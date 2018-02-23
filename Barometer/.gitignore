@@ -28,6 +28,7 @@ TestResults/
 Backup/
 .vs/*
 .vs/
+packages/
 ###################
 # Web publish log #
 ###################
