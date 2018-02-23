@@ -1,0 +1,35 @@
+﻿@{
+    ViewBag.Title = "About";
+}
+
+<div data-bind="component: {name: 'dashboard-grid', params: $data}">
+    <div class="grid-stack grid-stack-rtl grid-stack-instance-3321" data-bind="foreach: {data: widgets, afterRender: afterAddWidget}" data-gs-current-height="4" style="height: 300px;">
+        <div class="grid-stack-item ui-draggable ui-resizable ui-resizable-autohide" data-bind="attr: {'data-gs-x': $data.x, 'data-gs-y': $data.y, 'data-gs-width': $data.width, 'data-gs-height': $data.height, 'data-gs-auto-position': $data.auto_position}" data-gs-x="0" data-gs-y="0" data-gs-width="2" data-gs-height="2">
+            <div class="grid-stack-item-content ui-draggable-handle">
+                <center>
+                    <button data-bind="click: $root.deleteWidget">Delete me</button><br><h5 data-bind="text: index">1</h5>
+                </center><br>
+                <p>lorem ipsum</p>
+            </div>
+            <div class="ui-resizable-handle ui-resizable-se ui-icon ui-icon-gripsmall-diagonal-se" style="z-index: 90; display: none;"></div>
+        </div>
+        <div class="grid-stack-item ui-draggable ui-resizable ui-resizable-autohide" data-bind="attr: {'data-gs-x': $data.x, 'data-gs-y': $data.y, 'data-gs-width': $data.width, 'data-gs-height': $data.height, 'data-gs-auto-position': $data.auto_position}" data-gs-x="6" data-gs-y="0" data-gs-width="2" data-gs-height="4">
+            <div class="grid-stack-item-content ui-draggable-handle">
+                <center>
+                    <button data-bind="click: $root.deleteWidget">Delete me</button><br><h5 data-bind="text: index">3</h5>
+                </center><br>
+                <p>lorem ipsum</p>
+            </div>
+            <div class="ui-resizable-handle ui-resizable-se ui-icon ui-icon-gripsmall-diagonal-se" style="z-index: 90; display: none;"></div>
+        </div>
+        <div class="grid-stack-item ui-draggable ui-resizable ui-resizable-autohide" data-bind="attr: {'data-gs-x': $data.x, 'data-gs-y': $data.y, 'data-gs-width': $data.width, 'data-gs-height': $data.height, 'data-gs-auto-position': $data.auto_position}" data-gs-x="1" data-gs-y="2" data-gs-width="4" data-gs-height="2">
+            <div class="grid-stack-item-content ui-draggable-handle">
+                <center>
+                    <button data-bind="click: $root.deleteWidget">Delete me</button><br><h5 data-bind="text: index">4</h5>
+                </center><br>
+                <p>lorem ipsum</p>
+            </div>
+            <div class="ui-resizable-handle ui-resizable-se ui-icon ui-icon-gripsmall-diagonal-se" style="z-index: 90; display: none;"></div>
+        </div>
+    </div>
+</div>
