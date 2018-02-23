@@ -12,7 +12,7 @@ namespace Barometer.Controllers {
         }
 
         public ActionResult About() {
-            ViewBag.Message = "Your application description page.";
+            ViewBag.Message = "Your applicationn description page.";
 
             return View();
         }
