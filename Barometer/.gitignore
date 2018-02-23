@@ -26,7 +26,6 @@ bin/
 obj/
 TestResults/
 fonts/
-vendors/
 ###################
 # Web publish log #
 ###################
