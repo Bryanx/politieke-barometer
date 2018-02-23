@@ -99,7 +99,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include=".gitignore" />
     <Content Include="Content\build\.DS_Store" />
     <Content Include="Content\build\css\custom.css" />
     <Content Include="Content\build\images\back_disabled.png" />
@@ -111,6 +110,17 @@
     <Content Include="Content\build\images\loading.gif" />
     <Content Include="Content\build\js\custom.js" />
     <Content Include="Content\build\js\custom.min.js" />
+    <Content Include="Content\gridstack\gridstack-extra.css" />
+    <Content Include="Content\gridstack\gridstack-extra.min.css" />
+    <Content Include="Content\gridstack\gridstack.all.js" />
+    <Content Include="Content\gridstack\gridstack.css" />
+    <Content Include="Content\gridstack\gridstack.jQueryUI.js" />
+    <Content Include="Content\gridstack\gridstack.jQueryUI.min.js" />
+    <Content Include="Content\gridstack\gridstack.js" />
+    <Content Include="Content\gridstack\gridstack.min.css" />
+    <Content Include="Content\gridstack\gridstack.min.js" />
+    <Content Include="Content\gridstack\gridstack.min.map" />
+    <Content Include="Content\gridstack\underscore.min.js" />
     <Content Include="Content\images\.DS_Store" />
     <Content Include="Content\images\american-express.png" />
     <Content Include="Content\images\cropper.jpg" />
@@ -157,11 +167,6 @@
     <None Include="Content\bootstrap.css" />
     <None Include="Content\bootstrap.css.map" />
     <None Include="Content\bootstrap.min.css" />
-    <None Include="Content\gridstack-extra.css" />
-    <None Include="Content\gridstack-extra.min.css" />
-    <None Include="Content\gridstack.css" />
-    <None Include="Content\gridstack.min.css" />
-    <None Include="Content\gridstack.min.map" />
     <None Include="Content\themes\base\accordion.css" />
     <None Include="Content\themes\base\all.css" />
     <None Include="Content\themes\base\autocomplete.css" />
@@ -199,8 +204,6 @@
     <None Include="fonts\glyphicons-halflings-regular.svg" />
     <None Include="Scripts\bootstrap.js" />
     <None Include="Scripts\bootstrap.min.js" />
-    <None Include="Scripts\gridstack.js" />
-    <None Include="Scripts\gridstack.min.js" />
     <None Include="Scripts\jquery-3.3.1-vsdoc.js" />
     <None Include="Scripts\jquery-3.3.1.js" />
     <None Include="Scripts\jquery-3.3.1.min.js" />
@@ -213,6 +216,9 @@
     <None Include="Scripts\lodash.js" />
     <None Include="Scripts\lodash.min.js" />
     <None Include="Scripts\npm.js" />
+    <None Include="Scripts\underscore.js" />
+    <None Include="Scripts\underscore.min.js" />
+    <None Include="Scripts\underscore.min.map" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v15.0\WebApplications\Microsoft.WebApplication.targets" />

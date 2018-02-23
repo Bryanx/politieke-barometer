@@ -29,6 +29,7 @@
     <!-- Custom Theme Style -->
     <link href="../../Content/build/css/custom.css" rel="stylesheet">
     <link href="../../Content/specific.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../Content/gridstack/gridstack.css"/>
 </head>
 
 <body class="nav-md">
@@ -484,12 +485,16 @@
     <script src="../../vendors/moment/min/moment.min.js"></script>
     <script src="../../vendors/bootstrap-daterangepicker/daterangepicker.js"></script>
 
-    @RenderSection("scripts", required: false)
-    
-    <!-- Custom Theme Scripts -->
-    <script src="../../Content/build/js/custom.min.js"></script>
-    <script src="../../Content/specific.js"></script>
-    
 </environment>
+@RenderSection("scripts", required: false)
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.0/jquery-ui.js"></script>
+<script src="../../Content/gridstack/underscore.min.js"></script>
+<script src="../../Content/gridstack/gridstack.js"></script>
+<script src="../../Content/gridstack/gridstack.jQueryUI.js"></script>
+
+<!-- Custom Theme Scripts -->
+<script src="../../Content/build/js/custom.min.js"></script>
+<script src="../../Content/specific.js"></script>
+
 </body>
 </html>

@@ -2,33 +2,50 @@
     ViewBag.Title = "About";
 }
 
-<div data-bind="component: {name: 'dashboard-grid', params: $data}">
-    <div class="grid-stack grid-stack-rtl grid-stack-instance-3321" data-bind="foreach: {data: widgets, afterRender: afterAddWidget}" data-gs-current-height="4" style="height: 300px;">
-        <div class="grid-stack-item ui-draggable ui-resizable ui-resizable-autohide" data-bind="attr: {'data-gs-x': $data.x, 'data-gs-y': $data.y, 'data-gs-width': $data.width, 'data-gs-height': $data.height, 'data-gs-auto-position': $data.auto_position}" data-gs-x="0" data-gs-y="0" data-gs-width="2" data-gs-height="2">
-            <div class="grid-stack-item-content ui-draggable-handle">
-                <center>
-                    <button data-bind="click: $root.deleteWidget">Delete me</button><br><h5 data-bind="text: index">1</h5>
-                </center><br>
-                <p>lorem ipsum</p>
-            </div>
+<style type="text/css">
+    .grid-stack {
+        position: relative;
+        width: 960px;
+    }
+    .grid-stack-item-content {
+        background-color: darkgray;
+        border: 1px white;
+    }
+</style>
+<style type="text/css" data-gs-style-id="gridstack-style-5124"></style>
+<div class="container-fluid">
+    <h1>Float grid demo</h1>
+
+    <div>
+        <a class="btn btn-default" id="add-new-widget" href="#">Add Widget</a>
+    </div>
+
+    <br>
+
+    <div class="grid-stack grid-stack-instance-9028" data-gs-current-height="12" style="height: 940px;">
+        <div data-gs-x="2" data-gs-y="6" data-gs-width="4" data-gs-height="4" class="grid-stack-item ui-draggable ui-resizable ui-resizable-autohide">
+            <div class="grid-stack-item-content ui-draggable-handle"></div>
+            <div></div>
             <div class="ui-resizable-handle ui-resizable-se ui-icon ui-icon-gripsmall-diagonal-se" style="z-index: 90; display: none;"></div>
         </div>
-        <div class="grid-stack-item ui-draggable ui-resizable ui-resizable-autohide" data-bind="attr: {'data-gs-x': $data.x, 'data-gs-y': $data.y, 'data-gs-width': $data.width, 'data-gs-height': $data.height, 'data-gs-auto-position': $data.auto_position}" data-gs-x="6" data-gs-y="0" data-gs-width="2" data-gs-height="4">
-            <div class="grid-stack-item-content ui-draggable-handle">
-                <center>
-                    <button data-bind="click: $root.deleteWidget">Delete me</button><br><h5 data-bind="text: index">3</h5>
-                </center><br>
-                <p>lorem ipsum</p>
-            </div>
+        <div data-gs-x="2" data-gs-y="5" data-gs-width="3" data-gs-height="5" class="grid-stack-item ui-draggable ui-resizable ui-resizable-autohide">
+            <div class="grid-stack-item-content ui-draggable-handle"></div>
+            <div></div>
             <div class="ui-resizable-handle ui-resizable-se ui-icon ui-icon-gripsmall-diagonal-se" style="z-index: 90; display: none;"></div>
         </div>
-        <div class="grid-stack-item ui-draggable ui-resizable ui-resizable-autohide" data-bind="attr: {'data-gs-x': $data.x, 'data-gs-y': $data.y, 'data-gs-width': $data.width, 'data-gs-height': $data.height, 'data-gs-auto-position': $data.auto_position}" data-gs-x="1" data-gs-y="2" data-gs-width="4" data-gs-height="2">
-            <div class="grid-stack-item-content ui-draggable-handle">
-                <center>
-                    <button data-bind="click: $root.deleteWidget">Delete me</button><br><h5 data-bind="text: index">4</h5>
-                </center><br>
-                <p>lorem ipsum</p>
-            </div>
+        <div data-gs-x="4" data-gs-y="4" data-gs-width="4" data-gs-height="3" class="grid-stack-item ui-draggable ui-resizable ui-resizable-autohide">
+            <div class="grid-stack-item-content ui-draggable-handle"></div>
+            <div></div>
+            <div class="ui-resizable-handle ui-resizable-se ui-icon ui-icon-gripsmall-diagonal-se" style="z-index: 90; display: none;"></div>
+        </div>
+        <div data-gs-x="3" data-gs-y="1" data-gs-width="6" data-gs-height="2" class="grid-stack-item ui-draggable ui-resizable ui-resizable-autohide">
+            <div class="grid-stack-item-content ui-draggable-handle"></div>
+            <div></div>
+            <div class="ui-resizable-handle ui-resizable-se ui-icon ui-icon-gripsmall-diagonal-se" style="z-index: 90; display: none;"></div>
+        </div>
+        <div data-gs-x="0" data-gs-y="3" data-gs-width="2" data-gs-height="6" class="grid-stack-item ui-draggable ui-resizable ui-resizable-autohide">
+            <div class="grid-stack-item-content ui-draggable-handle"></div>
+            <div></div>
             <div class="ui-resizable-handle ui-resizable-se ui-icon ui-icon-gripsmall-diagonal-se" style="z-index: 90; display: none;"></div>
         </div>
     </div>
