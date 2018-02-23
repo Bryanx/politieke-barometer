@@ -1,6 +1,7 @@
 ###################
 # compiled source #
 ###################
+*.jarne
 *.com
 *.class
 *.dll
