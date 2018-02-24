@@ -167,6 +167,7 @@
     <None Include="Content\bootstrap.css" />
     <None Include="Content\bootstrap.css.map" />
     <None Include="Content\bootstrap.min.css" />
+    <None Include="Content\gridstack\knockout-3.2.0.js" />
     <None Include="Content\themes\base\accordion.css" />
     <None Include="Content\themes\base\all.css" />
     <None Include="Content\themes\base\autocomplete.css" />
