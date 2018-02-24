@@ -15,7 +15,8 @@ $(document).ready(function () {
                     this.afterAddWidget = function (items) {
                         if (grid == null) {
                             grid = $(componentInfo.element).find('.grid-stack').gridstack({
-                                auto: false
+                                auto: false,
+                                width: 4,
                             }).data('gridstack');
                         }
 
@@ -43,8 +44,8 @@ $(document).ready(function () {
                 this.widgets.push({
                     x: 0,
                     y: 0,
-                    width: Math.floor(1 + 3 * Math.random()),
-                    height: Math.floor(1 + 3 * Math.random()),
+                    width: Math.floor(1 + 4 * Math.random()),
+                    height: Math.floor(1 + 4 * Math.random()),
                     auto_position: true
                 });
                 return false;
@@ -57,9 +58,9 @@ $(document).ready(function () {
         };
 
         var widgets = [
-            {x: 0, y: 0, width: 2, height: 2},
-            {x: 2, y: 0, width: 4, height: 2},
-            {x: 6, y: 0, width: 2, height: 4},
+            {x: 0, y: 0, width: 3, height: 2},
+            {x: 4, y: 0, width: 4, height: 2},
+            {x: 6, y: 0, width: 3, height: 4},
             {x: 1, y: 2, width: 4, height: 2}
         ];
 

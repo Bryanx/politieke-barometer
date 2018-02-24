@@ -3,10 +3,19 @@
 }
 
 <style type="text/css">
-    .grid-stack {
-        position: relative;
-        width: 960px;
-    }
+    
+     .grid-stack {
+         position: relative;
+         width: 100%;
+     }
+     .grid-stack-item[data-gs-width="4"]  { width: 100% !important}
+     .grid-stack-item[data-gs-width="3"]  { width: 75% !important}
+     .grid-stack-item[data-gs-width="2"]  { width: 50% !important}
+     .grid-stack-item[data-gs-width="1"]  { width: 25% !important}
+
+     .grid-stack-item[data-gs-x="3"]  { left: 75% !important}
+     .grid-stack-item[data-gs-x="2"]  { left: 50% !important}
+     .grid-stack-item[data-gs-x="1"]  { left: 25% !important}
 
     .grid-stack-item-content { background-color: white; }
 </style>
@@ -28,23 +37,23 @@
     <br>
 
     <div data-bind="component: {name: 'dashboard-grid', params: $data}">
-        <div class="grid-stack grid-stack-instance-6798" data-bind="foreach: {data: widgets, afterRender: afterAddWidget}" data-gs-current-height="4" style="height: 300px;">
-            <div class="grid-stack-item ui-draggable ui-resizable ui-resizable-autohide" data-bind="attr: {'data-gs-x': $data.x, 'data-gs-y': $data.y, 'data-gs-width': $data.width, 'data-gs-height': $data.height, 'data-gs-auto-position': $data.auto_position}" data-gs-x="0" data-gs-y="0" data-gs-width="2" data-gs-height="2">
+        <div class="grid-stack grid-stack-4" data-bind="foreach: {data: widgets, afterRender: afterAddWidget}" data-gs-current-height="4" style="height: 300px;">
+            <div class="grid-stack-item ui-draggable ui-resizable ui-resizable-autohide" data-bind="attr: {'data-gs-x': $data.x, 'data-gs-y': $data.y, 'data-gs-width': $data.width, 'data-gs-height': $data.height, 'data-gs-auto-position': $data.auto_position}" data-gs-x="0" data-gs-y="0" data-gs-width="1" data-gs-height="2">
                 <div class="grid-stack-item-content ui-draggable-handle">
                     <button data-bind="click: $root.deleteWidget">X</button>
                 </div>
             </div>
-            <div class="grid-stack-item ui-draggable ui-resizable ui-resizable-autohide" data-bind="attr: {'data-gs-x': $data.x, 'data-gs-y': $data.y, 'data-gs-width': $data.width, 'data-gs-height': $data.height, 'data-gs-auto-position': $data.auto_position}" data-gs-x="2" data-gs-y="0" data-gs-width="4" data-gs-height="2">
+            <div class="grid-stack-item ui-draggable ui-resizable ui-resizable-autohide" data-bind="attr: {'data-gs-x': $data.x, 'data-gs-y': $data.y, 'data-gs-width': $data.width, 'data-gs-height': $data.height, 'data-gs-auto-position': $data.auto_position}" data-gs-x="0" data-gs-y="1" data-gs-width="1" data-gs-height="2">
                 <div class="grid-stack-item-content ui-draggable-handle">
                     <button data-bind="click: $root.deleteWidget">X</button>
                 </div>
             </div>
-            <div class="grid-stack-item ui-draggable ui-resizable ui-resizable-autohide" data-bind="attr: {'data-gs-x': $data.x, 'data-gs-y': $data.y, 'data-gs-width': $data.width, 'data-gs-height': $data.height, 'data-gs-auto-position': $data.auto_position}" data-gs-x="6" data-gs-y="0" data-gs-width="2" data-gs-height="4">
+            <div class="grid-stack-item ui-draggable ui-resizable ui-resizable-autohide" data-bind="attr: {'data-gs-x': $data.x, 'data-gs-y': $data.y, 'data-gs-width': $data.width, 'data-gs-height': $data.height, 'data-gs-auto-position': $data.auto_position}" data-gs-x="0" data-gs-y="1" data-gs-width="2" data-gs-height="3">
                 <div class="grid-stack-item-content ui-draggable-handle">
                     <button data-bind="click: $root.deleteWidget">X</button>
                 </div>
             </div>
-            <div class="grid-stack-item ui-draggable ui-resizable ui-resizable-autohide" data-bind="attr: {'data-gs-x': $data.x, 'data-gs-y': $data.y, 'data-gs-width': $data.width, 'data-gs-height': $data.height, 'data-gs-auto-position': $data.auto_position}" data-gs-x="1" data-gs-y="2" data-gs-width="4" data-gs-height="2">
+            <div class="grid-stack-item ui-draggable ui-resizable ui-resizable-autohide" data-bind="attr: {'data-gs-x': $data.x, 'data-gs-y': $data.y, 'data-gs-width': $data.width, 'data-gs-height': $data.height, 'data-gs-auto-position': $data.auto_position}" data-gs-x="0" data-gs-y="2" data-gs-width="1" data-gs-height="2">
                 <div class="grid-stack-item-content ui-draggable-handle">
                     <button data-bind="click: $root.deleteWidget">X</button>
                 </div>
