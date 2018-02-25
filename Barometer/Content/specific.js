@@ -1,25 +1,79 @@
 $(document).ready(init);
-// Highcharts won't automatically set its height and won't adjust
-// its width, so we need to set height and call reflow.
-function resizeChart(elem) {
-    var $elem = $(elem);
-    var $chart = $(elem).find('> div > div');
-    $chart.find('> div').height($elem.height());
-    Highcharts.charts[$chart.data('highchartsChart')].reflow();
-}
 
-function initializeChart() {
-    Morris.Donut({
-        element: 'graphHere',
-        resize: true,
+var counter = 0;
+
+function initializeChart(id) {
+    $('#' + id).css('width', 'auto');
+    $('#' + id).css('height', '85%');
+    Morris.Line({
+        // ID of the element in which to draw the chart.
+        element: id,
+        // Chart data records -- each entry in this array corresponds to a point on
+        // the chart.
         data: [
-            {label: "Friends", value: 30},
-            {label: "Allies", value: 15},
-            {label: "Enemies", value: 45},
-            {label: "Neutral", value: 10}
-        ]
+            {year: '2008', value: 20},
+            {year: '2009', value: 10},
+            {year: '2010', value: 5},
+            {year: '2011', value: 5},
+            {year: '2012', value: 20}
+        ],
+        // The name of the data record attribute that contains x-values.
+        xkey: 'year',
+        // A list of names of data record attributes that contain y-values.
+        ykeys: ['value'],
+        // Labels for the ykeys -- will be displayed when you hover over the
+        // chart.
+        labels: ['Value'],
+        resize: true
     });
+    // Morris.Donut({
+    //     element: elem,
+    //     resize: true,
+    //     data: [
+    //         {label: "Friends", value: 30},
+    //         {label: "Allies", value: 15},
+    //         {label: "Enemies", value: 45},
+    //         {label: "Neutral", value: 10}
+    //     ]
+    // });
 };
+
+function createWidget(id) {
+    return '<div class="chart-container" data-gs-width="4" data-gs-height="4" data-gs-y="0" data-gs-x="0">' +
+        '            <div class="x_panel grid-stack-item-content">' +
+        '                <div class="x_title">' +
+        '                    <h2 id="graphTitle">Titel</h2>' +
+        '                    <ul class="nav navbar-right panel_toolbox">' +
+        '                        <li>' +
+        '                            <a class="collapse-link">' +
+        '                                <i class="fa fa-chevron-up"></i>' +
+        '                            </a>' +
+        '                        </li>' +
+        '                        <li class="dropdown">' +
+        '                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">' +
+        '                                <i class="fa fa-wrench"></i>' +
+        '                            </a>' +
+        '                            <ul class="dropdown-menu" role="menu">' +
+        '                                <li>' +
+        '                                    <a href="#">Settings 1</a>' +
+        '                                </li>' +
+        '                                <li>' +
+        '                                    <a href="#">Settings 2</a>' +
+        '                                </li>' +
+        '                            </ul>' +
+        '                        </li>' +
+        '                        <li>' +
+        '                            <a id="close-widget">' +
+        '                                <i class="fa fa-close"></i>' +
+        '                            </a>' +
+        '                        </li>' +
+        '                    </ul>' +
+        '                    <div class="clearfix"></div>' +
+        '                </div>' +
+        '                <div id="' + id + '"></div>' +
+        '            </div>' +
+        '        </div>'
+}
 
 function init() {
     $('#grid').gridstack({
@@ -27,28 +81,77 @@ function init() {
             handles: 'e, se, s, sw, w'
         }
     });
-    var grid = $('#grid').data('gridstack');
-    for (var i = 0; i < $('.chart-container').length; i++) {
-        // convert elements to gridstack widgets
-        grid.makeWidget($('.chart-container')[i]);
-    }
+    this.grid = $('#grid').data('gridstack');
 
-    $('.grid-stack').on('gsresizestop', function(event, elem) {
-        var width = $(elem).attr('data-gs-width');
-        console.log('width: ' + width + ' y: ' + $(elem).attr('data-gs-y'));
+    $(document).on('click', '#close-widget', function (e) {
+        e.preventDefault();
+        let el = $(this).closest('.grid-stack-item');
+        $('#grid').data('gridstack').removeWidget(el);
     });
 
-    // $('.grid-stack').on('gsresizestop', function(event, elem) {
-    //     // update chart width and height on resize
-    //     resizeChart(elem);
-    // });
+    this.addWidgetToGrid = function () {
+        this.grid.addWidget(createWidget('grafiek'+counter), 0, 0, 4, 4, true);
+        initializeChart('grafiek'+counter);
+        counter++;
+        return false;
+    }.bind(this);
 
-    // Build the charts
-    initializeChart();
+    $('#btnAddWidget').click(this.addWidgetToGrid);
 
-    // set chart size on first load
-    // var $elems = $('.chart-container');
-    // for (var j = 0; j < $elems.length; j++) {
-    //     resizeChart($elems[j]);
-    // }
-};
+}
+
+
+// $(function () {
+//     new function () {
+//         this.serializedData = [
+//             {x: 0, y: 0, width: 2, height: 2},
+//             {x: 3, y: 1, width: 1, height: 2},
+//             {x: 4, y: 1, width: 1, height: 1},
+//             {x: 2, y: 3, width: 3, height: 1},
+//             {x: 1, y: 4, width: 1, height: 1},
+//             {x: 1, y: 3, width: 1, height: 1},
+//             {x: 2, y: 4, width: 1, height: 1},
+//             {x: 2, y: 5, width: 1, height: 1}
+//         ];
+//
+//         this.grid = $('.grid-stack').data('gridstack');
+//
+//         this.loadGrid = function () {
+//             this.grid.removeAll();
+//             var items = GridStackUI.Utils.sort(this.serializedData);
+//             _.each(items, function (node) {
+//                 this.grid.addWidget($('<div><div class="grid-stack-item-content" /><div/>'),
+//                     node.x, node.y, node.width, node.height);
+//             }, this);
+//             return false;
+//         }.bind(this);
+//
+//         this.saveGrid = function () {
+//             this.serializedData = _.map($('.grid-stack > .grid-stack-item:visible'), function (el) {
+//                 el = $(el);
+//                 var node = el.data('_gridstack_node');
+//                 return {
+//                     x: node.x,
+//                     y: node.y,
+//                     width: node.width,
+//                     height: node.height
+//                 };
+//             }, this);
+//             $('#saved-data').val(JSON.stringify(this.serializedData, null, '    '));
+//             return false;
+//         }.bind(this);
+//
+//         this.clearGrid = function () {
+//             this.grid.removeAll();
+//             return false;
+//         }.bind(this);
+//
+//         $('#save-grid').click(this.saveGrid);
+//         $('#load-grid').click(this.loadGrid);
+//         $('#clear-grid').click(this.clearGrid);
+//
+//         this.loadGrid();
+//     };
+// });
+    
+

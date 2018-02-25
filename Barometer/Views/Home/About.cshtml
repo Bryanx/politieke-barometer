@@ -6,19 +6,19 @@
     
     .grid-stack {
         position: relative;
-        width: 99%;
+        width: 100%;
         margin-left: -10px !important;
     }
 
-/*    .grid-stack-item[data-gs-width="3"] { width: 100% !important }*/
-/**/
-/*    .grid-stack-item[data-gs-width="2"] { width: 66.66% !important }*/
-/**/
-/*    .grid-stack-item[data-gs-width="1"] { width: 33.33% !important }*/
-/**/
-/*    .grid-stack-item[data-gs-x="2"] { left: 66.66% !important }*/
-/**/
-/*    .grid-stack-item[data-gs-x="1"] { left: 33.33% !important }*/
+    /*    .grid-stack-item[data-gs-width="3"] { width: 100% !important }*/
+    /**/
+    /*    .grid-stack-item[data-gs-width="2"] { width: 66.66% !important }*/
+    /**/
+    /*    .grid-stack-item[data-gs-width="1"] { width: 33.33% !important }*/
+    /**/
+    /*    .grid-stack-item[data-gs-x="2"] { left: 66.66% !important }*/
+    /**/
+    /*    .grid-stack-item[data-gs-x="1"] { left: 33.33% !important }*/
 
     .grid-stack-item-content {
         background-color: white;
@@ -27,11 +27,6 @@
 
     #containergrid { margin-left: -10px !important; }
 
-    #graphHere {
-        margin-right: 10px !important;
-        width: auto;
-        height: 100%;
-    }
 </style>
 
 
@@ -39,60 +34,10 @@
     <h1>knockout.js Demo</h1>
 
     <div>
-        <button class="btn btn-primary" data-bind="click: addNewWidget">Add new widget</button>
+        <button id="btnAddWidget" class="btn btn-primary">Add new widget</button>
     </div>
 
     <br>
 
-    <div class="grid-stack" id="grid">
-        <div class="chart-container" data-gs-width="4" data-gs-height="4" data-gs-y="0" data-gs-x="0">
-            <div class="grid-stack-item-content">
-                <div id="graphHere"></div>
-            </div>
-        </div>
-    </div>
-    <div class="chart-container" data-gs-width="4" data-gs-height="4" data-gs-x="4">
-        <div class="grid-stack-item-content">
-            <div id="container2"></div>
-        </div>
-    </div>
+    <div class="grid-stack" id="grid"></div>
 </div>
-
-@**@
-@*<template id="gridstack-template">*@
-@*    <div class="grid-stack" data-bind="foreach: {data: widgets, afterRender: afterAddWidget}">*@
-@*        <div class="grid-stack-item" data-bind="attr: {'data-gs-x': $data.x, 'data-gs-y': $data.y, 'data-gs-width': $data.width, 'data-gs-height': $data.height, 'data-gs-auto-position': $data.auto_position}">*@
-@*            <div class="x_panel grid-stack-item-content">*@
-@*                <div class="x_title">*@
-@*                    <h2>Titel</h2>*@
-@*                    <ul class="nav navbar-right panel_toolbox">*@
-@*                        <li>*@
-@*                            <a class="collapse-link">*@
-@*                                <i class="fa fa-chevron-up"></i>*@
-@*                            </a>*@
-@*                        </li>*@
-@*                        <li class="dropdown">*@
-@*                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">*@
-@*                                <i class="fa fa-wrench"></i>*@
-@*                            </a>*@
-@*                            <ul class="dropdown-menu" role="menu">*@
-@*                                <li>*@
-@*                                    <a href="#">Settings 1</a>*@
-@*                                </li>*@
-@*                                <li>*@
-@*                                    <a href="#">Settings 2</a>*@
-@*                                </li>*@
-@*                            </ul>*@
-@*                        </li>*@
-@*                        <li>*@
-@*                            <a class="close-link" data-bind="click: $root.deleteWidget">*@
-@*                                <i class="fa fa-close"></i>*@
-@*                            </a>*@
-@*                        </li>*@
-@*                    </ul>*@
-@*                    <div class="clearfix"></div>*@
-@*                </div>*@
-@*                testdata*@
-@*            </div>*@
-@*        </div></div><!-- <---- NO SPACE BETWEEN THESE CLOSING TAGS -->*@
-@*</template>*@
