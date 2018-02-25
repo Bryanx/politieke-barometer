@@ -69,9 +69,7 @@
             <ul class="nav child_menu">
                 <li>@Html.ActionLink("Home", "Index", "Home")</li>
                 <li>@Html.ActionLink("About", "About", "Home")</li>
-                <li>
-                    <a href="index3.html">Dashboard3</a>
-                </li>
+                <li>@Html.ActionLink("PersonenOverzicht", "Index", "Personen")</li>
             </ul>
         </li>
         <li>
@@ -437,7 +435,7 @@
 <!-- footer content -->
 <footer>
     <div class="pull-right">
-        Gentelella - Bootstrap Admin Template by <a href="https://colorlib.com">Colorlib</a>
+        &copy; @DateTime.Now.Year - Barometer
     </div>
     <div class="clearfix"></div>
 </footer>
@@ -446,7 +444,7 @@
 </div>
 
 <!-- Scripts -->
-<environment>
+<environment names="Development">
     <!-- jQuery -->
     <script src="../../vendors/jquery/dist/jquery.min.js"></script>
     <!-- Bootstrap -->
@@ -487,6 +485,7 @@
 
 </environment>
 @RenderSection("scripts", required: false)
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.0/jquery-ui.js"></script>
 <script src="../../Content/gridstack/underscore.min.js"></script>
 <script src="../../Content/gridstack/gridstack.js"></script>
@@ -494,6 +493,20 @@
 <script src="../../Content/gridstack/knockout-3.2.0.js"></script>
 <script src="../../vendors/raphael/raphael.min.js"></script>
 <script src="../../vendors/morris.js/morris.min.js"></script>
+
+<!-- tables -->
+<script src="../../vendors/datatables.net/js/jquery.dataTables.min.js"></script>
+<script src="../../vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+<script src="../../vendors/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+<script src="../../vendors/datatables.net-buttons-bs/js/buttons.bootstrap.min.js"></script>
+<script src="../../vendors/datatables.net-buttons/js/buttons.flash.min.js"></script>
+<script src="../../vendors/datatables.net-buttons/js/buttons.html5.min.js"></script>
+<script src="../../vendors/datatables.net-buttons/js/buttons.print.min.js"></script>
+<script src="../../vendors/datatables.net-fixedheader/js/dataTables.fixedHeader.min.js"></script>
+<script src="../../vendors/datatables.net-keytable/js/dataTables.keyTable.min.js"></script>
+<script src="../../vendors/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+<script src="../../vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
+<script src="../../vendors/datatables.net-scroller/js/dataTables.scroller.min.js"></script>
 
 <!-- Custom Theme Scripts -->
 <script src="../../Content/build/js/custom.min.js"></script>
