@@ -157,19 +157,19 @@ function init() {
 
     //add widget with graph
     this.btnAddLineChart = function () {
-        this.grid.addWidget(createWidget('grafiek' + counter), 0, 0, 4, 4, true);
+        this.grid.addWidget(createWidget('grafiek' + counter), 0, 0, 4, 4, true, 4, 12, 4);
         addLineChart('grafiek' + counter);
         counter++;
         return false;
     }.bind(this);
     this.btnAddPieChart = function () {
-        this.grid.addWidget(createWidget('grafiek' + counter), 0, 0, 4, 4, true);
+        this.grid.addWidget(createWidget('grafiek' + counter), 0, 0, 4, 4, true, 4, 12, 4);
         addPieChart('grafiek' + counter);
         counter++;
         return false;
     }.bind(this);  
     this.btnAddBarChart = function () {
-        this.grid.addWidget(createWidget('grafiek' + counter), 0, 0, 4, 4, true);
+        this.grid.addWidget(createWidget('grafiek' + counter), 0, 0, 4, 4, true, 4, 12, 4);
         addBarChart('grafiek' + counter);
         counter++;
         return false;
