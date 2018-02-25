@@ -2,9 +2,14 @@ $(document).ready(init);
 
 var counter = 0;
 
-function initializeChart(id) {
-    $('#' + id).css('width', 'auto');
-    $('#' + id).css('height', '85%');
+function addCSSgrid(id) {
+    let elem = $('#' + id);
+    elem.css('width', 'auto');
+    elem.css('height', '85%');
+}
+
+function addLineChart(id) {
+    addCSSgrid(id);
     Morris.Line({
         // ID of the element in which to draw the chart.
         element: id,
@@ -26,17 +31,76 @@ function initializeChart(id) {
         labels: ['Value'],
         resize: true
     });
-    // Morris.Donut({
-    //     element: elem,
-    //     resize: true,
-    //     data: [
-    //         {label: "Friends", value: 30},
-    //         {label: "Allies", value: 15},
-    //         {label: "Enemies", value: 45},
-    //         {label: "Neutral", value: 10}
-    //     ]
-    // });
-};
+}
+
+function addPieChart(id) {
+    addCSSgrid(id);
+    Morris.Donut({
+        element: id,
+        resize: true,
+        data: [
+            {label: "Friends", value: 30},
+            {label: "Allies", value: 15},
+            {label: "Enemies", value: 45},
+            {label: "Neutral", value: 10}
+        ]
+    });
+}
+
+function addBarChart(id) {
+    addCSSgrid(id);
+    Morris.Bar({
+        element: id,
+        data: [{
+            period: "2016-10-01",
+            licensed: 807,
+            sorned: 660
+        }, {
+            period: "2016-09-30",
+            licensed: 1251,
+            sorned: 729
+        }, {
+            period: "2016-09-29",
+            licensed: 1769,
+            sorned: 1018
+        }, {
+            period: "2016-09-20",
+            licensed: 2246,
+            sorned: 1461
+        }, {
+            period: "2016-09-19",
+            licensed: 2657,
+            sorned: 1967
+        }, {
+            period: "2016-09-18",
+            licensed: 3148,
+            sorned: 2627
+        }, {
+            period: "2016-09-17",
+            licensed: 3471,
+            sorned: 3740
+        }, {
+            period: "2016-09-16",
+            licensed: 2871,
+            sorned: 2216
+        }, {
+            period: "2016-09-15",
+            licensed: 2401,
+            sorned: 1656
+        }, {
+            period: "2016-09-10",
+            licensed: 2115,
+            sorned: 1022
+        }],
+        xkey: "period",
+        barColors: ["#26B99A", "#34495E", "#ACADAC", "#3498DB"],
+        ykeys: ["licensed", "sorned"],
+        labels: ["Licensed", "SORN"],
+        hideHover: "auto",
+        xLabelAngle: 60,
+        resize: !0
+    });
+}
 
 function createWidget(id) {
     return '<div class="chart-container" data-gs-width="4" data-gs-height="4" data-gs-y="0" data-gs-x="0">' +
@@ -76,31 +140,49 @@ function createWidget(id) {
 }
 
 function init() {
-    $('#grid').gridstack({
+    let gridselector = $('#grid');
+    gridselector.gridstack({
         resizable: {
             handles: 'e, se, s, sw, w'
         }
     });
-    this.grid = $('#grid').data('gridstack');
+    this.grid = gridselector.data('gridstack');
 
+    //close widget
     $(document).on('click', '#close-widget', function (e) {
         e.preventDefault();
         let el = $(this).closest('.grid-stack-item');
         $('#grid').data('gridstack').removeWidget(el);
     });
 
-    this.addWidgetToGrid = function () {
-        this.grid.addWidget(createWidget('grafiek'+counter), 0, 0, 4, 4, true);
-        initializeChart('grafiek'+counter);
+    //add widget with graph
+    this.btnAddLineChart = function () {
+        this.grid.addWidget(createWidget('grafiek' + counter), 0, 0, 4, 4, true);
+        addLineChart('grafiek' + counter);
+        counter++;
+        return false;
+    }.bind(this);
+    this.btnAddPieChart = function () {
+        this.grid.addWidget(createWidget('grafiek' + counter), 0, 0, 4, 4, true);
+        addPieChart('grafiek' + counter);
+        counter++;
+        return false;
+    }.bind(this);  
+    this.btnAddBarChart = function () {
+        this.grid.addWidget(createWidget('grafiek' + counter), 0, 0, 4, 4, true);
+        addBarChart('grafiek' + counter);
         counter++;
         return false;
     }.bind(this);
 
-    $('#btnAddWidget').click(this.addWidgetToGrid);
+    //handlers
+    $('#btnAddLine').click(this.btnAddLineChart);
+    $('#btnAddPie').click(this.btnAddPieChart);
+    $('#btnAddBar').click(this.btnAddBarChart);
 
 }
 
-
+//TODO: Add persistence and import functionality
 // $(function () {
 //     new function () {
 //         this.serializedData = [
