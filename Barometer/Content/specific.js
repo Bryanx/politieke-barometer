@@ -1,71 +1,54 @@
-$(document).ready(function () {
-    $(function () {
-        $('.grid-stack').gridstack();
+$(document).ready(init);
+// Highcharts won't automatically set its height and won't adjust
+// its width, so we need to set height and call reflow.
+function resizeChart(elem) {
+    var $elem = $(elem);
+    var $chart = $(elem).find('> div > div');
+    $chart.find('> div').height($elem.height());
+    Highcharts.charts[$chart.data('highchartsChart')].reflow();
+}
+
+function initializeChart() {
+    Morris.Donut({
+        element: 'graphHere',
+        resize: true,
+        data: [
+            {label: "Friends", value: 30},
+            {label: "Allies", value: 15},
+            {label: "Enemies", value: 45},
+            {label: "Neutral", value: 10}
+        ]
+    });
+};
+
+function init() {
+    $('#grid').gridstack({
+        resizable: {
+            handles: 'e, se, s, sw, w'
+        }
+    });
+    var grid = $('#grid').data('gridstack');
+    for (var i = 0; i < $('.chart-container').length; i++) {
+        // convert elements to gridstack widgets
+        grid.makeWidget($('.chart-container')[i]);
+    }
+
+    $('.grid-stack').on('gsresizestop', function(event, elem) {
+        var width = $(elem).attr('data-gs-width');
+        console.log('width: ' + width + ' y: ' + $(elem).attr('data-gs-y'));
     });
 
+    // $('.grid-stack').on('gsresizestop', function(event, elem) {
+    //     // update chart width and height on resize
+    //     resizeChart(elem);
+    // });
 
-    ko.components.register('dashboard-grid', {
-        viewModel: {
-            createViewModel: function (controller, componentInfo) {
-                var ViewModel = function (controller, componentInfo) {
-                    var grid = null;
+    // Build the charts
+    initializeChart();
 
-                    this.widgets = controller.widgets;
-
-                    this.afterAddWidget = function (items) {
-                        if (grid == null) {
-                            grid = $(componentInfo.element).find('.grid-stack').gridstack({
-                                auto: false,
-                                width: 3,
-                            }).data('gridstack');
-                        }
-
-                        var item = _.find(items, function (i) { return i.nodeType == 1 });
-                        grid.addWidget(item);
-                        ko.utils.domNodeDisposal.addDisposeCallback(item, function () {
-                            grid.removeWidget(item);
-                        });
-                    };
-                };
-
-                return new ViewModel(controller, componentInfo);
-            }
-        },
-        template: { element: 'gridstack-template' }
-    });
-
-    $(function () {
-        var Controller = function (widgets) {
-            var self = this;
-
-            this.widgets = ko.observableArray(widgets);
-
-            this.addNewWidget = function () {
-                this.widgets.push({
-                    x: 0,
-                    y: 0,
-                    width: Math.floor(1 + 2 * Math.random()),
-                    height: Math.floor(3 + 4 * Math.random()),
-                    auto_position: true
-                });
-                return false;
-            };
-
-            this.deleteWidget = function (item) {
-                self.widgets.remove(item);
-                return false;
-            };
-        };
-
-        var widgets = [
-            {x: 0, y: 0, width: 1, height: 4},
-            {x: 1, y: 0, width: 1, height: 4},
-            {x: 3, y: 0, width: 1, height: 4},
-        ];
-
-        var controller = new Controller(widgets);
-        ko.applyBindings(controller);
-    });
-
-
-});
+    // set chart size on first load
+    // var $elems = $('.chart-container');
+    // for (var j = 0; j < $elems.length; j++) {
+    //     resizeChart($elems[j]);
+    // }
+};

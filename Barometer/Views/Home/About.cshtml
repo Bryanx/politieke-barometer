@@ -4,25 +4,35 @@
 
 <style type="text/css">
     
-     .grid-stack {
-         position: relative;
-         width: 100%;
-     }
-     .grid-stack-item[data-gs-width="3"]  { width: 100% !important}
-     .grid-stack-item[data-gs-width="2"]  { width: 66.66% !important}
-     .grid-stack-item[data-gs-width="1"]  { width: 33.33% !important}
+    .grid-stack {
+        position: relative;
+        width: 99%;
+        margin-left: -10px !important;
+    }
 
-     .grid-stack-item[data-gs-x="2"]  { left: 66.66% !important}
-     .grid-stack-item[data-gs-x="1"]  { left: 33.33% !important}
+/*    .grid-stack-item[data-gs-width="3"] { width: 100% !important }*/
+/**/
+/*    .grid-stack-item[data-gs-width="2"] { width: 66.66% !important }*/
+/**/
+/*    .grid-stack-item[data-gs-width="1"] { width: 33.33% !important }*/
+/**/
+/*    .grid-stack-item[data-gs-x="2"] { left: 66.66% !important }*/
+/**/
+/*    .grid-stack-item[data-gs-x="1"] { left: 33.33% !important }*/
 
-    .grid-stack-item-content { background-color: white; }
-     
-     #containergrid { margin-left: -10px !important; }
+    .grid-stack-item-content {
+        background-color: white;
+        overflow-y: hidden !important;
+    }
+
+    #containergrid { margin-left: -10px !important; }
+
+    #graphHere {
+        margin-right: 10px !important;
+        width: auto;
+        height: 100%;
+    }
 </style>
-
-
-<!-- Knockout -->
-<style type="text/css" data-gs-style-id="gridstack-style-5124"></style>
 
 
 <div class="container-fluid">
@@ -34,55 +44,55 @@
 
     <br>
 
-    <div id="containergrid" data-bind="component: {name: 'dashboard-grid', params: $data}">
-        <div class="grid-stack grid-stack-4" data-bind="foreach: {data: widgets, afterRender: afterAddWidget}" data-gs-current-height="4" style="height: 300px;">
-            <div class="grid-stack-item ui-draggable ui-resizable ui-resizable-autohide" data-bind="attr: {'data-gs-x': $data.x, 'data-gs-y': $data.y, 'data-gs-width': $data.width, 'data-gs-height': $data.height, 'data-gs-auto-position': $data.auto_position}" data-gs-x="0" data-gs-y="0" data-gs-width="2" data-gs-height="6">
-                <div class="grid-stack-item-content ui-draggable-handle">
-                    <button data-bind="click: $root.deleteWidget">X</button>
-                </div>
+    <div class="grid-stack" id="grid">
+        <div class="chart-container" data-gs-width="4" data-gs-height="4" data-gs-y="0" data-gs-x="0">
+            <div class="grid-stack-item-content">
+                <div id="graphHere"></div>
             </div>
-            <div class="grid-stack-item ui-draggable ui-resizable ui-resizable-autohide" data-bind="attr: {'data-gs-x': $data.x, 'data-gs-y': $data.y, 'data-gs-width': $data.width, 'data-gs-height': $data.height, 'data-gs-auto-position': $data.auto_position}" data-gs-x="2" data-gs-y="0" data-gs-width="2" data-gs-height="6">
-                <div class="grid-stack-item-content ui-draggable-handle">
-                    <button data-bind="click: $root.deleteWidget">X</button>
-                </div>
-            </div></div><!-- <---- NO SPACE BETWEEN THESE CLOSING TAGS -->
+        </div>
+    </div>
+    <div class="chart-container" data-gs-width="4" data-gs-height="4" data-gs-x="4">
+        <div class="grid-stack-item-content">
+            <div id="container2"></div>
+        </div>
     </div>
 </div>
 
-<template id="gridstack-template">
-    <div class="grid-stack" data-bind="foreach: {data: widgets, afterRender: afterAddWidget}">
-        <div class="grid-stack-item" data-bind="attr: {'data-gs-x': $data.x, 'data-gs-y': $data.y, 'data-gs-width': $data.width, 'data-gs-height': $data.height, 'data-gs-auto-position': $data.auto_position}">
-            <div class="x_panel grid-stack-item-content">
-                <div class="x_title">
-                    <h2>Titel</h2>
-                    <ul class="nav navbar-right panel_toolbox">
-                        <li>
-                            <a class="collapse-link">
-                                <i class="fa fa-chevron-up"></i>
-                            </a>
-                        </li>
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                                <i class="fa fa-wrench"></i>
-                            </a>
-                            <ul class="dropdown-menu" role="menu">
-                                <li>
-                                    <a href="#">Settings 1</a>
-                                </li>
-                                <li>
-                                    <a href="#">Settings 2</a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a class="close-link" data-bind="click: $root.deleteWidget">
-                                <i class="fa fa-close"></i>
-                            </a>
-                        </li>
-                    </ul>
-                    <div class="clearfix"></div>
-                </div>
-                testdata
-            </div>
-        </div></div><!-- <---- NO SPACE BETWEEN THESE CLOSING TAGS -->
-</template>
+@**@
+@*<template id="gridstack-template">*@
+@*    <div class="grid-stack" data-bind="foreach: {data: widgets, afterRender: afterAddWidget}">*@
+@*        <div class="grid-stack-item" data-bind="attr: {'data-gs-x': $data.x, 'data-gs-y': $data.y, 'data-gs-width': $data.width, 'data-gs-height': $data.height, 'data-gs-auto-position': $data.auto_position}">*@
+@*            <div class="x_panel grid-stack-item-content">*@
+@*                <div class="x_title">*@
+@*                    <h2>Titel</h2>*@
+@*                    <ul class="nav navbar-right panel_toolbox">*@
+@*                        <li>*@
+@*                            <a class="collapse-link">*@
+@*                                <i class="fa fa-chevron-up"></i>*@
+@*                            </a>*@
+@*                        </li>*@
+@*                        <li class="dropdown">*@
+@*                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">*@
+@*                                <i class="fa fa-wrench"></i>*@
+@*                            </a>*@
+@*                            <ul class="dropdown-menu" role="menu">*@
+@*                                <li>*@
+@*                                    <a href="#">Settings 1</a>*@
+@*                                </li>*@
+@*                                <li>*@
+@*                                    <a href="#">Settings 2</a>*@
+@*                                </li>*@
+@*                            </ul>*@
+@*                        </li>*@
+@*                        <li>*@
+@*                            <a class="close-link" data-bind="click: $root.deleteWidget">*@
+@*                                <i class="fa fa-close"></i>*@
+@*                            </a>*@
+@*                        </li>*@
+@*                    </ul>*@
+@*                    <div class="clearfix"></div>*@
+@*                </div>*@
+@*                testdata*@
+@*            </div>*@
+@*        </div></div><!-- <---- NO SPACE BETWEEN THESE CLOSING TAGS -->*@
+@*</template>*@
