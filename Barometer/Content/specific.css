@@ -74,3 +74,15 @@ Search
     }
 
 }
+
+li.signup {
+    margin-right: 20px;
+    background-color: #00BB9D;
+    color: white !important;
+}
+.nav.navbar-nav>li>a.signup {
+    color: white !important;
+}
+.nav.navbar-nav>li>a.signup:hover {
+    background-color:#009B7F;   
+}
