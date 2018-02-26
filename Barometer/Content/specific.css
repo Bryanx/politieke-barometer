@@ -5,13 +5,6 @@ GENERAL
 .font_22 {
     font-size: 22px !important;
 }
-
-.searchbar {
-    width: 250px !important;
-    float:left;
-    padding-top: 12px;
-}
-
 #datatable-responsive {
     font-size: 16px !important;
 }
@@ -25,6 +18,10 @@ GENERAL
     overflow-y: hidden !important;
 }
 
+.zero-margin {
+    margin: 0 !important;
+}
+
 /*
 MODIFYABLE DASHBOARD
  */
@@ -33,4 +30,47 @@ MODIFYABLE DASHBOARD
     position: relative;
     width: 100%;
     margin-left: -10px !important;
+}
+
+.w-100 {
+    width: 100% !important;
+}
+
+/*
+Search
+ */
+
+.navbar .navbar-search .dropdown-menu { min-width: 25px; }
+.dropdown-menu .label-icon { margin-left: 5px; }
+.btn-outline {
+    background-color: transparent;
+    color: inherit;
+    transition: all .5s;
+}
+.searchbar {
+    display: block;
+    width: 60% !important;
+    padding-top: 12px;
+}
+
+.dropdown-search {
+    right: auto !important;
+}
+
+.search-field {
+    width: 100%;
+}
+
+.navbar-form .input-group .input-group-btn {
+    width: 1% !important;
+}
+
+@media (max-width: 770px) {
+    .searchbar {
+        display: none;
+    }
+    .navbar-right {
+        width: auto !important;
+    }
+
 }
