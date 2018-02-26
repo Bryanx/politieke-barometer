@@ -25,7 +25,6 @@ namespace Barometer.Models {
 
         public static IEnumerable<Persoon> getPersonen() {
             List<Persoon> list = new List<Persoon>();
-            
             Random rnd = new Random();
             list.Add(new Persoon(1,"Bryan", "Knight", rnd.Next(1, 34930), rnd.Next(1, 34930), rnd.Next(1, 34930), rnd.Next(1, 34930)));
             list.Add(new Persoon(2,"Thom", "Verstraten", rnd.Next(1, 34930), rnd.Next(1, 34930), rnd.Next(1, 34930), rnd.Next(1, 34930)));

@@ -104,7 +104,7 @@ function addBarChart(id) {
 
 function createWidget(id) {
     return '<div class="chart-container" data-gs-width="4" data-gs-height="4" data-gs-y="0" data-gs-x="0">' +
-        '            <div class="x_panel grid-stack-item-content">' +
+        '            <div class="x_panel grid-stack-item-content bg-white no-scrollbar">' +
         '                <div class="x_title">' +
         '                    <h2 id="graphTitle">Titel</h2>' +
         '                    <ul class="nav navbar-right panel_toolbox">' +

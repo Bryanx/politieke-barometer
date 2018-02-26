@@ -26,10 +26,13 @@
     <!-- bootstrap-daterangepicker -->
     <link href="../../vendors/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
 
+    @if (IsSectionDefined("CustomCSS")) {
+        @RenderSection("CustomCSS")
+    }
+    
     <!-- Custom Theme Style -->
     <link href="../../Content/build/css/custom.css" rel="stylesheet">
     <link href="../../Content/specific.css" rel="stylesheet">
-    <link rel="stylesheet" href="../../Content/gridstack/gridstack.css"/>
 </head>
 
 <body class="nav-md">
@@ -305,7 +308,7 @@
             </div>
 
             <!-- search -->
-            <div class="nav navbar-nav toggle searchbar">
+            <div class="nav navbar-nav toggle">
                 <div class="form-group top_search">
                     <div class="input-group">
                         <input type="text" class="form-control" placeholder="Search for...">
@@ -486,27 +489,9 @@
 </environment>
 @RenderSection("scripts", required: false)
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.0/jquery-ui.js"></script>
-<script src="../../Content/gridstack/underscore.min.js"></script>
-<script src="../../Content/gridstack/gridstack.js"></script>
-<script src="../../Content/gridstack/gridstack.jQueryUI.js"></script>
-<script src="../../Content/gridstack/knockout-3.2.0.js"></script>
-<script src="../../vendors/raphael/raphael.min.js"></script>
-<script src="../../vendors/morris.js/morris.min.js"></script>
-
-<!-- tables -->
-<script src="../../vendors/datatables.net/js/jquery.dataTables.min.js"></script>
-<script src="../../vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
-<script src="../../vendors/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
-<script src="../../vendors/datatables.net-buttons-bs/js/buttons.bootstrap.min.js"></script>
-<script src="../../vendors/datatables.net-buttons/js/buttons.flash.min.js"></script>
-<script src="../../vendors/datatables.net-buttons/js/buttons.html5.min.js"></script>
-<script src="../../vendors/datatables.net-buttons/js/buttons.print.min.js"></script>
-<script src="../../vendors/datatables.net-fixedheader/js/dataTables.fixedHeader.min.js"></script>
-<script src="../../vendors/datatables.net-keytable/js/dataTables.keyTable.min.js"></script>
-<script src="../../vendors/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
-<script src="../../vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
-<script src="../../vendors/datatables.net-scroller/js/dataTables.scroller.min.js"></script>
+@if (IsSectionDefined("CustomJS")) {
+    @RenderSection("CustomJS")
+}
 
 <!-- Custom Theme Scripts -->
 <script src="../../Content/build/js/custom.min.js"></script>

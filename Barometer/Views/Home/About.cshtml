@@ -2,34 +2,30 @@
     ViewBag.Title = "About";
 }
 
-<style type="text/css">
-    /* TODO: Move to css file */
-    .grid-stack {
-        position: relative;
-        width: 100%;
-        margin-left: -10px !important;
-    }
-
-    .grid-stack-item-content {
-        background-color: white;
-        overflow-y: hidden !important;
-    }
-
-    #containergrid { margin-left: -10px !important; }
-
-</style>
+@section CustomCSS{
+    <link rel="stylesheet" href="../../Content/gridstack/gridstack.css"/>
+}
 
 
-<div class="container-fluid">
+<section class="container-fluid">
     <h1>Widgets met grafieken</h1>
-
     <div>
         <button id="btnAddLine" class="btn btn-primary">Add line chart</button>
         <button id="btnAddPie" class="btn btn-primary">Add pie chart</button>
         <button id="btnAddBar" class="btn btn-primary">Add bar chart</button>
     </div>
-
     <br>
 
     <div class="grid-stack" id="grid"></div>
-</div>
+</section>
+<div style="visibility: hidden">t</div>
+
+@section CustomJS{
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.0/jquery-ui.js"></script>
+    <script src="../../Content/gridstack/underscore.min.js"></script>
+    <script src="../../Content/gridstack/gridstack.js"></script>
+    <script src="../../Content/gridstack/gridstack.jQueryUI.js"></script>
+    <script src="../../Content/gridstack/knockout-3.2.0.js"></script>
+    <script src="../../vendors/raphael/raphael.min.js"></script>
+    <script src="../../vendors/morris.js/morris.min.js"></script>
+}

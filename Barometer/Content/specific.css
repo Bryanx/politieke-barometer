@@ -1,3 +1,7 @@
+/*
+GENERAL
+ */
+
 .font_22 {
     font-size: 22px !important;
 }
@@ -13,4 +17,18 @@
 .table > tbody > tr > td, .table > tbody > tr > th, .table > tfoot > tr > td, .table > tfoot > tr > th, .table > thead > tr > td, .table > thead > tr > th {
     padding: 12px !important;
     cursor: pointer;
+}
+
+.no-scrollbar {
+    overflow-y: hidden !important;
+}
+
+/*
+MODIFYABLE DASHBOARD
+ */
+
+.grid-stack {
+    position: relative;
+    width: 100%;
+    margin-left: -10px !important;
 }
