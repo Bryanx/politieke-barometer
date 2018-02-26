@@ -122,6 +122,7 @@
     <Content Include="Content\gridstack\gridstack.min.css" />
     <Content Include="Content\gridstack\gridstack.min.js" />
     <Content Include="Content\gridstack\gridstack.min.map" />
+    <Content Include="Content\gridstack\jquery-ui.js" />
     <Content Include="Content\gridstack\underscore.min.js" />
     <Content Include="Content\images\.DS_Store" />
     <Content Include="Content\images\american-express.png" />
@@ -140,7 +141,7 @@
     <Content Include="Content\images\user.png" />
     <Content Include="Content\images\visa.png" />
     <Content Include="Content\specific.css" />
-    <Content Include="Content\specific.js" />
+    <Content Include="Content\widgets\widgets.js" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
@@ -170,7 +171,6 @@
     <None Include="Content\bootstrap.css" />
     <None Include="Content\bootstrap.css.map" />
     <None Include="Content\bootstrap.min.css" />
-    <None Include="Content\gridstack\knockout-3.2.0.js" />
     <None Include="Content\themes\base\accordion.css" />
     <None Include="Content\themes\base\all.css" />
     <None Include="Content\themes\base\autocomplete.css" />

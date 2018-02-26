@@ -8,6 +8,8 @@ GENERAL
 
 .searchbar {
     width: 250px !important;
+    float:left;
+    padding-top: 12px;
 }
 
 #datatable-responsive {

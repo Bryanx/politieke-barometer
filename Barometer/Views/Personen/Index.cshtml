@@ -48,11 +48,11 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.TotalMentions)
                 </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Positive)
+                <td class="green">
+                    @Html.DisplayFor(modelItem => item.Positive) <i class="glyphicon glyphicon-arrow-up"></i>
                 </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Negative)
+                <td class="red">
+                    @Html.DisplayFor(modelItem => item.Negative) <i class="glyphicon glyphicon-arrow-down"></i>
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Trend)
