@@ -47,10 +47,14 @@ var CURRENT_URL = window.location.href.split('#')[0].split('?')[0],
     $LEFT_COL = $('.left_col'),
     $RIGHT_COL = $('.right_col'),
     $NAV_MENU = $('.nav_menu'),
-    $FOOTER = $('footer');
+    $FOOTER = $('footer'),
+    primary_color = window.getComputedStyle(document.documentElement).getPropertyValue('--primary-color'),
+    primary_darker = window.getComputedStyle(document.documentElement).getPropertyValue('--primary-darker'),
+    primary_darkest = window.getComputedStyle(document.documentElement).getPropertyValue('--primary-darkest'),
+    secondary_color = window.getComputedStyle(document.documentElement).getPropertyValue('--secondary-color');
 
-	
-	
+
+
 // Sidebar
 function init_sidebar() {
 // TODO: This is some kind of easy fix, maybe we can improve this
@@ -198,7 +202,7 @@ $(document).ready(function() {
         var elems = Array.prototype.slice.call(document.querySelectorAll('.js-switch'));
         elems.forEach(function (html) {
             var switchery = new Switchery(html, {
-                color: '#26B99A'
+                color: primary_color
             });
         });
     }
@@ -440,7 +444,7 @@ if (typeof NProgress != 'undefined') {
             borderWidth: 1,
             color: '#fff'
           },
-          colors: ["rgba(38, 185, 154, 0.38)", "rgba(3, 88, 106, 0.38)"],
+          colors: ["rgba("+primary_color+", 0.38)", "rgba("+primary_darker+", 0.38)"],
           xaxis: {
             tickColor: "rgba(51, 51, 51, 0.06)",
             mode: "time",
@@ -531,7 +535,7 @@ if (typeof NProgress != 'undefined') {
 					monotonicFit: true
 				}
 			},
-			colors: ["#26B99A"],
+			colors: [primary_color],
 			grid: {
 				borderWidth: {
 					top: 0,
@@ -633,7 +637,7 @@ if (typeof NProgress != 'undefined') {
 					enableZoom: true,
 					showTooltip: true,
 					values: sample_data,
-					scaleColors: ['#E6F2F0', '#149B7E'],
+					scaleColors: ['#E6F2F0', primary_darkest],
 					normalizeFunction: 'polynomial'
 				});
 			
@@ -650,7 +654,7 @@ if (typeof NProgress != 'undefined') {
 					enableZoom: true,
 					showTooltip: true,
 					values: sample_data,
-					scaleColors: ['#E6F2F0', '#149B7E'],
+					scaleColors: ['#E6F2F0', primary_darker],
 					normalizeFunction: 'polynomial'
 				});
 			
@@ -704,17 +708,17 @@ if (typeof NProgress != 'undefined') {
 					datasets: [{
 						data: [15, 20, 30, 10, 30],
 						backgroundColor: [
-							"#BDC3C7",
+							"lightgray",
 							"#9B59B6",
 							"#E74C3C",
-							"#26B99A",
+                            primary_color,
 							"#3498DB"
 						],
 						hoverBackgroundColor: [
 							"#CFD4D8",
 							"#B370CF",
 							"#E95E4F",
-							"#36CAAB",
+							primary_darker,
 							"#49A9EA"
 						]
 					}]
@@ -755,8 +759,8 @@ if (typeof NProgress != 'undefined') {
 			  color: '#1D212A'
 		  },
 		  limitMax: 'false',
-		  colorStart: '#1ABC9C',
-		  colorStop: '#1ABC9C',
+		  colorStart: primary_color,
+		  colorStop: primary_color,
 		  strokeColor: '#F0F3F3',
 		  generateGradient: true
 	  };
@@ -815,7 +819,7 @@ if (typeof NProgress != 'undefined') {
 					'7': '#a1a1a1'
 				},
 				barSpacing: 2,
-				barColor: '#26B99A'
+				barColor: primary_color
 			});
 			
 			
@@ -827,7 +831,7 @@ if (typeof NProgress != 'undefined') {
 					'7': '#a1a1a1'	
 				},
 				barSpacing: 2,
-				barColor: '#26B99A'
+				barColor: primary_color
 			});
 			
 			
@@ -835,11 +839,11 @@ if (typeof NProgress != 'undefined') {
 				type: 'line',
 				width: '200',
 				height: '40',
-				lineColor: '#26B99A',
+				lineColor: primary_color,
 				fillColor: 'rgba(223, 223, 223, 0.57)',
 				lineWidth: 2,
-				spotColor: '#26B99A',
-				minSpotColor: '#26B99A'
+				spotColor: primary_color,
+				minSpotColor: primary_color
 			});
 			
 			
@@ -851,7 +855,7 @@ if (typeof NProgress != 'undefined') {
 					'7': '#a1a1a1'
 				},
 				barSpacing: 2,
-				barColor: '#26B99A'
+				barColor: primary_color
 			});
 			
 			
@@ -859,11 +863,11 @@ if (typeof NProgress != 'undefined') {
 				type: 'line',
 				height: '40',
 				width: '200',
-				lineColor: '#26B99A',
+				lineColor: primary_color,
 				fillColor: '#ffffff',
 				lineWidth: 3,
-				spotColor: '#34495E',
-				minSpotColor: '#34495E'
+				spotColor: secondary_color,
+				minSpotColor: secondary_color
 			});
 	
 	
@@ -872,14 +876,14 @@ if (typeof NProgress != 'undefined') {
 				colorMap: {
 					'7': '#a1a1a1'
 				},
-				barColor: '#26B99A'
+				barColor: primary_color
 			});
 			
 			
 			$(".sparkline_area").sparkline([5, 6, 7, 9, 9, 5, 3, 2, 2, 4, 6, 7], {
 				type: 'line',
-				lineColor: '#26B99A',
-				fillColor: '#26B99A',
+				lineColor: primary_color,
+				fillColor: primary_color,
 				spotColor: '#4578a0',
 				minSpotColor: '#728fb2',
 				maxSpotColor: '#6d93c4',
@@ -892,24 +896,24 @@ if (typeof NProgress != 'undefined') {
 			
 			$(".sparkline_line").sparkline([2, 4, 3, 4, 5, 4, 5, 4, 3, 4, 5, 6, 4, 5, 6, 3, 5], {
 				type: 'line',
-				lineColor: '#26B99A',
+				lineColor: primary_color,
 				fillColor: '#ffffff',
 				width: 85,
-				spotColor: '#34495E',
-				minSpotColor: '#34495E'
+				spotColor: secondary_color,
+				minSpotColor: secondary_color 
 			});
 			
 			
 			$(".sparkline_pie").sparkline([1, 1, 2, 1], {
 				type: 'pie',
-				sliceColors: ['#26B99A', '#ccc', '#75BCDD', '#D66DE2']
+				sliceColors: [primary_color, '#ccc', '#75BCDD', '#D66DE2']
 			});
 			
 			
 			$(".sparkline_discreet").sparkline([4, 6, 7, 7, 4, 3, 2, 1, 4, 4, 2, 4, 3, 7, 8, 9, 7, 6, 4, 3], {
 				type: 'discrete',
 				barWidth: 3,
-				lineColor: '#26B99A',
+				lineColor: primary_color,
 				width: '85',
 			});
 
@@ -1934,7 +1938,7 @@ if (typeof NProgress != 'undefined') {
 				$('.chart').easyPieChart({
 				  easing: 'easeOutElastic',
 				  delay: 3000,
-				  barColor: '#26B99A',
+				  barColor: 'var(--primary-color)',
 				  trackColor: '#fff',
 				  scaleColor: false,
 				  lineWidth: 20,
@@ -2007,20 +2011,20 @@ if (typeof NProgress != 'undefined') {
 					labels: ["January", "February", "March", "April", "May", "June", "July"],
 					datasets: [{
 					  label: "My First dataset",
-					  backgroundColor: "rgba(38, 185, 154, 0.31)",
-					  borderColor: "rgba(38, 185, 154, 0.7)",
-					  pointBorderColor: "rgba(38, 185, 154, 0.7)",
-					  pointBackgroundColor: "rgba(38, 185, 154, 0.7)",
+					  backgroundColor: "rgba("+primary_color+", 0.31)",
+					  borderColor: "rgba("+primary_color+", 0.7)",
+					  pointBorderColor: "rgba("+primary_color+", 0.7)",
+					  pointBackgroundColor: "rgba("+primary_color+", 0.7)",
 					  pointHoverBackgroundColor: "#fff",
 					  pointHoverBorderColor: "rgba(220,220,220,1)",
 					  pointBorderWidth: 1,
 					  data: [31, 74, 6, 39, 20, 85, 7]
 					}, {
 					  label: "My Second dataset",
-					  backgroundColor: "rgba(3, 88, 106, 0.3)",
-					  borderColor: "rgba(3, 88, 106, 0.70)",
-					  pointBorderColor: "rgba(3, 88, 106, 0.70)",
-					  pointBackgroundColor: "rgba(3, 88, 106, 0.70)",
+					  backgroundColor: "rgba("+secondary_color+", 0.3)",
+					  borderColor: "rgba("+secondary_color+", 0.70)",
+					  pointBorderColor: "rgba("+secondary_color+", 0.70)",
+					  pointBackgroundColor: "rgba("+secondary_color+", 0.70)",
 					  pointHoverBackgroundColor: "#fff",
 					  pointHoverBorderColor: "rgba(151,187,205,1)",
 					  pointBorderWidth: 1,
@@ -2040,20 +2044,20 @@ if (typeof NProgress != 'undefined') {
 					labels: ["January", "February", "March", "April", "May", "June", "July"],
 					datasets: [{
 					  label: "My First dataset",
-					  backgroundColor: "rgba(38, 185, 154, 0.31)",
-					  borderColor: "rgba(38, 185, 154, 0.7)",
-					  pointBorderColor: "rgba(38, 185, 154, 0.7)",
-					  pointBackgroundColor: "rgba(38, 185, 154, 0.7)",
+					  backgroundColor: "rgba("+primary_color+", 0.31)",
+					  borderColor: "rgba("+primary_color+", 0.7)",
+					  pointBorderColor: "rgba("+primary_color+", 0.7)",
+					  pointBackgroundColor: "rgba("+primary_color+", 0.7)",
 					  pointHoverBackgroundColor: "#fff",
 					  pointHoverBorderColor: "rgba(220,220,220,1)",
 					  pointBorderWidth: 1,
 					  data: [31, 74, 6, 39, 20, 85, 7]
 					}, {
 					  label: "My Second dataset",
-					  backgroundColor: "rgba(3, 88, 106, 0.3)",
-					  borderColor: "rgba(3, 88, 106, 0.70)",
-					  pointBorderColor: "rgba(3, 88, 106, 0.70)",
-					  pointBackgroundColor: "rgba(3, 88, 106, 0.70)",
+					  backgroundColor: "rgba("+secondary_color+", 0.3)",
+					  borderColor: "rgba("+secondary_color+", 0.70)",
+					  pointBorderColor: "rgba("+secondary_color+", 0.70)",
+					  pointBackgroundColor: "rgba("+secondary_color+", 0.70)",
 					  pointHoverBackgroundColor: "#fff",
 					  pointHoverBorderColor: "rgba(151,187,205,1)",
 					  pointBorderWidth: 1,
@@ -2073,20 +2077,20 @@ if (typeof NProgress != 'undefined') {
 					labels: ["January", "February", "March", "April", "May", "June", "July"],
 					datasets: [{
 					  label: "My First dataset",
-					  backgroundColor: "rgba(38, 185, 154, 0.31)",
-					  borderColor: "rgba(38, 185, 154, 0.7)",
-					  pointBorderColor: "rgba(38, 185, 154, 0.7)",
-					  pointBackgroundColor: "rgba(38, 185, 154, 0.7)",
+					  backgroundColor: "rgba("+primary_color+", 0.31)",
+					  borderColor: "rgba("+primary_color+", 0.7)",
+					  pointBorderColor: "rgba("+primary_color+", 0.7)",
+					  pointBackgroundColor: "rgba("+primary_color+", 0.7)",
 					  pointHoverBackgroundColor: "#fff",
 					  pointHoverBorderColor: "rgba(220,220,220,1)",
 					  pointBorderWidth: 1,
 					  data: [31, 74, 6, 39, 20, 85, 7]
 					}, {
 					  label: "My Second dataset",
-					  backgroundColor: "rgba(3, 88, 106, 0.3)",
-					  borderColor: "rgba(3, 88, 106, 0.70)",
-					  pointBorderColor: "rgba(3, 88, 106, 0.70)",
-					  pointBackgroundColor: "rgba(3, 88, 106, 0.70)",
+					  backgroundColor: "rgba("+secondary_color+", 0.3)",
+					  borderColor: "rgba("+secondary_color+", 0.70)",
+					  pointBorderColor: "rgba("+secondary_color+", 0.70)",
+					  pointBackgroundColor: "rgba("+secondary_color+", 0.70)",
 					  pointHoverBackgroundColor: "#fff",
 					  pointHoverBorderColor: "rgba(151,187,205,1)",
 					  pointBorderWidth: 1,
@@ -2106,20 +2110,20 @@ if (typeof NProgress != 'undefined') {
 					labels: ["January", "February", "March", "April", "May", "June", "July"],
 					datasets: [{
 					  label: "My First dataset",
-					  backgroundColor: "rgba(38, 185, 154, 0.31)",
-					  borderColor: "rgba(38, 185, 154, 0.7)",
-					  pointBorderColor: "rgba(38, 185, 154, 0.7)",
-					  pointBackgroundColor: "rgba(38, 185, 154, 0.7)",
+					  backgroundColor: "rgba("+primary_color+", 0.31)",
+					  borderColor: "rgba("+primary_color+", 0.7)",
+					  pointBorderColor: "rgba("+primary_color+", 0.7)",
+					  pointBackgroundColor: "rgba("+primary_color+", 0.7)",
 					  pointHoverBackgroundColor: "#fff",
 					  pointHoverBorderColor: "rgba(220,220,220,1)",
 					  pointBorderWidth: 1,
 					  data: [31, 74, 6, 39, 20, 85, 7]
 					}, {
 					  label: "My Second dataset",
-					  backgroundColor: "rgba(3, 88, 106, 0.3)",
-					  borderColor: "rgba(3, 88, 106, 0.70)",
-					  pointBorderColor: "rgba(3, 88, 106, 0.70)",
-					  pointBackgroundColor: "rgba(3, 88, 106, 0.70)",
+					  backgroundColor: "rgba("+secondary_color+", 0.3)",
+					  borderColor: "rgba("+secondary_color+", 0.70)",
+					  pointBorderColor: "rgba("+secondary_color+", 0.70)",
+					  pointBackgroundColor: "rgba("+secondary_color+", 0.70)",
 					  pointHoverBackgroundColor: "#fff",
 					  pointHoverBorderColor: "rgba(151,187,205,1)",
 					  pointBorderWidth: 1,
@@ -2139,20 +2143,20 @@ if (typeof NProgress != 'undefined') {
 					labels: ["January", "February", "March", "April", "May", "June", "July"],
 					datasets: [{
 					  label: "My First dataset",
-					  backgroundColor: "rgba(38, 185, 154, 0.31)",
-					  borderColor: "rgba(38, 185, 154, 0.7)",
-					  pointBorderColor: "rgba(38, 185, 154, 0.7)",
-					  pointBackgroundColor: "rgba(38, 185, 154, 0.7)",
+					  backgroundColor: "rgba("+primary_color+", 0.31)",
+					  borderColor: "rgba("+primary_color+", 0.7)",
+					  pointBorderColor: "rgba("+primary_color+", 0.7)",
+					  pointBackgroundColor: "rgba("+primary_color+", 0.7)",
 					  pointHoverBackgroundColor: "#fff",
 					  pointHoverBorderColor: "rgba(220,220,220,1)",
 					  pointBorderWidth: 1,
 					  data: [31, 74, 6, 39, 20, 85, 7]
 					}, {
 					  label: "My Second dataset",
-					  backgroundColor: "rgba(3, 88, 106, 0.3)",
-					  borderColor: "rgba(3, 88, 106, 0.70)",
-					  pointBorderColor: "rgba(3, 88, 106, 0.70)",
-					  pointBackgroundColor: "rgba(3, 88, 106, 0.70)",
+					  backgroundColor: "rgba("+secondary_color+", 0.3)",
+					  borderColor: "rgba("+secondary_color+", 0.70)",
+					  pointBorderColor: "rgba("+secondary_color+", 0.70)",
+					  pointBackgroundColor: "rgba("+secondary_color+", 0.70)",
 					  pointHoverBackgroundColor: "#fff",
 					  pointHoverBorderColor: "rgba(151,187,205,1)",
 					  pointBorderWidth: 1,
@@ -2175,20 +2179,20 @@ if (typeof NProgress != 'undefined') {
 				  labels: ["January", "February", "March", "April", "May", "June", "July"],
 				  datasets: [{
 					label: "My First dataset",
-					backgroundColor: "rgba(38, 185, 154, 0.31)",
-					borderColor: "rgba(38, 185, 154, 0.7)",
-					pointBorderColor: "rgba(38, 185, 154, 0.7)",
-					pointBackgroundColor: "rgba(38, 185, 154, 0.7)",
+					backgroundColor: "rgba("+primary_color+", 0.31)",
+					borderColor: "rgba("+primary_color+", 0.7)",
+					pointBorderColor: "rgba("+primary_color+", 0.7)",
+					pointBackgroundColor: "rgba("+primary_color+", 0.7)",
 					pointHoverBackgroundColor: "#fff",
 					pointHoverBorderColor: "rgba(220,220,220,1)",
 					pointBorderWidth: 1,
 					data: [31, 74, 6, 39, 20, 85, 7]
 				  }, {
 					label: "My Second dataset",
-					backgroundColor: "rgba(3, 88, 106, 0.3)",
-					borderColor: "rgba(3, 88, 106, 0.70)",
-					pointBorderColor: "rgba(3, 88, 106, 0.70)",
-					pointBackgroundColor: "rgba(3, 88, 106, 0.70)",
+					backgroundColor: "rgba("+secondary_color+", 0.3)",
+					borderColor: "rgba("+secondary_color+", 0.70)",
+					pointBorderColor: "rgba("+secondary_color+", 0.70)",
+					pointBackgroundColor: "rgba("+secondary_color+", 0.70)",
 					pointHoverBackgroundColor: "#fff",
 					pointHoverBorderColor: "rgba(151,187,205,1)",
 					pointBorderWidth: 1,
@@ -2210,7 +2214,7 @@ if (typeof NProgress != 'undefined') {
 				  labels: ["January", "February", "March", "April", "May", "June", "July"],
 				  datasets: [{
 					label: '# of Votes',
-					backgroundColor: "#26B99A",
+					backgroundColor: "var(--primary-color)",
 					data: [51, 30, 40, 28, 92, 50, 45]
 				  }, {
 					label: '# of Votes',
@@ -2252,14 +2256,14 @@ if (typeof NProgress != 'undefined') {
 					"#455C73",
 					"#9B59B6",
 					"#BDC3C7",
-					"#26B99A",
+					primary_color,
 					"#3498DB"
 				  ],
 				  hoverBackgroundColor: [
-					"#34495E",
+					secondary_color,
 					"#B370CF",
 					"#CFD4D8",
-					"#36CAAB",
+					primary_darker,
 					"#49A9EA"
 				  ]
 
@@ -2283,18 +2287,18 @@ if (typeof NProgress != 'undefined') {
 				labels: ["Eating", "Drinking", "Sleeping", "Designing", "Coding", "Cycling", "Running"],
 				datasets: [{
 				  label: "My First dataset",
-				  backgroundColor: "rgba(3, 88, 106, 0.2)",
-				  borderColor: "rgba(3, 88, 106, 0.80)",
-				  pointBorderColor: "rgba(3, 88, 106, 0.80)",
-				  pointBackgroundColor: "rgba(3, 88, 106, 0.80)",
+				  backgroundColor: "rgba("+secondary_color+", 0.2)",
+				  borderColor: "rgba("+secondary_color+", 0.80)",
+				  pointBorderColor: "rgba("+secondary_color+", 0.80)",
+				  pointBackgroundColor: "rgba("+secondary_color+", 0.80)",
 				  pointHoverBackgroundColor: "#fff",
 				  pointHoverBorderColor: "rgba(220,220,220,1)",
 				  data: [65, 59, 90, 81, 56, 55, 40]
 				}, {
 				  label: "My Second dataset",
-				  backgroundColor: "rgba(38, 185, 154, 0.2)",
-				  borderColor: "rgba(38, 185, 154, 0.85)",
-				  pointColor: "rgba(38, 185, 154, 0.85)",
+				  backgroundColor: "rgba("+primary_color+", 0.2)",
+				  borderColor: "rgba("+primary_color+", 0.85)",
+				  pointColor: "rgba("+primary_color+", 0.85)",
 				  pointStrokeColor: "#fff",
 				  pointHighlightFill: "#fff",
 				  pointHighlightStroke: "rgba(151,187,205,1)",
@@ -2321,7 +2325,7 @@ if (typeof NProgress != 'undefined') {
 						"#455C73",
 						"#9B59B6",
 						"#BDC3C7",
-						"#26B99A",
+						primary_color,
 						"#3498DB"
 					  ],
 					  label: 'My dataset' // for legend
@@ -2358,7 +2362,7 @@ if (typeof NProgress != 'undefined') {
 					"#455C73",
 					"#9B59B6",
 					"#BDC3C7",
-					"#26B99A",
+                      primary_color,
 					"#3498DB"
 				  ],
 				  label: 'My dataset'
@@ -2617,7 +2621,7 @@ if (typeof NProgress != 'undefined') {
 				  ykeys: ['geekbench'],
 				  labels: ['Geekbench'],
 				  barRatio: 0.4,
-				  barColors: ['#26B99A', '#34495E', '#ACADAC', '#3498DB'],
+				  barColors: [primary_color, secondary_color, '#ACADAC', primary_darker],
 				  xLabelAngle: 35,
 				  hideHover: 'auto',
 				  resize: true
@@ -2642,7 +2646,7 @@ if (typeof NProgress != 'undefined') {
 					{"period": "2016-09-10", "licensed": 2115, "sorned": 1022}
 				  ],
 				  xkey: 'period',
-				  barColors: ['#26B99A', '#34495E', '#ACADAC', '#3498DB'],
+				  barColors: [primary_color, secondary_color, '#ACADAC', primary_darker],
 				  ykeys: ['licensed', 'sorned'],
 				  labels: ['Licensed', 'SORN'],
 				  hideHover: 'auto',
@@ -2664,7 +2668,7 @@ if (typeof NProgress != 'undefined') {
 				  ],
 				  xkey: 'x',
 				  ykeys: ['y', 'z', 'a'],
-				  barColors: ['#26B99A', '#34495E', '#ACADAC', '#3498DB'],
+				  barColors: [primary_color, secondary_color, '#ACADAC', primary_darker],
 				  hideHover: 'auto',
 				  labels: ['Y', 'Z', 'A'],
 				  resize: true
@@ -2692,7 +2696,7 @@ if (typeof NProgress != 'undefined') {
 				  ],
 				  xkey: 'period',
 				  ykeys: ['iphone', 'ipad', 'itouch'],
-				  lineColors: ['#26B99A', '#34495E', '#ACADAC', '#3498DB'],
+				  lineColors: [primary_color, secondary_color, '#ACADAC', primary_darker],
 				  labels: ['iPhone', 'iPad', 'iPod Touch'],
 				  pointSize: 2,
 				  hideHover: 'auto',
@@ -2711,7 +2715,7 @@ if (typeof NProgress != 'undefined') {
 					{label: 'Custard', value: 25},
 					{label: 'Sugar', value: 10}
 				  ],
-				  colors: ['#26B99A', '#34495E', '#ACADAC', '#3498DB'],
+				  colors: [primary_color, secondary_color, '#ACADAC', primary_darker],
 				  formatter: function (y) {
 					return y + "%";
 				  },
@@ -2728,7 +2732,7 @@ if (typeof NProgress != 'undefined') {
 				  ykeys: ['value'],
 				  labels: ['Value'],
 				  hideHover: 'auto',
-				  lineColors: ['#26B99A', '#34495E', '#ACADAC', '#3498DB'],
+				  lineColors: [primary_color, secondary_color, '#ACADAC', primary_darker],
 				  data: [
 					{year: '2012', value: 20},
 					{year: '2013', value: 10},
@@ -2760,7 +2764,7 @@ if (typeof NProgress != 'undefined') {
 		
 				  var theme = {
 				  color: [
-					  '#26B99A', '#34495E', '#BDC3C7', '#3498DB',
+                      primary_color, secondary_color, '#BDC3C7', '#3498DB',
 					  '#9B59B6', '#8abb6f', '#759c6a', '#bfd3b7'
 				  ],
 
@@ -4470,7 +4474,7 @@ if (typeof NProgress != 'undefined') {
 					  text: ['High', 'Low'],
 					  realtime: false,
 					  calculable: true,
-					  color: ['#087E65', '#26B99A', '#CBEAE3']
+					  color: ['#087E65', 'var(--primary-color)', '#CBEAE3']
 					},
 					series: [{
 					  name: 'World Population (2010)',

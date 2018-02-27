@@ -141,7 +141,6 @@
     <Content Include="Content\images\user.png" />
     <Content Include="Content\images\visa.png" />
     <Content Include="Content\searchbar.js" />
-    <Content Include="Content\specific.css" />
     <Content Include="Content\widgets\widgets.js" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />

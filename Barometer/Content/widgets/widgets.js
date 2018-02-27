@@ -1,7 +1,12 @@
 $(document).ready(init);
 
 var counter = 0;
+var primary_color = window.getComputedStyle(document.documentElement).getPropertyValue('--primary-color');
+var primary_darker = window.getComputedStyle(document.documentElement).getPropertyValue('--primary-darker');
+var secondary_color = window.getComputedStyle(document.documentElement).getPropertyValue('--secondary-color');
+var tertiary_color = window.getComputedStyle(document.documentElement).getPropertyValue('--tertiary-color');
 
+    
 function addCSSgrid(id) {
     let elem = $('#' + id);
     elem.css('width', 'auto');
@@ -43,7 +48,8 @@ function addPieChart(id) {
             {label: "Allies", value: 15},
             {label: "Enemies", value: 45},
             {label: "Neutral", value: 10}
-        ]
+        ],
+        colors: [primary_color, secondary_color, '#ACADAC', tertiary_color]
     });
 }
 
@@ -93,7 +99,7 @@ function addBarChart(id) {
             sorned: 1022
         }],
         xkey: "period",
-        barColors: ["#26B99A", "#34495E", "#ACADAC", "#3498DB"],
+        barColors: [primary_color, "#34495E", "#ACADAC", "#3498DB"],
         ykeys: ["licensed", "sorned"],
         labels: ["Licensed", "SORN"],
         hideHover: "auto",
@@ -179,6 +185,15 @@ function init() {
     $('#btnAddLine').click(this.btnAddLineChart);
     $('#btnAddPie').click(this.btnAddPieChart);
     $('#btnAddBar').click(this.btnAddBarChart);
+    
+    //Colorpicker
+    $('#cp_primary').val(primary_color);
+    $('#cp_primary').on('change', function (e) {
+        e.preventDefault();
+        console.log($(this).val()+"");
+        var html = document.getElementsByTagName('html')[0];
+        html.style.cssText = "--primary-color: "+$(this).val();
+    })
 
 }
 
