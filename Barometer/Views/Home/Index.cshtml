@@ -1,6 +1,11 @@
 ﻿@{
     ViewBag.Title = "Home Page";
 }
+
+@section CustomCSS{
+    <link href="../../vendors/mjolnic-bootstrap-colorpicker/dist/css/bootstrap-colorpicker.min.css" rel="stylesheet">
+}
+
 <!-- top tiles -->
 <div class="row tile_count">
     <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
@@ -325,7 +330,7 @@
                     </th>
                 </tr>
                 <tr>
-                    <td>
+                    <td id="doughnut-parent">
                         <canvas class="canvasDoughnut" height="140" width="140"
                                 style="margin: 15px 10px 10px 0">
                         </canvas>
@@ -371,10 +376,11 @@
 </div>
 
 
+<!-- form color picker -->
 <div class="col-md-4 col-sm-4 col-xs-12">
     <div class="x_panel tile fixed_height_320">
         <div class="x_title">
-            <h2>Quick Settings</h2>
+            <h2>Color Picker</h2>
             <ul class="nav navbar-right panel_toolbox">
                 <li>
                     <a class="collapse-link">
@@ -404,46 +410,46 @@
             <div class="clearfix"></div>
         </div>
         <div class="x_content">
-            <div class="dashboard-widget-content">
-                <ul class="quick-list">
-                    <li>
-                        <i class="fa fa-calendar-o"></i><a href="#">Settings</a>
-                    </li>
-                    <li>
-                        <i class="fa fa-bars"></i><a href="#">Subscription</a>
-                    </li>
-                    <li>
-                        <i class="fa fa-bar-chart"></i><a href="#">Auto Renewal</a>
-                    </li>
-                    <li>
-                        <i class="fa fa-line-chart"></i><a href="#">Achievements</a>
-                    </li>
-                    <li>
-                        <i class="fa fa-bar-chart"></i><a href="#">Auto Renewal</a>
-                    </li>
-                    <li>
-                        <i class="fa fa-line-chart"></i><a href="#">Achievements</a>
-                    </li>
-                    <li>
-                        <i class="fa fa-area-chart"></i><a href="#">Logout</a>
-                    </li>
-                </ul>
-
-                <div class="sidebar-widget">
-                    <h4>Profile Completion</h4>
-                    <canvas width="150" height="80" id="chart_gauge_01" class=""
-                            style="width: 160px; height: 100px;">
-                    </canvas>
-                    <div class="goal-wrapper">
-                        <span id="gauge-text" class="gauge-value pull-left">0</span>
-                        <span class="gauge-value pull-left">%</span>
-                        <span id="goal-text" class="goal-value pull-right">100%</span>
+            <br/>
+            <form class="form-horizontal form-label-left">
+                <div class="form-group">
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Primaire kleur</label>
+                    <div class="col-md-9 col-sm-9 col-xs-12">
+                        <div id="cp-primary" class="cp-primary input-group">
+                            <input id="ip-primary" type="text" value="#e01ab5" class="form-control"/>
+                            <span class="input-group-addon">
+                                <i></i>
+                            </span>
+                        </div>
                     </div>
                 </div>
-            </div>
+                <div class="form-group">
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Secundaire kleur</label>
+                    <div class="col-md-9 col-sm-9 col-xs-12">
+                        <div id="cp-secondary" class="input-group demo2">
+                            <input id="ip-secondary" type="text" value="#e01ab5" class="form-control"/>
+                            <span class="input-group-addon">
+                                <i></i>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Tertiaire kleur</label>
+                    <div class="col-md-9 col-sm-9 col-xs-12">
+                        <div id="cp-tertiary" class="input-group demo2">
+                            <input id="ip-tertiary" type="text" value="#e01ab5" class="form-control"/>
+                            <span class="input-group-addon">
+                                <i></i>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </form>
         </div>
     </div>
 </div>
+<!-- /form color picker -->
 
 </div>
 
@@ -637,9 +643,10 @@
                             </tbody>
                         </table>
                     </div>
+                    <div id="map-parent">
                     <div id="world-map-gdp" class="col-md-8 col-sm-12 col-xs-12"
                          style="height: 230px;">
-                    </div>
+                    </div></div>
                 </div>
             </div>
         </div>
@@ -875,3 +882,7 @@
 </div>
 </div>
 </div>
+
+@section CustomJS{
+    <script src="../../vendors/mjolnic-bootstrap-colorpicker/dist/js/bootstrap-colorpicker.min.js"></script>
+}

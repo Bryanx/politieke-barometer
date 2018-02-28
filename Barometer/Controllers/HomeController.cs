@@ -11,16 +11,10 @@ namespace Barometer.Controllers {
             return View();
         }
 
-        public ActionResult About() {
+        public ActionResult Ingelogd() {
             ViewBag.Message = "Your applicationn description page.";
 
-            return View();
-        }
-
-        public ActionResult Contact() {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
+            return View("Ingelogd","~/Views/Shared/_MemberLayout.cshtml");
         }
     }
 }

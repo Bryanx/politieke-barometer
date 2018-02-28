@@ -95,7 +95,9 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\PersonenController.cs" />
     <Compile Include="Global.asax.cs" />
+    <Compile Include="Models\Persoon.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -120,6 +122,7 @@
     <Content Include="Content\gridstack\gridstack.min.css" />
     <Content Include="Content\gridstack\gridstack.min.js" />
     <Content Include="Content\gridstack\gridstack.min.map" />
+    <Content Include="Content\gridstack\jquery-ui.js" />
     <Content Include="Content\gridstack\underscore.min.js" />
     <Content Include="Content\images\.DS_Store" />
     <Content Include="Content\images\american-express.png" />
@@ -137,8 +140,8 @@
     <Content Include="Content\images\prod-5.jpg" />
     <Content Include="Content\images\user.png" />
     <Content Include="Content\images\visa.png" />
-    <Content Include="Content\specific.css" />
-    <Content Include="Content\specific.js" />
+    <Content Include="Content\searchbar.js" />
+    <Content Include="Content\widgets\widgets.js" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
@@ -147,12 +150,13 @@
     <Content Include="Global.asax" />
     <Content Include="packages.config" />
     <Content Include="Scripts\site.js" />
-    <Content Include="Views\Home\About.cshtml" />
-    <Content Include="Views\Home\Contact.cshtml" />
+    <Content Include="Views\Home\Ingelogd.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Personen\Details.cshtml" />
+    <Content Include="Views\Personen\Index.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
-    <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Shared\_LayoutTemp.cshtml" />
+    <Content Include="Views\Shared\_VisitorLayout.cshtml" />
+    <Content Include="Views\Shared\_MemberLayout.cshtml" />
     <Content Include="Views\Web.config" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Web.config" />
