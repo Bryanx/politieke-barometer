@@ -15,6 +15,15 @@ html {
 =========================================================
 */
 
+
+.c-primary {
+    color: var(--primary-color);
+}
+
+.c-secondary {
+    color: var(--secondary-color);
+}
+
 .font_22 {
     font-size: 22px !important;
 }
@@ -100,6 +109,16 @@ li.signup {
     background-color:var(--primary-darker);
 }
 
+/*
+Login
+ */
+.modal-lg {
+    max-width: 500px;
+}
+
+.login-input {
+    margin-top: 10px;
+}
 /*
 =========================================================
 ========================= CUSTOM ========================
@@ -2259,8 +2278,7 @@ span.section {
     border-bottom: 1px solid #e5e5e5
 }
 .form-control {
-    border-radius: 0;
-    width: 100%
+    width: 100%;
 }
 .form-horizontal .control-label {
     padding-top: 8px
