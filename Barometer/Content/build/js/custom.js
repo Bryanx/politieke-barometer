@@ -5428,8 +5428,8 @@ $(document).ready(function () {
         $('#map-parent').append('<div id="world-map-gdp" class="col-md-8 col-sm-12 col-xs-12"' +
             '                         style="height: 230px;">' +
             '                    </div>');
-        //TODO: optimize
-        callMethods();
+        init_flot_chart();
+        init_chart_doughnut();
         init_JQVmap();
     });
 
