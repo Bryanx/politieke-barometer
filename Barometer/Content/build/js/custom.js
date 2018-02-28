@@ -5357,6 +5357,14 @@ function init_echarts() {
 
 }
 
+function check() {
+    if($('.showchbox').length) {
+        $('.checkbox').removeClass('showchbox');
+    } else {
+        $('.checkbox').addClass('showchbox');
+    }
+}
+
 
 var htmlselector = document.getElementsByTagName('html')[0];
 

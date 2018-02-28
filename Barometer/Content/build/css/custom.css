@@ -114,6 +114,7 @@ Login
  */
 .modal-lg {
     max-width: 500px;
+    margin: 30px auto;
 }
 
 .login-input {
@@ -121,6 +122,24 @@ Login
     display: block;
 }
 
+.checkbox-label {
+    padding-left: 7px;
+}
+
+.checkbox {
+    margin-bottom: 20px;
+    position: relative;
+    user-select: none;
+}
+.checkbox.showchbox:before {
+    content: '\f00c';
+    color: var(--primary-color);
+    font-size: 17px;
+    margin: 1px 0 0 4px;
+    position: absolute;
+    pointer-events: none;
+    font-family: 'FontAwesome';
+}
 .character-checkbox {
     width: 25px;
     height: 25px;
@@ -131,21 +150,27 @@ Login
     display: inline-block;
 }
 
-.checkbox.show:before {
-    content: '\f00c';
-    color: var(--primary-color);
-    font-size: 17px;
-    margin: 1px 0 0 3px;
-    position: absolute;
-    pointer-events: none;
-    font-family: 'FontAwesome', FontAwesome;
-}
-
 /* navbar */
 .nav-fixed{
     position: fixed!important;
 }
 
+.btn-primary, btn-primary:visited {
+    color: #fff;
+    background-color: var(--primary-color) !important;
+    border-color: var(--primary-darker);
+}
+
+.btn-primary:hover {
+    color: #fff;
+    background-color: var(--primary-darker);
+    border-color: var(--primary-darkest);
+}
+.btn-primary:active, .btn-primary:focus {
+    color: #fff;
+    background-color: var(--primary-darkest) !important;
+    border-color: var(--primary-darkest) !important;
+}
 
 /*
 =========================================================
