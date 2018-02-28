@@ -5425,9 +5425,11 @@ $(document).ready(function () {
         htmlselector.setAttribute("style", "--primary-color: " + primary_color);
         var map = $('#world-map-gdp').vectorMap('get', 'mapObject');
         $('#world-map-gdp').remove();
+        $('.canvasDoughnut').remove();
         $('#map-parent').append('<div id="world-map-gdp" class="col-md-8 col-sm-12 col-xs-12"' +
-            '                         style="height: 230px;">' +
-            '                    </div>');
+            'style="height: 230px;"></div>');
+        $('#doughnut-parent').append('<canvas class="canvasDoughnut" height="140" width="140"' +
+            'style="margin: 15px 10px 10px 0"></canvas>');
         init_flot_chart();
         init_chart_doughnut();
         init_JQVmap();
