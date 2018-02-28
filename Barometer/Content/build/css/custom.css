@@ -140,6 +140,13 @@ Login
     pointer-events: none;
     font-family: 'FontAwesome', FontAwesome;
 }
+
+/* navbar */
+.nav-fixed{
+    position: fixed!important;
+}
+
+
 /*
 =========================================================
 ========================= CUSTOM ========================
