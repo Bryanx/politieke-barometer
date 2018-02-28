@@ -1,12 +1,12 @@
 html {
-    --primary-color: rgb(0, 187, 158);
-    --primary-darker: rgb(0, 168, 140);
-    --primary-darkest: rgb(0, 158, 132);
-    --secondary-lighter: rgb(44, 71, 94);
-    --secondary-color: rgb(39, 63, 83);
-    --secondary-darker: rgb(35, 52, 71);
-    --secondary-darkest: rgb(31, 46, 63);
-    --tertiary-color: rgb(60, 112, 142);
+    --primary-color: #00bb9e;
+    --primary-darker: #00a88c;
+    --primary-darkest: #009e84;
+    --secondary-lighter: #2c475e;
+    --secondary-color: #273f53;
+    --secondary-darker: #233447;
+    --secondary-darkest: #1f2e3f;
+    --tertiary-color: #3c708e;
 }
 
 /*

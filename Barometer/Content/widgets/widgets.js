@@ -2,7 +2,6 @@ $(document).ready(init);
 
 var counter = 0;
 var primary_color = window.getComputedStyle(document.documentElement).getPropertyValue('--primary-color');
-var primary_darker = window.getComputedStyle(document.documentElement).getPropertyValue('--primary-darker');
 var secondary_color = window.getComputedStyle(document.documentElement).getPropertyValue('--secondary-color');
 var tertiary_color = window.getComputedStyle(document.documentElement).getPropertyValue('--tertiary-color');
 
@@ -185,16 +184,6 @@ function init() {
     $('#btnAddLine').click(this.btnAddLineChart);
     $('#btnAddPie').click(this.btnAddPieChart);
     $('#btnAddBar').click(this.btnAddBarChart);
-    
-    //Colorpicker
-    $('#cp_primary').val(primary_color);
-    $('#cp_primary').on('change', function (e) {
-        e.preventDefault();
-        console.log($(this).val()+"");
-        var html = document.getElementsByTagName('html')[0];
-        html.style.cssText = "--primary-color: "+$(this).val();
-    })
-
 }
 
 //TODO: Add persistence and import functionality
