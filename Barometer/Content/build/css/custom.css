@@ -117,7 +117,28 @@ Login
 }
 
 .login-input {
-    margin-top: 10px;
+    margin-top: 15px;
+    display: block;
+}
+
+.character-checkbox {
+    width: 25px;
+    height: 25px;
+    cursor: pointer;
+    border-radius: 3px;
+    border: 1px solid #ccc;
+    vertical-align: middle;
+    display: inline-block;
+}
+
+.checkbox.show:before {
+    content: '\f00c';
+    color: var(--primary-color);
+    font-size: 17px;
+    margin: 1px 0 0 3px;
+    position: absolute;
+    pointer-events: none;
+    font-family: 'FontAwesome', FontAwesome;
 }
 /*
 =========================================================
@@ -622,7 +643,7 @@ body {
     font-family: "Helvetica Neue", Roboto, Arial, "Droid Sans", sans-serif;
     font-size: 13px;
     font-weight: 400;
-    line-height: 1.471
+    line-height: 1.471;
 }
 .main_container .top_nav {
     display: block;
