@@ -107,11 +107,11 @@ function addBarChart(id) {
     });
 }
 
-function createWidget(id) {
+function createWidget(id, title) {
     return '<div class="chart-container" data-gs-width="4" data-gs-height="4" data-gs-y="0" data-gs-x="0">' +
         '            <div class="x_panel grid-stack-item-content bg-white no-scrollbar">' +
         '                <div class="x_title">' +
-        '                    <h2 id="graphTitle">Titel</h2>' +
+        '                    <h2 id="graphTitle">'+title+'</h2>' +
         '                    <ul class="nav navbar-right panel_toolbox">' +
         '                        <li>' +
         '                            <a class="collapse-link">' +
@@ -157,9 +157,13 @@ var grid = gridselector.data('gridstack');
 function loadGrid(data) {
     for (var i = 0; i < data.length; i++) {
         let width = data[i].width;
-        grid.addWidget(createWidget('grafiek' + counter), 
+        grid.addWidget(createWidget('grafiek' + counter, data[i].Title), 
             data.x, data[i].y, width, data[i].height, true, 4, 12, 4);
-        addLineChart('grafiek' + counter);
+        switch (data[i].Graph.type) {
+            case "donut" : addPieChart('grafiek' + counter);break;
+            case "line" : addLineChart('grafiek' + counter);break;
+            case "bar" : addBarChart('grafiek' + counter);break;
+        }
         counter++;
     }
 }

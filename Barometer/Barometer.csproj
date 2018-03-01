@@ -98,6 +98,7 @@
     <Compile Include="Controllers\PersonenController.cs" />
     <Compile Include="Controllers\WidgetController.cs" />
     <Compile Include="Global.asax.cs" />
+    <Compile Include="Models\Graph.cs" />
     <Compile Include="Models\Persoon.cs" />
     <Compile Include="Models\Widget.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
