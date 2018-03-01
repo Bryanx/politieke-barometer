@@ -5,7 +5,7 @@ var primary_color = window.getComputedStyle(document.documentElement).getPropert
 var secondary_color = window.getComputedStyle(document.documentElement).getPropertyValue('--secondary-color');
 var tertiary_color = window.getComputedStyle(document.documentElement).getPropertyValue('--tertiary-color');
 
-    
+
 function addCSSgrid(id) {
     let elem = $('#' + id);
     elem.css('width', 'auto');
@@ -144,15 +144,27 @@ function createWidget(id) {
         '        </div>'
 }
 
-function init() {
-    let gridselector = $('#grid');
-    gridselector.gridstack({
-        resizable: {
-            handles: 'e, se, s, sw, w'
-        }
-    });
-    this.grid = gridselector.data('gridstack');
+var gridselector = $('#grid');
+gridselector.gridstack({
+    resizable: {
+        handles: 'e, se, s, sw, w'
+    }
+});
 
+var grid = gridselector.data('gridstack');
+
+
+function loadGrid(data) {
+    for (var i = 0; i < data.length; i++) {
+        let width = data[i].width;
+        grid.addWidget(createWidget('grafiek' + counter), 
+            data.x, data[i].y, width, data[i].height, true, 4, 12, 4);
+        addLineChart('grafiek' + counter);
+        counter++;
+    }
+}
+
+function init() {
     //close widget
     $(document).on('click', '#close-widget', function (e) {
         e.preventDefault();
@@ -162,19 +174,19 @@ function init() {
 
     //add widget with graph
     this.btnAddLineChart = function () {
-        this.grid.addWidget(createWidget('grafiek' + counter), 0, 0, 4, 4, true, 4, 12, 4);
+        grid.addWidget(createWidget('grafiek' + counter), 0, 0, 4, 4, true, 4, 12, 4);
         addLineChart('grafiek' + counter);
         counter++;
         return false;
     }.bind(this);
     this.btnAddPieChart = function () {
-        this.grid.addWidget(createWidget('grafiek' + counter), 0, 0, 4, 4, true, 4, 12, 4);
+        grid.addWidget(createWidget('grafiek' + counter), 0, 0, 4, 4, true, 4, 12, 4);
         addPieChart('grafiek' + counter);
         counter++;
         return false;
-    }.bind(this);  
+    }.bind(this);
     this.btnAddBarChart = function () {
-        this.grid.addWidget(createWidget('grafiek' + counter), 0, 0, 4, 4, true, 4, 12, 4);
+        grid.addWidget(createWidget('grafiek' + counter), 0, 0, 4, 4, true, 4, 12, 4);
         addBarChart('grafiek' + counter);
         counter++;
         return false;
