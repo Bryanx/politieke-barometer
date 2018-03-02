@@ -25,7 +25,8 @@
     <!-- bootstrap-daterangepicker -->
     <link href="../../vendors/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
 
-    @if (IsSectionDefined("CustomCSS")) {
+    @if (IsSectionDefined("CustomCSS"))
+    {
         @RenderSection("CustomCSS")
     }
 
@@ -63,26 +64,25 @@
         <!-- sidebar menu -->
         <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
             <div class="menu_section">
-                <h3>General</h3>
                 <ul class="nav side-menu">
+
+                    <!-- DEZE MOET VERWIJDERT WORDEN -> Niet ingelogde gebruiker kan dashboard niet zien-->
                     <li>
-                        <a><i class="fa fa-clock-o"></i> Dashboard <span class="fa fa-chevron-down"></span></a>
-                        <ul class="nav child_menu">
-                            <li>@Html.ActionLink("Niet-ingelogd", "Index", "Home")</li>
-                            <li>@Html.ActionLink("Ingelogd", "Ingelogd", "Home")</li>
-                        </ul>
+                    <a href='@Url.Action("Ingelogd", "Home")'><i class="fa fa-bar-chart-o"></i> Dashboard </a>
+                                        <li/>
+                    <!-- DEZE MOET VERWIJDERT WORDEN -> Niet ingelogde gebruiker kan dashboard niet zien-->
+
+                    <li>
+                    <a href='@Url.Action("Index", "Home")'><i class="fa fa-newspaper-o"></i> News </a>
+                    <li/>
+                    <li>
+                        <a href='@Url.Action("Index", "Personen")'><i class="fa fa-users"></i>Personen</a>
                     </li>
                     <li>
-                        <a><i class="fa fa-bar-chart-o"></i> Overzichten <span class="fa fa-chevron-down"></span></a>
-                        <ul class="nav child_menu">
-                            <li>@Html.ActionLink("Personen", "Index", "Personen")</li>
-                            <li>
-                                <a href="form_advanced.html">Partijen</a>
-                            </li>
-                            <li>
-                                <a href="form_validation.html">Thema's</a>
-                            </li>
-                        </ul>
+                        <a href='@Url.Action("Index", "Partij")'><i class="fa fa-briefcase"></i>Partijen</a>
+                    </li>
+                    <li>
+                        <a href='@Url.Action("Index", "Thema")'><i class="fa fa-tag"></i>Thema's</a>
                     </li>
 
                 </ul>
@@ -285,7 +285,8 @@
 </environment>
 @RenderSection("scripts", required: false)
 
-@if (IsSectionDefined("CustomJS")) {
+@if (IsSectionDefined("CustomJS"))
+{
     @RenderSection("CustomJS")
 }
 

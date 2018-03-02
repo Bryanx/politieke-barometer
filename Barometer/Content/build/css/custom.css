@@ -505,6 +505,13 @@ html, body {
     margin-bottom: 5px
 }
 
+.nav-sm .nav.side-menu li i {
+    font-size: 25px !important;
+    text-align: center;
+    width: 100% !important;
+    margin-bottom: 5px
+}
+
 .nav-sm ul.nav.child_menu {
     left: 100%;
     position: absolute;
@@ -1083,12 +1090,12 @@ a:focus {
     width: 100%
 }
 
-.top_nav .dropdown-menu li a {
+.top_nav .dropdown-menu li i {
     width: 100%;
     padding: 12px 20px
 }
 
-.top_nav li a i {
+.top_nav li i {
     font-size: 15px
 }
 
@@ -1113,15 +1120,15 @@ a:focus {
     cursor: pointer
 }
 
-.nav.side-menu > li > a {
+.nav.side-menu > li > i {
     margin-bottom: 6px
 }
 
-.nav.side-menu > li > a:hover {
+.nav.side-menu > li > i:hover {
     color: #F2F5F7 !important
 }
 
-.nav.side-menu > li > a:hover,
+.nav.side-menu > li > i:hover,
 .nav > li > a:focus {
     text-decoration: none;
     background: transparent
