@@ -13,6 +13,7 @@
         <button id="btnAddLine" class="btn btn-primary">Add line chart</button>
         <button id="btnAddPie" class="btn btn-primary">Add donut chart</button>
         <button id="btnAddBar" class="btn btn-primary">Add bar chart</button>
+        <button id="saveWidgets" class="btn btn-primary">Save changes</button>
     </div>
     <br>
 
@@ -39,10 +40,14 @@
                         dataType: 'json'
                     })
                 .done(function(data) {
-                    console.log(data);
                     loadGrid(data);
                 })
                 .fail(function() { alert('Oeps, something went wrong!'); });
+
+            $('#saveWidgets').on('click',
+                function() {
+                });
+
         })(jQuery);
     </script>
 }

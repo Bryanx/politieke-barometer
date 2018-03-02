@@ -5448,6 +5448,8 @@ $(document).ready(function () {
         htmlselector.setAttribute("style", "--secondary-color: " + secondary_color);
     });
     callMethods();
+    //TODO: Flicker voorkomen
+    $MENU_TOGGLE.click();
     init_JQVmap();
 });	
 

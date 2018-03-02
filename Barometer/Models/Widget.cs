@@ -23,7 +23,7 @@ namespace Barometer.Models {
 
         public static IEnumerable<Widget> getWidgets() {
             List<Widget> list = new List<Widget>();
-            list.Add(new Widget(1,"Anthony",0,0,6,4, new Graph("donut")));
+            list.Add(new Widget(1,"Anthony",0,0,6,4, new Graph("donut", new string[] {"jarne","bryan","maarten","yoni"}, new int[] {30,15,45,10})));
             list.Add(new Widget(2,"Bryan",0,0,6,4, new Graph("line")));
             list.Add(new Widget(3,"Maarten",0,0,4,4, new Graph("bar")));
             list.Add(new Widget(4,"Yoni",0,0,4,4, new Graph("line")));
