@@ -41,6 +41,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Widgets\Graph.cs" />
+    <Compile Include="Widgets\GraphType.cs" />
+    <Compile Include="Widgets\NumberInformation.cs" />
+    <Compile Include="Widgets\NumberType.cs" />
     <Compile Include="Widgets\Widget.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

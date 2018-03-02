@@ -9,6 +9,10 @@ namespace BAR.BL.Model.Widgets
     public class Widget
     {
         public int WidgetId { get; set; }
-        public string Title { get; set; }    
+        public string Title { get; set; }
+        public int Height { get; set; }
+        public int Width { get; set; }
+        public int Xpos { get; set; }
+        public int Ypos { get; set; }
     }
 }
