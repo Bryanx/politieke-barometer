@@ -637,15 +637,15 @@ function init_JQVmap() {
         let colors = ["#E6F2F0", primary_color];
         $('#world-map-gdp').vectorMap({
             map: 'be_mill',
-            backgroundColor: null, 
+            backgroundColor: null,
             series: {
                 regions: [{
                     values: sample_data,
                     scale: colors,
                 }]
             },
-            onRegionTipShow: function(e, el, code){
-                el.html(el.html()+' ('+sample_data[code]+' stemmen)');
+            onRegionTipShow: function (e, el, code) {
+                el.html(el.html() + ' (' + sample_data[code] + ' stemmen)');
             }
         });
 
@@ -5358,7 +5358,7 @@ function init_echarts() {
 }
 
 function check() {
-    if($('.showchbox').length) {
+    if ($('.showchbox').length) {
         $('.checkbox').removeClass('showchbox');
     } else {
         $('.checkbox').addClass('showchbox');
@@ -5405,13 +5405,13 @@ function callMethods() {
 }
 
 
-function rgb2hex(rgb){
+function rgb2hex(rgb) {
     rgb = rgb.toString();
     rgb = rgb.match(/^rgba?[\s+]?\([\s+]?(\d+)[\s+]?,[\s+]?(\d+)[\s+]?,[\s+]?(\d+)[\s+]?/i);
     return (rgb && rgb.length === 4) ? "#" +
-        ("0" + parseInt(rgb[1],10).toString(16)).slice(-2) +
-        ("0" + parseInt(rgb[2],10).toString(16)).slice(-2) +
-        ("0" + parseInt(rgb[3],10).toString(16)).slice(-2) : '';
+        ("0" + parseInt(rgb[1], 10).toString(16)).slice(-2) +
+        ("0" + parseInt(rgb[2], 10).toString(16)).slice(-2) +
+        ("0" + parseInt(rgb[3], 10).toString(16)).slice(-2) : '';
 }
 
 function hexToRgb(hex) {
@@ -5424,18 +5424,23 @@ function hexToRgb(hex) {
     } : null;
 }
 
+function sleep(delay) {
+    var start = new Date().getTime();
+    while (new Date().getTime() < start + delay) ;
+}
+
 $(document).ready(function () {
     $('#ip-primary').val(primary_color);
     $('#ip-secondary').val(secondary_color);
 
-    $('#cp-primary').colorpicker().on('changeColor', function (e) {
+    $('#cp-primary').colorpicker().on('changeColor' , function (e) {
         primary_color = rgb2hex(e.color);
         htmlselector.setAttribute("style", "--primary-color: " + primary_color);
         var map = $('#world-map-gdp').vectorMap('get', 'mapObject');
         $('#world-map-gdp').remove();
         $('.canvasDoughnut').remove();
         $('#map-parent').append('<div id="world-map-gdp" class="col-md-8 col-sm-12 col-xs-12"' +
-            'style="height: 230px;"></div>');
+            'style="height: 230px;"></div>').delay(10000);
         $('#doughnut-parent').append('<canvas class="canvasDoughnut" height="140" width="140"' +
             'style="margin: 15px 10px 10px 0"></canvas>');
         init_flot_chart();

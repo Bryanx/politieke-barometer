@@ -5,19 +5,19 @@ namespace Barometer.Models {
     public class Widget {
         public int Id { get; set; }
         public string Title { get; set; }
-        public int x { get; set; }
-        public int y { get; set; }
-        public int width { get; set; }
-        public int height { get; set; }
+        public int X { get; set; }
+        public int Y { get; set; }
+        public int Width { get; set; }
+        public int Height { get; set; }
         public Graph Graph { get; set; }
 
         public Widget(int id, string title, int x, int y, int width, int height, Graph graph) {
             Id = id;
             Title = title;
-            this.x = x;
-            this.y = y;
-            this.width = width;
-            this.height = height;
+            this.X = x;
+            this.Y = y;
+            this.Width = width;
+            this.Height = height;
             this.Graph = graph;
         }
 
