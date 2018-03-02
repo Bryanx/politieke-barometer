@@ -9,7 +9,6 @@ namespace BAR.BL.Model.Widgets
     public class Widget
     {
         public int WidgetId { get; set; }
-        public string Title { get; set; }
-        public int MyProperty { get; set; }
+        public string Title { get; set; }    
     }
 }
