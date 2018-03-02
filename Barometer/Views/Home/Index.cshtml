@@ -8,7 +8,7 @@
 
 
 <!-- header start -->
-<div class="main-header-container-parent row fixed_height_390 bg-white">
+<div class="main-header-container-parent row header-image-bg">
     <div class="col-md-12 col-sm-12 col-xs-12 main-header-container">
         <div class="main-header">
             <span class="main-header-category"><i class="fa fa-user"></i> Now trending</span>
@@ -900,4 +900,16 @@
 </div>
 @section CustomJS{
     <script src="../../vendors/mjolnic-bootstrap-colorpicker/dist/js/bootstrap-colorpicker.min.js"></script>
+    <script type="text/javascript">
+        $(window).scroll(function() {
+            //After scrolling 100px from the top...
+
+            console.log($(window).scrollTop() + "");
+            if ($(window).scrollTop() >= 100) {
+                $('.nav_menu').css('background-color', '#EDEDED');
+            } else {
+                $('.nav_menu').css('background-color', 'transparent');
+            }
+        });
+    </script>
 }
