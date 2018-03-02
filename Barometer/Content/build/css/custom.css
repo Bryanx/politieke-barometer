@@ -1,10 +1,10 @@
 html {
-    --primary-color: #00bb9e;
-    --primary-darker: #00a88c;
-    --primary-darkest: #009e84;
-    --secondary-lighter: #2c475e;
-    --secondary-color: #273f53;
-    --secondary-darker: #233447;
+    --primary-color: #0f8ec4;
+    --primary-darker: #0e85b8;
+    --primary-darkest: #0d77a4;
+    --secondary-lighter: #3c3c3c;
+    --secondary-color: #2b2b2b;
+    --secondary-darker: #090004;
     --secondary-darkest: #1f2e3f;
     --tertiary-color: #79428e;
 }
@@ -58,6 +58,7 @@ MODIFYABLE DASHBOARD
     width: 100% !important;
 }
 
+
 /*
 Search
  */
@@ -99,14 +100,14 @@ Search
 
 li.signup {
     margin-right: 20px;
-    background-color: var(--primary-color);
-    color: white !important;
 }
+
 .nav.navbar-nav>li>a.signup {
-    color: white !important;
+    color: var(--primary-color) !important;
 }
 .nav.navbar-nav>li>a.signup:hover {
-    background-color:var(--primary-darker);
+    background-color:var(--primary-color);
+    color:white !important;
 }
 
 /*
@@ -170,6 +171,36 @@ Login
     color: #fff;
     background-color: var(--primary-darkest) !important;
     border-color: var(--primary-darkest) !important;
+}
+
+/* main-header */
+.nav-sm .container.body .main-header-container-parent {
+    margin-left: 70px;
+    z-index: 2;
+}
+
+.nav-md .container.body .main-header-container-parent {
+    margin-left: 230px;
+    z-index: 2;
+}
+
+.main-header-container-parent {
+        margin-right: 0!important;
+}
+
+.main-header-container {
+    height: 80%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 !important;
+}
+.main-header {
+    text-align: center;
+}
+
+.main-header-title {
+    font-weight: 600;
 }
 
 /*
@@ -620,8 +651,8 @@ body .container.body .right_col {
 }
 .bg-white {
     background: white !important;
-    border: 1px solid white !important;
-    color: #73879C
+    /* border: 1px solid white !important; */
+    color: #73879C;
 }
 .bg-green {
     background: var(--primary-color) !important;
@@ -709,7 +740,7 @@ body {
     height: 320px
 }
 .fixed_height_390 {
-    height: 390px
+    height: 390px;
 }
 .fixed_height_200 {
     height: 200px
@@ -811,11 +842,11 @@ table.no-margin .progress {
     min-height: 1px;
     float: left;
     padding-right: 10px;
-    padding-left: 10px
+    padding-left: 10px;
 }
 .row {
     margin-right: -10px;
-    margin-left: -10px
+    margin-left: -10px;
 }
 .grid_slider .col-md-6 {
     padding: 0 40px
@@ -4412,4 +4443,4 @@ table thead .checkbox.radio { margin-top:-7px;margin-top:-21px; }
     border-radius: 0px !important;
     background-color: white !important;
 }
-/** /bootstrap-datetimepicker **/
+/** /bootstrap-datetimepic

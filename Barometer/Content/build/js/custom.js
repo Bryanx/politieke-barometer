@@ -55,6 +55,7 @@ var CURRENT_URL = window.location.href.split('#')[0].split('?')[0],
     primary_darker = window.getComputedStyle(document.documentElement).getPropertyValue('--primary-darker').split(' ').join(''),
     primary_darkest = window.getComputedStyle(document.documentElement).getPropertyValue('--primary-darkest').split(' ').join(''),
     secondary_color = window.getComputedStyle(document.documentElement).getPropertyValue('--secondary-color').split(' ').join('');
+    tertiary_color = window.getComputedStyle(document.documentElement).getPropertyValue('--tertiary-color').split(' ').join('');
 
 
 // Sidebar
@@ -446,7 +447,7 @@ function init_flot_chart() {
             borderWidth: 1,
             color: '#fff'
         },
-        colors: ["rgba(" + primary_color + ", 0.38)", "rgba(" + primary_darker + ", 0.38)"],
+        colors: ["rgba(" + primary_color + ", 0.38)", "rgba(" + tertiary_color + ", 0.38)"],
         xaxis: {
             tickColor: "rgba(51, 51, 51, 0.06)",
             mode: "time",
@@ -5427,26 +5428,31 @@ function hexToRgb(hex) {
 $(document).ready(function () {
     $('#ip-primary').val(primary_color);
     $('#ip-secondary').val(secondary_color);
+    if ($('#cp-primary').length) {
+        $('#cp-primary').colorpicker().on('changeColor', function (e) {
+            primary_color = rgb2hex(e.color);
+            htmlselector.setAttribute("style", "--primary-color: " + primary_color);
+            var map = $('#world-map-gdp').vectorMap('get', 'mapObject');
+            $('#world-map-gdp').remove();
+            $('.canvasDoughnut').remove();
+            $('#map-parent').append('<div id="world-map-gdp" class="col-md-8 col-sm-12 col-xs-12"' +
+                'style="height: 230px;"></div>');
+            $('#doughnut-parent').append('<canvas class="canvasDoughnut" height="140" width="140"' +
+                'style="margin: 15px 10px 10px 0"></canvas>');
+            init_flot_chart();
+            init_chart_doughnut();
+            init_JQVmap();
+        });
 
-    $('#cp-primary').colorpicker().on('changeColor', function (e) {
-        primary_color = rgb2hex(e.color);
-        htmlselector.setAttribute("style", "--primary-color: " + primary_color);
-        var map = $('#world-map-gdp').vectorMap('get', 'mapObject');
-        $('#world-map-gdp').remove();
-        $('.canvasDoughnut').remove();
-        $('#map-parent').append('<div id="world-map-gdp" class="col-md-8 col-sm-12 col-xs-12"' +
-            'style="height: 230px;"></div>');
-        $('#doughnut-parent').append('<canvas class="canvasDoughnut" height="140" width="140"' +
-            'style="margin: 15px 10px 10px 0"></canvas>');
-        init_flot_chart();
-        init_chart_doughnut();
-        init_JQVmap();
-    });
-
-    $('#cp-secondary').colorpicker().on('changeColor', function (e) {
-        secondary_color = rgb2hex(e.color);
-        htmlselector.setAttribute("style", "--secondary-color: " + secondary_color);
-    });
+        $('#cp-secondary').colorpicker().on('changeColor', function (e) {
+            secondary_color = rgb2hex(e.color);
+            htmlselector.setAttribute("style", "--secondary-color: " + secondary_color);
+        });
+        $('#cp-tertiary').colorpicker().on('changeColor', function (e) {
+            tertiary_color = rgb2hex(e.color);
+            htmlselector.setAttribute("style", "--tertiary-color: " + tertiary_color);
+        });
+    }
     callMethods();
     //TODO: Flicker voorkomen
     $MENU_TOGGLE.click();
