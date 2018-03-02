@@ -98,8 +98,8 @@ Search
 
 }
 
-li.signup {
-    margin-right: 20px;
+.signup {
+    right: 60px;
 }
 
 .nav.navbar-nav>li>a.signup {
@@ -174,6 +174,7 @@ Login
 }
 
 /* main-header */
+
 .nav-sm .container.body .main-header-container-parent {
     margin-left: 70px;
     z-index: 2;
@@ -185,22 +186,34 @@ Login
 }
 
 .main-header-container-parent {
-        margin-right: 0!important;
+   margin-right: 0!important;
+   height: 50%;
 }
 
 .main-header-container {
-    height: 80%;
+    height: 85%;
     display: flex;
     justify-content: center;
     align-items: center;
     padding: 0 !important;
+    margin-top: -70px;
+    z-index: -1;
 }
 .main-header {
     text-align: center;
+    padding: 260px 0 200px 0;
 }
 
-.main-header-title {
+.main-header-title, .main-header {
     font-weight: 600;
+    color: white;
+}
+
+.main-header-container {
+    background-image: url("../../images/parlement.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
 }
 
 /*
@@ -535,12 +548,17 @@ html , body{
     display: inline-block
 }
 .nav_menu {
+    position: fixed !important;
     float: left;
-    background: #EDEDED;
-    border-bottom: 1px solid #D9DEE4;
+    background-color: transparent;
+    border-bottom: 1px solid transparent;
     margin-bottom: 10px;
     width: 100%;
-    position: relative
+    color: white;
+    z-index: 100;
+    position: relative;
+    -webkit-transition: width 2s; /* Safari */
+    transition: background-color .5s;
 }
 @media (min-width: 480px) {
     .nav_menu {
@@ -4443,4 +4461,4 @@ table thead .checkbox.radio { margin-top:-7px;margin-top:-21px; }
     border-radius: 0px !important;
     background-color: white !important;
 }
-/** /bootstrap-datetimepic
+/** /bootstrap-datetimep
