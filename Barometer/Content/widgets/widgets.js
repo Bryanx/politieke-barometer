@@ -37,16 +37,17 @@ function addLineChart(id) {
     });
 }
 
-function addPieChart(id) {
+function addPieChart(id, labels, values) {
     addCSSgrid(id);
+    console.log(labels[0] + " " + values[0]);
     Morris.Donut({
         element: id,
         resize: true,
         data: [
-            {label: "Friends", value: 30},
-            {label: "Allies", value: 15},
-            {label: "Enemies", value: 45},
-            {label: "Neutral", value: 10}
+            {label: labels[0], value: values[0]},
+            {label: labels[1], value: values[1]},
+            {label: labels[2], value: values[2]},
+            {label: labels[3], value: values[3]}
         ],
         colors: [primary_color, secondary_color, '#ACADAC', tertiary_color]
     });
@@ -111,7 +112,7 @@ function createWidget(id, title) {
     return '<div class="chart-container" data-gs-width="4" data-gs-height="4" data-gs-y="0" data-gs-x="0">' +
         '            <div class="x_panel grid-stack-item-content bg-white no-scrollbar">' +
         '                <div class="x_title">' +
-        '                    <h2 id="graphTitle">'+title+'</h2>' +
+        '                    <h2 id="graphTitle">' + title + '</h2>' +
         '                    <ul class="nav navbar-right panel_toolbox">' +
         '                        <li>' +
         '                            <a class="collapse-link">' +
@@ -157,16 +158,39 @@ var grid = gridselector.data('gridstack');
 function loadGrid(data) {
     for (var i = 0; i < data.length; i++) {
         let width = data[i].width;
-        grid.addWidget(createWidget('grafiek' + counter, data[i].Title), 
+        grid.addWidget(createWidget('grafiek' + counter, data[i].Title),
             data.x, data[i].y, width, data[i].height, true, 4, 12, 4);
-        switch (data[i].Graph.type) {
-            case "donut" : addPieChart('grafiek' + counter);break;
-            case "line" : addLineChart('grafiek' + counter);break;
-            case "bar" : addBarChart('grafiek' + counter);break;
+        switch (data[i].Graph.Type) {
+            case "donut" :
+                if (data[i].Graph.DonutLabels != null && data[i].Graph.DonutValues != null) {
+                    addPieChart('grafiek' + counter, data[i].Graph.DonutLabels, data[i].Graph.DonutValues);
+                }
+                break;
+            case "line" :
+                addLineChart('grafiek' + counter);
+                break;
+            case "bar" :
+                addBarChart('grafiek' + counter);
+                break;
         }
         counter++;
     }
 }
+
+function saveGrid() {
+    this.serializedData = _.map($('.grid-stack > .grid-stack-item:visible'), function (el) {
+        el = $(el);
+        var node = el.data('_gridstack_node');
+        return {
+            x: node.x,
+            y: node.y,
+            width: node.width,
+            height: node.height
+        };
+    }, this);
+    $('#saved-data').val(JSON.stringify(this.serializedData, null, '    '));
+    return false;
+};
 
 function init() {
     //close widget
