@@ -55,7 +55,7 @@ var CURRENT_URL = window.location.href.split('#')[0].split('?')[0],
     primary_darker = window.getComputedStyle(document.documentElement).getPropertyValue('--primary-darker').split(' ').join(''),
     primary_darkest = window.getComputedStyle(document.documentElement).getPropertyValue('--primary-darkest').split(' ').join(''),
     secondary_color = window.getComputedStyle(document.documentElement).getPropertyValue('--secondary-color').split(' ').join('');
-    tertiary_color = window.getComputedStyle(document.documentElement).getPropertyValue('--tertiary-color').split(' ').join('');
+tertiary_color = window.getComputedStyle(document.documentElement).getPropertyValue('--tertiary-color').split(' ').join('');
 
 
 // Sidebar
@@ -638,15 +638,15 @@ function init_JQVmap() {
         let colors = ["#E6F2F0", primary_color];
         $('#world-map-gdp').vectorMap({
             map: 'be_mill',
-            backgroundColor: null, 
+            backgroundColor: null,
             series: {
                 regions: [{
                     values: sample_data,
                     scale: colors,
                 }]
             },
-            onRegionTipShow: function(e, el, code){
-                el.html(el.html()+' ('+sample_data[code]+' stemmen)');
+            onRegionTipShow: function (e, el, code) {
+                el.html(el.html() + ' (' + sample_data[code] + ' stemmen)');
             }
         });
 
@@ -5359,7 +5359,7 @@ function init_echarts() {
 }
 
 function check() {
-    if($('.showchbox').length) {
+    if ($('.showchbox').length) {
         $('.checkbox').removeClass('showchbox');
     } else {
         $('.checkbox').addClass('showchbox');
@@ -5406,13 +5406,13 @@ function callMethods() {
 }
 
 
-function rgb2hex(rgb){
+function rgb2hex(rgb) {
     rgb = rgb.toString();
     rgb = rgb.match(/^rgba?[\s+]?\([\s+]?(\d+)[\s+]?,[\s+]?(\d+)[\s+]?,[\s+]?(\d+)[\s+]?/i);
     return (rgb && rgb.length === 4) ? "#" +
-        ("0" + parseInt(rgb[1],10).toString(16)).slice(-2) +
-        ("0" + parseInt(rgb[2],10).toString(16)).slice(-2) +
-        ("0" + parseInt(rgb[3],10).toString(16)).slice(-2) : '';
+        ("0" + parseInt(rgb[1], 10).toString(16)).slice(-2) +
+        ("0" + parseInt(rgb[2], 10).toString(16)).slice(-2) +
+        ("0" + parseInt(rgb[3], 10).toString(16)).slice(-2) : '';
 }
 
 function hexToRgb(hex) {
@@ -5455,7 +5455,6 @@ $(document).ready(function () {
     }
     callMethods();
     //TODO: Flicker voorkomen
-    $MENU_TOGGLE.click();
     init_JQVmap();
 });	
 
