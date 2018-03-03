@@ -127,6 +127,7 @@
     <Content Include="Content\gridstack\gridstack.min.map" />
     <Content Include="Content\gridstack\jquery-ui.js" />
     <Content Include="Content\gridstack\underscore.min.js" />
+    <Content Include="Content\homepage\homepage.css" />
     <Content Include="Content\images\.DS_Store" />
     <Content Include="Content\images\american-express.png" />
     <Content Include="Content\images\img.jpg" />

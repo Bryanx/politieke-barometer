@@ -5,17 +5,58 @@
 @section CustomCSS{
     <link href="../../vendors/mjolnic-bootstrap-colorpicker/dist/css/bootstrap-colorpicker.min.css" rel="stylesheet">
 }
-
+<link href="../../Content/homepage/homepage.css" rel="stylesheet">
 
 <!-- header start -->
 <div class="main-header-container-parent row header-image-bg">
     <div class="col-md-12 col-sm-12 col-xs-12 main-header-container">
         <div class="main-header">
             <span class="main-header-category"><i class="fa fa-user"></i> Now trending</span>
-            <h1 class="main-header-title"> Bart de Wever</h1>
+            <h1 class="main-header-title">Bekijk welke politici er trending zijn<br/>op social media</h1>
             <div class="main-header-amount"><span id="main-header-amount">5436</span> berichten</div>
             <span class="main-header-percentage"><i class="main-header-percentage">120% </i> Sinds vorige week</span>
         </div>
+        <div class="searchbar">
+                <form class="navbar-search zero-margin" role="search">
+                    <div class="input-group zero-margin w-100">
+                        <div class="input-group-btn">
+                            <button type="button" class="btn btn-search btn-default dropdown-toggle" data-toggle="dropdown">
+                                <span class="glyphicon glyphicon-search"></span>
+                                <span class="label-icon">Search</span>
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-left dropdown-search pull-left" role="menu">
+                                <li>
+                                    <a href="#">
+                                        <span class="fa fa-user"></span>
+                                        <span class="label-icon">Personen</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <span class="fa fa-briefcase"></span>
+                                        <span class="label-icon">Partijen</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <span class="fa fa-paperclip"></span>
+                                        <span class="label-icon">Thema's</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <input type="text" class="form-control search-field" placeholder="Zoeken naar ...">
+
+                        <div class="input-group-btn">
+                            <button type="button" class="btn btn-search btn-default">
+                                GO
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
     </div>
 </div>
 <!-- header end -->
@@ -658,10 +699,11 @@
                             </tbody>
                         </table>
                     </div>
-                    <div id="map-parent">
-                        <div id="world-map-gdp" class="col-md-8 col-sm-12 col-xs-12"
-                             style="height: 230px;">
-                        </div></div>
+                        <div id="map-parent">
+                            <div id="world-map-gdp" class="col-md-8 col-sm-12 col-xs-12"
+                                 style="height: 230px;">
+                            </div>
+                        </div>
                 </div>
             </div>
         </div>
@@ -903,12 +945,10 @@
     <script type="text/javascript">
         $(window).scroll(function() {
             //After scrolling 100px from the top...
-
-            console.log($(window).scrollTop() + "");
             if ($(window).scrollTop() >= 100) {
-                $('.nav_menu').css('background-color', '#EDEDED');
+                $('.left_col').css('left', '0');
             } else {
-                $('.nav_menu').css('background-color', 'transparent');
+                $('.left_col').css('left', '-70px');
             }
         });
     </script>

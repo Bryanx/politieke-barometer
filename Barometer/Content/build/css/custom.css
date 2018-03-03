@@ -184,50 +184,7 @@ Login
     border-color: var(--primary-darkest) !important;
 }
 
-/* main-header */
 
-.nav-sm .container.body .main-header-container-parent {
-    margin-left: 70px;
-    z-index: 2;
-}
-@media((max-width: 991px)) {
-.nav-md .container.body .main-header-container-parent {
-    margin-left: 230px;
-    z-index: 2;
-}
-}
-
-.main-header-container-parent {
-    margin-right: 0 !important;
-    height: 50%;
-}
-
-.main-header-container {
-    height: 85%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 0 !important;
-    margin-top: -70px;
-    z-index: -1;
-}
-
-.main-header {
-    text-align: center;
-    padding: 260px 0 200px 0;
-}
-
-.main-header-title, .main-header {
-    font-weight: 600;
-    color: white;
-}
-
-.main-header-container {
-    background-image: linear-gradient(-225deg, rgba(0, 0, 0, 0.35) 100%, rgba(0, 0, 0, 0.3) 50%), url("../../images/parlement.jpg");
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center center;
-}
 
 /*
 =========================================================
@@ -410,7 +367,8 @@ html, body {
 }
 
 .left_col {
-    background: var(--secondary-color)
+    background: var(--secondary-color);
+    left: 0px;
 }
 
 .nav-sm .container.body .col-md-3.left_col {
@@ -438,7 +396,7 @@ html, body {
 .nav-sm .container.body .right_col {
     padding: 10px 20px;
     margin-left: 70px;
-    z-index: 2
+    z-index: 2;
 }
 
 .nav-sm .navbar.nav_title {
@@ -624,12 +582,12 @@ html, body {
 }
 
 .nav-sm .menu_section {
-    margin: 0
+    margin: 0;
 }
 
 .nav-sm span.fa,
 .nav-sm .menu_section h3 {
-    display: none
+    display: none;
 }
 
 .nav-sm li li span.fa {
@@ -637,17 +595,14 @@ html, body {
 }
 
 .nav_menu {
-    position: fixed !important;
     float: left;
-    background-color: transparent;
+    background-color: #EDEDED;
     border-bottom: 1px solid transparent;
     margin-bottom: 10px;
     width: 100%;
     color: white;
     z-index: 100;
     position: relative;
-    -webkit-transition: width 2s; /* Safari */
-    transition: background-color .5s;
 }
 
 @media (min-width: 480px) {
@@ -847,7 +802,7 @@ body .container.body .right_col {
 
 body {
     color: #73879C;
-    background: var(--secondary-color);
+    background: #F7F7F7;
     font-family: "Helvetica Neue", Roboto, Arial, "Droid Sans", sans-serif;
     font-size: 13px;
     font-weight: 400;
@@ -1214,9 +1169,7 @@ a:focus {
 }
 
 .nav.side-menu > li.active > a {
-    text-shadow: rgba(0, 0, 0, 0.25) 0 -1px 0;
-    background: linear-gradient(var(--secondary-lighter), var(--secondary-color)), var(--secondary-darker);
-    box-shadow: rgba(0, 0, 0, 0.25) 0 1px 0, inset rgba(255, 255, 255, 0.16) 0 1px 0;
+    background: #363636;
 }
 
 .navbar-brand,
@@ -1299,7 +1252,8 @@ a:focus {
 .toggle a {
     padding: 15px 15px 0;
     margin: 0;
-    cursor: pointer
+    cursor: pointer;
+    display: inline;
 }
 
 .toggle a i {
@@ -4389,7 +4343,7 @@ form:after {
     display: block;
     height: 0;
     clear: both;
-    visibility: hidden
+    visibility: hidden;
 }
 
 .login_content {
