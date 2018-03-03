@@ -58,6 +58,17 @@ MODIFYABLE DASHBOARD
     width: 100% !important;
 }
 
+.small-logo {
+    background-image: url("../../images/logo-white-img.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+    width:50px;
+    height:50px;
+    display: block;
+    margin-left: 10px;
+}
+
 /*
 Search
  */
@@ -433,7 +444,7 @@ html, body {
     text-align: center !important;
     font-weight: 400;
     font-size: 10px;
-    padding: 10px 5px
+    padding: 10px 5px;
 }
 
 .nav-sm .nav.child_menu li.active,
@@ -458,9 +469,9 @@ html, body {
 
 .nav-sm .nav.side-menu li a i {
     font-size: 25px !important;
-    text-align: center;
+    ext-align: center;
     width: 100% !important;
-    margin-bottom: 5px
+    margin-bottom: 5px;
 }
 
 .nav-sm .nav.side-menu li i {
@@ -1004,7 +1015,7 @@ a:active,
 .btn.focus,
 .btn:active.focus,
 .btn.active.focus {
-    outline: 0
+    outline: 0;
 }
 
 a:hover,
@@ -1132,7 +1143,7 @@ a:focus {
 .nav.side-menu > li > a,
 .nav.child_menu > li > a {
     color: #E7E7E7;
-    font-weight: 500
+    font-weight: 500;
 }
 
 .nav.child_menu li li:hover,
@@ -1148,7 +1159,7 @@ a:focus {
 .nav > li > a {
     position: relative;
     display: block;
-    padding: 13px 15px 12px
+    padding: 13px 15px 12px;
 }
 
 .nav.side-menu > li.current-page,
@@ -1188,11 +1199,11 @@ a:focus {
     width: 100%;
     color: #ECF0F1 !important;
     margin-left: 0 !important;
-    line-height: 59px;
+    /* line-height: 59px; */
     display: block;
     height: 55px;
     margin: 0;
-    padding-left: 10px
+    padding-left: 10px;
 }
 
 .site_title:hover,

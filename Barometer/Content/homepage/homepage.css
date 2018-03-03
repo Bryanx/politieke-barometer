@@ -32,7 +32,13 @@ nav > .searchbar {
 .searchbar {
     margin-left: auto;
     margin-right: auto;
-    margin-bottom: 230px;
+    margin-bottom: 160px;
+    max-width: 500px;
+    padding: 0;
+}
+
+.nav-sm span.fa {
+    display: inline;
 }
 
 .navbar-search, .search-field, .btn-search {
@@ -51,7 +57,7 @@ nav_menu {
     z-index: 2;
 }
 
-@media((max-width: 991px)) {
+@media(max-width: 991px) {
     .nav-md .container.body .main-header-container-parent {
         margin-left: 230px;
         z-index: 2;
@@ -71,10 +77,21 @@ nav_menu {
     margin-top: -70px;
     z-index: 1;
 }
+.logo {
+    background-image: url("../images/logo-all-white-smaller.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+    height: 60px;
+    width: 200px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 100px;
+}
 
 .main-header {
     text-align: center;
-    padding: 150px 0 10px 0;
+    padding: 60px 0 10px 0;
     margin-left: auto;
 }
 

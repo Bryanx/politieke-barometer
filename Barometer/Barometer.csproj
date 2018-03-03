@@ -131,6 +131,10 @@
     <Content Include="Content\images\.DS_Store" />
     <Content Include="Content\images\american-express.png" />
     <Content Include="Content\images\img.jpg" />
+    <Content Include="Content\images\logo-all-white-smaller.png" />
+    <Content Include="Content\images\logo-all-white.png" />
+    <Content Include="Content\images\logo-white-img.png" />
+    <Content Include="Content\images\logo-white.png" />
     <Content Include="Content\images\mastercard.png" />
     <Content Include="Content\images\media.jpg" />
     <Content Include="Content\images\parlement.jpg" />

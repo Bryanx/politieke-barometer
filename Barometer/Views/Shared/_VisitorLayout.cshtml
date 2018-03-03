@@ -39,9 +39,9 @@
 <div class="main_container">
 <div class="col-md-3 left_col nav-fixed">
     <div class="left_col scroll-view">
-        <div class="navbar nav_title" style="border: 0;">
-            <a href="/" class="site_title">
-                <i class="fa fa-paw font_22"></i> <span>Politieke Barometer</span>
+        <div class="navbar" style="border: 0;">
+            <a href="/" class="">
+                <i class="small-logo"></i> 
             </a>
         </div>
 
@@ -73,7 +73,7 @@
                     <!-- DEZE MOET VERWIJDERT WORDEN -> Niet ingelogde gebruiker kan dashboard niet zien-->
 
                     <li>
-                    <a href='@Url.Action("Index", "Home")'><i class="fa fa-newspaper-o"></i> News </a>
+                    <a href='/#news'><i class="fa fa-newspaper-o"></i> News </a>
                     <li/>
                     <li>
                         <a href='@Url.Action("Index", "Personen")'><i class="fa fa-users"></i>Personen</a>
@@ -191,7 +191,7 @@
                             <ul class="dropdown-menu dropdown-menu-left dropdown-search pull-left" role="menu">
                                 <li>
                                     <a href="#">
-                                        <span class="fa fa-user"></span>
+                                        <span class="fa fa-users"></span>
                                         <span class="label-icon">Personen</span>
                                     </a>
                                 </li>
@@ -203,8 +203,14 @@
                                 </li>
                                 <li>
                                     <a href="#">
-                                        <span class="fa fa-paperclip"></span>
+                                        <span class="fa fa-tag"></span>
                                         <span class="label-icon">Thema's</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <span class="fa fa-newspaper-o"></span>
+                                        <span class="label-icon">Algemeen</span>
                                     </a>
                                 </li>
                             </ul>
