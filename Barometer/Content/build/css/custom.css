@@ -100,6 +100,9 @@ Search
 .search-field {
     width: 100%;
 }
+.dropdown-menu > li > a .fa {
+    display: inline;
+}
 
 .navbar-form .input-group .input-group-btn {
     width: 1% !important;

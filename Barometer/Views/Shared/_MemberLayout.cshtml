@@ -68,7 +68,7 @@
                     <a href='@Url.Action( "Ingelogd", "Home")'><i class="fa fa-bar-chart-o"></i> Dashboard </a>
                     <li/>
                     <li>
-                    <a href='@Url.Action( "Index", "Home")'><i class="fa fa-newspaper-o"></i> News </a>
+                    <a href='@Url.Action( "Index", "Home")'><i class="fa fa-newspaper-o"></i> Nieuws </a>
                     <li/>
                     <li>
                         <a href='@Url.Action( "Index", "Personen")'><i class="fa fa-users"></i>Personen</a>                        
@@ -245,47 +245,7 @@
                 </li>
             </ul>
             <!-- search -->
-            <div class="nav navbar-nav searchbar">
-                <form class="navbar-form navbar-search zero-margin" role="search">
-                    <div class="input-group zero-margin w-100">
-                        <div class="input-group-btn">
-                            <button type="button" class="btn btn-search btn-default dropdown-toggle" data-toggle="dropdown">
-                                <span class="glyphicon glyphicon-search"></span>
-                                <span class="label-icon">Search</span>
-                                <span class="caret"></span>
-                            </button>
-                            <ul class="dropdown-menu dropdown-menu-left dropdown-search pull-left" role="menu">
-                                <li>
-                                    <a href="#">
-                                        <span class="fa fa-user"></span>
-                                        <span class="label-icon">Personen</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        <span class="fa fa-briefcase"></span>
-                                        <span class="label-icon">Partijen</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        <span class="fa fa-paperclip"></span>
-                                        <span class="label-icon">Thema's</span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-        
-                        <input type="text" class="form-control search-field" placeholder="Zoeken naar ...">
-                
-                        <div class="input-group-btn">
-                            <button type="button" class="btn btn-search btn-default">
-                                GO
-                            </button>
-                        </div>
-                    </div>  
-                </form>  
-            </div>
+            @Html.Partial("~/Views/Shared/SearchBar.cshtml")
         </nav>
     </div>
 </div>

@@ -137,6 +137,7 @@
     <Content Include="Content\images\logo-white.png" />
     <Content Include="Content\images\mastercard.png" />
     <Content Include="Content\images\media.jpg" />
+    <Content Include="Content\images\parlement-smaller.jpg" />
     <Content Include="Content\images\parlement.jpg" />
     <Content Include="Content\images\paypal.png" />
     <Content Include="Content\images\picture.jpg" />
@@ -157,6 +158,7 @@
     <Content Include="Views\Personen\Details.cshtml" />
     <Content Include="Views\Personen\Index.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
+    <Content Include="Views\Shared\SearchBar.cshtml" />
     <Content Include="Views\Shared\_VisitorLayout.cshtml" />
     <Content Include="Views\Shared\_MemberLayout.cshtml" />
     <Content Include="Views\Web.config" />
