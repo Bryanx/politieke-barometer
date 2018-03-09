@@ -6,8 +6,10 @@ using System.Threading.Tasks;
 
 namespace BAR.BL.Domain.Data
 {
-    public class Information
+    public class Source
     {
-
+        public int SourceId { get; set; }
+        public string Name { get; set; }
+        public string SourceLine { get; set; }
     }
 }
