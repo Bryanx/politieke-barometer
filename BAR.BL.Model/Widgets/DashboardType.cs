@@ -6,8 +6,10 @@ using System.Threading.Tasks;
 
 namespace BAR.BL.Domain.Widgets
 {
-    public class Graph : Widget
-    {
-        public GraphType GraphType { get; set; }
-    }
+  public enum DashboardType
+  {
+    PERSONAL = 1,
+    WEEKLYREVIEW,
+    PUBLIC
+  }
 }

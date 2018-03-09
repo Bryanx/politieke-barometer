@@ -4,10 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BAR.BL.Domain.Widgets
+namespace BAR.BL.Domain.Users
 {
-    public enum NumberType : byte
-    {
-        Mentions
-    }
+  public enum Gender
+  {
+    MAN = 1,
+    WOMAN,
+    OTHER
+  }
 }

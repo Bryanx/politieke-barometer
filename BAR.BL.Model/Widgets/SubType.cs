@@ -6,10 +6,9 @@ using System.Threading.Tasks;
 
 namespace BAR.BL.Domain.Widgets
 {
-    public enum GraphType : byte
-    {
-        Barchart,
-        Piechart,
-        Linegraph
-    }
+  public class SubType
+  {
+    public int SubTypeId { get; set; }
+    public string Name { get; set; }
+  }
 }
