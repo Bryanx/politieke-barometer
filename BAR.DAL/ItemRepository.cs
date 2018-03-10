@@ -12,15 +12,22 @@ namespace BAR.DAL
     /// </summary>
     public class ItemRepository
     {
+        private List<Item> items;
+
+        public ItemRepository()
+        {
+            items = new List<Item>();
+        }
+
         public void UpdateItemTrending(int itemId, double baseline, double trendingepr)
         {
-            //TODO: implement logic
+            // all data lives in memory
+            // everything refers to the same objects
         }
 
         public Item ReadItem(int itemId)
-        {
-            //TODO: implement logic
-            return null;
+        {         
+            return items.Where(i => i.ItemId == itemId).SingleOrDefault();
         }
     }
 }

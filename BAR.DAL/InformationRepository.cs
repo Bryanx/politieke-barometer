@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BAR.BL.Domain.Data;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,7 +11,14 @@ namespace BAR.DAL
     /// At this moment the repository works HC.
     /// </summary>
     public class InformationRepository
-    {             
+    {
+        private List<Information> information;
+
+        public InformationRepository()
+        {
+            information = new List<Information>();
+        }
+
         public int GetAantalInfo(int itemId, DateTime since)
         {
             //TODO: implement logic

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BAR.BL.Domain.Items;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,6 +13,7 @@ namespace BAR.BL.Domain.Users
         public int Treshhold { get; set; }
         public DateTime DateSubscribed { get; set; }
         public List<Alert> Alerts { get; set; }
+        public Item SubscribedItem { get; set; }
 
         public void AddAlert(Alert alert)
         {

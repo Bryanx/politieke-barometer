@@ -12,15 +12,22 @@ namespace BAR.DAL
     /// </summary>
     public class SubscriptionRepository
     {
-        public IEnumerable<Subscription> ReadSubscriptions(int itemId)
+        private List<Subscription> subs;
+
+        public SubscriptionRepository()
         {
-            //TODO: implement logic
-            return null;
+            subs = new List<Subscription>();
+        }
+
+        public IEnumerable<Subscription> ReadSubscriptions(int itemId)
+        {    
+            return subs.Where(sub => sub.SubscribedItem.ItemId == itemId).AsEnumerable();
         }
 
         public void UpdateSubscriptions(IEnumerable<Subscription> subs)
         {
-            //TODO: implement logic
+            // all data lives in memory
+            // everything refers to the same objects
         }
     }
 }
