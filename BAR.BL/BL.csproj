@@ -40,12 +40,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\SysController.cs" />
+    <Compile Include="Managers\DataManager.cs" />
+    <Compile Include="Managers\ItemManager.cs" />
+    <Compile Include="Managers\SubsriptionManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Controllers\" />
-    <Folder Include="Managers\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\BAR.BL.Model\Domain.csproj">
       <Project>{00352c28-b6e5-40a8-9e50-6d5bae403014}</Project>

@@ -6,7 +6,15 @@ using System.Threading.Tasks;
 
 namespace BAR.DAL
 {
-    class InformationRepository
-    {
+    /// <summary>
+    /// Deze repo werkt op dit moment nog HC.
+    /// </summary>
+    public class InformationRepository
+    {             
+        public int GetAantalInfo(int itemId, DateTime since)
+        {
+            //TODO: implement logic
+            return 0;
+        }
     }
 }

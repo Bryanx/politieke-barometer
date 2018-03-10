@@ -9,7 +9,7 @@ namespace BAR.BL.Managers
         public int GetAanatalInfo(int itemId, DateTime since)
         {
             InformationRepository infRepo = new InformationRepository();
-            return infRepo.getAantalInfo(itemId, since);
+            return infRepo.GetAantalInfo(itemId, since);
         }
                    
     }
