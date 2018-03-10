@@ -5,6 +5,10 @@ using System.Collections.Generic;
 
 namespace BAR.BL.Managers
 {
+    /// <summary>
+    /// Resposable for managing subcriptions
+    /// and their alerts
+    /// </summary>
     public class SubsriptionManager
     {
         public void GenerateAlerts(int itemId)

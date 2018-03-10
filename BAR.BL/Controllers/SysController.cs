@@ -3,6 +3,9 @@ using System;
 
 namespace BAR.BL.Controllers
 {
+    /// <summary>
+    /// Controller used for backgroundtasks.
+    /// </summary>
     public class SysController
     {
         public void DetermineTrending(int itemId)

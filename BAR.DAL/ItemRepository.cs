@@ -8,7 +8,7 @@ using BAR.BL.Domain.Items;
 namespace BAR.DAL
 {
     /// <summary>
-    /// Deze repository werkt op dit moment nog HC.
+    /// At this moment the repository works HC.
     /// </summary>
     public class ItemRepository
     {

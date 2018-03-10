@@ -3,6 +3,10 @@ using BAR.DAL;
 
 namespace BAR.BL.Managers
 {
+    /// <summary>
+    /// Responsable for working with 
+    /// data we received from TextGain.
+    /// </summary>
     public class DataManager
     {
 

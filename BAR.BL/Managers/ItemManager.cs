@@ -4,6 +4,12 @@ using BAR.BL.Domain.Items;
 
 namespace BAR.BL.Managers
 {
+    /// <summary>
+    /// Responsable for managing:
+    /// Oraginsations
+    /// Persons
+    /// Themes
+    /// </summary>
     public class ItemManager
     {
         /// <summary>
@@ -16,11 +22,11 @@ namespace BAR.BL.Managers
             int aantalTrending = dataManager.GetAanatalInfo(itemId, DateTime.Now.AddDays(-1));
             int aantalBaseline = dataManager.GetAanatalInfo(itemId, DateTime.Now.AddMonths(-1));
 
-            //bereken de baseline = aantal / aantal dagen since tot vandaag
+            // bereken de baseline = aantal / aantal dagen since tot vandaag
             // 30 is ongeveer het gemiddelde van 1 maand.
             double baseline = aantalBaseline / 30;
 
-            //Bereken het trendingpercentage = baseline / aantal dagen since tot vandaag
+            // Bereken het trendingpercentage = baseline / aantal dagen since tot vandaag
             // 30 is ongeveer het gemiddelde van 1 maand.
             double trendingPer = baseline / 30;
 

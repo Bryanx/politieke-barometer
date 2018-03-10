@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace BAR.DAL
 {
     /// <summary>
-    /// Deze repo werkt op dit moment nog HC.
+    /// At this moment the repository works HC.
     /// </summary>
     public class InformationRepository
     {             
