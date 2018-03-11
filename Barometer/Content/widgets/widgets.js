@@ -39,7 +39,6 @@ function addLineChart(id) {
 
 function addPieChart(id, labels, values) {
     addCSSgrid(id);
-    console.log(labels[0] + " " + values[0]);
     Morris.Donut({
         element: id,
         resize: true,
@@ -112,7 +111,7 @@ function createWidget(id, title) {
     return '<div class="chart-container" data-gs-width="4" data-gs-height="4" data-gs-y="0" data-gs-x="0">' +
         '            <div class="x_panel grid-stack-item-content bg-white no-scrollbar">' +
         '                <div class="x_title">' +
-        '                    <h2 id="graphTitle">' + title + '</h2>' +
+        '                    <h2 class="graphTitle">' + title + '</h2>' +
         '                    <ul class="nav navbar-right panel_toolbox">' +
         '                        <li>' +
         '                            <a class="collapse-link">' +
@@ -157,40 +156,47 @@ var grid = gridselector.data('gridstack');
 
 function loadGrid(data) {
     for (var i = 0; i < data.length; i++) {
-        let width = data[i].width;
         grid.addWidget(createWidget('grafiek' + counter, data[i].Title),
-            data.x, data[i].y, width, data[i].height, true, 4, 12, 4);
-        switch (data[i].Graph.Type) {
-            case "donut" :
-                if (data[i].Graph.DonutLabels != null && data[i].Graph.DonutValues != null) {
-                    addPieChart('grafiek' + counter, data[i].Graph.DonutLabels, data[i].Graph.DonutValues);
-                }
-                break;
-            case "line" :
-                addLineChart('grafiek' + counter);
-                break;
-            case "bar" :
-                addBarChart('grafiek' + counter);
-                break;
+            data.x, data[i].y, data[i].width, data[i].height, true, 4, 12, 4);
+        if (data[i].Graph != null) {
+            switch (data[i].Graph.Type) {
+                case "donut" :
+                    if (data[i].Graph.DonutLabels != null && data[i].Graph.DonutValues != null) {
+                        addPieChart('grafiek' + counter, data[i].Graph.DonutLabels, data[i].Graph.DonutValues);
+                    }
+                    break;
+                case "line" :
+                    addLineChart('grafiek' + counter);
+                    break;
+                case "bar" :
+                    addBarChart('grafiek' + counter);
+                    break;
+            }
         }
         counter++;
     }
 }
 
+var count = 0;
+
 function saveGrid() {
-    this.serializedData = _.map($('.grid-stack > .grid-stack-item:visible'), function (el) {
+    var titles = $('.graphTitle');
+    grid.serializedData = _.map($('.grid-stack > .grid-stack-item:visible'), function (el) {
         el = $(el);
         var node = el.data('_gridstack_node');
         return {
-            x: node.x,
-            y: node.y,
-            width: node.width,
-            height: node.height
+            Id: node._id,
+            Title: $(titles[count++]).html(),
+            X: node.x,
+            Y: node.y,
+            Width: node.width,
+            Height: node.height
         };
     }, this);
-    $('#saved-data').val(JSON.stringify(this.serializedData, null, '    '));
+    var JSONdata = JSON.stringify(grid.serializedData, null, '    ');
+    console.log(grid.serializedData);
     return false;
-};
+}
 
 function init() {
     //close widget
@@ -228,45 +234,6 @@ function init() {
 
 //TODO: Add persistence and import functionality
 // $(function () {
-//     new function () {
-//         this.serializedData = [
-//             {x: 0, y: 0, width: 2, height: 2},
-//             {x: 3, y: 1, width: 1, height: 2},
-//             {x: 4, y: 1, width: 1, height: 1},
-//             {x: 2, y: 3, width: 3, height: 1},
-//             {x: 1, y: 4, width: 1, height: 1},
-//             {x: 1, y: 3, width: 1, height: 1},
-//             {x: 2, y: 4, width: 1, height: 1},
-//             {x: 2, y: 5, width: 1, height: 1}
-//         ];
-//
-//         this.grid = $('.grid-stack').data('gridstack');
-//
-//         this.loadGrid = function () {
-//             this.grid.removeAll();
-//             var items = GridStackUI.Utils.sort(this.serializedData);
-//             _.each(items, function (node) {
-//                 this.grid.addWidget($('<div><div class="grid-stack-item-content" /><div/>'),
-//                     node.x, node.y, node.width, node.height);
-//             }, this);
-//             return false;
-//         }.bind(this);
-//
-//         this.saveGrid = function () {
-//             this.serializedData = _.map($('.grid-stack > .grid-stack-item:visible'), function (el) {
-//                 el = $(el);
-//                 var node = el.data('_gridstack_node');
-//                 return {
-//                     x: node.x,
-//                     y: node.y,
-//                     width: node.width,
-//                     height: node.height
-//                 };
-//             }, this);
-//             $('#saved-data').val(JSON.stringify(this.serializedData, null, '    '));
-//             return false;
-//         }.bind(this);
-//
 //         this.clearGrid = function () {
 //             this.grid.removeAll();
 //             return false;
