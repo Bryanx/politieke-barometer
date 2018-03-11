@@ -10,7 +10,7 @@ namespace BAR.DAL
     /// <summary>
     /// At this moment the repository works HC.
     /// </summary>
-    public class SubscriptionRepository
+    public class SubscriptionRepository : ISubscriptionRepository
     {
         private List<Subscription> subs;
 

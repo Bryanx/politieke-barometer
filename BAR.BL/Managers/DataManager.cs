@@ -7,12 +7,12 @@ namespace BAR.BL.Managers
     /// Responsable for working with 
     /// data we received from TextGain.
     /// </summary>
-    public class DataManager
+    public class DataManager : IDataManager
     {
 
         public int GetAanatalInfo(int itemId, DateTime since)
         {
-            InformationRepository infRepo = new InformationRepository();
+            IInformationRepository infRepo = new InformationRepository();
             return infRepo.GetAantalInfo(itemId, since);
         }
                    

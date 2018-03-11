@@ -10,7 +10,7 @@ namespace BAR.BL.Managers
     /// Persons
     /// Themes
     /// </summary>
-    public class ItemManager
+    public class ItemManager : IItemManager
     {
         /// <summary>
         /// Adjust the baseline of the given item
@@ -18,7 +18,7 @@ namespace BAR.BL.Managers
         /// </summary>
         public void DetermineTrending(int itemId)
         {
-            DataManager dataManager = new DataManager();
+            IDataManager dataManager = new DataManager();
             int aantalTrending = dataManager.GetAanatalInfo(itemId, DateTime.Now.AddDays(-1));
             int aantalBaseline = dataManager.GetAanatalInfo(itemId, DateTime.Now.AddMonths(-1));
 
@@ -30,13 +30,13 @@ namespace BAR.BL.Managers
             // 30 is ongeveer het gemiddelde van 1 maand.
             double trendingPer = baseline / 30;
 
-            ItemRepository itemRepo = new ItemRepository();
+            IItemRepository itemRepo = new ItemRepository();
             itemRepo.UpdateItemTrending(itemId, baseline, trendingPer);
         }
 
         public double GetTrendingPer(int itemId)
         {
-            ItemRepository itemRepo = new ItemRepository();
+            IItemRepository itemRepo = new ItemRepository();
             Item item = itemRepo.ReadItem(itemId);
             return item.TrendingPercentage;
         }

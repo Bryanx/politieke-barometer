@@ -42,8 +42,11 @@
   <ItemGroup>
     <Compile Include="Controllers\SysController.cs" />
     <Compile Include="Managers\DataManager.cs" />
+    <Compile Include="Managers\IDataManager.cs" />
+    <Compile Include="Managers\IItemManager.cs" />
+    <Compile Include="Managers\ISubscriptionManager.cs" />
     <Compile Include="Managers\ItemManager.cs" />
-    <Compile Include="Managers\SubsriptionManager.cs" />
+    <Compile Include="Managers\SubscriptionManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />

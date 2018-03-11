@@ -10,7 +10,7 @@ namespace BAR.DAL
     /// <summary>
     /// At this moment the repository works HC.
     /// </summary>
-    public class InformationRepository
+    public class InformationRepository : IInformationRepository
     {
         private List<Information> information;
 

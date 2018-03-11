@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace BAR.BL.Domain.Widgets
 {
-  public class SubType
-  {
-    public int SubTypeId { get; set; }
-    public string Name { get; set; }
-  }
+    public class SubType
+    {
+        public int SubTypeId { get; set; }
+        public string Name { get; set; }
+    }
 }

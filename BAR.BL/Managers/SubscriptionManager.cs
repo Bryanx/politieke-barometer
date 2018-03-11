@@ -9,14 +9,14 @@ namespace BAR.BL.Managers
     /// Resposable for managing subcriptions
     /// and their alerts
     /// </summary>
-    public class SubsriptionManager
+    public class SubscriptionManager : ISubscriptionManager
     {
         public void GenerateAlerts(int itemId)
         {
-            ItemManager itemManager = new ItemManager();
+            IItemManager itemManager = new ItemManager();
             double per = itemManager.GetTrendingPer(itemId);
 
-            SubscriptionRepository subRepo = new SubscriptionRepository();
+            ISubscriptionRepository subRepo = new SubscriptionRepository();
             IEnumerable<Subscription> subs = subRepo.ReadSubscriptions(itemId);
             foreach (Subscription sub in subs)
             {

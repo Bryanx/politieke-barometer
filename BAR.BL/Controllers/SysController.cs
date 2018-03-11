@@ -10,13 +10,13 @@ namespace BAR.BL.Controllers
     {
         public void DetermineTrending(int itemId)
         {
-            ItemManager itemManager = new ItemManager();
+            IItemManager itemManager = new ItemManager();
             itemManager.DetermineTrending(itemId);
         }
 
         public void GenerateAlerts(int itemId)
         {
-            SubsriptionManager subManager = new SubsriptionManager();
+            ISubscriptionManager subManager = new SubscriptionManager();
             subManager.GenerateAlerts(itemId);
         }
     }
