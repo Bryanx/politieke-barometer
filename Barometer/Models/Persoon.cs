@@ -3,7 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Barometer.Models {
+namespace Barometer.Models {    
+    /// <summary>
+    /// temp model
+    /// </summary>
     public class Persoon {
         public int Id  { get; set; }
         public string FirstName { get; set; }

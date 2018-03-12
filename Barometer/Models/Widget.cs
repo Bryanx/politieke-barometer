@@ -2,6 +2,9 @@
 using System.Linq;
 
 namespace Barometer.Models {
+    /// <summary>
+    /// temp model
+    /// </summary>
     public class Widget {
     
         public int Id { get; set; }

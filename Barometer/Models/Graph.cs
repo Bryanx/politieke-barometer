@@ -1,6 +1,9 @@
 ﻿using System.Collections.Generic;
 
 namespace Barometer.Models {
+    /// <summary>
+    /// temp model
+    /// </summary>
     public class Graph {
         public string Type { get; set; }
         public string[] DonutLabels { get; set; }

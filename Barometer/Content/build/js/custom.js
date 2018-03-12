@@ -5454,7 +5454,6 @@ $(document).ready(function () {
         });
     }
     callMethods();
-    //TODO: Flicker voorkomen
     init_JQVmap();
 });	
 
