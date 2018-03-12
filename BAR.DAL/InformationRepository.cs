@@ -1,9 +1,12 @@
 ﻿using BAR.BL.Domain.Data;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web.Script.Serialization;
 
 namespace BAR.DAL
 {
@@ -18,6 +21,8 @@ namespace BAR.DAL
     public InformationRepository()
     {
       information = new List<Information>();
+      properties = new List<Property>();
+      GenerateProperties();
     }
 
     public int GetAantalInfo(int itemId, DateTime since)
@@ -98,5 +103,24 @@ namespace BAR.DAL
       properties.Add(url);
       properties.Add(mention);
     }
+
+    //public static void ReadJson()
+    //{
+    //  JsonTextReader reader = new JsonTextReader(new StringReader());
+    //  while (reader.Read())
+    //  {
+    //    if (reader.Value != null)
+    //    {
+    //      Console.WriteLine("Token: {0}, Value: {1}", reader.TokenType, reader.Value);
+    //    }
+    //    else
+    //    {
+    //      Console.WriteLine("Token: {0}", reader.TokenType);
+    //    }
+    //  }
+
+    //  Console.WriteLine();
+    //  Console.ReadKey();
+    //}
   }
 }

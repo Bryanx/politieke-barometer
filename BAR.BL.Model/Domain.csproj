@@ -41,7 +41,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Data\Information.cs" />
+    <Compile Include="Data\Property.cs" />
+    <Compile Include="Data\PropertyValue.cs" />
     <Compile Include="Data\Source.cs" />
+    <Compile Include="Data\Record.cs" />
     <Compile Include="Items\Item.cs" />
     <Compile Include="Items\Organisation.cs" />
     <Compile Include="Items\Person.cs" />

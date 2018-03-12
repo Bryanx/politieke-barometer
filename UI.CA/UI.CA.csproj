@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{10D141A9-6F98-49F7-97D8-CD6A4C417679}</ProjectGuid>
+    <ProjectGuid>{FD82E5A8-8753-41BE-818F-7DE613D26B24}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <RootNamespace>BAR.UI.CA</RootNamespace>
     <AssemblyName>BAR.UI.CA</AssemblyName>
-    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>
@@ -47,20 +47,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\BAR.BL.Model\Domain.csproj">
-      <Project>{00352c28-b6e5-40a8-9e50-6d5bae403014}</Project>
-      <Name>Domain</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\BAR.BL\BL.csproj">
-      <Project>{c6088863-8af1-4ff0-b288-12fc419680ad}</Project>
-      <Name>BL</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\BAR.DAL\DAL.csproj">
-      <Project>{F5414F35-68D4-4BE7-A2CF-DA5D9977FC0F}</Project>
-      <Name>DAL</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
