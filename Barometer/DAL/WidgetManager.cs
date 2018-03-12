@@ -3,9 +3,12 @@ using System.Linq;
 using Barometer.Models;
 
 namespace Barometer.DAL {
+    
+    //TODO: Should be replaced and moved to BL layer.
     public class WidgetManager {
         private static List<Widget> mgr;
-
+        
+        //tempdata
         static WidgetManager() {
             mgr = new List<Widget>();
             mgr.Add(new Widget(1,"Anthony",0,0,6,4, new Graph("donut", new string[] {"jarne","bryan","maarten","yoni"}, new int[] {30,15,45,10})));

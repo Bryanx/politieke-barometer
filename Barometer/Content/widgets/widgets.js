@@ -107,8 +107,11 @@ function addBarChart(id) {
     });
 }
 
+/**
+ * The basic HTML structure of a widget
+ */
 function createWidget(id, title) {
-    return '<div class="chart-container" data-gs-width="4" data-gs-height="4" data-gs-y="0" data-gs-x="0">' +
+    return '<div class="chart-container">' +
         '            <div class="x_panel grid-stack-item-content bg-white no-scrollbar">' +
         '                <div class="x_title">' +
         '                    <h2 class="graphTitle">' + title + '</h2>' +

@@ -23,6 +23,7 @@ namespace Barometer.Models {
             Trend = trend;
         }
 
+        //temp data
         public static IEnumerable<Persoon> getPersonen() {
             List<Persoon> list = new List<Persoon>();
             Random rnd = new Random();

@@ -35,14 +35,18 @@
     <script type="text/javascript">
         (function() {
             $('#saveWidgets').on('click',saveGrid);
+            
+            //GET Request for the widgets
             $.ajax('/api/Widget',
                     {
                         type: 'GET',
                         dataType: 'json'
                     })
                 .done(function(data) {
+                    //if GET request is succesfull: call loadGrid() in widgets.js -> loads all widgets
                     loadGrid(data);
                 })
+                    //TODO: if FAIL proper error handling
                 .fail(function() { alert('Oeps, something went wrong!'); });
         })(jQuery);
     </script>
