@@ -19,8 +19,17 @@ namespace BAR.DAL
             subs = new List<Subscription>();
         }
 
+        public IEnumerable<Alert> ReadAllAlerts(int userId)
+        {           
+            IEnumerable<Subscription> userSubs = subs.Where(sub => sub.SubscribedUser.UserId == userId);
+
+            List<Alert> alersToRead = new List<Alert>();
+            foreach (Subscription sub in userSubs) alersToRead.AddRange(sub.Alerts);
+            return alersToRead.AsEnumerable();           
+        }
+
         public IEnumerable<Subscription> ReadSubscriptions(int itemId)
-        {    
+        {
             return subs.Where(sub => sub.SubscribedItem.ItemId == itemId).AsEnumerable();
         }
 

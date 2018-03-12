@@ -29,5 +29,11 @@ namespace BAR.BL.Managers
 
             subRepo.UpdateSubscriptions(subs);
         }
+
+        public IEnumerable<Alert> GetAllAlerts(int userId)
+        {
+            ISubscriptionRepository subRepo = new SubscriptionRepository();
+            return subRepo.ReadAllAlerts(userId);
+        }
     }
 }

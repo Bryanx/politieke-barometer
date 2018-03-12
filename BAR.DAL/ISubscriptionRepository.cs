@@ -11,5 +11,6 @@ namespace BAR.DAL
     {
         IEnumerable<Subscription> ReadSubscriptions(int itemId);
         void UpdateSubscriptions(IEnumerable<Subscription> subs);
+        IEnumerable<Alert> ReadAllAlerts(int userId);
     }
 }
