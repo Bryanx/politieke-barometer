@@ -131,6 +131,9 @@
     <Content Include="Content\homepage\homepage.css" />
     <Content Include="Content\images\.DS_Store" />
     <Content Include="Content\images\american-express.png" />
+    <Content Include="Content\images\facebook-app-logo-white.svg" />
+    <Content Include="Content\images\facebook-app-logo.svg" />
+    <Content Include="Content\images\google-normal-icon.svg" />
     <Content Include="Content\images\img.jpg" />
     <Content Include="Content\images\logo-all-white-smaller.png" />
     <Content Include="Content\images\logo-all-white.png" />
@@ -159,6 +162,7 @@
     <Content Include="Views\Personen\Details.cshtml" />
     <Content Include="Views\Personen\Index.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
+    <Content Include="Views\Shared\NavBarLinks.cshtml" />
     <Content Include="Views\Shared\SearchBar.cshtml" />
     <Content Include="Views\Shared\_VisitorLayout.cshtml" />
     <Content Include="Views\Shared\_MemberLayout.cshtml" />

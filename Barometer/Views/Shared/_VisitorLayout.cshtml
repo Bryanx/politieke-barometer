@@ -25,8 +25,7 @@
     <!-- bootstrap-daterangepicker -->
     <link href="../../vendors/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
 
-    @if (IsSectionDefined("CustomCSS"))
-    {
+    @if (IsSectionDefined("CustomCSS")) {
         @RenderSection("CustomCSS")
     }
 
@@ -41,7 +40,7 @@
     <div class="left_col scroll-view">
         <div class="navbar" style="border: 0;">
             <a href="/" class="">
-                <i class="small-logo"></i> 
+                <i class="small-logo"></i>
             </a>
         </div>
 
@@ -65,19 +64,7 @@
         <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
             <div class="menu_section">
                 <ul class="nav side-menu">
-                    <li>
-                    <a href='/#nieuws'><i class="fa fa-newspaper-o"></i> Nieuws </a>
-                    <li/>
-                    <li>
-                        <a href='@Url.Action("Index", "Personen")'><i class="fa fa-users"></i>Personen</a>
-                    </li>
-                    <li>
-                        <a href='@Url.Action("Index", "Partijen")'><i class="fa fa-briefcase"></i>Partijen</a>
-                    </li>
-                    <li>
-                        <a href='@Url.Action("Index", "Themas")'><i class="fa fa-tag"></i>Thema's</a>
-                    </li>
-
+                    @Html.Partial("~/Views/Shared/NavBarLinks.cshtml")
                 </ul>
             </div>
             <div class="menu_section">
@@ -151,20 +138,51 @@
                                     <h4 class="modal-title c-secondary" id="myModalLabel">Sign In - Sign Up</h4>
                                 </div>
                                 <div class="modal-body">
-                                    <form role="form">
-                                        <div class="form-group">
-                                            <input type="email" class="form-control login-input" placeholder="email@adress.com"/>
-                                            <input type="password" class="form-control login-input" placeholder="Password"/>
-                                            <div class="form-check login-input">
-                                                <div class="checkbox">
-                                                    <span class="character-checkbox" id="chbox" onclick="check()"></span>
-                                                    <span class="checkbox-label c-secondary">Remember me</span>
+                                    <div class="accordion" id="accordion" role="tablist" aria-multiselectable="true">
+                                        <div class="panel">
+                                            <a class="panel-heading" role="tab" id="headingOne" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                                <h4 class="panel-title">Sign In</h4>
+                                            </a>
+                                            <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                                                <div class="panel-body">
+                                                    <form role="form">
+                                                        <div class="form-group">
+                                                            <input type="email" class="form-control login-input" placeholder="email@adress.com"/>
+                                                            <input type="password" class="form-control login-input" placeholder="Password"/>
+                                                            <div class="form-check login-input">
+                                                                <div class="checkbox">
+                                                                    <span class="character-checkbox" id="chbox" onclick="check()"></span>
+                                                                    <span class="checkbox-label c-secondary">Remember me</span>
+                                                                </div>
+                                                                <button type="button" class="btn btn-primary login-input w-100">Log In</button>
+                                                                <a href="javascript:;" class="text-center login-input w-100" data-toggle="modal" data-target=".forget-modal">Forgot your password?</a>
+                                                            </div>
+                                                        </div>
+                                                    </form>
                                                 </div>
-                                                <button type="button" class="btn btn-primary login-input w-100">Log In</button>
-                                                <a href="javascript:;" class="text-center login-input w-100" data-toggle="modal" data-target=".forget-modal">Forgot your password?</a>
                                             </div>
                                         </div>
-                                    </form>
+                                        <div class="panel">
+                                            <a class="panel-heading collapsed" role="tab" id="headingTwo" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                                <h4 class="panel-title">Sign Up</h4>
+                                            </a>
+                                            <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+                                                <div class="panel-body">
+                                                    <form role="form">
+                                                        <div class="form-group">
+                                                            <button type="button" class="btn google-btn login-input w-100">Sign in with Google</button>
+                                                            <button type="button" class="btn fb-btn login-input w-100">Sign in with Facebook</button>
+                                                            <input type="email" class="form-control login-input" placeholder="email@adress.com"/>
+                                                            <input type="password" class="form-control login-input" placeholder="Password"/>
+                                                            <div class="form-check login-input">
+                                                                <button type="button" class="btn btn-primary login-input w-100">Sign Up</button>
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -206,8 +224,6 @@
     <script src="../../vendors/nprogress/nprogress.js"></script>
     <!-- Chart.js -->
     <script src="../../vendors/Chart.js/dist/Chart.min.js"></script>
-    <!-- gauge.js -->
-    <script src="../../vendors/gauge.js/dist/gauge.min.js"></script>
     <!-- bootstrap-progressbar -->
     <script src="../../vendors/bootstrap-progressbar/bootstrap-progressbar.min.js"></script>
     <!-- iCheck -->
@@ -238,8 +254,7 @@
 </environment>
 @RenderSection("scripts", required: false)
 
-@if (IsSectionDefined("CustomJS"))
-{
+@if (IsSectionDefined("CustomJS")) {
     @RenderSection("CustomJS")
 }
 
