@@ -34,6 +34,9 @@ namespace BAR.BL.Managers
             itemRepo.UpdateItemTrending(itemId, baseline, trendingPer);
         }
 
+        /// <summary>
+        /// Gets the trending percentage of a specific item
+        /// </summary>
         public double GetTrendingPer(int itemId)
         {
             IItemRepository itemRepo = new ItemRepository();

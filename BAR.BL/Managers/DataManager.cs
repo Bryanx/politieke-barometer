@@ -10,6 +10,9 @@ namespace BAR.BL.Managers
     public class DataManager : IDataManager
     {
 
+        /// <summary>
+        /// Gets the number of 
+        /// </summary
         public int GetAanatalInfo(int itemId, DateTime since)
         {
             IInformationRepository infRepo = new InformationRepository();

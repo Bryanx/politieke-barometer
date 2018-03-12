@@ -11,6 +11,10 @@ namespace BAR.BL.Managers
     /// </summary>
     public class SubscriptionManager : ISubscriptionManager
     {
+        /// <summary>
+        /// Generates new alerts for a specific item
+        /// When a user treshhold is met, a alert will bed generated
+        /// </summary>
         public void GenerateAlerts(int itemId)
         {
             IItemManager itemManager = new ItemManager();
@@ -30,6 +34,9 @@ namespace BAR.BL.Managers
             subRepo.UpdateSubscriptions(subs);
         }
 
+        /// <summary>
+        /// Gets all the alerts for a specific user
+        /// </summary>
         public IEnumerable<Alert> GetAllAlerts(int userId)
         {
             ISubscriptionRepository subRepo = new SubscriptionRepository();
