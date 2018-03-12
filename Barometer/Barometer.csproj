@@ -133,7 +133,8 @@
     <Content Include="Content\images\american-express.png" />
     <Content Include="Content\images\facebook-app-logo-white.svg" />
     <Content Include="Content\images\facebook-app-logo.svg" />
-    <Content Include="Content\images\google-normal-icon.svg" />
+    <Content Include="Content\images\google-icon-white.svg" />
+    <Content Include="Content\images\google-icon.svg" />
     <Content Include="Content\images\img.jpg" />
     <Content Include="Content\images\logo-all-white-smaller.png" />
     <Content Include="Content\images\logo-all-white.png" />

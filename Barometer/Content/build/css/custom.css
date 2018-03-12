@@ -175,36 +175,42 @@ Login
     display: inline-block;
 }
 
-.google-btn { 
+.form-control {
+    height: 40px;
+}
+
+.h-40 {
+    height: 40px;
+}
+
+
+.google-btn {
     background-color: #3484EF;
-    background-image: url(../../images/google-normal-icon.svg);
-    color: white;
-    background-position: 1em;
+    background-image: url(../../images/google-icon-white.svg);
+    background-position: 10px;
     background-repeat: no-repeat;
-    background-size: 3em;
+    background-size: 2em;
     border: none;
     color: white;
-    height: 4em;
+    height: 40px;
     line-height: 1em;
     padding: 0 4em 0 4em;
     text-decoration: none;
 }
 
-.fb-btn { 
+.fb-btn {
     background-color: #3C66AF;
     background-image: url(../../images/facebook-app-logo-white.svg);
-    color: white;
-    background-position: 1em;
+    background-position: 10px;
     background-repeat: no-repeat;
-    background-size: 3em;
+    background-size: 2em;
     border: none;
     color: white;
-    height: 4em;
+    height: 40px;
     line-height: 1em;
     padding: 0 4em 0 4em;
     text-decoration: none;
 }
-
 /* navbar */
 .nav-fixed {
     position: fixed !important;
@@ -4073,10 +4079,6 @@ ul.project_files li a i {
 
 .form-group.has-feedback span {
     display: block !important;
-}
-
-.form-group .btn {
-    margin-bottom: -6px;
 }
 
 .input-group-btn .btn {
