@@ -14,7 +14,6 @@ namespace BAR.UI.MVC.Controllers
         /// This method is called every time  when a
         /// user wants to see his/her alers
         /// </summary>
-        /// <param name="userId"></param>
         public ActionResult Index(int userId)
         {
             ISubscriptionManager subManager = new SubscriptionManager();

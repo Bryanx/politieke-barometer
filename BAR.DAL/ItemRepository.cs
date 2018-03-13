@@ -19,15 +19,30 @@ namespace BAR.DAL
             items = new List<Item>();
         }
 
+        /// <summary>
+        /// Updates the baseline and trendingpercentage of a specific item.       
+        /// </summary>
         public void UpdateItemTrending(int itemId, double baseline, double trendingepr)
         {
             // all data lives in memory
             // everything refers to the same objects
         }
 
+        /// <summary>
+        /// Returns the item that matches the itemId.
+        /// </summary>       
         public Item ReadItem(int itemId)
         {         
             return items.Where(i => i.ItemId == itemId).SingleOrDefault();
+        }
+
+        /// <summary>
+        /// Updates the Lastupdated field of an Item.
+        /// </summary>
+        public void UpdateLastUpdated(int ItemId, DateTime LastUpdated)
+        {
+            // all data lives in memory
+            // everything refers to the same objects
         }
     }
 }

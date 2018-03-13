@@ -32,6 +32,7 @@ namespace BAR.BL.Managers
 
             IItemRepository itemRepo = new ItemRepository();
             itemRepo.UpdateItemTrending(itemId, baseline, trendingPer);
+            itemRepo.UpdateLastUpdated(itemId, DateTime.Now); //Is not going to work yet. Repos are HC.
         }
 
         /// <summary>
