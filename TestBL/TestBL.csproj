@@ -50,6 +50,8 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestDataManager.cs" />
+    <Compile Include="TestItemManager.cs" />
+    <Compile Include="TestSubscriptionManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
