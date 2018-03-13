@@ -17,7 +17,8 @@ namespace BAR.UI.CA
     {
       //wave 1
       //TODO: implement logic
-      InformationRepository.ReadJson();
+      InformationRepository informationRepository = new InformationRepository();
+      informationRepository.ReadJson();
 
 
       //wave 2

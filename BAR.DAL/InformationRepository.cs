@@ -1,5 +1,6 @@
 ﻿using BAR.BL.Domain.Data;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -104,23 +105,32 @@ namespace BAR.DAL
       properties.Add(mention);
     }
 
-    //public static void ReadJson()
-    //{
-    //  JsonTextReader reader = new JsonTextReader(new StringReader());
-    //  while (reader.Read())
-    //  {
-    //    if (reader.Value != null)
-    //    {
-    //      Console.WriteLine("Token: {0}, Value: {1}", reader.TokenType, reader.Value);
-    //    }
-    //    else
-    //    {
-    //      Console.WriteLine("Token: {0}", reader.TokenType);
-    //    }
-    //  }
+    public void ReadJson()
+    {
+      Information information = new Information();
+      information.InformationId = 1;
+      //information.Properties.Add(properties.Where(x => x.Name.Equals("Hashtag"), List<PropertyValue>);
+      string json = File.ReadAllText("C:\\Users\\remi\\Google Drive\\KdG\\Leerstof\\2017 - 2018\\Integratieproject\\Repo\\politieke-barometer\\BAR.DAL\\data.json");
 
-    //  Console.WriteLine();
-    //  Console.ReadKey();
-    //}
+      dynamic deserializedJson = JsonConvert.DeserializeObject(json);
+
+        for (int i = 0; i < deserializedJson.records[0].words.Count; i++)
+        {
+          Console.WriteLine(deserializedJson.records[0].words[i]);
+        }
+
+      //for(int i = 0; i < deserializedJson.records.Count; i++)
+      //{
+      //  for (int j = 0; j < deserializedJson.records[i].Count; j++)
+      //  {
+      //    for (int k = 0; k < deserializedJson.records[i][j].Count; k++)
+      //    {
+      //      Console.WriteLine(deserializedJson.records[i][j][k]);
+      //    }
+      //  }
+      //}
+
+      Console.ReadKey();
+    }
   }
 }
