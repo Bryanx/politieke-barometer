@@ -13,7 +13,7 @@ namespace BAR.BL.Managers
         /// Gets the number of informations of a specific given item
         /// form since till now.
         /// </summary
-        public int GetAanatalInfo(int itemId, DateTime since)
+        public int GetNumberInfo(int itemId, DateTime since)
         {
             IInformationRepository infRepo = new InformationRepository();
             return infRepo.GetNumberInfo(itemId, since);

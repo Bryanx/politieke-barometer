@@ -8,6 +8,6 @@ namespace BAR.BL.Managers
 {
     public interface IDataManager
     {
-        int GetAanatalInfo(int itemId, DateTime since);
+        int GetNumberInfo(int itemId, DateTime since);
     }
 }
