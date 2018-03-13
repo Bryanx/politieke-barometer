@@ -18,9 +18,15 @@ namespace BAR.BL.Managers
         /// </summary>
         public void DetermineTrending(int itemId)
         {
+<<<<<<< HEAD
             IDataManager dataManager = new DataManager();
             int aantalTrending = dataManager.GetAantalInfo(itemId, DateTime.Now.AddDays(-1));
             int aantalBaseline = dataManager.GetAantalInfo(itemId, DateTime.Now.AddMonths(-1));
+=======
+            DataManager dataManager = new DataManager();
+            int aantalTrending = dataManager.GetNumberInfo(itemId, DateTime.Now.AddDays(-1));
+            int aantalBaseline = dataManager.GetNumberInfo(itemId, DateTime.Now.AddMonths(-1));
+>>>>>>> f34955d8e48a371814e65d354b49033fe6d64af3
 
             // bereken de baseline = aantal / aantal dagen since tot vandaag
             // 30 is ongeveer het gemiddelde van 1 maand.

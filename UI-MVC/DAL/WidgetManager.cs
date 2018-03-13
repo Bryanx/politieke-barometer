@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using UI.MVC.Models;
+using BAR.UI.MVC.Models;
 
-namespace UI.MVC.DAL {
+namespace BAR.UI.MVC.DAL {
     
     //TODO: Should be replaced and moved to BL layer.
     public class WidgetManager {

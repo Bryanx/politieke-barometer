@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace UI.MVC.Models {
+namespace BAR.UI.MVC.Models {
     /// <summary>
     /// temp model
     /// </summary>
