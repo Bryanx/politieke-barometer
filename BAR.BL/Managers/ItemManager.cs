@@ -18,7 +18,7 @@ namespace BAR.BL.Managers
         /// </summary>
         public void DetermineTrending(int itemId)
         {
-            IDataManager dataManager = new DataManager();
+            DataManager dataManager = new DataManager();
             int aantalTrending = dataManager.GetNumberInfo(itemId, DateTime.Now.AddDays(-1));
             int aantalBaseline = dataManager.GetNumberInfo(itemId, DateTime.Now.AddMonths(-1));
 

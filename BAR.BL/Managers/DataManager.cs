@@ -18,7 +18,10 @@ namespace BAR.BL.Managers
             IInformationRepository infRepo = new InformationRepository();
             return infRepo.GetNumberInfo(itemId, since);
         }
-                   
+
+        public int GetAanatalInfo(int itemId, DateTime since) {
+            throw new NotImplementedException();
+        }
     }
 }
 

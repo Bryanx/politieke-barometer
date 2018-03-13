@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace UI.MVC.Models {
+namespace BAR.UI.MVC.Models {
     /// <summary>
     /// temp model
     /// </summary>

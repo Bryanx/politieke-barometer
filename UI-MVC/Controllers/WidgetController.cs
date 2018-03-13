@@ -2,10 +2,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Web.Http;
-using UI.MVC.DAL;
-using UI.MVC.Models;
+using BAR.UI.MVC.DAL;
+using BAR.UI.MVC.Models;
 
-namespace UI.MVC.Controllers {
+namespace BAR.UI.MVC.Controllers {
     
     /// This class is used to transfer all widget information from UI to the managers.
     /// The api calls are in ajax requests on the dashboard index page.

@@ -1,9 +1,8 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Web.Mvc;
-using UI.MVC.Models;
+using BAR.UI.MVC.Models;
 
-namespace UI.MVC.Controllers {
+namespace BAR.UI.MVC.Controllers {
     public class PersonenController : Controller {
         
         // GET: Default (Person overview page)
