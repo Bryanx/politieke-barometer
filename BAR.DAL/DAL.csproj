@@ -64,7 +64,6 @@
     <Folder Include="EF\" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="data.json" />
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

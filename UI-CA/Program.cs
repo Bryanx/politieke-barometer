@@ -7,23 +7,22 @@ using System.Threading.Tasks;
 
 namespace BAR.UI.CA
 {
-    /// <summary>
-    /// In this class we test te logic of generating the alerts
-    /// in two waves. The second wave needs to generate new alerts
-    /// </summary>
-    public class Program
+  /// <summary>
+  /// In this class we test te logic of generating the alerts
+  /// in two waves. The second wave needs to generate new alerts
+  /// </summary>
+  public class Program
+  {
+    public static void Main(string[] args)
     {
-        public static void Main(string[] args)
-        {
-            //wave 1
-            //Are setup is based on the json-dump data.
-            //TODO: implement logic
-            InformationRepository informationRepository = new InformationRepository();
-            informationRepository.ReadJson();
-
-            //wave 2
-            //Needs to generate new alerts when HC data is added.
-            //TOCO: implement logic
-        }
-    }
+      //wave 1
+      //Are setup is based on the json-dump data.
+      //TODO: implement logic
+      InformationRepository informationRepository = new InformationRepository();
+      informationRepository.PrintInformationList();
+      //wave 2
+    }//Needs to generate new alerts when HC data is added.
+     //TOCO: implement logic
+  }
 }
+
