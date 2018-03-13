@@ -22,7 +22,7 @@ namespace BAR.DAL
         /// <summary>
         /// Updates the baseline and trendingpercentage of a specific item.       
         /// </summary>
-        public void UpdateItemTrending(int itemId, double baseline, double trendingepr)
+        c
         {
             // all data lives in memory
             // everything refers to the same objects
