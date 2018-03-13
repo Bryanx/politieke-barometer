@@ -109,26 +109,43 @@ namespace BAR.DAL
     {
       string json = File.ReadAllText("C:\\Users\\remi\\Google Drive\\KdG\\Leerstof\\2017 - 2018\\Integratieproject\\Repo\\politieke-barometer\\BAR.DAL\\data.json");
       dynamic deserializedJson = JsonConvert.DeserializeObject(json);
+
       for (int i = 0; i < deserializedJson.records.Count; i++)
       {
+        PropertyValue propertyValue;
         Information information = new Information();
-        information.InformationId = i+1;
+        information.InformationId = i + 1;
         information.Properties = new Dictionary<Property, ICollection<PropertyValue>>();
 
         List<PropertyValue> list = new List<PropertyValue>();
+        for (int j = 0; j < deserializedJson.records[i].hashtags.Count; j++)
+        {
+          propertyValue = new PropertyValue();
+          propertyValue.PropertyValueId = j + 1;
+          propertyValue.Value = deserializedJson.records[i].hashtags[j];
+          list.Add(propertyValue);
+        }
+        information.Properties.Add(propertyList.ElementAt(0), list);
+
+        list = new List<PropertyValue>();
         for (int j = 0; j < deserializedJson.records[i].words.Count; j++)
         {
-          PropertyValue propertyValue = new PropertyValue();
+          propertyValue = new PropertyValue();
           propertyValue.PropertyValueId = j + 1;
           propertyValue.Value = deserializedJson.records[i].words[j];
           list.Add(propertyValue);
         }
-
         information.Properties.Add(propertyList.ElementAt(1), list);
+
+        list = new List<PropertyValue>();
+        propertyValue = new PropertyValue();
+        propertyValue.PropertyValueId = 1;
+        propertyValue.Value = deserializedJson.records[i].date;
+        list.Add(propertyValue);
+        information.Properties.Add(propertyList.ElementAt(2), list);
 
         Console.ReadKey();
       }
-      //information.Properties.Add(properties.ElementAt(0), list);
     }
   }
 }
