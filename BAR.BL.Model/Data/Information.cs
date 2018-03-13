@@ -15,4 +15,5 @@ namespace BAR.BL.Domain.Data
     public int UserSourceId { get; set; }
     public IDictionary<Property, ICollection<PropertyValue>> Properties { get; set; }
   }
+
 }

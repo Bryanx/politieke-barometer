@@ -19,6 +19,9 @@ namespace BAR.DAL
             subs = new List<Subscription>();
         }
 
+        /// <summary>
+        /// Gives back a collection of alerts from a specific user.
+        /// </summary>
         public IEnumerable<Alert> ReadAllAlerts(int userId)
         {           
             IEnumerable<Subscription> userSubs = subs.Where(sub => sub.SubscribedUser.UserId == userId);
@@ -28,11 +31,17 @@ namespace BAR.DAL
             return alersToRead.AsEnumerable();           
         }
 
+        /// <summary>
+        /// Gives back a collection of subscriptions form a specific item.
+        /// </summary>
         public IEnumerable<Subscription> ReadSubscriptions(int itemId)
         {
             return subs.Where(sub => sub.SubscribedItem.ItemId == itemId).AsEnumerable();
         }
 
+        /// <summary>
+        /// Updates all the subscriptions when alerts are added.
+        /// </summary>
         public void UpdateSubscriptions(IEnumerable<Subscription> subs)
         {
             // all data lives in memory

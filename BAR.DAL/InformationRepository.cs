@@ -11,6 +11,7 @@ using System.Web.Script.Serialization;
 
 namespace BAR.DAL
 {
+
   /// <summary>
   /// At this moment the repository works HC.
   /// </summary>
@@ -149,3 +150,4 @@ namespace BAR.DAL
     }
   }
 }
+

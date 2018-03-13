@@ -9,7 +9,6 @@ namespace BAR.BL.Managers
     /// </summary>
     public class DataManager : IDataManager
     {
-
         /// <summary>
         /// Gets the number of 
         /// </summary
