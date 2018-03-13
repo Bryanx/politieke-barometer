@@ -16,13 +16,13 @@ namespace BAR.DAL
   /// </summary>
   public class InformationRepository : IInformationRepository
   {
-    private List<Information> information;
-    private List<Property> properties;
+    private List<Information> informationList;
+    private List<Property> propertyList;
 
     public InformationRepository()
     {
-      information = new List<Information>();
-      properties = new List<Property>();
+      informationList = new List<Information>();
+      propertyList = new List<Property>();
       GenerateProperties();
     }
 
@@ -92,45 +92,43 @@ namespace BAR.DAL
       };
 
       //Add all properties
-      properties.Add(hashtag);
-      properties.Add(word);
-      properties.Add(date);
-      properties.Add(politician);
-      properties.Add(geo);
-      properties.Add(postId);
-      properties.Add(userId);
-      properties.Add(sentiment);
-      properties.Add(retweet);
-      properties.Add(url);
-      properties.Add(mention);
+      propertyList.Add(hashtag);
+      propertyList.Add(word);
+      propertyList.Add(date);
+      propertyList.Add(politician);
+      propertyList.Add(geo);
+      propertyList.Add(postId);
+      propertyList.Add(userId);
+      propertyList.Add(sentiment);
+      propertyList.Add(retweet);
+      propertyList.Add(url);
+      propertyList.Add(mention);
     }
 
     public void ReadJson()
     {
-      Information information = new Information();
-      information.InformationId = 1;
-      //information.Properties.Add(properties.Where(x => x.Name.Equals("Hashtag"), List<PropertyValue>);
       string json = File.ReadAllText("C:\\Users\\remi\\Google Drive\\KdG\\Leerstof\\2017 - 2018\\Integratieproject\\Repo\\politieke-barometer\\BAR.DAL\\data.json");
-
       dynamic deserializedJson = JsonConvert.DeserializeObject(json);
+      for (int i = 0; i < deserializedJson.records.Count; i++)
+      {
+        Information information = new Information();
+        information.InformationId = i+1;
+        information.Properties = new Dictionary<Property, ICollection<PropertyValue>>();
 
-        for (int i = 0; i < deserializedJson.records[0].words.Count; i++)
+        List<PropertyValue> list = new List<PropertyValue>();
+        for (int j = 0; j < deserializedJson.records[i].words.Count; j++)
         {
-          Console.WriteLine(deserializedJson.records[0].words[i]);
+          PropertyValue propertyValue = new PropertyValue();
+          propertyValue.PropertyValueId = j + 1;
+          propertyValue.Value = deserializedJson.records[i].words[j];
+          list.Add(propertyValue);
         }
 
-      //for(int i = 0; i < deserializedJson.records.Count; i++)
-      //{
-      //  for (int j = 0; j < deserializedJson.records[i].Count; j++)
-      //  {
-      //    for (int k = 0; k < deserializedJson.records[i][j].Count; k++)
-      //    {
-      //      Console.WriteLine(deserializedJson.records[i][j][k]);
-      //    }
-      //  }
-      //}
+        information.Properties.Add(propertyList.ElementAt(1), list);
 
-      Console.ReadKey();
+        Console.ReadKey();
+      }
+      //information.Properties.Add(properties.ElementAt(0), list);
     }
   }
 }

@@ -13,6 +13,6 @@ namespace BAR.BL.Domain.Data
     public Item Item { get; set; }
     public Source Source { get; set; }
     public int UserSourceId { get; set; }
-    public IDictionary<Property, PropertyValue> Properties { get; set; }
+    public IDictionary<Property, ICollection<PropertyValue>> Properties { get; set; }
   }
 }
