@@ -34,7 +34,7 @@ namespace TestDAL
             int aantal;
 
             //Act
-            aantal = infoRepo.GetNumberInfo(1, DateTime.Now.AddDays(-7));
+            aantal = infoRepo.ReadNumberInfo(1, DateTime.Now.AddDays(-7));
 
             //Assert
             Assert.AreNotEqual(aantal, 0, "Aantal shoud not be 0.");

@@ -19,7 +19,8 @@ namespace BAR.UI.CA
       //Are setup is based on the json-dump data.
       //TODO: implement logic
       InformationRepository informationRepository = new InformationRepository();
-      informationRepository.PrintInformationList();
+      //informationRepository.PrintInformationList();
+      informationRepository.FilterProperty("Politician");
       //wave 2
     }//Needs to generate new alerts when HC data is added.
      //TOCO: implement logic
