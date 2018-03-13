@@ -8,6 +8,6 @@ namespace BAR.DAL
 {
     public interface IInformationRepository
     {
-        int GetAantalInfo(int itemId, DateTime since);
+        int GetNumberInfo(int itemId, DateTime since);
     }
 }

@@ -10,12 +10,13 @@ namespace BAR.BL.Managers
     public class DataManager : IDataManager
     {
         /// <summary>
-        /// Gets the number of 
+        /// Gets the number of informations of a specific given item
+        /// form since till now.
         /// </summary
         public int GetAanatalInfo(int itemId, DateTime since)
         {
             IInformationRepository infRepo = new InformationRepository();
-            return infRepo.GetAantalInfo(itemId, since);
+            return infRepo.GetNumberInfo(itemId, since);
         }
                    
     }
