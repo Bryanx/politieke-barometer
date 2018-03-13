@@ -22,7 +22,7 @@ namespace BAR.DAL
         /// <summary>
         /// Updates the baseline and trendingpercentage of a specific item.       
         /// </summary>
-        c
+        public void UpdateItemTrending(int itemId, double baseline, double trendingepr)
         {
             // all data lives in memory
             // everything refers to the same objects
@@ -32,7 +32,7 @@ namespace BAR.DAL
         /// Returns the item that matches the itemId.
         /// </summary>       
         public Item ReadItem(int itemId)
-        {         
+        {
             return items.Where(i => i.ItemId == itemId).SingleOrDefault();
         }
 

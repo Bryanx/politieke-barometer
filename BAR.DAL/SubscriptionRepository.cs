@@ -22,7 +22,7 @@ namespace BAR.DAL
         /// <summary>
         /// Gives back a collection of alerts from a specific user.
         /// </summary>
-        public IEnumerable<Alert> ReadAllAlerts(int userId)
+        public IEnumerable<Alert> ReadAlerts(int userId)
         {           
             IEnumerable<Subscription> userSubs = subs.Where(sub => sub.SubscribedUser.UserId == userId);
 
