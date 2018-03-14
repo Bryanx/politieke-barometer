@@ -16,9 +16,14 @@ namespace BAR.DAL
 	{
 		private BarometerDbContext ctx;
 
-		public InformationRepository()
+		/// <summary>
+		/// If uow is present then the constructor
+		/// will get the context from uow.
+		/// </summary>
+		public InformationRepository(UnitOfWork uow = null)
 		{
-			ctx = new BarometerDbContext();
+			if (uow == null) ctx = new BarometerDbContext();
+			else ctx = uow.Context;					
 		}
 
 		/// <summary>

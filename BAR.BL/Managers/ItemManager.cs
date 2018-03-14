@@ -15,6 +15,10 @@ namespace BAR.BL.Managers
 		private UnitOfWorkManager uowManager;
 		private ItemRepository itemRepo;
 
+		/// <summary>
+		/// When unit of work is present, it will effect
+		/// initRepo-method. (see documentation of initRepo)
+		/// </summary>
         public ItemManager(UnitOfWorkManager uowManager = null)
 		{
 			this.uowManager = uowManager;

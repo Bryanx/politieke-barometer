@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 
 namespace BAR.BL.Managers
 {
-  public interface IDataManager
-  {
-    int GetNumberInfo(int itemId, DateTime since);
-  }
+	public interface IDataManager
+	{
+		int GetNumberInfo(int itemId, DateTime since);
+		void InitRepo();
+	}
 }

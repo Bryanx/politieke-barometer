@@ -25,16 +25,16 @@ namespace BAR.BL.Managers
         {
             IUserRepository userRepo = new UserRepository();
             return userRepo.ReadUser(userId);
-        }
+        }		
 
 		/// <summary>
 		/// Determines if the repo needs a unit of work
 		/// if the unitOfWorkManager is present
 		/// </summary>
-		public void InitRepo()
+		private void InitRepo()
 		{
 			if (uowManager == null) userRepo = new UserRepository();
 			else userRepo = new UserRepository(uowManager.UnitOfWork);
-		}
-    }
+		}		
+	}
 }

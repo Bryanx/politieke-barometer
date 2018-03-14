@@ -11,7 +11,19 @@ namespace BAR.BL.Managers
 	/// and their alerts
 	/// </summary>
 	public class SubscriptionManager : ISubscriptionManager
-	{		
+	{
+		private SubscriptionRepository subRepo;
+		private UnitOfWorkManager uowManager;
+
+		/// <summary>
+		/// When unit of work is present, it will effect
+		/// initRepo-method. (see documentation of initRepo)
+		/// </summary>
+		public SubscriptionManager(UnitOfWorkManager uowManager = null) 
+		{
+			this.uowManager = uowManager;
+		}
+
 		/// <summary>
 		/// Creates a new subscription for a specific user and item
 		/// with a given treshhold.
@@ -21,6 +33,7 @@ namespace BAR.BL.Managers
 		/// </summary>		
 		public void CreateSubscription(int userId, int itemId, int treshhold = 10)
 		{
+			
 			UnitOfWorkManager uowManager = new UnitOfWorkManager();
 			
 			//get user
@@ -31,8 +44,7 @@ namespace BAR.BL.Managers
 			IItemManager itemManager = new ItemManager(uowManager);
 			Item item = itemManager.GetItem(itemId);
 
-			//make subscription
-			ISubscriptionRepository subRepo = new SubscriptionRepository(uowManager.UnitOfWork);
+			//make subscription		
 			Subscription sub = new Subscription()
 			{
 				SubscribedUser = user,
@@ -73,6 +85,16 @@ namespace BAR.BL.Managers
 		{
 			ISubscriptionRepository subRepo = new SubscriptionRepository();
 			return subRepo.ReadAlerts(userId);
+		}
+
+		/// <summary>
+		/// Determines if the repo needs a unit of work
+		/// if the unitOfWorkManager is present
+		/// </summary>
+		private void InitRepo()
+		{
+			if (uowManager == null) subRepo = new SubscriptionRepository();
+			else subRepo = new SubscriptionRepository(uowManager.UnitOfWork);
 		}
 	}
 }
