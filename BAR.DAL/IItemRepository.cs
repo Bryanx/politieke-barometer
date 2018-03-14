@@ -13,6 +13,6 @@ namespace BAR.DAL
     void UpdateLastUpdated(int itemId, DateTime lastUpdated);
     Item ReadItemWithInformations(int itemId);
     Item ReadItem(int itemId);
-    List<Item> ReadAllItems();
+    IEnumerable<Item> ReadAllItems();
   }
 }

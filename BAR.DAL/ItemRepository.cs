@@ -69,9 +69,9 @@ namespace BAR.DAL
 				.Where(item => item.ItemId == itemId).SingleOrDefault();
 		}
 
-		public List<Item> ReadAllItems()
+		public IEnumerable<Item> ReadAllItems()
 		{
-			return ctx.Items.ToList();
+			return ctx.Items.AsEnumerable();
 		}
 	}
 }

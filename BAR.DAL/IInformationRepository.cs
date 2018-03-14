@@ -10,6 +10,6 @@ namespace BAR.DAL
   public interface IInformationRepository
   {
     int ReadNumberInfo(int itemId, DateTime since);
-    List<Information> ReadAllInfoForId(int itemId);
+    IEnumerable<Information> ReadAllInfoForId(int itemId);
   }
 }

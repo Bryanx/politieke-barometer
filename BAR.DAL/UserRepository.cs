@@ -20,9 +20,9 @@ namespace BAR.DAL
       else ctx = uow.Context;
     }
 
-    public List<User> ReadAllUsers()
+    public IEnumerable<User> ReadAllUsers()
     {
-      return ctx.Users.ToList();
+      return ctx.Users.AsEnumerable();
     }
 
     /// <summary>

@@ -26,9 +26,9 @@ namespace BAR.DAL
 			else ctx = uow.Context;					
 		}
 
-		public List<Information> ReadAllInfoForId(int itemId)
+		public IEnumerable<Information> ReadAllInfoForId(int itemId)
 		{
-			return ctx.Informations.Where(info => info.Item.ItemId == itemId).ToList();
+			return ctx.Informations.Where(info => info.Item.ItemId == itemId).AsEnumerable();
 		}
 
 		/// <summary>
