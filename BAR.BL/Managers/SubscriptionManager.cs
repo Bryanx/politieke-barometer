@@ -28,11 +28,11 @@ namespace BAR.BL.Managers
 			User user = userManager.GetUser(userId);
 
 			//get item
-			IItemManager itemManager = new ItemManager();
+			IItemManager itemManager = new ItemManager(uowManager);
 			Item item = itemManager.GetItem(itemId);
 
 			//make subscription
-			ISubscriptionRepository subRepo = new SubscriptionRepository();
+			ISubscriptionRepository subRepo = new SubscriptionRepository(uowManager.UnitOfWork);
 			Subscription sub = new Subscription()
 			{
 				SubscribedUser = user,

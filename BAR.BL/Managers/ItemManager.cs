@@ -15,7 +15,12 @@ namespace BAR.BL.Managers
 		private UnitOfWorkManager uowManager;
 		private ItemRepository itemRepo;
 
-        /// <summary>
+        public ItemManager(UnitOfWorkManager uowManager = null)
+		{
+			this.uowManager = uowManager;
+		}
+		
+		/// <summary>
         /// Adjust the baseline of the given item
         /// Adjust the trendingpercentage of the given item
         /// </summary>
