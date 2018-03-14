@@ -115,7 +115,6 @@ namespace BAR.DAL.EF
         {
           PropertieValues = new List<PropertyValue>()
         };
-        Console.WriteLine(String.Format("Record {0}", i + 1));
         //Read hashtags
         for (int j = 0; j < deserializedJson.records[i].hashtags.Count; j++)
         {
@@ -223,7 +222,6 @@ namespace BAR.DAL.EF
 
         //Add connection to Item (Person)
         string personFullName = String.Format("{0} {1}", deserializedJson.records[i].politician[0], deserializedJson.records[i].politician[1]);
-        Console.WriteLine(personFullName);
         
         information.Item = GeneratePoliticians(personFullName, ctx);
 
