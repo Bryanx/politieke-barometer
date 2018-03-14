@@ -19,7 +19,5 @@ namespace BAR.DAL.EF
 
         //Item package
         public DbSet<Item> Items { get; set; }
-
-
     }
 }

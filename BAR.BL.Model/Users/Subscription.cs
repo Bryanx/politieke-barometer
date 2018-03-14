@@ -14,11 +14,6 @@ namespace BAR.BL.Domain.Users
         public DateTime DateSubscribed { get; set; }
         public List<Alert> Alerts { get; set; }
         public Item SubscribedItem { get; set; }
-        public User SubscribedUser { get; set; }
-
-        public void AddAlert(Alert alert)
-        {
-            Alerts.Add(alert);
-        }
+        public User SubscribedUser { get; set; }       
     }
 }
