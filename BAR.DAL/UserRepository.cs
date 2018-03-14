@@ -10,9 +10,10 @@ namespace BAR.DAL
     {
         private BarometerDbContext ctx;
 
-        public UserRepository()
+        public UserRepository(UnitOfWork uow)
         {
-            ctx = new BarometerDbContext();
+			if (uow == null) ctx = new BarometerDbContext();
+			else ctx = uow.Context;
         }
 
         public User ReadUser(int userId)
