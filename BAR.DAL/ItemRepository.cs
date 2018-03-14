@@ -5,6 +5,7 @@ using System.Text;
 using BAR.DAL.EF;
 using BAR.BL.Domain.Items;
 using System.Data.Entity;
+using BAR.BL.Domain.Data;
 
 namespace BAR.DAL
 {
@@ -44,12 +45,19 @@ namespace BAR.DAL
         /// <summary>
         /// Updates the Lastupdated field of an Item.
         /// </summary>
-        public void UpdateLastUpdated(int itemId, DateTime LastUpdated)
+        public void UpdateLastUpdated(int itemId, DateTime lastUpdated)
         {
-            //needs to be implemented in the informationRepository
-            //because its the information in the items wich are updated
-            //and not the item itself.
-            throw new NotImplementedException();
+            Item itemToUpdate = ReadItemWithInformations(itemId);
+            foreach (Information info in itemToUpdate.Informations) info.LastUpdated = lastUpdated;
+
+            ctx.Entry(itemToUpdate).State = EntityState.Modified;
+            ctx.SaveChanges();            
+        }
+
+        public Item ReadItemWithInformations(int itemId)
+        {
+            return ctx.Items.Include(item => item.Informations)
+                .Where(item => item.ItemId == itemId).SingleOrDefault();
         }
     }
 }

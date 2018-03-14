@@ -10,7 +10,8 @@ namespace BAR.DAL
     public interface IItemRepository
     {
         void UpdateItemTrending(int itemId, double baseline, double trendingepr);
-        void UpdateLastUpdated(int itemId, DateTime LastUpdated);
+        void UpdateLastUpdated(int itemId, DateTime lastUpdated);
+        Item ReadItemWithInformations(int itemId);
         Item ReadItem(int itemId);
     }
 }
