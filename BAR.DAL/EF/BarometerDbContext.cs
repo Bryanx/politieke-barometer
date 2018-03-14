@@ -30,6 +30,7 @@ namespace BAR.DAL.EF
 		}
 
 		//Data package
+		public DbSet<Source> Sources { get; set; }
 		public DbSet<Information> Informations { get; set; }
 		public DbSet<Property> Properties { get; set; }
 

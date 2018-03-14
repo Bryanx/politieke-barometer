@@ -21,13 +21,25 @@ namespace BAR.DAL.EF
     /// </summary>
     protected override void Seed(BarometerDbContext ctx)
     {
+      GenerateSources(ctx);
+      GenerateProperties(ctx);
+      ReadJson(ctx);
+      GenerateUser(ctx);
+    }
 
-      Source c = new Source
+    private void GenerateSources(BarometerDbContext ctx)
+    {
+      Source source = new Source
       {
         Name = "Twitter",
         SourceLine = "twitter.com"
       };
+      ctx.Sources.Add(source);
+      ctx.SaveChanges();
+    }
 
+    private void GenerateProperties(BarometerDbContext ctx)
+    {
       //Write properties to Set
       Property hashtag = new Property
       {
@@ -86,8 +98,10 @@ namespace BAR.DAL.EF
       ctx.Properties.Add(url);
       ctx.Properties.Add(mention);
       ctx.SaveChanges();
+    }
 
-      //TODO: implement logic
+    private void ReadJson(BarometerDbContext ctx)
+    {
       string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "data.json");
       string json = File.ReadAllText(path);
       dynamic deserializedJson = JsonConvert.DeserializeObject(json);
@@ -99,7 +113,7 @@ namespace BAR.DAL.EF
         {
           PropertieValues = new List<PropertyValue>()
         };
-        Console.WriteLine(String.Format("Record {0}", i+1));
+        Console.WriteLine(String.Format("Record {0}", i + 1));
         //Read hashtags
         for (int j = 0; j < deserializedJson.records[i].hashtags.Count; j++)
         {
@@ -138,10 +152,75 @@ namespace BAR.DAL.EF
           Confidence = 1
         };
         information.PropertieValues.Add(propertyValue);
+        //Read geo
+        propertyValue = new PropertyValue
+        {
+          Property = ctx.Properties.Where(x => x.Name.Equals("Geo")).SingleOrDefault(),
+          Value = deserializedJson.records[i].geo,
+          Confidence = 1
+        };
+        information.PropertieValues.Add(propertyValue);
+        //Read postId
+        propertyValue = new PropertyValue
+        {
+          Property = ctx.Properties.Where(x => x.Name.Equals("PostId")).SingleOrDefault(),
+          Value = deserializedJson.records[i].id,
+          Confidence = 1
+        };
+        information.PropertieValues.Add(propertyValue);
+        //Read userId
+        propertyValue = new PropertyValue
+        {
+          Property = ctx.Properties.Where(x => x.Name.Equals("UserId")).SingleOrDefault(),
+          Value = deserializedJson.records[i].user_id,
+          Confidence = 1
+        };
+        information.PropertieValues.Add(propertyValue);
+        //Read sentiment
+        propertyValue = new PropertyValue
+        {
+          Property = ctx.Properties.Where(x => x.Name.Equals("Sentiment")).SingleOrDefault(),
+          Value = deserializedJson.records[i].sentiment[0],
+          Confidence = deserializedJson.records[i].sentiment[1]
+        };
+        information.PropertieValues.Add(propertyValue);
+        //Read retweet
+        propertyValue = new PropertyValue
+        {
+          Property = ctx.Properties.Where(x => x.Name.Equals("Retweet")).SingleOrDefault(),
+          Value = deserializedJson.records[i].retweet,
+          Confidence = 1
+        };
+        information.PropertieValues.Add(propertyValue);
+        //Read urls
+        for (int j = 0; j < deserializedJson.records[i].urls.Count; j++)
+        {
+          propertyValue = new PropertyValue
+          {
+            Property = ctx.Properties.Where(x => x.Name.Equals("Url")).SingleOrDefault(),
+            Value = deserializedJson.records[i].urls[j],
+            Confidence = 1
+          };
+          information.PropertieValues.Add(propertyValue);
+        }
+        //Read mentions
+        for (int j = 0; j < deserializedJson.records[i].mentions.Count; j++)
+        {
+          propertyValue = new PropertyValue
+          {
+            Property = ctx.Properties.Where(x => x.Name.Equals("Mention")).SingleOrDefault(),
+            Value = deserializedJson.records[i].mentions[j],
+            Confidence = 1
+          };
+          information.PropertieValues.Add(propertyValue);
+        }
+        //Add source
         ctx.Informations.Add(information);
       }
       ctx.SaveChanges();
-
+    }
+    private void GenerateUser(BarometerDbContext ctx)
+    {
       User bryan = new User()
       {
         FirstName = "Bryan",
@@ -184,9 +263,13 @@ namespace BAR.DAL.EF
       ctx.Users.Add(remi);
       ctx.Users.Add(yoni);
       ctx.Users.Add(jarne);
-
       ctx.SaveChanges();
+    }
+
+    private void GeneratePoliticians(BarometerDbContext ctx)
+    {
 
     }
   }
 }
+
