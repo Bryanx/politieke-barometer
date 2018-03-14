@@ -13,12 +13,21 @@ namespace BAR.DAL.EF
   internal class BarometerInitializer : DropCreateDatabaseAlways<BarometerDbContext>
   {
 
+
+
     /// <summary>
     /// Dummy data form the json file will be generated
     /// in this file for the first wave of information
     /// </summary>
     protected override void Seed(BarometerDbContext ctx)
     {
+
+      Source c = new Source
+      {
+        Name = "Twitter",
+        SourceLine = "twitter.com"
+      };
+
       //Write properties to Set
       Property hashtag = new Property
       {
