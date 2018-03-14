@@ -18,7 +18,7 @@ namespace BAR.BL.Managers
       this.uowManager = uowManager;
     }
 
-    public List<User> GetAllUsers()
+    public IEnumerable<User> GetAllUsers()
     {
       InitRepo();
       return userRepo.ReadAllUsers();

@@ -12,6 +12,6 @@ namespace BAR.BL.Managers
     void DetermineTrending(int itemId);
     double GetTrendingPer(int itemId);
     Item GetItem(int itemId);
-    List<Item> getAllItems();
+    IEnumerable<Item> getAllItems();
   }
 }

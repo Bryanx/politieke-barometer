@@ -39,7 +39,7 @@ namespace BAR.BL.Managers
       //int aantalTrending = dataManager.GetNumberInfo(itemId, DateTime.Now.AddDays(-1));
       //int aantalBaseline = dataManager.GetNumberInfo(itemId, DateTime.Now.AddMonths(-20));
 
-      List<Information> allInfoForId = dataManager.getAllInformationForId(itemId);
+      IEnumerable<Information> allInfoForId = dataManager.getAllInformationForId(itemId);
 
 
       DateTime earliestInfoDate = allInfoForId.Min(item => item.LastUpdated).Value;
@@ -86,7 +86,7 @@ namespace BAR.BL.Managers
       return item.TrendingPercentage;
     }
 
-    public List<Item> getAllItems()
+    public IEnumerable<Item> getAllItems()
     {
       InitRepo();
       return itemRepo.ReadAllItems();
