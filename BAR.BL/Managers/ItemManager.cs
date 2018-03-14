@@ -30,7 +30,9 @@ namespace BAR.BL.Managers
         /// </summary>
         public void DetermineTrending(int itemId)
         {
-            DataManager dataManager = new DataManager();
+			InitRepo();
+
+			DataManager dataManager = new DataManager();
             int aantalTrending = dataManager.GetNumberInfo(itemId, DateTime.Now.AddDays(-1));
             int aantalBaseline = dataManager.GetNumberInfo(itemId, DateTime.Now.AddMonths(-1));
 
@@ -41,9 +43,8 @@ namespace BAR.BL.Managers
             // Bereken het trendingpercentage = baseline / aantal dagen since tot vandaag
             // 30 is ongeveer het gemiddelde van 1 maand.
             double trendingPer = Convert.ToDouble(aantalTrending) / baseline;
-
-            IItemRepository itemRepo = new ItemRepository();
-            itemRepo.UpdateItemTrending(itemId, baseline, trendingPer);
+          
+			itemRepo.UpdateItemTrending(itemId, baseline, trendingPer);
             itemRepo.UpdateLastUpdated(itemId, DateTime.Now); //Is not going to work yet. Repos are HC.
         }
 
@@ -52,7 +53,7 @@ namespace BAR.BL.Managers
 		/// </summary>
 		public Item GetItem(int itemId)
 		{
-			IItemRepository itemRepo = new ItemRepository();
+			InitRepo();
 			return itemRepo.ReadItem(itemId);
 		}
 
@@ -61,7 +62,7 @@ namespace BAR.BL.Managers
 		/// </summary>
 		public double GetTrendingPer(int itemId)
         {
-            IItemRepository itemRepo = new ItemRepository();
+			InitRepo();
             Item item = itemRepo.ReadItem(itemId);
             return item.TrendingPercentage;
         }
@@ -70,7 +71,7 @@ namespace BAR.BL.Managers
 		/// Determines if the repo needs a unit of work
 		/// if the unitOfWorkManager is present
 		/// </summary>
-		public void InitRepo()
+		private void InitRepo()
 		{
 			if (uowManager == null) itemRepo = new ItemRepository();
 			else itemRepo = new ItemRepository(uowManager.UnitOfWork);
