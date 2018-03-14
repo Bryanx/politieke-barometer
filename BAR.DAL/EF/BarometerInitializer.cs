@@ -20,7 +20,8 @@ namespace BAR.DAL.EF
             User bryan = new User()
             {
                 UserId = 1,
-                FirstName = "Bryan"
+                FirstName = "Bryan",
+                Gender = Gender.MAN
             };
 
             ctx.Users.Add(bryan);

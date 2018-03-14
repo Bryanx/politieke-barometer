@@ -15,9 +15,10 @@ namespace BAR.DAL
             ctx = new BarometerDbContext();
         }
 
-        public User ReadUser(int userID)
+        public User ReadUser(int userId)
         {
-            return ctx.Users.FirstOrDefault(u => u.UserId == userID);          
+            var user = ctx.Users.SingleOrDefault(u => u.UserId == userId);
+            return user;
         }
     }
 }

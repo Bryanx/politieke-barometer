@@ -13,7 +13,7 @@ namespace BAR.BL.Domain.Users
     public string LastName { get; set; }
     public string EmailAdress { get; set; }
     public Gender Gender { get; set; }
-    public DateTime DateOfBirth { get; set; }
+    public DateTime? DateOfBirth { get; set; }
     public Role Role { get; set; }
     public Area Area { get; set; }
   }
