@@ -13,7 +13,7 @@ namespace BAR.BL.Domain.Data
         public Item Item { get; set; }
         public Source Source { get; set; }
         public DateTime LastUpdated { get; set; }
-        public IDictionary<Property, ICollection<PropertyValue>> Properties { get; set; }
+        public ICollection<Property> Properties { get; set; }
     }
 
 }
