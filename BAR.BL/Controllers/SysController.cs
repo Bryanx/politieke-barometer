@@ -8,7 +8,6 @@ namespace BAR.BL.Controllers
   /// </summary>
   public class SysController
   {
-
     public SysController()
     {
 
@@ -19,7 +18,7 @@ namespace BAR.BL.Controllers
     /// </summary>
     public void DetermineTrending(int itemId)
     {
-      IItemManager itemManager = new ItemManager();
+      ItemManager itemManager = new ItemManager();
       itemManager.DetermineTrending(itemId);
     }
 
@@ -29,7 +28,7 @@ namespace BAR.BL.Controllers
     /// </summary>
     public void GenerateAlerts(int itemId)
     {
-      ISubscriptionManager subManager = new SubscriptionManager();
+      SubscriptionManager subManager = new SubscriptionManager();
       subManager.GenerateAlerts(itemId);
     }
   }

@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using BAR.BL.Domain.Data;
 using BAR.DAL;
 
 namespace BAR.BL.Managers
@@ -39,6 +41,12 @@ namespace BAR.BL.Managers
 		{
 			if (uowManager == null) infoRepo = new InformationRepository();
 			else infoRepo = new InformationRepository(uowManager.UnitOfWork);
+		}
+
+		public List<Information> getAllInformationForId(int itemId)
+		{
+      InitRepo();
+      return infoRepo.ReadAllInfoForId(itemId);
 		}
 	}
 }

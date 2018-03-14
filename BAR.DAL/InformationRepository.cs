@@ -26,6 +26,11 @@ namespace BAR.DAL
 			else ctx = uow.Context;					
 		}
 
+		public List<Information> ReadAllInfoForId(int itemId)
+		{
+			return ctx.Informations.Where(info => info.Item.ItemId == itemId).ToList();
+		}
+
 		/// <summary>
 		/// Gets the number of informations of a specific given item
 		/// form since till now.
@@ -33,7 +38,7 @@ namespace BAR.DAL
 		public int ReadNumberInfo(int itemId, DateTime since)
 		{
 			return ctx.Informations.Where(info => info.Item.ItemId == itemId)
-				.Where(info => info.LastUpdated <= since).Count();
+				.Where(info => info.LastUpdated >= since).Count();
 		}
 	}
 }

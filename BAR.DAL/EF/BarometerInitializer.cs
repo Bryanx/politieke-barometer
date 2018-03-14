@@ -108,7 +108,7 @@ namespace BAR.DAL.EF
       string json = File.ReadAllText(path);
       dynamic deserializedJson = JsonConvert.DeserializeObject(json);
 
-      for (int i = 0; i < 100; i++)
+      for (int i = 0; i < 150; i++)
       {
         PropertyValue propertyValue;
         Information information = new Information
@@ -225,7 +225,10 @@ namespace BAR.DAL.EF
         
         information.Item = GeneratePoliticians(personFullName, ctx);
 
-        information.LastUpdated = DateTime.Now;
+        string datum = Convert.ToString(deserializedJson.records[i].date);
+        DateTime myInfoDate = DateTime.ParseExact(datum, "yyyy-MM-dd HH:mm:ss",
+                                       System.Globalization.CultureInfo.InvariantCulture);
+        information.LastUpdated = myInfoDate;
 
 
         ctx.Informations.Add(information);

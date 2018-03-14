@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BAR.BL.Domain.Data;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,5 +10,6 @@ namespace BAR.BL.Managers
 	public interface IDataManager
 	{
 		int GetNumberInfo(int itemId, DateTime since);
+		List<Information> getAllInformationForId(int itemId);
 	}
 }
