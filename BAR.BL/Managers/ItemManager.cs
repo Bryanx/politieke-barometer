@@ -2,6 +2,8 @@
 using BAR.DAL;
 using BAR.BL.Domain.Items;
 using System.Collections.Generic;
+using BAR.BL.Domain.Data;
+using System.Linq;
 
 namespace BAR.BL.Managers
 {
@@ -34,12 +36,28 @@ namespace BAR.BL.Managers
       InitRepo();
 
       DataManager dataManager = new DataManager();
-      int aantalTrending = dataManager.GetNumberInfo(itemId, DateTime.Now.AddDays(-1));
-      int aantalBaseline = dataManager.GetNumberInfo(itemId, DateTime.Now.AddMonths(-20));
+      //int aantalTrending = dataManager.GetNumberInfo(itemId, DateTime.Now.AddDays(-1));
+      //int aantalBaseline = dataManager.GetNumberInfo(itemId, DateTime.Now.AddMonths(-20));
+
+      List<Information> allInfoForId = dataManager.getAllInformationForId(itemId);
+
+
+      DateTime earliestInfoDate = allInfoForId.Min(item => item.LastUpdated).Value;
+      DateTime lastInfoDate = allInfoForId.Max(item => item.LastUpdated).Value;
+
+      int period = (lastInfoDate - earliestInfoDate).Days;
+
+      Console.WriteLine(earliestInfoDate);
+      Console.WriteLine(lastInfoDate);
+
+
+      int aantalBaseline = dataManager.GetNumberInfo(itemId, earliestInfoDate);
+      int aantalTrending = dataManager.GetNumberInfo(itemId, lastInfoDate.AddDays(-1));
+
 
       // bereken de baseline = aantal / aantal dagen since tot vandaag
       // 30 is ongeveer het gemiddelde van 1 maand.
-      double baseline = aantalBaseline / 30;
+      double baseline = Convert.ToDouble(aantalBaseline) / Convert.ToDouble(period);
 
       // Bereken het trendingpercentage = baseline / aantal dagen since tot vandaag
       // 30 is ongeveer het gemiddelde van 1 maand.
