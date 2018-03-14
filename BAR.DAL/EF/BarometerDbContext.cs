@@ -7,11 +7,7 @@ namespace BAR.DAL.EF
 {
     public class BarometerDbContext : DbContext
     {
-        public BarometerDbContext() : base("BAR_DB")
-        {
-            BarometerInitializer init = new BarometerInitializer();
-            Database.SetInitializer(init);
-        }
+        public BarometerDbContext() : base("BAR_DB") { }
 
         //Data package
         public DbSet<Information> Informations { get; set; }
