@@ -1,4 +1,5 @@
 ﻿using BAR.DAL;
+using BAR.DAL.EF;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,9 +19,10 @@ namespace BAR.UI.CA
       //wave 1
       //Are setup is based on the json-dump data.
       //TODO: implement logic
-      InformationRepository informationRepository = new InformationRepository();
+      //InformationRepository informationRepository = new InformationRepository();
       //informationRepository.PrintInformationList();
-      informationRepository.FilterProperty("Politician");
+      //informationRepository.FilterProperty("Politician");
+      BarometerDbContext ctx = new BarometerDbContext();
       //wave 2
     }//Needs to generate new alerts when HC data is added.
      //TOCO: implement logic

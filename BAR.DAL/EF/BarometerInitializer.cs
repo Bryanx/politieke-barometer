@@ -58,7 +58,7 @@ namespace BAR.DAL.EF
       };
       Property mention = new Property
       {
-        Name = "Mention" 
+        Name = "Mention"
       };
 
       ctx.Properties.Add(hashtag);
@@ -68,6 +68,11 @@ namespace BAR.DAL.EF
       ctx.Properties.Add(geo);
       ctx.Properties.Add(postId);
       ctx.Properties.Add(userId);
+      ctx.Properties.Add(sentiment);
+      ctx.Properties.Add(retweet);
+      ctx.Properties.Add(url);
+      ctx.Properties.Add(mention);
+      ctx.SaveChanges();
 
       //TODO: implement logic
       string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "data.json");
@@ -78,105 +83,20 @@ namespace BAR.DAL.EF
       {
         PropertyValue propertyValue;
         Information information = new Information();
-        information.InformationId = i + 1;
-        information.PropertieValues = new Dictionary<Property, ICollection<PropertyValue>>();
+        information.PropertieValues = new List<PropertyValue>();
 
-        List<PropertyValue> list = new List<PropertyValue>();
         for (int j = 0; j < deserializedJson.records[i].hashtags.Count; j++)
         {
-          propertyValue = new PropertyValue();
-          propertyValue.PropertyValueId = j + 1;
-          propertyValue.Value = deserializedJson.records[i].hashtags[j];
-          list.Add(propertyValue);
+          propertyValue = new PropertyValue
+          {
+            Property = ctx.Properties.Find(1),
+            Value = deserializedJson.records[i].hashtags[j]
+          };
+          information.PropertieValues.Add(propertyValue);
         }
-        information.PropertieValues.Add(propertyList.ElementAt(0), list);
-
-        list = new List<PropertyValue>();
-        for (int j = 0; j < deserializedJson.records[i].words.Count; j++)
-        {
-          propertyValue = new PropertyValue();
-          propertyValue.PropertyValueId = j + 1;
-          propertyValue.Value = deserializedJson.records[i].words[j];
-          list.Add(propertyValue);
-        }
-        information.PropertieValues.Add(propertyList.ElementAt(1), list);
-
-        list = new List<PropertyValue>();
-        propertyValue = new PropertyValue();
-        propertyValue.PropertyValueId = 1;
-        propertyValue.Value = deserializedJson.records[i].date;
-        list.Add(propertyValue);
-        information.PropertieValues.Add(propertyList.ElementAt(2), list);
-
-        list = new List<PropertyValue>();
-        for (int j = 0; j < deserializedJson.records[i].politician.Count; j++)
-        {
-          propertyValue = new PropertyValue();
-          propertyValue.PropertyValueId = j + 1;
-          propertyValue.Value = deserializedJson.records[i].politician[j];
-          list.Add(propertyValue);
-        }
-        information.PropertieValues.Add(propertyList.ElementAt(3), list);
-
-        list = new List<PropertyValue>();
-        propertyValue = new PropertyValue();
-        propertyValue.PropertyValueId = 1;
-        propertyValue.Value = deserializedJson.records[i].geo;
-        list.Add(propertyValue);
-        information.PropertieValues.Add(propertyList.ElementAt(4), list);
-
-        list = new List<PropertyValue>();
-        propertyValue = new PropertyValue();
-        propertyValue.PropertyValueId = 1;
-        propertyValue.Value = deserializedJson.records[i].id;
-        list.Add(propertyValue);
-        information.PropertieValues.Add(propertyList.ElementAt(5), list);
-
-        list = new List<PropertyValue>();
-        propertyValue = new PropertyValue();
-        propertyValue.PropertyValueId = 1;
-        propertyValue.Value = deserializedJson.records[i].user_id;
-        list.Add(propertyValue);
-        information.PropertieValues.Add(propertyList.ElementAt(6), list);
-
-        list = new List<PropertyValue>();
-        for (int j = 0; j < deserializedJson.records[i].sentiment.Count; j++)
-        {
-          propertyValue = new PropertyValue();
-          propertyValue.PropertyValueId = j + 1;
-          propertyValue.Value = deserializedJson.records[i].sentiment[j];
-          list.Add(propertyValue);
-        }
-        information.PropertieValues.Add(propertyList.ElementAt(7), list);
-
-        list = new List<PropertyValue>();
-        propertyValue = new PropertyValue();
-        propertyValue.PropertyValueId = 1;
-        propertyValue.Value = deserializedJson.records[i].retweet;
-        list.Add(propertyValue);
-        information.PropertieValues.Add(propertyList.ElementAt(8), list);
-
-        list = new List<PropertyValue>();
-        for (int j = 0; j < deserializedJson.records[i].urls.Count; j++)
-        {
-          propertyValue = new PropertyValue();
-          propertyValue.PropertyValueId = j + 1;
-          propertyValue.Value = deserializedJson.records[i].urls[j];
-          list.Add(propertyValue);
-        }
-        information.PropertieValues.Add(propertyList.ElementAt(9), list);
-
-        list = new List<PropertyValue>();
-        for (int j = 0; j < deserializedJson.records[i].mentions.Count; j++)
-        {
-          propertyValue = new PropertyValue();
-          propertyValue.PropertyValueId = j + 1;
-          propertyValue.Value = deserializedJson.records[i].mentions[j];
-          list.Add(propertyValue);
-        }
-        information.PropertieValues.Add(propertyList.ElementAt(10), list);
-        informationList.Add(information);
+        ctx.Informations.Add(information);
 
       }
     }
   }
+}
