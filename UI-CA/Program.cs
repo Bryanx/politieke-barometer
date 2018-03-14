@@ -19,8 +19,8 @@ namespace BAR.UI.CA
         {
             IUserManager userManager = new UserManager();
             Console.WriteLine(userManager.GetUser(1).FirstName);
-            
-            
+            Console.ReadLine();
+                        
             //wave 1
             //Are setup is based on the json-dump data.
             //TODO: implement logic

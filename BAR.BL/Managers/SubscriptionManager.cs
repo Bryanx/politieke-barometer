@@ -27,7 +27,7 @@ namespace BAR.BL.Managers
                 double tresh = sub.Treshhold;
                 if (tresh <= (per - 100))
                 {
-                    sub.AddAlert(new Alert());
+                    sub.Alerts.Add(new Alert());
                 }
             }
 

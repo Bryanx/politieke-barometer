@@ -19,16 +19,6 @@ namespace BAR.DAL.EF
     /// </summary>
     protected override void Seed(BarometerDbContext ctx)
     {
-      User bryan = new User()
-      {
-        UserId = 1,
-        FirstName = "Bryan",
-        Gender = Gender.MAN
-      };
-
-      ctx.Users.Add(bryan);
-      ctx.SaveChanges();
-
       //Write properties to Set
       Property hashtag = new Property
       {
@@ -142,6 +132,52 @@ namespace BAR.DAL.EF
         ctx.Informations.Add(information);
       }
       ctx.SaveChanges();
+
+      User bryan = new User()
+      {
+        FirstName = "Bryan",
+        Gender = Gender.MAN
+      };
+
+      User maarten = new User()
+      {
+        FirstName = "Maarten",
+        Gender = Gender.OTHER
+      };
+
+      User remi = new User()
+      {
+        FirstName = "Remi",
+        Gender = Gender.MAN
+      };
+
+      User anthony = new User()
+      {
+        FirstName = "Anthony",
+        Gender = Gender.MAN
+      };
+
+      User jarne = new User()
+      {
+        FirstName = "Jarne",
+        Gender = Gender.MAN
+      };
+
+      User yoni = new User()
+      {
+        FirstName = "Yoni",
+        Gender = Gender.MAN
+      };
+
+      ctx.Users.Add(bryan);
+      ctx.Users.Add(bryan);
+      ctx.Users.Add(anthony);
+      ctx.Users.Add(remi);
+      ctx.Users.Add(yoni);
+      ctx.Users.Add(jarne);
+
+      ctx.SaveChanges();
+
     }
   }
 }

@@ -17,7 +17,7 @@ namespace BAR.DAL
 
         public User ReadUser(int userId)
         {
-            var user = ctx.Users.SingleOrDefault(u => u.UserId == userId);
+            var user = ctx.Users.Find(userId);
             return user;
         }
     }
