@@ -17,7 +17,7 @@ namespace BAR.DAL
 
         public User ReadUser(int userID)
         {
-            return ctx.Users.Where(u => u.UserId == userID).FirstOrDefault();          
+            return ctx.Users.FirstOrDefault(u => u.UserId == userID);          
         }
     }
 }
