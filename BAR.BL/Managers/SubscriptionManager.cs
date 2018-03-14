@@ -65,15 +65,17 @@ namespace BAR.BL.Managers
       InitRepo();
 
       IItemManager itemManager = new ItemManager();
-      double per = itemManager.GetTrendingPer(itemId);
+      double per = (itemManager.GetTrendingPer(itemId) * 100)-100;
 
       IEnumerable<Subscription> subs = subRepo.ReadSubscriptions(itemId);
       foreach (Subscription sub in subs)
       {
         double tresh = sub.Treshhold;
-        if (tresh <= (per - 100))
+        if (tresh >= (per))
         {
-          sub.Alerts.Add(new Alert());
+          sub.Alerts.Add(new Alert() {
+            //Subscription = sub
+          });
         }
       }
       subRepo.UpdateSubscriptions(subs);
