@@ -1,4 +1,5 @@
 ﻿using BAR.BL.Domain.Data;
+using BAR.BL.Domain.Items;
 using BAR.BL.Domain.Users;
 using Newtonsoft.Json;
 using System;
@@ -25,6 +26,7 @@ namespace BAR.DAL.EF
       GenerateProperties(ctx);
       ReadJson(ctx);
       GenerateUser(ctx);
+
     }
 
     private void GenerateSources(BarometerDbContext ctx)
@@ -106,7 +108,7 @@ namespace BAR.DAL.EF
       string json = File.ReadAllText(path);
       dynamic deserializedJson = JsonConvert.DeserializeObject(json);
 
-      for (int i = 0; i < 5; i++)
+      for (int i = 0; i < 100; i++)
       {
         PropertyValue propertyValue;
         Information information = new Information
@@ -215,6 +217,19 @@ namespace BAR.DAL.EF
           information.PropertieValues.Add(propertyValue);
         }
         //Add source
+        string source = Convert.ToString(deserializedJson.records[i].source);
+        information.Source = ctx.Sources.Where(s => s.Name.ToLower().Equals(source)).SingleOrDefault();
+
+
+        //Add connection to Item (Person)
+        string personFullName = String.Format("{0} {1}", deserializedJson.records[i].politician[0], deserializedJson.records[i].politician[1]);
+        Console.WriteLine(personFullName);
+        
+        information.Item = GeneratePoliticians(personFullName, ctx);
+
+        information.LastUpdated = DateTime.Now;
+
+
         ctx.Informations.Add(information);
       }
       ctx.SaveChanges();
@@ -266,9 +281,32 @@ namespace BAR.DAL.EF
       ctx.SaveChanges();
     }
 
-    private void GeneratePoliticians(BarometerDbContext ctx)
+    /// <summary>
+    /// Zal de ID van de politicus teruggeven
+    /// Als de politicus nog niet bestaat zal deze aangemaakt worden
+    /// </summary>
+    /// <param name="politicianFullName"></param>
+    /// <param name="ctx"></param>
+    /// <returns></returns>
+    private Item GeneratePoliticians(string personFullName, BarometerDbContext ctx)
     {
 
+      Item person = ctx.Items.Where(i => i.Name.Equals(personFullName)).SingleOrDefault();
+
+      if(person == null)
+      {
+        person = new Person()
+        {
+          Name = personFullName,
+          CreationDate = DateTime.Now,
+          Baseline = 0,
+          TrendingPercentage = 0
+        };
+        ctx.Items.Add(person);
+        ctx.SaveChanges();
+      }
+
+      return person;
     }
   }
 }
