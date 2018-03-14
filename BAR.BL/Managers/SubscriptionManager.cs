@@ -20,8 +20,21 @@ namespace BAR.BL.Managers
 			IItemManager itemManager = new ItemManager();
 			double per = itemManager.GetTrendingPer(itemId);
 
+<<<<<<< HEAD
 			ISubscriptionRepository subRepo = new SubscriptionRepository();
 			IEnumerable<Subscription> subs = subRepo.ReadSubscriptions(itemId);
+=======
+            ISubscriptionRepository subRepo = new SubscriptionRepository();
+            IEnumerable<Subscription> subs = subRepo.ReadSubscriptions(itemId);
+            foreach (Subscription sub in subs)
+            {
+                double tresh = sub.Treshhold;
+                if (tresh <= (per - 100))
+                {
+                    sub.Alerts.Add(new Alert());
+                }
+            }
+>>>>>>> 678c8c282e1df7658ffe27ee8959cb19c0820383
 
 			foreach (Subscription sub in subs)
 			{

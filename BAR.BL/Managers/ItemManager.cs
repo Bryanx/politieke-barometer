@@ -28,7 +28,7 @@ namespace BAR.BL.Managers
 
             // Bereken het trendingpercentage = baseline / aantal dagen since tot vandaag
             // 30 is ongeveer het gemiddelde van 1 maand.
-            double trendingPer = baseline / 30;
+            double trendingPer = Convert.ToDouble(aantalTrending) / baseline;
 
             IItemRepository itemRepo = new ItemRepository();
             itemRepo.UpdateItemTrending(itemId, baseline, trendingPer);
