@@ -9,7 +9,8 @@ namespace BAR.DAL.EF
     {
         public BarometerDbContext() : base("BAR_DB")
         {
-            Database.SetInitializer(new BarometerInitializer());
+            BarometerInitializer init = new BarometerInitializer();
+            Database.SetInitializer(init);
         }
 
         //Data package
