@@ -20,8 +20,11 @@ namespace BAR.DAL
         public InformationRepository()
         {
             ctx = new BarometerDbContext();
-            GenerateProperties();
-            ReadJson();
+
+            //TODO: fix code
+
+            //GenerateProperties();
+            //ReadJson();
         }
 
         /// <summary>

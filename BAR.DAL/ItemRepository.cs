@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+using BAR.DAL.EF;
 using BAR.BL.Domain.Items;
+using System.Data.Entity;
 
 namespace BAR.DAL
 {
@@ -12,20 +13,24 @@ namespace BAR.DAL
     /// </summary>
     public class ItemRepository : IItemRepository
     {
-        private List<Item> items;
+        private BarometerDbContext ctx;
 
         public ItemRepository()
         {
-            items = new List<Item>();
+            ctx = new BarometerDbContext();           
         }
 
         /// <summary>
         /// Updates the baseline and trendingpercentage of a specific item.       
         /// </summary>
-        public void UpdateItemTrending(int itemId, double baseline, double trendingepr)
+        public void UpdateItemTrending(int itemId, double baseline, double trendingeper)
         {
-            // all data lives in memory
-            // everything refers to the same objects
+            Item itemToUpdate = ReadItem(itemId);
+            itemToUpdate.Baseline = baseline;
+            itemToUpdate.TrendingPercentage = trendingeper;
+
+            ctx.Entry(itemToUpdate).State = System.Data.Entity.EntityState.Modified;
+            ctx.SaveChanges();
         }
 
         /// <summary>
@@ -33,16 +38,18 @@ namespace BAR.DAL
         /// </summary>       
         public Item ReadItem(int itemId)
         {
-            return items.Where(i => i.ItemId == itemId).SingleOrDefault();
+            return ctx.Items.Where(i => i.ItemId == itemId).SingleOrDefault();
         }
 
         /// <summary>
         /// Updates the Lastupdated field of an Item.
         /// </summary>
-        public void UpdateLastUpdated(int ItemId, DateTime LastUpdated)
+        public void UpdateLastUpdated(int itemId, DateTime LastUpdated)
         {
-            // all data lives in memory
-            // everything refers to the same objects
+            //needs to be implemented in the informationRepository
+            //because its the information in the items wich are updated
+            //and not the item itself.
+            throw new NotImplementedException();
         }
     }
 }
