@@ -68,5 +68,10 @@ namespace BAR.DAL
 			return ctx.Items.Include(item => item.Informations)
 				.Where(item => item.ItemId == itemId).SingleOrDefault();
 		}
+
+		public List<Item> ReadAllItems()
+		{
+			return ctx.Items.ToList();
+		}
 	}
 }

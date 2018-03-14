@@ -10,5 +10,6 @@ namespace BAR.DAL
   public interface IUserRepository
   {
     User ReadUser(int userID);
+    List<User> ReadAllUsers();
   }
 }
