@@ -3,12 +3,12 @@ using BAR.DAL;
 
 namespace BAR.BL.Managers
 {
-    /// <summary>
-    /// Responsable for working with 
-    /// data we received from TextGain.
-    /// </summary>
-    public class DataManager : IDataManager
-    {
+	/// <summary>
+	/// Responsable for working with 
+	/// data we received from TextGain.
+	/// </summary>
+	public class DataManager : IDataManager
+	{
 		private InformationRepository infoRepo;
 		private UnitOfWorkManager uowManager;
 
@@ -21,15 +21,15 @@ namespace BAR.BL.Managers
 			this.uowManager = uowManager;
 		}
 
-        /// <summary>
-        /// Gets the number of informations of a specific given item
-        /// form since till now.
-        /// </summary
-        public int GetNumberInfo(int itemId, DateTime since)
-        {
+		/// <summary>
+		/// Gets the number of informations of a specific given item
+		/// form since till now.
+		/// </summary
+		public int GetNumberInfo(int itemId, DateTime since)
+		{
 			InitRepo();			
-            return infoRepo.ReadNumberInfo(itemId, since);
-        }
+			return infoRepo.ReadNumberInfo(itemId, since);
+		}
 
 		/// <summary>
 		/// Determines if the repo needs a unit of work

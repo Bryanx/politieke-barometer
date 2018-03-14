@@ -28,12 +28,12 @@ namespace BAR.BL.Managers
 		/// Creates a new subscription for a specific user and item
 		/// with a given treshhold.
 		/// 
-		/// NOTO
+		/// NOTE
 		/// THIS METHOD USES UNIT OF WORK
 		/// </summary>		
 		public void CreateSubscription(int userId, int itemId, int treshhold = 10)
 		{
-			
+			InitRepo();
 			UnitOfWorkManager uowManager = new UnitOfWorkManager();
 			
 			//get user
@@ -62,10 +62,11 @@ namespace BAR.BL.Managers
 		/// </summary>
 		public void GenerateAlerts(int itemId)
 		{
+			InitRepo();
+
 			IItemManager itemManager = new ItemManager();
 			double per = itemManager.GetTrendingPer(itemId);
-
-			ISubscriptionRepository subRepo = new SubscriptionRepository();
+			
 			IEnumerable<Subscription> subs = subRepo.ReadSubscriptions(itemId);
 			foreach (Subscription sub in subs)
 			{
@@ -83,7 +84,7 @@ namespace BAR.BL.Managers
 		/// </summary>
 		public IEnumerable<Alert> GetAllAlerts(int userId)
 		{
-			ISubscriptionRepository subRepo = new SubscriptionRepository();
+			InitRepo();
 			return subRepo.ReadAlerts(userId);
 		}
 

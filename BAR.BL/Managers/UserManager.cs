@@ -23,7 +23,7 @@ namespace BAR.BL.Managers
 		/// </summary>
 		public User GetUser(int userId)
         {
-            IUserRepository userRepo = new UserRepository();
+			InitRepo();
             return userRepo.ReadUser(userId);
         }		
 
