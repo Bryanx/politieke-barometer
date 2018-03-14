@@ -12,7 +12,7 @@ namespace BAR.BL.Domain.Data
         public int InformationId { get; set; }
         public Item Item { get; set; }
         public Source Source { get; set; }
-        public DateTime LastUpdated { get; set; }
+        public DateTime? LastUpdated { get; set; }
         public ICollection<PropertyValue> PropertieValues { get; set; }
     }
 
