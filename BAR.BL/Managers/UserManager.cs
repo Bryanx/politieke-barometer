@@ -10,10 +10,24 @@ namespace BAR.BL.Managers
 {
     public class UserManager : IUserManager
     {
-        public User GetUser(int userId)
+		private UnitOfWorkManager uowManager;
+		private UserRepository userRepo;
+
+		public UserManager(UnitOfWorkManager uowManager = null)
+		{
+			this.uowManager = uowManager;
+		}
+
+		public User GetUser(int userId)
         {
             IUserRepository userRepo = new UserRepository();
             return userRepo.ReadUser(userId);
         }
+
+		public void InitRepo()
+		{
+			if (uowManager == null) userRepo = new UserRepository();
+			else userRepo = new UserRepository(uowManager.UnitOfWork);
+		}
     }
 }

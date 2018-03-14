@@ -10,5 +10,6 @@ namespace BAR.BL.Managers
     public interface IUserManager
     {
         User GetUser(int userId);
-    }
+		void InitRepo();
+	}
 }

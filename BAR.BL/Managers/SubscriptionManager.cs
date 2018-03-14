@@ -11,16 +11,18 @@ namespace BAR.BL.Managers
 	/// and their alerts
 	/// </summary>
 	public class SubscriptionManager : ISubscriptionManager
-	{
+	{		
 		/// <summary>
 		/// Creates a new subscription for a specific user and item
 		/// with a given treshhold.
 		/// 
-		/// WARNING
-		/// THIS METHOD WILL NOT WORK BECAUSE UNIT OF WORK IS YET TO BE IMPLEMENTED.
+		/// NOTO
+		/// THIS METHOD USES UNIT OF WORK
 		/// </summary>		
 		public void CreateSubscription(int userId, int itemId, int treshhold = 10)
 		{
+			UnitOfWorkManager uowManager = new UnitOfWorkManager();
+			
 			//get user
 			IUserManager userManager = new UserManager();
 			User user = userManager.GetUser(userId);
@@ -39,6 +41,7 @@ namespace BAR.BL.Managers
 			};
 			subRepo.CreateSubscription(sub);
 
+			uowManager.Save();
 		}
 
 		/// <summary>
