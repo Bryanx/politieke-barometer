@@ -27,7 +27,7 @@ namespace BAR.BL.Managers
         /// </summary
         public int GetNumberInfo(int itemId, DateTime since)
         {
-            IInformationRepository infoRepo = new InformationRepository();
+			InitRepo();			
             return infoRepo.ReadNumberInfo(itemId, since);
         }
 
@@ -35,7 +35,7 @@ namespace BAR.BL.Managers
 		/// Determines if the repo needs a unit of work
 		/// if the unitOfWorkManager is present
 		/// </summary>
-		public void InitRepo()
+		private void InitRepo()
 		{
 			if (uowManager == null) infoRepo = new InformationRepository();
 			else infoRepo = new InformationRepository(uowManager.UnitOfWork);

@@ -9,6 +9,5 @@ namespace BAR.BL.Managers
 	public interface IDataManager
 	{
 		int GetNumberInfo(int itemId, DateTime since);
-		void InitRepo();
 	}
 }
