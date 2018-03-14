@@ -79,7 +79,7 @@ namespace BAR.DAL.EF
         PropertyValue propertyValue;
         Information information = new Information();
         information.InformationId = i + 1;
-        information.Properties = new Dictionary<Property, ICollection<PropertyValue>>();
+        information.PropertieValues = new Dictionary<Property, ICollection<PropertyValue>>();
 
         List<PropertyValue> list = new List<PropertyValue>();
         for (int j = 0; j < deserializedJson.records[i].hashtags.Count; j++)
@@ -89,7 +89,7 @@ namespace BAR.DAL.EF
           propertyValue.Value = deserializedJson.records[i].hashtags[j];
           list.Add(propertyValue);
         }
-        information.Properties.Add(propertyList.ElementAt(0), list);
+        information.PropertieValues.Add(propertyList.ElementAt(0), list);
 
         list = new List<PropertyValue>();
         for (int j = 0; j < deserializedJson.records[i].words.Count; j++)
@@ -99,14 +99,14 @@ namespace BAR.DAL.EF
           propertyValue.Value = deserializedJson.records[i].words[j];
           list.Add(propertyValue);
         }
-        information.Properties.Add(propertyList.ElementAt(1), list);
+        information.PropertieValues.Add(propertyList.ElementAt(1), list);
 
         list = new List<PropertyValue>();
         propertyValue = new PropertyValue();
         propertyValue.PropertyValueId = 1;
         propertyValue.Value = deserializedJson.records[i].date;
         list.Add(propertyValue);
-        information.Properties.Add(propertyList.ElementAt(2), list);
+        information.PropertieValues.Add(propertyList.ElementAt(2), list);
 
         list = new List<PropertyValue>();
         for (int j = 0; j < deserializedJson.records[i].politician.Count; j++)
@@ -116,28 +116,28 @@ namespace BAR.DAL.EF
           propertyValue.Value = deserializedJson.records[i].politician[j];
           list.Add(propertyValue);
         }
-        information.Properties.Add(propertyList.ElementAt(3), list);
+        information.PropertieValues.Add(propertyList.ElementAt(3), list);
 
         list = new List<PropertyValue>();
         propertyValue = new PropertyValue();
         propertyValue.PropertyValueId = 1;
         propertyValue.Value = deserializedJson.records[i].geo;
         list.Add(propertyValue);
-        information.Properties.Add(propertyList.ElementAt(4), list);
+        information.PropertieValues.Add(propertyList.ElementAt(4), list);
 
         list = new List<PropertyValue>();
         propertyValue = new PropertyValue();
         propertyValue.PropertyValueId = 1;
         propertyValue.Value = deserializedJson.records[i].id;
         list.Add(propertyValue);
-        information.Properties.Add(propertyList.ElementAt(5), list);
+        information.PropertieValues.Add(propertyList.ElementAt(5), list);
 
         list = new List<PropertyValue>();
         propertyValue = new PropertyValue();
         propertyValue.PropertyValueId = 1;
         propertyValue.Value = deserializedJson.records[i].user_id;
         list.Add(propertyValue);
-        information.Properties.Add(propertyList.ElementAt(6), list);
+        information.PropertieValues.Add(propertyList.ElementAt(6), list);
 
         list = new List<PropertyValue>();
         for (int j = 0; j < deserializedJson.records[i].sentiment.Count; j++)
@@ -147,14 +147,14 @@ namespace BAR.DAL.EF
           propertyValue.Value = deserializedJson.records[i].sentiment[j];
           list.Add(propertyValue);
         }
-        information.Properties.Add(propertyList.ElementAt(7), list);
+        information.PropertieValues.Add(propertyList.ElementAt(7), list);
 
         list = new List<PropertyValue>();
         propertyValue = new PropertyValue();
         propertyValue.PropertyValueId = 1;
         propertyValue.Value = deserializedJson.records[i].retweet;
         list.Add(propertyValue);
-        information.Properties.Add(propertyList.ElementAt(8), list);
+        information.PropertieValues.Add(propertyList.ElementAt(8), list);
 
         list = new List<PropertyValue>();
         for (int j = 0; j < deserializedJson.records[i].urls.Count; j++)
@@ -164,7 +164,7 @@ namespace BAR.DAL.EF
           propertyValue.Value = deserializedJson.records[i].urls[j];
           list.Add(propertyValue);
         }
-        information.Properties.Add(propertyList.ElementAt(9), list);
+        information.PropertieValues.Add(propertyList.ElementAt(9), list);
 
         list = new List<PropertyValue>();
         for (int j = 0; j < deserializedJson.records[i].mentions.Count; j++)
@@ -174,7 +174,7 @@ namespace BAR.DAL.EF
           propertyValue.Value = deserializedJson.records[i].mentions[j];
           list.Add(propertyValue);
         }
-        information.Properties.Add(propertyList.ElementAt(10), list);
+        information.PropertieValues.Add(propertyList.ElementAt(10), list);
         informationList.Add(information);
 
       }
