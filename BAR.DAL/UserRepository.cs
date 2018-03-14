@@ -2,25 +2,22 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using BAR.DAL.EF;
 
 namespace BAR.DAL
-{ 
-  public class UserRepository : IUserRepository
-  {
-    private List<User> users;
-
-    public UserRepository()
+{
+    public class UserRepository : IUserRepository
     {
-      users = new List<User>();
-    }
+        private BarometerDbContext ctx;
 
-    public User ReadUser(int userID)
-    {
-      User user = users.Where(u => u.UserId == userID).FirstOrDefault();
+        public UserRepository()
+        {
+            ctx = new BarometerDbContext();
+        }
 
-      return user;
+        public User ReadUser(int userID)
+        {
+            return ctx.Users.Where(u => u.UserId == userID).FirstOrDefault();          
+        }
     }
-  }
-} 
+}
