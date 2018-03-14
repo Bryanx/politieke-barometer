@@ -24,7 +24,7 @@ namespace BAR.BL.Managers
 			UnitOfWorkManager uowManager = new UnitOfWorkManager();
 			
 			//get user
-			IUserManager userManager = new UserManager();
+			IUserManager userManager = new UserManager(uowManager);
 			User user = userManager.GetUser(userId);
 
 			//get item

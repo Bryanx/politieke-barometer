@@ -12,6 +12,9 @@ namespace BAR.BL.Managers
     /// </summary>
     public class ItemManager : IItemManager
     {
+		private UnitOfWorkManager uowManager;
+		private ItemRepository itemRepo;
+
         /// <summary>
         /// Adjust the baseline of the given item
         /// Adjust the trendingpercentage of the given item
@@ -53,5 +56,15 @@ namespace BAR.BL.Managers
             Item item = itemRepo.ReadItem(itemId);
             return item.TrendingPercentage;
         }
-    }
+
+		/// <summary>
+		/// Determines if the repo needs a unit of work
+		/// if the unitOfWorkManager is present
+		/// </summary>
+		public void InitRepo()
+		{
+			if (uowManager == null) itemRepo = new ItemRepository();
+			else itemRepo = new ItemRepository(uowManager.UnitOfWork);
+		}
+	}
 }

@@ -18,12 +18,19 @@ namespace BAR.BL.Managers
 			this.uowManager = uowManager;
 		}
 
+		/// <summary>
+		/// Returns a user for a specific userId.
+		/// </summary>
 		public User GetUser(int userId)
         {
             IUserRepository userRepo = new UserRepository();
             return userRepo.ReadUser(userId);
         }
 
+		/// <summary>
+		/// Determines if the repo needs a unit of work
+		/// if the unitOfWorkManager is present
+		/// </summary>
 		public void InitRepo()
 		{
 			if (uowManager == null) userRepo = new UserRepository();
