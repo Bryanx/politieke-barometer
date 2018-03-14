@@ -7,8 +7,9 @@ using System.Threading.Tasks;
 
 namespace BAR.BL.Managers
 {
-    public interface IUserManager
-    {
-        User GetUser(int userId);
-	}
+  public interface IUserManager
+  {
+    User GetUser(int userId);
+    List<User> GetAllUsers();
+  }
 }

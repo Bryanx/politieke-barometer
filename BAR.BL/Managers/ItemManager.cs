@@ -1,6 +1,7 @@
 ﻿using System;
 using BAR.DAL;
 using BAR.BL.Domain.Items;
+using System.Collections.Generic;
 
 namespace BAR.BL.Managers
 {
@@ -34,7 +35,7 @@ namespace BAR.BL.Managers
 
       DataManager dataManager = new DataManager();
       int aantalTrending = dataManager.GetNumberInfo(itemId, DateTime.Now.AddDays(-1));
-      int aantalBaseline = dataManager.GetNumberInfo(itemId, DateTime.Now.AddMonths(-1));
+      int aantalBaseline = dataManager.GetNumberInfo(itemId, DateTime.Now.AddMonths(-20));
 
       // bereken de baseline = aantal / aantal dagen since tot vandaag
       // 30 is ongeveer het gemiddelde van 1 maand.
@@ -65,6 +66,12 @@ namespace BAR.BL.Managers
       InitRepo();
       Item item = itemRepo.ReadItem(itemId);
       return item.TrendingPercentage;
+    }
+
+    public List<Item> getAllItems()
+    {
+      InitRepo();
+      return itemRepo.ReadAllItems();
     }
 
     /// <summary>
