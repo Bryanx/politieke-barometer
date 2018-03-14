@@ -46,7 +46,9 @@
     <Compile Include="Managers\IItemManager.cs" />
     <Compile Include="Managers\ISubscriptionManager.cs" />
     <Compile Include="Managers\ItemManager.cs" />
+    <Compile Include="Managers\IUserManager.cs" />
     <Compile Include="Managers\SubscriptionManager.cs" />
+    <Compile Include="Managers\UserManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />

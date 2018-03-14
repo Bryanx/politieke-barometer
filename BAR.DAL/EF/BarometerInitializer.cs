@@ -19,11 +19,11 @@ namespace BAR.DAL.EF
         {
             User bryan = new User()
             {
+                UserId = 1,
                 FirstName = "Bryan"
             };
 
             ctx.Users.Add(bryan);
-            ctx.Entry(bryan).State = EntityState.Added;
             ctx.SaveChanges();
             
             //Write properties to Set
