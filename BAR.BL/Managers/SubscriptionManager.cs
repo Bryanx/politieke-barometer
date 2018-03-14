@@ -2,6 +2,7 @@
 using BAR.DAL;
 using BAR.BL.Domain.Users;
 using System.Collections.Generic;
+using BAR.BL.Domain.Items;
 
 namespace BAR.BL.Managers
 {
@@ -11,6 +12,35 @@ namespace BAR.BL.Managers
 	/// </summary>
 	public class SubscriptionManager : ISubscriptionManager
 	{
+		/// <summary>
+		/// Creates a new subscription for a specific user and item
+		/// with a given treshhold.
+		/// 
+		/// WARNING
+		/// THIS METHOD WILL NOT WORK BECAUSE UNIT OF WORK IS YET TO BE IMPLEMENTED.
+		/// </summary>		
+		public void CreateSubscription(int userId, int itemId, int treshhold = 10)
+		{
+			//get user
+			IUserManager userManager = new UserManager();
+			User user = userManager.GetUser(userId);
+
+			//get item
+			IItemManager itemManager = new ItemManager();
+			Item item = itemManager.GetItem(itemId);
+
+			//make subscription
+			ISubscriptionRepository subRepo = new SubscriptionRepository();
+			Subscription sub = new Subscription()
+			{
+				SubscribedUser = user,
+				SubscribedItem = item,
+				Treshhold = treshhold
+			};
+			subRepo.CreateSubscription(sub);
+
+		}
+
 		/// <summary>
 		/// Generates new alerts for a specific item
 		/// When a user treshhold is met, a alert will bed generated

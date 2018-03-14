@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BAR.BL.Domain.Items;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,5 +11,6 @@ namespace BAR.BL.Managers
     {
         void DetermineTrending(int itemId);
         double GetTrendingPer(int itemId);
+		Item GetItem(int itemId);
     }
 }

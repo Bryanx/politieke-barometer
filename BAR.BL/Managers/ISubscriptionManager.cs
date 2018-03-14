@@ -7,5 +7,6 @@ namespace BAR.BL.Managers
     {
         void GenerateAlerts(int itemId);
         IEnumerable<Alert> GetAllAlerts(int userId);
+		void CreateSubscription(int userId, int itemId, int treshhold = 10);
     }
 }

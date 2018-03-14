@@ -35,10 +35,19 @@ namespace BAR.BL.Managers
             itemRepo.UpdateLastUpdated(itemId, DateTime.Now); //Is not going to work yet. Repos are HC.
         }
 
-        /// <summary>
-        /// Gets the trending percentage of a specific item
-        /// </summary>
-        public double GetTrendingPer(int itemId)
+		/// <summary>
+		/// Returns an item from a specific itemId.
+		/// </summary>
+		public Item GetItem(int itemId)
+		{
+			IItemRepository itemRepo = new ItemRepository();
+			return itemRepo.ReadItem(itemId);
+		}
+
+		/// <summary>
+		/// Gets the trending percentage of a specific item
+		/// </summary>
+		public double GetTrendingPer(int itemId)
         {
             IItemRepository itemRepo = new ItemRepository();
             Item item = itemRepo.ReadItem(itemId);

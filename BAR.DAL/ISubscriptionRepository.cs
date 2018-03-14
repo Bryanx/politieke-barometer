@@ -7,10 +7,11 @@ using System.Threading.Tasks;
 
 namespace BAR.DAL
 {
-    public interface ISubscriptionRepository
-    {
-        IEnumerable<Subscription> ReadSubscriptions(int itemId);
-        void UpdateSubscriptions(IEnumerable<Subscription> subs);
-        IEnumerable<Alert> ReadAlerts(int userId);
-    }
+	public interface ISubscriptionRepository
+	{
+		IEnumerable<Subscription> ReadSubscriptions(int itemId);
+		void UpdateSubscriptions(IEnumerable<Subscription> subs);
+		IEnumerable<Alert> ReadAlerts(int userId);
+		void CreateSubscription(Subscription sub);
+	}
 }
