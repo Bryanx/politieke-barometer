@@ -11,7 +11,7 @@ namespace BAR.BL.Domain.Users
     {
         public int SubscriptionId { get; set; }
         public int Treshhold { get; set; }
-        public DateTime DateSubscribed { get; set; }
+        public DateTime? DateSubscribed { get; set; }
         public List<Alert> Alerts { get; set; }
         public Item SubscribedItem { get; set; }
         public User SubscribedUser { get; set; }       

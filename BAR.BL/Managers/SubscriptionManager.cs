@@ -33,8 +33,8 @@ namespace BAR.BL.Managers
 		/// </summary>		
 		public void CreateSubscription(int userId, int itemId, int treshhold = 10)
 		{
-			InitRepo();
-			UnitOfWorkManager uowManager = new UnitOfWorkManager();
+      uowManager = new UnitOfWorkManager();
+      InitRepo();
 			
 			//get user
 			IUserManager userManager = new UserManager(uowManager);
