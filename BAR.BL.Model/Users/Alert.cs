@@ -13,7 +13,7 @@ namespace BAR.BL.Domain.Users
     public string Message { get; set; }
     public AlertType AlertType { get; set; }
     public bool IsRead { get; set; }
-    public DateTime TimeStamp { get; set; }
+    public DateTime? TimeStamp { get; set; }
     public Subscription Subscription { get; set; }
   }
 }
