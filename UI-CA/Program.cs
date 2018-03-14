@@ -30,6 +30,11 @@ namespace BAR.UI.CA
       Console.WriteLine("3) Voeg nieuwe tweets toe");
       Console.WriteLine("4) Toon alle items");
       Console.WriteLine("5) Bepaal baselines en trending voor alle items");
+      Console.WriteLine("6) Voeg alerts toe voor trending items");
+      Console.WriteLine("7) Subscribe op nieuw item");
+      Console.WriteLine("8) Toon alle alerts voor een user");
+
+
       Console.WriteLine("0) Afsluiten");
       try
       {
@@ -65,6 +70,12 @@ namespace BAR.UI.CA
               ShowAllItems(); break;
             case 5:
               CalculateTrending(); break;
+            case 6:
+              AddAlertsForTrendingItems(); break;
+            case 7:
+              SubscribeOnItem(); break;
+            case 8:
+              ShowUserAlerts(); break;
             case 0:
               quit = true;
               return;
@@ -77,12 +88,57 @@ namespace BAR.UI.CA
       } while (inValidAction);
     }
 
+    private static void AddAlertsForTrendingItems()
+    {
+      SysController sys = new SysController();
+      IEnumerable<Item> allItems = new ItemManager().getAllItems();
+      int itemSize = allItems.Count();
+
+      for (int i = 0; i < itemSize; i++)
+      {
+        sys.GenerateAlerts(i + 1);
+      }
+    }
+
+    private static void ShowUserAlerts()
+    {
+      Console.Write("UserID: ");
+      int userId = Convert.ToInt32(Console.ReadLine());
+
+      IEnumerable<Alert> allUserAlerts = new SubscriptionManager().GetAllAlerts(userId);
+
+      foreach (Alert alert in allUserAlerts)
+      {
+        //Console.WriteLine(alert.AlertId + ": van user: " + alert.Subscription.SubscribedUser.UserId + " voor item:" + alert.Subscription.SubscribedItem.Name);
+
+      }
+    }
+
+    private static void SubscribeOnItem()
+    {
+      Console.Write("UserID: ");
+      int userId = Convert.ToInt32(Console.ReadLine());
+      
+
+      Console.Write("ItemId: ");
+      int itemId = Convert.ToInt32(Console.ReadLine());
+
+      Console.Write("Threshold (In percentages boven de baseline): ");
+      int treshold = Convert.ToInt32(Console.ReadLine());
+
+
+      var sm = new SubscriptionManager();
+      sm.CreateSubscription(userId, itemId, treshold);
+    }
+
     private static void CalculateTrending()
     {
       
       SysController sys = new SysController();
-      List<Item> allItems = new ItemManager().getAllItems();
-      for (int i = 0; i < allItems.Count; i++)
+      IEnumerable<Item> allItems = new ItemManager().getAllItems();
+      int itemSize = allItems.Count();
+      
+      for (int i = 0; i < itemSize; i++)
       {
         sys.DetermineTrending(i+1);
       }
@@ -90,10 +146,12 @@ namespace BAR.UI.CA
 
     private static void ShowAllItems()
     {
-      List<Item> allItems = new ItemManager().getAllItems();
-      for (int i=0; i<allItems.Count; i++)
+      IEnumerable<Item> allItems = new ItemManager().getAllItems();
+
+      foreach(Item item in allItems)
       {
-        Console.WriteLine(allItems[i].Name + " baseline: " + allItems[i].Baseline + " trendingpercentage: " + allItems[i].TrendingPercentage);
+        Console.WriteLine(item.Name + " baseline: " + item.Baseline + " trendingpercentage: " + item.TrendingPercentage);
+
       }
     }
 
@@ -104,15 +162,26 @@ namespace BAR.UI.CA
 
     private static void ShowAlertsForUser()
     {
-      throw new NotImplementedException();
+      Console.Write("UserID: ");
+      int userId = Convert.ToInt32(Console.ReadLine());
+
+      IEnumerable<Alert> allUserAlerts = new SubscriptionManager().GetAllAlerts(userId);
+
+      foreach (Alert alert in allUserAlerts)
+      {
+        //Console.WriteLine(alert.AlertId + ": van user: " + alert.Subscription.SubscribedUser.UserId + " voor item:" + alert.Subscription.SubscribedItem.Name);
+
+      }
     }
 
     private static void ShowAllUsers()
     {
-      List<User> allUsers = new UserManager().GetAllUsers();
-      for (int i = 0; i < allUsers.Count; i++)
+      IEnumerable<User> allUsers = new UserManager().GetAllUsers();
+
+      foreach (User user in allUsers)
       {
-        Console.WriteLine(allUsers[i].FirstName + " " + allUsers[i].LastName);
+        Console.WriteLine(user.FirstName + " " + user.LastName);
+
       }
     }
 
