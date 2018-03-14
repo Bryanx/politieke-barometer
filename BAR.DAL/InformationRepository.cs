@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 
 namespace BAR.DAL
 {
@@ -247,7 +248,7 @@ namespace BAR.DAL
     }
 
     /// <summary>
-    /// Get all the PropertyValues available for a certain Property
+    /// Get all the PropertyValues available for politician
     /// </summary>
     /// <param name="key"></param>
     public void FilterProperty(string key)
@@ -258,13 +259,15 @@ namespace BAR.DAL
       {
         foreach (KeyValuePair<Property, ICollection<PropertyValue>> entry in item.Properties)
         {
+          StringBuilder sb = new StringBuilder();
           foreach (var property in entry.Value)
           {
             if (entry.Key.Name.Equals(key))
             {
-              set.Add(property.Value);
+              sb.Append(String.Format("{0} ", property.Value));
             }
           }
+          set.Add(sb.ToString());
         }
       }
 
