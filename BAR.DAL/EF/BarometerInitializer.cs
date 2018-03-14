@@ -13,15 +13,29 @@ namespace BAR.DAL.EF
   internal class BarometerInitializer : DropCreateDatabaseAlways<BarometerDbContext>
   {
 
+
+
     /// <summary>
     /// Dummy data form the json file will be generated
     /// in this file for the first wave of information
     /// </summary>
     protected override void Seed(BarometerDbContext ctx)
     {
+      GenerateSources(ctx);
       GenerateProperties(ctx);
       ReadJson(ctx);
       GenerateUser(ctx);
+    }
+
+    private void GenerateSources(BarometerDbContext ctx)
+    {
+      Source source = new Source
+      {
+        Name = "Twitter",
+        SourceLine = "twitter.com"
+      };
+      ctx.Sources.Add(source);
+      ctx.SaveChanges();
     }
 
     private void GenerateProperties(BarometerDbContext ctx)
@@ -200,6 +214,7 @@ namespace BAR.DAL.EF
           };
           information.PropertieValues.Add(propertyValue);
         }
+        //Add source
         ctx.Informations.Add(information);
       }
       ctx.SaveChanges();
