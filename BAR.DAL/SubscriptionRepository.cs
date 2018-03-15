@@ -27,7 +27,7 @@ namespace BAR.DAL
 		}
 
 		/// <summary>
-		/// Creates a new subscription and persist that
+		/// Create's a new subscription and persist that
 		/// subscription to the database.
 		/// </summary>
 		public void CreateSubscription(Subscription sub)
@@ -37,7 +37,7 @@ namespace BAR.DAL
 		}
 
 		/// <summary>
-		/// Returns a collection of alerts from a specific user.
+		/// Gives back a collection of alerts from a specific user.
 		/// </summary>
 		public IEnumerable<Alert> ReadAlerts(int userId)
 		{
@@ -49,7 +49,7 @@ namespace BAR.DAL
 		}
 
 		/// <summary>
-		/// Gives back a collection of subscriptions from a specific item.
+		/// Gives back a collection of subscriptions form a specific item.
 		/// </summary>
 		public IEnumerable<Subscription> ReadSubscriptions(int itemId)
 		{
