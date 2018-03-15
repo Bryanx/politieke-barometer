@@ -23,6 +23,18 @@ namespace BAR.DAL.EF
       GenerateProperties(ctx);
       GenerateInformations(ctx);
       GenerateUser(ctx);
+      GenerateSubscription(ctx);
+    }
+
+    private void GenerateSubscription(BarometerDbContext ctx)
+    {
+      Subscription s = new Subscription()
+      {
+        SubscribedItem = ctx.Items.Find(1),
+        SubscribedUser = ctx.Users.Find(1),
+        Treshhold = 60,
+        Alerts = new List<Alert>()
+      };
     }
 
     private void GenerateSources(BarometerDbContext ctx)
