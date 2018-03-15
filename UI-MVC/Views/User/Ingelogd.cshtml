@@ -17,26 +17,6 @@
             <span class="badge bg-green">6</span>
         </a>
         <ul id="menu1" class="dropdown-menu list-unstyled msg_list" role="menu">
-            @foreach (var alert in ViewBag.Alerts) {
-                <li>
-                    <a>
-                        <span>
-                            <span><strong>@Convert.ToString(alert.Subscription.SubscribedItem.Name)</strong> is now trending.</span>
-                        </span>
-                        <span class="message">
-                            @Convert.ToString(alert.Subscription.SubscribedItem.LastUpdated)
-                        </span>
-                    </a>
-                </li>
-            }
-            <li>
-                <div class="text-center">
-                    <a>
-                        <strong>See All Alerts</strong>
-                        <i class="fa fa-angle-right"></i>
-                    </a>
-                </div>
-            </li>
         </ul>
     </li>
 }
@@ -48,7 +28,6 @@
         <button id="btnAddPie" class="btn btn-primary">Add donut chart</button>
         <button id="btnAddBar" class="btn btn-primary">Add bar chart</button>
         <button id="saveWidgets" class="btn btn-primary">Save changes</button>
-        <button class="btn btn-default source" onclick="new PNotify({ title: 'Regular Success', text: 'That thing that you were trying to do worked!', type: 'success', styling: 'bootstrap3' });">Success</button>
     </div>
     <br>
 
@@ -74,8 +53,37 @@
     <script type="text/javascript">
         (function() {
             $('#saveWidgets').on('click', saveGrid);
+            //GET Request for alerts
+            var alerts = []
+            $.ajax('/api/Alert/@ViewBag.Id',
+                    {
+                        type: 'GET',
+                        dataType: 'json'
+                    })
+                .done(function(data) {
+                    console.log(data);
+                    for (var i = 0; i < data.length; i++) {
+                        if (!alerts.includes(data[i].AlertId)) {
+                            $('#menu1').append("<li><a><span><span><strong>" +
+                                data[i].Name +
+                                "</strong> is nu trending!</span></span>" +
+                                "<span class=\"message\">nu</span></a></li>");
+                            new PNotify({
+                                title: 'Trending Alert',
+                                text: '<strong>' + data[i].Name + '</strong> is nu trending!',
+                                type: 'success',
+                                styling: 'bootstrap3'
+                            });
+                        }
 
-            //GET Request for the widgets
+                        alerts.push(data[i].AlertId);
+                    }
+                    $('#menu1').append("<li><div class=\"text-center\"><a><strong>See All Alerts</strong><i class=\"fa fa-angle-right\"></i></a></div></li>");
+                })
+                //TODO: if FAIL proper error handling
+                .fail(function() { alert('Oeps, something went wrong!'); });
+
+            //GET Request for widgets
             $.ajax('/api/Widget',
                     {
                         type: 'GET',
