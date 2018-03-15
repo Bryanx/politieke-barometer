@@ -53,8 +53,8 @@ namespace BAR.DAL
 		public void UpdateLastUpdated(int itemId, DateTime lastUpdated)
 		{
 			Item itemToUpdate = ReadItemWithInformations(itemId);
-			foreach (Information info in itemToUpdate.Informations) info.LastUpdated = lastUpdated;
-
+			itemToUpdate.LastUpdated = lastUpdated;
+			
 			ctx.Entry(itemToUpdate).State = EntityState.Modified;
 			ctx.SaveChanges();            
 		}

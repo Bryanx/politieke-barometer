@@ -18,8 +18,47 @@ namespace BAR.UI.CA
 	/// </summary>
 	public class Program
 	{
+		/// <summary>
+		/// If true, the program will shut down.
+		/// </summary>
 		private static bool quit = false;
 
+		/// <summary>
+		/// Start of the program.
+		/// </summary>
+		public static void Main(string[] args)
+		{
+
+			while (!quit)
+				ShowMenu();
+			//IUserManager userManager = new UserManager();
+			//Console.WriteLine(userManager.GetUser(1).FirstName);
+			//Console.ReadKey();
+			//BL.Domain.Items.Item item = new ItemManager().GetItem(1);
+
+			//Console.WriteLine(item.Name);
+
+			//var sm = new SubscriptionManager();
+			//sm.CreateSubscription(1, 1, 50);
+
+			//Console.WriteLine("GEDAAN");
+			//Console.ReadKey();
+
+			//wave 1
+			//Are setup is based on the json-dump data.
+			//TODO: implement logic
+			//InformationRepository informationRepository = new InformationRepository();
+			//informationRepository.PrintInformationList();
+			//informationRepository.FilterProperty("Politician");
+
+			//wave 2
+			// Needs to generate new alerts when HC data is added.
+			//TOCO: implement logic
+		}
+
+		/// <summary>
+		/// Shows a menu of options that a user can select.
+		/// </summary>
 		private static void ShowMenu()
 		{
 			Console.WriteLine("=================================");
@@ -47,6 +86,10 @@ namespace BAR.UI.CA
 			}
 		}
 
+		/// <summary>
+		/// Determines wich code needs to be executed
+		/// when a user selects an option.
+		/// </summary>
 		private static void DetectMenuAction()
 		{
 			bool inValidAction = false;
@@ -84,6 +127,10 @@ namespace BAR.UI.CA
 			} while (inValidAction);
 		}
 
+		/// <summary>
+		/// Generates all the alerts for users
+		/// based on new information form the item objects
+		/// </summary>
 		private static void AddAlertsForTrendingItems()
 		{
 			SysController sys = new SysController();
@@ -96,6 +143,10 @@ namespace BAR.UI.CA
 			}
 		}
 
+		/// <summary>
+		/// Shows all alerts for a specific user
+		/// in a showable format.
+		/// </summary>
 		private static void ShowUserAlerts()
 		{
 			Console.Write("UserID: ");
@@ -105,11 +156,15 @@ namespace BAR.UI.CA
 
 			foreach (Alert alert in allUserAlerts)
 			{
-				Console.WriteLine(alert.AlertId);
+				Console.WriteLine("alertId: " + alert.AlertId + " for " + alert.Subscription.SubscribedUser.FirstName +
+					" that is subscribed to " + alert.Subscription.SubscribedItem.Name);
 
 			}
 		}
 
+		/// <summary>
+		/// Subscribes a user to a specific item.
+		/// </summary>
 		private static void SubscribeOnItem()
 		{
 			Console.Write("UserID: ");
@@ -127,19 +182,25 @@ namespace BAR.UI.CA
 			sm.CreateSubscription(userId, itemId, treshold);
 		}
 
+		/// <summary>
+		/// Calculates a trending percentage and adjusts
+		/// the baseline for a specific item
+		/// </summary>
 		private static void CalculateTrending()
 		{
-
 			SysController sys = new SysController();
 			IEnumerable<Item> allItems = new ItemManager().getAllItems();
 			int itemSize = allItems.Count();
 
-			for (int i = 0; i < itemSize; i++)
+			for (int i = 1; i < itemSize; i++)
 			{
-				sys.DetermineTrending(i + 1);
+				sys.DetermineTrending(i);
 			}
 		}
 
+		/// <summary>
+		/// Show all the items that are currently in the system.
+		/// </summary>
 		private static void ShowAllItems()
 		{
 			IEnumerable<Item> allItems = new ItemManager().getAllItems();
@@ -151,11 +212,15 @@ namespace BAR.UI.CA
 			}
 		}
 
+		//What is the purpose of this method?
 		private static void AddTweets()
 		{
 			throw new NotImplementedException();
 		}
 
+		/// <summary>
+		/// Show all the users that are currently in the system.
+		/// </summary>
 		private static void ShowAllUsers()
 		{
 			IEnumerable<User> allUsers = new UserManager().GetAllUsers();
@@ -165,37 +230,7 @@ namespace BAR.UI.CA
 				Console.WriteLine(user.FirstName + " " + user.LastName);
 
 			}
-		}
-
-		public static void Main(string[] args)
-		{
-
-			while (!quit)
-				ShowMenu();
-			//IUserManager userManager = new UserManager();
-			//Console.WriteLine(userManager.GetUser(1).FirstName);
-			//Console.ReadKey();
-			//BL.Domain.Items.Item item = new ItemManager().GetItem(1);
-
-			//Console.WriteLine(item.Name);
-
-			//var sm = new SubscriptionManager();
-			//sm.CreateSubscription(1, 1, 50);
-
-			//Console.WriteLine("GEDAAN");
-			//Console.ReadKey();
-
-			//wave 1
-			//Are setup is based on the json-dump data.
-			//TODO: implement logic
-			//InformationRepository informationRepository = new InformationRepository();
-			//informationRepository.PrintInformationList();
-			//informationRepository.FilterProperty("Politician");
-
-			//wave 2
-			// Needs to generate new alerts when HC data is added.
-			//TOCO: implement logic
-		}
+		}		
 	}
 }
 
