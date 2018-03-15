@@ -4,30 +4,27 @@
 
 @section CustomCSS{
     <link rel="stylesheet" href="../../Content/gridstack/gridstack.css"/>
+    <link href="../../vendors/pnotify/dist/pnotify.css" rel="stylesheet">
+    <link href="../../vendors/pnotify/dist/pnotify.buttons.css" rel="stylesheet">
+    <link href="../../vendors/pnotify/dist/pnotify.nonblock.css" rel="stylesheet">
 }
 
 @section Alerts{
     <li role="presentation" class="dropdown">
-                    <a href="javascript:;" class="dropdown-toggle info-number" data-toggle="dropdown"
-                       aria-expanded="false">
-                        <i class="fa fa-envelope-o"></i>
-                        <span class="badge bg-green">6</span>
-                    </a>
+        <a href="javascript:;" class="dropdown-toggle info-number" data-toggle="dropdown"
+           aria-expanded="false">
+            <i class="fa fa-envelope-o"></i>
+            <span class="badge bg-green">6</span>
+        </a>
         <ul id="menu1" class="dropdown-menu list-unstyled msg_list" role="menu">
-            @foreach (var alert in ViewBag.Alerts)
-            {
+            @foreach (var alert in ViewBag.Alerts) {
                 <li>
                     <a>
-                        <span class="image">
-                            <img src="../../Content/images/img.jpg"
-                                 alt="Profile Image"/>
-                        </span>
                         <span>
-                            <span>@Convert.ToString(alert.Subscription.SubscribedItem.Name)</span>
-                            <span class="time">@Convert.ToString(alert.Subscription.SubscribedItem.LastUpdated)</span>
+                            <span>@Convert.ToString(alert.Subscription.SubscribedItem.Name) is now trending.</span>
                         </span>
                         <span class="message">
-                            @Convert.ToString(alert.Subscription.SubscribedItem.Name) is now trending.
+                            @Convert.ToString(alert.Subscription.SubscribedItem.LastUpdated)
                         </span>
                     </a>
                 </li>
@@ -41,7 +38,7 @@
                 </div>
             </li>
         </ul>
-                </li>
+    </li>
 }
 
 <section class="container-fluid">
@@ -51,6 +48,7 @@
         <button id="btnAddPie" class="btn btn-primary">Add donut chart</button>
         <button id="btnAddBar" class="btn btn-primary">Add bar chart</button>
         <button id="saveWidgets" class="btn btn-primary">Save changes</button>
+        <button class="btn btn-default source" onclick="new PNotify({ title: 'Regular Success', text: 'That thing that you were trying to do worked!', type: 'success', styling: 'bootstrap3' });">Success</button>
     </div>
     <br>
 
@@ -62,17 +60,21 @@
 <div style="visibility: hidden">t</div>
 
 @section CustomJS{
-    <script src="../../Content/gridstack/jquery-ui.js"></script>
+    <script src="../../Content/gridstack/jquery-ui.js">
+    </script>
     <script src="../../Content/gridstack/underscore.min.js"></script>
     <script src="../../Content/gridstack/gridstack.js"></script>
     <script src="../../Content/gridstack/gridstack.jQueryUI.js"></script>
     <script src="../../vendors/raphael/raphael.min.js"></script>
     <script src="../../vendors/morris.js/morris.min.js"></script>
     <script src="../../Content/widgets/widgets.js"></script>
+    <script src="../../vendors/pnotify/dist/pnotify.js"></script>
+    <script src="../../vendors/pnotify/dist/pnotify.buttons.js"></script>
+    <script src="../../vendors/pnotify/dist/pnotify.nonblock.js"></script>
     <script type="text/javascript">
         (function() {
-            $('#saveWidgets').on('click',saveGrid);
-            
+            $('#saveWidgets').on('click', saveGrid);
+
             //GET Request for the widgets
             $.ajax('/api/Widget',
                     {
@@ -83,7 +85,7 @@
                     //if GET request is succesfull: call loadGrid() in widgets.js -> loads all widgets
                     loadGrid(data);
                 })
-                    //TODO: if FAIL proper error handling
+                //TODO: if FAIL proper error handling
                 .fail(function() { alert('Oeps, something went wrong!'); });
         })(jQuery);
     </script>

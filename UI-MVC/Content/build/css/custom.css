@@ -463,7 +463,6 @@ html, body {
 }
 
 .site_title i {
-    border: 1px solid #EAEAEA;
     padding: 5px 6px;
     border-radius: 50%
 }
@@ -1094,11 +1093,11 @@ a:focus {
 .top_nav .dropdown-menu li {
     width: 100%
 }
-
+/*
 .top_nav .dropdown-menu li i {
     width: 100%;
     padding: 12px 20px
-}
+}*/
 
 .top_nav li i {
     font-size: 15px

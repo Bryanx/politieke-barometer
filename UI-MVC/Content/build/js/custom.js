@@ -2161,7 +2161,7 @@ function init_PNotify() {
         return;
     }
     console.log('init_PNotify');
-
+/*
     new PNotify({
         title: "PNotify",
         type: "info",
@@ -2183,7 +2183,7 @@ function init_PNotify() {
             return false;
         }
     });
-
+*/
 };
 
 
