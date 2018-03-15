@@ -12,7 +12,7 @@ namespace BAR.UI.MVC.Controllers
     /// This method is called every time  when a
     /// user wants to see his/her alers
     /// </summary>
-    public ActionResult Index(int userId)
+    public ActionResult Index(int id)
     {
 
       SysController sys = new SysController();
@@ -20,7 +20,7 @@ namespace BAR.UI.MVC.Controllers
       sys.GenerateAlerts();
 
       ISubscriptionManager subManager = new SubscriptionManager();
-      IEnumerable<Alert> alertsToShow = subManager.GetAllAlerts(userId);
+      IEnumerable<Alert> alertsToShow = subManager.GetAllAlerts(id);
 
       ViewBag.Alerts = alertsToShow;
 

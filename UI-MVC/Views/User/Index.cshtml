@@ -9,9 +9,18 @@
 
     @foreach (var alert in ViewBag.Alerts)
     {
+      <tr>
     <td>
-        @Convert.ToString(alert.AlertId);
+        @Convert.ToString(alert.AlertId)
     </td>
+
+    <td>
+        @Convert.ToString(alert.Subscription.SubscribedUser.FirstName)
+    </td>
+    <td>
+        @Convert.ToString(alert.Subscription.SubscribedItem.Name)
+    </td>
+          </tr>
     }
 </table>
 

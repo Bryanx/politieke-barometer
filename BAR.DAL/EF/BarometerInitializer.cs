@@ -28,16 +28,46 @@ namespace BAR.DAL.EF
 
 		private void GenerateSubscription(BarometerDbContext ctx)
 		{
-			Subscription s = new Subscription()
+			Subscription s1= new Subscription()
 			{
 				SubscribedItem = ctx.Items.Find(1),
 				SubscribedUser = ctx.Users.Find(1),
 				Treshhold = 60,
 				Alerts = new List<Alert>()
 			};
+      ctx.Subscriptions.Add(s1);
 
-			ctx.Subscriptions.Add(s);
-			ctx.SaveChanges();
+      Subscription s2 = new Subscription()
+      {
+        SubscribedItem = ctx.Items.Find(2),
+        SubscribedUser = ctx.Users.Find(1),
+        Treshhold = 60,
+        Alerts = new List<Alert>()
+      };
+
+      ctx.Subscriptions.Add(s2);
+
+      Subscription s3 = new Subscription()
+      {
+        SubscribedItem = ctx.Items.Find(3),
+        SubscribedUser = ctx.Users.Find(2),
+        Treshhold = 60,
+        Alerts = new List<Alert>()
+      };
+
+      ctx.Subscriptions.Add(s3);
+
+      Subscription s4 = new Subscription()
+      {
+        SubscribedItem = ctx.Items.Find(4),
+        SubscribedUser = ctx.Users.Find(2),
+        Treshhold = 60,
+        Alerts = new List<Alert>()
+      };
+
+      ctx.Subscriptions.Add(s4);
+
+      ctx.SaveChanges();
 		}
 
 
