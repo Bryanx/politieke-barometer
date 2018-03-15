@@ -35,6 +35,9 @@ namespace BAR.DAL.EF
 				Treshhold = 60,
 				Alerts = new List<Alert>()
 			};
+
+			ctx.Subscriptions.Add(s);
+			ctx.SaveChanges();
 		}
 
 
