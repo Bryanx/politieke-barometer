@@ -23,7 +23,7 @@ namespace BAR.UI.MVC.Controllers
 			IEnumerable<Alert> alertsToShow = subManager.GetAllAlerts(id);
 			ViewBag.Alerts = alertsToShow;
 
-			return View(ViewBag.Alerts);
+			return View("Ingelogd","~/Views/Shared/_MemberLayout.cshtml",ViewBag.Alerts);
 		}
 	}
 }

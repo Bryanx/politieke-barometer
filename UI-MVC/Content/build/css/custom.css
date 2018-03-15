@@ -175,7 +175,7 @@ Login
     display: inline-block;
 }
 
-.form-control {
+.panel .form-control {
     height: 40px;
 }
 

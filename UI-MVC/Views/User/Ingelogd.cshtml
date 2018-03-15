@@ -6,6 +6,43 @@
     <link rel="stylesheet" href="../../Content/gridstack/gridstack.css"/>
 }
 
+@section Alerts{
+    <li role="presentation" class="dropdown">
+                    <a href="javascript:;" class="dropdown-toggle info-number" data-toggle="dropdown"
+                       aria-expanded="false">
+                        <i class="fa fa-envelope-o"></i>
+                        <span class="badge bg-green">6</span>
+                    </a>
+        <ul id="menu1" class="dropdown-menu list-unstyled msg_list" role="menu">
+            @foreach (var alert in ViewBag.Alerts)
+            {
+                <li>
+                    <a>
+                        <span class="image">
+                            <img src="../../Content/images/img.jpg"
+                                 alt="Profile Image"/>
+                        </span>
+                        <span>
+                            <span>@Convert.ToString(alert.Subscription.SubscribedItem.Name)</span>
+                            <span class="time">@Convert.ToString(alert.Subscription.SubscribedItem.LastUpdated)</span>
+                        </span>
+                        <span class="message">
+                            @Convert.ToString(alert.Subscription.SubscribedItem.Name) is now trending.
+                        </span>
+                    </a>
+                </li>
+            }
+            <li>
+                <div class="text-center">
+                    <a>
+                        <strong>See All Alerts</strong>
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                </div>
+            </li>
+        </ul>
+                </li>
+}
 
 <section class="container-fluid">
     <h1>Widgets met grafieken</h1>
