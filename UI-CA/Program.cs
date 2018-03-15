@@ -12,206 +12,224 @@ using BAR.BL.Controllers;
 
 namespace BAR.UI.CA
 {
-  /// <summary>
-  /// In this class we test te logic of generating the alerts
-  /// in two waves. The second wave needs to generate new alerts
-  /// </summary>
-  public class Program
-  {
-    private static bool quit = false;
+	/// <summary>
+	/// In this class we test te logic of generating the alerts
+	/// in two waves. The second wave needs to generate new alerts.
+	/// </summary>
+	public class Program
+	{
+		/// <summary>
+		/// If true the program shuts down
+		/// </summary>
+		private static bool quit = false;
 
-    private static void ShowMenu()
-    {
-      Console.WriteLine("=================================");
-      Console.WriteLine("=== CONSOLE - BAROMETER =========");
-      Console.WriteLine("=================================");
-      Console.WriteLine("1) Toon alle users");
-      Console.WriteLine("2) Toon alerts van een user");
-      Console.WriteLine("3) Voeg nieuwe tweets toe");
-      Console.WriteLine("4) Toon alle items");
-      Console.WriteLine("5) Bepaal baselines en trending voor alle items");
-      Console.WriteLine("6) Voeg alerts toe voor trending items");
-      Console.WriteLine("7) Subscribe op nieuw item");
-      Console.WriteLine("8) Toon alle alerts voor een user");
+		/// <summary>
+		/// Starts the program
+		/// </summary>
+		public static void Main(string[] args)
+		{
 
+			while (!quit)
+				ShowMenu();
+			//IUserManager userManager = new UserManager();
+			//Console.WriteLine(userManager.GetUser(1).FirstName);
+			//Console.ReadKey();
+			//BL.Domain.Items.Item item = new ItemManager().GetItem(1);
 
-      Console.WriteLine("0) Afsluiten");
-      try
-      {
-        DetectMenuAction();
-      }
-      catch (Exception e)
-      {
-        Console.WriteLine();
-        Console.WriteLine("Er heeft zich een onverwachte fout voorgedaan!");
-        Console.WriteLine();
-      }
-    }
+			//Console.WriteLine(item.Name);
 
-    private static void DetectMenuAction()
-    {
-      bool inValidAction = false;
-      do
-      {
-        Console.Write("Keuze: ");
-        string input = Console.ReadLine();
-        if (Int32.TryParse(input, out int action))
-        {
-          switch (action)
-          {
-            case 1:
-              ShowAllUsers(); break;
-            case 2:
-              ShowAlertsForUser(); break;
-            case 3:
-              AddTweets(); break;
-            case 4:
-              ShowAllItems(); break;
-            case 5:
-              CalculateTrending(); break;
-            case 6:
-              AddAlertsForTrendingItems(); break;
-            case 7:
-              SubscribeOnItem(); break;
-            case 8:
-              ShowUserAlerts(); break;
-            case 0:
-              quit = true;
-              return;
-            default:
-              Console.WriteLine("Geen geldige keuze!");
-              inValidAction = true;
-              break;
-          }
-        }
-      } while (inValidAction);
-    }
+			//var sm = new SubscriptionManager();
+			//sm.CreateSubscription(1, 1, 50);
 
-    private static void AddAlertsForTrendingItems()
-    {
-      SysController sys = new SysController();
-      IEnumerable<Item> allItems = new ItemManager().getAllItems();
-      int itemSize = allItems.Count();
+			//Console.WriteLine("GEDAAN");
+			//Console.ReadKey();
 
-      for (int i = 0; i < itemSize; i++)
-      {
-        sys.GenerateAlerts(i + 1);
-      }
-    }
+			//wave 1
+			//Are setup is based on the json-dump data.
+			//TODO: implement logic
+			//InformationRepository informationRepository = new InformationRepository();
+			//informationRepository.PrintInformationList();
+			//informationRepository.FilterProperty("Politician");
 
-    private static void ShowUserAlerts()
-    {
-      Console.Write("UserID: ");
-      int userId = Convert.ToInt32(Console.ReadLine());
+			//wave 2
+			//Needs to generate new alerts when HC data is added.
+			//TOCO: implement logic
+		}
 
-      IEnumerable<Alert> allUserAlerts = new SubscriptionManager().GetAllAlerts(userId);
-
-      foreach (Alert alert in allUserAlerts)
-      {
-        //Console.WriteLine(alert.AlertId + ": van user: " + alert.Subscription.SubscribedUser.UserId + " voor item:" + alert.Subscription.SubscribedItem.Name);
-
-      }
-    }
-
-    private static void SubscribeOnItem()
-    {
-      Console.Write("UserID: ");
-      int userId = Convert.ToInt32(Console.ReadLine());
-      
-
-      Console.Write("ItemId: ");
-      int itemId = Convert.ToInt32(Console.ReadLine());
-
-      Console.Write("Threshold (In percentages boven de baseline): ");
-      int treshold = Convert.ToInt32(Console.ReadLine());
+		/// <summary>
+		/// Shows a menu of options you can select
+		/// to interact with.
+		/// </summary>
+		private static void ShowMenu()
+		{
+			Console.WriteLine("=================================");
+			Console.WriteLine("=== CONSOLE - BAROMETER =========");
+			Console.WriteLine("=================================");
+			Console.WriteLine("1) Toon alle users");
+			Console.WriteLine("2) Toon alerts van een user");
+			Console.WriteLine("3) Voeg nieuwe tweets toe");
+			Console.WriteLine("4) Toon alle items");
+			Console.WriteLine("5) Bepaal baselines en trending voor alle items");
+			Console.WriteLine("6) Voeg alerts toe voor trending items");
+			Console.WriteLine("7) Subscribe op nieuw item");
+			Console.WriteLine("8) Toon alle alerts voor een user");
 
 
-      var sm = new SubscriptionManager();
-      sm.CreateSubscription(userId, itemId, treshold);
-    }
+			Console.WriteLine("0) Afsluiten");
+			try
+			{
+				DetectMenuAction();
+			}
+			catch (Exception e)
+			{
+				Console.WriteLine();
+				Console.WriteLine("Er heeft zich een onverwachte fout voorgedaan!");
+				Console.WriteLine();
+			}
+		}
 
-    private static void CalculateTrending()
-    {
-      
-      SysController sys = new SysController();
-      IEnumerable<Item> allItems = new ItemManager().getAllItems();
-      int itemSize = allItems.Count();
-      
-      for (int i = 0; i < itemSize; i++)
-      {
-        sys.DetermineTrending(i+1);
-      }
-    }
+		/// <summary>
+		/// Detects the option that a user has selected.
+		/// </summary>
+		private static void DetectMenuAction()
+		{
+			bool inValidAction = false;
+			do
+			{
+				Console.Write("Keuze: ");
+				string input = Console.ReadLine();
+				if (Int32.TryParse(input, out int action))
+				{
+					switch (action)
+					{
+						case 1:
+							ShowAllUsers(); break;
+						case 2:
+							ShowAlertsForUser(); break;
+						case 3:
+							AddTweets(); break;
+						case 4:
+							ShowAllItems(); break;
+						case 5:
+							CalculateTrending(); break;
+						case 6:
+							AddAlertsForTrendingItems(); break;
+						case 7:
+							SubscribeOnItem(); break;
+						case 8:
+							ShowUserAlerts(); break;
+						case 0:
+							quit = true;
+							return;
+						default:
+							Console.WriteLine("Geen geldige keuze!");
+							inValidAction = true;
+							break;
+					}
+				}
+			} while (inValidAction);
+		}
 
-    private static void ShowAllItems()
-    {
-      IEnumerable<Item> allItems = new ItemManager().getAllItems();
+		/// <summary>
+		/// Automaticly generates new alerts based
+		/// on trending items.
+		/// </summary>
+		private static void AddAlertsForTrendingItems()
+		{
+			SysController sys = new SysController();
+			IEnumerable<Item> allItems = new ItemManager().getAllItems();
+			int itemSize = allItems.Count();
 
-      foreach(Item item in allItems)
-      {
-        Console.WriteLine(item.Name + " baseline: " + item.Baseline + " trendingpercentage: " + item.TrendingPercentage);
+			for (int i = 1; i < itemSize; i++)
+			{
+				sys.GenerateAlerts(i);
+			}
+		}		
 
-      }
-    }
+		/// <summary>
+		/// Lets a user subscribe to a specific item.
+		/// </summary>
+		private static void SubscribeOnItem()
+		{
+			Console.Write("UserID: ");
+			int userId = Convert.ToInt32(Console.ReadLine());
 
-    private static void AddTweets()
-    {
-      throw new NotImplementedException();
-    }
+			Console.Write("ItemId: ");
+			int itemId = Convert.ToInt32(Console.ReadLine());
 
-    private static void ShowAlertsForUser()
-    {
-      Console.Write("UserID: ");
-      int userId = Convert.ToInt32(Console.ReadLine());
+			Console.Write("Threshold (In percentages boven de baseline): ");
+			int treshold = Convert.ToInt32(Console.ReadLine());
 
-      IEnumerable<Alert> allUserAlerts = new SubscriptionManager().GetAllAlerts(userId);
+			new SubscriptionManager().CreateSubscription(userId, itemId, treshold);			
+		}
 
-      foreach (Alert alert in allUserAlerts)
-      {
-        //Console.WriteLine(alert.AlertId + ": van user: " + alert.Subscription.SubscribedUser.UserId + " voor item:" + alert.Subscription.SubscribedItem.Name);
+		/// <summary>
+		/// Calculates the trending precentage and
+		/// adjust the baseline of every item.
+		/// </summary>
+		private static void CalculateTrending()
+		{
 
-      }
-    }
+			SysController sys = new SysController();
+			IEnumerable<Item> allItems = new ItemManager().getAllItems();
+			int itemSize = allItems.Count();
 
-    private static void ShowAllUsers()
-    {
-      IEnumerable<User> allUsers = new UserManager().GetAllUsers();
+			for (int i = 1; i < itemSize; i++)
+			{
+				sys.DetermineTrending(i);
+			}
+		}
 
-      foreach (User user in allUsers)
-      {
-        Console.WriteLine(user.FirstName + " " + user.LastName);
+		/// <summary>
+		/// Gives an overview of every item (politician)
+		/// with their baseline and trendingpercentage.
+		/// </summary>
+		private static void ShowAllItems()
+		{
+			IEnumerable<Item> allItems = new ItemManager().getAllItems();
 
-      }
-    }
+			foreach (Item item in allItems)
+			{
+				Console.WriteLine(item.Name + " baseline: " + item.Baseline + " trendingpercentage: " + item.TrendingPercentage);
 
-    public static void Main(string[] args)
-    {
+			}
+		}
 
-      while (!quit)
-        ShowMenu();
-      //IUserManager userManager = new UserManager();
-      //Console.WriteLine(userManager.GetUser(1).FirstName);
-      //Console.ReadKey();
-      //BL.Domain.Items.Item item = new ItemManager().GetItem(1);
+		//What is the purpose of this method?
+		private static void AddTweets()
+		{
+			throw new NotImplementedException();
+		}
 
-      //Console.WriteLine(item.Name);
+		//Method won't work, we need to use eager loading
+		private static void ShowUserAlerts()
+		{
+			Console.Write("UserID: ");
+			int userId = Convert.ToInt32(Console.ReadLine());
 
-      //var sm = new SubscriptionManager();
-      //sm.CreateSubscription(1, 1, 50);
+			IEnumerable<Alert> allUserAlerts = new SubscriptionManager().GetAllAlerts(userId);
+		
+			foreach (Alert alert in allUserAlerts)
+			{
+				Console.WriteLine(alert.AlertId + ": van user: " + alert.Subscription.SubscribedUser.FirstName
+					+ " voor item:" + alert.Subscription.SubscribedItem.Name);
 
-      //Console.WriteLine("GEDAAN");
-      //Console.ReadKey();
+			}
+		}
 
-      //wave 1
-      //Are setup is based on the json-dump data.
-      //TODO: implement logic
-      //InformationRepository informationRepository = new InformationRepository();
-      //informationRepository.PrintInformationList();
-      //informationRepository.FilterProperty("Politician");
+		/// <summary>
+		/// Show all users that are registerd on the platform
+		/// </summary>
+		private static void ShowAllUsers()
+		{
+			IEnumerable<User> allUsers = new UserManager().GetAllUsers();
 
-      //wave 2
-    }//Needs to generate new alerts when HC data is added.
-     //TOCO: implement logic
-  }
+			foreach (User user in allUsers)
+			{
+				Console.WriteLine(user.FirstName + " " + user.LastName);
+
+			}
+		}		
+	}
 }
 
