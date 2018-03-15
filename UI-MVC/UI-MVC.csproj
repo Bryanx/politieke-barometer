@@ -162,6 +162,7 @@
     </Compile>
     <Compile Include="Models\Graph.cs" />
     <Compile Include="Models\Persoon.cs" />
+    <Compile Include="Models\SubscriptionVM.cs" />
     <Compile Include="Models\Widget.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
