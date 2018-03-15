@@ -17,7 +17,7 @@ namespace BAR.DAL
 		private BarometerDbContext ctx;
 
 		/// <summary>
-		/// If uow is present then the constructor
+		/// If uow is present, the constructor
 		/// will get the context from uow.
 		/// </summary>
 		public ItemRepository(UnitOfWork uow = null)
@@ -48,7 +48,7 @@ namespace BAR.DAL
 		}
 
 		/// <summary>
-		/// Updates the Lastupdated field of an Item.
+		/// Updates the LastUpdated field of an Item.
 		/// </summary>
 		public void UpdateLastUpdated(int itemId, DateTime lastUpdated)
 		{
@@ -60,7 +60,7 @@ namespace BAR.DAL
 		}
 
 		/// <summary>
-		/// Does the same thing as ReadItem but it loeds all the
+		/// Does the same thing as ReadItem but it loads all the
 		/// informations with it.
 		/// </summary>
 		public Item ReadItemWithInformations(int itemId)
