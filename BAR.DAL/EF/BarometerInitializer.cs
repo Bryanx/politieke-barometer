@@ -215,6 +215,7 @@ namespace BAR.DAL.EF
           information.PropertieValues.Add(propertyValue);
         }
         //Add source
+
         ctx.Informations.Add(information);
       }
       ctx.SaveChanges();
