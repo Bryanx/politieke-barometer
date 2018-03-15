@@ -256,6 +256,8 @@ namespace BAR.DAL.EF
 
 <<<<<<< HEAD
     /// <summary>
+    /// Will return the ID of the politician, if he does not exist yet he will be created.
+    /// 
     /// Zal de ID van de politicus teruggeven
     /// Als de politicus nog niet bestaat zal deze aangemaakt worden
     /// </summary>
