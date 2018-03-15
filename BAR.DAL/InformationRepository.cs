@@ -38,7 +38,7 @@ namespace BAR.DAL
 		public int ReadNumberInfo(int itemId, DateTime since)
 		{
 			return ctx.Informations.Where(info => info.Item.ItemId == itemId)
-				.Where(info => info.LastUpdated >= since).Count();
+				.Where(info => info.CreatetionDate >= since).Count();
 		}
 	}
 }

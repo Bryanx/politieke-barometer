@@ -194,7 +194,7 @@ namespace BAR.DAL.EF
 				//Add date
 				string datum = Convert.ToString(deserializedJson.records[i].date);
 				DateTime myInfoDate = DateTime.ParseExact(datum, "yyyy-MM-dd HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture);
-				information.LastUpdated = myInfoDate;
+				information.CreatetionDate = myInfoDate;
 
 				//Add information object to the DbSet
 				ctx.Informations.Add(information);
