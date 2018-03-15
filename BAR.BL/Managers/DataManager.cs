@@ -43,6 +43,10 @@ namespace BAR.BL.Managers
 			else infoRepo = new InformationRepository(uowManager.UnitOfWork);
 		}
 
+		/// <summary>
+		/// Returns a list of informations for
+		/// a specific item id.
+		/// </summary>
 		public IEnumerable<Information> getAllInformationForId(int itemId)
 		{
 			InitRepo();

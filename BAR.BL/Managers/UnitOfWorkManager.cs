@@ -27,6 +27,10 @@ namespace BAR.BL.Managers
 			}
 		}
 
+		/// <summary>
+		/// Commits changes to the database when
+		/// when unit of work is used.
+		/// </summary>
 		public void Save()
 		{
 			UnitOfWork.CommitChanges();

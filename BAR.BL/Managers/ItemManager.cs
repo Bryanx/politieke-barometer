@@ -82,6 +82,9 @@ namespace BAR.BL.Managers
 			return item.TrendingPercentage;
 		}
 
+		/// <summary>
+		/// Returns a list of all items.
+		/// </summary>
 		public IEnumerable<Item> getAllItems()
 		{
 			InitRepo();
