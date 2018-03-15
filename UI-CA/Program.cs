@@ -72,9 +72,6 @@ namespace BAR.UI.CA
 			Console.WriteLine("5) Bepaal baselines en trending voor alle items");
 			Console.WriteLine("6) Voeg alerts toe voor trending items");
 			Console.WriteLine("7) Subscribe op nieuw item");
-			Console.WriteLine("8) Toon alle alerts voor een user");
-
-
 			Console.WriteLine("0) Afsluiten");
 			try
 			{
@@ -105,7 +102,7 @@ namespace BAR.UI.CA
 						case 1:
 							ShowAllUsers(); break;
 						case 2:
-							ShowAlertsForUser(); break;
+							ShowUserAlerts(); break;
 						case 3:
 							AddTweets(); break;
 						case 4:
@@ -115,9 +112,7 @@ namespace BAR.UI.CA
 						case 6:
 							AddAlertsForTrendingItems(); break;
 						case 7:
-							SubscribeOnItem(); break;
-						case 8:
-							ShowUserAlerts(); break;
+							SubscribeOnItem(); break;						
 						case 0:
 							quit = true;
 							return;
