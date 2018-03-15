@@ -12,6 +12,12 @@ namespace BAR.BL.Controllers
 	{
 		IItemManager itemManager;
 		ISubscriptionManager subManager;
+
+		/// <summary>
+		/// WARNING
+		/// this is not the right way to initialize managers
+		/// but we need to do it this way for the POC.
+		/// </summary>
 		public SysController()
 		{
 			itemManager = new ItemManager();
@@ -31,6 +37,7 @@ namespace BAR.BL.Controllers
 		/// Is used to trigger the determination
 		/// of adjusting the baseline and the trending percentage 
 		/// of a specific item.
+		/// 
 		/// </summary>
 		public void DetermineTrending()
 		{
@@ -51,6 +58,9 @@ namespace BAR.BL.Controllers
 			subManager.GenerateAlerts(itemId);
 		}
 
+		/// <summary>
+		/// Generates alersts for all items.
+		/// </summary>
 		public void GenerateAlerts()
 		{
 			IEnumerable<Item> allItems = itemManager.getAllItems();
