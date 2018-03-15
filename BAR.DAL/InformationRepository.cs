@@ -16,9 +16,19 @@ namespace BAR.DAL
 	{
 		private BarometerDbContext ctx;
 
-		public InformationRepository()
+		/// <summary>
+		/// If uow is present then the constructor
+		/// will get the context from uow.
+		/// </summary>
+		public InformationRepository(UnitOfWork uow = null)
 		{
-			ctx = new BarometerDbContext();
+			if (uow == null) ctx = new BarometerDbContext();
+			else ctx = uow.Context;					
+		}
+
+		public IEnumerable<Information> ReadAllInfoForId(int itemId)
+		{
+			return ctx.Informations.Where(info => info.Item.ItemId == itemId).AsEnumerable();
 		}
 
 		/// <summary>
@@ -28,7 +38,7 @@ namespace BAR.DAL
 		public int ReadNumberInfo(int itemId, DateTime since)
 		{
 			return ctx.Informations.Where(info => info.Item.ItemId == itemId)
-				.Where(info => info.LastUpdated <= since).Count();
+				.Where(info => info.LastUpdated >= since).Count();
 		}
 	}
 }

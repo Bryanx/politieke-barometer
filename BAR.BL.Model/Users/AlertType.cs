@@ -8,7 +8,7 @@ namespace BAR.BL.Domain.Users
 {
   public class AlertType
   {
-    public int AlerTypeId { get; set; }
+    public int AlertTypeId { get; set; }
     public string Name { get; set; }
   }
 }

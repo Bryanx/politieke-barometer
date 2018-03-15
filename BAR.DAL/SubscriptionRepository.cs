@@ -16,9 +16,10 @@ namespace BAR.DAL
 	{
 		private BarometerDbContext ctx;
 
-		public SubscriptionRepository()
+		public SubscriptionRepository(UnitOfWork uow = null)
 		{
-			ctx = new BarometerDbContext();
+			if (uow == null) ctx = new BarometerDbContext();
+			else ctx = uow.Context;
 		}
 
 		/// <summary>

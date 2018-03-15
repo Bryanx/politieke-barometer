@@ -1,4 +1,5 @@
 ﻿using BAR.BL.Domain.Data;
+using BAR.BL.Domain.Items;
 using BAR.BL.Domain.Users;
 using Newtonsoft.Json;
 using System;
@@ -12,18 +13,15 @@ namespace BAR.DAL.EF
 {
   internal class BarometerInitializer : DropCreateDatabaseAlways<BarometerDbContext>
   {
-
-
-
     /// <summary>
-    /// Dummy data form the json file will be generated
+    /// Dummy data from the json file will be generated
     /// in this file for the first wave of information
     /// </summary>
     protected override void Seed(BarometerDbContext ctx)
     {
       GenerateSources(ctx);
       GenerateProperties(ctx);
-      ReadJson(ctx);
+      GenerateInformations(ctx);
       GenerateUser(ctx);
     }
 
@@ -48,14 +46,6 @@ namespace BAR.DAL.EF
       Property word = new Property
       {
         Name = "Word"
-      };
-      Property date = new Property
-      {
-        Name = "Date"
-      };
-      Property politician = new Property
-      {
-        Name = "Politician"
       };
       Property geo = new Property
       {
@@ -88,8 +78,6 @@ namespace BAR.DAL.EF
 
       ctx.Properties.Add(hashtag);
       ctx.Properties.Add(word);
-      ctx.Properties.Add(date);
-      ctx.Properties.Add(politician);
       ctx.Properties.Add(geo);
       ctx.Properties.Add(postId);
       ctx.Properties.Add(userId);
@@ -100,20 +88,19 @@ namespace BAR.DAL.EF
       ctx.SaveChanges();
     }
 
-    private void ReadJson(BarometerDbContext ctx)
+    private void GenerateInformations(BarometerDbContext ctx)
     {
       string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "data.json");
       string json = File.ReadAllText(path);
       dynamic deserializedJson = JsonConvert.DeserializeObject(json);
 
-      for (int i = 0; i < 5; i++)
+      for (int i = 0; i < 150; i++)
       {
         PropertyValue propertyValue;
         Information information = new Information
         {
           PropertieValues = new List<PropertyValue>()
         };
-        Console.WriteLine(String.Format("Record {0}", i + 1));
         //Read hashtags
         for (int j = 0; j < deserializedJson.records[i].hashtags.Count; j++)
         {
@@ -136,22 +123,6 @@ namespace BAR.DAL.EF
           };
           information.PropertieValues.Add(propertyValue);
         }
-        //Read date
-        propertyValue = new PropertyValue
-        {
-          Property = ctx.Properties.Where(x => x.Name.Equals("Date")).SingleOrDefault(),
-          Value = deserializedJson.records[i].date,
-          Confidence = 1
-        };
-        information.PropertieValues.Add(propertyValue);
-        //Read politician
-        propertyValue = new PropertyValue
-        {
-          Property = ctx.Properties.Where(x => x.Name.Equals("Politician")).SingleOrDefault(),
-          Value = String.Format("{0} {1}", deserializedJson.records[i].politician[0], deserializedJson.records[i].politician[1]),
-          Confidence = 1
-        };
-        information.PropertieValues.Add(propertyValue);
         //Read geo
         propertyValue = new PropertyValue
         {
@@ -215,7 +186,17 @@ namespace BAR.DAL.EF
           information.PropertieValues.Add(propertyValue);
         }
         //Add source
+        string source = Convert.ToString(deserializedJson.records[i].source);
+        information.Source = ctx.Sources.Where(s => s.Name.ToLower().Equals(source)).SingleOrDefault();
+        //Add connection to Item (Person)
+        string personFullName = String.Format("{0} {1}", deserializedJson.records[i].politician[0], deserializedJson.records[i].politician[1]);        
+        information.Item = GeneratePoliticians(personFullName, ctx);
+        //Add date
+        string datum = Convert.ToString(deserializedJson.records[i].date);
+        DateTime myInfoDate = DateTime.ParseExact(datum, "yyyy-MM-dd HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture);
+        information.LastUpdated = myInfoDate;
 
+        //Add information object to the DbSet
         ctx.Informations.Add(information);
       }
       ctx.SaveChanges();
@@ -267,9 +248,32 @@ namespace BAR.DAL.EF
       ctx.SaveChanges();
     }
 
-    private void GeneratePoliticians(BarometerDbContext ctx)
+    /// <summary>
+    /// Zal de ID van de politicus teruggeven
+    /// Als de politicus nog niet bestaat zal deze aangemaakt worden
+    /// </summary>
+    /// <param name="politicianFullName"></param>
+    /// <param name="ctx"></param>
+    /// <returns></returns>
+    private Item GeneratePoliticians(string personFullName, BarometerDbContext ctx)
     {
 
+      Item person = ctx.Items.Where(i => i.Name.Equals(personFullName)).SingleOrDefault();
+
+      if(person == null)
+      {
+        person = new Person()
+        {
+          Name = personFullName,
+          CreationDate = DateTime.Now,
+          Baseline = 0,
+          TrendingPercentage = 0
+        };
+        ctx.Items.Add(person);
+        ctx.SaveChanges();
+      }
+
+      return person;
     }
   }
 }
