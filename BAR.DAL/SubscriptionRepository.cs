@@ -34,11 +34,24 @@ namespace BAR.DAL
 
 		/// <summary>
 		/// Gives back a collection of alerts from a specific user.
+		/// 
+		/// If showalbe is true, the method will return a list of alerts
+		/// where you can alse access the item and the user of a specific alert.
 		/// </summary>
-		public IEnumerable<Alert> ReadAlerts(int userId)
+		public IEnumerable<Alert> ReadAlerts(int userId, bool showable = false)
 		{
-			IEnumerable<Subscription> userSubs = ctx.Subscriptions.Include(sub => sub.Alerts)
+			IEnumerable<Subscription> userSubs;
+			if (!showable)
+			{
+				userSubs = ctx.Subscriptions.Include(sub => sub.Alerts)
+				.Where(sub => sub.SubscribedUser.UserId == userId).AsEnumerable();				
+			} else
+			{
+				userSubs = ctx.Subscriptions.Include(sub => sub.Alerts)
+											.Include(sub => sub.SubscribedItem)
+											.Include(sub => sub.SubscribedUser)
 				.Where(sub => sub.SubscribedUser.UserId == userId).AsEnumerable();
+			}
 
 			List<Alert> alersToRead = new List<Alert>();
 			foreach (Subscription sub in userSubs) alersToRead.AddRange(sub.Alerts);
@@ -60,6 +73,15 @@ namespace BAR.DAL
 		{
 			return ctx.Subscriptions.Include(sub => sub.Alerts)
 				.Where(sub => sub.SubscribedItem.ItemId == itemId).AsEnumerable();
+		}
+
+		/// <summary>
+		/// Update a specific subscription.
+		/// </summary>
+		public void UpdateSubScription(Subscription sub)
+		{
+			ctx.Entry(sub).State = EntityState.Modified;
+			ctx.SaveChanges();
 		}
 
 		/// <summary>

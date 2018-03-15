@@ -76,9 +76,11 @@ namespace BAR.BL.Managers
 				{
 					sub.Alerts.Add(new Alert()
 					{
-						//Subscription = sub
+						Subscription = sub
 					});
+					//subRepo.UpdateSubScription(sub);
 				}
+				
 			}
 			subRepo.UpdateSubscriptions(subs);
 		}
@@ -89,7 +91,7 @@ namespace BAR.BL.Managers
 		public IEnumerable<Alert> GetAllAlerts(int userId)
 		{
 			InitRepo();
-			return subRepo.ReadAlerts(userId);
+			return subRepo.ReadAlerts(userId, true);
 		}
 
 		/// <summary>

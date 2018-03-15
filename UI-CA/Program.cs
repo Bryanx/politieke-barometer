@@ -105,7 +105,8 @@ namespace BAR.UI.CA
 
 			foreach (Alert alert in allUserAlerts)
 			{
-				Console.WriteLine(alert.AlertId);
+				Console.WriteLine("alertId: " + alert.AlertId + " for " + alert.Subscription.SubscribedUser.FirstName +
+					" that is subscribed to " + alert.Subscription.SubscribedItem.Name);
 
 			}
 		}
@@ -134,9 +135,9 @@ namespace BAR.UI.CA
 			IEnumerable<Item> allItems = new ItemManager().getAllItems();
 			int itemSize = allItems.Count();
 
-			for (int i = 0; i < itemSize; i++)
+			for (int i = 1; i < itemSize; i++)
 			{
-				sys.DetermineTrending(i + 1);
+				sys.DetermineTrending(i);
 			}
 		}
 
