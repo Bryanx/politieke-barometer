@@ -32,8 +32,8 @@ namespace BAR.DAL
 		}
 
 		/// <summary>
-		/// Gets the number of informations of a specific given item
-		/// form since till now.
+		/// Returns the number of informations of a specific given item
+		/// since the last update.
 		/// </summary
 		public int ReadNumberInfo(int itemId, DateTime since)
 		{

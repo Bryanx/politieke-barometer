@@ -26,7 +26,7 @@ namespace BAR.DAL
     }
 
     /// <summary>
-    /// Returns the user form a specific userId.
+    /// Returns the user from a specific userId.
     /// </summary>
     public User ReadUser(int userId)
     {
