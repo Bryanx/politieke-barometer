@@ -11,7 +11,7 @@ namespace BAR.DAL
 {
 	/// <summary>
 	/// At this moment the repository works HC.
-	/// </summary>
+	/// </summary
 	public class SubscriptionRepository : ISubscriptionRepository
 	{
 		private BarometerDbContext ctx;
@@ -37,7 +37,8 @@ namespace BAR.DAL
 		/// </summary>
 		public IEnumerable<Alert> ReadAlerts(int userId)
 		{
-			IEnumerable<Subscription> userSubs = ctx.Subscriptions.Where(sub => sub.SubscribedUser.UserId == userId).AsEnumerable();
+			IEnumerable<Subscription> userSubs = ctx.Subscriptions.Include(sub => sub.Alerts)
+				.Where(sub => sub.SubscribedUser.UserId == userId).AsEnumerable();
 
 			List<Alert> alersToRead = new List<Alert>();
 			foreach (Subscription sub in userSubs) alersToRead.AddRange(sub.Alerts);
@@ -50,6 +51,15 @@ namespace BAR.DAL
 		public IEnumerable<Subscription> ReadSubscriptions(int itemId)
 		{
 			return ctx.Subscriptions.Where(sub => sub.SubscribedItem.ItemId == itemId).AsEnumerable();
+		}
+
+		/// <summary>
+		/// Returns a list of subscriptions with their alerts.
+		/// </summary>
+		public IEnumerable<Subscription> ReadSubscritpionsWithAlerts(int itemId)
+		{
+			return ctx.Subscriptions.Include(sub => sub.Alerts)
+				.Where(sub => sub.SubscribedItem.ItemId == itemId).AsEnumerable();
 		}
 
 		/// <summary>
