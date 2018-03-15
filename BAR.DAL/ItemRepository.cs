@@ -35,7 +35,7 @@ namespace BAR.DAL
 			itemToUpdate.Baseline = baseline;
 			itemToUpdate.TrendingPercentage = trendingeper;
 
-			ctx.Entry(itemToUpdate).State = System.Data.Entity.EntityState.Modified;
+			ctx.Entry(itemToUpdate).State = EntityState.Modified;
 			ctx.SaveChanges();
 		}
 
@@ -69,6 +69,9 @@ namespace BAR.DAL
 				.Where(item => item.ItemId == itemId).SingleOrDefault();
 		}
 
+		/// <summary>
+		/// Reads all the items.
+		/// </summary>
 		public IEnumerable<Item> ReadAllItems()
 		{
 			return ctx.Items.AsEnumerable();
