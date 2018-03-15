@@ -16,7 +16,8 @@ namespace BAR.UI.MVC.Controllers
     {
 
       SysController sys = new SysController();
-      
+      sys.DetermineTrending();
+      sys.GenerateAlerts();
 
       ISubscriptionManager subManager = new SubscriptionManager();
       IEnumerable<Alert> alertsToShow = subManager.GetAllAlerts(userId);

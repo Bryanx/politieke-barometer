@@ -1,18 +1,18 @@
-﻿@model System.Collections.Generic.IEnumerable<BAR.BL.Domain.Users.Alert>
-
+﻿
 @{
-    ViewBag.Title = "title";
-    Layout = "_Layout";
+    ViewBag.Title = "Index";
 }
 
 <h2>title</h2>
 
 <table class="table">
-    
-    @foreach( var alert in Model)
+
+    @foreach (var alert in ViewBag.Alerts)
     {
-      <td>
-          @Convert.ToString(alert.AlertId);
-      </td>
+    <td>
+        @Convert.ToString(alert.AlertId);
+    </td>
     }
- </table>
+</table>
+
+
