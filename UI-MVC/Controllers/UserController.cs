@@ -6,25 +6,24 @@ using System.Web.Mvc;
 
 namespace BAR.UI.MVC.Controllers
 {
-  public class UserController : Controller
-  {
-    /// <summary>
-    /// This method is called every time  when a
-    /// user wants to see his/her alers
-    /// </summary>
-    public ActionResult Index(int id)
-    {
+	public class UserController : Controller
+	{
+		/// <summary>
+		/// This method is called every time  when a
+		/// user wants to see his/her alers.
+		/// id = UserId
+		/// </summary>
+		public ActionResult Index(int id)
+		{
+			SysController sys = new SysController();
+			sys.DetermineTrending();
+			sys.GenerateAlerts();
 
-      SysController sys = new SysController();
-      sys.DetermineTrending();
-      sys.GenerateAlerts();
+			ISubscriptionManager subManager = new SubscriptionManager();
+			IEnumerable<Alert> alertsToShow = subManager.GetAllAlerts(id);
+			ViewBag.Alerts = alertsToShow;
 
-      ISubscriptionManager subManager = new SubscriptionManager();
-      IEnumerable<Alert> alertsToShow = subManager.GetAllAlerts(id);
-
-      ViewBag.Alerts = alertsToShow;
-
-      return View(ViewBag.Alerts);
-    }
-  }
+			return View(ViewBag.Alerts);
+		}
+	}
 }

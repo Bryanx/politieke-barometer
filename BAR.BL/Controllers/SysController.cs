@@ -20,6 +20,11 @@ namespace BAR.BL.Controllers
 			itemManager.DetermineTrending(itemId);
 		}
 
+		/// <summary>
+		/// Is used to trigger the determination
+		/// of adjusting the baseline and the trending percentage 
+		/// of a specific item.
+		/// </summary>
 		public void DetermineTrending()
 		{
 			ItemManager itemManager = new ItemManager();

@@ -69,6 +69,10 @@ namespace BAR.DAL
 				.Where(item => item.ItemId == itemId).SingleOrDefault();
 		}
 
+		/// <summary>
+		/// Returns a list of all items.
+		/// </summary>
+		/// <returns></returns>
 		public IEnumerable<Item> ReadAllItems()
 		{
 			return ctx.Items.AsEnumerable();
