@@ -1,5 +1,7 @@
-﻿using BAR.BL.Managers;
+﻿using BAR.BL.Domain.Items;
+using BAR.BL.Managers;
 using System;
+using System.Collections.Generic;
 
 namespace BAR.BL.Controllers
 {
@@ -18,6 +20,17 @@ namespace BAR.BL.Controllers
 			itemManager.DetermineTrending(itemId);
 		}
 
+		public void DetermineTrending()
+		{
+			ItemManager itemManager = new ItemManager();
+			IEnumerable<Item> allItems = itemManager.getAllItems();
+
+			foreach(Item item in allItems)
+			{
+				DetermineTrending(item.ItemId);
+			}
+		}
+
 		/// <summary>
 		/// When a new baseline and trendingpercentage is determined,
 		/// Alerts will be generated.
@@ -26,6 +39,17 @@ namespace BAR.BL.Controllers
 		{
 			SubscriptionManager subManager = new SubscriptionManager();
 			subManager.GenerateAlerts(itemId);
+		}
+
+		public void GenerateAlerts()
+		{
+			ItemManager itemManager = new ItemManager();
+			IEnumerable<Item> allItems = itemManager.getAllItems();
+			
+			foreach (Item item in allItems)
+			{
+				GenerateAlerts(item.ItemId);
+			}
 		}
 	}
 }
