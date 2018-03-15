@@ -26,10 +26,6 @@ namespace BAR.DAL
 			else ctx = uow.Context;					
 		}
 
-		/// <summary>
-		/// Returns a list of informations based on 
-		/// the itemId.
-		/// </summary>
 		public IEnumerable<Information> ReadAllInfoForId(int itemId)
 		{
 			return ctx.Informations.Where(info => info.Item.ItemId == itemId).AsEnumerable();

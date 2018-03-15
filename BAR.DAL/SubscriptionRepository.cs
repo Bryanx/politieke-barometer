@@ -16,10 +16,6 @@ namespace BAR.DAL
 	{
 		private BarometerDbContext ctx;
 
-		/// <summary>
-		/// If uow is present then the constructor
-		/// will get the context from uow.
-		/// </summary>
 		public SubscriptionRepository(UnitOfWork uow = null)
 		{
 			if (uow == null) ctx = new BarometerDbContext();
