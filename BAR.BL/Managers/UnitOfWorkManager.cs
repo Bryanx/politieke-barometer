@@ -27,6 +27,9 @@ namespace BAR.BL.Managers
 			}
 		}
 
+		/// <summary>
+		/// Saves the current trasaction
+		/// </summary>
 		public void Save()
 		{
 			UnitOfWork.CommitChanges();
