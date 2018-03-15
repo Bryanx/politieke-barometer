@@ -10,13 +10,20 @@ namespace BAR.BL.Controllers
 	/// </summary>
 	public class SysController
 	{
+		IItemManager itemManager;
+		ISubscriptionManager subManager;
+		public SysController()
+		{
+			itemManager = new ItemManager();
+			subManager = new SubscriptionManager();
+		}
+
 		/// <summary>
 		/// When new data arrives this method will be triggerd to determine
 		/// a new baseline and a new trending percentage for a specific item.
 		/// </summary>
 		public void DetermineTrending(int itemId)
-		{
-			ItemManager itemManager = new ItemManager();
+		{		
 			itemManager.DetermineTrending(itemId);
 		}
 
@@ -27,7 +34,6 @@ namespace BAR.BL.Controllers
 		/// </summary>
 		public void DetermineTrending()
 		{
-			ItemManager itemManager = new ItemManager();
 			IEnumerable<Item> allItems = itemManager.getAllItems();
 
 			foreach(Item item in allItems)
@@ -42,13 +48,11 @@ namespace BAR.BL.Controllers
 		/// </summary>
 		public void GenerateAlerts(int itemId)
 		{
-			SubscriptionManager subManager = new SubscriptionManager();
 			subManager.GenerateAlerts(itemId);
 		}
 
 		public void GenerateAlerts()
 		{
-			ItemManager itemManager = new ItemManager();
 			IEnumerable<Item> allItems = itemManager.getAllItems();
 			
 			foreach (Item item in allItems)
