@@ -74,8 +74,7 @@ namespace BAR.BL.Managers
 		public double GetTrendingPer(int itemId)
 		{
 			InitRepo();
-			Item item = itemRepo.ReadItem(itemId);
-			return item.TrendingPercentage;
+			return itemRepo.ReadItem(itemId).TrendingPercentage;
 		}
 
 		/// <summary>
