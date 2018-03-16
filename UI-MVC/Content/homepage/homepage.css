@@ -1,0 +1,108 @@
+h1 {
+    line-height: 45px;
+}
+
+.nav_menu {
+    background-color: transparent;
+}
+
+.left_col {
+    left: -70px;
+    transition: .5s;
+}
+
+#menu_toggle {
+    display: inline;
+}
+
+.nav.navbar-nav > li > a.signup, .btn-search-submit {
+    color: white !important;
+    background-color: var(--primary-color);
+    z-index: 2;
+}
+
+.nav.navbar-nav > li > a.signup:hover, .btn-search-submit:hover {
+    background-color: var(--primary-darkest);
+}
+
+nav > .searchbar {
+    display: none !important;
+}
+
+.searchbar {
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 160px;
+    max-width: 500px;
+    padding: 0;
+}
+
+.nav-sm span.fa {
+    display: inline;
+}
+
+.navbar-search, .search-field, .btn-search {
+    height: 40px !important;
+    border-radius: 5px;
+    border: 0px;
+}
+
+nav_menu {
+    position: relative !important;
+}
+
+/* main-header */
+.nav-sm .container.body .main-header-container-parent {
+    margin-left: 0px !important;
+    z-index: 2;
+}
+
+@media(max-width: 991px) {
+    .nav-md .container.body .main-header-container-parent {
+        margin-left: 230px;
+        z-index: 2;
+    }
+}
+
+.main-header-container-parent {
+    margin-right: 0 !important;
+    height: 50%;
+}
+
+.main-header-container {
+    height: 85%;
+    justify-content: center;
+    align-items: center;
+    padding: 0 !important;
+    margin-top: -70px;
+    z-index: 1;
+}
+.logo {
+    background-image: url("../images/logo-all-white-smaller.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+    height: 60px;
+    width: 200px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 100px;
+}
+
+.main-header {
+    text-align: center;
+    padding: 60px 0 10px 0;
+    margin-left: auto;
+}
+
+.main-header-title, .main-header {
+    font-weight: 600;
+    color: white;
+}
+
+.main-header-container {
+    background-image: url("../images/parlement-smaller.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+}
