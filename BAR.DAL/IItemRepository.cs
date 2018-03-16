@@ -16,7 +16,7 @@ namespace BAR.DAL
 		IEnumerable<Item> ReadAllItemsForUpdatedSince(DateTime since);
 
 		//Create
-		//...
+		int CreateItem(Item item);
 
 		//Update
 		void UpdateItemTrending(int itemId, double baseline, double trendingepr);

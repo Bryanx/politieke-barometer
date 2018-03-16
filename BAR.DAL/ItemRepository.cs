@@ -25,20 +25,7 @@ namespace BAR.DAL
 			if (uow == null) ctx = new BarometerDbContext();
 			else ctx = uow.Context;
 		}
-
-		/// <summary>
-		/// Updates the baseline and trendingpercentage of a specific item.       
-		/// </summary>
-		public void UpdateItemTrending(int itemId, double baseline, double trendingeper)
-		{
-			Item itemToUpdate = ReadItem(itemId);
-			itemToUpdate.Baseline = baseline;
-			itemToUpdate.TrendingPercentage = trendingeper;
-
-			ctx.Entry(itemToUpdate).State = System.Data.Entity.EntityState.Modified;
-			ctx.SaveChanges();
-		}
-
+		
 		/// <summary>
 		/// Returns the item that matches the itemId.
 		/// </summary>       
@@ -46,19 +33,7 @@ namespace BAR.DAL
 		{
 			return ctx.Items.Find(itemId);
 		}
-
-		/// <summary>
-		/// Updates the Lastupdated field of an Item.
-		/// </summary>
-		public void UpdateLastUpdated(int itemId, DateTime lastUpdated)
-		{
-			Item itemToUpdate = ReadItemWithInformations(itemId);
-			itemToUpdate.LastUpdated = lastUpdated;
-			
-			ctx.Entry(itemToUpdate).State = EntityState.Modified;
-			ctx.SaveChanges();            
-		}
-
+	
 		/// <summary>
 		/// Does the same thing as ReadItem but it loeds all the
 		/// informations with it.
@@ -85,6 +60,40 @@ namespace BAR.DAL
 		public IEnumerable<Item> ReadAllItemsForUpdatedSince(DateTime since)
 		{
 			return ctx.Items.Where(item => item.LastUpdated >= since).AsEnumerable();
+		}
+
+		/// <summary>
+		/// Persists an item to the database.
+		/// </summary>
+		public int CreateItem(Item item)
+		{
+			ctx.Items.Add(item);
+			return ctx.SaveChanges();
+		}
+
+		/// <summary>
+		/// Updates the Lastupdated field of an Item.
+		/// </summary>
+		public void UpdateLastUpdated(int itemId, DateTime lastUpdated)
+		{
+			Item itemToUpdate = ReadItemWithInformations(itemId);
+			itemToUpdate.LastUpdated = lastUpdated;
+
+			ctx.Entry(itemToUpdate).State = EntityState.Modified;
+			ctx.SaveChanges();
+		}
+
+		/// <summary>
+		/// Updates the baseline and trendingpercentage of a specific item.       
+		/// </summary>
+		public void UpdateItemTrending(int itemId, double baseline, double trendingeper)
+		{
+			Item itemToUpdate = ReadItem(itemId);
+			itemToUpdate.Baseline = baseline;
+			itemToUpdate.TrendingPercentage = trendingeper;
+
+			ctx.Entry(itemToUpdate).State = System.Data.Entity.EntityState.Modified;
+			ctx.SaveChanges();
 		}
 	}
 }
