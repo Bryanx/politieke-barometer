@@ -64,6 +64,7 @@ namespace BAR.DAL
 
 		/// <summary>
 		/// Persists an item to the database.
+		/// Returns -1 if saveChanges() failed.
 		/// </summary>
 		public int CreateItem(Item item)
 		{
@@ -73,27 +74,45 @@ namespace BAR.DAL
 
 		/// <summary>
 		/// Updates the Lastupdated field of an Item.
+		/// Returns -1 if saveChanges() failed.
 		/// </summary>
-		public void UpdateLastUpdated(int itemId, DateTime lastUpdated)
+		public int UpdateLastUpdated(int itemId, DateTime lastUpdated)
 		{
 			Item itemToUpdate = ReadItemWithInformations(itemId);
 			itemToUpdate.LastUpdated = lastUpdated;
-
-			ctx.Entry(itemToUpdate).State = EntityState.Modified;
-			ctx.SaveChanges();
+			return UpdateItem(itemToUpdate);
 		}
 
 		/// <summary>
-		/// Updates the baseline and trendingpercentage of a specific item.       
+		/// Updates the baseline and trendingpercentage of a specific item.
+		/// Returns -1 if saveChanges() failed.
 		/// </summary>
-		public void UpdateItemTrending(int itemId, double baseline, double trendingeper)
+		public int UpdateItemTrending(int itemId, double baseline, double trendingeper)
 		{
 			Item itemToUpdate = ReadItem(itemId);
 			itemToUpdate.Baseline = baseline;
 			itemToUpdate.TrendingPercentage = trendingeper;
+			return UpdateItem(itemToUpdate);
+		}
 
-			ctx.Entry(itemToUpdate).State = System.Data.Entity.EntityState.Modified;
-			ctx.SaveChanges();
+		/// <summary>
+		/// Updates an item and persists changes to the database
+		/// Returns -1 if saveChanges() failed.
+		/// </summary>
+		public int UpdateItem(Item item)
+		{
+			ctx.Entry(item).State = EntityState.Modified;
+			return ctx.SaveChanges();
+		}
+
+		/// <summary>
+		/// Updates a list of items and persists changes to the database
+		/// Returns -1 if saveChanges() failed.
+		/// </summary>
+		public int UpdateItems(IEnumerable<Item> items)
+		{
+			foreach (Item item in items) ctx.Entry(item).State = EntityState.Modified;	
+			return ctx.SaveChanges();
 		}
 	}
 }

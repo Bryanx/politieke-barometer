@@ -19,8 +19,10 @@ namespace BAR.DAL
 		int CreateItem(Item item);
 
 		//Update
-		void UpdateItemTrending(int itemId, double baseline, double trendingepr);
-		void UpdateLastUpdated(int itemId, DateTime lastUpdated);		
+		int UpdateItem(Item item);
+		int UpdateItems(IEnumerable<Item> items);
+		int UpdateItemTrending(int itemId, double baseline, double trendingepr);
+		int UpdateLastUpdated(int itemId, DateTime lastUpdated);		
 
 		//Delete
 		//..
