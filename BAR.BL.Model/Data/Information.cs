@@ -15,5 +15,4 @@ namespace BAR.BL.Domain.Data
         public DateTime? CreatetionDate { get; set; }
         public ICollection<PropertyValue> PropertieValues { get; set; }
     }
-
 }

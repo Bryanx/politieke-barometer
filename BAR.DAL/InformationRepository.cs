@@ -1,11 +1,11 @@
 ﻿using BAR.BL.Domain.Data;
 using BAR.DAL.EF;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Data.Entity;
 
 namespace BAR.DAL
 {
@@ -27,12 +27,86 @@ namespace BAR.DAL
 		}
 
 		/// <summary>
+		/// Creates a new instance of an information objects and
+		/// persist that to the database.
+		/// Returns -1 if savechanges() failed
+		/// </summary>
+		public int CreateInformation(Information info)
+		{
+			ctx.Informations.Add(info);
+			return ctx.SaveChanges();
+		}
+
+		/// <summary>
+		/// Deletes a specific information object
+		/// Returns -1 if savechanges() failed
+		/// </summary>
+		public int DeleteInformation(Information info)
+		{
+			ctx.Informations.Remove(info);
+			return ctx.SaveChanges();
+		}
+
+		/// <summary>
+		/// Deletes a range of information objects
+		/// Returns -1 if savechanges() failed
+		/// </summary>
+		public int DeleteInformations(IEnumerable<Information> infos)
+		{
+			foreach (Information info in infos) ctx.Informations.Remove(info);
+			return ctx.SaveChanges();
+		}
+
+		/// <summary>
+		/// Deletes informations objects from the past unti a given date
+		/// for a specific item.
+		/// Returns -1 if savechanges() failed
+		/// </summary>
+		public int DeleteInformationsForDate(int itemId, DateTime until)
+		{
+			IEnumerable<Information> infos = ctx.Informations
+							.Where(info => info.Item.ItemId == itemId)
+							.Where(info => info.CreatetionDate <= until).AsEnumerable();
+
+			foreach (Information info in infos) ctx.Informations.Remove(info);
+			return ctx.SaveChanges();
+		}
+
+		/// <summary>
 		/// Returns a list of informations based on
 		/// a specific item.
 		/// </summary>
 		public IEnumerable<Information> ReadAllInfoForId(int itemId)
 		{
 			return ctx.Informations.Where(info => info.Item.ItemId == itemId).AsEnumerable();
+		}
+
+		/// <summary>
+		/// Gives back a list of information-objects.
+		/// </summary>
+		/// <returns></returns>
+		public IEnumerable<Information> ReadAllInformations()
+		{
+			return ctx.Informations.AsEnumerable();
+		}
+
+		/// <summary>
+		/// Gives back an information object based on informationid.
+		/// </summary>
+		public Information ReadInformation(int informationid)
+		{
+			return ctx.Informations.Find(informationid);
+		}
+
+		/// <summary>
+		/// Gives back all informations objects form now until a given date
+		/// for a specific item.
+		/// </summary>
+		public IEnumerable<Information> ReadInformationsForDate(int itemId, DateTime since)
+		{
+			return ctx.Informations
+					.Where(info => info.Item.ItemId == itemId)
+					.Where(info => info.CreatetionDate >= since).AsEnumerable();
 		}
 
 		/// <summary>
@@ -43,6 +117,26 @@ namespace BAR.DAL
 		{
 			return ctx.Informations.Where(info => info.Item.ItemId == itemId)
 				.Where(info => info.CreatetionDate >= since).Count();
+		}
+
+		/// <summary>
+		/// Updates an instance of a specific information object
+		/// Returns -1 if savechanges() failed
+		/// </summary>
+		public int UpdateInformation(Information info)
+		{
+			ctx.Entry(info).State = EntityState.Modified;
+			return ctx.SaveChanges();
+		}
+
+		/// <summary>
+		/// Updates all informations objects that are in the list.
+		/// Returns -1 if savechanges() failed
+		/// </summary>
+		public int UpdateInformations(IEnumerable<Information> infos)
+		{
+			foreach (Information info in infos) ctx.Entry(info).State = EntityState.Modified;
+			return ctx.SaveChanges();
 		}
 	}
 }
