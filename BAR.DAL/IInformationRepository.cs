@@ -14,5 +14,9 @@ namespace BAR.DAL
 		Information ReadInformation(int informationid);
 		IEnumerable<Information> ReadAllInformations();
 		IEnumerable<Information> ReadAllInfoForId(int itemId);
+
+		//Create
+		void CreateInformation(Information info);
+
 	}
 }

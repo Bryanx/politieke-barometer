@@ -26,6 +26,16 @@ namespace BAR.DAL
 		}
 
 		/// <summary>
+		/// Creates a new instance of an information objects and
+		/// persist that to the database.
+		/// </summary>
+		public void CreateInformation(Information info)
+		{
+			ctx.Informations.Add(info);
+			ctx.SaveChanges();
+		}
+
+		/// <summary>
 		/// Returns a list of informations based on
 		/// a specific item.
 		/// </summary>
