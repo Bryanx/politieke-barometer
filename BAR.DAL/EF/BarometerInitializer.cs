@@ -26,51 +26,57 @@ namespace BAR.DAL.EF
 			GenerateSubscription(ctx);
 		}
 
+		/// <summary>
+		/// HC subscriptions were added.
+		/// </summary>
 		private void GenerateSubscription(BarometerDbContext ctx)
 		{
-			Subscription s1= new Subscription()
+			Subscription s1 = new Subscription()
 			{
 				SubscribedItem = ctx.Items.Find(1),
 				SubscribedUser = ctx.Users.Find(1),
 				Treshhold = 60,
 				Alerts = new List<Alert>()
 			};
-      ctx.Subscriptions.Add(s1);
+			ctx.Subscriptions.Add(s1);
 
-      Subscription s2 = new Subscription()
-      {
-        SubscribedItem = ctx.Items.Find(2),
-        SubscribedUser = ctx.Users.Find(1),
-        Treshhold = 60,
-        Alerts = new List<Alert>()
-      };
+			Subscription s2 = new Subscription()
+			{
+				SubscribedItem = ctx.Items.Find(2),
+				SubscribedUser = ctx.Users.Find(1),
+				Treshhold = 60,
+				Alerts = new List<Alert>()
+			};
 
-      ctx.Subscriptions.Add(s2);
+			ctx.Subscriptions.Add(s2);
 
-      Subscription s3 = new Subscription()
-      {
-        SubscribedItem = ctx.Items.Find(3),
-        SubscribedUser = ctx.Users.Find(2),
-        Treshhold = 60,
-        Alerts = new List<Alert>()
-      };
+			Subscription s3 = new Subscription()
+			{
+				SubscribedItem = ctx.Items.Find(3),
+				SubscribedUser = ctx.Users.Find(2),
+				Treshhold = 60,
+				Alerts = new List<Alert>()
+			};
 
-      ctx.Subscriptions.Add(s3);
+			ctx.Subscriptions.Add(s3);
 
-      Subscription s4 = new Subscription()
-      {
-        SubscribedItem = ctx.Items.Find(4),
-        SubscribedUser = ctx.Users.Find(2),
-        Treshhold = 60,
-        Alerts = new List<Alert>()
-      };
+			Subscription s4 = new Subscription()
+			{
+				SubscribedItem = ctx.Items.Find(4),
+				SubscribedUser = ctx.Users.Find(2),
+				Treshhold = 60,
+				Alerts = new List<Alert>()
+			};
 
-      ctx.Subscriptions.Add(s4);
+			ctx.Subscriptions.Add(s4);
 
-      ctx.SaveChanges();
+			ctx.SaveChanges();
 		}
 
 
+		/// <summary>
+		/// Generates all the sources we get our information from.
+		/// </summary>
 		private void GenerateSources(BarometerDbContext ctx)
 		{
 			Source source = new Source
@@ -82,9 +88,14 @@ namespace BAR.DAL.EF
 			ctx.SaveChanges();
 		}
 
+		/// <summary>
+		/// Preformance gain if you put all items in a list
+		/// and then in the context with addRange();
+		/// </summary>
 		private void GenerateProperties(BarometerDbContext ctx)
 		{
-			//Write properties to Set
+			List<Property> propertiesList = new List<Property>();
+
 			Property hashtag = new Property
 			{
 				Name = "Hashtag"
@@ -122,18 +133,24 @@ namespace BAR.DAL.EF
 				Name = "Mention"
 			};
 
-			ctx.Properties.Add(hashtag);
-			ctx.Properties.Add(word);
-			ctx.Properties.Add(geo);
-			ctx.Properties.Add(postId);
-			ctx.Properties.Add(userId);
-			ctx.Properties.Add(sentiment);
-			ctx.Properties.Add(retweet);
-			ctx.Properties.Add(url);
-			ctx.Properties.Add(mention);
+			propertiesList.Add(hashtag);
+			propertiesList.Add(word);
+			propertiesList.Add(geo);
+			propertiesList.Add(postId);
+			propertiesList.Add(userId);
+			propertiesList.Add(sentiment);
+			propertiesList.Add(retweet);
+			propertiesList.Add(url);
+			propertiesList.Add(mention);
+
+			ctx.Properties.AddRange(propertiesList);
 			ctx.SaveChanges();
 		}
 
+		/// <summary>
+		/// Generates informations objects based on the
+		/// JSON-file.
+		/// </summary>
 		private void GenerateInformations(BarometerDbContext ctx)
 		{
 			string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "data.json");
@@ -247,6 +264,10 @@ namespace BAR.DAL.EF
 			}
 			ctx.SaveChanges();
 		}
+
+		/// <summary>
+		/// Generates dummy users.
+		/// </summary>
 		private void GenerateUser(BarometerDbContext ctx)
 		{
 			User bryan = new User()
@@ -298,9 +319,6 @@ namespace BAR.DAL.EF
 		/// Zal de ID van de politicus teruggeven
 		/// Als de politicus nog niet bestaat zal deze aangemaakt worden
 		/// </summary>
-		/// <param name="politicianFullName"></param>
-		/// <param name="ctx"></param>
-		/// <returns></returns>
 		private Item GeneratePoliticians(string personFullName, BarometerDbContext ctx)
 		{
 
