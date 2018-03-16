@@ -14,7 +14,7 @@ namespace BAR.UI.MVC.Controllers {
         public ActionResult Ingelogd() {
             ViewBag.Message = "Your applicationn description page.";
 
-            return View("Ingelogd","~/Views/Shared/_MemberLayout.cshtml");
+            return View("~/Views/User/Ingelogd.cshtml","~/Views/Shared/_MemberLayout.cshtml");
         }
     }
 }
