@@ -18,5 +18,10 @@ namespace BAR.DAL
 		//Create
 		void CreateInformation(Information info);
 
+		//Update
+		void UpdateInformation(Information info);
+		void UpdateInformations(IEnumerable<Information> infos);
+
+		//Delete
 	}
 }

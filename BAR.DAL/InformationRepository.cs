@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Data.Entity;
 
 namespace BAR.DAL
 {
@@ -69,6 +70,24 @@ namespace BAR.DAL
 		{
 			return ctx.Informations.Where(info => info.Item.ItemId == itemId)
 				.Where(info => info.CreatetionDate >= since).Count();
+		}
+
+		/// <summary>
+		/// Updates an instance of a specific information object
+		/// </summary>
+		public void UpdateInformation(Information info)
+		{
+			ctx.Entry(info).State = EntityState.Modified;
+			ctx.SaveChanges();
+		}
+
+		/// <summary>
+		/// Updates all informations objects that are in the list.
+		/// </summary>
+		public void UpdateInformations(IEnumerable<Information> infos)
+		{
+			foreach (Information info in infos) ctx.Entry(info).State = EntityState.Modified;
+			ctx.SaveChanges();
 		}
 	}
 }
