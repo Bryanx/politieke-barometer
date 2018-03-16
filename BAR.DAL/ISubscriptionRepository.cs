@@ -20,8 +20,10 @@ namespace BAR.DAL
 		int CreateSubscription(Subscription sub);
 
 		//Update
-		int UpdateSubscriptions(IEnumerable<Subscription> subs);
 		int UpdateSubScription(Subscription sub);
+		int UpdateSubscriptions(IEnumerable<Subscription> subs);
+		int UpdateSubscriptionsForUser(int userId);
+		int UpdateSubscriptionsForItem(int itemId);
 
 		//Delete
 		//...		

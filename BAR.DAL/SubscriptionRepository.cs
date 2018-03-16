@@ -89,6 +89,7 @@ namespace BAR.DAL
 		/// <summary>
 		/// Create's a new subscription and persist that
 		/// subscription to the database.
+		/// Returns -1 if SaveChanges() is delayed by unit of work.
 		/// </summary>
 		public int CreateSubscription(Subscription sub)
 		{
@@ -98,6 +99,7 @@ namespace BAR.DAL
 
 		/// <summary>
 		/// Update a specific subscription.
+		/// Returns -1 if SaveChanges() is delayed by unit of work.
 		/// </summary>
 		public int UpdateSubScription(Subscription sub)
 		{
@@ -107,11 +109,36 @@ namespace BAR.DAL
 
 		/// <summary>
 		/// Updates all the subscriptions when alerts are added.
+		/// Returns -1 if SaveChanges() is delayed by unit of work.
 		/// </summary>
 		public int UpdateSubscriptions(IEnumerable<Subscription> subs)
 		{
 			foreach (Subscription sub in subs) ctx.Entry(sub).State = EntityState.Modified;
 			return ctx.SaveChanges();
-		}		
+		}
+
+		/// <summary>
+		/// Updates all the subscriptions for a specific user.
+		/// Returns -1 if SaveChanges() is delayed by unit of work.
+		/// </summary>
+		public int UpdateSubscriptionsForUser(int userId)
+		{
+			IEnumerable<Subscription> subs = ctx.Subscriptions.Where(sub => sub.SubscribedUser.UserId == userId).AsEnumerable();
+
+			foreach (Subscription sub in subs) ctx.Entry(sub).State = EntityState.Modified;
+			return ctx.SaveChanges();
+		}
+
+		/// <summary>
+		/// Updates all the subscriptions for a specific item.
+		/// Returns -1 if SaveChanges() is delayed by unit of work.
+		/// </summary>
+		public int UpdateSubscriptionsForItem(int itemId)
+		{
+			IEnumerable<Subscription> subs = ctx.Subscriptions.Where(sub => sub.SubscribedItem.ItemId == itemId).AsEnumerable();
+
+			foreach (Subscription sub in subs) ctx.Entry(sub).State = EntityState.Modified;
+			return ctx.SaveChanges();
+		}
 	}
 }
