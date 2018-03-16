@@ -15,6 +15,8 @@ namespace BAR.UI.MVC.Controllers
 		/// </summary>
 		public ActionResult Index(int id)
 		{
+			//because the process of generating alerts doesn't
+			//happen automatich yet, we need to force it.
 			SysController sys = new SysController();
 			sys.DetermineTrending();
 			sys.GenerateAlerts();

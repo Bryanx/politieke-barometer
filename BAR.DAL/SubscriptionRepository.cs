@@ -44,8 +44,9 @@ namespace BAR.DAL
 			if (!showable)
 			{
 				userSubs = ctx.Subscriptions.Include(sub => sub.Alerts)
-				.Where(sub => sub.SubscribedUser.UserId == userId).AsEnumerable();				
-			} else
+				.Where(sub => sub.SubscribedUser.UserId == userId).AsEnumerable();
+			}
+			else
 			{
 				userSubs = ctx.Subscriptions.Include(sub => sub.Alerts)
 											.Include(sub => sub.SubscribedItem)
