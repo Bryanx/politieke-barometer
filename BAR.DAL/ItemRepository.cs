@@ -25,20 +25,7 @@ namespace BAR.DAL
 			if (uow == null) ctx = new BarometerDbContext();
 			else ctx = uow.Context;
 		}
-
-		/// <summary>
-		/// Updates the baseline and trendingpercentage of a specific item.       
-		/// </summary>
-		public void UpdateItemTrending(int itemId, double baseline, double trendingeper)
-		{
-			Item itemToUpdate = ReadItem(itemId);
-			itemToUpdate.Baseline = baseline;
-			itemToUpdate.TrendingPercentage = trendingeper;
-
-			ctx.Entry(itemToUpdate).State = System.Data.Entity.EntityState.Modified;
-			ctx.SaveChanges();
-		}
-
+		
 		/// <summary>
 		/// Returns the item that matches the itemId.
 		/// </summary>       
@@ -46,19 +33,7 @@ namespace BAR.DAL
 		{
 			return ctx.Items.Find(itemId);
 		}
-
-		/// <summary>
-		/// Updates the Lastupdated field of an Item.
-		/// </summary>
-		public void UpdateLastUpdated(int itemId, DateTime lastUpdated)
-		{
-			Item itemToUpdate = ReadItemWithInformations(itemId);
-			itemToUpdate.LastUpdated = lastUpdated;
-			
-			ctx.Entry(itemToUpdate).State = EntityState.Modified;
-			ctx.SaveChanges();            
-		}
-
+	
 		/// <summary>
 		/// Does the same thing as ReadItem but it loeds all the
 		/// informations with it.
@@ -76,6 +51,88 @@ namespace BAR.DAL
 		public IEnumerable<Item> ReadAllItems()
 		{
 			return ctx.Items.AsEnumerable();
+		}
+
+		/// <summary>
+		/// Gives back a list of items that were
+		/// last updated from now until a given date.
+		/// </summary>
+		public IEnumerable<Item> ReadAllItemsForUpdatedSince(DateTime since)
+		{
+			return ctx.Items.Where(item => item.LastUpdated >= since).AsEnumerable();
+		}
+
+		/// <summary>
+		/// Persists an item to the database.
+		/// Returns -1 if saveChanges() failed.
+		/// </summary>
+		public int CreateItem(Item item)
+		{
+			ctx.Items.Add(item);
+			return ctx.SaveChanges();
+		}
+
+		/// <summary>
+		/// Updates the Lastupdated field of an Item.
+		/// Returns -1 if saveChanges() failed.
+		/// </summary>
+		public int UpdateLastUpdated(int itemId, DateTime lastUpdated)
+		{
+			Item itemToUpdate = ReadItemWithInformations(itemId);
+			itemToUpdate.LastUpdated = lastUpdated;
+			return UpdateItem(itemToUpdate);
+		}
+
+		/// <summary>
+		/// Updates the baseline and trendingpercentage of a specific item.
+		/// Returns -1 if saveChanges() failed.
+		/// </summary>
+		public int UpdateItemTrending(int itemId, double baseline, double trendingeper)
+		{
+			Item itemToUpdate = ReadItem(itemId);
+			itemToUpdate.Baseline = baseline;
+			itemToUpdate.TrendingPercentage = trendingeper;
+			return UpdateItem(itemToUpdate);
+		}
+
+		/// <summary>
+		/// Updates an item and persists changes to the database
+		/// Returns -1 if saveChanges() failed.
+		/// </summary>
+		public int UpdateItem(Item item)
+		{
+			ctx.Entry(item).State = EntityState.Modified;
+			return ctx.SaveChanges();
+		}
+
+		/// <summary>
+		/// Updates a list of items and persists changes to the database
+		/// Returns -1 if saveChanges() failed.
+		/// </summary>
+		public int UpdateItems(IEnumerable<Item> items)
+		{
+			foreach (Item item in items) ctx.Entry(item).State = EntityState.Modified;	
+			return ctx.SaveChanges();
+		}
+
+		/// <summary>
+		/// Deletes an item from the database.
+		/// Returns -1 if saveChanges() failed.
+		/// </summary>
+		public int DeleteItem(Item item)
+		{
+			ctx.Items.Remove(item);
+			return ctx.SaveChanges();
+		}
+
+		/// <summary>
+		/// Deletes a list of items from the database.
+		/// Returns -1 if saveChanges() failed.
+		/// </summary>
+		public int DeleteItems(IEnumerable<Item> items)
+		{
+			foreach (Item item in items) ctx.Items.Remove(item);
+			return ctx.SaveChanges();
 		}
 	}
 }
