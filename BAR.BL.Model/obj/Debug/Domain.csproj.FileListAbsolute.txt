@@ -1,0 +1,7 @@
+C:\Users\Maarten Jorens\Documents\KdG\INF203\Integratieproject\politieke-barometer\BAR.BL.Model\bin\Debug\BAR.BL.Domain.dll.config
+C:\Users\Maarten Jorens\Documents\KdG\INF203\Integratieproject\politieke-barometer\BAR.BL.Model\bin\Debug\BAR.BL.Domain.dll
+C:\Users\Maarten Jorens\Documents\KdG\INF203\Integratieproject\politieke-barometer\BAR.BL.Model\bin\Debug\BAR.BL.Domain.pdb
+C:\Users\Maarten Jorens\Documents\KdG\INF203\Integratieproject\politieke-barometer\BAR.BL.Model\obj\Debug\Domain.csprojResolveAssemblyReference.cache
+C:\Users\Maarten Jorens\Documents\KdG\INF203\Integratieproject\politieke-barometer\BAR.BL.Model\obj\Debug\Domain.csproj.CoreCompileInputs.cache
+C:\Users\Maarten Jorens\Documents\KdG\INF203\Integratieproject\politieke-barometer\BAR.BL.Model\obj\Debug\BAR.BL.Domain.dll
+C:\Users\Maarten Jorens\Documents\KdG\INF203\Integratieproject\politieke-barometer\BAR.BL.Model\obj\Debug\BAR.BL.Domain.pdb
