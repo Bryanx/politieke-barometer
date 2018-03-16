@@ -36,9 +36,6 @@ namespace BAR.BL.Managers
 			InitRepo();
 
 			DataManager dataManager = new DataManager();
-			//int aantalTrending = dataManager.GetNumberInfo(itemId, DateTime.Now.AddDays(-1));
-			//int aantalBaseline = dataManager.GetNumberInfo(itemId, DateTime.Now.AddMonths(-20));
-
 			IEnumerable<Information> allInfoForId = dataManager.getAllInformationForId(itemId);
 
 			DateTime earliestInfoDate = allInfoForId.Min(item => item.CreatetionDate).Value;
@@ -48,7 +45,6 @@ namespace BAR.BL.Managers
 
 			Console.WriteLine(earliestInfoDate);
 			Console.WriteLine(lastInfoDate);
-
 
 			int aantalBaseline = dataManager.GetNumberInfo(itemId, earliestInfoDate);
 			int aantalTrending = dataManager.GetNumberInfo(itemId, lastInfoDate.AddDays(-1));
