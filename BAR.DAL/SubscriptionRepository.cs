@@ -56,18 +56,28 @@ namespace BAR.DAL
 		/// <summary>
 		/// Gives back a collection of subscriptions form a specific item.
 		/// </summary>
-		public IEnumerable<Subscription> ReadSubscriptions(int itemId)
+		public IEnumerable<Subscription> ReadSubscriptionsForItem(int itemId)
 		{
 			return ctx.Subscriptions.Where(sub => sub.SubscribedItem.ItemId == itemId).AsEnumerable();
 		}
 
 		/// <summary>
 		/// Returns a list of subscriptions with their alerts.
+		/// for a specific item.
 		/// </summary>
 		public IEnumerable<Subscription> ReadSubscritpionsWithAlerts(int itemId)
 		{
 			return ctx.Subscriptions.Include(sub => sub.Alerts)
 				.Where(sub => sub.SubscribedItem.ItemId == itemId).AsEnumerable();
+		}
+
+		/// <summary>
+		/// Returns a list of subscriptions with their alerts.
+		/// for a specific item.
+		/// </summary>
+		public IEnumerable<Subscription> ReadSubscriptionsForUser(int userId)
+		{
+			return ctx.Subscriptions.Where(sub => sub.SubscribedUser.UserId == userId).AsEnumerable();
 		}
 
 		/// <summary>
@@ -123,10 +133,8 @@ namespace BAR.DAL
 		/// </summary>
 		public int UpdateSubscriptionsForUser(int userId)
 		{
-			IEnumerable<Subscription> subs = ctx.Subscriptions.Where(sub => sub.SubscribedUser.UserId == userId).AsEnumerable();
-
-			foreach (Subscription sub in subs) ctx.Entry(sub).State = EntityState.Modified;
-			return ctx.SaveChanges();
+			IEnumerable<Subscription> subs = ReadSubscriptionsForUser(userId);
+			return UpdateSubscriptions(subs);
 		}
 
 		/// <summary>
@@ -135,10 +143,48 @@ namespace BAR.DAL
 		/// </summary>
 		public int UpdateSubscriptionsForItem(int itemId)
 		{
-			IEnumerable<Subscription> subs = ctx.Subscriptions.Where(sub => sub.SubscribedItem.ItemId == itemId).AsEnumerable();
+			IEnumerable<Subscription> subs = ReadSubscriptionsForItem(itemId);
+			return UpdateSubscriptions(subs);
+		}
 
-			foreach (Subscription sub in subs) ctx.Entry(sub).State = EntityState.Modified;
+		/// <summary>
+		/// Deletes a subscription from the database.
+		/// Returns -1 if SaveChanges() is delayed by unit of work.
+		/// </summary>
+		public int DeleteSubScription(Subscription sub)
+		{
+			ctx.Subscriptions.Remove(sub);
 			return ctx.SaveChanges();
 		}
+
+		/// <summary>
+		/// Deletes a list of subscriptions from the database.
+		/// Returns -1 if SaveChanges() is delayed by unit of work.
+		/// </summary>
+		public int DeleteSubscriptions(IEnumerable<Subscription> subs)
+		{
+			foreach (Subscription sub in subs) ctx.Subscriptions.Remove(sub);
+			return ctx.SaveChanges();
+		}
+
+		/// <summary>
+		/// Deletes all the subscriptons for a specific user.
+		/// Returns -1 if SaveChanges() is delayed by unit of work.
+		/// </summary>
+		public int DeleteSubscriptionsForUser(int userId)
+		{
+			IEnumerable<Subscription> subs = ReadSubscriptionsForUser(userId);
+			return DeleteSubscriptions(subs);
+		}
+
+		/// <summary>
+		/// Deletes all the subscriptons for a specific item.
+		/// Returns -1 if SaveChanges() is delayed by unit of work.
+		/// </summary>
+		public int DeleteSubscriptionsForItem(int itemId)
+		{
+			IEnumerable<Subscription> subs = ReadSubscriptionsForItem(itemId);
+			return DeleteSubscriptions(subs);
+		}		
 	}
 }
