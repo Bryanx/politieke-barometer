@@ -77,5 +77,14 @@ namespace BAR.DAL
 		{
 			return ctx.Items.AsEnumerable();
 		}
+
+		/// <summary>
+		/// Gives back a list of items that were
+		/// last updated from now until a given date.
+		/// </summary>
+		public IEnumerable<Item> ReadAllItemsForUpdatedSince(DateTime since)
+		{
+			return ctx.Items.Where(item => item.LastUpdated >= since).AsEnumerable();
+		}
 	}
 }
