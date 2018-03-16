@@ -114,5 +114,25 @@ namespace BAR.DAL
 			foreach (Item item in items) ctx.Entry(item).State = EntityState.Modified;	
 			return ctx.SaveChanges();
 		}
+
+		/// <summary>
+		/// Deletes an item from the database.
+		/// Returns -1 if saveChanges() failed.
+		/// </summary>
+		public int DeleteItem(Item item)
+		{
+			ctx.Items.Remove(item);
+			return ctx.SaveChanges();
+		}
+
+		/// <summary>
+		/// Deletes a list of items from the database.
+		/// Returns -1 if saveChanges() failed.
+		/// </summary>
+		public int DeleteItems(IEnumerable<Item> items)
+		{
+			foreach (Item item in items) ctx.Items.Remove(item);
+			return ctx.SaveChanges();
+		}
 	}
 }

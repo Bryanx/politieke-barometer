@@ -22,9 +22,10 @@ namespace BAR.DAL
 		int UpdateItem(Item item);
 		int UpdateItems(IEnumerable<Item> items);
 		int UpdateItemTrending(int itemId, double baseline, double trendingepr);
-		int UpdateLastUpdated(int itemId, DateTime lastUpdated);		
+		int UpdateLastUpdated(int itemId, DateTime lastUpdated);
 
 		//Delete
-		//..
+		int DeleteItem(Item item);
+		int DeleteItems(IEnumerable<Item> items);
 	}
 }
