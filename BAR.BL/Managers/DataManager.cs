@@ -32,6 +32,16 @@ namespace BAR.BL.Managers
 			InitRepo();			
 			return infoRepo.ReadNumberInfo(itemId, since);
 		}
+	
+		/// <summary>
+		/// Returns a list of informations for
+		/// a specific item id.
+		/// </summary>
+		public IEnumerable<Information> getAllInformationForId(int itemId)
+		{
+			InitRepo();
+			return infoRepo.ReadAllInfoForId(itemId);
+		}
 
 		/// <summary>
 		/// Determines if the repo needs a unit of work
@@ -43,15 +53,6 @@ namespace BAR.BL.Managers
 			else infoRepo = new InformationRepository(uowManager.UnitOfWork);
 		}
 
-		/// <summary>
-		/// Returns a list of informations for
-		/// a specific item id.
-		/// </summary>
-		public IEnumerable<Information> getAllInformationForId(int itemId)
-		{
-			InitRepo();
-			return infoRepo.ReadAllInfoForId(itemId);
-		}
 	}
 }
 
