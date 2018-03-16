@@ -1,6 +1,5 @@
 ﻿using BAR.BL.Domain.Data;
 using BAR.DAL.EF;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -33,6 +32,23 @@ namespace BAR.DAL
 		public IEnumerable<Information> ReadAllInfoForId(int itemId)
 		{
 			return ctx.Informations.Where(info => info.Item.ItemId == itemId).AsEnumerable();
+		}
+
+		/// <summary>
+		/// Gives back a list of information-objects.
+		/// </summary>
+		/// <returns></returns>
+		public IEnumerable<Information> ReadAllInformations()
+		{
+			return ctx.Informations.AsEnumerable();
+		}
+
+		/// <summary>
+		/// Gives back an information object based on informationid.
+		/// </summary>
+		public Information ReadInformation(int informationid)
+		{
+			return ctx.Informations.Find(informationid);
 		}
 
 		/// <summary>

@@ -7,9 +7,12 @@ using System.Threading.Tasks;
 
 namespace BAR.DAL
 {
-  public interface IInformationRepository
-  {
-    int ReadNumberInfo(int itemId, DateTime since);
-    IEnumerable<Information> ReadAllInfoForId(int itemId);
-  }
+	public interface IInformationRepository
+	{
+		//Read
+		int ReadNumberInfo(int itemId, DateTime since);
+		Information ReadInformation(int informationid);
+		IEnumerable<Information> ReadAllInformations();
+		IEnumerable<Information> ReadAllInfoForId(int itemId);
+	}
 }
