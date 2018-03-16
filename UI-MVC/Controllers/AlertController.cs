@@ -12,7 +12,12 @@ namespace BAR.UI.MVC.Controllers {
         
         ISubscriptionManager subManager = new SubscriptionManager();
 
-        // GET
+        /// <summary>
+        /// Get Request geeft alerts de user met parameter id.
+        /// Wordt gebruikt in een ajax call vanaf pagina's van de betreffende user.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public IHttpActionResult Get(int id) {
             SysController sys = new SysController();
             sys.DetermineTrending();
@@ -20,6 +25,8 @@ namespace BAR.UI.MVC.Controllers {
 
             IEnumerable<Alert> alertsToShow = subManager.GetAllAlerts(id);
             if (alertsToShow == null || alertsToShow.Count() == 0) return StatusCode(HttpStatusCode.NoContent);
+            
+            //DTO aangemaakt om circulaire referentie te voorkomen
             List<AlertDTO> lijst = new List<AlertDTO>();
             foreach (Alert alert in alertsToShow)
             {

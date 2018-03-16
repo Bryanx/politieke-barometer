@@ -97,8 +97,7 @@ namespace BAR.UI.CA
 			{
 				Console.Write("Keuze: ");
 				string input = Console.ReadLine();
-				int action;
-				if (Int32.TryParse(input, out action))
+				if (Int32.TryParse(input, out int action))
 				{
 					switch (action)
 					{
