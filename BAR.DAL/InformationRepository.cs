@@ -58,6 +58,21 @@ namespace BAR.DAL
 		}
 
 		/// <summary>
+		/// Deletes informations objects from the past unti a given date
+		/// for a specific item.
+		/// Returns -1 if savechanges() failed
+		/// </summary>
+		public int DeleteInformationsForDate(int itemId, DateTime until)
+		{
+			IEnumerable<Information> infos = ctx.Informations
+							.Where(info => info.Item.ItemId == itemId)
+							.Where(info => info.CreatetionDate <= until).AsEnumerable();
+
+			foreach (Information info in infos) ctx.Informations.Remove(info);
+			return ctx.SaveChanges();
+		}
+
+		/// <summary>
 		/// Returns a list of informations based on
 		/// a specific item.
 		/// </summary>
@@ -81,6 +96,17 @@ namespace BAR.DAL
 		public Information ReadInformation(int informationid)
 		{
 			return ctx.Informations.Find(informationid);
+		}
+
+		/// <summary>
+		/// Gives back all informations objects form now until a given date
+		/// for a specific item.
+		/// </summary>
+		public IEnumerable<Information> ReadInformationsForDate(int itemId, DateTime since)
+		{
+			return ctx.Informations
+					.Where(info => info.Item.ItemId == itemId)
+					.Where(info => info.CreatetionDate >= since).AsEnumerable();
 		}
 
 		/// <summary>
