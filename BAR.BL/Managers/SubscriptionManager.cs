@@ -72,7 +72,7 @@ namespace BAR.BL.Managers
 			foreach (Subscription sub in subs)
 			{
 				double tresh = sub.Treshhold;
-				if (tresh <= (per))
+				if (per >=  tresh)
 				{
 					sub.Alerts.Add(new Alert()
 					{
