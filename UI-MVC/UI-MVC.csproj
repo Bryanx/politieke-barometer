@@ -161,6 +161,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\AlertDTO.cs" />
     <Compile Include="Models\Graph.cs" />
     <Compile Include="Models\Persoon.cs" />
     <Compile Include="Models\SubscriptionVM.cs" />
@@ -2499,6 +2500,7 @@
     <Content Include="vendors\validator\index.html" />
     <Content Include="vendors\validator\multifield.js" />
     <Content Include="vendors\validator\validator.js" />
+    <Content Include="Views\User\Ingelogd.cshtml" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -3159,7 +3161,6 @@
     <Content Include="vendors\validator\README.md" />
     <Content Include="vendors\validator\validator.jquery.json" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Home\Ingelogd.cshtml" />
     <Content Include="Views\Personen\Details.cshtml" />
     <Content Include="Views\Personen\Index.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
