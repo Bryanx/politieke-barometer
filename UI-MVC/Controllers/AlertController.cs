@@ -13,8 +13,8 @@ namespace BAR.UI.MVC.Controllers {
         ISubscriptionManager subManager = new SubscriptionManager();
 
         /// <summary>
-        /// Get Request geeft alerts de user met parameter id.
-        /// Wordt gebruikt in een ajax call vanaf pagina's van de betreffende user.
+        /// Get Request for alerts of a specific user (id)
+        /// This request is used on the member
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
@@ -26,12 +26,12 @@ namespace BAR.UI.MVC.Controllers {
             IEnumerable<Alert> alertsToShow = subManager.GetAllAlerts(id);
             if (alertsToShow == null || alertsToShow.Count() == 0) return StatusCode(HttpStatusCode.NoContent);
             
-            //DTO aangemaakt om circulaire referentie te voorkomen
+            //Made DTO class to prevent circular references
             List<AlertDTO> lijst = new List<AlertDTO>();
             foreach (Alert alert in alertsToShow)
             {
                 lijst.Add(new AlertDTO() {
-                    //Momenteel even ingesteld dat je alerts kan krijgen van slechts 1 item, dit om 1miljoen alerts te voorkomen
+                    //TODO: Currently only 1 item can produce 1 alert, this can be changed later on.
                     AlertId=alert.Subscription.SubscribedItem.ItemId,
                     Name=alert.Subscription.SubscribedItem.Name,
                     TimeStamp=alert.TimeStamp

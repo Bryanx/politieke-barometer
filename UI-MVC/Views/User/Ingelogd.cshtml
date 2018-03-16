@@ -81,7 +81,10 @@
                     $('#alertCount').html(alerts.length);
                 })
                 //TODO: if FAIL proper error handling
-                .fail(function() { alert('Alerts could not be loaded.'); });
+                .fail(function() {
+                    //error handling.
+                    //currently not implemented because database needs to be initialized on page reload.
+z                });
 
             //GET Request for widgets
             $.ajax('/api/Widget',
