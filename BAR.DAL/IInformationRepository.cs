@@ -16,12 +16,14 @@ namespace BAR.DAL
 		IEnumerable<Information> ReadAllInfoForId(int itemId);
 
 		//Create
-		void CreateInformation(Information info);
+		int CreateInformation(Information info);
 
 		//Update
-		void UpdateInformation(Information info);
-		void UpdateInformations(IEnumerable<Information> infos);
+		int UpdateInformation(Information info);
+		int UpdateInformations(IEnumerable<Information> infos);
 
 		//Delete
+		int DeleteInformation(Information info);
+		int DeleteInformations(IEnumerable<Information> infos);
 	}
 }

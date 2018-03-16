@@ -29,11 +29,32 @@ namespace BAR.DAL
 		/// <summary>
 		/// Creates a new instance of an information objects and
 		/// persist that to the database.
+		/// Returns -1 if savechanges() failed
 		/// </summary>
-		public void CreateInformation(Information info)
+		public int CreateInformation(Information info)
 		{
 			ctx.Informations.Add(info);
-			ctx.SaveChanges();
+			return ctx.SaveChanges();
+		}
+
+		/// <summary>
+		/// Deletes a specific information object
+		/// Returns -1 if savechanges() failed
+		/// </summary>
+		public int DeleteInformation(Information info)
+		{
+			ctx.Informations.Remove(info);
+			return ctx.SaveChanges();
+		}
+
+		/// <summary>
+		/// Deletes a range of information objects
+		/// Returns -1 if savechanges() failed
+		/// </summary>
+		public int DeleteInformations(IEnumerable<Information> infos)
+		{
+			foreach (Information info in infos) ctx.Informations.Remove(info);
+			return ctx.SaveChanges();
 		}
 
 		/// <summary>
@@ -74,20 +95,22 @@ namespace BAR.DAL
 
 		/// <summary>
 		/// Updates an instance of a specific information object
+		/// Returns -1 if savechanges() failed
 		/// </summary>
-		public void UpdateInformation(Information info)
+		public int UpdateInformation(Information info)
 		{
 			ctx.Entry(info).State = EntityState.Modified;
-			ctx.SaveChanges();
+			return ctx.SaveChanges();
 		}
 
 		/// <summary>
 		/// Updates all informations objects that are in the list.
+		/// Returns -1 if savechanges() failed
 		/// </summary>
-		public void UpdateInformations(IEnumerable<Information> infos)
+		public int UpdateInformations(IEnumerable<Information> infos)
 		{
 			foreach (Information info in infos) ctx.Entry(info).State = EntityState.Modified;
-			ctx.SaveChanges();
+			return ctx.SaveChanges();
 		}
 	}
 }
