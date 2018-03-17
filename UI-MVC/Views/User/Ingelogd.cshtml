@@ -11,7 +11,7 @@
 
 @section Alerts{
     <li role="presentation" class="dropdown">
-        <a href="javascript:;" class="dropdown-toggle info-number" data-toggle="dropdown"
+        <a id="alertDropdown" href="javascript:;" class="dropdown-toggle info-number" data-toggle="dropdown"
            aria-expanded="false">
             <i class="fa fa-envelope-o"></i>
             <span id="alertCount" class="badge bg-green"></span>
@@ -54,37 +54,28 @@
         (function() {
             $('#saveWidgets').on('click', saveGrid);
             //GET Request for alerts
-            var alerts = []
-            $.ajax('/api/Alert/@ViewBag.Id',
+            var alerts = [];
+            var alertData;
+            var startTime;
+            $.ajax('/api/UserApi/@ViewBag.Id',
                     {
                         type: 'GET',
                         dataType: 'json'
                     })
                 .done(function(data) {
+                    alertData = data;
                     console.log(data);
-                    for (var i = 0; i < data.length; i++) {
-                        if (!alerts.includes(data[i].AlertId)) {
-                            $('#menu1').append("<li><a><span><span><strong>" +
-                                data[i].Name +
-                                "</strong> is nu trending!</span></span>" +
-                                "<span class=\"message\">nu</span></a></li>");
-                            new PNotify({
-                                title: 'Trending Alert',
-                                text: '<strong>' + data[i].Name + '</strong> is nu trending!',
-                                type: 'success',
-                                styling: 'bootstrap3'
-                            });
-                            alerts.push(data[i].AlertId);
-                        }
-                    }
-                    $('#menu1').append("<li><div class=\"text-center\"><a><strong>See All Alerts</strong><i class=\"fa fa-angle-right\"></i></a></div></li>");
+                    loadAlerts();
+                    loadAlertNotifications();
+                    $('#menu1').append(
+                        "<li><div class=\"text-center\"><a><strong>See All Alerts</strong><i class=\"fa fa-angle-right\"></i></a></div></li>");
                     $('#alertCount').html(alerts.length);
                 })
                 //TODO: if FAIL proper error handling
                 .fail(function() {
                     //error handling.
                     //currently not implemented because database needs to be initialized on page reload.
-z                });
+                });
 
             //GET Request for widgets
             $.ajax('/api/Widget',
@@ -98,6 +89,44 @@ z                });
                 })
                 //TODO: if FAIL proper error handling
                 .fail(function() { alert('Widgets could not be loaded.'); });
+            
+            $('#alertDropdown').on('click', loadAlerts);
+
+            function loadAlerts() {
+                var now = '@DateTime.Now.Ticks';
+                for (var i = 0; i < alertData.length; i++) {
+                    if (!alerts.includes(alertData[i].AlertId)) {
+                        startTime = alertData[i].TimeStamp;
+                        console.log(now + "  -  " + startTime);
+                        $('#menu1').append("<li onclick=\"markAsRead(" +
+                            alertData[i].AlertId +
+                            ")\"><a><span><span><strong>" +
+                            alertData[i].Name +
+                            "</strong> is nu trending!</span></span>" +
+                            "<span class=\"message\">"+(startTime-now)+"</span></a></li>");
+                    }
+                }
+            }
+
+            function loadAlertNotifications() {
+                for (var i = 0; i < alertData.length; i++) {
+                    if (!alerts.includes(alertData[i].AlertId)) {
+                        //notification
+                        new PNotify({
+                            title: 'Trending Alert',
+                            text: '<strong>' + alertData[i].Name + '</strong> is nu trending!',
+                            type: 'success',
+                            styling: 'bootstrap3'
+                        });
+                        if (!alertData[i].isRead) alerts.push(alertData[i].AlertId);
+
+                    }
+                }
+            }
+
+            function markAsRead(id) {
+                //ajax put
+            }
         })(jQuery);
     </script>
 }
