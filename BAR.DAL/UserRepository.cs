@@ -55,6 +55,27 @@ namespace BAR.DAL
 		}
 
 		/// <summary>
+		/// Reads all the activities of all users.
+		/// </summary>
+		public IEnumerable<Activity> ReadAllActivities()
+		{
+			List<Activity> activities = new List<Activity>();
+			IEnumerable<User> userActivities = ctx.Users.Include(user => user.Activities).AsEnumerable();
+
+			foreach (User user in userActivities) activities.AddRange(user.Activities);
+			return activities.AsEnumerable();
+		}
+
+		/// <summary>
+		/// Reads all the activities for a specific user.
+		/// </summary>
+		public IEnumerable<Activity> ReadActivitiesForUser(int userId)
+		{
+			return ctx.Users.Include(user => user.Activities).
+				Where(user => user.UserId == userId).SingleOrDefault().Activities.AsEnumerable();
+		}
+
+		/// <summary>
 		/// Creates an instance of a user in the database
 		/// Returns -1 if SaveChanges() is delayed by unit of work.
 		/// </summary>

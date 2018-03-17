@@ -10,10 +10,12 @@ namespace BAR.DAL
 	public interface IUserRepository
 	{
 		//Read
-		User ReadUser(int userID);
+		User ReadUser(int userId);
 		IEnumerable<User> ReadAllUsers();
 		IEnumerable<User> ReadAllUsersForRole(int roleId);
 		IEnumerable<User> ReadAllUsersForArea(int areaId);
+		IEnumerable<Activity> ReadAllActivities();
+		IEnumerable<Activity> ReadActivitiesForUser(int userId);
 
 		//Create
 		int CreateUser(User user);

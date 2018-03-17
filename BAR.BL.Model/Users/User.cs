@@ -16,5 +16,6 @@ namespace BAR.BL.Domain.Users
 		public DateTime? DateOfBirth { get; set; }
 		public Role Role { get; set; }
 		public Area Area { get; set; }
+		public ICollection<Activity> Activities { get; set; }
 	}
 }
