@@ -29,7 +29,7 @@ namespace BAR.DAL
 		/// <summary>
 		/// Creates a new instance of an information objects and
 		/// persist that to the database.
-		/// Returns -1 if savechanges() failed
+		/// Returns -1 if SaveChanges() is delayed by unit of work.
 		/// </summary>
 		public int CreateInformation(Information info)
 		{
@@ -39,7 +39,7 @@ namespace BAR.DAL
 
 		/// <summary>
 		/// Deletes a specific information object
-		/// Returns -1 if savechanges() failed
+		/// Returns -1 if SaveChanges() is delayed by unit of work.
 		/// </summary>
 		public int DeleteInformation(Information info)
 		{
@@ -49,7 +49,7 @@ namespace BAR.DAL
 
 		/// <summary>
 		/// Deletes a range of information objects
-		/// Returns -1 if savechanges() failed
+		/// Returns -1 if SaveChanges() is delayed by unit of work.
 		/// </summary>
 		public int DeleteInformations(IEnumerable<Information> infos)
 		{
@@ -60,7 +60,7 @@ namespace BAR.DAL
 		/// <summary>
 		/// Deletes informations objects from the past unti a given date
 		/// for a specific item.
-		/// Returns -1 if savechanges() failed
+		/// Returns -1 if SaveChanges() is delayed by unit of work.
 		/// </summary>
 		public int DeleteInformationsForDate(int itemId, DateTime until)
 		{
@@ -68,8 +68,7 @@ namespace BAR.DAL
 							.Where(info => info.Item.ItemId == itemId)
 							.Where(info => info.CreatetionDate <= until).AsEnumerable();
 
-			foreach (Information info in infos) ctx.Informations.Remove(info);
-			return ctx.SaveChanges();
+			return DeleteInformations(infos);
 		}
 
 		/// <summary>
@@ -121,7 +120,7 @@ namespace BAR.DAL
 
 		/// <summary>
 		/// Updates an instance of a specific information object
-		/// Returns -1 if savechanges() failed
+		/// Returns -1 if SaveChanges() is delayed by unit of work.
 		/// </summary>
 		public int UpdateInformation(Information info)
 		{
@@ -131,7 +130,7 @@ namespace BAR.DAL
 
 		/// <summary>
 		/// Updates all informations objects that are in the list.
-		/// Returns -1 if savechanges() failed
+		/// Returns -1 if SaveChanges() is delayed by unit of work.
 		/// </summary>
 		public int UpdateInformations(IEnumerable<Information> infos)
 		{
