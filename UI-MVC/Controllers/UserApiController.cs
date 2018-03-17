@@ -43,16 +43,16 @@ namespace BAR.UI.MVC.Controllers {
             List<AlertDTO> lijst = new List<AlertDTO>();
             lijst.Add(new AlertDTO() {
                 //TODO: Currently only 1 item can produce 1 alert, this can be changed later on.
-                AlertId = 1,
+                AlertId = 0,
                 Name = "Bart de Wever",
-                TimeStamp = DateTime.Now.Ticks,
+                TimeStamp = (DateTime.UtcNow.Ticks - 621355968000000000) / 10000,
                 IsRead = false
             });
             lijst.Add(new AlertDTO() {
                 //TODO: Currently only 1 item can produce 1 alert, this can be changed later on.
-                AlertId = 2,
+                AlertId = 1,
                 Name = "Maggie die Block",
-                TimeStamp = DateTime.Now.Ticks,
+                TimeStamp = (DateTime.UtcNow.Ticks - 621355968000000000) / 10000,
                 IsRead = false
             });
             return Ok(lijst.AsEnumerable());
