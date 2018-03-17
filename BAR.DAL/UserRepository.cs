@@ -29,6 +29,22 @@ namespace BAR.DAL
 		}
 
 		/// <summary>
+		/// Gives back a list of users from a specific area.
+		/// </summary>
+		public IEnumerable<User> ReadAllUsersForArea(int areaId)
+		{
+			return ctx.Users.Where(user => user.Area.AreaId == areaId).AsEnumerable();
+		}
+
+		/// <summary>
+		/// Returns a list of users for a spefic role
+		/// </summary>
+		public IEnumerable<User> ReadAllUsersForRole(int roleId)
+		{
+			return ctx.Users.Where(user => user.Role.RoleId == roleId).AsEnumerable();
+		}
+
+		/// <summary>
 		/// Returns the user form a specific userId.
 		/// </summary>
 		public User ReadUser(int userId)
