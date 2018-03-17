@@ -52,5 +52,15 @@ namespace BAR.DAL
 			var user = ctx.Users.Find(userId);
 			return user;
 		}
+
+		/// <summary>
+		/// Creates an instance of a user in the database
+		/// Returns -1 if SaveChanges() is delayed by unit of work.
+		/// </summary>
+		public int CreateUser(User user)
+		{
+			ctx.Users.Add(user);
+			return ctx.SaveChanges();
+		}
 	}
 }

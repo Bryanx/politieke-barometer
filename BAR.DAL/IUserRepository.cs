@@ -16,7 +16,7 @@ namespace BAR.DAL
 		IEnumerable<User> ReadAllUsersForArea(int areaId);
 
 		//Create
-		//...
+		int CreateUser(User user);
 
 		//update
 		//...
