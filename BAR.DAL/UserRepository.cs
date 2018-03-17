@@ -83,5 +83,25 @@ namespace BAR.DAL
 			foreach (User user in users) ctx.Entry(user).State = EntityState.Modified;
 			return ctx.SaveChanges();
 		}
+
+		/// <summary>
+		/// Deletes a given user from the database
+		/// Returns -1 if SaveChanges() is delayed by unit of work.
+		/// </summary>
+		public int DeleteUser(User user)
+		{
+			ctx.Users.Remove(user);
+			return ctx.SaveChanges();
+		}
+
+		/// <summary>
+		/// Deletes a given list of users
+		/// Returns -1 if SaveChanges() is delayed by unit of work.
+		/// </summary>
+		public int DeleteUsers(IEnumerable<User> users)
+		{
+			foreach (User user in users) ctx.Users.Remove(user);
+			return ctx.SaveChanges();
+		}
 	}
 }
