@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using BAR.DAL.EF;
+using System.Data.Entity;
 
 namespace BAR.DAL
 {
@@ -60,6 +61,26 @@ namespace BAR.DAL
 		public int CreateUser(User user)
 		{
 			ctx.Users.Add(user);
+			return ctx.SaveChanges();
+		}
+
+		/// <summary>
+		/// Updates a given user
+		/// Returns -1 if SaveChanges() is delayed by unit of work.
+		/// </summary>
+		public int UpdateUser(User user)
+		{
+			ctx.Entry(user).State = EntityState.Modified;
+			return ctx.SaveChanges();
+		}
+
+		/// <summary>
+		/// Updataes a given list of users
+		/// Returns -1 if SaveChanges() is delayed by unit of work.
+		/// </summary>
+		public int UpdateUsers(IEnumerable<User> users)
+		{
+			foreach (User user in users) ctx.Entry(user).State = EntityState.Modified;
 			return ctx.SaveChanges();
 		}
 	}

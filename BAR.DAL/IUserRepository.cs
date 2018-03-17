@@ -19,7 +19,8 @@ namespace BAR.DAL
 		int CreateUser(User user);
 
 		//update
-		//...
+		int UpdateUser(User user);
+		int UpdateUsers(IEnumerable<User> users);
 
 		//Delete
 	}
