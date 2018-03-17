@@ -39,8 +39,7 @@
 <div style="visibility: hidden">t</div>
 
 @section CustomJS{
-    <script src="../../Content/gridstack/jquery-ui.js">
-    </script>
+    <script src="../../Content/gridstack/jquery-ui.js"></script>
     <script src="../../Content/gridstack/underscore.min.js"></script>
     <script src="../../Content/gridstack/gridstack.js"></script>
     <script src="../../Content/gridstack/gridstack.jQueryUI.js"></script>
@@ -52,48 +51,34 @@
     <script src="../../vendors/pnotify/dist/pnotify.nonblock.js"></script>
     <script type="text/javascript">
         var alerts = [];
-        var alertData;
-        function loadAlertNotifications() {
+
+        //Loads the alerts inside the notifications panel in the top-navbar
+        function loadAlerts(alertData) {
             for (var i = 0; i < alertData.length; i++) {
                 var keys = Object.keys(alerts);
-                if (!keys.includes(alertData[i].AlertId+" ")) {
-                    //notification
+                if (!keys.includes(alertData[i].AlertId+"id")) {
+                    $('#menu1').append("<li onclick=\"markAsRead("+alertData[i].AlertId +
+                        ")\"><a><span><span><strong>" +
+                        alertData[i].Name +
+                        "</strong> is nu trending!</span></span><span class=\"message\">"+
+                        jQuery.timeago(alertData[i].TimeStamp)+"</span></a></li>");
+                    
+                    //Loads the pop ups notifications.
                     new PNotify({
                         title: 'Trending Alert',
                         text: '<strong>' + alertData[i].Name + '</strong> is nu trending!',
                         type: 'success',
                         styling: 'bootstrap3'
                     });
-                    alerts[alertData[i].AlertId+" "] = alertData[i].TimeStamp;
+                    
+                    alerts[alertData[i].AlertId+"id"] = alertData[i].TimeStamp;
                 }
             }
         }
 
-        function loadAlerts() {
-            var now = new Date().getTime();
-            var keys = Object.keys(alerts);
-            for (var i = 0; i < alertData.length; i++) {
-                if (!keys.includes(alertData[i].AlertId+" ")) {
-                    var startTime = alertData[i].TimeStamp;
-                    $('#menu1').append("<li onclick=\"markAsRead(" +
-                        alertData[i].AlertId +
-                        ")\"><a><span><span><strong>" +
-                        alertData[i].Name +
-                        "</strong> is nu trending!</span></span>" +
-                        "<span id=\"alertTime"+alertData[i].AlertId+"\"class=\"message\">" +
-                        (now - startTime) +
-                        "</span></a></li>");
-                } else {
-                    for (var id in alerts) {
-                       var alertStartTime = alerts[id];
-                        $('#alertTime'+id).html(now-alertStartTime+"");
-                    }
-                }
-            }
-        }
-        
         //ajax calls
         (function() {
+            jQuery('span.timeago').timeago();
             $('#saveWidgets').on('click', saveGrid);
             //GET Request for alerts
             $.ajax('/api/UserApi/@ViewBag.Id',
@@ -102,10 +87,9 @@
                         dataType: 'json'
                     })
                 .done(function(data) {
-                    alertData = data;
-                    console.log(data);
-                    loadAlerts();
-                    loadAlertNotifications();
+                    var alertData = data;
+                    console.log(alertData);
+                    loadAlerts(data);
                     $('#menu1').append(
                         "<li><div class=\"text-center\"><a><strong>See All Alerts</strong><i class=\"fa fa-angle-right\"></i></a></div></li>");
                     $('#alertCount').html(Object.keys(alerts).length);
@@ -128,11 +112,11 @@
                 })
                 //TODO: if FAIL proper error handling
                 .fail(function() { alert('Widgets could not be loaded.'); });
-            
+
             $('#alertDropdown').on('click', loadAlerts);
 
             function markAsRead(id) {
-                //ajax put
+                //TODO Ajax put
             }
         })(jQuery);
     </script>

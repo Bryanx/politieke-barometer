@@ -76,7 +76,8 @@ namespace BAR.BL.Managers
 				{
 					sub.Alerts.Add(new Alert()
 					{
-						Subscription = sub
+						Subscription = sub,
+						TimeStamp = DateTime.Now
 					});
 					//subRepo.UpdateSubScription(sub);
 				}

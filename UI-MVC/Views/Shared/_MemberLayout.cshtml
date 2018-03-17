@@ -1,4 +1,5 @@
 @using System
+@using System.Web.Optimization
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -168,8 +169,6 @@
     <script src="../../vendors/nprogress/nprogress.js"></script>
     <!-- Chart.js -->
     <script src="../../vendors/Chart.js/dist/Chart.min.js"></script>
-    <!-- gauge.js -->
-    <script src="../../vendors/gauge.js/dist/gauge.min.js"></script>
     <!-- bootstrap-progressbar -->
     <script src="../../vendors/bootstrap-progressbar/bootstrap-progressbar.min.js"></script>
     <!-- iCheck -->
@@ -197,6 +196,9 @@
     <script src="../../vendors/bootstrap-daterangepicker/daterangepicker.js"></script>
 
 </environment>
+
+@Scripts.Render("~/bundles/timeago")
+
 @RenderSection("scripts", required: false)
 
 @if (IsSectionDefined("CustomJS")) {
