@@ -169,11 +169,13 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\bootstrap-theme.css" />
-    <Content Include="Content\bootstrap-theme.min.css" />
-    <Content Include="Content\bootstrap.css" />
-    <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\build\css\bootstrap-progressbar-3.3.4.css" />
+    <Content Include="Content\build\css\bootstrap-progressbar-3.3.4.min.css" />
     <Content Include="Content\build\css\custom.css" />
+    <Content Include="Content\build\css\gridstack.css" />
+    <Content Include="Content\build\css\gridstack.min.css" />
+    <Content Include="Content\build\css\homepage.css" />
+    <Content Include="Content\build\css\nprogress.css" />
     <Content Include="Content\build\images\back_disabled.png" />
     <Content Include="Content\build\images\back_enabled.png" />
     <Content Include="Content\build\images\back_enabled_hover.png" />
@@ -183,18 +185,8 @@
     <Content Include="Content\build\images\loading.gif" />
     <Content Include="Content\build\js\custom.js" />
     <Content Include="Content\build\js\custom.min.js" />
-    <Content Include="Content\gridstack\gridstack-extra.css" />
-    <Content Include="Content\gridstack\gridstack-extra.min.css" />
-    <Content Include="Content\gridstack\gridstack.all.js" />
-    <Content Include="Content\gridstack\gridstack.css" />
-    <Content Include="Content\gridstack\gridstack.jQueryUI.js" />
-    <Content Include="Content\gridstack\gridstack.jQueryUI.min.js" />
-    <Content Include="Content\gridstack\gridstack.js" />
-    <Content Include="Content\gridstack\gridstack.min.css" />
-    <Content Include="Content\gridstack\gridstack.min.js" />
-    <Content Include="Content\gridstack\jquery-ui.js" />
-    <Content Include="Content\gridstack\underscore.min.js" />
-    <Content Include="Content\homepage\homepage.css" />
+    <Content Include="Content\build\js\searchbar.js" />
+    <Content Include="Content\build\js\widgets.js" />
     <Content Include="Content\images\american-express.png" />
     <Content Include="Content\images\facebook-app-logo-white.svg" />
     <Content Include="Content\images\facebook-app-logo.svg" />
@@ -214,7 +206,6 @@
     <Content Include="Content\images\picture.jpg" />
     <Content Include="Content\images\user.png" />
     <Content Include="Content\images\visa.png" />
-    <Content Include="Content\searchbar.js" />
     <Content Include="Content\themes\base\accordion.css" />
     <Content Include="Content\themes\base\all.css" />
     <Content Include="Content\themes\base\autocomplete.css" />
@@ -249,34 +240,42 @@
     <Content Include="Content\themes\base\tabs.css" />
     <Content Include="Content\themes\base\theme.css" />
     <Content Include="Content\themes\base\tooltip.css" />
-    <Content Include="Content\widgets\widgets.js" />
     <Content Include="favicon.ico" />
-    <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Scripts\bootstrap.js" />
-    <Content Include="Scripts\bootstrap.min.js" />
-    <Content Include="Content\bootstrap-theme.css.map" />
-    <Content Include="Content\bootstrap.css.map" />
-    <Content Include="Content\gridstack\gridstack.min.map" />
     <Content Include="data.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <None Include="Scripts\jquery-3.3.1-vsdoc.js" />
-    <Content Include="Scripts\jquery-3.3.1.js" />
-    <Content Include="Scripts\jquery-3.3.1.min.js" />
-    <Content Include="Scripts\jquery-3.3.1.slim.js" />
-    <Content Include="Scripts\jquery-3.3.1.slim.min.js" />
+    <None Include="fonts\glyphicons-halflings-regular.eot" />
+    <None Include="fonts\glyphicons-halflings-regular.svg" />
+    <None Include="fonts\glyphicons-halflings-regular.ttf" />
+    <None Include="fonts\glyphicons-halflings-regular.woff" />
+    <None Include="fonts\glyphicons-halflings-regular.woff2" />
+    <None Include="Scripts\bootstrap.js" />
+    <None Include="Scripts\bootstrap.min.js" />
+    <None Include="Scripts\jquery-2.2.4-vsdoc.js" />
+    <None Include="Scripts\jquery-2.2.4.js" />
+    <None Include="Scripts\jquery-2.2.4.min.js" />
+    <None Include="Scripts\jquery-2.2.4.min.map" />
+    <Content Include="Scripts\bootstrap-progressbar.js" />
+    <Content Include="Scripts\bootstrap-progressbar.min.js" />
+    <Content Include="Scripts\fastclick.js" />
+    <Content Include="Scripts\gridstack.jQueryUI.js" />
+    <Content Include="Scripts\gridstack.jQueryUI.min.js" />
+    <Content Include="Scripts\gridstack.js" />
+    <Content Include="Scripts\gridstack.min.js" />
+    <Content Include="Scripts\gridstack.min.map" />
     <Content Include="Scripts\jquery-ui-1.11.0.js" />
     <Content Include="Scripts\jquery-ui-1.11.0.min.js" />
+    <Content Include="Scripts\jquery-ui.js" />
     <Content Include="Scripts\jquery.timeago.js" />
     <Content Include="Scripts\lodash.js" />
     <Content Include="Scripts\lodash.min.js" />
     <Content Include="Scripts\npm.js" />
+    <Content Include="Scripts\nprogress.js" />
     <Content Include="Scripts\site.js" />
-    <Content Include="Scripts\underscore.js" />
     <Content Include="Scripts\underscore.min.js" />
     <Content Include="vendors\animate.css\animate.css" />
     <Content Include="vendors\animate.css\animate.min.css" />
@@ -1031,7 +1030,6 @@
     <Content Include="vendors\echarts\webpack.config.js" />
     <Content Include="vendors\eve\e.html" />
     <Content Include="vendors\eve\eve.js" />
-    <Content Include="vendors\fastclick\lib\fastclick.js" />
     <Content Include="vendors\flot-spline\js\jquery.flot.spline.js" />
     <Content Include="vendors\flot-spline\js\jquery.flot.spline.min.js" />
     <Content Include="vendors\flot.curvedlines\curvedLines.js" />
@@ -1041,43 +1039,6 @@
     <Content Include="vendors\flot.orderbars\examples\js\main.js" />
     <Content Include="vendors\flot.orderbars\examples\js\vendor\jquery-1.9.1.min.js" />
     <Content Include="vendors\flot.orderbars\js\jquery.flot.orderBars.js" />
-    <Content Include="vendors\Flot\examples\ajax\index.html" />
-    <Content Include="vendors\Flot\examples\annotating\index.html" />
-    <Content Include="vendors\Flot\examples\axes-interacting\index.html" />
-    <Content Include="vendors\Flot\examples\axes-multiple\index.html" />
-    <Content Include="vendors\Flot\examples\axes-time-zones\date.js" />
-    <Content Include="vendors\Flot\examples\axes-time-zones\index.html" />
-    <Content Include="vendors\Flot\examples\axes-time\index.html" />
-    <Content Include="vendors\Flot\examples\background.png" />
-    <Content Include="vendors\Flot\examples\basic-options\index.html" />
-    <Content Include="vendors\Flot\examples\basic-usage\index.html" />
-    <Content Include="vendors\Flot\examples\canvas\index.html" />
-    <Content Include="vendors\Flot\examples\categories\index.html" />
-    <Content Include="vendors\Flot\examples\examples.css" />
-    <Content Include="vendors\Flot\examples\image\hs-2004-27-a-large-web.jpg" />
-    <Content Include="vendors\Flot\examples\image\index.html" />
-    <Content Include="vendors\Flot\examples\index.html" />
-    <Content Include="vendors\Flot\examples\interacting\index.html" />
-    <Content Include="vendors\Flot\examples\navigate\arrow-down.gif" />
-    <Content Include="vendors\Flot\examples\navigate\arrow-left.gif" />
-    <Content Include="vendors\Flot\examples\navigate\arrow-right.gif" />
-    <Content Include="vendors\Flot\examples\navigate\arrow-up.gif" />
-    <Content Include="vendors\Flot\examples\navigate\index.html" />
-    <Content Include="vendors\Flot\examples\percentiles\index.html" />
-    <Content Include="vendors\Flot\examples\realtime\index.html" />
-    <Content Include="vendors\Flot\examples\resize\index.html" />
-    <Content Include="vendors\Flot\examples\selection\index.html" />
-    <Content Include="vendors\Flot\examples\series-errorbars\index.html" />
-    <Content Include="vendors\Flot\examples\series-pie\index.html" />
-    <Content Include="vendors\Flot\examples\series-toggle\index.html" />
-    <Content Include="vendors\Flot\examples\series-types\index.html" />
-    <Content Include="vendors\Flot\examples\shared\jquery-ui\jquery-ui.min.css" />
-    <Content Include="vendors\Flot\examples\stacking\index.html" />
-    <Content Include="vendors\Flot\examples\symbols\index.html" />
-    <Content Include="vendors\Flot\examples\threshold\index.html" />
-    <Content Include="vendors\Flot\examples\tracking\index.html" />
-    <Content Include="vendors\Flot\examples\visitors\index.html" />
-    <Content Include="vendors\Flot\examples\zooming\index.html" />
     <Content Include="vendors\Flot\excanvas.js" />
     <Content Include="vendors\Flot\excanvas.min.js" />
     <Content Include="vendors\Flot\jquery.colorhelpers.js" />
@@ -2813,10 +2774,6 @@
     <Content Include="vendors\eve\LICENSE" />
     <Content Include="vendors\eve\package.json" />
     <Content Include="vendors\eve\README.md" />
-    <Content Include="vendors\fastclick\.bower.json" />
-    <Content Include="vendors\fastclick\bower.json" />
-    <Content Include="vendors\fastclick\LICENSE" />
-    <Content Include="vendors\fastclick\README.md" />
     <Content Include="vendors\flot-spline\.bower.json" />
     <Content Include="vendors\flot-spline\bower.json" />
     <Content Include="vendors\flot-spline\LICENSE" />
@@ -2830,33 +2787,6 @@
     <Content Include="vendors\Flot\API.md" />
     <Content Include="vendors\Flot\component.json" />
     <Content Include="vendors\Flot\CONTRIBUTING.md" />
-    <Content Include="vendors\Flot\examples\ajax\data-eu-gdp-growth-1.json" />
-    <Content Include="vendors\Flot\examples\ajax\data-eu-gdp-growth-2.json" />
-    <Content Include="vendors\Flot\examples\ajax\data-eu-gdp-growth-3.json" />
-    <Content Include="vendors\Flot\examples\ajax\data-eu-gdp-growth-4.json" />
-    <Content Include="vendors\Flot\examples\ajax\data-eu-gdp-growth-5.json" />
-    <Content Include="vendors\Flot\examples\ajax\data-eu-gdp-growth.json" />
-    <Content Include="vendors\Flot\examples\ajax\data-japan-gdp-growth.json" />
-    <Content Include="vendors\Flot\examples\ajax\data-usa-gdp-growth.json" />
-    <Content Include="vendors\Flot\examples\axes-time-zones\tz\africa" />
-    <Content Include="vendors\Flot\examples\axes-time-zones\tz\antarctica" />
-    <Content Include="vendors\Flot\examples\axes-time-zones\tz\asia" />
-    <Content Include="vendors\Flot\examples\axes-time-zones\tz\australasia" />
-    <Content Include="vendors\Flot\examples\axes-time-zones\tz\backward" />
-    <Content Include="vendors\Flot\examples\axes-time-zones\tz\etcetera" />
-    <Content Include="vendors\Flot\examples\axes-time-zones\tz\europe" />
-    <Content Include="vendors\Flot\examples\axes-time-zones\tz\factory" />
-    <Content Include="vendors\Flot\examples\axes-time-zones\tz\iso3166.tab" />
-    <Content Include="vendors\Flot\examples\axes-time-zones\tz\leapseconds" />
-    <Content Include="vendors\Flot\examples\axes-time-zones\tz\northamerica" />
-    <Content Include="vendors\Flot\examples\axes-time-zones\tz\pacificnew" />
-    <Content Include="vendors\Flot\examples\axes-time-zones\tz\solar87" />
-    <Content Include="vendors\Flot\examples\axes-time-zones\tz\solar88" />
-    <Content Include="vendors\Flot\examples\axes-time-zones\tz\solar89" />
-    <Content Include="vendors\Flot\examples\axes-time-zones\tz\southamerica" />
-    <Content Include="vendors\Flot\examples\axes-time-zones\tz\systemv" />
-    <Content Include="vendors\Flot\examples\axes-time-zones\tz\yearistype.sh" />
-    <Content Include="vendors\Flot\examples\axes-time-zones\tz\zone.tab" />
     <Content Include="vendors\Flot\FAQ.md" />
     <Content Include="vendors\Flot\flot.jquery.json" />
     <Content Include="vendors\Flot\Makefile" />
@@ -3210,21 +3140,8 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\User\Index.cshtml" />
   </ItemGroup>
-  <ItemGroup />
-  <ItemGroup>
-    <Content Include="fonts\glyphicons-halflings-regular.woff" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="fonts\glyphicons-halflings-regular.eot" />
-  </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    <Content Include="Scripts\jquery-3.3.1.min.map" />
-    <Content Include="Scripts\jquery-3.3.1.slim.min.map" />
-    <Content Include="Scripts\underscore.min.map" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BAR.BL.Model\Domain.csproj">
