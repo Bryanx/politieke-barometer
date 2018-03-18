@@ -47,10 +47,6 @@ namespace BAR.UI.MVC.Controllers {
         [HttpPut]
         [Route("api/User/{id}/Alert/{alertId}/Read")]
         public IHttpActionResult MarkAlertAsRead(int id, int alertId) {
-            //TODO: Make method in mgr and repo for this
-            Alert clickedAlert = subManager.GetAllAlerts(id).SingleOrDefault(alert => alert.AlertId == alertId);
-            if (clickedAlert == null) return StatusCode(HttpStatusCode.NoContent);
-            clickedAlert.IsRead = true;
             return StatusCode(HttpStatusCode.NoContent);
         }
     }
