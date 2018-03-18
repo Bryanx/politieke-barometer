@@ -7,9 +7,25 @@ using System.Threading.Tasks;
 
 namespace BAR.DAL
 {
-  public interface IUserRepository
-  {
-    User ReadUser(int userID);
-    IEnumerable<User> ReadAllUsers();
-  }
+	public interface IUserRepository
+	{
+		//Read
+		User ReadUser(int userId);
+		IEnumerable<User> ReadAllUsers();
+		IEnumerable<User> ReadAllUsersForRole(int roleId);
+		IEnumerable<User> ReadAllUsersForArea(int areaId);
+		IEnumerable<Activity> ReadAllActivities();
+		IEnumerable<Activity> ReadActivitiesForUser(int userId);
+
+		//Create
+		int CreateUser(User user);
+
+		//update
+		int UpdateUser(User user);
+		int UpdateUsers(IEnumerable<User> users);
+
+		//Delete
+		int DeleteUser(User user);
+		int DeleteUsers(IEnumerable<User> users);
+	}
 }

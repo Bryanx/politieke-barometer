@@ -6,15 +6,16 @@ using System.Threading.Tasks;
 
 namespace BAR.BL.Domain.Users
 {
-  public class User
-  {
-    public int UserId { get; set; }
-    public string FirstName { get; set; }
-    public string LastName { get; set; }
-    public string EmailAdress { get; set; }
-    public Gender Gender { get; set; }
-    public DateTime? DateOfBirth { get; set; }
-    public Role Role { get; set; }
-    public Area Area { get; set; }
-  }
+	public class User
+	{
+		public int UserId { get; set; }
+		public string FirstName { get; set; }
+		public string LastName { get; set; }
+		public string EmailAdress { get; set; }
+		public Gender Gender { get; set; }
+		public DateTime? DateOfBirth { get; set; }
+		public Role Role { get; set; }
+		public Area Area { get; set; }
+		public ICollection<Activity> Activities { get; set; }
+	}
 }

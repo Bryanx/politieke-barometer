@@ -64,7 +64,7 @@ namespace BAR.DAL
 
 		/// <summary>
 		/// Persists an item to the database.
-		/// Returns -1 if saveChanges() failed.
+		/// Returns -1 if SaveChanges() is delayed by unit of work.
 		/// </summary>
 		public int CreateItem(Item item)
 		{
@@ -74,7 +74,7 @@ namespace BAR.DAL
 
 		/// <summary>
 		/// Updates the Lastupdated field of an Item.
-		/// Returns -1 if saveChanges() failed.
+		/// Returns -1 if SaveChanges() is delayed by unit of work.
 		/// </summary>
 		public int UpdateLastUpdated(int itemId, DateTime lastUpdated)
 		{
@@ -85,7 +85,7 @@ namespace BAR.DAL
 
 		/// <summary>
 		/// Updates the baseline and trendingpercentage of a specific item.
-		/// Returns -1 if saveChanges() failed.
+		/// Returns -1 if SaveChanges() is delayed by unit of work.
 		/// </summary>
 		public int UpdateItemTrending(int itemId, double baseline, double trendingeper)
 		{
@@ -97,7 +97,7 @@ namespace BAR.DAL
 
 		/// <summary>
 		/// Updates an item and persists changes to the database
-		/// Returns -1 if saveChanges() failed.
+		/// Returns -1 if SaveChanges() is delayed by unit of work.
 		/// </summary>
 		public int UpdateItem(Item item)
 		{
@@ -107,7 +107,7 @@ namespace BAR.DAL
 
 		/// <summary>
 		/// Updates a list of items and persists changes to the database
-		/// Returns -1 if saveChanges() failed.
+		/// Returns -1 if SaveChanges() is delayed by unit of work.
 		/// </summary>
 		public int UpdateItems(IEnumerable<Item> items)
 		{
@@ -117,7 +117,7 @@ namespace BAR.DAL
 
 		/// <summary>
 		/// Deletes an item from the database.
-		/// Returns -1 if saveChanges() failed.
+		/// Returns -1 if SaveChanges() is delayed by unit of work.
 		/// </summary>
 		public int DeleteItem(Item item)
 		{
@@ -127,7 +127,7 @@ namespace BAR.DAL
 
 		/// <summary>
 		/// Deletes a list of items from the database.
-		/// Returns -1 if saveChanges() failed.
+		/// Returns -1 if SaveChanges() is delayed by unit of work.
 		/// </summary>
 		public int DeleteItems(IEnumerable<Item> items)
 		{
