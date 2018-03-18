@@ -18,7 +18,9 @@ namespace BAR.UI.MVC.Controllers {
         /// </summary>
         /// <param name="id"></param>
         /// <returns>Statuscode 202 if everything OK</returns>
-        public IHttpActionResult Get(int id) {
+        [HttpGet]
+        [Route("api/User/{id}/GetAlerts")]
+        public IHttpActionResult GetAlerts(int id) {
             SysController sys = new SysController();
             sys.DetermineTrending();
             sys.GenerateAlerts();
@@ -42,9 +44,14 @@ namespace BAR.UI.MVC.Controllers {
             
         }
 
-//        [HttpPut]
-//        [Route("api/UserApi/{id}")]
-//        public IHttpActionResult MarkAsRead(int id) {
-//        }
+        [HttpPut]
+        [Route("api/User/{id}/Alert/{alertId}/Read")]
+        public IHttpActionResult MarkAlertAsRead(int id, int alertId) {
+            //TODO: Make method in mgr and repo for this
+            Alert clickedAlert = subManager.GetAllAlerts(id).SingleOrDefault(alert => alert.AlertId == alertId);
+            if (clickedAlert == null) return StatusCode(HttpStatusCode.NoContent);
+            clickedAlert.IsRead = true;
+            return StatusCode(HttpStatusCode.NoContent);
+        }
     }
 }

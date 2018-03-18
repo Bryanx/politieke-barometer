@@ -81,7 +81,7 @@
             jQuery('span.timeago').timeago();
             $('#saveWidgets').on('click', saveGrid);
             //GET Request for alerts
-            $.ajax('/api/UserApi/@ViewBag.Id',
+            $.ajax('/api/User/@ViewBag.Id/GetAlerts',
                     {
                         type: 'GET',
                         dataType: 'json'
