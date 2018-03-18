@@ -183,6 +183,12 @@
     <Content Include="Content\build\images\forward_enabled.png" />
     <Content Include="Content\build\images\forward_enabled_hover.png" />
     <Content Include="Content\build\images\loading.gif" />
+    <Content Include="Content\build\images\logo-all-white-smaller.png" />
+    <Content Include="Content\build\images\logo-all-white.png" />
+    <Content Include="Content\build\images\logo-white-img.png" />
+    <Content Include="Content\build\images\logo-white.png" />
+    <Content Include="Content\build\images\parlement-smaller.jpg" />
+    <Content Include="Content\build\images\parlement.jpg" />
     <Content Include="Content\build\js\custom.js" />
     <Content Include="Content\build\js\custom.min.js" />
     <Content Include="Content\build\js\searchbar.js" />
@@ -194,14 +200,8 @@
     <Content Include="Content\images\google-icon.svg" />
     <Content Include="Content\images\google_normal.png" />
     <Content Include="Content\images\img.jpg" />
-    <Content Include="Content\images\logo-all-white-smaller.png" />
-    <Content Include="Content\images\logo-all-white.png" />
-    <Content Include="Content\images\logo-white-img.png" />
-    <Content Include="Content\images\logo-white.png" />
     <Content Include="Content\images\mastercard.png" />
     <Content Include="Content\images\media.jpg" />
-    <Content Include="Content\images\parlement-smaller.jpg" />
-    <Content Include="Content\images\parlement.jpg" />
     <Content Include="Content\images\paypal.png" />
     <Content Include="Content\images\picture.jpg" />
     <Content Include="Content\images\user.png" />
