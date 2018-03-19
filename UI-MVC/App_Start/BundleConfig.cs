@@ -1,73 +1,107 @@
-﻿using System.Web;
-using System.Web.Optimization;
+﻿using System.Web.Optimization;
 
 namespace BAR.UI.MVC {
     public class BundleConfig {
-        // For more information on bundling, visit https://go.microsoft.com/fwlink/?LinkId=301862
+
+        //Scripts
+        private static readonly string Jquery ="~/Scripts/jquery-2.2.4.js";
+        private static readonly string JqueryValidate ="~/Scripts/jquery.validate*";
+        private static readonly string Timeago ="~/Scripts/jquery.timeago.js";
+        private static readonly string Modernizr ="~/Scripts/modernizr-*";
+        private static readonly string[] Bootstrap = {
+            "~/Scripts/bootstrap.js",
+            "~/Scripts/respond.js",
+            "~/Scripts/bootstrap-progressbar.min.js",
+            "~/Scripts/nprogress.js",
+            "~/Scripts/fastclick.js"
+        };
+        private static readonly string[] Gridstack = {
+            "~/Scripts/jquery-ui.js",
+            "~/Scripts/underscore.min.js",
+            "~/Scripts/gridstack.js",
+            "~/Scripts/gridstack.jQueryUI.js",
+            "~/Content/build/js/widgets.js"
+        };
+        private static readonly string[] Notifications = {
+            "~/Scripts/pnotify/pnotify.js",
+            "~/Scripts/pnotify/pnotify.buttons.js",
+            "~/Scripts/pnotify/pnotify.nonblock.js"
+        };
+        private static readonly string[] Jqvmap = {
+            "~/Scripts/jqvmap/jquery.vmap.min.js",
+            "~/Scripts/jqvmap/jquery.vmap.belgium.js",
+            "~/Scripts/jqvmap/jquery.vmap.sampledata.js"
+        }; //TODO: replace smapledata with actual data.
+        private static readonly string[] Flot = {
+            "~/Scripts/flot/jquery.flot.js",
+            "~/Scripts/flot/jquery.flot.pie.js",
+            "~/Scripts/flot/jquery.flot.time.js",
+            "~/Scripts/flot/jquery.flot.stack.js",
+            "~/Scripts/flot/jquery.flot.resize.js",
+            "~/Scripts/flot/jquery.flot.orderBars.js",
+            "~/Scripts/flot/jquery.flot.spline.min.js",
+            "~/Scripts/flot/curvedLines.js"
+        };        
+        private static readonly string[] Dates = {
+            "~/Scripts/dates/date.min.js",
+            "~/Scripts/dates/moment.min.js",
+            "~/Scripts/dates/daterangepicker.js"
+        };
+        private static readonly string[] MorrisCharts = {
+            "~/Scripts/morrisCharts/raphael.min.js",
+            "~/Scripts/morrisCharts/morris.min.js"
+        };
+        private static readonly string[] DataTables = {
+            "~/Scripts/datatables/datatables.net/js/jquery.dataTables.min.js",
+            "~/Scripts/datatables/datatables.net-bs/js/dataTables.bootstrap.min.js",
+            "~/Scripts/datatables/datatables.net-responsive/js/dataTables.responsive.min.js",
+            "~/Scripts/datatables/datatables.net-responsive-bs/js/responsive.bootstrap.js"
+            
+        };
+        private static readonly string[] CustomScripts = {
+            "~/Content/build/js/custom.js",
+            "~/Content/build/js/searchbar.js"
+        };
+        
+        //Styles
+        private static readonly string[] DefaultCss = {
+            "~/Content/build/css/bootstrap.min.css",
+            "~/Content/build/css/font-awesome.min.css",
+            "~/Content/build/css/nprogress.css",
+            "~/Content/build/css/bootstrap-progressbar-3.3.4.min.css",
+            "~/Content/build/css/pnotify.css",
+            "~/Content/build/css/pnotify.buttons.css",
+            "~/Content/build/css/pnotify.nonblock.css",
+            "~/Content/build/css/jqvmap.min.css",
+            "~/Content/build/css/daterangepicker.css"
+        };
+        private static readonly string[] DatatablesCss = {
+            "~/Scripts/datatables/datatables.net-bs/css/dataTables.bootstrap.min.css",
+            "~/Scripts/datatables/datatables.net-responsive-bs/css/responsive.bootstrap.min.css",
+            "~/Scripts/datatables/datatables.net-scroller-bs/css/scroller.bootstrap.min.css"
+        };
+        private static readonly string CustomCss ="~/Content/build/css/custom/custom.css";
+
         public static void RegisterBundles(BundleCollection bundles) {
-            bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
-                "~/Scripts/jquery-2.2.4.js"));
-
-            bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
-                "~/Scripts/jquery.validate*"));
+            //Scripts
+            bundles.Add(new ScriptBundle("~/bundles/jquery").Include(Jquery));
+            bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(JqueryValidate));
+            bundles.Add(new ScriptBundle("~/bundles/flot").Include(Flot));
+            bundles.Add(new ScriptBundle("~/bundles/map").Include(Jqvmap));
+            bundles.Add(new ScriptBundle("~/bundles/timeago").Include(Timeago));
+            bundles.Add(new ScriptBundle("~/bundles/dates").Include(Dates));
+            bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(Modernizr));
+            bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(Bootstrap));
+            bundles.Add(new ScriptBundle("~/bundles/gridstack").Include(Gridstack));
+            bundles.Add(new ScriptBundle("~/bundles/morrisCharts").Include(MorrisCharts));
+            bundles.Add(new ScriptBundle("~/bundles/pnotify").Include(Notifications));
+            bundles.Add(new ScriptBundle("~/bundles/datatablesScripts").Include(DataTables));
+            bundles.Add(new ScriptBundle("~/bundles/custom").Include(CustomScripts));
             
-            bundles.Add(new ScriptBundle("~/bundles/flot").Include(
-                "~/vendors/Flot/jquery.flot.js",
-                "~/vendors/Flot/jquery.flot.pie.js",
-                "~/vendors/Flot/jquery.flot.time.js",
-                "~/vendors/Flot/jquery.flot.stack.js",
-                "~/vendors/Flot/jquery.flot.resize.js",
-                "~/vendors/flot.orderbars/js/jquery.flot.orderBars.js",
-                "~/vendors/flot-spline/js/jquery.flot.spline.min.js",
-                "~/vendors/flot.curvedlines/curvedLines.js"));
-            
-            bundles.Add(new ScriptBundle("~/bundles/map").Include(
-                "~/vendors/jqvmap/dist/jquery.vmap.min.js",
-                "~/vendors/jqvmap/dist/maps/jquery.vmap.belgium.js",
-                "~/vendors/jqvmap/examples/js/jquery.vmap.sampledata.js")); //TODO: replace smapledata with actual data.
-            
-            bundles.Add(new ScriptBundle("~/bundles/timeago").Include(
-                "~/Scripts/jquery.timeago.js"));
-            
-            bundles.Add(new ScriptBundle("~/bundles/dates").Include(
-                "~/vendors/DateJS/build/date.js",
-                "~/vendors/moment/min/moment.min.js",
-                "~/vendors/bootstrap-daterangepicker/daterangepicker.js"));
-
-            // Use the development version of Modernizr to develop with and learn from. Then, when you're
-            // ready for production, use the build tool at https://modernizr.com to pick only the tests you need.
-            bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
-                "~/Scripts/modernizr-*"));
-
-            bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
-                "~/Scripts/bootstrap.js",
-                "~/Scripts/respond.js",
-                "~/Scripts/bootstrap-progressbar.min.js",
-                "~/Scripts/nprogress.js",
-                "~/Scripts/fastclick.js"));
-            
-            bundles.Add(new ScriptBundle("~/bundles/gridstack").Include(
-                "~/Scripts/jquery-ui.js",
-                "~/Scripts/underscore.min.js",
-                "~/Scripts/gridstack.js",
-                "~/Scripts/gridstack.jQueryUI.js"));
-            
-            bundles.Add(new ScriptBundle("~/bundles/morrisCharts").Include(
-                "~/vendors/raphael/raphael.min.js",
-                "~/vendors/morris.js/morris.min.js"
-                ));
-            
-            bundles.Add(new ScriptBundle("~/bundles/pnotify").Include(
-                "~/vendors/pnotify/dist/pnotify.js",
-                "~/vendors/pnotify/dist/pnotify.buttons.js",
-                "~/vendors/pnotify/dist/pnotify.nonblock.js"));
-            
-            bundles.Add(new ScriptBundle("~/bundles/custom").Include(
-                "~/Content/build/js/custom.js",
-                "~/Content/build/js/searchbar.js"));
-
-            bundles.Add(new StyleBundle("~/Content/css").Include(
-                "~/Content/bootstrap.css"));
+            //Styles
+            bundles.Add(new StyleBundle("~/Content/css").Include(DefaultCss));
+            bundles.Add(new StyleBundle("~/Content/custom").Include(CustomCss));
+            bundles.Add(new StyleBundle("~/bundles/datatables").Include(DatatablesCss));
         }
     }
 }

@@ -5,9 +5,6 @@
 
 @section CustomCSS{
     <link rel="stylesheet" href="../../Content/build/css/gridstack.css"/>
-    <link href="../../vendors/pnotify/dist/pnotify.css" rel="stylesheet">
-    <link href="../../vendors/pnotify/dist/pnotify.buttons.css" rel="stylesheet">
-    <link href="../../vendors/pnotify/dist/pnotify.nonblock.css" rel="stylesheet">
 }
 
 @section Alerts{
@@ -40,9 +37,7 @@
 <div style="visibility: hidden">t</div>
 
 @section CustomJS{
-    @Scripts.Render("~/bundles/gridstack")
-    @Scripts.Render("~/bundles/morrisCharts")
-    <script src="../../Content/build/js/widgets.js"></script>
+    @Scripts.Render("~/bundles/gridstack", "~/bundles/morrisCharts")
     <script type="text/javascript">
         var alerts = [];
 
@@ -72,7 +67,6 @@
 
         //ajax calls
         (function() {
-            jQuery('span.timeago').timeago();
             $('#saveWidgets').on('click', saveGrid);
             //GET Request for alerts
             $.ajax('/api/User/@ViewBag.Id/GetAlerts',

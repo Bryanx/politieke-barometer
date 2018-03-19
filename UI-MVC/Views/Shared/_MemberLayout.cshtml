@@ -11,26 +11,17 @@
 
     <title>@ViewData["Title"]</title>
 
-    <!-- Bootstrap -->
-    <link href="../../vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Font Awesome -->
-    <link href="../../vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
-    <!-- NProgress -->
-    <link href="../../vendors/nprogress/nprogress.css" rel="stylesheet">
-    <!-- bootstrap-progressbar -->
-    <link href="../../vendors/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css" rel="stylesheet">
-    
-    <!-- JQVMap -->
-    <link href="../../vendors/jqvmap/dist/jqvmap.min.css" rel="stylesheet"/>
-    <!-- bootstrap-daterangepicker -->
-    <link href="../../vendors/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
+    @Styles.Render("~/Content/css")
 
     @if (IsSectionDefined("CustomCSS")) {
         @RenderSection("CustomCSS")
     }
 
     <!-- Custom Theme Style -->
-    <link href="../../Content/build/css/custom.css" rel="stylesheet">
+    @Styles.Render("~/Content/custom")
+    
+    <!-- Font -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
 </head>
 
 <body class="nav-sm">
@@ -49,7 +40,7 @@
         <!-- menu profile quick info -->
         <div class="profile clearfix">
             <div class="profile_pic">
-                <img src="../../Content/images/img.jpg" alt="..." class="img-circle profile_img">
+                <img src="../../Content/build/images/img.jpg" alt="..." class="img-circle profile_img">
             </div>
             <div class="profile_info">
                 <span>Welcome,</span>
@@ -105,7 +96,7 @@
                 <li class="">
                     <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown"
                        aria-expanded="false">
-                        <img src="../../Content/images/img.jpg" alt="">John Doe
+                        <img src="../../Content/build/images/img.jpg" alt="">John Doe
                         <span class=" fa fa-angle-down"></span>
                     </a>
                     <ul class="dropdown-menu dropdown-usermenu pull-right">
@@ -156,14 +147,7 @@
 </div>
 
 <!-- Scripts -->
-<environment names="Development">
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
-    @Scripts.Render("~/bundles/flot")
-    @Scripts.Render("~/bundles/dates")
-    @Scripts.Render("~/bundles/pnotify")
-    @Scripts.Render("~/bundles/timeago")
-</environment>
+@Scripts.Render("~/bundles/jquery","~/bundles/bootstrap","~/bundles/flot","~/bundles/dates","~/bundles/pnotify","~/bundles/timeago")
 
 @if (IsSectionDefined("CustomJS")) {
     @RenderSection("CustomJS")
