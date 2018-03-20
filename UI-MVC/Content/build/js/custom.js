@@ -210,75 +210,6 @@ $(document).ready(function () {
         });
     }
 });
-// /Switchery
-
-
-// iCheck
-$(document).ready(function () {
-    if ($("input.flat")[0]) {
-        $(document).ready(function () {
-            $('input.flat').iCheck({
-                checkboxClass: 'icheckbox_flat-green',
-                radioClass: 'iradio_flat-green'
-            });
-        });
-    }
-});
-// /iCheck
-
-// Table
-$('table input').on('ifChecked', function () {
-    checkState = '';
-    $(this).parent().parent().parent().addClass('selected');
-    countChecked();
-});
-$('table input').on('ifUnchecked', function () {
-    checkState = '';
-    $(this).parent().parent().parent().removeClass('selected');
-    countChecked();
-});
-
-var checkState = '';
-
-$('.bulk_action input').on('ifChecked', function () {
-    checkState = '';
-    $(this).parent().parent().parent().addClass('selected');
-    countChecked();
-});
-$('.bulk_action input').on('ifUnchecked', function () {
-    checkState = '';
-    $(this).parent().parent().parent().removeClass('selected');
-    countChecked();
-});
-$('.bulk_action input#check-all').on('ifChecked', function () {
-    checkState = 'all';
-    countChecked();
-});
-$('.bulk_action input#check-all').on('ifUnchecked', function () {
-    checkState = 'none';
-    countChecked();
-});
-
-function countChecked() {
-    if (checkState === 'all') {
-        $(".bulk_action input[name='table_records']").iCheck('check');
-    }
-    if (checkState === 'none') {
-        $(".bulk_action input[name='table_records']").iCheck('uncheck');
-    }
-
-    var checkCount = $(".bulk_action input[name='table_records']:checked").length;
-
-    if (checkCount) {
-        $('.column-title').hide();
-        $('.bulk-actions').show();
-        $('.action-cnt').html(checkCount + ' Records Selected');
-    } else {
-        $('.column-title').show();
-        $('.bulk-actions').hide();
-    }
-}
-
 
 // Accordion
 $(document).ready(function () {
@@ -635,7 +566,7 @@ function init_JQVmap() {
     console.log('init_JQVmap');
 
     if ($('#world-map-gdp').length) {
-        let colors = ["#E6F2F0", primary_color];
+        var colors = ["#E6F2F0", primary_color];
         $('#world-map-gdp').vectorMap({
             map: 'be_mill',
             backgroundColor: null,
@@ -2832,94 +2763,7 @@ function init_calendar() {
 
 };
 
-/* DATA TABLES */
 
-function init_DataTables() {
-
-    console.log('run_datatables');
-
-    if (typeof ($.fn.DataTable) === 'undefined') {
-        return;
-    }
-    console.log('init_DataTables');
-
-    var handleDataTableButtons = function () {
-        if ($("#datatable-buttons").length) {
-            $("#datatable-buttons").DataTable({
-                dom: "Bfrtip",
-                buttons: [
-                    {
-                        extend: "copy",
-                        className: "btn-sm"
-                    },
-                    {
-                        extend: "csv",
-                        className: "btn-sm"
-                    },
-                    {
-                        extend: "excel",
-                        className: "btn-sm"
-                    },
-                    {
-                        extend: "pdfHtml5",
-                        className: "btn-sm"
-                    },
-                    {
-                        extend: "print",
-                        className: "btn-sm"
-                    },
-                ],
-                responsive: true
-            });
-        }
-    };
-
-    TableManageButtons = function () {
-        "use strict";
-        return {
-            init: function () {
-                handleDataTableButtons();
-            }
-        };
-    }();
-
-    $('#datatable').dataTable();
-
-    $('#datatable-keytable').DataTable({
-        keys: true
-    });
-
-    $('#datatable-responsive').DataTable();
-
-    $('#datatable-scroller').DataTable({
-        ajax: "js/datatables/json/scroller-demo.json",
-        deferRender: true,
-        scrollY: 380,
-        scrollCollapse: true,
-        scroller: true
-    });
-
-    $('#datatable-fixed-header').DataTable({
-        fixedHeader: true
-    });
-
-    var $datatable = $('#datatable-checkbox');
-
-    $datatable.dataTable({
-        'order': [[1, 'asc']],
-        'columnDefs': [
-            {orderable: false, targets: [0]}
-        ]
-    });
-    $datatable.on('draw.dt', function () {
-        $('checkbox input').iCheck({
-            checkboxClass: 'icheckbox_flat-green'
-        });
-    });
-
-    TableManageButtons.init();
-
-};
 
 /* CHART - MORRIS  */
 
@@ -5358,6 +5202,44 @@ function init_echarts() {
 
 }
 
+/*
+Init_dataTables
+ */
+
+function init_DataTables() {
+    if (console.log("run_datatables"), "undefined" != typeof $.fn.DataTable) {
+        console.log("init_DataTables");
+        var a = function () {
+            $("#datatable-buttons").length && $("#datatable-buttons").DataTable({
+                dom: "Blfrtip",
+                buttons: [{extend: "copy", className: "btn-sm"}, {extend: "csv", className: "btn-sm"}, {
+                    extend: "excel",
+                    className: "btn-sm"
+                }, {extend: "pdfHtml5", className: "btn-sm"}, {extend: "print", className: "btn-sm"}],
+                responsive: !0
+            })
+        };
+        TableManageButtons = function () {
+            "use strict";
+            return {
+                init: function () {
+                    a()
+                }
+            }
+        }(), $("#datatable").dataTable(), $("#datatable-keytable").DataTable({keys: !0}), $("#datatable-responsive").DataTable(), $("#datatable-scroller").DataTable({
+            ajax: "js/datatables/json/scroller-demo.json",
+            deferRender: !0,
+            scrollY: 380,
+            scrollCollapse: !0,
+            scroller: !0
+        }), $("#datatable-fixed-header").DataTable({fixedHeader: !0});
+        var b = $("#datatable-checkbox");
+        b.dataTable({order: [[1, "asc"]], columnDefs: [{orderable: !1, targets: [0]}]}), b.on("draw.dt", function () {
+            $("checkbox input").iCheck({checkboxClass: "icheckbox_flat-green"})
+        }), TableManageButtons.init()
+    }
+}
+    
 function check() {
     if ($('.showchbox').length) {
         $('.checkbox').removeClass('showchbox');
@@ -5365,9 +5247,6 @@ function check() {
         $('.checkbox').addClass('showchbox');
     }
 }
-
-
-var htmlselector = document.getElementsByTagName('html')[0];
 
 function callMethods() {
     init_sparklines();
@@ -5392,8 +5271,8 @@ function callMethods() {
     init_morris_charts();
     init_skycons();
     init_select2();
-    init_validator();
     init_DataTables();
+    init_validator();
     init_chart_doughnut();
     init_gauge();
     init_PNotify();
@@ -5415,15 +5294,7 @@ function rgb2hex(rgb) {
         ("0" + parseInt(rgb[3], 10).toString(16)).slice(-2) : '';
 }
 
-function hexToRgb(hex) {
-    hex = hex.toString();
-    var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
-    return result ? {
-        r: parseInt(result[1], 16),
-        g: parseInt(result[2], 16),
-        b: parseInt(result[3], 16)
-    } : null;
-}
+var htmlselector = document.getElementsByTagName('html')[0];
 
 $(document).ready(function () {
     $('#ip-primary').val(primary_color);

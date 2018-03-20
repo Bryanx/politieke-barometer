@@ -76,7 +76,9 @@ namespace BAR.BL.Managers
 				{
 					sub.Alerts.Add(new Alert()
 					{
-						Subscription = sub
+						Subscription = sub,
+						TimeStamp = DateTime.Now,
+						IsRead = false
 					});
 					//subRepo.UpdateSubScription(sub);
 				}
@@ -93,7 +95,7 @@ namespace BAR.BL.Managers
 			InitRepo();
 			return subRepo.ReadAlerts(userId, true);
 		}
-
+		
 		/// <summary>
 		/// Determines if the repo needs a unit of work
 		/// if the unitOfWorkManager is present
