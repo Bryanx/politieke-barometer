@@ -44,9 +44,10 @@ namespace BAR.UI.MVC.Controllers {
             
         }
 
-        [HttpPut]
+        [HttpDelete]
         [Route("api/User/{id}/Alert/{alertId}/Read")]
         public IHttpActionResult MarkAlertAsRead(int id, int alertId) {
+            subManager.RemoveAlert(id, alertId);
             return StatusCode(HttpStatusCode.NoContent);
         }
     }

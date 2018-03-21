@@ -53,6 +53,20 @@ namespace BAR.DAL
 			return alersToRead.AsEnumerable();
 		}
 
+		public void DeleteAlert(int userId, int alertId) {
+			foreach (Subscription sub in ReadSubscritpionsWithAlerts(userId).ToList()) {
+				if (sub.Alerts != null)
+					foreach (Alert alert in sub.Alerts.ToList()) {
+						if (alert != null && alert.AlertId == alertId) {
+							ctx.Subscriptions.Find(sub.SubscriptionId).Alerts.Remove(alert);
+							UpdateSubScription(sub);
+						}
+					}
+			}
+			
+			
+		}
+
 		/// <summary>
 		/// Gives back a collection of subscriptions form a specific item.
 		/// </summary>
@@ -77,7 +91,7 @@ namespace BAR.DAL
 		/// </summary>
 		public IEnumerable<Subscription> ReadSubscriptionsForUser(int userId)
 		{
-			return ctx.Subscriptions.Where(sub => sub.SubscribedUser.UserId == userId).AsEnumerable();
+			return ctx.Subscriptions.Include(sub => sub.Alerts).Where(sub => sub.SubscribedUser.UserId == userId).AsEnumerable();
 		}
 
 		/// <summary>

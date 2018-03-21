@@ -2,6 +2,7 @@
 using BAR.DAL;
 using BAR.BL.Domain.Users;
 using System.Collections.Generic;
+using System.Linq;
 using BAR.BL.Domain.Items;
 
 namespace BAR.BL.Managers
@@ -94,6 +95,11 @@ namespace BAR.BL.Managers
 		{
 			InitRepo();
 			return subRepo.ReadAlerts(userId, true);
+		}
+
+		public void RemoveAlert(int userId, int alertId) {
+			InitRepo();
+			subRepo.DeleteAlert(userId, alertId);
 		}
 		
 		/// <summary>
