@@ -54,7 +54,7 @@ namespace BAR.DAL
 		}
 
 		public void DeleteAlert(int userId, int alertId) {
-			foreach (Subscription sub in ReadSubscritpionsWithAlerts(userId).ToList()) {
+			foreach (Subscription sub in ReadSubscriptionsForUser(userId).ToList()) {
 				if (sub.Alerts != null)
 					foreach (Alert alert in sub.Alerts.ToList()) {
 						if (alert != null && alert.AlertId == alertId) {
