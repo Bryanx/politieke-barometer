@@ -69,6 +69,7 @@ namespace BAR.BL.Managers
 			IItemManager itemManager = new ItemManager();
 			double per = (itemManager.GetTrendingPer(itemId) * 100) - 100;
 
+			List<Subscription> subsToUpdate = new List<Subscription>();
 			IEnumerable<Subscription> subs = subRepo.ReadSubscritpionsWithAlerts(itemId);
 			foreach (Subscription sub in subs)
 			{
@@ -81,11 +82,11 @@ namespace BAR.BL.Managers
 						TimeStamp = DateTime.Now,
 						IsRead = false
 					});
-					//subRepo.UpdateSubScription(sub);
+					subsToUpdate.Add(sub);
 				}
 				
 			}
-			subRepo.UpdateSubscriptions(subs);
+			subRepo.UpdateSubscriptions(subsToUpdate);
 		}
 
 		/// <summary>
