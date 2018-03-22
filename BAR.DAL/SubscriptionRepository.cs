@@ -81,13 +81,6 @@ namespace BAR.DAL
 			UpdateSubScription(al.Subscription);
 		}
 
-		public void DeleteAlert(Alert alert) 
-		{
-			Subscription sub = alert.Subscription;
-			ctx.Subscriptions.Find(sub.SubscriptionId)?.Alerts.Remove(alert);
-			UpdateSubScription(sub);
-		}
-
 		/// <summary>
 		/// Gives back a collection of subscriptions form a specific item.
 		/// </summary>

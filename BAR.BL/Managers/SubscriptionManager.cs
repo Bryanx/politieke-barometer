@@ -110,11 +110,25 @@ namespace BAR.BL.Managers
 			if (alert != null) subRepo.UpdateAlertToRead(alert);
 		}
 
-		public void RemoveAlert(int userId, int alertId) 
+		/// <summary>
+		/// Removes a specific alert for a specific user.
+		/// </summary>
+		public void RemoveAlert(int userId, int alertId)
 		{
 			InitRepo();
-			Alert alert = GetAlert(userId, alertId);
-			if (alert != null) subRepo.DeleteAlert(alert);
+			foreach (Subscription sub in subRepo.ReadSubscriptionsForUser(userId))
+			{
+				if (sub.Alerts != null)
+				{
+					Alert alertToRemove = sub.Alerts.SingleOrDefault(alert => alert.AlertId == alertId);
+					if (alertToRemove != null)
+					{
+						sub.Alerts.Remove(alertToRemove);
+						subRepo.UpdateSubScription(sub);
+						return;
+					}
+				}
+			}
 		}
 		
 		/// <summary>
