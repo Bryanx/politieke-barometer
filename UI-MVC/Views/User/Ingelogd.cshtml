@@ -39,29 +39,44 @@
 @section CustomJS{
     @Scripts.Render("~/bundles/gridstack", "~/bundles/morrisCharts")
     <script type="text/javascript">
-        var alerts = [];
+        
+        //When an alert is clicked, this function is called.
+        //It sets the property isRead of Alert to true.
+        function markAsRead(id) {
+            $.ajax('/api/User/'+@ViewBag.Id+'/Alert/'+id+'/Read',
+                    {
+                        type: 'PUT',
+                        dataType: 'json'
+                    })
+                .done(function(data) {
+                    $('#alert' + id).css("background-color", "white");
+                })
+                //TODO: if FAIL proper error handling
+                .fail(function() { alert('Cannot change alert.'); });
+        }
+        
 
         //Loads the alerts inside the notifications panel in the top-navbar
         function loadAlerts(alertData) {
             for (var i = 0; i < alertData.length; i++) {
-                var keys = Object.keys(alerts);
-                if (!keys.includes(alertData[i].AlertId+"id")) {
-                    $('#menu1').append("<li onclick=\"markAsRead("+alertData[i].AlertId +
-                        ")\"><a><span><span><strong>" +
-                        alertData[i].Name +
-                        "</strong> is nu trending!</span></span><span class=\"message\">"+
-                        jQuery.timeago(alertData[i].TimeStamp)+"</span></a></li>");
-                    
-                    //Loads the pop ups notifications.
-                    new PNotify({
-                        title: 'Trending Alert',
-                        text: '<strong>' + alertData[i].Name + '</strong> is nu trending!',
-                        type: 'success',
-                        styling: 'bootstrap3'
-                    });
-                    
-                    alerts[alertData[i].AlertId+"id"] = alertData[i].TimeStamp;
+                var alert = alertData[i];
+                $('#menu1').append("<li class=\"alertMessage"+alert.AlertId+"\" onclick=\"markAsRead("+alert.AlertId+")\"><a><span><span><strong>" +
+                    alert.Name +
+                    "</strong> is nu trending!</span></span><span class=\"message\">"+
+                    jQuery.timeago(alert.TimeStamp)+"</span></a></li>");
+
+                if (alert.IsRead) {
+                    $('.alertMessage' + alert.AlertId).css("background-color", "white");
                 }
+
+                //Loads the pop ups notifications.
+                new PNotify({
+                    title: 'Trending Alert',
+                    text: '<strong>' + alert.Name + '</strong> is nu trending!',
+                    type: 'success',
+                    styling: 'bootstrap3'
+                });
+                
             }
         }
 
@@ -80,7 +95,7 @@
                     loadAlerts(data);
                     $('#menu1').append(
                         "<li><div class=\"text-center\"><a><strong>See All Alerts</strong><i class=\"fa fa-angle-right\"></i></a></div></li>");
-                    $('#alertCount').html(Object.keys(alerts).length);
+                    $('#alertCount').html(alertData.length);
                 })
                 //TODO: if FAIL proper error handling
                 .fail(function() {
@@ -103,9 +118,7 @@
 
             $('#alertDropdown').on('click', loadAlerts);
 
-            function markAsRead(id) {
-                //TODO Ajax put
-            }
+            
         })(jQuery);
     </script>
 }

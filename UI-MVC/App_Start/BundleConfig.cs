@@ -83,7 +83,6 @@ namespace BAR.UI.MVC {
         private static readonly string CustomCss ="~/Content/build/css/custom/custom.css";
 
         public static void RegisterBundles(BundleCollection bundles) {
-            BundleTable.EnableOptimizations = true;
             //Scripts
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(Jquery));
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(JqueryValidate));
@@ -103,7 +102,6 @@ namespace BAR.UI.MVC {
             bundles.Add(new StyleBundle("~/Content/css").Include(DefaultCss));
             bundles.Add(new StyleBundle("~/Content/custom").Include(CustomCss));
             bundles.Add(new StyleBundle("~/bundles/datatables").Include(DatatablesCss));
-            bundles.Add(new StyleBundle("~/bundles/test").Include("~/Content/build/css/test.scss"));
         }
     }
 }

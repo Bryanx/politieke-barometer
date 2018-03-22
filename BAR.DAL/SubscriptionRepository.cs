@@ -62,7 +62,9 @@ namespace BAR.DAL
 		{
 			foreach (Subscription sub in ReadSubscriptionsForUser(userId).ToList()) {
 				if (sub.Alerts != null) {
-					return sub.Alerts.FirstOrDefault(a => a.AlertId == alertId);
+					foreach (Alert alert in sub.Alerts) {
+						if (alert.AlertId == alertId) return alert;
+					}
 				}
 			}
 			return null;
