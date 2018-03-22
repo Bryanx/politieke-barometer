@@ -73,7 +73,7 @@ namespace BAR.BL.Managers
 			foreach (Subscription sub in subs)
 			{
 				double tresh = sub.Treshhold;
-				if (per >=  tresh)
+				if (per >= tresh)
 				{
 					sub.Alerts.Add(new Alert()
 					{
@@ -83,7 +83,7 @@ namespace BAR.BL.Managers
 					});
 					//subRepo.UpdateSubScription(sub);
 				}
-				
+
 			}
 			subRepo.UpdateSubscriptions(subs);
 		}
@@ -97,11 +97,28 @@ namespace BAR.BL.Managers
 			return subRepo.ReadAlerts(userId, true);
 		}
 
-		public void RemoveAlert(int userId, int alertId) {
+		/// <summary>
+		/// Removes a specific alert for a specific user.
+		/// </summary>
+		public void RemoveAlert(int userId, int alertId)
+		{
 			InitRepo();
-			subRepo.DeleteAlert(userId, alertId);
+			foreach (Subscription sub in subRepo.ReadSubscriptionsForUser(userId))
+			{
+				if (sub.Alerts != null)
+				{
+					Alert alertToRemove = sub.Alerts
+						.Where(alert => alert.AlertId == alertId).SingleOrDefault();
+					if (alertToRemove != null)
+					{
+						sub.Alerts.Remove(alertToRemove);
+						subRepo.UpdateSubScription(sub);
+						return;
+					}
+				}
+			}
 		}
-		
+
 		/// <summary>
 		/// Determines if the repo needs a unit of work
 		/// if the unitOfWorkManager is present
