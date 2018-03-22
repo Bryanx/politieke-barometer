@@ -97,9 +97,24 @@ namespace BAR.BL.Managers
 			return subRepo.ReadAlerts(userId, true);
 		}
 
-		public void RemoveAlert(int userId, int alertId) {
+		public Alert GetAlert(int userId, int alertId) 
+		{
 			InitRepo();
-			subRepo.DeleteAlert(userId, alertId);
+			return subRepo.ReadAlert(userId, alertId);
+		}
+
+		public void ChangeAlertToRead(int userId, int alertId) 
+		{
+			InitRepo();
+			Alert alert = subRepo.ReadAlert(userId, alertId);
+			if (alert != null) subRepo.UpdateAlertToRead(alert);
+		}
+
+		public void RemoveAlert(int userId, int alertId) 
+		{
+			InitRepo();
+			Alert alert = GetAlert(userId, alertId);
+			if (alert != null) subRepo.DeleteAlert(alert);
 		}
 		
 		/// <summary>

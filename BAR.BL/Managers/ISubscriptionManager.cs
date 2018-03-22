@@ -9,6 +9,6 @@ namespace BAR.BL.Managers
 		IEnumerable<Alert> GetAllAlerts(int userId);
 		void RemoveAlert(int userId, int alertId);
 		void CreateSubscription(int userId, int itemId, int treshhold = 10);
-		
+		void ChangeAlertToRead(int id, int alertId);
 	}
 }

@@ -53,18 +53,39 @@ namespace BAR.DAL
 			return alersToRead.AsEnumerable();
 		}
 
-		public void DeleteAlert(int userId, int alertId) {
+		/// <summary>
+		/// Returns the alert from a specific user.
+		/// Because a user can have multiple subscriptions, we look for the alert in each subscription
+		/// To update the alert you have to update its Subscription (alerts have no DbSet)
+		/// </summary>
+		public Alert ReadAlert(int userId, int alertId) 
+		{
 			foreach (Subscription sub in ReadSubscriptionsForUser(userId).ToList()) {
-				if (sub.Alerts != null)
-					foreach (Alert alert in sub.Alerts.ToList()) {
-						if (alert != null && alert.AlertId == alertId) {
-							ctx.Subscriptions.Find(sub.SubscriptionId).Alerts.Remove(alert);
-							UpdateSubScription(sub);
-						}
-					}
+				if (sub.Alerts != null) {
+					return sub.Alerts.FirstOrDefault(a => a.AlertId == alertId);
+				}
 			}
-			
-			
+			return null;
+		}
+
+		public void UpdateAlert(Alert alert) 
+		{
+			if (alert != null) UpdateSubScription(alert.Subscription);
+		}
+
+		public void UpdateAlertToRead(Alert alert) 
+		{
+			Alert al = ctx.Subscriptions.Find(alert.Subscription.SubscriptionId)?
+				.Alerts.SingleOrDefault(a => a.AlertId == alert.AlertId);
+			al.IsRead = true;
+			UpdateSubScription(al.Subscription);
+		}
+
+		public void DeleteAlert(Alert alert) 
+		{
+			Subscription sub = alert.Subscription;
+			ctx.Subscriptions.Find(sub.SubscriptionId)?.Alerts.Remove(alert);
+			UpdateSubScription(sub);
 		}
 
 		/// <summary>
