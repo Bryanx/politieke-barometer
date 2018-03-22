@@ -253,7 +253,7 @@ namespace BAR.DAL.EF
 				information.Source = ctx.Sources.Where(s => s.Name.ToLower().Equals(source)).SingleOrDefault();
 				//Add connection to Item (Person)
 				string personFullName = String.Format("{0} {1}", deserializedJson.records[i].politician[0], deserializedJson.records[i].politician[1]);
-				information.Item = GeneratePoliticians(personFullName, ctx);
+				information.Item = GeneratePeople(personFullName, ctx);
 				//Add date
 				string datum = Convert.ToString(deserializedJson.records[i].date);
 				DateTime myInfoDate = DateTime.ParseExact(datum, "yyyy-MM-dd HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture);
@@ -316,10 +316,10 @@ namespace BAR.DAL.EF
 		}
 
 		/// <summary>
-		/// Zal de ID van de politicus teruggeven
+		/// Zal de ID van de personen teruggeven
 		/// Als de politicus nog niet bestaat zal deze aangemaakt worden
 		/// </summary>
-		private Item GeneratePoliticians(string personFullName, BarometerDbContext ctx)
+		private Item GeneratePeople(string personFullName, BarometerDbContext ctx)
 		{
 
 			Item person = ctx.Items.Where(i => i.Name.Equals(personFullName)).SingleOrDefault();

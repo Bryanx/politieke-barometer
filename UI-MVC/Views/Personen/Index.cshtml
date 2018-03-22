@@ -1,8 +1,8 @@
 @using System.Web.Optimization
-@model System.Collections.Generic.IEnumerable<BAR.UI.MVC.Models.Persoon>
+@model System.Collections.Generic.IEnumerable<BAR.UI.MVC.Models.PersoonDTO>
 
 @{
-    ViewBag.Title = "Personen";
+    ViewBag.Title = "Politici";
 }
 
 @section CustomCSS{
@@ -11,50 +11,50 @@
 <div class="right_col" role="main">
     <div class="col-md-12 col-sm-12 col-xs-12">
 
-        <h1>Personenoverzicht</h1>
+        <h1>Politici-overzicht</h1>
         <hr/>
 
         <p class="text-muted font-16 m-b-30">
-            Extra informatie over de gebruikers en uitleg over de attributen etc.
+            Extra informatie over de politici en uitleg over de attributen etc.
         </p>
 
         <table id="datatable-responsive" class="table dt-responsive nowrap table-hover" cellspacing="0" width="100%">
             <thead>
             <tr>
                 <th>
-                    Name
+                    @Html.DisplayNameFor(model => model.Name)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.TotalMentions)
+                    @Html.DisplayNameFor(model => model.NumberOfMentions)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Positive)
+                    Positive
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Negative)
+                    Negative
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Trend)
+                    @Html.DisplayNameFor(model => model.TrendingPercentage)
                 </th>
             </tr>
             </thead>
             <tbody>
             @foreach (var item in Model) {
-                <tr onclick="location.href = '@(Url.Action("Details", new {id = item.Id}))'">
+                <tr onclick="location.href = '@(Url.Action("Details", new {id = item.ItemId}))'">
                     <td>
-                        @Html.DisplayFor(modelItem => item.FirstName) @Html.DisplayFor(modelItem => item.LastName)
+                        @Html.DisplayFor(modelItem => item.Name)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.TotalMentions)
+                        @Html.DisplayFor(modelItem => item.NumberOfMentions)
                     </td>
                     <td class="green">
-                        @Html.DisplayFor(modelItem => item.Positive) <i class="glyphicon glyphicon-arrow-up"></i>
+                        @Html.DisplayFor(modelItem => item.NumberOfMentions)
                     </td>
                     <td class="red">
-                        @Html.DisplayFor(modelItem => item.Negative) <i class="glyphicon glyphicon-arrow-down"></i>
+                        @Html.DisplayFor(modelItem => item.NumberOfMentions)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.Trend)
+                        @Html.DisplayFor(modelItem => item.TrendingPercentage)
                     </td>
                 </tr>
             }

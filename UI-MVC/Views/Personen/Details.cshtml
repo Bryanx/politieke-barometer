@@ -1,5 +1,5 @@
 @using System.Web.Optimization
-@model BAR.UI.MVC.Models.Persoon
+@model BAR.BL.Domain.Items.Item
 
 @{
     ViewBag.Title = "Details";
@@ -8,7 +8,7 @@
 
 <div class="page-title">
     <div class="title_left">
-        <h3>Persoon - @Html.DisplayFor(model => model.FirstName) @Html.DisplayFor(model => model.LastName)</h3>
+        <h3>Persoon - @Html.DisplayFor(model => model.Name)</h3>
     </div>
 
     <div class="title_right">
@@ -65,7 +65,7 @@
             <img class="img-responsive avatar-view" src="../../Content/build/images/picture.jpg" alt="Avatar" title="Change the avatar">
         </div>
     </div>
-    <h3>@Html.DisplayFor(model => model.FirstName) @Html.DisplayFor(model => model.LastName)</h3>
+    <h3>@Html.DisplayFor(model => model.Name)</h3>
 
     <ul class="list-unstyled user_data">
         <li>
