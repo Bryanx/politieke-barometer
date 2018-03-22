@@ -154,7 +154,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\UserApiController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\PersonenController.cs" />
+    <Compile Include="Controllers\PersonController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\WidgetController.cs" />
     <Compile Include="DAL\WidgetManager.cs" />
@@ -164,7 +164,7 @@
     <Compile Include="Models\AlertDTO.cs" />
     <Compile Include="Models\Graph.cs" />
     <Compile Include="Models\Persoon.cs" />
-    <Compile Include="Models\PersoonDTO.cs" />
+    <Compile Include="Models\PersonDTO.cs" />
     <Compile Include="Models\SubscriptionVM.cs" />
     <Compile Include="Models\Widget.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -342,6 +342,7 @@
     <Content Include="Scripts\pnotify\pnotify.nonblock.js" />
     <Content Include="Scripts\site.js" />
     <Content Include="Scripts\underscore.min.js" />
+    <Content Include="Views\Shared\DisplayTemplates\PersonDTO.cshtml" />
     <Content Include="Views\User\Ingelogd.cshtml" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -351,8 +352,8 @@
       <DependentUpon>Web.config</DependentUpon>
     </Content>
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Personen\Details.cshtml" />
-    <Content Include="Views\Personen\Index.cshtml" />
+    <Content Include="Views\Person\Details.cshtml" />
+    <Content Include="Views\Person\Index.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\NavBarLinks.cshtml" />
     <Content Include="Views\Shared\SearchBar.cshtml" />

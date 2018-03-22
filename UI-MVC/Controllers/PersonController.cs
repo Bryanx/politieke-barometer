@@ -6,15 +6,15 @@ using BAR.BL.Managers;
 using BAR.UI.MVC.Models;
 
 namespace BAR.UI.MVC.Controllers {
-    public class PersonenController : Controller {
+    public class PersonController : Controller {
         
         IItemManager itemMgr = new ItemManager();
         
         // GET: Default (Person overview page)
         public ActionResult Index() {
-            List<PersoonDTO> personen = new List<PersoonDTO>();
+            List<PersonDTO> personen = new List<PersonDTO>();
             foreach (Item item in itemMgr.getAllItems()) {
-                personen.Add(new PersoonDTO() {
+                personen.Add(new PersonDTO() {
                     ItemId = item.ItemId,
                     Name = item.Name,
                     CreationDate = item.CreationDate,

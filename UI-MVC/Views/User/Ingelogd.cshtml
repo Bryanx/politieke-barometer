@@ -61,7 +61,7 @@
             for (var i = 0; i < alertData.length; i++) {
                 var alert = alertData[i];
                 $('#menu1').append("<li class=\"alertMessage"+alert.AlertId+"\" onclick=\"markAsRead("+alert.AlertId+"); " +
-                    "location.href = \'/Personen/Details/"+alert.AlertId+"\';\"><a><span><span><strong>" +
+                    "location.href = \'/Person/Details/"+alert.AlertId+"\';\"><a><span><span><strong>" +
                     alert.Name +
                     "</strong> is nu trending!</span></span><span class=\"message\">"+
                     jQuery.timeago(alert.TimeStamp)+"</span></a></li>");
