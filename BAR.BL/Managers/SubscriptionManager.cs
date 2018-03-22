@@ -96,18 +96,28 @@ namespace BAR.BL.Managers
 			InitRepo();
 			return subRepo.ReadAlerts(userId, true);
 		}
-
+		
+		/// <summary>
+		/// Retrieves a single alert for a specific user.
+		/// </summary>
 		public Alert GetAlert(int userId, int alertId) 
 		{
 			InitRepo();
 			return subRepo.ReadAlert(userId, alertId);
 		}
 
+		/// <summary>
+		/// Changed the isRead property of an Alert to true.
+		/// </summary>
 		public void ChangeAlertToRead(int userId, int alertId) 
 		{
 			InitRepo();
-			Alert alert = subRepo.ReadAlert(userId, alertId);
-			if (alert != null) subRepo.UpdateAlertToRead(alert);
+			Alert alert = GetAlert(userId, alertId);
+			if (alert != null) 
+			{
+				alert.IsRead = true;
+				subRepo.UpdateSubScription(alert.Subscription);
+			}
 		}
 
 		/// <summary>
@@ -116,19 +126,13 @@ namespace BAR.BL.Managers
 		public void RemoveAlert(int userId, int alertId)
 		{
 			InitRepo();
-			foreach (Subscription sub in subRepo.ReadSubscriptionsForUser(userId))
-			{
-				if (sub.Alerts != null)
+			Alert alert = GetAlert(userId, alertId);
+				if (alert != null) 
 				{
-					Alert alertToRemove = sub.Alerts.SingleOrDefault(alert => alert.AlertId == alertId);
-					if (alertToRemove != null)
-					{
-						sub.Alerts.Remove(alertToRemove);
-						subRepo.UpdateSubScription(sub);
-						return;
-					}
+					Subscription sub = alert.Subscription;
+					sub.Alerts.Remove(alert);
+					subRepo.UpdateSubScription(sub);
 				}
-			}
 		}
 		
 		/// <summary>

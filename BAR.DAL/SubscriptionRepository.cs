@@ -68,19 +68,6 @@ namespace BAR.DAL
 			return null;
 		}
 
-		public void UpdateAlert(Alert alert) 
-		{
-			if (alert != null) UpdateSubScription(alert.Subscription);
-		}
-
-		public void UpdateAlertToRead(Alert alert) 
-		{
-			Alert al = ctx.Subscriptions.Find(alert.Subscription.SubscriptionId)?
-				.Alerts.SingleOrDefault(a => a.AlertId == alert.AlertId);
-			al.IsRead = true;
-			UpdateSubScription(al.Subscription);
-		}
-
 		/// <summary>
 		/// Gives back a collection of subscriptions form a specific item.
 		/// </summary>
