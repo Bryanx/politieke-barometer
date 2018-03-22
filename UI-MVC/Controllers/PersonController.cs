@@ -10,7 +10,7 @@ namespace BAR.UI.MVC.Controllers {
         
         IItemManager itemMgr = new ItemManager();
         
-        // GET: Default (Person overview page)
+        // Loads all Items into a DTO class. Then passes it on to the view.
         public ActionResult Index() {
             List<PersonDTO> personen = new List<PersonDTO>();
             foreach (Item item in itemMgr.getAllItems()) {

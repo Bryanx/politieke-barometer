@@ -153,6 +153,79 @@
     @RenderSection("CustomJS")
 }
 
+<script type="text/javascript">
+    //When an alert is clicked, this function is called.
+    //It sets the property isRead of the Alert to true.
+    function markAsRead(id) {
+        $.ajax('/api/User/'+@ViewBag.Id+'/Alert/'+id+'/Read',
+                {
+                    type: 'PUT',
+                    dataType: 'json'
+                })
+            .done(function(data) {
+                $('#alert' + id).addClass('alertRead');
+            })
+            //TODO: if FAIL proper error handling
+            .fail(function() { alert('Cannot change alert.'); });
+    }
+        
+
+    //Inserts the HTML for the alerts inside the notifications panel in the top-navbar
+    //Also shows notification messages with PNotify
+    function InsertAlerts(alertData) {
+        for (var i = 0; i < alertData.length; i++) {
+            var alert = alertData[i];
+            var read = "";
+            if (alert.IsRead) {
+                read = "alertRead";
+            }
+            $('#menu1').append("<li class=\"alertMessage"+alert.AlertId+" "+read+"\" onclick=\"markAsRead("+alert.AlertId+"); " +
+                "location.href = \'/Person/Details/"+alert.AlertId+"\';\"><a><span><span><strong>" +
+                alert.Name +
+                "</strong> is nu trending!</span></span><span class=\"message\">"+
+                jQuery.timeago(alert.TimeStamp)+"</span></a></li>");
+
+            if (!alert.IsRead) {
+                //Loads the pop ups notifications.
+                new PNotify({
+                    title: 'Trending Alert',
+                    text: '<strong>' + alert.Name + '</strong> is nu trending!',
+                    type: 'success',
+                    styling: 'bootstrap3'
+                });
+            }
+        }
+    }
+    
+    //Ajax GET request: loads all alerts and calls InsertAlerts() method to add HTML to the page.
+    function loadAlerts() {
+        $(".loadingAlerts").css("display","block");
+        $.ajax('/api/User/@ViewBag.Id/GetAlerts',
+                {
+                    type: 'GET',
+                    dataType: 'json'
+                })
+            .done(function(data) {
+                $(".loadingAlerts").css("display", "none");
+                var alertData = data;
+                console.log(alertData);
+                InsertAlerts(data);
+                $('#menu1').append(
+                    "<li><div class=\"text-center\"><a><strong>See All Alerts</strong><i class=\"fa fa-angle-right\"></i></a></div></li>");
+                $('#alertCount').html(alertData.length);
+            })
+            //TODO: if FAIL proper error handling
+            .fail(function() {
+                //error handling.
+                //currently not implemented because database needs to be initialized on page reload.
+            });
+    }
+    (function() {
+        loadAlerts();
+        $('#alertDropdown').on('click', InsertAlerts);
+    })(jQuery);
+</script>
+
 <!-- Custom Theme Scripts -->
 @Scripts.Render("~/bundles/custom")
 
