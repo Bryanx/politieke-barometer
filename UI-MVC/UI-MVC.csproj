@@ -163,7 +163,6 @@
     </Compile>
     <Compile Include="Models\AlertDTO.cs" />
     <Compile Include="Models\Graph.cs" />
-    <Compile Include="Models\Persoon.cs" />
     <Compile Include="Models\PersonDTO.cs" />
     <Compile Include="Models\SubscriptionVM.cs" />
     <Compile Include="Models\Widget.cs" />

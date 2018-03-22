@@ -118,9 +118,16 @@
                     </ul>
                 </li>
                 <!-- alerts -->
-                @if (IsSectionDefined("Alerts")) {
-                    @RenderSection("Alerts")
-                }
+                <li role="presentation" class="dropdown">
+                    <a id="alertDropdown" href="javascript:;" class="dropdown-toggle info-number" data-toggle="dropdown"
+                       aria-expanded="false">
+                        <i class="fa fa-envelope-o"></i>
+                        <span id="alertCount" class="badge bg-green"></span>
+                    </a>
+                    <ul id="menu1" class="dropdown-menu list-unstyled msg_list" role="menu">
+                        <div class="loadingAlerts"></div>
+                    </ul>
+                </li>
             </ul>
             <!-- search -->
             @Html.Partial("~/Views/Shared/SearchBar.cshtml")
@@ -154,16 +161,35 @@
 }
 
 <script type="text/javascript">
+
+    var alertcount;
+    
+    //Updates the alert count icon
+    function updateAlertCount() {
+        if (this.alertcount <= 0) {
+            $('#alertCount').hide();
+        } else {
+            $('#alertCount').show();
+            $('#alertCount').html(this.alertcount);
+        }
+    }
+    
     //When an alert is clicked, this function is called.
     //It sets the property isRead of the Alert to true.
     function markAsRead(id) {
+        var alert = $('#alert' + id);
+        if (!alert.hasClass('alertRead')) {
+            alert.addClass('alertRead');
+            this.alertcount = alertcount - 1;
+            updateAlertCount();
+        }
         $.ajax('/api/User/'+@ViewBag.Id+'/Alert/'+id+'/Read',
                 {
                     type: 'PUT',
                     dataType: 'json'
                 })
             .done(function(data) {
-                $('#alert' + id).addClass('alertRead');
+                //ok
             })
             //TODO: if FAIL proper error handling
             .fail(function() { alert('Cannot change alert.'); });
@@ -171,8 +197,9 @@
         
 
     //Inserts the HTML for the alerts inside the notifications panel in the top-navbar
-    //Also shows notification messages with PNotify
     function InsertAlerts(alertData) {
+        $('#menu1').empty();
+        var counter = 0;
         for (var i = 0; i < alertData.length; i++) {
             var alert = alertData[i];
             var read = "";
@@ -186,15 +213,11 @@
                 jQuery.timeago(alert.TimeStamp)+"</span></a></li>");
 
             if (!alert.IsRead) {
-                //Loads the pop ups notifications.
-                new PNotify({
-                    title: 'Trending Alert',
-                    text: '<strong>' + alert.Name + '</strong> is nu trending!',
-                    type: 'success',
-                    styling: 'bootstrap3'
-                });
+                counter++;
             }
         }
+        this.alertcount = counter;
+        updateAlertCount();
     }
     
     //Ajax GET request: loads all alerts and calls InsertAlerts() method to add HTML to the page.
@@ -212,7 +235,6 @@
                 InsertAlerts(data);
                 $('#menu1').append(
                     "<li><div class=\"text-center\"><a><strong>See All Alerts</strong><i class=\"fa fa-angle-right\"></i></a></div></li>");
-                $('#alertCount').html(alertData.length);
             })
             //TODO: if FAIL proper error handling
             .fail(function() {
@@ -222,7 +244,8 @@
     }
     (function() {
         loadAlerts();
-        $('#alertDropdown').on('click', InsertAlerts);
+        //Everytime the alert button is clicked, they are reloaded.
+        $('#alertDropdown').on('click', loadAlerts);
     })(jQuery);
 </script>
 

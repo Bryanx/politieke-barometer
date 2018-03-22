@@ -11,7 +11,7 @@ using BAR.UI.MVC.Models;
 namespace BAR.UI.MVC.Controllers {
     public class UserApiController : ApiController {
         ISubscriptionManager subManager = new SubscriptionManager();
-        public static int counter = 0;
+        public static int Counter = 0;
 
         /// <summary>
         /// Get Request for alerts of a specific user (id)
@@ -20,11 +20,11 @@ namespace BAR.UI.MVC.Controllers {
         [HttpGet]
         [Route("api/User/{id}/GetAlerts")]
         public IHttpActionResult GetAlerts(int id) {
-            if (counter == 0) {
+            if (Counter == 0) {
+                Counter++;
                 SysController sys = new SysController();
                 sys.DetermineTrending();
                 sys.GenerateAlerts();
-                counter++;
             }
 
             IEnumerable<Alert> alertsToShow = subManager.GetAllAlerts(id);
@@ -42,7 +42,6 @@ namespace BAR.UI.MVC.Controllers {
                 });
             }
             return Ok(lijst.AsEnumerable());
-            
         }
 
         /// <summary>
