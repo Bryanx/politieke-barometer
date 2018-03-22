@@ -15,6 +15,7 @@
             <span id="alertCount" class="badge bg-green"></span>
         </a>
         <ul id="menu1" class="dropdown-menu list-unstyled msg_list" role="menu">
+            <div class="loadingAlerts"></div>
         </ul>
     </li>
 }
@@ -49,7 +50,7 @@
                         dataType: 'json'
                     })
                 .done(function(data) {
-                    $('#alert' + id).css("background-color", "white");
+                    $('#alert' + id).addClass('alertRead');
                 })
                 //TODO: if FAIL proper error handling
                 .fail(function() { alert('Cannot change alert.'); });
@@ -57,43 +58,42 @@
         
 
         //Loads the alerts inside the notifications panel in the top-navbar
-        function loadAlerts(alertData) {
+        function InsertAlerts(alertData) {
             for (var i = 0; i < alertData.length; i++) {
                 var alert = alertData[i];
-                $('#menu1').append("<li class=\"alertMessage"+alert.AlertId+"\" onclick=\"markAsRead("+alert.AlertId+"); " +
+                var read = "";
+                if (alert.IsRead) {
+                    read = "alertRead";
+                }
+                $('#menu1').append("<li class=\"alertMessage"+alert.AlertId+" "+read+"\" onclick=\"markAsRead("+alert.AlertId+"); " +
                     "location.href = \'/Person/Details/"+alert.AlertId+"\';\"><a><span><span><strong>" +
                     alert.Name +
                     "</strong> is nu trending!</span></span><span class=\"message\">"+
                     jQuery.timeago(alert.TimeStamp)+"</span></a></li>");
 
-                if (alert.IsRead) {
-                    $('.alertMessage' + alert.AlertId).css("background-color", "white");
+                if (!alert.IsRead) {
+                    //Loads the pop ups notifications.
+                    new PNotify({
+                        title: 'Trending Alert',
+                        text: '<strong>' + alert.Name + '</strong> is nu trending!',
+                        type: 'success',
+                        styling: 'bootstrap3'
+                    });
                 }
-
-                //Loads the pop ups notifications.
-                new PNotify({
-                    title: 'Trending Alert',
-                    text: '<strong>' + alert.Name + '</strong> is nu trending!',
-                    type: 'success',
-                    styling: 'bootstrap3'
-                });
-                
             }
         }
-
-        //ajax calls
-        (function() {
-            $('#saveWidgets').on('click', saveGrid);
-            //GET Request for alerts
+        function loadAlerts() {
+            $(".loadingAlerts").css("display","block");
             $.ajax('/api/User/@ViewBag.Id/GetAlerts',
                     {
                         type: 'GET',
                         dataType: 'json'
                     })
                 .done(function(data) {
+                    $(".loadingAlerts").css("display", "none");
                     var alertData = data;
                     console.log(alertData);
-                    loadAlerts(data);
+                    InsertAlerts(data);
                     $('#menu1').append(
                         "<li><div class=\"text-center\"><a><strong>See All Alerts</strong><i class=\"fa fa-angle-right\"></i></a></div></li>");
                     $('#alertCount').html(alertData.length);
@@ -103,8 +103,9 @@
                     //error handling.
                     //currently not implemented because database needs to be initialized on page reload.
                 });
-
-            //GET Request for widgets
+        }
+        
+        function loadWidgets() {
             $.ajax('/api/Widget',
                     {
                         type: 'GET',
@@ -116,8 +117,18 @@
                 })
                 //TODO: if FAIL proper error handling
                 .fail(function() { alert('Widgets could not be loaded.'); });
+        }
 
-            $('#alertDropdown').on('click', loadAlerts);
+        //ajax calls
+        (function() {
+            $('#saveWidgets').on('click', saveGrid);
+            //GET Request for alerts
+            loadAlerts();
+
+            //GET Request for widgets
+            loadWidgets();
+
+            $('#alertDropdown').on('click', InsertAlerts);
 
             
         })(jQuery);
