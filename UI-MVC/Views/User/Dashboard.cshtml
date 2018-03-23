@@ -1,5 +1,5 @@
 ﻿@using System.Web.Optimization
-@model BAR.BL.Domain.Users.User
+@model BAR.UI.MVC.Models.UserSubscribedPeopleDTO
 @{
     ViewBag.Title = "Dashboard";
 }
@@ -18,6 +18,7 @@
     </div>
     <br>
 
+    <!-- Widgets -->
     <div class="grid-stack" id="grid">
 
     </div>
@@ -25,7 +26,7 @@
 
 <div style="visibility: hidden">space</div>
 
-@Html.Partial("Subscriptions", Model)
+@Html.Partial("Subscriptions", Model.People)
 
 <div style="visibility: hidden">space</div>
 

@@ -165,6 +165,7 @@
     <Compile Include="Models\Graph.cs" />
     <Compile Include="Models\PersonDTO.cs" />
     <Compile Include="Models\SubscriptionVM.cs" />
+    <Compile Include="Models\UserSubscribedPeopleDTO.cs" />
     <Compile Include="Models\Widget.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -342,6 +343,7 @@
     <Content Include="Scripts\site.js" />
     <Content Include="Scripts\underscore.min.js" />
     <Content Include="Views\Shared\DisplayTemplates\PersonDTO.cshtml" />
+    <Content Include="Views\Shared\Partials\PersonTable.cshtml" />
     <Content Include="Views\User\Dashboard.cshtml" />
     <Content Include="Views\User\Subscriptions.cshtml" />
     <Content Include="Web.config" />

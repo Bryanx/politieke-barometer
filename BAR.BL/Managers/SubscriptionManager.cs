@@ -135,6 +135,18 @@ namespace BAR.BL.Managers
 					subRepo.UpdateSubScription(sub);
 				}
 		}
+
+		public IEnumerable<Subscription> GetSubscriptionsWithAlertsForUser(int userId) 
+		{
+			InitRepo();
+			return subRepo.ReadSubscriptionsWithAlertsForUser(userId);
+		}
+		
+		public IEnumerable<Subscription> GetSubscriptionsWithItemsForUser(int userId) 
+		{
+			InitRepo();
+			return subRepo.ReadSubscriptionsWithItemsForUser(userId);
+		}
 		
 		/// <summary>
 		/// Determines if the repo needs a unit of work

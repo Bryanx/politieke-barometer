@@ -10,7 +10,7 @@ using BAR.UI.MVC.Models;
 
 namespace BAR.UI.MVC.Controllers {
     public class UserApiController : ApiController {
-        ISubscriptionManager subManager = new SubscriptionManager();
+        public ISubscriptionManager subManager = new SubscriptionManager();
         public static int Counter = 0;
 
         /// <summary>

@@ -2177,12 +2177,12 @@ div.alertClose {
     padding: 0 10px 0 0;
 }
 
-div.alertClose > a {
+div.alertClose > a > i {
     display: block;
     font-size: 11px;
     color: #d9dee4;
 }
-div.alertClose > a:hover {
+div.alertClose > a > i:hover {
     color: #5a738e;
 }
 

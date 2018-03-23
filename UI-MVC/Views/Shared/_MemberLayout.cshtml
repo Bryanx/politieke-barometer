@@ -1,6 +1,7 @@
 @using System
 @using System.Web.Optimization
-@model BAR.BL.Domain.Users.User
+@model BAR.UI.MVC.Models.UserSubscribedPeopleDTO
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -45,7 +46,7 @@
             </div>
             <div class="profile_info">
                 <span>Welkom,</span>
-                <h2>@Html.DisplayFor(modelItem => Model.FirstName)</h2>
+                <h2>@Html.DisplayFor(modelItem => Model.User.FirstName)</h2>
             </div>
         </div>
         <!-- /menu profile quick info -->
@@ -97,7 +98,7 @@
                 <li class="">
                     <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown"
                        aria-expanded="false">
-                        <img src="../../Content/build/images/img.jpg" alt="">@Html.DisplayFor(modelItem => Model.FirstName)
+                        <img src="../../Content/build/images/img.jpg" alt="">@Html.DisplayFor(modelItem => Model.User.FirstName)
                         <span class=" fa fa-angle-down"></span>
                     </a>
                     <ul class="dropdown-menu dropdown-usermenu pull-right">

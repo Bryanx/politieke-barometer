@@ -87,14 +87,29 @@ namespace BAR.DAL
 			return ctx.Subscriptions.Include(sub => sub.Alerts)
 				.Where(sub => sub.SubscribedItem.ItemId == itemId).AsEnumerable();
 		}
-
+		
 		/// <summary>
-		/// Returns a list of subscriptions with their alerts.
-		/// for a specific item.
+		/// Returns a list of subscriptions of a user.
 		/// </summary>
 		public IEnumerable<Subscription> ReadSubscriptionsForUser(int userId)
 		{
+			return ctx.Subscriptions.Where(sub => sub.SubscribedUser.UserId == userId).AsEnumerable();
+		}
+
+		/// <summary>
+		/// Returns a list of subscriptions with their alerts.
+		/// </summary>
+		public IEnumerable<Subscription> ReadSubscriptionsWithAlertsForUser(int userId)
+		{
 			return ctx.Subscriptions.Include(sub => sub.Alerts).Where(sub => sub.SubscribedUser.UserId == userId).AsEnumerable();
+		}
+		
+		/// <summary>
+		/// Returns a list of subscriptions with their items.
+		/// </summary>
+		public IEnumerable<Subscription> ReadSubscriptionsWithItemsForUser(int userId)
+		{
+			return ctx.Subscriptions.Include(sub => sub.SubscribedItem).Where(sub => sub.SubscribedUser.UserId == userId).AsEnumerable();
 		}
 
 		/// <summary>
