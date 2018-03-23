@@ -223,7 +223,6 @@
 
         var alertItem = $("<li />",
             {
-                href: `/Person/Details/${alert.AlertId}`,
                 "class": `alertMessage${alert.AlertId} ${read}`,
                 onclick: `markAsRead(${alert.AlertId})`
             });
@@ -238,7 +237,10 @@
                 onclick: `removeAlert(${alert.AlertId})`
 
             }));
-        var alertBody = $("<a />");
+        var alertBody = $("<a />",
+        {
+            href: `/Person/Details/${alert.AlertId}`
+        });
         var alertIcon = $("<div />",
             {
                 "class": "alertIcon"
