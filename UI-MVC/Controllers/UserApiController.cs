@@ -60,8 +60,18 @@ namespace BAR.UI.MVC.Controllers {
         /// </summary>
         [HttpDelete]
         [Route("api/User/{id}/Alert/{alertId}/Delete")]
-        public IHttpActionResult Delete(int id, int alertId) {
-            subManager.RemoveAlert(id, alertId);
+        public IHttpActionResult DeleteAlert(int userId, int alertId) {
+            subManager.RemoveAlert(userId, alertId);
+            return StatusCode(HttpStatusCode.NoContent);
+        }
+        
+        /// <summary>
+        /// Removes a Subscription from a specific user.
+        /// </summary>
+        [HttpDelete]
+        [Route("api/User/{id}/Subscription/{subId}/Delete")]
+        public IHttpActionResult DeleteSubscription(int subId) {
+            subManager.RemoveSubscription(subId);
             return StatusCode(HttpStatusCode.NoContent);
         }
     }

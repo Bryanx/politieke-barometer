@@ -1,22 +1,24 @@
 ﻿@model IEnumerable<BAR.UI.MVC.Models.PersonDTO>
 
-<table id="datatable-responsive" class="table dt-responsive nowrap table-hover" cellspacing="0" width="100%">
+<table id="datatable-responsive" class="table projects table-hover" cellspacing="0" width="100%">
     <thead>
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.Name)
         </th>
         <th>
-            Mentions
+            Vermeldingen
         </th>
         <th>
-            Positive
+            Positief
         </th>
         <th>
-            Negative
+            Negatief
         </th>
-        <th name="Calculated by amount of tweets">
+        <th title="Berekend op basis van het aantal tweets">
             Trending %
+        </th>
+        <th>
         </th>
     </tr>
     </thead>

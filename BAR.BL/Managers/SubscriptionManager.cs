@@ -135,17 +135,39 @@ namespace BAR.BL.Managers
 					subRepo.UpdateSubScription(sub);
 				}
 		}
-
+		
+		/// <summary>
+		/// Gets the subscription of a specific user, with alerts.
+		/// </summary>
 		public IEnumerable<Subscription> GetSubscriptionsWithAlertsForUser(int userId) 
 		{
 			InitRepo();
 			return subRepo.ReadSubscriptionsWithAlertsForUser(userId);
 		}
 		
+		/// <summary>
+		/// Gets the subscription of a specific user, with items.
+		/// </summary>
 		public IEnumerable<Subscription> GetSubscriptionsWithItemsForUser(int userId) 
 		{
 			InitRepo();
 			return subRepo.ReadSubscriptionsWithItemsForUser(userId);
+		}
+		
+		/// <summary>
+		/// Gets a subscription by Subscription id.
+		/// </summary>
+		public Subscription GetSubscription(int subId) {
+			InitRepo();
+			return subRepo.ReadSubscription(subId);
+		}
+		
+		/// <summary>
+		/// Removes a subscription by Subscription id.
+		/// </summary>
+		public void RemoveSubscription(int subId) {
+			InitRepo();
+			subRepo.DeleteSubscription(subId);
 		}
 		
 		/// <summary>

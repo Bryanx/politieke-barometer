@@ -29,7 +29,7 @@ namespace BAR.DAL
 		int UpdateSubscriptionsForItem(int itemId);
 
 		//Delete
-		int DeleteSubScription(Subscription sub);
+		int DeleteSubscription(int subId);
 		int DeleteSubscriptions(IEnumerable<Subscription> subs);
 		int DeleteSubscriptionsForUser(int userId);
 		int DeleteSubscriptionsForItem(int itemId);

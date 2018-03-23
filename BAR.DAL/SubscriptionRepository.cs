@@ -183,9 +183,10 @@ namespace BAR.DAL
 		/// Deletes a subscription from the database.
 		/// Returns -1 if SaveChanges() is delayed by unit of work.
 		/// </summary>
-		public int DeleteSubScription(Subscription sub)
+		public int DeleteSubscription(int subId)
 		{
-			ctx.Subscriptions.Remove(sub);
+			Subscription sub = ctx.Subscriptions.Include(s => s.Alerts).SingleOrDefault(s => s.SubscriptionId == subId);
+			if (sub != null) ctx.Subscriptions.Remove(sub);
 			return ctx.SaveChanges();
 		}
 

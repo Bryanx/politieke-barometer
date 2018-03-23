@@ -12,5 +12,6 @@ namespace BAR.BL.Managers
 		void ChangeAlertToRead(int id, int alertId);
 		IEnumerable<Subscription> GetSubscriptionsWithAlertsForUser(int userId);
 		IEnumerable<Subscription> GetSubscriptionsWithItemsForUser(int userId);
+		void RemoveSubscription(int subId);
 	}
 }

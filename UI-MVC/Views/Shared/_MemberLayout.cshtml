@@ -168,9 +168,9 @@
 }
 
 <script type="text/javascript">
-
-    var alertcount;
     
+    //Alerts:
+    var alertcount;
     //Updates the alert count icon
     function updateAlertCount() {
         if (this.alertcount <= 0) {
@@ -181,8 +181,8 @@
         }
     }
     
-    function removeAlert(id) {
-        $.ajax('/api/User/'+@ViewBag.Id+'/Alert/'+id+'/Delete',
+    function removeAlert(alertId) {
+        $.ajax('/api/User/'+@ViewBag.Id+'/Alert/'+alertId+'/Delete',
                 {
                     type: 'DELETE',
                     dataType: 'json'

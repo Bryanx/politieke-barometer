@@ -345,6 +345,7 @@
     <Content Include="Views\Shared\DisplayTemplates\PersonDTO.cshtml" />
     <Content Include="Views\Shared\Partials\PersonTable.cshtml" />
     <Content Include="Views\User\Dashboard.cshtml" />
+    <Content Include="Views\User\Settings.cshtml" />
     <Content Include="Views\User\Subscriptions.cshtml" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -363,7 +364,6 @@
     <Content Include="Views\Shared\_VisitorLayout.cshtml" />
     <Content Include="Views\Web.config" />
     <Content Include="Views\_ViewStart.cshtml" />
-    <Content Include="Views\User\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

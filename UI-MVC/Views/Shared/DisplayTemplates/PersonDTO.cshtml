@@ -1,8 +1,8 @@
 ﻿@model BAR.UI.MVC.Models.PersonDTO
 
-<tr onclick="location.href = '@(Url.Action("Details", "Person", new {id = Model.ItemId}))'">
+<tr class="subscription" data-id="@Model.ItemId">
     <td>
-        @Html.DisplayFor(modelItem => Model.Name)
+        <a href='@Url.Action("Details", "Person", new {id = Model.ItemId})'><i class="fa fa-user"></i>  @Html.DisplayFor(modelItem => Model.Name)</a>
     </td>
     <td>
         @Html.DisplayFor(modelItem => Model.NumberOfMentions)
@@ -17,5 +17,10 @@
     </td>
     <td>
         @Html.DisplayFor(modelItem => Model.TrendingPercentage) %
+    </td>
+    <td>
+        <a class="btn btn-danger btn-xs" onclick="personUnsubscribe(@Model.ItemId)" title="Uitschrijven">
+            <i class="fa fa-trash-o"></i>
+        </a>
     </td>
 </tr>

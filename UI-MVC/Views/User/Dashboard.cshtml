@@ -27,13 +27,43 @@
 <div style="visibility: hidden">space</div>
 
 <!-- Subscriptions -->
-@Html.Partial("Subscriptions", Model.People)
+@if (Model.People.Count() > 0) {
+    @Html.Partial("Subscriptions", Model.People)
+}
 
 <div style="visibility: hidden">space</div>
 
 @section CustomJS{
     @Scripts.Render("~/bundles/gridstack", "~/bundles/morrisCharts")
     <script type="text/javascript">
+        //Subscriptions:
+
+        var subscriptionAmount = $('.subscription').length;
+        
+        function personUnsubscribe(itemId) {
+            $('.subscription').click(function() {
+                var id = $(this).attr('data-id');
+                if (id === itemId.toString()) {
+                    if (subscriptionAmount === 1) {
+                        $('#peopleSubscriptions').empty();
+                    } else {
+                        $(this).empty();
+                    }
+                }
+            });
+            $.ajax('/api/User/' + @ViewBag.Id + '/Subscription/' + itemId + '/Delete',
+                    {
+                        type: 'DELETE',
+                        dataType: 'json'
+                    })
+                .done(function(data) {
+                    loadAlerts();
+                    subscriptionAmount--;
+                })
+                //TODO: if FAIL proper error handling
+                .fail(function() {});
+        }
+
         //GET Request for widgets
         function loadWidgets() {
             $.ajax('/api/Widget',
