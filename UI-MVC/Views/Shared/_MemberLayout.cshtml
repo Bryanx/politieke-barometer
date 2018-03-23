@@ -120,7 +120,7 @@
                 <!-- alerts -->
                 <li role="presentation" class="dropdown">
                     <a id="alertDropdown" href="javascript:;" class="dropdown-toggle info-number" data-toggle="dropdown"
-                       aria-expanded="false">
+                       aria-menu1expanded="false">
                         <i class="fa fa-envelope-o"></i>
                         <span id="alertCount" class="badge bg-green"></span>
                     </a>
@@ -129,7 +129,7 @@
                             <li class="alertMenuHeader"><strong>Alerts</strong></li>
                             <li class="alertWindowsSettings"><a>Intellingen</a></li>
                         </ul>
-                        <ul id="menu1" class=" list-unstyled msg_list">
+                        <ul id="alertMenu" class=" list-unstyled msg_list">
                             <div class="loadingAlerts"></div>
                         </ul>
                     </div>
@@ -200,26 +200,64 @@
             //TODO: if FAIL proper error handling
             .fail(function() { alert('Cannot change alert.'); });
     }
+    
+    //Generates the HTML for one alert item in the dropdown alert menu
+    function generateAlertHTML(alert) {
+        var read = "";
+        if (alert.IsRead) {
+            read = "alertRead";
+        }
+
+        var alertItem = $("<li />",
+            {
+                href: `/Person/Details/${alert.AlertId}`,
+                "class": `alertMessage${alert.AlertId} ${read}`,
+                onclick: `markAsRead(${alert.AlertId})`
+            });
+
+        var alertCloseButton = $("<div />",
+            {
+                "class": "alertClose",
+                title: "Verwijder alert"
+            }).append($("<a />",
+            {
+                "class": "fa fa-close",
+                title: "Verwijder alert"
+            }));
+        var alertBody = $("<a />");
+        var alertIcon = $("<div />",
+            {
+                "class": "alertIcon"
+            }).append($("<i />",
+            {
+                "class": "fa fa-user"
+            }));
+        var alertContent = $("<span />",
+            {
+                html: `<strong>${alert.Name}</strong> is nu trending!`
+            });
+        var alertTime = $("<span />",
+            {
+                "class": "alertTime",
+                html: `<i class="font_11 fa fa-clock-o"></i> ${jQuery.timeago(alert.TimeStamp)}`
+            });
+        alertBody.append(alertIcon).append(alertContent).append(alertTime)
+        alertItem.append(alertCloseButton).append(alertBody);
+        return alertItem;
+    }
         
 
     //Inserts the HTML for the alerts inside the alert dropdownlist in the top-navbar
     function InsertAlerts(alertData) {
-        $('#menu1').empty();
+        $('#alertMenu').empty();
         var counter = 0;
         for (var i = 0; i < alertData.length; i++) {
-            var alert = alertData[i];
-            var read = "";
-            if (alert.IsRead) {
-                read = "alertRead";
-            }
+            var alertItem = generateAlertHTML(alertData[i]);
+            
             //Add alert to alert dropdownlist
-            $('#menu1').append("<li class=\"alertMessage"+alert.AlertId+" "+read+"\" onclick=\"markAsRead("+alert.AlertId+"); " +
-                "location.href = \'/Person/Details/"+alert.AlertId+"\';\"><a>" +
-                "<div class=\"alertIcon\"><i class=\"fa fa-user\"></i></div>" +
-                "<span><span><strong>"+alert.Name+"</strong> is nu trending!</span></span>" +
-                "<span class=\"alertTime\"><i class=\"font_11 fa fa-clock-o\"></i> "+jQuery.timeago(alert.TimeStamp)+"</span></a></li>");
+            $('#alertMenu').append(alertItem);
 
-            if (!alert.IsRead) {
+            if (!alertData[i].IsRead) {
                 counter++;
             }
         }
@@ -243,11 +281,14 @@
                     var alertData = data;
                     console.log(alertData);
                     InsertAlerts(data);
-                    $('#menu1').append(
+                    $('#alertMenu').append(
                         "<li id=\"seeAllAlerts\"><div class=\"text-center\"><a><strong>Bekijk alle alerts</strong></a></div></li>");
                 } else { //No available alerts
-                    $('#menu1').empty();
-                    $('#menu1').append("<li class=\"noAlertsAvailable\"><i class=\"fa fa-envelope-o\"></i></br><strong>Je hebt nog geen alerts.</strong></br>Abboneer jezelf op personen, partijen of thema's</br>om te zien wanneer ze trending zijn.</li>");
+                    $('#alertMenu').empty();
+                    $('#alertMenu').append("<li class=\"noAlertsAvailable\"><i class=\"fa fa-envelope-o\"></i></br>" +
+                        "<strong>Je hebt nog geen alerts.</strong></br>" +
+                        "Abboneer jezelf op personen, partijen of thema's</br>" +
+                        "om te zien wanneer ze trending zijn.</li>");
                 }
             })
             //TODO: if FAIL proper error handling

@@ -2042,7 +2042,7 @@ div.box {
 ul.msg_list li {
     background: #f7f7f7;
     border-top: 1px solid #d9dee4;
-    padding: 10px;
+    padding: 10px 25px 10px 10px;
     display: -ms-flexbox;
     display: flex;
 }
@@ -2112,6 +2112,7 @@ ul.msg_list li a .time {
 ul.msg_list li a .alertTime {
     display: block !important;
     font-size: 11px;
+    color: #a5a5a5;
 }
 
 .dropdown-menu.msg_list span {
@@ -2120,7 +2121,7 @@ ul.msg_list li a .alertTime {
 }
 
 .dropdown-menu > li > a {
-    color: #5A738E
+    color: #5A738E;
 }
 
 ul.msg_list li.noAlertsAvailable {
@@ -2169,22 +2170,29 @@ div.alertIcon > i {
     font-size:35px;
 }
 
+div.alertClose {
+    display: block;
+    position: absolute;
+    right: 0;
+    padding: 0 10px 0 0;
+}
+
+div.alertClose > a {
+    display: block;
+    font-size: 11px;
+    color: #d9dee4;
+}
+div.alertClose > a:hover {
+    color: #5a738e;
+}
+
 .navbar-nav .open .dropdown-menu.msg_list {
     width: 300px;
 }
 .navbar-nav .open .dropdown-menu.msg_list .alertRead {
     background-color:white;
     border-top: 1px solid #d9dee4;
-    color:black;
-}
-
-.navbar-nav .open .dropdown-menu.msg_list .alertRead:hover {
-    color:black;
-}
-
-.navbar-nav .open .dropdown-menu.msg_list .alertRead a:hover {
-    background-color: white;
-    color:black;
+    color:#5a738e;
 }
 
 
