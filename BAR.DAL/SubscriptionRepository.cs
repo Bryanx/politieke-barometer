@@ -60,7 +60,7 @@ namespace BAR.DAL
 		/// </summary>
 		public Alert ReadAlert(int userId, int alertId) 
 		{
-			foreach (Subscription sub in ReadSubscriptionsWithAlertsForUser(userId).ToList()) {
+			foreach (Subscription sub in ReadSubscriptionsForUser(userId).ToList()) {
 				if (sub.Alerts != null) {
 					foreach (Alert alert in sub.Alerts) {
 						if (alert.AlertId == alertId) return alert;
