@@ -8,15 +8,15 @@ namespace BAR.UI.MVC.Controllers
 {
 	public class UserController : Controller
 	{
+		IUserManager usrMgr = new UserManager();
 		/// <summary>
-		/// This method is called every time  when a
-		/// user wants to see his/her alers.
-		/// id = UserId
+		/// Dashboard of the user
 		/// </summary>
 		public ActionResult Index(int id)
 		{
 			ViewBag.Id = id;
-			return View("Ingelogd","~/Views/Shared/_MemberLayout.cshtml");
+			User user = usrMgr.GetUser(id);
+			return View("Dashboard","~/Views/Shared/_MemberLayout.cshtml", user);
 		}
 	}
 }

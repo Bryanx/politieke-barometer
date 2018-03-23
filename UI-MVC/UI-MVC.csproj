@@ -342,7 +342,8 @@
     <Content Include="Scripts\site.js" />
     <Content Include="Scripts\underscore.min.js" />
     <Content Include="Views\Shared\DisplayTemplates\PersonDTO.cshtml" />
-    <Content Include="Views\User\Ingelogd.cshtml" />
+    <Content Include="Views\User\Dashboard.cshtml" />
+    <Content Include="Views\User\Subscriptions.cshtml" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

@@ -11,10 +11,10 @@ namespace BAR.UI.MVC.Controllers {
             return View();
         }
 
-        public ActionResult Ingelogd() {
+        public ActionResult Dashboard() {
             ViewBag.Message = "Your applicationn description page.";
 
-            return View("~/Views/User/Ingelogd.cshtml","~/Views/Shared/_MemberLayout.cshtml");
+            return View("~/Views/User/Dashboard.cshtml","~/Views/Shared/_MemberLayout.cshtml");
         }
     }
 }

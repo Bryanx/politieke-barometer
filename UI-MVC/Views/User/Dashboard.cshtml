@@ -1,6 +1,7 @@
 ﻿@using System.Web.Optimization
+@model BAR.BL.Domain.Users.User
 @{
-    ViewBag.Title = "About";
+    ViewBag.Title = "Dashboard";
 }
 
 @section CustomCSS{
@@ -22,7 +23,11 @@
     </div>
 </section>
 
-<div style="visibility: hidden">t</div>
+<div style="visibility: hidden">space</div>
+
+@Html.Partial("Subscriptions", Model)
+
+<div style="visibility: hidden">space</div>
 
 @section CustomJS{
     @Scripts.Render("~/bundles/gridstack", "~/bundles/morrisCharts")
