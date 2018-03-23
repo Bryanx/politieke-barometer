@@ -4,17 +4,31 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Mvc.Ajax;
+using BAR.BL.Domain.Items;
+using BAR.BL.Managers;
+using BAR.UI.MVC.Models;
 
 namespace BAR.UI.MVC.Controllers {
     public class HomeController : Controller {
+        
+        IItemManager itemMgr = new ItemManager();
+        
         public ActionResult Index() {
-            return View();
-        }
-
-        public ActionResult Dashboard() {
-            ViewBag.Message = "Your applicationn description page.";
-
-            return View("~/Views/User/Dashboard.cshtml","~/Views/Shared/_MemberLayout.cshtml");
+            List<PersonDTO> personen = new List<PersonDTO>();
+            foreach (Item item in itemMgr.getAllItems()) {
+                personen.Add(new PersonDTO() {
+                    ItemId = item.ItemId,
+                    Name = item.Name,
+                    CreationDate = item.CreationDate,
+                    LastUpdated = item.LastUpdated,
+                    Description = item.Description,
+                    NumberOfFollowers = item.NumberOfFollowers,
+                    TrendingPercentage = Math.Floor(item.TrendingPercentage),
+                    NumberOfMentions = item.NumberOfMentions,
+                    Baseline = item.Baseline
+                });
+            }
+            return View(personen.AsEnumerable());
         }
     }
 }
