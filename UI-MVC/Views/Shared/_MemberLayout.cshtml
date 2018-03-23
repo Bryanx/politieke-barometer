@@ -180,6 +180,19 @@
         }
     }
     
+    function removeAlert(id) {
+        $.ajax('/api/User/'+@ViewBag.Id+'/Alert/'+id+'/Delete',
+                {
+                    type: 'DELETE',
+                    dataType: 'json'
+                })
+            .done(function(data) {
+                loadAlerts();
+            })
+            //TODO: if FAIL proper error handling
+            .fail(function() { alert('Cannot change alert.'); });
+    }
+    
     //When an alert is clicked, this function is called.
     //It sets the property isRead of the Alert to true.
     function markAsRead(id) {
@@ -222,7 +235,8 @@
             }).append($("<a />",
             {
                 "class": "fa fa-close",
-                title: "Verwijder alert"
+                onclick: `removeAlert(${alert.AlertId})`
+
             }));
         var alertBody = $("<a />");
         var alertIcon = $("<div />",

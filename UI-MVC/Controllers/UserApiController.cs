@@ -20,6 +20,7 @@ namespace BAR.UI.MVC.Controllers {
         [HttpGet]
         [Route("api/User/{id}/GetAlerts")]
         public IHttpActionResult GetAlerts(int id) {
+            //TODO: Remove counter, temporary solution because db is rebuild on every load.
             if (Counter == 0) {
                 Counter++;
                 SysController sys = new SysController();
@@ -51,6 +52,16 @@ namespace BAR.UI.MVC.Controllers {
         [Route("api/User/{id}/Alert/{alertId}/Read")]
         public IHttpActionResult MarkAlertAsRead(int id, int alertId) {
             subManager.ChangeAlertToRead(id, alertId);
+            return StatusCode(HttpStatusCode.NoContent);
+        }
+        
+        /// <summary>
+        /// Removes an alert from a specific user.
+        /// </summary>
+        [HttpDelete]
+        [Route("api/User/{id}/Alert/{alertId}/Delete")]
+        public IHttpActionResult Delete(int id, int alertId) {
+            subManager.RemoveAlert(id, alertId);
             return StatusCode(HttpStatusCode.NoContent);
         }
     }
