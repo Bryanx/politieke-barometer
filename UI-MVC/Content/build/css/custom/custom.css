@@ -59,8 +59,8 @@ MODIFYABLE DASHBOARD
 
 .grid-stack {
     position: relative;
-    width: 100%;
     margin-left: -10px !important;
+    margin-right: -10px !important;
 }
 
 .w-100 {

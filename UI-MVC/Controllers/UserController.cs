@@ -1,4 +1,5 @@
-﻿using BAR.BL.Controllers;
+﻿using System;
+using BAR.BL.Controllers;
 using BAR.BL.Domain.Users;
 using BAR.BL.Managers;
 using System.Collections.Generic;
@@ -33,7 +34,7 @@ namespace BAR.UI.MVC.Controllers
 					LastUpdated = item.LastUpdated,
 					Description = item.Description,
 					NumberOfFollowers = item.NumberOfFollowers,
-					TrendingPercentage = item.TrendingPercentage,
+					TrendingPercentage = Math.Floor(item.TrendingPercentage),
 					NumberOfMentions = item.NumberOfMentions,
 					Baseline = item.Baseline
 				});
@@ -43,6 +44,10 @@ namespace BAR.UI.MVC.Controllers
 				People = people
 			};
 			return View("Dashboard","~/Views/Shared/_MemberLayout.cshtml", model);
+		}
+
+		public ActionResult Settings(int id) {
+			return View("Settings","~/Views/Shared/_MemberLayout.cshtml");
 		}
 	}
 }

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using BAR.BL.Domain.Items;
@@ -21,7 +22,7 @@ namespace BAR.UI.MVC.Controllers {
                     LastUpdated = item.LastUpdated,
                     Description = item.Description,
                     NumberOfFollowers = item.NumberOfFollowers,
-                    TrendingPercentage = item.TrendingPercentage,
+                    TrendingPercentage = Math.Floor(item.TrendingPercentage),
                     NumberOfMentions = item.NumberOfMentions,
                     Baseline = item.Baseline
                 });
