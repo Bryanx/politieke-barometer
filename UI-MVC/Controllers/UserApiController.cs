@@ -59,7 +59,7 @@ namespace BAR.UI.MVC.Controllers {
         /// Removes an alert from a specific user.
         /// </summary>
         [HttpDelete]
-        [Route("api/User/{id}/Alert/{alertId}/Delete")]
+        [Route("api/User/{userId}/Alert/{alertId}/Delete")]
         public IHttpActionResult DeleteAlert(int userId, int alertId) {
             subManager.RemoveAlert(userId, alertId);
             return StatusCode(HttpStatusCode.NoContent);
