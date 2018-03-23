@@ -124,9 +124,15 @@
                         <i class="fa fa-envelope-o"></i>
                         <span id="alertCount" class="badge bg-green"></span>
                     </a>
-                    <ul id="menu1" class="dropdown-menu list-unstyled msg_list" role="menu">
-                        <div class="loadingAlerts"></div>
-                    </ul>
+                    <div class="dropdown-menu msg_list" role="menu">
+                        <ul class="list-unstyled msg_list msg_headers">
+                            <li class="alertMenuHeader"><strong>Alerts</strong></li>
+                            <li class="alertWindowsSettings"><a>Intellingen</a></li>
+                        </ul>
+                        <ul id="menu1" class=" list-unstyled msg_list">
+                            <div class="loadingAlerts"></div>
+                        </ul>
+                    </div>
                 </li>
             </ul>
             <!-- search -->
@@ -196,7 +202,7 @@
     }
         
 
-    //Inserts the HTML for the alerts inside the notifications panel in the top-navbar
+    //Inserts the HTML for the alerts inside the alert dropdownlist in the top-navbar
     function InsertAlerts(alertData) {
         $('#menu1').empty();
         var counter = 0;
@@ -206,16 +212,18 @@
             if (alert.IsRead) {
                 read = "alertRead";
             }
+            //Add alert to alert dropdownlist
             $('#menu1').append("<li class=\"alertMessage"+alert.AlertId+" "+read+"\" onclick=\"markAsRead("+alert.AlertId+"); " +
-                "location.href = \'/Person/Details/"+alert.AlertId+"\';\"><a><span><span><strong>" +
-                alert.Name +
-                "</strong> is nu trending!</span></span><span class=\"message\">"+
-                jQuery.timeago(alert.TimeStamp)+"</span></a></li>");
+                "location.href = \'/Person/Details/"+alert.AlertId+"\';\"><a>" +
+                "<div class=\"alertIcon\"><i class=\"fa fa-user\"></i></div>" +
+                "<span><span><strong>"+alert.Name+"</strong> is nu trending!</span></span>" +
+                "<span class=\"alertTime\"><i class=\"font_11 fa fa-clock-o\"></i> "+jQuery.timeago(alert.TimeStamp)+"</span></a></li>");
 
             if (!alert.IsRead) {
                 counter++;
             }
         }
+        //Update the alertCounter
         this.alertcount = counter;
         updateAlertCount();
     }
@@ -230,11 +238,17 @@
                 })
             .done(function(data) {
                 $(".loadingAlerts").css("display", "none");
-                var alertData = data;
-                console.log(alertData);
-                InsertAlerts(data);
-                $('#menu1').append(
-                    "<li><div class=\"text-center\"><a><strong>See All Alerts</strong><i class=\"fa fa-angle-right\"></i></a></div></li>");
+                //There are alerts available
+                if (data != undefined) {
+                    var alertData = data;
+                    console.log(alertData);
+                    InsertAlerts(data);
+                    $('#menu1').append(
+                        "<li id=\"seeAllAlerts\"><div class=\"text-center\"><a><strong>Bekijk alle alerts</strong></a></div></li>");
+                } else { //No available alerts
+                    $('#menu1').empty();
+                    $('#menu1').append("<li class=\"noAlertsAvailable\"><i class=\"fa fa-envelope-o\"></i></br><strong>Je hebt nog geen alerts.</strong></br>Abboneer jezelf op personen, partijen of thema's</br>om te zien wanneer ze trending zijn.</li>");
+                }
             })
             //TODO: if FAIL proper error handling
             .fail(function() {
