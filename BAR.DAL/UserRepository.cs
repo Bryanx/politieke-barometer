@@ -127,7 +127,7 @@ namespace BAR.DAL
 		/// </summary>
 		public int DeleteUser(int userId)
 		{
-			User userToDelete = readUserWithActivities(userId);
+			User userToDelete = ReadUserWithActivities(userId);
 			ctx.Users.Remove(userToDelete);
 			return ctx.SaveChanges();
 		}
@@ -147,7 +147,7 @@ namespace BAR.DAL
 		{
 			foreach (int userid in userIds)
 			{
-				User userToDelete = readUserWithActivities(userid);
+				User userToDelete = ReadUserWithActivities(userid);
 				ctx.Users.Remove(userToDelete);
 			}
 			return ctx.SaveChanges();
