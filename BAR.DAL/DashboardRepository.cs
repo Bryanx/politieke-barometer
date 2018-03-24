@@ -21,7 +21,7 @@ namespace BAR.DAL
 			if (uow == null) ctx = new BarometerDbContext();
 			else ctx = uow.Context;
 		}
-
+		
 		/// <summary>
 		/// Gives back a list of all the dashboards.
 		/// </summary>
@@ -75,6 +75,34 @@ namespace BAR.DAL
 		public IEnumerable<Widget> ReadWidgetsForDashboard(int dashboardId)
 		{
 			return ctx.Widgets.Where(wid => wid.Dashboard.DashboardId == dashboardId).AsEnumerable();
+		}
+
+		/// <summary>
+		/// Create's a new dashboard and persist that
+		/// subscription to the database.
+		/// Returns -1 if SaveChanges() is delayed by unit of work.
+		/// </summary>
+		public int CreateDashboard(Dashboard dashboard)
+		{
+			ctx.Dashboards.Add(dashboard);
+			return ctx.SaveChanges();
+		}
+
+		/// <summary>
+		/// Create's a new widget and persist that
+		/// subscription to the database.
+		/// Returns -1 if SaveChanges() is delayed by unit of work.
+		/// 
+		/// WARNING
+		/// widget needs to linked to dashboard.
+		/// alternative: call read dashboard, add widget to the list, update dashboard
+		/// </summary>
+		public int CreateWidget(Widget widget, int dashboardId)
+		{
+			Dashboard dasboardToAddWidget = ReadDashboard(dashboardId);
+			dasboardToAddWidget.Widgets.Add(widget);
+			//return udpate dashboard
+			throw new NotImplementedException();
 		}
 	}
 }

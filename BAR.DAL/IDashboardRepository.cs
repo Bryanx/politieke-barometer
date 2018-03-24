@@ -18,7 +18,8 @@ namespace BAR.DAL
 		IEnumerable<Widget> ReadWidgetsForDashboard(int dashboardId);
 
 		//Create
-		//...
+		int CreateDashboard(Dashboard dashboard);
+		int CreateWidget(Widget widget, int dashboardId);
 
 		//Update
 		//...
