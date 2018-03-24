@@ -36,8 +36,8 @@
 @section CustomJS{
     @Scripts.Render("~/bundles/gridstack", "~/bundles/morrisCharts")
     <script type="text/javascript">
+        
         //Subscriptions:
-
         var subscriptionAmount = $('.subscription').length;
         
         function personUnsubscribe(itemId) {
@@ -46,6 +46,8 @@
                 if (id === itemId.toString()) {
                     if (subscriptionAmount === 1) {
                         $('#peopleSubscriptions').empty();
+                        alertcount = 0;
+                        updateAlertCount();
                     } else {
                         $(this).empty();
                     }
@@ -56,13 +58,15 @@
                         type: 'DELETE',
                         dataType: 'json'
                     })
-                .done(function(data) {
+                .done(() => {
                     loadAlerts();
                     subscriptionAmount--;
                 })
                 //TODO: if FAIL proper error handling
-                .fail(function() {});
+                .fail(() => alert('Subscriptions could not be loaded.'));
         }
+
+        //Widgets:
 
         //GET Request for widgets
         function loadWidgets() {
@@ -71,15 +75,13 @@
                         type: 'GET',
                         dataType: 'json'
                     })
-                .done(function(data) {
-                    //if GET request is succesfull: call loadGrid() in widgets.js -> loads all widgets
-                    loadGrid(data);
-                })
+                //if GET request is succesfull: call loadGrid() in widgets.js -> loads all widgets
+                .done(data => loadGrid(data))
                 //TODO: if FAIL proper error handling
-                .fail(function() { alert('Widgets could not be loaded.'); });
+                .fail(() => alert('Widgets could not be loaded.'));
         }
 
-        (function() {
+        (() => {
             $('#saveWidgets').on('click', saveGrid);
             loadWidgets();
         })(jQuery);

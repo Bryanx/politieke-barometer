@@ -167,10 +167,6 @@
 <!-- Scripts -->
 @Scripts.Render("~/bundles/jquery","~/bundles/bootstrap","~/bundles/flot","~/bundles/dates","~/bundles/pnotify","~/bundles/timeago")
 
-@if (IsSectionDefined("CustomJS")) {
-    @RenderSection("CustomJS")
-}
-
 <script type="text/javascript">
     
     //Alerts:
@@ -186,37 +182,31 @@
     }
     
     function removeAlert(alertId) {
-        $.ajax('/api/User/'+@ViewBag.Id+'/Alert/'+alertId+'/Delete',
+        $.ajax(`/api/User/${@ViewBag.Id}/Alert/${alertId}/Delete`,
                 {
                     type: 'DELETE',
                     dataType: 'json'
                 })
-            .done(function(data) {
-                loadAlerts();
-            })
-            //TODO: if FAIL proper error handling
-            .fail(function() { alert('Cannot change alert.'); });
+            .done(() => loadAlerts())
+            .fail(() => alert('Cannot change alert.'));
     }
     
     //When an alert is clicked, this function is called.
     //It sets the property isRead of the Alert to true.
     function markAsRead(id) {
-        var alert = $('#alert' + id);
+        var alert = $(`#alert${id}`);
         if (!alert.hasClass('alertRead')) {
             alert.addClass('alertRead');
             this.alertcount = alertcount - 1;
             updateAlertCount();
         }
-        $.ajax('/api/User/'+@ViewBag.Id+'/Alert/'+id+'/Read',
+        $.ajax(`/api/User/${@ViewBag.Id}/Alert/${id}/Read`,
                 {
                     type: 'PUT',
                     dataType: 'json'
                 })
-            .done(function(data) {
-                //ok
-            })
-            //TODO: if FAIL proper error handling
-            .fail(function() { alert('Cannot change alert.'); });
+            .done(() => {/*ok*/})
+            .fail(() => alert('Cannot change alert.'));
     }
     
     //Generates the HTML for one alert item in the dropdown alert menu
@@ -289,13 +279,15 @@
     
     //Ajax GET request: loads all alerts and calls InsertAlerts() method to add HTML to the page.
     function loadAlerts() {
+        //show loading gif
         $(".loadingAlerts").css("display","block");
         $.ajax('/api/User/@ViewBag.Id/GetAlerts',
                 {
                     type: 'GET',
                     dataType: 'json'
                 })
-            .done(function(data) {
+            .done(data => {
+                //hide loading gif
                 $(".loadingAlerts").css("display", "none");
                 //There are alerts available
                 if (data != undefined) {
@@ -312,18 +304,20 @@
                         "om te zien wanneer ze trending zijn.</li>");
                 }
             })
-            //TODO: if FAIL proper error handling
-            .fail(function() {
-                //error handling.
-                //currently not implemented because database needs to be initialized on page reload.
+            .fail(() => {
+                //TODO: if request fails proper error handling
             });
     }
-    (function() {
+    (() => {
         loadAlerts();
         //Everytime the alert button is clicked, they are reloaded.
-        $('#alertDropdown').on('click', loadAlerts);
+        $('#alertDropdown').click(loadAlerts);
     })(jQuery);
 </script>
+
+@if (IsSectionDefined("CustomJS")) {
+    @RenderSection("CustomJS")
+}
 
 <!-- Custom Theme Scripts -->
 @Scripts.Render("~/bundles/custom")
