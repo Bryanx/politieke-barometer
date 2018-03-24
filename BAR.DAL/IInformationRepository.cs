@@ -12,6 +12,7 @@ namespace BAR.DAL
 		//Read
 		int ReadNumberInfo(int itemId, DateTime since);
 		Information ReadInformation(int informationid);
+		Information ReadInformationWithPropValues(int informationId);
 		IEnumerable<Information> ReadAllInformations();
 		IEnumerable<Information> ReadAllInfoForId(int itemId);
 		IEnumerable<Information> ReadInformationsForDate(int itemId, DateTime since);
@@ -24,8 +25,7 @@ namespace BAR.DAL
 		int UpdateInformations(IEnumerable<Information> infos);
 
 		//Delete
-		int DeleteInformation(Information info);
-		int DeleteInformations(IEnumerable<Information> infos);
-		int DeleteInformationsForDate(int itemId, DateTime until);
+		int DeleteInformation(int infoId);
+		int DeleteInformations(IEnumerable<int> infoIds);
 	}
 }

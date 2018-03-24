@@ -23,7 +23,7 @@ namespace BAR.DAL
 		public InformationRepository(UnitOfWork uow = null)
 		{
 			if (uow == null) ctx = new BarometerDbContext();
-			else ctx = uow.Context;					
+			else ctx = uow.Context;
 		}
 
 		/// <summary>
@@ -40,35 +40,34 @@ namespace BAR.DAL
 		/// <summary>
 		/// Deletes a specific information object
 		/// Returns -1 if SaveChanges() is delayed by unit of work.
+		/// 
+		/// WARNING
+		/// All the propertyvalues of the information also need the be deleted.
 		/// </summary>
-		public int DeleteInformation(Information info)
+		/// </summary>
+		public int DeleteInformation(int infoId)
 		{
-			ctx.Informations.Remove(info);
+			Information infoToDelete = ReadInformationWithPropValues(infoId);
+			ctx.Informations.Remove(infoToDelete);
 			return ctx.SaveChanges();
 		}
 
 		/// <summary>
 		/// Deletes a range of information objects
 		/// Returns -1 if SaveChanges() is delayed by unit of work.
+		/// 
+		/// WARNING
+		/// All the propertyvalues of the informations also need the be deleted.
 		/// </summary>
-		public int DeleteInformations(IEnumerable<Information> infos)
+		/// </summary>
+		public int DeleteInformations(IEnumerable<int> infoIds)
 		{
-			foreach (Information info in infos) ctx.Informations.Remove(info);
+			foreach (int infoId in infoIds)
+			{
+				Information infoToDelete = ReadInformationWithPropValues(infoId);
+				ctx.Informations.Remove(infoToDelete);
+			}
 			return ctx.SaveChanges();
-		}
-
-		/// <summary>
-		/// Deletes informations objects from the past unti a given date
-		/// for a specific item.
-		/// Returns -1 if SaveChanges() is delayed by unit of work.
-		/// </summary>
-		public int DeleteInformationsForDate(int itemId, DateTime until)
-		{
-			IEnumerable<Information> infos = ctx.Informations
-							.Where(info => info.Item.ItemId == itemId)
-							.Where(info => info.CreatetionDate <= until).AsEnumerable();
-
-			return DeleteInformations(infos);
 		}
 
 		/// <summary>
@@ -95,6 +94,16 @@ namespace BAR.DAL
 		public Information ReadInformation(int informationid)
 		{
 			return ctx.Informations.Find(informationid);
+		}
+
+		/// <summary>
+		/// Gives back an information object with his property-values
+		/// based on informationid.
+		/// </summary>
+		public Information ReadInformationWithPropValues(int informationId)
+		{
+			return ctx.Informations.Include(info => info.PropertieValues)
+				.Where(info => info.InformationId == informationId).SingleOrDefault();
 		}
 
 		/// <summary>
