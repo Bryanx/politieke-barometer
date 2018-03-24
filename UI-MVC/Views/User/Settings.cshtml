@@ -1,63 +1,60 @@
-﻿<div class="row">
+﻿@using BAR.BL.Domain.Users
+@using Microsoft.Ajax.Utilities
+@model BAR.UI.MVC.Models.UserSubscribedPeopleDTO
+
+<div class="row">
     <div class="col-md-12 col-sm-12 col-xs-12">
         <div class="x_panel">
             <div class="x_title">
-                <h2>Form Design <small>different form elements</small></h2>
+                <h2>User settings</h2>
                 <div class="clearfix"></div>
             </div>
             <div class="x_content">
                 <br/>
-                <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
 
+                <form method="post" action="/api/User/@ViewBag.Id" id="userSettingsForm" class="form-horizontal">
+                    @Html.HiddenFor(model => model.User.UserId)
                     <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">
-                            First Name <span class="required">*</span>
+                            Voornaam <span class="required">*</span>
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                            <input type="text" id="first-name" required="required" class="form-control col-md-7 col-xs-12">
+                            @Html.TextBoxFor(model => model.User.FirstName, "", new {@class = "form-control col-md-7 col-xs-12"})
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">
-                            Last Name <span class="required">*</span>
+                            Achternaam <span class="required">*</span>
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                            <input type="text" id="last-name" name="last-name" required="required" class="form-control col-md-7 col-xs-12">
+                            @Html.TextBoxFor(model => model.User.LastName, "", new {@class = "form-control col-md-7 col-xs-12"})
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">Middle Name / Initial</label>
-                        <div class="col-md-6 col-sm-6 col-xs-12">
-                            <input id="middle-name" class="form-control col-md-7 col-xs-12" type="text" name="middle-name">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Gender</label>
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Geslacht</label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
                             <div id="gender" class="btn-group" data-toggle="buttons">
                                 <label class="btn btn-default" data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">
-                                    <input type="radio" name="gender" value="male"> &nbsp; Male &nbsp;
+                                    @Html.RadioButtonFor(model => model.User.Gender, Gender.MAN) Man
                                 </label>
-                                <label class="btn btn-primary" data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">
-                                    <input type="radio" name="gender" value="female"> Female
+                                <label class="btn btn-default" data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">
+                                    @Html.RadioButtonFor(model => model.User.Gender, Gender.WOMAN) Vrouw
                                 </label>
                             </div>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">
-                            Date Of Birth <span class="required">*</span>
+                            Geboortedatum <span class="required">*</span>
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                            <input id="birthday" class="date-picker form-control col-md-7 col-xs-12" required="required" type="text">
+                            @Html.TextBoxFor(model => model.User.DateOfBirth, new {@class = "form-control col-md-7 col-xs-12"})
                         </div>
                     </div>
-                    <div class="ln_solid"></div>
                     <div class="form-group">
                         <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
-                            <button class="btn btn-primary" type="button">Cancel</button>
-                            <button class="btn btn-primary" type="reset">Reset</button>
-                            <button type="submit" class="btn btn-success">Submit</button>
+                            <button type="submit" class="btn btn-dark">Opslaan</button>
+                            <div id="settingsEnd" style="display: inline"></div>
                         </div>
                     </div>
 
@@ -66,3 +63,20 @@
         </div>
     </div>
 </div>
+
+@section CustomJS{
+    <script type="text/javascript">
+        (() => {
+            $("#userSettingsForm").on("submit", function (event) {
+                var $this = $(this);
+                $.ajax({
+                        type: $this.attr('method'),
+                        url: $this.attr('action'),
+                        data: $this.serialize(),
+                        succes: $("#settingsEnd").addClass('green').html("Saved.")
+                    }).fail(() => $("#settingsEnd").addClass('red').html("An error occured"));
+                event.preventDefault(); 
+            });
+        })($)
+    </script>
+}

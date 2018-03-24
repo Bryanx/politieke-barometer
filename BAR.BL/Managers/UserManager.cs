@@ -39,6 +39,15 @@ namespace BAR.BL.Managers
 			InitRepo();
 			return userRepo.ReadUser(userId);
 		}
+		
+		/// <summary>
+		/// Returns a user for a specific userId.
+		/// </summary>
+		public void ChangeUser(User user)
+		{
+			InitRepo();
+			userRepo.UpdateUser(user);
+		}
 
 		/// <summary>
 		/// Determines if the repo needs a unit of work
