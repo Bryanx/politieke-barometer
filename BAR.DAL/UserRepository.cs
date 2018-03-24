@@ -57,7 +57,7 @@ namespace BAR.DAL
 		/// <summary>
 		/// Gives back a user with their activities.
 		/// </summary>
-		public User readUserWithActivities(int userId)
+		public User ReadUserWithActivities(int userId)
 		{
 			return ctx.Users.Include(user => user.Activities)
 				.Where(user => user.UserId == userId).SingleOrDefault();
