@@ -51,9 +51,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DashboardRepository.cs" />
     <Compile Include="EF\BarometerDbConfiguration.cs" />
     <Compile Include="EF\BarometerDbContext.cs" />
     <Compile Include="EF\BarometerInitializer.cs" />
+    <Compile Include="IDashboardRepository.cs" />
     <Compile Include="IInformationRepository.cs" />
     <Compile Include="IItemRepository.cs" />
     <Compile Include="InformationRepository.cs" />
