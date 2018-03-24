@@ -1,18 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
-using System.Web.Mvc.Ajax;
 using BAR.BL.Domain.Items;
 using BAR.BL.Managers;
 using BAR.UI.MVC.Models;
 
 namespace BAR.UI.MVC.Controllers {
-    public class HomeController : Controller {
+    public class PersonController : Controller {
         
         IItemManager itemMgr = new ItemManager();
         
+        // Loads all Items into a DTO class. Then passes it on to the view.
         public ActionResult Index() {
             List<PersonDTO> personen = new List<PersonDTO>();
             foreach (Item item in itemMgr.getAllItems()) {
@@ -29,6 +28,11 @@ namespace BAR.UI.MVC.Controllers {
                 });
             }
             return View(personen.AsEnumerable());
+        }
+
+        // GET: Default/Details/5 (Specific person page)
+        public ActionResult Details(int id) {
+            return View(itemMgr.GetItem(id));
         }
     }
 }

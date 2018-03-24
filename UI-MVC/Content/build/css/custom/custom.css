@@ -28,6 +28,10 @@ html {
     color: var(--secondary-color);
 }
 
+.font_11 {
+    font-size: 11px !important;
+}
+
 .font_22 {
     font-size: 22px !important;
 }
@@ -38,7 +42,6 @@ html {
 
 .table > tbody > tr > td, .table > tbody > tr > th, .table > tfoot > tr > td, .table > tfoot > tr > th, .table > thead > tr > td, .table > thead > tr > th {
     padding: 12px !important;
-    cursor: pointer;
 }
 
 .no-scrollbar {
@@ -55,8 +58,8 @@ MODIFYABLE DASHBOARD
 
 .grid-stack {
     position: relative;
-    width: 100%;
     margin-left: -10px !important;
+    margin-right: -10px !important;
 }
 
 .w-100 {
@@ -1091,12 +1094,12 @@ a:focus {
 
 @media (min-width: 480px) {
     .top_nav .navbar-right li {
-        position: relative
+        position: relative;
     }
 }
 
 .top_nav .dropdown-menu li {
-    width: 100%
+    width: 100%;
 }
 /*
 .top_nav .dropdown-menu li i {
@@ -2037,28 +2040,64 @@ div.box {
 
 ul.msg_list li {
     background: #f7f7f7;
-    padding: 5px;
+    border-top: 1px solid #d9dee4;
+    padding: 10px 25px 10px 10px;
     display: -ms-flexbox;
     display: flex;
-    margin: 6px 6px 0;
-    width: 96% !important
 }
 
-ul.msg_list li:last-child {
-    margin-bottom: 6px;
-    padding: 10px
+ul.msg_headers li {
+    border: none;
+}
+
+ul.msg_list li#seeAllAlerts {
+    background: white;
+    padding: 10px;
+    border-top: 1px solid #d9dee4;
+    margin-bottom: -4px;
+}
+
+ul.msg_headers li:nth-child(2), 
+ul.msg_headers li.alertMenuHeader {
+    color: #5a738e;
+    padding: 0 10px;
+    font-size: 11px;
+    background: transparent;
+    text-align:right;
+    width: 100%;
+}
+
+ul.msg_headers li:nth-child(2) a {
+    width: auto;
+    float:right;
+}
+
+ul.msg_headers li:nth-child(2) a:hover {
+    background: transparent;
+}
+
+ul.msg_headers li.alertMenuHeader {
+    text-align:left;
+    padding: 2px 15px !important;
+    position: absolute;
+    background: transparent;
+}
+
+ul.msg_list > li > a {
+    display: block;
+    clear: both;
+    font-weight: 400;
+    line-height: 1.42857143;
+    white-space: nowrap;
+}
+
+ul.msg_list li:last-child a:hover, ul.msg_headers li:nth-child(2) a:hover {
+    text-decoration: underline;
 }
 
 ul.msg_list li a {
-    padding: 3px 5px !important
-}
-
-ul.msg_list li a .image img {
-    border-radius: 2px 2px 2px 2px;
-    -webkit-border-radius: 2px 2px 2px 2px;
-    float: left;
-    margin-right: 10px;
-    width: 11%
+    padding: 3px 5px !important;
+    width: auto;
 }
 
 ul.msg_list li a .time {
@@ -2069,17 +2108,35 @@ ul.msg_list li a .time {
     right: 35px
 }
 
-ul.msg_list li a .message {
+ul.msg_list li a .alertTime {
     display: block !important;
-    font-size: 11px
+    font-size: 11px;
+    color: #a5a5a5;
 }
 
 .dropdown-menu.msg_list span {
-    white-space: normal
+    white-space: normal;
+    user-select: none;
 }
 
 .dropdown-menu > li > a {
-    color: #5A738E
+    color: #5A738E;
+}
+
+ul.msg_list li.noAlertsAvailable {
+    border-top: 1px solid #D9DEE4;
+    color: #5A738E;
+    text-align: center;
+    padding: 50px 0 65px 0px;
+    margin-bottom: -5px;
+    background:white;
+}
+
+ul.msg_list li.noAlertsAvailable i {
+    font-size: 70px;
+    padding-bottom: 10px;
+    color: #5A738E;
+    text-align: center;
 }
 
 .navbar-nav .open .dropdown-menu {
@@ -2093,8 +2150,55 @@ ul.msg_list li a .message {
     width: 220px
 }
 
+.loadingAlerts {
+    background-image: url("../../images/loading.gif");
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 50px;
+    height: 50px;
+    margin: 30px auto 30px auto;
+}
+
+div.alertIcon {
+    display:block;
+    float:left;
+    padding-right: 10px;
+}
+
+div.alertIcon > i {
+    font-size:35px;
+}
+
+div.alertClose {
+    display: block;
+    position: absolute;
+    right: 0;
+    padding: 0 10px 0 0;
+}
+
+div.alertClose > a > i {
+    display: block;
+    font-size: 11px;
+    color: #d9dee4;
+}
+div.alertClose > a > i:hover {
+    color: #5a738e;
+}
+
 .navbar-nav .open .dropdown-menu.msg_list {
-    width: 300px
+    width: 300px;
+}
+.navbar-nav .open .dropdown-menu.msg_list .alertRead {
+    background-color:white;
+    border-top: 1px solid #d9dee4;
+    color:#5a738e;
+}
+
+
+@media (min-width: 900px) {
+    .navbar-nav .open .dropdown-menu.msg_list {
+        width: 400px;
+    }
 }
 
 .info-number .badge {

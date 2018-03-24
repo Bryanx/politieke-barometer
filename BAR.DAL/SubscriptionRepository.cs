@@ -54,6 +54,23 @@ namespace BAR.DAL
 		}
 
 		/// <summary>
+		/// Returns the alert from a specific user.
+		/// Because a user can have multiple subscriptions, we look for the alert in each subscription
+		/// To update the alert you have to update its Subscription (alerts have no DbSet)
+		/// </summary>
+		public Alert ReadAlert(int userId, int alertId) 
+		{
+			foreach (Subscription sub in ReadSubscriptionsWithAlertsForUser(userId).ToList()) {
+				if (sub.Alerts != null) {
+					foreach (Alert alert in sub.Alerts) {
+						if (alert.AlertId == alertId) return alert;
+					}
+				}
+			}
+			return null;
+		}
+
+		/// <summary>
 		/// Gives back a collection of subscriptions form a specific item.
 		/// </summary>
 		public IEnumerable<Subscription> ReadSubscriptionsForItem(int itemId)
@@ -70,14 +87,29 @@ namespace BAR.DAL
 			return ctx.Subscriptions.Include(sub => sub.Alerts)
 				.Where(sub => sub.SubscribedItem.ItemId == itemId).AsEnumerable();
 		}
-
+		
 		/// <summary>
-		/// Returns a list of subscriptions with their alerts.
-		/// for a specific item.
+		/// Returns a list of subscriptions of a user.
 		/// </summary>
 		public IEnumerable<Subscription> ReadSubscriptionsForUser(int userId)
 		{
 			return ctx.Subscriptions.Where(sub => sub.SubscribedUser.UserId == userId).AsEnumerable();
+		}
+
+		/// <summary>
+		/// Returns a list of subscriptions with their alerts.
+		/// </summary>
+		public IEnumerable<Subscription> ReadSubscriptionsWithAlertsForUser(int userId)
+		{
+			return ctx.Subscriptions.Include(sub => sub.Alerts).Where(sub => sub.SubscribedUser.UserId == userId).AsEnumerable();
+		}
+		
+		/// <summary>
+		/// Returns a list of subscriptions with their items.
+		/// </summary>
+		public IEnumerable<Subscription> ReadSubscriptionsWithItemsForUser(int userId)
+		{
+			return ctx.Subscriptions.Include(sub => sub.SubscribedItem).Where(sub => sub.SubscribedUser.UserId == userId).AsEnumerable();
 		}
 
 		/// <summary>
@@ -151,9 +183,10 @@ namespace BAR.DAL
 		/// Deletes a subscription from the database.
 		/// Returns -1 if SaveChanges() is delayed by unit of work.
 		/// </summary>
-		public int DeleteSubScription(Subscription sub)
+		public int DeleteSubscription(int subId)
 		{
-			ctx.Subscriptions.Remove(sub);
+			Subscription sub = ctx.Subscriptions.Include(s => s.Alerts).SingleOrDefault(s => s.SubscriptionId == subId);
+			if (sub != null) ctx.Subscriptions.Remove(sub);
 			return ctx.SaveChanges();
 		}
 

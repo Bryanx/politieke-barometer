@@ -2,6 +2,7 @@
 using BAR.DAL;
 using BAR.BL.Domain.Users;
 using System.Collections.Generic;
+using System.Linq;
 using BAR.BL.Domain.Items;
 
 namespace BAR.BL.Managers
@@ -68,6 +69,7 @@ namespace BAR.BL.Managers
 			IItemManager itemManager = new ItemManager();
 			double per = (itemManager.GetTrendingPer(itemId) * 100) - 100;
 
+			List<Subscription> subsToUpdate = new List<Subscription>();
 			IEnumerable<Subscription> subs = subRepo.ReadSubscritpionsWithAlerts(itemId);
 			foreach (Subscription sub in subs)
 			{
@@ -80,11 +82,11 @@ namespace BAR.BL.Managers
 						TimeStamp = DateTime.Now,
 						IsRead = false
 					});
-					//subRepo.UpdateSubScription(sub);
+					subsToUpdate.Add(sub);
 				}
 				
 			}
-			subRepo.UpdateSubscriptions(subs);
+			subRepo.UpdateSubscriptions(subsToUpdate);
 		}
 
 		/// <summary>
@@ -94,6 +96,78 @@ namespace BAR.BL.Managers
 		{
 			InitRepo();
 			return subRepo.ReadAlerts(userId, true);
+		}
+		
+		/// <summary>
+		/// Retrieves a single alert for a specific user.
+		/// </summary>
+		public Alert GetAlert(int userId, int alertId) 
+		{
+			InitRepo();
+			return subRepo.ReadAlert(userId, alertId);
+		}
+
+		/// <summary>
+		/// Changed the isRead property of an Alert to true.
+		/// </summary>
+		public void ChangeAlertToRead(int userId, int alertId) 
+		{
+			InitRepo();
+			Alert alert = GetAlert(userId, alertId);
+			if (alert != null) 
+			{
+				alert.IsRead = true;
+				subRepo.UpdateSubScription(alert.Subscription);
+			}
+		}
+
+		/// <summary>
+		/// Removes a specific alert for a specific user.
+		/// </summary>
+		public void RemoveAlert(int userId, int alertId)
+		{
+			InitRepo();
+			Alert alert = GetAlert(userId, alertId);
+				if (alert != null) 
+				{
+					Subscription sub = alert.Subscription;
+					sub.Alerts.Remove(alert);
+					subRepo.UpdateSubScription(sub);
+				}
+		}
+		
+		/// <summary>
+		/// Gets the subscription of a specific user, with alerts.
+		/// </summary>
+		public IEnumerable<Subscription> GetSubscriptionsWithAlertsForUser(int userId) 
+		{
+			InitRepo();
+			return subRepo.ReadSubscriptionsWithAlertsForUser(userId);
+		}
+		
+		/// <summary>
+		/// Gets the subscription of a specific user, with items.
+		/// </summary>
+		public IEnumerable<Subscription> GetSubscriptionsWithItemsForUser(int userId) 
+		{
+			InitRepo();
+			return subRepo.ReadSubscriptionsWithItemsForUser(userId);
+		}
+		
+		/// <summary>
+		/// Gets a subscription by Subscription id.
+		/// </summary>
+		public Subscription GetSubscription(int subId) {
+			InitRepo();
+			return subRepo.ReadSubscription(subId);
+		}
+		
+		/// <summary>
+		/// Removes a subscription by Subscription id.
+		/// </summary>
+		public void RemoveSubscription(int subId) {
+			InitRepo();
+			subRepo.DeleteSubscription(subId);
 		}
 		
 		/// <summary>

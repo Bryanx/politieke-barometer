@@ -1,0 +1,26 @@
+﻿@model BAR.UI.MVC.Models.PersonDTO
+
+<tr class="subscription" data-id="@Model.ItemId">
+    <td>
+        <a href='@Url.Action("Details", "Person", new {id = Model.ItemId})'><i class="fa fa-user"></i>  @Html.DisplayFor(modelItem => Model.Name)</a>
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => Model.NumberOfMentions)
+    </td>
+    <td class="green">
+        @Html.DisplayFor(modelItem => Model.NumberOfMentions)
+        <i class="glyphicon glyphicon-arrow-up"></i>
+    </td>
+    <td class="red">
+        @Html.DisplayFor(modelItem => Model.NumberOfMentions)
+        <i class="glyphicon glyphicon-arrow-down"></i>
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => Model.TrendingPercentage) %
+    </td>
+    <td>
+        <a class="btn btn-danger btn-xs" onclick="personUnsubscribe(@Model.ItemId)" title="Uitschrijven">
+            <i class="fa fa-trash-o"></i>
+        </a>
+    </td>
+</tr>

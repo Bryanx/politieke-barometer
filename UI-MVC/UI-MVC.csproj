@@ -154,7 +154,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\UserApiController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\PersonenController.cs" />
+    <Compile Include="Controllers\PersonController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\WidgetController.cs" />
     <Compile Include="DAL\WidgetManager.cs" />
@@ -163,8 +163,9 @@
     </Compile>
     <Compile Include="Models\AlertDTO.cs" />
     <Compile Include="Models\Graph.cs" />
-    <Compile Include="Models\Persoon.cs" />
+    <Compile Include="Models\PersonDTO.cs" />
     <Compile Include="Models\SubscriptionVM.cs" />
+    <Compile Include="Models\UserSubscribedPeopleDTO.cs" />
     <Compile Include="Models\Widget.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -280,33 +281,17 @@
     <None Include="Scripts\jquery-2.2.4.min.map" />
     <Content Include="Scripts\bootstrap-progressbar.js" />
     <Content Include="Scripts\bootstrap-progressbar.min.js" />
-    <Content Include="Scripts\datatables\datatables.net-bs\.bower.json" />
-    <Content Include="Scripts\datatables\datatables.net-bs\bower.json" />
     <Content Include="Scripts\datatables\datatables.net-bs\css\dataTables.bootstrap.css" />
     <Content Include="Scripts\datatables\datatables.net-bs\css\dataTables.bootstrap.min.css" />
     <Content Include="Scripts\datatables\datatables.net-bs\js\dataTables.bootstrap.js" />
     <Content Include="Scripts\datatables\datatables.net-bs\js\dataTables.bootstrap.min.js" />
-    <Content Include="Scripts\datatables\datatables.net-bs\License.txt" />
-    <Content Include="Scripts\datatables\datatables.net-bs\Readme.md" />
-    <Content Include="Scripts\datatables\datatables.net-responsive-bs\.bower.json" />
-    <Content Include="Scripts\datatables\datatables.net-responsive-bs\bower.json" />
     <Content Include="Scripts\datatables\datatables.net-responsive-bs\css\responsive.bootstrap.css" />
     <Content Include="Scripts\datatables\datatables.net-responsive-bs\css\responsive.bootstrap.min.css" />
     <Content Include="Scripts\datatables\datatables.net-responsive-bs\js\responsive.bootstrap.js" />
-    <Content Include="Scripts\datatables\datatables.net-responsive-bs\License.txt" />
-    <Content Include="Scripts\datatables\datatables.net-responsive-bs\Readme.md" />
-    <Content Include="Scripts\datatables\datatables.net-responsive\.bower.json" />
-    <Content Include="Scripts\datatables\datatables.net-responsive\bower.json" />
     <Content Include="Scripts\datatables\datatables.net-responsive\js\dataTables.responsive.js" />
     <Content Include="Scripts\datatables\datatables.net-responsive\js\dataTables.responsive.min.js" />
-    <Content Include="Scripts\datatables\datatables.net-responsive\License.txt" />
-    <Content Include="Scripts\datatables\datatables.net-responsive\Readme.md" />
-    <Content Include="Scripts\datatables\datatables.net\.bower.json" />
-    <Content Include="Scripts\datatables\datatables.net\bower.json" />
     <Content Include="Scripts\datatables\datatables.net\js\jquery.dataTables.js" />
     <Content Include="Scripts\datatables\datatables.net\js\jquery.dataTables.min.js" />
-    <Content Include="Scripts\datatables\datatables.net\License.txt" />
-    <Content Include="Scripts\datatables\datatables.net\Readme.md" />
     <Content Include="Scripts\dates\date.min.js" />
     <Content Include="Scripts\dates\daterangepicker.js" />
     <Content Include="Scripts\dates\moment.min.js" />
@@ -320,11 +305,11 @@
     <Content Include="Scripts\flot\jquery.flot.spline.min.js" />
     <Content Include="Scripts\flot\jquery.flot.stack.js" />
     <Content Include="Scripts\flot\jquery.flot.time.js" />
-    <Content Include="Scripts\gridstack.jQueryUI.js" />
-    <Content Include="Scripts\gridstack.jQueryUI.min.js" />
-    <Content Include="Scripts\gridstack.js" />
-    <Content Include="Scripts\gridstack.min.js" />
-    <Content Include="Scripts\gridstack.min.map" />
+    <Content Include="Scripts\gridstack\gridstack.jQueryUI.js" />
+    <Content Include="Scripts\gridstack\gridstack.jQueryUI.min.js" />
+    <Content Include="Scripts\gridstack\gridstack.js" />
+    <Content Include="Scripts\gridstack\gridstack.min.js" />
+    <Content Include="Scripts\gridstack\gridstack.min.map" />
     <Content Include="Scripts\jquery-ui-1.11.0.js" />
     <Content Include="Scripts\jquery-ui-1.11.0.min.js" />
     <Content Include="Scripts\jquery-ui.js" />
@@ -357,7 +342,15 @@
     <Content Include="Scripts\pnotify\pnotify.nonblock.js" />
     <Content Include="Scripts\site.js" />
     <Content Include="Scripts\underscore.min.js" />
-    <Content Include="Views\User\Ingelogd.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\PersonDTO.cshtml" />
+    <Content Include="Views\Shared\Layouts\_MemberLayout.cshtml" />
+    <Content Include="Views\Shared\Layouts\_VisitorLayout.cshtml" />
+    <Content Include="Views\Shared\Partials\NavBarLinks.cshtml" />
+    <Content Include="Views\Shared\Partials\PersonTable.cshtml" />
+    <Content Include="Views\Shared\Partials\SearchBar.cshtml" />
+    <Content Include="Views\User\Dashboard.cshtml" />
+    <Content Include="Views\User\Settings.cshtml" />
+    <Content Include="Views\User\Subscriptions.cshtml" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -366,16 +359,11 @@
       <DependentUpon>Web.config</DependentUpon>
     </Content>
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Personen\Details.cshtml" />
-    <Content Include="Views\Personen\Index.cshtml" />
+    <Content Include="Views\Person\Details.cshtml" />
+    <Content Include="Views\Person\Index.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
-    <Content Include="Views\Shared\NavBarLinks.cshtml" />
-    <Content Include="Views\Shared\SearchBar.cshtml" />
-    <Content Include="Views\Shared\_MemberLayout.cshtml" />
-    <Content Include="Views\Shared\_VisitorLayout.cshtml" />
     <Content Include="Views\Web.config" />
     <Content Include="Views\_ViewStart.cshtml" />
-    <Content Include="Views\User\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

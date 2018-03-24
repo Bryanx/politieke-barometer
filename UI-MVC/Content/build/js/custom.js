@@ -570,6 +570,7 @@ function init_JQVmap() {
         $('#world-map-gdp').vectorMap({
             map: 'be_mill',
             backgroundColor: null,
+            enableZoom: false,
             series: {
                 regions: [{
                     values: sample_data,
@@ -579,23 +580,6 @@ function init_JQVmap() {
             onRegionTipShow: function (e, el, code) {
                 el.html(el.html() + ' (' + sample_data[code] + ' stemmen)');
             }
-        });
-
-    }
-
-    if ($('#usa_map').length) {
-
-        $('#usa_map').vectorMap({
-            map: 'usa_en',
-            backgroundColor: null,
-            color: '#ffffff',
-            hoverOpacity: 0.7,
-            selectedColor: '#666666',
-            enableZoom: true,
-            showTooltip: true,
-            values: sample_data,
-            scaleColors: ['#E6F2F0', primary_darker],
-            normalizeFunction: 'polynomial'
         });
 
     }
@@ -5306,7 +5290,7 @@ $(document).ready(function () {
             var map = $('#world-map-gdp').vectorMap('get', 'mapObject');
             $('#world-map-gdp').remove();
             $('.canvasDoughnut').remove();
-            $('#map-parent').append('<div id="world-map-gdp" class="col-md-8 col-sm-12 col-xs-12"' +
+            $('#map-parent').append('<div id="world-map-gdp" class="col-md-12 col-sm-12 col-xs-12"' +
                 'style="height: 230px;"></div>');
             $('#doughnut-parent').append('<canvas class="canvasDoughnut" height="140" width="140"' +
                 'style="margin: 15px 10px 10px 0"></canvas>');

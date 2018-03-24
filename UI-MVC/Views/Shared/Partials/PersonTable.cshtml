@@ -1,0 +1,28 @@
+﻿@model IEnumerable<BAR.UI.MVC.Models.PersonDTO>
+
+<table id="datatable-responsive" class="table projects table-hover" cellspacing="0" width="100%">
+    <thead>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            Vermeldingen
+        </th>
+        <th>
+            Positief
+        </th>
+        <th>
+            Negatief
+        </th>
+        <th title="Berekend op basis van het aantal tweets">
+            Trending %
+        </th>
+        <th>
+        </th>
+    </tr>
+    </thead>
+    <tbody>
+    @Html.DisplayForModel()
+    </tbody>
+</table>

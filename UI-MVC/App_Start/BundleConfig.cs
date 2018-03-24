@@ -3,7 +3,7 @@
 namespace BAR.UI.MVC {
     public class BundleConfig {
 
-        //Scripts
+        /// Script fields
         private static readonly string Jquery ="~/Scripts/jquery-2.2.4.js";
         private static readonly string JqueryValidate ="~/Scripts/jquery.validate*";
         private static readonly string Timeago ="~/Scripts/jquery.timeago.js";
@@ -18,8 +18,8 @@ namespace BAR.UI.MVC {
         private static readonly string[] Gridstack = {
             "~/Scripts/jquery-ui.js",
             "~/Scripts/underscore.min.js",
-            "~/Scripts/gridstack.js",
-            "~/Scripts/gridstack.jQueryUI.js",
+            "~/Scripts/gridstack/gridstack.js",
+            "~/Scripts/gridstack/gridstack.jQueryUI.js",
             "~/Content/build/js/widgets.js"
         };
         private static readonly string[] Notifications = {
@@ -63,7 +63,7 @@ namespace BAR.UI.MVC {
             "~/Content/build/js/searchbar.js"
         };
         
-        //Styles
+        /// Style fields
         private static readonly string[] DefaultCss = {
             "~/Content/build/css/bootstrap.min.css",
             "~/Content/build/css/font-awesome.min.css",
