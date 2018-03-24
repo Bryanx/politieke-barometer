@@ -33,7 +33,15 @@ namespace BAR.DAL
 		{
 			return ctx.Items.Find(itemId);
 		}
-	
+
+		/// <summary>
+		/// Gives back a list of alle the items for a specif type
+		/// </summary>
+		public IEnumerable<Item> ReadItemsForType(ItemType type)
+		{
+			return ctx.Items.Where(item => item.ItemType == type).AsEnumerable();
+		}
+
 		/// <summary>
 		/// Does the same thing as ReadItem but it loeds all the
 		/// informations with it.
@@ -133,6 +141,6 @@ namespace BAR.DAL
 		{
 			foreach (Item item in items) ctx.Items.Remove(item);
 			return ctx.SaveChanges();
-		}
+		}		
 	}
 }

@@ -43,7 +43,9 @@ namespace BAR.DAL
 		/// 
 		/// WARNING
 		/// All the propertyvalues of the information also need the be deleted.
-		/// </summary>
+		/// 
+		/// NOTE
+		/// Normally we don't delete informations.
 		/// </summary>
 		public int DeleteInformation(int infoId)
 		{
@@ -58,7 +60,9 @@ namespace BAR.DAL
 		/// 
 		/// WARNING
 		/// All the propertyvalues of the informations also need the be deleted.
-		/// </summary>
+		/// 
+		/// NOTE
+		/// Normally we don't delete informations.
 		/// </summary>
 		public int DeleteInformations(IEnumerable<int> infoIds)
 		{
