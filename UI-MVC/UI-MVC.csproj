@@ -343,7 +343,11 @@
     <Content Include="Scripts\site.js" />
     <Content Include="Scripts\underscore.min.js" />
     <Content Include="Views\Shared\DisplayTemplates\PersonDTO.cshtml" />
+    <Content Include="Views\Shared\Layouts\_MemberLayout.cshtml" />
+    <Content Include="Views\Shared\Layouts\_VisitorLayout.cshtml" />
+    <Content Include="Views\Shared\Partials\NavBarLinks.cshtml" />
     <Content Include="Views\Shared\Partials\PersonTable.cshtml" />
+    <Content Include="Views\Shared\Partials\SearchBar.cshtml" />
     <Content Include="Views\User\Dashboard.cshtml" />
     <Content Include="Views\User\Settings.cshtml" />
     <Content Include="Views\User\Subscriptions.cshtml" />
@@ -358,10 +362,6 @@
     <Content Include="Views\Person\Details.cshtml" />
     <Content Include="Views\Person\Index.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
-    <Content Include="Views\Shared\NavBarLinks.cshtml" />
-    <Content Include="Views\Shared\SearchBar.cshtml" />
-    <Content Include="Views\Shared\_MemberLayout.cshtml" />
-    <Content Include="Views\Shared\_VisitorLayout.cshtml" />
     <Content Include="Views\Web.config" />
     <Content Include="Views\_ViewStart.cshtml" />
   </ItemGroup>

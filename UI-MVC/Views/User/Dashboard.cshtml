@@ -27,7 +27,7 @@
 <div style="visibility: hidden">space</div>
 
 <!-- Subscriptions -->
-@if (Model.People.Count() > 0) {
+@if (Model.People.Any()) {
     @Html.Partial("Subscriptions", Model.People)
 }
 

@@ -43,11 +43,11 @@ namespace BAR.UI.MVC.Controllers
 				User = user,
 				People = people
 			};
-			return View("Dashboard","~/Views/Shared/_MemberLayout.cshtml", model);
+			return View("Dashboard","~/Views/Shared/Layouts/_MemberLayout.cshtml", model);
 		}
 
 		public ActionResult Settings(int id) {
-			return View("Settings","~/Views/Shared/_MemberLayout.cshtml");
+			return View("Settings","~/Views/Shared/Layouts/_MemberLayout.cshtml");
 		}
 	}
 }
