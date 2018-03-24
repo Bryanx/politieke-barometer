@@ -174,9 +174,9 @@ namespace BAR.DAL
 		/// WARNING
 		/// All the widgets of the dashboards also need the be deleted.
 		/// </summary>
-		public int DeleteDashboards(IEnumerable<int> ids)
+		public int DeleteDashboards(IEnumerable<int> dashboardIds)
 		{
-			foreach (int id in ids)
+			foreach (int id in dashboardIds)
 			{
 				Dashboard dashboardToDelete = ReadDashboardWithWidgets(id);
 				ctx.Dashboards.Remove(dashboardToDelete);

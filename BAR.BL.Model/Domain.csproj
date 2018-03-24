@@ -46,6 +46,7 @@
     <Compile Include="Data\PropertyValue.cs" />
     <Compile Include="Data\Source.cs" />
     <Compile Include="Items\Item.cs" />
+    <Compile Include="Items\ItemType.cs" />
     <Compile Include="Items\Organisation.cs" />
     <Compile Include="Items\Person.cs" />
     <Compile Include="Items\SocialMediaUrl.cs" />
