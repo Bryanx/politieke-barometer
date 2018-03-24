@@ -2,8 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using BAR.BL.Domain.Widgets;
 using System.Data.Entity;
 
@@ -46,6 +44,16 @@ namespace BAR.DAL
 		public Dashboard ReadDashboard(int dashboardId)
 		{
 			return ctx.Dashboards.Find(dashboardId);
+		}
+
+		/// <summary>
+		/// Gives back a dashboard object with all the widgets
+		/// for a specific dashboard id.
+		/// </summary>
+		public Dashboard ReadDashboardWithWidgets(int dashboardId)
+		{
+			return ctx.Dashboards.Include(dash => dash.Widgets)
+				.Where(dash => dash.DashboardId == dashboardId).SingleOrDefault();
 		}
 
 		/// <summary>
@@ -144,5 +152,56 @@ namespace BAR.DAL
 			foreach (Widget widget in widgets) ctx.Entry(widget).State = EntityState.Modified;
 			return ctx.SaveChanges();
 		}
+
+		/// <summary>
+		/// Deletes a specific dashboard.
+		/// Returns -1 if SaveChanges() is delayed by unit of work.
+		/// 
+		/// WARNING
+		/// All the widgets of the dashboard also need the be deleted.
+		/// </summary>
+		public int DeleteDashboard(int dashboardId)
+		{
+			Dashboard dashboardToDelete = ReadDashboardWithWidgets(dashboardId);
+			ctx.Dashboards.Remove(dashboardToDelete);
+			return ctx.SaveChanges();
+		}
+
+		/// <summary>
+		/// Deletes a list of dashboards.
+		/// Returns -1 if SaveChanges() is delayed by unit of work.
+		/// 
+		/// WARNING
+		/// All the widgets of the dashboards also need the be deleted.
+		/// </summary>
+		public int DeleteDashboards(IEnumerable<int> ids)
+		{
+			foreach (int id in ids)
+			{
+				Dashboard dashboardToDelete = ReadDashboardWithWidgets(id);
+				ctx.Dashboards.Remove(dashboardToDelete);
+			}
+			return ctx.SaveChanges();
+		}
+
+		/// <summary>
+		/// Updates a specific widget.
+		/// Returns -1 if SaveChanges() is delayed by unit of work.
+		/// </summary>
+		public int DeleteWidget(Widget widget)
+		{
+			ctx.Widgets.Remove(widget);
+			return ctx.SaveChanges();
+		}
+
+		/// <summary>
+		/// Deletes a list of widgets.
+		/// Returns -1 if SaveChanges() is delayed by unit of work.
+		/// </summary>
+		public int DeleteWidgets(IEnumerable<Widget> widgets)
+		{
+			foreach (Widget widget in widgets) ctx.Widgets.Remove(widget);
+			return ctx.SaveChanges();
+		}		
 	}
 }
