@@ -1,6 +1,7 @@
 ﻿using BAR.BL.Domain.Data;
 using BAR.BL.Domain.Items;
 using BAR.BL.Domain.Users;
+using BAR.BL.Domain.Widgets;
 using System;
 using System.Data.Entity;
 
@@ -40,6 +41,10 @@ namespace BAR.DAL.EF
 
 		//Item package
 		public DbSet<Item> Items { get; set; }
+
+		//Widget package
+		public DbSet<Dashboard> Dashboards { get; set; }
+		public DbSet<Widget> Widgets { get; set; }
 
 		/// <summary>
 		/// We overridden de standaard SaveChanges implementatie, omdat we een extra

@@ -8,10 +8,11 @@ using System.Threading.Tasks;
 
 namespace BAR.BL.Domain.Widgets
 {
-  public class Dashboard
-  {
-    public int DashboardId { get; set; }
-    public DashboardType DashboardType { get; set; }
-    public IEnumerable<Activity> Activities { get; set; }
-  }
+	public class Dashboard
+	{
+		public int DashboardId { get; set; }
+		public DashboardType DashboardType { get; set; }
+		public ICollection<Activity> Activities { get; set; }
+		public ICollection<Widget> Widgets { get; set; }
+	}
 }
