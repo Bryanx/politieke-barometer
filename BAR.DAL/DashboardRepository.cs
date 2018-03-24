@@ -88,7 +88,7 @@ namespace BAR.DAL
 
 		/// <summary>
 		/// Create's a new dashboard and persist that
-		/// subscription to the database.
+		/// to the database.
 		/// Returns -1 if SaveChanges() is delayed by unit of work.
 		/// </summary>
 		public int CreateDashboard(Dashboard dashboard)
@@ -99,12 +99,12 @@ namespace BAR.DAL
 
 		/// <summary>
 		/// Create's a new widget and persist that
-		/// subscription to the database.
+		/// to the database.
 		/// Returns -1 if SaveChanges() is delayed by unit of work.
 		/// 
 		/// WARNING
 		/// widget needs to linked to dashboard.
-		/// alternative: call read dashboard, add widget to the list, update dashboard
+		/// Alternative: call ReadDashboard(), add widget to the list, updateDashboard();
 		/// </summary>
 		public int CreateWidget(Widget widget, int dashboardId)
 		{
