@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BAR.BL.Domain.Widgets;
+using System.Data.Entity;
 
 namespace BAR.DAL
 {
@@ -101,8 +102,47 @@ namespace BAR.DAL
 		{
 			Dashboard dasboardToAddWidget = ReadDashboard(dashboardId);
 			dasboardToAddWidget.Widgets.Add(widget);
-			//return udpate dashboard
-			throw new NotImplementedException();
+			return UpdateDashboard(dasboardToAddWidget);
+		}
+
+		/// <summary>
+		/// Updates a specific dashboard.
+		/// Returns -1 if SaveChanges() is delayed by unit of work.
+		/// </summary>
+		public int UpdateDashboard(Dashboard dashboard)
+		{
+			ctx.Entry(dashboard).State = EntityState.Modified;
+			return ctx.SaveChanges();
+		}
+
+		/// <summary>
+		/// Updates a list of dashboards.
+		/// Returns -1 if SaveChanges() is delayed by unit of work.
+		/// </summary>
+		public int UpdateDashboards(IEnumerable<Dashboard> dashboards)
+		{
+			foreach (Dashboard dashboard in dashboards) ctx.Entry(dashboard).State = EntityState.Modified;
+			return ctx.SaveChanges();
+		}
+
+		/// <summary>
+		/// Updates a specific widget.
+		/// Returns -1 if SaveChanges() is delayed by unit of work.
+		/// </summary>
+		public int UpdateWidget(Widget widget)
+		{
+			ctx.Entry(widget).State = EntityState.Modified;
+			return ctx.SaveChanges();
+		}
+
+		/// <summary>
+		/// Updates a list of widgets.
+		/// Returns -1 if SaveChanges() is delayed by unit of work.
+		/// </summary>
+		public int UpdateWidgets(IEnumerable<Widget> widgets)
+		{
+			foreach (Widget widget in widgets) ctx.Entry(widget).State = EntityState.Modified;
+			return ctx.SaveChanges();
 		}
 	}
 }

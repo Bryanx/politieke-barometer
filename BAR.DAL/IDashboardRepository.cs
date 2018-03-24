@@ -22,7 +22,10 @@ namespace BAR.DAL
 		int CreateWidget(Widget widget, int dashboardId);
 
 		//Update
-		//...
+		int UpdateDashboard(Dashboard dashboard);
+		int UpdateDashboards(IEnumerable<Dashboard> dashboards);
+		int UpdateWidget(Widget widget);
+		int UpdateWidgets(IEnumerable<Widget> widgets);
 
 		//Delete
 		//...
