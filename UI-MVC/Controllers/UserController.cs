@@ -21,6 +21,18 @@ namespace BAR.UI.MVC.Controllers
 		public ActionResult Index(int id)
 		{
 			ViewBag.Id = id;
+			UserSubscribedPeopleDTO model = GetUserSubscribedModel(id);
+			return View("Dashboard","~/Views/Shared/Layouts/_MemberLayout.cshtml", model);
+		}
+
+		public ActionResult Settings(int id) {
+			ViewBag.Id = id;
+			UserSubscribedPeopleDTO model = GetUserSubscribedModel(id);
+			return View("Settings","~/Views/Shared/Layouts/_MemberLayout.cshtml", model);
+		}
+		
+	
+		private UserSubscribedPeopleDTO GetUserSubscribedModel(int id) {
 			User user = usrMgr.GetUser(id);
 			//TODO: These next statements should be in a method in BL
 			IEnumerable<Subscription> subs = subManager.GetSubscriptionsWithItemsForUser(id);
@@ -39,15 +51,10 @@ namespace BAR.UI.MVC.Controllers
 					Baseline = item.Baseline
 				});
 			}
-			UserSubscribedPeopleDTO model = new UserSubscribedPeopleDTO() {
+			return new UserSubscribedPeopleDTO() {
 				User = user,
 				People = people
 			};
-			return View("Dashboard","~/Views/Shared/Layouts/_MemberLayout.cshtml", model);
-		}
-
-		public ActionResult Settings(int id) {
-			return View("Settings","~/Views/Shared/Layouts/_MemberLayout.cshtml");
 		}
 	}
 }
