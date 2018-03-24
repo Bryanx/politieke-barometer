@@ -55,6 +55,15 @@ namespace BAR.DAL
 		}
 
 		/// <summary>
+		/// Gives back a user with their activities.
+		/// </summary>
+		public User readUserWithActivities(int userId)
+		{
+			return ctx.Users.Include(user => user.Activities)
+				.Where(user => user.UserId == userId).SingleOrDefault();
+		}
+
+		/// <summary>
 		/// Reads all the activities of all users.
 		/// </summary>
 		public IEnumerable<Activity> ReadAllActivities()
@@ -108,20 +117,39 @@ namespace BAR.DAL
 		/// <summary>
 		/// Deletes a given user from the database
 		/// Returns -1 if SaveChanges() is delayed by unit of work.
+		/// 
+		/// WARNING
+		/// if user is deleted, all the acitivies of a specific user also need to be deleted.
+		/// Dashboard of the user also needs to be deleted.
+		/// 
+		/// NOTE
+		/// Normally we don't delete a user, but we keep the information
 		/// </summary>
-		public int DeleteUser(User user)
+		public int DeleteUser(int userId)
 		{
-			ctx.Users.Remove(user);
+			User userToDelete = readUserWithActivities(userId);
+			ctx.Users.Remove(userToDelete);
 			return ctx.SaveChanges();
 		}
 
 		/// <summary>
 		/// Deletes a given list of users
 		/// Returns -1 if SaveChanges() is delayed by unit of work.
+		/// 
+		/// WARNING
+		/// if users are deleted, all the acitivies of the users also need to be deleted.
+		/// Dashboard of the users also needs to be deleted.
+		/// 
+		/// NOTE
+		/// Normally we don't delete a users, but we keep the information
 		/// </summary>
-		public int DeleteUsers(IEnumerable<User> users)
+		public int DeleteUsers(IEnumerable<int> userIds)
 		{
-			foreach (User user in users) ctx.Users.Remove(user);
+			foreach (int userid in userIds)
+			{
+				User userToDelete = readUserWithActivities(userid);
+				ctx.Users.Remove(userToDelete);
+			}
 			return ctx.SaveChanges();
 		}
 	}
