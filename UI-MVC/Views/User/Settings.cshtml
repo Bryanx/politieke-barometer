@@ -187,7 +187,7 @@
         </div>
         <div class="x_content">
             <br/>
-            <form method="post" action="/api/User/@ViewBag.Id" id="alertSettingsForm" class="form-horizontal">
+            <form method="post" action="/api/User/@ViewBag.Id" id="removeAccountForm" class="form-horizontal">
                 @Html.HiddenFor(model => model.User.UserId)
                 <div class="form-group">
                     <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
@@ -195,7 +195,7 @@
                         <br/>
                         <br/>
                         <button type="submit" class="btn btn-danger">Account verwijderen</button>
-                        <div id="alertSettingsMessage" style="display: inline"></div>
+                        <div id="removeAccountMessage" style="display: inline"></div>
                     </div>
                 </div>
             </form>
