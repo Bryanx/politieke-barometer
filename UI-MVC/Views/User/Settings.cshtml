@@ -55,7 +55,7 @@
                     </div>
                     <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">
-                            Geboortedatum <span class="required">*</span>
+                            Geboortedatum
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
                             @Html.TextBoxFor(model => model.User.DateOfBirth, new {@class = "form-control col-md-7 col-xs-12"})
@@ -88,7 +88,7 @@
                     @Html.HiddenFor(model => model.User.UserId)
                     <div class="form-group">
                         @Html.LabelFor(model => model.User.AlertsViaWebsite,"Alerts ontvangen op deze website", htmlAttributes: new { @class = "control-label col-md-6 col-sm-6 col-xs-12" })
-                        <div class="col-md-6 col-sm-6 col-xs-12">
+                        <div class="col-md-3 col-sm-3 col-xs-12">
                             @Html.DropDownListFor(model => model.User.AlertsViaWebsite, new List<SelectListItem>()
                             {
                                 new SelectListItem() { Text = "Ja", Value = "True" },
@@ -99,7 +99,7 @@
                     </div>
                     <div class="form-group">
                         @Html.LabelFor(model => model.User.AlertsViaEmail,"Alerts ontvangen per email", htmlAttributes: new { @class = "control-label col-md-6 col-sm-6 col-xs-12" })
-                        <div class="col-md-6 col-sm-6 col-xs-12">
+                        <div class="col-md-3 col-sm-3 col-xs-12">
                             @Html.DropDownListFor(model => model.User.AlertsViaEmail, new List<SelectListItem>()
                             {
                                 new SelectListItem() { Text = "Ja", Value = "True" },
@@ -110,7 +110,7 @@
                     </div>
                     <div class="form-group">
                         @Html.LabelFor(model => model.User.WeeklyReviewViaEmail,"Weekly review ontvangen per email", htmlAttributes: new { @class = "control-label col-md-6 col-sm-6 col-xs-12" })
-                        <div class="col-md-6 col-sm-6 col-xs-12">
+                        <div class="col-md-3 col-sm-3 col-xs-12">
                             @Html.DropDownListFor(model => model.User.WeeklyReviewViaEmail, new List<SelectListItem>()
                             {
                                 new SelectListItem() { Text = "Ja", Value = "True" },
@@ -130,7 +130,7 @@
         </div>
     </div>
 
-<!-- Account Settings -->
+    <!-- Account Settings -->
     <div class="col-md-6 col-xs-12">
         <div class="x_panel">
             <div class="x_title">
@@ -139,36 +139,69 @@
             </div>
             <div class="x_content">
                 <br/>
-                <form method="post" action="/api/User/@ViewBag.Id" id="alertSettingsForm" class="form-horizontal">
+                <form method="post" action="/api/User/@ViewBag.Id" id="accountSettingsForm" class="form-horizontal">
                     @Html.HiddenFor(model => model.User.UserId)
                     <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">
                             E-mailadres <span class="required">*</span>
                         </label>
-                        <div class="col-md-6 col-sm-6 col-xs-12">
-                            @Html.TextBoxFor(model => model.User.FirstName, "", new {type = "email", @class = "form-control col-md-7 col-xs-12"})
+                        <div class="col-md-9 col-sm-9 col-xs-12">
+                            @Html.TextBoxFor(model => model.User.EmailAdress, "", new {type = "email", @class = "form-control col-md-7 col-xs-12"})
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">
                             Wachtwoord <span class="required">*</span>
                         </label>
-                        <div class="col-md-6 col-sm-6 col-xs-12">
-                            @Html.TextBoxFor(model => model.User.LastName, "", new {@class = "form-control col-md-7 col-xs-12"})
+                        <div class="col-md-9 col-sm-9 col-xs-12">
+                            @Html.TextBoxFor(model => model.User.LastName, "", new {type = "password", @class = "form-control col-md-7 col-xs-12"})
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">
-                            Wachtwoord (herhaling) <span class="required">*</span>
+                            Wachtwoord <span class="required">*</span>
                         </label>
-                        <div class="col-md-6 col-sm-6 col-xs-12">
-                            @Html.TextBoxFor(model => model.User.LastName, "", new {@class = "form-control col-md-7 col-xs-12"})
+                        <div class="col-md-9 col-sm-9 col-xs-12">
+                            @Html.TextBoxFor(model => model.User.LastName, "", new {type = "password", @class = "form-control col-md-7 col-xs-12"})
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+                            <button type="submit" class="btn btn-dark">Opslaan</button>
+                            <div id="accountSettingsMessage" style="display: inline"></div>
                         </div>
                     </div>
                 </form>
             </div>
         </div>
     </div>
+</div>
+
+<!-- Remove account Settings -->
+<div class="row">
+<div class="col-md-6 col-xs-12">
+    <div class="x_panel">
+        <div class="x_title">
+            <h2>Account deactiveren</h2>
+            <div class="clearfix"></div>
+        </div>
+        <div class="x_content">
+            <br/>
+            <form method="post" action="/api/User/@ViewBag.Id" id="alertSettingsForm" class="form-horizontal">
+                @Html.HiddenFor(model => model.User.UserId)
+                <div class="form-group">
+                    <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+                        Let op. Bij het verwijderen van uw account worden al uw instellingen, grafieken en widgets verwijderd.
+                        <br/>
+                        <br/>
+                        <button type="submit" class="btn btn-danger">Account verwijderen</button>
+                        <div id="alertSettingsMessage" style="display: inline"></div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 </div>
 
 @section CustomJS{
