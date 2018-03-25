@@ -1,12 +1,14 @@
-﻿@using BAR.BL.Domain.Users
+﻿@using System.Web.Optimization
+@using BAR.BL.Domain.Users
 @using Microsoft.Ajax.Utilities
 @model BAR.UI.MVC.Models.UserSubscribedPeopleDTO
 
+<!-- User Settings -->
 <div class="row">
     <div class="col-md-12 col-sm-12 col-xs-12">
         <div class="x_panel">
             <div class="x_title">
-                <h2>User settings</h2>
+                <h2>Gebruiker instellingen</h2>
                 <div class="clearfix"></div>
             </div>
             <div class="x_content">
@@ -57,6 +59,7 @@
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
                             @Html.TextBoxFor(model => model.User.DateOfBirth, new {@class = "form-control col-md-7 col-xs-12"})
+                            @Html.ValidationMessageFor(model => model.User.DateOfBirth, "", new {@class = "text-danger"})
                         </div>
                     </div>
                     <div class="form-group">
@@ -65,7 +68,103 @@
                             <div id="messageSettings" style="display: inline"></div>
                         </div>
                     </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 
+<!-- Alert Settings -->
+<div class="row">
+    <div class="col-md-6 col-xs-12">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>Alert instellingen</h2>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+                <br/>
+                <form method="post" action="/api/User/@ViewBag.Id" id="alertSettingsForm" class="form-horizontal">
+                    @Html.HiddenFor(model => model.User.UserId)
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.User.AlertsViaWebsite,"Alerts ontvangen op deze website", htmlAttributes: new { @class = "control-label col-md-6 col-sm-6 col-xs-12" })
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            @Html.DropDownListFor(model => model.User.AlertsViaWebsite, new List<SelectListItem>()
+                            {
+                                new SelectListItem() { Text = "Ja", Value = "True" },
+                                new SelectListItem() { Text = "Nee", Value = "False"}
+                            }, new { @id = "flag", @class="form-control" })
+                            @Html.ValidationMessageFor(model => model.User.AlertsViaWebsite, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.User.AlertsViaEmail,"Alerts ontvangen per email", htmlAttributes: new { @class = "control-label col-md-6 col-sm-6 col-xs-12" })
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            @Html.DropDownListFor(model => model.User.AlertsViaEmail, new List<SelectListItem>()
+                            {
+                                new SelectListItem() { Text = "Ja", Value = "True" },
+                                new SelectListItem() { Text = "Nee", Value = "False"}
+                            }, new { @id = "flag", @class="form-control" })
+                            @Html.ValidationMessageFor(model => model.User.AlertsViaEmail, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.User.WeeklyReviewViaEmail,"Weekly review ontvangen per email", htmlAttributes: new { @class = "control-label col-md-6 col-sm-6 col-xs-12" })
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            @Html.DropDownListFor(model => model.User.WeeklyReviewViaEmail, new List<SelectListItem>()
+                            {
+                                new SelectListItem() { Text = "Ja", Value = "True" },
+                                new SelectListItem() { Text = "Nee", Value = "False"}
+                            }, new { @id = "flag", @class="form-control" })
+                            @Html.ValidationMessageFor(model => model.User.WeeklyReviewViaEmail, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-6">
+                            <button type="submit" class="btn btn-dark">Opslaan</button>
+                            <div id="alertSettingsMessage" style="display: inline"></div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+<!-- Account Settings -->
+    <div class="col-md-6 col-xs-12">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>Account instellingen</h2>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+                <br/>
+                <form method="post" action="/api/User/@ViewBag.Id" id="alertSettingsForm" class="form-horizontal">
+                    @Html.HiddenFor(model => model.User.UserId)
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">
+                            E-mailadres <span class="required">*</span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            @Html.TextBoxFor(model => model.User.FirstName, "", new {type = "email", @class = "form-control col-md-7 col-xs-12"})
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">
+                            Wachtwoord <span class="required">*</span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            @Html.TextBoxFor(model => model.User.LastName, "", new {@class = "form-control col-md-7 col-xs-12"})
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">
+                            Wachtwoord (herhaling) <span class="required">*</span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            @Html.TextBoxFor(model => model.User.LastName, "", new {@class = "form-control col-md-7 col-xs-12"})
+                        </div>
+                    </div>
                 </form>
             </div>
         </div>
@@ -74,8 +173,9 @@
 
 @section CustomJS{
     <script type="text/javascript">
+        //When the user settings form is submitted: post request to webapi
         $("#userSettingsForm").on("submit", function(event) {
-                var $this = $(this);
+            var $this = $(this);
             $.ajax({
                 type: $this.attr('method'),
                 url: $this.attr('action'),
@@ -100,7 +200,7 @@
                             .html("")
                             .css("display", "inline");
                     }));
-                event.preventDefault();
-            });
+            event.preventDefault();
+        });
     </script>
 }
