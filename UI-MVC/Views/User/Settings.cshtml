@@ -11,7 +11,6 @@
             </div>
             <div class="x_content">
                 <br/>
-
                 <form method="post" action="/api/User/@ViewBag.Id" id="userSettingsForm" class="form-horizontal">
                     @Html.HiddenFor(model => model.User.UserId)
                     <div class="form-group">
@@ -34,12 +33,21 @@
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">Geslacht</label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
                             <div id="gender" class="btn-group" data-toggle="buttons">
-                                <label class="btn btn-default" data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">
-                                    @Html.RadioButtonFor(model => model.User.Gender, Gender.MAN) Man
-                                </label>
-                                <label class="btn btn-default" data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">
-                                    @Html.RadioButtonFor(model => model.User.Gender, Gender.WOMAN) Vrouw
-                                </label>
+                                @if (Model.User.Gender == Gender.MAN) {
+                                    <label class="btn btn-default active">
+                                        @Html.RadioButtonFor(model => model.User.Gender, Gender.MAN) Man
+                                    </label>
+                                    <label class="btn btn-default">
+                                        @Html.RadioButtonFor(model => model.User.Gender, Gender.WOMAN) Vrouw
+                                    </label>
+                                } else {
+                                    <label class="btn btn-default">
+                                        @Html.RadioButtonFor(model => model.User.Gender, Gender.MAN) Man
+                                    </label>
+                                    <label class="btn btn-default active">
+                                        @Html.RadioButtonFor(model => model.User.Gender, Gender.WOMAN) Vrouw
+                                    </label>
+                                }
                             </div>
                         </div>
                     </div>
@@ -54,7 +62,7 @@
                     <div class="form-group">
                         <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
                             <button type="submit" class="btn btn-dark">Opslaan</button>
-                            <div id="settingsEnd" style="display: inline"></div>
+                            <div id="messageSettings" style="display: inline"></div>
                         </div>
                     </div>
 
@@ -66,17 +74,33 @@
 
 @section CustomJS{
     <script type="text/javascript">
-        (() => {
-            $("#userSettingsForm").on("submit", function (event) {
+        $("#userSettingsForm").on("submit", function(event) {
                 var $this = $(this);
-                $.ajax({
-                        type: $this.attr('method'),
-                        url: $this.attr('action'),
-                        data: $this.serialize(),
-                        succes: $("#settingsEnd").addClass('green').html("Saved.")
-                    }).fail(() => $("#settingsEnd").addClass('red').html("An error occured"));
-                event.preventDefault(); 
+            $.ajax({
+                type: $this.attr('method'),
+                url: $this.attr('action'),
+                data: $this.serialize(),
+                succes: $("#messageSettings")
+                    .addClass('green')
+                    .html("Saved.")
+                    .fadeOut(1000,
+                        function() {
+                            $(this)
+                                .removeClass()
+                                .html("")
+                                .css("display", "inline");
+                        })
+            }).fail(() => $("#messageSettings")
+                .addClass('red')
+                .html("Mislukt.")
+                .fadeOut(1000,
+                    function() {
+                        $(this)
+                            .removeClass()
+                            .html("")
+                            .css("display", "inline");
+                    }));
+                event.preventDefault();
             });
-        })($)
     </script>
 }
