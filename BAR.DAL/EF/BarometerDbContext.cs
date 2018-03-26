@@ -46,27 +46,27 @@ namespace BAR.DAL.EF
 		public DbSet<Dashboard> Dashboards { get; set; }
 		public DbSet<Widget> Widgets { get; set; }
 
-    protected override void OnModelCreating(DbModelBuilder modelBuilder)
-    {
-      //Very important! This class will call the same method from the base class
-      //which needs to be executed
-      base.OnModelCreating(modelBuilder);
+		protected override void OnModelCreating(DbModelBuilder modelBuilder)
+		{
+			//Very important! This class will call the same method from the base class
+			//which needs to be executed
+			base.OnModelCreating(modelBuilder);
 
-      //Change default names of Identity tables
-      modelBuilder.Entity<User>().ToTable("Users");
-      modelBuilder.Entity<IdentityUserRole>().ToTable("UserRoles");
-      modelBuilder.Entity<IdentityUserLogin>().ToTable("SocialLogins");
-      modelBuilder.Entity<IdentityRole>().ToTable("Roles");
-      modelBuilder.Entity<IdentityUserClaim>().ToTable("UserClaims");
-    }
+			//Change default names of Identity tables
+			modelBuilder.Entity<User>().ToTable("Users");
+			modelBuilder.Entity<IdentityUserRole>().ToTable("UserRoles");
+			modelBuilder.Entity<IdentityUserLogin>().ToTable("SocialLogins");
+			modelBuilder.Entity<IdentityRole>().ToTable("Roles");
+			modelBuilder.Entity<IdentityUserClaim>().ToTable("UserClaims");
+		}
 
-    /// <summary>
-    /// We overridden de standaard SaveChanges implementatie, omdat we een extra
-    /// controle willen inbouwen. Indien de boolean 'delaySave' op true staat, willen
-    /// we niet dat we ineens gegevens gaan bewaren, maar mag dit commando enkel en alleen
-    /// maar doorgevoerd worden vanuit de UnitOfWork klasse.
-    /// </summary>
-    public override int SaveChanges()
+		/// <summary>
+		/// We overridden de standaard SaveChanges implementatie, omdat we een extra
+		/// controle willen inbouwen. Indien de boolean 'delaySave' op true staat, willen
+		/// we niet dat we ineens gegevens gaan bewaren, maar mag dit commando enkel en alleen
+		/// maar doorgevoerd worden vanuit de UnitOfWork klasse.
+		/// </summary>
+		public override int SaveChanges()
 		{
 			if (delaySave) return -1;
 			return base.SaveChanges();
