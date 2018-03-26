@@ -5292,11 +5292,11 @@ $(document).ready(function () {
     $('#ip-primary').val(primary_color);
     $('#ip-secondary').val(secondary_color);
 
-    $('.search-field').on('focus', function (e) {
+    $('div.nav_menu .searchbar .search-field').on('focus', function (e) {
         $('.btn-search').css('background', 'var(--secondary-color');
         $('.btn-search').css('color', '#FFF');
     });
-    $('.search-field').on('focusout', function (e) {
+    $('div.nav_menu .searchbar .search-field').on('focusout', function (e) {
         $('.btn-search').css('background', '#f7f7f7');
         $('.btn-search').css('color', '#a5a9ac');
     });

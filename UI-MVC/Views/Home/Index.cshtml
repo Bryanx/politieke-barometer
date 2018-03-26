@@ -476,27 +476,12 @@
         $(window).scroll(() => {
             //After scrolling 100px from the top...
             if ($(window).scrollTop() >= 100) {
-                console.log("left");
                 $('.left_col').css('left', '0');
             } else {
-                if ($(window).width() < 1000) {                    
-                    console.log("-70");
-                    $('.left_col').css('left', '-70px');
-                } else {
-                    console.log("-100");
-                    $('.left_col').css('left', '-100px');
-                }
-            }
-        });
-        $(window).resize(() => {
-            console.log("resize");
-            if ($(window).width() < 1000) {
-                console.log("resize -70");
-                $('.left_col').css('left', '-70px');
-            } else {
-                console.log("resize -100");
                 $('.left_col').css('left', '-100px');
             }
         });
+
+        (() => $('.search-field').focus())($);
     </script>
 }

@@ -141,7 +141,7 @@ Search
 }
 
 .search-field:focus::placeholder {
-    color: white !important;
+    color: white;
 }
 
 .dropdown-search {

@@ -184,6 +184,19 @@ nav_menu {
     }
 }
 
+.search-field:focus::placeholder {
+       color:#73879c;
+}
+
+.search-field:focus {
+    background-color: #f7f7f7;
+    color:#73879c;
+}
+
+.search-field:focus::placeholder {
+    color: #73879c;
+}
+
 #menu_toggle, #menu_toggle > i {
     display: none;
 }
