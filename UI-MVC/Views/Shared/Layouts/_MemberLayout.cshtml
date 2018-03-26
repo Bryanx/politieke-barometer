@@ -30,7 +30,7 @@
 <body class="nav-sm">
 <div class="container body">
 <div class="main_container">
-<div class="col-md-3 left_col nav-fixed">
+<div class="col-md-3 left_col">
     <div class="left_col scroll-view">
         <div class="navbar" style="border: 0;">
             <a href='@Url.Action("Index","Home")'>
@@ -39,18 +39,6 @@
         </div>
 
         <div class="clearfix"></div>
-
-        <!-- menu profile quick info -->
-        <div class="profile clearfix">
-            <div class="profile_pic">
-                <img src="../../Content/build/images/img.jpg" alt="..." class="img-circle profile_img">
-            </div>
-            <div class="profile_info">
-                <span>Welkom,</span>
-                <h2>@Html.DisplayFor(modelItem => Model.User.FirstName)</h2>
-            </div>
-        </div>
-        <!-- /menu profile quick info -->
 
         <br/>
 
@@ -163,7 +151,6 @@
 
 <!-- Scripts -->
 @Scripts.Render("~/bundles/jquery","~/bundles/bootstrap","~/bundles/flot","~/bundles/dates","~/bundles/pnotify","~/bundles/timeago")
-
 <script type="text/javascript">
     
     //global variables

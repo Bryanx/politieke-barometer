@@ -287,13 +287,11 @@ Login
  */
 
 html, body {
-
     height: 100%;
-
+    background: var(--secondary-color);
 }
 
 .full-width {
-
     width: 100%;
 
 }
@@ -466,12 +464,11 @@ html, body {
 }
 
 .nav-sm .container.body .col-md-3.left_col {
-    min-height: 100%;
     width: 100px;
     padding: 0;
-    padding-top:70px;
     z-index: 2;
     position: absolute;
+    height: 100%;
 }
 
 .nav-sm .container.body .col-md-3.left_col.menu_fixed {
@@ -489,8 +486,9 @@ html, body {
 }
 
 .nav-sm .container.body .right_col {
-    padding: 10px 20px;
+    padding: 15px 20px;
     margin-left: 100px;
+    margin-top: 70px;
     z-index: 2;
 }
 
@@ -698,9 +696,10 @@ html, body {
     width: 100%;
     color: white;
     z-index: 99999;
-    position: relative !important;
+    position: fixed !important;
     height: 70px;
     box-shadow: 0 1px 4px 1px rgba(0, 0, 0, 0.05);
+    top: 0;
 }
 
 @media (min-width: 480px) {
@@ -881,7 +880,7 @@ body .container.body .right_col {
 
 .container {
     width: 100%;
-    padding: 0
+    padding: 0;
 }
 
 .navbar-nav > li > a,
@@ -905,6 +904,10 @@ body {
     font-size: 15px;
     font-weight: 400;
     line-height: 1.471;
+}
+
+.main_container {
+    position: relative;
 }
 
 .main_container .top_nav {
@@ -1252,7 +1255,7 @@ a:focus {
 }
 
 #alertDropdown {
-   padding: 16px 17px;
+   padding: 17px 17px 16px;
 }
 
 .nav.side-menu > li.current-page,
@@ -1312,7 +1315,6 @@ a:focus {
     padding-bottom: 12px;
     flex-grow:  0;
     flex-shrink:  0;
-    flex-basis:;
 }
 
 .nav.top_menu > li > a {

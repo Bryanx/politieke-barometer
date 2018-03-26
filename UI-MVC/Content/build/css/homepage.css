@@ -1,3 +1,8 @@
+html, body {
+    background: #F7F7F7;
+    height: 100%;
+}
+
 h1 {
     line-height: 45px;
 }
@@ -10,10 +15,16 @@ h1 {
 .left_col {
     left: -100px;
     transition: .5s;
+    position: fixed;
+    width: 100px;
 }
 
 #menu_toggle {
     display: inline;
+}
+
+.nav-sm .container.body .col-md-3.left_col {
+    padding-top: 0px;
 }
 
 .nav.navbar-nav > li > a.signup {
