@@ -87,7 +87,6 @@
 <!-- top navigation -->
 <div class="top_nav">
     <div class="nav_menu">
-        <nav>
             <div class="nav toggle">
                 <a id="menu_toggle">
                     <i class="fa fa-bars"></i>
@@ -96,10 +95,10 @@
 
             <!-- login -->
             <ul class="nav navbar-nav navbar-right">
-                <li class="">
-                    <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown"
+                <li class="user-profile">
+                    <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown"
                        aria-expanded="false">
-                        <img src="../../Content/build/images/img.jpg" alt="">@Html.DisplayFor(modelItem => Model.User.FirstName)
+                        <img src="../../Content/build/images/user.png" alt=""><span class="userNameNav">@Html.DisplayFor(modelItem => Model.User.FirstName)</span>
                         <span class=" fa fa-angle-down"></span>
                     </a>
                     <ul class="dropdown-menu dropdown-usermenu pull-right">
@@ -126,7 +125,7 @@
                 <li role="presentation" class="dropdown">
                     <a id="alertDropdown" href="javascript:;" class="dropdown-toggle info-number" data-toggle="dropdown"
                        aria-menu1expanded="false">
-                        <i class="fa fa-envelope-o"></i>
+                        <i class="fa fa-bell"></i>
                         <span id="alertCount" class="badge bg-green"></span>
                     </a>
                     <div class="dropdown-menu msg_list" role="menu">
@@ -141,7 +140,6 @@
             </ul>
             <!-- search -->
             @Html.Partial("Partials/SearchBar")
-        </nav>
     </div>
 </div>
 <!-- /top navigation -->
@@ -250,6 +248,7 @@
             }));
         var alertContent = $("<span />",
             {
+                "class": "font_16",
                 html: `<strong>${alert.Name}</strong> is nu trending!`
             });
         var alertTime = $("<span />",
@@ -306,7 +305,7 @@
                         "<li id=\"seeAllAlerts\"><div class=\"text-center\"><a><strong>Bekijk alle alerts</strong></a></div></li>");
                 } else { //No available alerts
                     $('#alertMenu').empty();
-                    $('#alertMenu').append("<li class=\"noAlertsAvailable\"><i class=\"fa fa-envelope-o\"></i></br>" +
+                    $('#alertMenu').append("<li class=\"noAlertsAvailable\"><i class=\"fa fa-bell\"></i></br>" +
                         "<strong>Je hebt geen alerts.</strong></br>" +
                         "Abonneer jezelf op personen, partijen of thema's</br>" +
                         "om te zien wanneer ze trending zijn.</li>");

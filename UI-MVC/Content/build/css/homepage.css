@@ -4,6 +4,7 @@ h1 {
 
 .nav_menu {
     background-color: transparent;
+    box-shadow: none;
 }
 
 .left_col {
@@ -15,7 +16,7 @@ h1 {
     display: inline;
 }
 
-.nav.navbar-nav > li > a.signup, .btn-search-submit {
+.nav.navbar-nav > li > a.signup {
     color: white !important;
     background-color: var(--primary-color);
     z-index: 2;
@@ -25,10 +26,6 @@ h1 {
     background-color: var(--primary-darkest);
 }
 
-nav > .searchbar {
-    display: none !important;
-}
-
 .searchbar {
     margin-left: auto;
     margin-right: auto;
@@ -36,16 +33,11 @@ nav > .searchbar {
     margin-top: 10px;
     max-width: 500px;
     padding: 0;
+    float:none;
 }
 
 .nav-sm span.fa {
     display: inline;
-}
-
-.navbar-search, .search-field, .btn-search {
-    height: 40px !important;
-    border-radius: 5px;
-    border: 0px;
 }
 
 nav_menu {
@@ -67,7 +59,7 @@ nav_menu {
     justify-content: center;
     align-items: center;
     padding: 0 !important;
-    margin-top: -70px;
+    margin-top: -100px;
     z-index: 1;
 }
 .logo {
@@ -181,6 +173,14 @@ nav_menu {
     }
 }
 
-#menu_toggle {
+#menu_toggle, #menu_toggle > i {
     display: none;
+}
+
+div.nav_menu .searchbar {
+    visibility:hidden;
+}
+
+.signup {
+    right: 60px;
 }
