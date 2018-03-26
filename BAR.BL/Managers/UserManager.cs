@@ -32,6 +32,15 @@ namespace BAR.BL.Managers
 		}
 
 		/// <summary>
+		/// Creates a user
+		/// </summary>
+		public int CreateUser(User user)
+		{
+			InitRepo();
+			return userRepo.CreateUser(user);
+		}
+		
+		/// <summary>
 		/// Returns a user for a specific userId.
 		/// </summary>
 		public User GetUser(int userId)

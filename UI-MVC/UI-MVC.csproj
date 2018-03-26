@@ -158,6 +158,7 @@
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\WidgetController.cs" />
     <Compile Include="DAL\WidgetManager.cs" />
+    <Compile Include="ExtensionMethods.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

@@ -93,7 +93,7 @@
                             {
                                 new SelectListItem() { Text = "Ja", Value = "True" },
                                 new SelectListItem() { Text = "Nee", Value = "False"}
-                            }, new { @id = "flag", @class="form-control" })
+                            }, new { @class="form-control" })
                             @Html.ValidationMessageFor(model => model.User.AlertsViaWebsite, "", new { @class = "text-danger" })
                         </div>
                     </div>
@@ -104,7 +104,7 @@
                             {
                                 new SelectListItem() { Text = "Ja", Value = "True" },
                                 new SelectListItem() { Text = "Nee", Value = "False"}
-                            }, new { @id = "flag", @class="form-control" })
+                            }, new { @class="form-control" })
                             @Html.ValidationMessageFor(model => model.User.AlertsViaEmail, "", new { @class = "text-danger" })
                         </div>
                     </div>
@@ -115,7 +115,7 @@
                             {
                                 new SelectListItem() { Text = "Ja", Value = "True" },
                                 new SelectListItem() { Text = "Nee", Value = "False"}
-                            }, new { @id = "flag", @class="form-control" })
+                            }, new { @class="form-control" })
                             @Html.ValidationMessageFor(model => model.User.WeeklyReviewViaEmail, "", new { @class = "text-danger" })
                         </div>
                     </div>
@@ -154,7 +154,7 @@
                             Wachtwoord <span class="required">*</span>
                         </label>
                         <div class="col-md-9 col-sm-9 col-xs-12">
-                            @Html.TextBoxFor(model => model.User.LastName, "", new {type = "password", @class = "form-control col-md-7 col-xs-12"})
+@*                            @Html.TextBoxFor(model => model.User.LastName, "", new {type = "password", @class = "form-control col-md-7 col-xs-12"})*@
                         </div>
                     </div>
                     <div class="form-group">
@@ -162,7 +162,7 @@
                             Wachtwoord <span class="required">*</span>
                         </label>
                         <div class="col-md-9 col-sm-9 col-xs-12">
-                            @Html.TextBoxFor(model => model.User.LastName, "", new {type = "password", @class = "form-control col-md-7 col-xs-12"})
+@*                            @Html.TextBoxFor(model => model.User.LastName, "", new {type = "password", @class = "form-control col-md-7 col-xs-12"})*@
                         </div>
                     </div>
                     <div class="form-group">
@@ -208,32 +208,42 @@
     <script type="text/javascript">
         //When the user settings form is submitted: post request to webapi
         $("#userSettingsForm").on("submit", function(event) {
-            var $this = $(this);
-            $.ajax({
-                type: $this.attr('method'),
-                url: $this.attr('action'),
-                data: $this.serialize(),
-                succes: $("#messageSettings")
-                    .addClass('green')
-                    .html("Saved.")
+            submitForm($(this), event, $("#messageSettings"));
+        });
+        $("#alertSettingsForm").on("submit", function(event) {
+            submitForm($(this), event, $("#alertSettingsMessage"));
+        });
+        $("#accountSettingsForm").on("submit", function(event) {
+            submitForm($(this), event, $("#accountSettingsMessage"));
+        });
+        
+        //Ajax call in generic function so every form can use the same code.
+        function submitForm($this, event, message) {
+                $.ajax({
+                    type: $this.attr('method'),
+                    url: $this.attr('action'),
+                    data: $this.serialize(),
+                    succes: message
+                        .addClass('green')
+                        .html("Saved.")
+                        .fadeOut(1000,
+                            function() {
+                                $(this)
+                                    .removeClass()
+                                    .html("")
+                                    .css("display", "inline");
+                            })
+                }).fail(() => message
+                    .addClass('red')
+                    .html("Mislukt.")
                     .fadeOut(1000,
                         function() {
                             $(this)
                                 .removeClass()
                                 .html("")
                                 .css("display", "inline");
-                        })
-            }).fail(() => $("#messageSettings")
-                .addClass('red')
-                .html("Mislukt.")
-                .fadeOut(1000,
-                    function() {
-                        $(this)
-                            .removeClass()
-                            .html("")
-                            .css("display", "inline");
-                    }));
-            event.preventDefault();
-        });
+                        }));
+                event.preventDefault();
+        }
     </script>
 }

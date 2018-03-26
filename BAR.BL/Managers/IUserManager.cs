@@ -11,6 +11,7 @@ namespace BAR.BL.Managers
   {
     User GetUser(int userId);
     IEnumerable<User> GetAllUsers();
+    int CreateUser(User user);
     void ChangeUser(User user);
   }
 }

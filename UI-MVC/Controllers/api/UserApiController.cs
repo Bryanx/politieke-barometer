@@ -57,14 +57,17 @@ namespace BAR.UI.MVC.Controllers {
         }
         
         /// <summary>
-        /// Updates a user.
+        /// Updates/Creates a user.
         /// </summary>
         [HttpPost]
         [Route("api/User/{id}")]
         public IHttpActionResult UpdateUser(UserSubscribedPeopleDTO usr) {
-            UserManager.ChangeUser(usr.User);
+            User user = UserManager.GetUser(usr.User.UserId);
+            User newUser = user.CopyTo<User>(usr.User);
+            UserManager.ChangeUser(newUser);
             return StatusCode(HttpStatusCode.NoContent);
         }
+        
         
         /// <summary>
         /// Updates an alert from a specific user. Sets its property isRead to true.
