@@ -416,4 +416,3 @@ ASALocalRun/
 
 # MSBuild Binary and Structured Log
 *.binlog
-package-lock\.json
