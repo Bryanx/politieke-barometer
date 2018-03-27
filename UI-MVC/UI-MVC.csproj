@@ -384,6 +384,9 @@
     <None Include="Scripts\jquery-3.3.1.slim.js" />
     <None Include="Scripts\jquery-3.3.1.slim.min.js" />
     <None Include="Scripts\jquery-3.3.1.slim.min.map" />
+    <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <None Include="Scripts\jquery.validate.js" />
+    <None Include="Scripts\jquery.validate.min.js" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BAR.BL.Model\Domain.csproj">
