@@ -27,7 +27,7 @@ namespace BAR.BL.Managers
 		/// Creates a widget based on the parameters
 		/// and links that widget to a dasboard.
 		/// </summary>
-		public Widget CreateWidget(int dashboardId, string title, int rowNbr, int colNbr, int rowspan, int colspan)
+		public Widget CreateWidget(int dashboardId, string title, int rowNbr, int colNbr, int rowspan = 1, int colspan = 1)
 		{
 			InitRepo();
 
@@ -77,7 +77,7 @@ namespace BAR.BL.Managers
 		/// <summary>
 		/// Updates the position of the widget.
 		/// </summary>
-		public Widget UpdateWidgetPos(int widgetId, int rowNbr, int colNbr, int rowspan, int colspan)
+		public Widget UpdateWidgetPos(int widgetId, int rowNbr, int colNbr, int rowspan = 1, int colspan = 1)
 		{
 			InitRepo();
 
