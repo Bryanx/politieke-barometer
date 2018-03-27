@@ -31,7 +31,7 @@ namespace BAR.DAL
 		//Delete
 		int DeleteDashboard(int dashboardId);
 		int DeleteDashboards(IEnumerable<int> dashboardIds);
-		int DeleteWidget(Widget widget);
+		int DeleteWidget(int widgetId);
 		int DeleteWidgets(IEnumerable<Widget> widgets);
 	}
 }
