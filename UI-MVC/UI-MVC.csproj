@@ -165,7 +165,6 @@
     <Compile Include="Models\AlertDTO.cs" />
     <Compile Include="Models\Graph.cs" />
     <Compile Include="Models\PersonDTO.cs" />
-    <Compile Include="Models\SubscriptionVM.cs" />
     <Compile Include="Models\UserSubscribedPeopleDTO.cs" />
     <Compile Include="Models\Widget.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -361,19 +360,6 @@
     <Content Include="Views\_ViewStart.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Content\bootstrap-theme.css" />
-    <None Include="Content\bootstrap-theme.css.map" />
-    <None Include="Content\bootstrap-theme.min.css" />
-    <None Include="Content\bootstrap-theme.min.css.map" />
-    <None Include="Content\bootstrap.css" />
-    <None Include="Content\bootstrap.css.map" />
-    <None Include="Content\bootstrap.min.css" />
-    <None Include="Content\bootstrap.min.css.map" />
-    <None Include="fonts\glyphicons-halflings-regular.eot" />
-    <None Include="fonts\glyphicons-halflings-regular.svg" />
-    <None Include="fonts\glyphicons-halflings-regular.ttf" />
-    <None Include="fonts\glyphicons-halflings-regular.woff" />
-    <None Include="fonts\glyphicons-halflings-regular.woff2" />
     <None Include="packages.config" />
     <None Include="Scripts\bootstrap.js" />
     <None Include="Scripts\bootstrap.min.js" />
