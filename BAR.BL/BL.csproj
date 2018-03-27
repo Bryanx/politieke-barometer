@@ -41,7 +41,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\SysController.cs" />
+    <Compile Include="Managers\DashboardManager.cs" />
     <Compile Include="Managers\DataManager.cs" />
+    <Compile Include="Managers\IDashboardManager.cs" />
     <Compile Include="Managers\IDataManager.cs" />
     <Compile Include="Managers\IItemManager.cs" />
     <Compile Include="Managers\ISubscriptionManager.cs" />
