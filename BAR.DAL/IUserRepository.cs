@@ -10,13 +10,13 @@ namespace BAR.DAL
 	public interface IUserRepository
 	{
 		//Read
-		User ReadUser(int userId);
-		User ReadUserWithActivities(int userId);
+		User ReadUser(string userId);
+		User ReadUserWithActivities(string userId);
 		IEnumerable<User> ReadAllUsers();
-		IEnumerable<User> ReadAllUsersForRole(int roleId);
+		IEnumerable<User> ReadAllUsersForRole(string roleId);
 		IEnumerable<User> ReadAllUsersForArea(int areaId);
 		IEnumerable<Activity> ReadAllActivities();
-		IEnumerable<Activity> ReadActivitiesForUser(int userId);
+		IEnumerable<Activity> ReadActivitiesForUser(string userId);
 
 		//Create
 		int CreateUser(User user);
@@ -26,7 +26,7 @@ namespace BAR.DAL
 		int UpdateUsers(IEnumerable<User> users);
 
 		//Delete
-		int DeleteUser(int userId);
-		int DeleteUsers(IEnumerable<int> userIds);
+		int DeleteUser(string userId);
+		int DeleteUsers(IEnumerable<string> userIds);
 	}
 }

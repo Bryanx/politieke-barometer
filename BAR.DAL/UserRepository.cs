@@ -4,12 +4,21 @@ using System.Collections.Generic;
 using System.Linq;
 using BAR.DAL.EF;
 using System.Data.Entity;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace BAR.DAL
 {
-	public class UserRepository : IUserRepository
+	public class UserRepository : UserStore<User>, IUserRepository
 	{
 		private BarometerDbContext ctx;
+
+		/// <summary>
+		/// Gets called by Owin at startup
+		/// </summary>
+		/// <param name="context"></param>
+		public UserRepository(BarometerDbContext context): base(context)
+		{
+		}
 
 		/// <summary>
 		/// If uow is present then the constructor
@@ -40,15 +49,27 @@ namespace BAR.DAL
 		/// <summary>
 		/// Returns a list of users for a spefic role
 		/// </summary>
-		public IEnumerable<User> ReadAllUsersForRole(int roleId)
+		public IEnumerable<User> ReadAllUsersForRole(string roleId)
 		{
-			return ctx.Users.Where(user => user.Role.RoleId == roleId).AsEnumerable();
+			List<User> userList = new List<User>();
+			IdentityUserRole role;
+			foreach (var user in ctx.Users)
+			{
+				role = null;
+				role = user.Roles.Where(x => x.RoleId.Equals(roleId)).SingleOrDefault();
+				if (role != null)
+				{
+					userList.Add(user);
+				}
+			}
+
+			return userList.AsEnumerable();
 		}
 
 		/// <summary>
 		/// Returns the user form a specific userId.
 		/// </summary>
-		public User ReadUser(int userId)
+		public User ReadUser(string userId)
 		{
 			var user = ctx.Users.Find(userId);
 			return user;
@@ -57,10 +78,10 @@ namespace BAR.DAL
 		/// <summary>
 		/// Gives back a user with their activities.
 		/// </summary>
-		public User ReadUserWithActivities(int userId)
+		public User ReadUserWithActivities(string userId)
 		{
 			return ctx.Users.Include(user => user.Activities)
-				.Where(user => user.UserId == userId).SingleOrDefault();
+				.Where(user => user.Id.Equals(userId)).SingleOrDefault();
 		}
 
 		/// <summary>
@@ -78,10 +99,10 @@ namespace BAR.DAL
 		/// <summary>
 		/// Reads all the activities for a specific user.
 		/// </summary>
-		public IEnumerable<Activity> ReadActivitiesForUser(int userId)
+		public IEnumerable<Activity> ReadActivitiesForUser(string userId)
 		{
 			return ctx.Users.Include(user => user.Activities).
-				Where(user => user.UserId == userId).SingleOrDefault().Activities.AsEnumerable();
+				Where(user => user.Id.Equals(userId)).SingleOrDefault().Activities.AsEnumerable();
 		}
 
 		/// <summary>
@@ -125,7 +146,7 @@ namespace BAR.DAL
 		/// NOTE
 		/// Normally we don't delete a user, but we keep the information
 		/// </summary>
-		public int DeleteUser(int userId)
+		public int DeleteUser(string userId)
 		{
 			User userToDelete = ReadUserWithActivities(userId);
 			ctx.Users.Remove(userToDelete);
@@ -143,9 +164,9 @@ namespace BAR.DAL
 		/// NOTE
 		/// Normally we don't delete a users, but we keep the information
 		/// </summary>
-		public int DeleteUsers(IEnumerable<int> userIds)
+		public int DeleteUsers(IEnumerable<string> userIds)
 		{
-			foreach (int userid in userIds)
+			foreach (string userid in userIds)
 			{
 				User userToDelete = ReadUserWithActivities(userid);
 				ctx.Users.Remove(userToDelete);
