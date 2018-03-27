@@ -10,6 +10,7 @@ h1 {
 .nav_menu {
     background-color: transparent;
     box-shadow: none;
+    position: relative !important;
 }
 
 .left_col {
