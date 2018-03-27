@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using BAR.BL.Domain.Widgets;
 using BAR.DAL;
+using BAR.BL.Domain.Users;
 
 namespace BAR.BL.Managers
 {
@@ -135,10 +136,37 @@ namespace BAR.BL.Managers
 		/// </summary>
 		public Dashboard CreateDashboard(int userId, DashboardType dashType)
 		{
+			uowManager = new UnitOfWorkManager();
 			InitRepo();
 
 			//Get user
-			return null;
+			UserManager userManager = new UserManager(uowManager);
+			User user = userManager.GetUser(userId);
+			if (user == null) return null;
+
+			//Create dashboard
+			Dashboard dashboard = new Dashboard()
+			{
+				DashboardType = dashType,
+				User = user,
+				Widgets = new List<Widget>(),
+				Activities = new List<Activity>()
+			};
+			
+			//Update database
+			dashboardRepo.UpdateDashboard(dashboard);
+			uowManager.Save();
+
+			return dashboard;
+		}
+
+		/// <summary>
+		/// Deletes a dashboard from the database.
+		/// </summary>
+		public void RemoveDashboard(int dashboardId)
+		{
+			InitRepo();
+			dashboardRepo.DeleteDashboard(dashboardId);
 		}
 
 		/// <summary>

@@ -24,5 +24,7 @@ namespace BAR.BL.Managers
 		Dashboard GetDashboard(int dashboardId);
 
 		Dashboard CreateDashboard(int userId, DashboardType dashType);
+
+		void RemoveDashboard(int dashboardId);
 	}
 }
