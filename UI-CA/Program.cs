@@ -13,7 +13,7 @@ using BAR.BL.Controllers;
 namespace BAR.UI.CA
 {
 	/// <summary>
-	/// In this class we test te logic of generating the alerts
+	/// In this class we test the logic of generating the alerts
 	/// in two waves. The second wave needs to generate new alerts
 	/// </summary>
 	public class Program
@@ -87,7 +87,7 @@ namespace BAR.UI.CA
 		}
 
 		/// <summary>
-		/// Determines wich code needs to be executed
+		/// Determines which code needs to be executed
 		/// when a user selects an option.
 		/// </summary>
 		private static void DetectMenuAction()
@@ -129,7 +129,7 @@ namespace BAR.UI.CA
 
 		/// <summary>
 		/// Generates all the alerts for users
-		/// based on new information form the item objects
+		/// based on new information from the item objects
 		/// </summary>
 		private static void AddAlertsForTrendingItems()
 		{

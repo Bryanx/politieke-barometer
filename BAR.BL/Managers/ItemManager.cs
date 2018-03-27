@@ -28,8 +28,8 @@ namespace BAR.BL.Managers
 		}
 
 		/// <summary>
-		/// Adjust the baseline of the given item
-		/// Adjust the trendingpercentage of the given item
+		/// Adjusts the baseline of the given item and 
+		/// Adjusts the trendingpercentage of the given item.
 		/// </summary>
 		public void DetermineTrending(int itemId)
 		{
@@ -49,10 +49,10 @@ namespace BAR.BL.Managers
 			int aantalBaseline = dataManager.GetNumberInfo(itemId, earliestInfoDate);
 			int aantalTrending = dataManager.GetNumberInfo(itemId, lastInfoDate.AddDays(-1));
 
-			// Calculate the baseline = number of information / number of days from since until today
+			// Calculate the baseline = number of information / number of days from the last update until now
 			double baseline = Convert.ToDouble(aantalBaseline) / Convert.ToDouble(period);
 
-			// Calculate the trendingpercentage = baseline / number of days from since until todayk
+			// Calculate the trendingpercentage = baseline / number of days from the last update until now.
 			double trendingPer = Convert.ToDouble(aantalTrending) / baseline;
 
 			itemRepo.UpdateItemTrending(itemId, baseline, trendingPer);

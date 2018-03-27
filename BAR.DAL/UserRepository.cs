@@ -38,7 +38,7 @@ namespace BAR.DAL
 		}
 
 		/// <summary>
-		/// Returns a list of users for a spefic role
+		/// Returns a list of users for a specific role
 		/// </summary>
 		public IEnumerable<User> ReadAllUsersForRole(int roleId)
 		{
@@ -46,7 +46,7 @@ namespace BAR.DAL
 		}
 
 		/// <summary>
-		/// Returns the user form a specific userId.
+		/// Returns the user from a specific userId.
 		/// </summary>
 		public User ReadUser(int userId)
 		{
@@ -55,7 +55,7 @@ namespace BAR.DAL
 		}
 
 		/// <summary>
-		/// Gives back a user with their activities.
+		/// Returns a user with their activities.
 		/// </summary>
 		public User ReadUserWithActivities(int userId)
 		{
@@ -123,7 +123,7 @@ namespace BAR.DAL
 		/// Dashboard of the user also needs to be deleted.
 		/// 
 		/// NOTE
-		/// Normally we don't delete a user, but we keep the information
+		/// Normally we don't delete a user, we disable his account but keep the information.
 		/// </summary>
 		public int DeleteUser(int userId)
 		{
@@ -132,18 +132,18 @@ namespace BAR.DAL
 			return ctx.SaveChanges();
 		}
 
-		/// <summary>
-		/// Deletes a given list of users
-		/// Returns -1 if SaveChanges() is delayed by unit of work.
-		/// 
-		/// WARNING
-		/// if users are deleted, all the acitivies of the users also need to be deleted.
-		/// Dashboard of the users also needs to be deleted.
-		/// 
-		/// NOTE
-		/// Normally we don't delete a users, but we keep the information
-		/// </summary>
-		public int DeleteUsers(IEnumerable<int> userIds)
+        /// <summary>
+        /// Deletes a given list of users
+        /// Returns -1 if SaveChanges() is delayed by unit of work.
+        /// 
+        /// WARNING
+        /// if users are deleted, all the acitivies of the users also need to be deleted.
+        /// Dashboard of the users also needs to be deleted.
+        /// 
+        /// NOTE
+        /// Normally we don't delete a users, we disable his account but keep the information.
+        /// </summary>
+        public int DeleteUsers(IEnumerable<int> userIds)
 		{
 			foreach (int userid in userIds)
 			{

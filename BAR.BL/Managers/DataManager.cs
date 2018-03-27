@@ -24,8 +24,7 @@ namespace BAR.BL.Managers
 		}
 
 		/// <summary>
-		/// Gets the number of informations of a specific given item
-		/// form since till now.
+		/// Gets the number of informations of a specific given item.
 		/// </summary
 		public int GetNumberInfo(int itemId, DateTime since)
 		{
@@ -45,7 +44,7 @@ namespace BAR.BL.Managers
 
 		/// <summary>
 		/// Determines if the repo needs a unit of work
-		/// if the unitOfWorkManager is present
+		/// if the unitOfWorkManager is present.
 		/// </summary>
 		private void InitRepo()
 		{

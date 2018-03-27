@@ -8,8 +8,8 @@ using BAR.BL.Domain.Items;
 namespace BAR.BL.Managers
 {
 	/// <summary>
-	/// Resposable for managing subcriptions
-	/// and their alerts
+	/// Responsable for managing subcriptions
+	/// and their alerts.
 	/// </summary>
 	public class SubscriptionManager : ISubscriptionManager
 	{
@@ -27,12 +27,12 @@ namespace BAR.BL.Managers
 
 		/// <summary>
 		/// Creates a new subscription for a specific user and item
-		/// with a given treshhold.
+		/// with a given threshold.
 		/// 
 		/// NOTE
 		/// THIS METHOD USES UNIT OF WORK
 		/// </summary>		
-		public void CreateSubscription(int userId, int itemId, int treshhold = 10)
+		public void CreateSubscription(int userId, int itemId, int threshold = 10)
 		{
 			uowManager = new UnitOfWorkManager();
 			InitRepo();
@@ -50,7 +50,7 @@ namespace BAR.BL.Managers
 			{
 				SubscribedUser = user,
 				SubscribedItem = item,
-				Treshhold = treshhold,
+				Threshold = threshold,
 				Alerts = new List<Alert>()
 			};
 			subRepo.CreateSubscription(sub);
@@ -59,8 +59,8 @@ namespace BAR.BL.Managers
 		}
 
 		/// <summary>
-		/// Generates new alerts for a specific item
-		/// When a user treshhold is met, a alert will bed generated
+		/// Generates new alerts for a specific item.
+		/// When a user's threshold is met, an alert will be generated.
 		/// </summary>
 		public void GenerateAlerts(int itemId)
 		{
@@ -73,8 +73,8 @@ namespace BAR.BL.Managers
 			IEnumerable<Subscription> subs = subRepo.ReadSubscritpionsWithAlerts(itemId);
 			foreach (Subscription sub in subs)
 			{
-				double tresh = sub.Treshhold;
-				if (per >=  tresh)
+				double thresh = sub.Threshold;
+				if (per >=  thresh)
 				{
 					sub.Alerts.Add(new Alert()
 					{
@@ -172,7 +172,7 @@ namespace BAR.BL.Managers
 		
 		/// <summary>
 		/// Determines if the repo needs a unit of work
-		/// if the unitOfWorkManager is present
+		/// if the unitOfWorkManager is present.
 		/// </summary>
 		private void InitRepo()
 		{
