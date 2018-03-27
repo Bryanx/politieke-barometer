@@ -9,6 +9,8 @@ namespace BAR.BL.Managers
 {
 	public interface IDashboardManager
 	{
+		Widget GetWidget(int widgetId);
 		IEnumerable<Widget> GetWidgets(int dashboardId);
+		Widget CreateWidget(int dashboardId, string title, int rowNbr, int colNbr, int rowspan, int colspan);
 	}
 }
