@@ -75,7 +75,7 @@ MODIFYABLE DASHBOARD
 }
 
 .small-logo {
-    background-image: url("../../images/logo-all-white-smaller.png");
+    background-image: url("../images/logo-all-white-smaller.png");
     background-repeat: no-repeat;
     background-size: contain;
     background-position: center center;
@@ -231,7 +231,7 @@ Login
 
 .google-btn {
     background-color: #3484EF;
-    background-image: url(../../images/google-icon-white.svg);
+    background-image: url(../images/google-icon-white.svg);
     background-position: 10px;
     background-repeat: no-repeat;
     background-size: 2em;
@@ -245,7 +245,7 @@ Login
 
 .fb-btn {
     background-color: #3C66AF;
-    background-image: url(../../images/facebook-app-logo-white.svg);
+    background-image: url(../images/facebook-app-logo-white.svg);
     background-position: 10px;
     background-repeat: no-repeat;
     background-size: 2em;
@@ -2221,7 +2221,7 @@ ul.msg_list li.noAlertsAvailable i {
 }
 
 .loadingAlerts {
-    background-image: url("../../images/loading.gif");
+    background-image: url("../images/loading.gif");
     background-repeat: no-repeat;
     background-size: cover;
     width: 50px;

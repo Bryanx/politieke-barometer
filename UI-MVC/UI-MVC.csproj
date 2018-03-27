@@ -176,7 +176,7 @@
     <Content Include="Content\build\css\bootstrap.css.map" />
     <Content Include="Content\build\css\bootstrap.min.css" />
     <Content Include="Content\build\css\bootstrap.min.css.map" />
-    <Content Include="Content\build\css\custom\custom.css" />
+    <Content Include="Content\build\css\custom.css" />
     <Content Include="Content\build\css\daterangepicker.css" />
     <Content Include="Content\build\css\daterangepicker.scss" />
     <Content Include="Content\build\css\font-awesome.css" />
