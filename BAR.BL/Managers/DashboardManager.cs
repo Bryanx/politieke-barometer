@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using BAR.BL.Domain.Widgets;
 using BAR.DAL;
 
@@ -34,11 +31,6 @@ namespace BAR.BL.Managers
 		{
 			InitRepo();
 
-			//get dashboard
-			Dashboard dashboard = dashboardRepo.ReadDashboard(dashboardId);
-			if (dashboard == null) return null;
-
-			//create widget
 			Widget widget = new Widget()
 			{
 				Title = title,
@@ -46,12 +38,9 @@ namespace BAR.BL.Managers
 				ColumnNumber = colNbr,
 				RowSpan = rowspan,
 				ColumnSpan = colspan,
-				Dashboard = dashboard
 			};
-			dashboard.Widgets.Add(widget);
-
-			//update database
-			dashboardRepo.UpdateDashboard(dashboard);
+			//repo autmaticly links widget to dashboard in repo
+			dashboardRepo.CreateWidget(widget, dashboardId);
 
 			return widget;
 		}
@@ -74,6 +63,49 @@ namespace BAR.BL.Managers
 		{
 			InitRepo();
 			return dashboardRepo.ReadWidgetsForDashboard(dashboardId);
+		}
+
+		/// <summary>
+		/// Updates the position of the widget.
+		/// </summary>
+		public Widget UpdateWidgetPos(int widgetId, int rowNbr, int colNbr, int rowspan, int colspan)
+		{
+			InitRepo();
+
+			//get widget
+			Widget widgetToUpdate = dashboardRepo.ReadWidget(widgetId);
+			if (widgetToUpdate == null) return null;
+
+			//update widget
+			widgetToUpdate.RowNumber = rowNbr;
+			widgetToUpdate.ColumnNumber = colNbr;
+			widgetToUpdate.RowSpan = rowspan;
+			widgetToUpdate.ColumnSpan = colspan;
+
+			//update database
+			dashboardRepo.UpdateWidget(widgetToUpdate);
+
+			return widgetToUpdate;
+		}
+
+		/// <summary>
+		/// Updates the position of the widget.
+		/// </summary>
+		public Widget UpdateWidgetTitle(int widgetId, string title)
+		{
+			InitRepo();
+
+			//get widget
+			Widget widgetToUpdate = dashboardRepo.ReadWidget(widgetId);
+			if (widgetToUpdate == null) return null;
+
+			//update widget
+			widgetToUpdate.Title = title;
+
+			//update database
+			dashboardRepo.UpdateWidget(widgetToUpdate);
+
+			return widgetToUpdate;
 		}
 
 		/// <summary>

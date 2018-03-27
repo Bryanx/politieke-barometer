@@ -110,6 +110,7 @@ namespace BAR.DAL
 		{
 			Dashboard dasboardToAddWidget = ReadDashboard(dashboardId);
 			dasboardToAddWidget.Widgets.Add(widget);
+			widget.Dashboard = dasboardToAddWidget;
 			return UpdateDashboard(dasboardToAddWidget);
 		}
 
