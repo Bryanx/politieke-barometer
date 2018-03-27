@@ -24,11 +24,11 @@ namespace BAR.DAL
 		/// If uow is present then the constructor
 		/// will get the context from uow.
 		/// </summary>
-		public UserRepository(UnitOfWork uow = null)
-		{
-			if (uow == null) ctx = new BarometerDbContext();
-			else ctx = uow.Context;
-		}
+		//public UserRepository(UnitOfWork uow = null)
+		//{
+		//	if (uow == null) ctx = new BarometerDbContext();
+		//	else ctx = uow.Context;
+		//}
 
 		/// <summary>
 		/// Returns a list of all users.

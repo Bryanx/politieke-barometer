@@ -46,6 +46,12 @@ namespace BAR.DAL.EF
 		public DbSet<Dashboard> Dashboards { get; set; }
 		public DbSet<Widget> Widgets { get; set; }
 
+		//Static method for creating and returning a BarometerDbContext (used as in Singleton pattern)
+		public static BarometerDbContext Create()
+		{
+			return new BarometerDbContext();
+		}
+
 		protected override void OnModelCreating(DbModelBuilder modelBuilder)
 		{
 			//Very important! This class will call the same method from the base class
