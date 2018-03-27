@@ -9,7 +9,7 @@ namespace BAR.DAL.EF
 {
     /// <summary>
     /// Configuration is needed to discard EF
-    /// in the UI and introduce loose coppeling.
+    /// in the UI and introduce loose coupeling.
     /// </summary>
     public class BarometerDbConfiguration : DbConfiguration
     {

@@ -9,20 +9,20 @@ namespace BAR.DAL.EF
 {
 	public class BarometerDbContext : DbContext
 	{
-		/// <summary>
-		/// DelaySave zorgt ervoor dat de gewone SaveChanges niet uitgevoerd wordt
-		/// indien deze boolean op true staat. 
-		/// Wordt gebruikt in het kader van het unit-of-work pattern. 
-		/// </summary>
-		private readonly bool delaySave;
+        /// <summary>
+        /// DelaySave makes sure that the SaveChanges method will not be executed
+        /// if this boolean is true.
+        /// Will be used with the UnitOfWork pattern.
+        /// </summary>
+        private readonly bool delaySave;
 
 		/// <summary>
 		/// Constructor of PizzaDbContext, loads the connectionstring based on de
 		/// configuration key "PizzaDB"
 		/// </summary>
-		/// Indicates is this context class operates under a Unit-Of-Work pattern. If so
+		/// Indicates if this context class operates under a Unit-Of-Work pattern. If so,
 		/// SaveChanges will not be executed on the database, instead you'll need to use
-		/// CommitChanges (but that method is not public available)
+		/// CommitChanges (but that method is not publicly available)
 		/// By default, unitOfWorkPresent will be set to false
 		/// </param>
 		public BarometerDbContext(bool useUOF = false) : base("BAR_DB")
@@ -46,25 +46,22 @@ namespace BAR.DAL.EF
 		public DbSet<Dashboard> Dashboards { get; set; }
 		public DbSet<Widget> Widgets { get; set; }
 
-		/// <summary>
-		/// We overridden de standaard SaveChanges implementatie, omdat we een extra
-		/// controle willen inbouwen. Indien de boolean 'delaySave' op true staat, willen
-		/// we niet dat we ineens gegevens gaan bewaren, maar mag dit commando enkel en alleen
-		/// maar doorgevoerd worden vanuit de UnitOfWork klasse.
-		/// </summary>
-		public override int SaveChanges()
+        /// <summary>
+        /// We override the standard SaveChanges implementation, because we want to build in more control.
+        /// If the boolean 'DelaySave' is true we want to save the changes through the UnitOfWork class.
+        /// </summary>
+        public override int SaveChanges()
 		{
 			if (delaySave) return -1;
 			return base.SaveChanges();
 		}
 
-		/// <summary>
-		/// Om onze wijzigingen toch te kunnen bewaren, voorzien we de CommitChanges methode.
-		/// Deze gaat de gegevens effectief in de databank bewaren indien de member 'delaySave'
-		/// effectief op true staat.
-		/// Indien je deze oproept zonder dat die boolean op true staat, wordt er een Exception gegooid
-		/// </summary>
-		internal int CommitChanges()
+        /// <summary>
+        /// This method is used to save changes. It will save all changes to the database if DelaySave is true.
+        /// effectief op true staat.
+        /// If DelaySave is false, there will be an exception.
+        /// </summary>
+        internal int CommitChanges()
 		{
 			if (delaySave)
 			{

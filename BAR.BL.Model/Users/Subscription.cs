@@ -10,7 +10,7 @@ namespace BAR.BL.Domain.Users
     public class Subscription
     {
         public int SubscriptionId { get; set; }
-        public int Treshhold { get; set; }
+        public int Threshold { get; set; }
         public DateTime? DateSubscribed { get; set; }
         public ICollection<Alert> Alerts { get; set; }
         public Item SubscribedItem { get; set; }
