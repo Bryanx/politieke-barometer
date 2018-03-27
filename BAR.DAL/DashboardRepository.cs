@@ -189,9 +189,9 @@ namespace BAR.DAL
 		/// Updates a specific widget.
 		/// Returns -1 if SaveChanges() is delayed by unit of work.
 		/// </summary>
-		public int DeleteWidget(Widget widget)
+		public int DeleteWidget(int widgetId)
 		{
-			ctx.Widgets.Remove(widget);
+			ctx.Widgets.Remove(ReadWidget(widgetId));
 			return ctx.SaveChanges();
 		}
 
