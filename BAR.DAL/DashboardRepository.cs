@@ -108,7 +108,7 @@ namespace BAR.DAL
 		/// </summary>
 		public int CreateWidget(Widget widget, int dashboardId)
 		{
-			Dashboard dasboardToAddWidget = ReadDashboard(dashboardId);
+			Dashboard dasboardToAddWidget = ReadDashboardWithWidgets(dashboardId);
 			dasboardToAddWidget.Widgets.Add(widget);
 			widget.Dashboard = dasboardToAddWidget;
 			return UpdateDashboard(dasboardToAddWidget);

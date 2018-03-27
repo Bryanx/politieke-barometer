@@ -21,6 +21,6 @@ namespace BAR.BL.Managers
 		void RemoveWidget(int widgetId);
 
 		//dashboards
-		//...
+		Dashboard GetDashboard(int dashboardId);
 	}
 }
