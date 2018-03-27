@@ -8,8 +8,9 @@
     <link rel="stylesheet" href="../../Content/build/css/gridstack.css"/>
 }
 
-<section class="col-md-12 col-sm-12 col-xs-12">
+<section>
     <h1>Widgets met grafieken</h1>
+    <hr/>
     <div>
         <button id="btnAddLine" class="btn btn-primary">Add line chart</button>
         <button id="btnAddPie" class="btn btn-primary">Add donut chart</button>
@@ -28,7 +29,12 @@
 
 <!-- Subscriptions -->
 @if (Model.People.Any()) {
-    @Html.Partial("Subscriptions", Model.People)
+    <section>
+        <br/>
+        <h1>Abonnementen</h1>
+        <hr/>
+        @Html.Partial("Subscriptions", Model.People)
+    </section>
 }
 
 <div style="visibility: hidden">space</div>
@@ -38,29 +44,28 @@
     <script type="text/javascript">
         
         //Subscriptions:
-        var subscriptionAmount = $('.subscription').length;
         
         function personUnsubscribe(itemId) {
             $('.subscription').click(function() {
                 var id = $(this).attr('data-id');
                 if (id === itemId.toString()) {
-                    if (subscriptionAmount === 1) {
+                    if (res.subscriptionAmount === 1) {
                         $('#peopleSubscriptions').empty();
-                        alertcount = 0;
+                        res.alertcount = 0;
                         updateAlertCount();
                     } else {
                         $(this).empty();
                     }
                 }
             });
-            $.ajax('/api/User/' + @ViewBag.Id + '/Subscription/' + itemId + '/Delete',
+            $.ajax(`/api/User/${@ViewBag.Id}/Subscription/${itemId}/Delete`,
                     {
                         type: 'DELETE',
                         dataType: 'json'
                     })
                 .done(() => {
                     loadAlerts();
-                    subscriptionAmount--;
+                    res.subscriptionAmount--;
                 })
                 //TODO: if FAIL proper error handling
                 .fail(() => alert('Subscriptions could not be loaded.'));
@@ -84,6 +89,6 @@
         (() => {
             $('#saveWidgets').on('click', saveGrid);
             loadWidgets();
-        })(jQuery);
+        })($);
     </script>
 }

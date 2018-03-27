@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using BAR.DAL.EF;
 using System.Data.Entity;
+using System.Data.Entity.Migrations;
 
 namespace BAR.DAL
 {

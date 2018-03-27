@@ -1,21 +1,34 @@
+html, body {
+    background: #F7F7F7;
+    height: 100%;
+}
+
 h1 {
     line-height: 45px;
 }
 
 .nav_menu {
     background-color: transparent;
+    box-shadow: none;
+    position: relative !important;
 }
 
 .left_col {
-    left: -70px;
+    left: -100px;
     transition: .5s;
+    position: fixed;
+    width: 100px;
 }
 
 #menu_toggle {
     display: inline;
 }
 
-.nav.navbar-nav > li > a.signup, .btn-search-submit {
+.nav-sm .container.body .col-md-3.left_col {
+    padding-top: 0px;
+}
+
+.nav.navbar-nav > li > a.signup {
     color: white !important;
     background-color: var(--primary-color);
     z-index: 2;
@@ -25,10 +38,6 @@ h1 {
     background-color: var(--primary-darkest);
 }
 
-nav > .searchbar {
-    display: none !important;
-}
-
 .searchbar {
     margin-left: auto;
     margin-right: auto;
@@ -36,16 +45,11 @@ nav > .searchbar {
     margin-top: 10px;
     max-width: 500px;
     padding: 0;
+    float:none;
 }
 
 .nav-sm span.fa {
     display: inline;
-}
-
-.navbar-search, .search-field, .btn-search {
-    height: 40px !important;
-    border-radius: 5px;
-    border: 0px;
 }
 
 nav_menu {
@@ -67,7 +71,7 @@ nav_menu {
     justify-content: center;
     align-items: center;
     padding: 0 !important;
-    margin-top: -70px;
+    margin-top: -100px;
     z-index: 1;
 }
 .logo {
@@ -181,6 +185,31 @@ nav_menu {
     }
 }
 
-#menu_toggle {
+.search-field:focus::placeholder {
+       color:#73879c;
+}
+
+.search-field:focus {
+    background-color: #f7f7f7;
+    color:#73879c;
+}
+
+.search-field:focus::placeholder {
+    color: #73879c;
+}
+
+#menu_toggle, #menu_toggle > i {
     display: none;
+}
+
+div.nav_menu .searchbar {
+    visibility:hidden;
+}
+
+.signup {
+    right: 60px;
+}
+
+.right_col {
+    margin-top: 0 !important;
 }
