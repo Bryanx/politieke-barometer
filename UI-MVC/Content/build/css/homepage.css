@@ -208,3 +208,7 @@ div.nav_menu .searchbar {
 .signup {
     right: 60px;
 }
+
+.right_col {
+    margin-top: 0 !important;
+}

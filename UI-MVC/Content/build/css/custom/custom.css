@@ -2213,11 +2213,10 @@ ul.msg_list li.noAlertsAvailable i {
     position: absolute;
     background: white;
     margin-top: 0;
-    border: 1px solid #D9DEE4;
     -webkit-box-shadow: none;
     right: 0;
     left: auto;
-    width: 220px
+    width: 220px;
 }
 
 .loadingAlerts {
