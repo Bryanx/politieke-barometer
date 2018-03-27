@@ -274,12 +274,6 @@
     <Content Include="data.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <None Include="Scripts\bootstrap.js" />
-    <None Include="Scripts\bootstrap.min.js" />
-    <None Include="Scripts\jquery-2.2.4-vsdoc.js" />
-    <None Include="Scripts\jquery-2.2.4.js" />
-    <None Include="Scripts\jquery-2.2.4.min.js" />
-    <None Include="Scripts\jquery-2.2.4.min.map" />
     <Content Include="Scripts\bootstrap-progressbar.js" />
     <Content Include="Scripts\bootstrap-progressbar.min.js" />
     <Content Include="Scripts\datatables\datatables.net-bs\css\dataTables.bootstrap.css" />
@@ -367,7 +361,29 @@
     <Content Include="Views\_ViewStart.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Content\bootstrap-theme.css" />
+    <None Include="Content\bootstrap-theme.css.map" />
+    <None Include="Content\bootstrap-theme.min.css" />
+    <None Include="Content\bootstrap-theme.min.css.map" />
+    <None Include="Content\bootstrap.css" />
+    <None Include="Content\bootstrap.css.map" />
+    <None Include="Content\bootstrap.min.css" />
+    <None Include="Content\bootstrap.min.css.map" />
+    <None Include="fonts\glyphicons-halflings-regular.eot" />
+    <None Include="fonts\glyphicons-halflings-regular.svg" />
+    <None Include="fonts\glyphicons-halflings-regular.ttf" />
+    <None Include="fonts\glyphicons-halflings-regular.woff" />
+    <None Include="fonts\glyphicons-halflings-regular.woff2" />
     <None Include="packages.config" />
+    <None Include="Scripts\bootstrap.js" />
+    <None Include="Scripts\bootstrap.min.js" />
+    <None Include="Scripts\jquery-3.3.1-vsdoc.js" />
+    <None Include="Scripts\jquery-3.3.1.js" />
+    <None Include="Scripts\jquery-3.3.1.min.js" />
+    <None Include="Scripts\jquery-3.3.1.min.map" />
+    <None Include="Scripts\jquery-3.3.1.slim.js" />
+    <None Include="Scripts\jquery-3.3.1.slim.min.js" />
+    <None Include="Scripts\jquery-3.3.1.slim.min.map" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BAR.BL.Model\Domain.csproj">

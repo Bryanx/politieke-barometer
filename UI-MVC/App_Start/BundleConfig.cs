@@ -4,7 +4,7 @@ namespace BAR.UI.MVC {
     public class BundleConfig {
 
         /// Script fields
-        private static readonly string Jquery ="~/Scripts/jquery-2.2.4.js";
+        private static readonly string Jquery ="~/Scripts/jquery-3.3.1.min.js";
         private static readonly string JqueryValidate ="~/Scripts/jquery.validate*";
         private static readonly string Timeago ="~/Scripts/jquery.timeago.js";
         private static readonly string Modernizr ="~/Scripts/modernizr-*";
