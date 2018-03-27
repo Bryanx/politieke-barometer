@@ -27,12 +27,13 @@ namespace BAR.BL.Managers
 		/// Creates a widget based on the parameters
 		/// and links that widget to a dasboard.
 		/// </summary>
-		public Widget CreateWidget(int dashboardId, string title, int rowNbr, int colNbr, int rowspan = 1, int colspan = 1)
+		public Widget CreateWidget(int dashboardId, WidgetType widgetType, string title, int rowNbr, int colNbr, int rowspan = 1, int colspan = 1)
 		{
 			InitRepo();
 
 			Widget widget = new Widget()
 			{
+				WidgetType = widgetType,
 				Title = title,
 				RowNumber = rowNbr,
 				ColumnNumber = colNbr,
@@ -124,6 +125,20 @@ namespace BAR.BL.Managers
 		{
 			InitRepo();
 			return dashboardRepo.ReadDashboardWithWidgets(dashboardId);
+		}
+
+		/// <summary>
+		/// Creates a new dashboard based on the user.
+		/// 
+		/// NOTE
+		/// THIS METHOD USES UNIT OF WORK
+		/// </summary>
+		public Dashboard CreateDashboard(int userId, DashboardType dashType)
+		{
+			InitRepo();
+
+			//Get user
+			return null;
 		}
 
 		/// <summary>
