@@ -15,8 +15,8 @@ namespace BAR.BL.Managers
 	/// </summary>
 	public class ItemManager : IItemManager
 	{
+		private IItemRepository itemRepo;
 		private UnitOfWorkManager uowManager;
-		private ItemRepository itemRepo;
 
 		/// <summary>
 		/// When unit of work is present, it will effect
@@ -85,6 +85,79 @@ namespace BAR.BL.Managers
 			InitRepo();
 			return itemRepo.ReadAllItems();
 		}
+
+		/// <summary>
+		/// Creates a new item based on the given parameters
+		/// </summary>
+		public Item CreateItem(ItemType itemType, string name, string description = "", string function = "", Category category = null)
+		{
+			InitRepo();
+
+			//the switch statement will determine if we need to make a
+			//Organisation, person or theme.
+			Item item;
+			switch (itemType)
+			{
+				case ItemType.Person:
+					item = new Person()
+					{
+						ItemType = itemType,
+						Name = name,
+						CreationDate = DateTime.Now,
+						LastUpdated = DateTime.Now,
+						Description = description,
+						NumberOfFollowers = 0,
+						TrendingPercentage = 0.0,
+						Baseline = 0.0,
+						Informations = new List<Information>(),
+						SocialMediaUrls = new List<SocialMediaUrl>(),
+						Function = function
+					};
+					break;
+				case ItemType.Organisation:
+					item = new Organisation()
+					{
+						ItemType = itemType,
+						Name = name,
+						CreationDate = DateTime.Now,
+						LastUpdated = DateTime.Now,
+						Description = description,
+						NumberOfFollowers = 0,
+						TrendingPercentage = 0.0,
+						Baseline = 0.0,
+						Informations = new List<Information>(),
+						SocialMediaUrls = new List<SocialMediaUrl>()
+					};
+					break;
+				case ItemType.Theme:
+					item = new Theme()
+					{
+						ItemType = itemType,
+						Name = name,
+						CreationDate = DateTime.Now,
+						LastUpdated = DateTime.Now,
+						Description = description,
+						NumberOfFollowers = 0,
+						TrendingPercentage = 0.0,
+						Baseline = 0.0,
+						Informations = new List<Information>(),
+						Category = category
+					};
+					break;
+				default:
+					item = null;
+					break;
+			}
+
+			if (item == null) return item;
+			else
+			{
+				itemRepo.CreateItem(item);
+				return item;
+			}
+
+		}
+
 
 		/// <summary>
 		/// Determines if the repo needs a unit of work
