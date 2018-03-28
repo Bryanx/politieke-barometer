@@ -16,11 +16,7 @@
     <div class="col-md-12 col-sm-12 col-xs-12 main-header-container">
         <div class="logo"></div>
         <div class="main-header">
-            <h1 class="main-header-title">Bekijk welke <span class="underline">politici</span> trending zijn<br/>op social media. 
-                <span id="app">{{ vueMessage }}
-                  <first-component v-bind:time="new Date()"></first-component>
-
-                    </span>
+            <h1 class="main-header-title">Bekijk welke <span class="underline">politici</span> trending zijn<br/>op social media.
                 </h1>
         </div>
         @Html.Partial("Partials/SearchBar")
@@ -477,7 +473,6 @@
 </div>
 
 @section CustomJS{
-    @Scripts.Render("~/Scripts/vue-dist/home.js")
     <script src="../../Scripts/mjolnic-bootstrap-colorpicker/dist/js/bootstrap-colorpicker.min.js"></script>
     <script type="text/javascript">
         $(window).scroll(() => {
