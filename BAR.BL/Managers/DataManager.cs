@@ -11,7 +11,7 @@ namespace BAR.BL.Managers
 	/// </summary>
 	public class DataManager : IDataManager
 	{
-		private InformationRepository infoRepo;
+		private IInformationRepository infoRepo;
 		private UnitOfWorkManager uowManager;
 
 		/// <summary>
