@@ -365,6 +365,10 @@
     <None Include="Scripts\jquery\jquery.validate-vsdoc.js" />
     <None Include="Scripts\jquery\jquery.validate.js" />
     <None Include="Scripts\jquery\jquery.validate.min.js" />
+    <None Include="Scripts\vue-resource.common.js" />
+    <None Include="Scripts\vue-resource.es2015.js" />
+    <None Include="Scripts\vue-resource.js" />
+    <None Include="Scripts\vue-resource.min.js" />
     <None Include="Scripts\vue.js" />
     <None Include="Scripts\vue.min.js" />
   </ItemGroup>
