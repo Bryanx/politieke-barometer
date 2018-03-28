@@ -14,7 +14,7 @@ namespace BAR.UI.MVC.Controllers {
         // Loads all Items into a DTO class. Then passes it on to the view.
         public ActionResult Index() {
             List<PersonDTO> personen = new List<PersonDTO>();
-            foreach (Item item in itemMgr.getAllItems()) {
+            foreach (Item item in itemMgr.GetAllItems()) {
                 personen.Add(new PersonDTO() {
                     ItemId = item.ItemId,
                     Name = item.Name,

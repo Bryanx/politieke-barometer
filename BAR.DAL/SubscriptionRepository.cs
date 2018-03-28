@@ -218,6 +218,6 @@ namespace BAR.DAL
 		{
 			IEnumerable<Subscription> subs = ReadSubscriptionsForItem(itemId);
 			return DeleteSubscriptions(subs);
-		}		
+		}
 	}
 }
