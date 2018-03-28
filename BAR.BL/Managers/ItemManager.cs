@@ -69,31 +69,14 @@ namespace BAR.BL.Managers
 		}
 
 		/// <summary>
-		/// Gives back all the persons
+		/// Gives back all the items of a specific type
 		/// </summary>
-		public IEnumerable<Item> GetAllPersons()
+		public IEnumerable<Item> GetItemsForType(ItemType type)
 		{
 			IEnumerable<Item> items = GetAllItems();
-			return items.Where(item => item.ItemType == ItemType.Person).AsEnumerable();
+			return items.Where(item => item.ItemType == type).AsEnumerable();
 		}
 
-		/// <summary>
-		/// Gives back all the organisations
-		/// </summary>
-		public IEnumerable<Item> GetAllOrganisations()
-		{
-			IEnumerable<Item> items = GetAllItems();
-			return items.Where(item => item.ItemType == ItemType.Organisation).AsEnumerable();
-		}
-
-		/// <summary>
-		/// Gives back all the Themes
-		/// </summary>
-		public IEnumerable<Item> GetAllThemes()
-		{
-			IEnumerable<Item> items = GetAllItems();
-			return items.Where(item => item.ItemType == ItemType.Theme).AsEnumerable();
-		}
 		/// <summary>
 		/// Gets the trending percentage of a specific item
 		/// </summary>
