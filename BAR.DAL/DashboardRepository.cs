@@ -164,7 +164,7 @@ namespace BAR.DAL
 		public int DeleteDashboard(int dashboardId)
 		{
 			Dashboard dashboardToDelete = ReadDashboardWithWidgets(dashboardId);
-			ctx.Dashboards.Remove(dashboardToDelete);
+			if (dashboardToDelete != null) ctx.Dashboards.Remove(dashboardToDelete);
 			return ctx.SaveChanges();
 		}
 
