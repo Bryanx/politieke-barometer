@@ -165,7 +165,6 @@
     <Compile Include="Models\AlertDTO.cs" />
     <Compile Include="Models\Graph.cs" />
     <Compile Include="Models\PersonDTO.cs" />
-    <Compile Include="Models\SubscriptionVM.cs" />
     <Compile Include="Models\UserSubscribedPeopleDTO.cs" />
     <Compile Include="Models\Widget.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -177,7 +176,7 @@
     <Content Include="Content\build\css\bootstrap.css.map" />
     <Content Include="Content\build\css\bootstrap.min.css" />
     <Content Include="Content\build\css\bootstrap.min.css.map" />
-    <Content Include="Content\build\css\custom\custom.css" />
+    <Content Include="Content\build\css\custom.scss" />
     <Content Include="Content\build\css\daterangepicker.css" />
     <Content Include="Content\build\css\daterangepicker.scss" />
     <Content Include="Content\build\css\font-awesome.css" />
@@ -185,13 +184,9 @@
     <Content Include="Content\build\css\font-awesome.min.css" />
     <Content Include="Content\build\css\gridstack.css" />
     <Content Include="Content\build\css\gridstack.min.css" />
-    <Content Include="Content\build\css\homepage.css" />
+    <Content Include="Content\build\css\homepage.scss" />
     <Content Include="Content\build\css\jqvmap.css" />
     <Content Include="Content\build\css\jqvmap.min.css" />
-    <Content Include="Content\build\css\nprogress.css" />
-    <Content Include="Content\build\css\pnotify.buttons.css" />
-    <Content Include="Content\build\css\pnotify.css" />
-    <Content Include="Content\build\css\pnotify.nonblock.css" />
     <Content Include="Content\build\fonts\fontawesome-webfont.eot" />
     <Content Include="Content\build\fonts\fontawesome-webfont.svg" />
     <Content Include="Content\build\fonts\fontawesome-webfont.ttf" />
@@ -266,7 +261,6 @@
     <Content Include="Content\themes\base\tabs.css" />
     <Content Include="Content\themes\base\theme.css" />
     <Content Include="Content\themes\base\tooltip.css" />
-    <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -274,12 +268,10 @@
     <Content Include="data.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <None Include="Scripts\bootstrap.js" />
-    <None Include="Scripts\bootstrap.min.js" />
-    <None Include="Scripts\jquery-2.2.4-vsdoc.js" />
-    <None Include="Scripts\jquery-2.2.4.js" />
-    <None Include="Scripts\jquery-2.2.4.min.js" />
-    <None Include="Scripts\jquery-2.2.4.min.map" />
+    <Content Include="Scripts\jquery\jquery-ui-1.11.0.js" />
+    <Content Include="Scripts\jquery\jquery-ui-1.11.0.min.js" />
+    <Content Include="Scripts\jquery\jquery-ui.js" />
+    <Content Include="Scripts\jquery\jquery.timeago.js" />
     <Content Include="Scripts\bootstrap-progressbar.js" />
     <Content Include="Scripts\bootstrap-progressbar.min.js" />
     <Content Include="Scripts\datatables\datatables.net-bs\css\dataTables.bootstrap.css" />
@@ -311,10 +303,6 @@
     <Content Include="Scripts\gridstack\gridstack.js" />
     <Content Include="Scripts\gridstack\gridstack.min.js" />
     <Content Include="Scripts\gridstack\gridstack.min.map" />
-    <Content Include="Scripts\jquery-ui-1.11.0.js" />
-    <Content Include="Scripts\jquery-ui-1.11.0.min.js" />
-    <Content Include="Scripts\jquery-ui.js" />
-    <Content Include="Scripts\jquery.timeago.js" />
     <Content Include="Scripts\jqvmap\jquery.vmap.belgium.js" />
     <Content Include="Scripts\jqvmap\jquery.vmap.js" />
     <Content Include="Scripts\jqvmap\jquery.vmap.min.js" />
@@ -338,9 +326,6 @@
     <Content Include="Scripts\morrisCharts\raphael.min.js" />
     <Content Include="Scripts\npm.js" />
     <Content Include="Scripts\nprogress.js" />
-    <Content Include="Scripts\pnotify\pnotify.buttons.js" />
-    <Content Include="Scripts\pnotify\pnotify.js" />
-    <Content Include="Scripts\pnotify\pnotify.nonblock.js" />
     <Content Include="Scripts\site.js" />
     <Content Include="Scripts\underscore.min.js" />
     <Content Include="Views\Shared\DisplayTemplates\PersonDTO.cshtml" />
@@ -368,6 +353,24 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="Scripts\bootstrap.js" />
+    <None Include="Scripts\bootstrap.min.js" />
+    <None Include="Scripts\jquery\jquery-3.3.1-vsdoc.js" />
+    <None Include="Scripts\jquery\jquery-3.3.1.js" />
+    <None Include="Scripts\jquery\jquery-3.3.1.min.js" />
+    <None Include="Scripts\jquery\jquery-3.3.1.min.map" />
+    <None Include="Scripts\jquery\jquery-3.3.1.slim.js" />
+    <None Include="Scripts\jquery\jquery-3.3.1.slim.min.js" />
+    <None Include="Scripts\jquery\jquery-3.3.1.slim.min.map" />
+    <None Include="Scripts\jquery\jquery.validate-vsdoc.js" />
+    <None Include="Scripts\jquery\jquery.validate.js" />
+    <None Include="Scripts\jquery\jquery.validate.min.js" />
+    <None Include="Scripts\vue-resource.common.js" />
+    <None Include="Scripts\vue-resource.es2015.js" />
+    <None Include="Scripts\vue-resource.js" />
+    <None Include="Scripts\vue-resource.min.js" />
+    <None Include="Scripts\vue.js" />
+    <None Include="Scripts\vue.min.js" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BAR.BL.Model\Domain.csproj">
@@ -399,7 +402,7 @@
         <WebProjectProperties>
           <UseIIS>True</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>51487</DevelopmentServerPort>
+          <DevelopmentServerPort>5000</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>http://localhost:51487/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
