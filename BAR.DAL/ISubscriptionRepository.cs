@@ -11,6 +11,8 @@ namespace BAR.DAL
 	{
 		//Read
 		Subscription ReadSubscription(int subscriptionId);
+		Subscription ReadSubscriptionWithAlerts(int subscriptionId);
+		Subscription ReadEditableSubscription(int subscriptionId);
 		IEnumerable<Subscription> ReadAllSubscriptions();
 		IEnumerable<Subscription> ReadSubscriptionsForItem(int itemId);
 		IEnumerable<Subscription> ReadSubscriptionsForUser(int userId);

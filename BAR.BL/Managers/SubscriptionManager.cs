@@ -188,7 +188,7 @@ namespace BAR.BL.Managers
 		public void RemoveSubscription(int subId)
 		{
 			InitRepo();
-			Subscription subscriptionToRemove = GetSubscription(subId);
+			Subscription subscriptionToRemove = subRepo.ReadEditableSubscription(subId);
 			if (subscriptionToRemove == null) return;
 
 			subscriptionToRemove.SubscribedItem.NumberOfFollowers--;
