@@ -231,6 +231,16 @@ namespace BAR.BL.Managers
 		}
 
 		/// <summary>
+		/// Removes an item from the database.
+		/// </summary>
+		public void RemoveItem(int itemId)
+		{
+			InitRepo();
+			Item itemToRemove = itemRepo.ReadItem(itemId);
+			if (itemToRemove != null) itemRepo.DeleteItem(itemToRemove);
+		}
+
+		/// <summary>
 		/// Determines if the repo needs a unit of work
 		/// if the unitOfWorkManager is present
 		/// </summary>
@@ -238,6 +248,6 @@ namespace BAR.BL.Managers
 		{
 			if (uowManager == null) itemRepo = new ItemRepository();
 			else itemRepo = new ItemRepository(uowManager.UnitOfWork);
-		}	
+		}		
 	}
 }

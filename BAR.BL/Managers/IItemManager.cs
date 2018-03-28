@@ -20,6 +20,8 @@ namespace BAR.BL.Managers
 		Item UpdateItemName(int itemId, string name);
 		Item UpdateItemDescription(int itemId, string description);
 
+		void RemoveItem(int itemId);
+
 		void DetermineTrending(int itemId);
 		double GetTrendingPer(int itemId);
 	}
