@@ -333,6 +333,7 @@
     <Content Include="Scripts\nprogress.js" />
     <Content Include="Scripts\site.js" />
     <Content Include="Scripts\underscore.min.js" />
+    <Content Include="Scripts\vue\user\index.js" />
     <Content Include="Views\Shared\DisplayTemplates\PersonDTO.cshtml" />
     <Content Include="Views\Shared\Layouts\_MemberLayout.cshtml" />
     <Content Include="Views\Shared\Layouts\_VisitorLayout.cshtml" />
