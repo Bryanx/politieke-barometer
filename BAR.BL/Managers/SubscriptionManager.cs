@@ -188,6 +188,11 @@ namespace BAR.BL.Managers
 		public void RemoveSubscription(int subId)
 		{
 			InitRepo();
+			Subscription subscriptionToRemove = GetSubscription(subId);
+			if (subscriptionToRemove == null) return;
+
+			subscriptionToRemove.SubscribedItem.NumberOfFollowers--;
+			//id parameter is needed to delete alers with subscription in repo
 			subRepo.DeleteSubscription(subId);
 		}
 
