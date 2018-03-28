@@ -15,6 +15,6 @@
 </script>
 <style>
     .time {
-        color: #F44336;
+        color: #72f458;
     }
 </style>

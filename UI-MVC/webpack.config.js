@@ -1,7 +1,7 @@
 var path = require('path')
 var webpack = require('webpack')
 var fs = require('fs')
-
+const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 var appBasePath = './Scripts/vue/'
 
 var jsEntries = {}
@@ -85,10 +85,6 @@ if (process.env.NODE_ENV === 'production') {
                 NODE_ENV: '"production"'
             }
         }),
-        new webpack.optimize.UglifyJsPlugin({
-            compress: {
-                warnings: false
-            }
-        })
+        new UglifyJSPlugin()
     ])
 }
