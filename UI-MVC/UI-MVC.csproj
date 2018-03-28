@@ -269,6 +269,10 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="package.json" />
+    <Content Include="Scripts\jquery\jquery-ui-1.11.0.js" />
+    <Content Include="Scripts\jquery\jquery-ui-1.11.0.min.js" />
+    <Content Include="Scripts\jquery\jquery-ui.js" />
+    <Content Include="Scripts\jquery\jquery.timeago.js" />
     <Content Include="Scripts\vue-dist\home.js" />
     <Content Include="Scripts\vue-dist\home.js.map" />
     <Content Include="Scripts\vue\home\FirstComponent.vue" />
@@ -304,10 +308,6 @@
     <Content Include="Scripts\gridstack\gridstack.js" />
     <Content Include="Scripts\gridstack\gridstack.min.js" />
     <Content Include="Scripts\gridstack\gridstack.min.map" />
-    <Content Include="Scripts\jquery-ui-1.11.0.js" />
-    <Content Include="Scripts\jquery-ui-1.11.0.min.js" />
-    <Content Include="Scripts\jquery-ui.js" />
-    <Content Include="Scripts\jquery.timeago.js" />
     <Content Include="Scripts\jqvmap\jquery.vmap.belgium.js" />
     <Content Include="Scripts\jqvmap\jquery.vmap.js" />
     <Content Include="Scripts\jqvmap\jquery.vmap.min.js" />
@@ -361,16 +361,16 @@
     <None Include="packages.config" />
     <None Include="Scripts\bootstrap.js" />
     <None Include="Scripts\bootstrap.min.js" />
-    <None Include="Scripts\jquery-3.3.1-vsdoc.js" />
-    <None Include="Scripts\jquery-3.3.1.js" />
-    <None Include="Scripts\jquery-3.3.1.min.js" />
-    <None Include="Scripts\jquery-3.3.1.min.map" />
-    <None Include="Scripts\jquery-3.3.1.slim.js" />
-    <None Include="Scripts\jquery-3.3.1.slim.min.js" />
-    <None Include="Scripts\jquery-3.3.1.slim.min.map" />
-    <None Include="Scripts\jquery.validate-vsdoc.js" />
-    <None Include="Scripts\jquery.validate.js" />
-    <None Include="Scripts\jquery.validate.min.js" />
+    <None Include="Scripts\jquery\jquery-3.3.1-vsdoc.js" />
+    <None Include="Scripts\jquery\jquery-3.3.1.js" />
+    <None Include="Scripts\jquery\jquery-3.3.1.min.js" />
+    <None Include="Scripts\jquery\jquery-3.3.1.min.map" />
+    <None Include="Scripts\jquery\jquery-3.3.1.slim.js" />
+    <None Include="Scripts\jquery\jquery-3.3.1.slim.min.js" />
+    <None Include="Scripts\jquery\jquery-3.3.1.slim.min.map" />
+    <None Include="Scripts\jquery\jquery.validate-vsdoc.js" />
+    <None Include="Scripts\jquery\jquery.validate.js" />
+    <None Include="Scripts\jquery\jquery.validate.min.js" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BAR.BL.Model\Domain.csproj">

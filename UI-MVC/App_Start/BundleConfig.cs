@@ -4,9 +4,9 @@ namespace BAR.UI.MVC {
     public class BundleConfig {
 
         /// Script fields
-        private static readonly string Jquery ="~/Scripts/jquery-3.3.1.min.js";
-        private static readonly string JqueryValidate ="~/Scripts/jquery.validate*";
-        private static readonly string Timeago ="~/Scripts/jquery.timeago.js";
+        private static readonly string Jquery ="~/Scripts/jquery/jquery-3.3.1.min.js";
+        private static readonly string JqueryValidate ="~/Scripts/jquery/jquery.validate*";
+        private static readonly string Timeago ="~/Scripts/jquery/jquery.timeago.js";
         private static readonly string Modernizr ="~/Scripts/modernizr-*";
         private static readonly string[] Bootstrap = {
             "~/Scripts/bootstrap.js",
@@ -16,7 +16,7 @@ namespace BAR.UI.MVC {
             "~/Scripts/fastclick.js"
         };
         private static readonly string[] Gridstack = {
-            "~/Scripts/jquery-ui.js",
+            "~/Scripts/jquery/jquery-ui.js",
             "~/Scripts/underscore.min.js",
             "~/Scripts/gridstack/gridstack.js",
             "~/Scripts/gridstack/gridstack.jQueryUI.js",
