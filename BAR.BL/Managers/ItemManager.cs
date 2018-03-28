@@ -133,6 +133,7 @@ namespace BAR.BL.Managers
 						ItemType = itemType,
 						Name = name,
 						CreationDate = DateTime.Now,
+						LastUpdatedInfo = DateTime.Now,
 						LastUpdated = DateTime.Now,
 						Description = description,
 						NumberOfFollowers = 0,
@@ -149,6 +150,7 @@ namespace BAR.BL.Managers
 						ItemType = itemType,
 						Name = name,
 						CreationDate = DateTime.Now,
+						LastUpdatedInfo = DateTime.Now,
 						LastUpdated = DateTime.Now,
 						Description = description,
 						NumberOfFollowers = 0,
@@ -164,6 +166,7 @@ namespace BAR.BL.Managers
 						ItemType = itemType,
 						Name = name,
 						CreationDate = DateTime.Now,
+						LastUpdatedInfo = DateTime.Now,
 						LastUpdated = DateTime.Now,
 						Description = description,
 						NumberOfFollowers = 0,
@@ -187,6 +190,45 @@ namespace BAR.BL.Managers
 
 		}
 
+		/// <summary>
+		/// Updates the name of a given item.
+		/// </summary>
+		public Item UpdateItemName(int itemId, string name)
+		{
+			InitRepo();
+
+			//Get item
+			Item itemToUpdate = itemRepo.ReadItem(itemId);
+			if (itemToUpdate == null) return null;
+
+			//Update item
+			itemToUpdate.Name = name;
+			itemToUpdate.LastUpdated = DateTime.Now;
+
+			//Update database
+			itemRepo.UpdateItem(itemToUpdate);
+			return itemToUpdate;
+		}
+
+		/// <summary>
+		/// Updates the description of a given item.
+		/// </summary>
+		public Item UpdateItemDescription(int itemId, string description)
+		{
+			InitRepo();
+
+			//Get item
+			Item itemToUpdate = itemRepo.ReadItem(itemId);
+			if (itemToUpdate == null) return null;
+
+			//Update item
+			itemToUpdate.Description = description;
+			itemToUpdate.LastUpdated = DateTime.Now;
+
+			//Update database
+			itemRepo.UpdateItem(itemToUpdate);
+			return itemToUpdate;
+		}
 
 		/// <summary>
 		/// Determines if the repo needs a unit of work

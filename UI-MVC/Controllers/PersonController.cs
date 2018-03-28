@@ -19,7 +19,7 @@ namespace BAR.UI.MVC.Controllers {
                     ItemId = item.ItemId,
                     Name = item.Name,
                     CreationDate = item.CreationDate,
-                    LastUpdated = item.LastUpdated,
+                    LastUpdated = item.LastUpdatedInfo,
                     Description = item.Description,
                     NumberOfFollowers = item.NumberOfFollowers,
                     TrendingPercentage = Math.Floor(item.TrendingPercentage),

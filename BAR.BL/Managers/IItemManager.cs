@@ -17,6 +17,9 @@ namespace BAR.BL.Managers
 
 		Item CreateItem(ItemType itemType, string name, string description = "", string function = "", Category category = null);
 
+		Item UpdateItemName(int itemId, string name);
+		Item UpdateItemDescription(int itemId, string description);
+
 		void DetermineTrending(int itemId);
 		double GetTrendingPer(int itemId);
 	}
