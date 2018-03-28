@@ -53,7 +53,8 @@ namespace BAR.BL.Managers
 		public void RemoveWidget(int widgetId)
 		{
 			InitRepo();
-			dashboardRepo.DeleteWidget(widgetId);
+			Widget widgetToRemove = dashboardRepo.ReadWidget(widgetId);
+			if (widgetToRemove != null) dashboardRepo.DeleteWidget(widgetToRemove);
 		}
 
 		/// <summary>
