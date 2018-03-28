@@ -5,13 +5,15 @@ namespace BAR.BL.Managers
 {
 	public interface ISubscriptionManager
 	{
-		void GenerateAlerts(int itemId);
+		//Subscriptions
+		void CreateSubscription(int userId, int itemId, int treshhold = 10);
 		IEnumerable<Alert> GetAllAlerts(int userId);
 		void RemoveAlert(int userId, int alertId);
-		void CreateSubscription(int userId, int itemId, int treshhold = 10);
+		
 		void ChangeAlertToRead(int id, int alertId);
 		IEnumerable<Subscription> GetSubscriptionsWithAlertsForUser(int userId);
 		IEnumerable<Subscription> GetSubscriptionsWithItemsForUser(int userId);
 		void RemoveSubscription(int subId);
+		void GenerateAlerts(int itemId);
 	}
 }

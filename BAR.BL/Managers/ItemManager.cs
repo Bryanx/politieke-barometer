@@ -193,7 +193,7 @@ namespace BAR.BL.Managers
 		/// <summary>
 		/// Updates the name of a given item.
 		/// </summary>
-		public Item UpdateItemName(int itemId, string name)
+		public Item ChangeItemName(int itemId, string name)
 		{
 			InitRepo();
 
@@ -213,7 +213,7 @@ namespace BAR.BL.Managers
 		/// <summary>
 		/// Updates the description of a given item.
 		/// </summary>
-		public Item UpdateItemDescription(int itemId, string description)
+		public Item ChangeItemDescription(int itemId, string description)
 		{
 			InitRepo();
 

@@ -17,8 +17,8 @@ namespace BAR.BL.Managers
 
 		Item CreateItem(ItemType itemType, string name, string description = "", string function = "", Category category = null);
 
-		Item UpdateItemName(int itemId, string name);
-		Item UpdateItemDescription(int itemId, string description);
+		Item ChangeItemName(int itemId, string name);
+		Item ChangeItemDescription(int itemId, string description);
 
 		void RemoveItem(int itemId);
 

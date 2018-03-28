@@ -80,7 +80,7 @@ namespace BAR.BL.Managers
 		/// <summary>
 		/// Updates the position of the widget.
 		/// </summary>
-		public Widget UpdateWidgetPos(int widgetId, int rowNbr, int colNbr, int rowspan = 1, int colspan = 1)
+		public Widget ChangeWidgetPos(int widgetId, int rowNbr, int colNbr, int rowspan = 1, int colspan = 1)
 		{
 			InitRepo();
 
@@ -103,7 +103,7 @@ namespace BAR.BL.Managers
 		/// <summary>
 		/// Updates the position of the widget.
 		/// </summary>
-		public Widget UpdateWidgetTitle(int widgetId, string title)
+		public Widget ChangeWidgetTitle(int widgetId, string title)
 		{
 			InitRepo();
 
