@@ -73,8 +73,7 @@ namespace BAR.BL.Managers
 		/// </summary>
 		public IEnumerable<Item> GetAllPersons()
 		{
-			InitRepo();
-			IEnumerable<Item> items = itemRepo.ReadAllItems();
+			IEnumerable<Item> items = GetAllItems();
 			return items.Where(item => item.ItemType == ItemType.Person).AsEnumerable();
 		}
 
@@ -83,7 +82,6 @@ namespace BAR.BL.Managers
 		/// </summary>
 		public IEnumerable<Item> GetAllOrganisations()
 		{
-			InitRepo();
 			IEnumerable<Item> items = GetAllItems();
 			return items.Where(item => item.ItemType == ItemType.Organisation).AsEnumerable();
 		}
@@ -93,7 +91,6 @@ namespace BAR.BL.Managers
 		/// </summary>
 		public IEnumerable<Item> GetAllThemes()
 		{
-			InitRepo();
 			IEnumerable<Item> items = GetAllItems();
 			return items.Where(item => item.ItemType == ItemType.Theme).AsEnumerable();
 		}
