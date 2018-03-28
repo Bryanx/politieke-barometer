@@ -109,7 +109,7 @@ namespace BAR.BL.Managers
 		/// <summary>
 		/// Returns a list of all items.
 		/// </summary>
-		public IEnumerable<Item> getAllItems()
+		public IEnumerable<Item> GetAllItems()
 		{
 			InitRepo();
 			return itemRepo.ReadAllItems();

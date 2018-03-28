@@ -10,7 +10,7 @@ namespace BAR.BL.Managers
 	public interface IItemManager
 	{	
 		Item GetItem(int itemId);
-		IEnumerable<Item> getAllItems();
+		IEnumerable<Item> GetAllItems();
 		IEnumerable<Item> GetAllPersons();
 		IEnumerable<Item> GetAllOrganisations();
 		IEnumerable<Item> GetAllThemes();
