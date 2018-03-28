@@ -18,7 +18,6 @@
         <button id="saveWidgets" class="btn btn-primary">Save changes</button>
     </div>
     <br>
-
     <!-- Widgets -->
     <div class="grid-stack" id="grid">
 
@@ -41,11 +40,9 @@
 
 @section CustomJS{
     @Scripts.Render("~/bundles/gridstack", "~/bundles/morrisCharts")
-    @Scripts.Render("~/Scripts/vue-dist/user.js")
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue-resource/1.2.0/vue-resource.js"></script>
     <script type="text/javascript">
-        
         //Subscriptions:
-        
         function personUnsubscribe(itemId) {
             $('.subscription').click(function() {
                 var id = $(this).attr('data-id');
@@ -73,7 +70,6 @@
         }
 
         //Widgets:
-
         //GET Request for widgets
         function loadWidgets() {
             $.ajax('/api/Widget',
