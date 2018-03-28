@@ -11,9 +11,13 @@ namespace BAR.BL.Managers
 	{	
 		Item GetItem(int itemId);
 		IEnumerable<Item> getAllItems();
-		void DetermineTrending(int itemId);
-		double GetTrendingPer(int itemId);
+		IEnumerable<Item> GetAllPersons();
+		IEnumerable<Item> GetAllOrganisations();
+		IEnumerable<Item> GetAllThemes();
 
 		Item CreateItem(ItemType itemType, string name, string description = "", string function = "", Category category = null);
+
+		void DetermineTrending(int itemId);
+		double GetTrendingPer(int itemId);
 	}
 }

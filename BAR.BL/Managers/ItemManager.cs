@@ -69,6 +69,35 @@ namespace BAR.BL.Managers
 		}
 
 		/// <summary>
+		/// Gives back all the persons
+		/// </summary>
+		public IEnumerable<Item> GetAllPersons()
+		{
+			InitRepo();
+			IEnumerable<Item> items = itemRepo.ReadAllItems();
+			return items.Where(item => item.ItemType == ItemType.Person).AsEnumerable();
+		}
+
+		/// <summary>
+		/// Gives back all the organisations
+		/// </summary>
+		public IEnumerable<Item> GetAllOrganisations()
+		{
+			InitRepo();
+			IEnumerable<Item> items = itemRepo.ReadAllItems();
+			return items.Where(item => item.ItemType == ItemType.Organisation).AsEnumerable();
+		}
+
+		/// <summary>
+		/// Gives back all the Themes
+		/// </summary>
+		public IEnumerable<Item> GetAllThemes()
+		{
+			InitRepo();
+			IEnumerable<Item> items = itemRepo.ReadAllItems();
+			return items.Where(item => item.ItemType == ItemType.Theme).AsEnumerable();
+		}
+		/// <summary>
 		/// Gets the trending percentage of a specific item
 		/// </summary>
 		public double GetTrendingPer(int itemId)
@@ -167,6 +196,6 @@ namespace BAR.BL.Managers
 		{
 			if (uowManager == null) itemRepo = new ItemRepository();
 			else itemRepo = new ItemRepository(uowManager.UnitOfWork);
-		}
+		}	
 	}
 }
