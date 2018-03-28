@@ -53,7 +53,8 @@ namespace BAR.BL.Managers
 		public void RemoveWidget(int widgetId)
 		{
 			InitRepo();
-			dashboardRepo.DeleteWidget(widgetId);
+			Widget widgetToRemove = GetWidget(widgetId);
+			if (widgetToRemove != null) dashboardRepo.DeleteWidget(widgetToRemove);
 		}
 
 		/// <summary>
@@ -79,12 +80,12 @@ namespace BAR.BL.Managers
 		/// <summary>
 		/// Updates the position of the widget.
 		/// </summary>
-		public Widget UpdateWidgetPos(int widgetId, int rowNbr, int colNbr, int rowspan = 1, int colspan = 1)
+		public Widget ChangeWidgetPos(int widgetId, int rowNbr, int colNbr, int rowspan = 1, int colspan = 1)
 		{
 			InitRepo();
 
 			//get widget
-			Widget widgetToUpdate = dashboardRepo.ReadWidget(widgetId);
+			Widget widgetToUpdate = GetWidget(widgetId);
 			if (widgetToUpdate == null) return null;
 
 			//update widget
@@ -102,12 +103,12 @@ namespace BAR.BL.Managers
 		/// <summary>
 		/// Updates the position of the widget.
 		/// </summary>
-		public Widget UpdateWidgetTitle(int widgetId, string title)
+		public Widget ChangeWidgetTitle(int widgetId, string title)
 		{
 			InitRepo();
 
 			//get widget
-			Widget widgetToUpdate = dashboardRepo.ReadWidget(widgetId);
+			Widget widgetToUpdate = GetWidget(widgetId);
 			if (widgetToUpdate == null) return null;
 
 			//update widget

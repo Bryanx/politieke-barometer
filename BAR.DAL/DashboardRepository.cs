@@ -164,7 +164,7 @@ namespace BAR.DAL
 		public int DeleteDashboard(int dashboardId)
 		{
 			Dashboard dashboardToDelete = ReadDashboardWithWidgets(dashboardId);
-			ctx.Dashboards.Remove(dashboardToDelete);
+			if (dashboardToDelete != null) ctx.Dashboards.Remove(dashboardToDelete);
 			return ctx.SaveChanges();
 		}
 
@@ -189,9 +189,9 @@ namespace BAR.DAL
 		/// Updates a specific widget.
 		/// Returns -1 if SaveChanges() is delayed by unit of work.
 		/// </summary>
-		public int DeleteWidget(int widgetId)
+		public int DeleteWidget(Widget widget)
 		{
-			ctx.Widgets.Remove(ReadWidget(widgetId));
+			ctx.Widgets.Remove(widget);
 			return ctx.SaveChanges();
 		}
 

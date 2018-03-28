@@ -15,8 +15,8 @@ namespace BAR.BL.Managers
 	/// </summary>
 	public class ItemManager : IItemManager
 	{
+		private IItemRepository itemRepo;
 		private UnitOfWorkManager uowManager;
-		private ItemRepository itemRepo;
 
 		/// <summary>
 		/// When unit of work is present, it will effect
@@ -69,6 +69,15 @@ namespace BAR.BL.Managers
 		}
 
 		/// <summary>
+		/// Gives back all the items of a specific type
+		/// </summary>
+		public IEnumerable<Item> GetItemsForType(ItemType type)
+		{
+			IEnumerable<Item> items = GetAllItems();
+			return items.Where(item => item.ItemType == type).AsEnumerable();
+		}
+
+		/// <summary>
 		/// Gets the trending percentage of a specific item
 		/// </summary>
 		public double GetTrendingPer(int itemId)
@@ -80,10 +89,135 @@ namespace BAR.BL.Managers
 		/// <summary>
 		/// Returns a list of all items.
 		/// </summary>
-		public IEnumerable<Item> getAllItems()
+		public IEnumerable<Item> GetAllItems()
 		{
 			InitRepo();
 			return itemRepo.ReadAllItems();
+		}
+
+		/// <summary>
+		/// Creates a new item based on the given parameters
+		/// </summary>
+		public Item CreateItem(ItemType itemType, string name, string description = "", string function = "", Category category = null)
+		{
+			InitRepo();
+
+			//the switch statement will determine if we need to make a
+			//Organisation, person or theme.
+			Item item;
+			switch (itemType)
+			{
+				case ItemType.Person:
+					item = new Person()
+					{
+						ItemType = itemType,
+						Name = name,
+						CreationDate = DateTime.Now,
+						LastUpdatedInfo = DateTime.Now,
+						LastUpdated = DateTime.Now,
+						Description = description,
+						NumberOfFollowers = 0,
+						TrendingPercentage = 0.0,
+						Baseline = 0.0,
+						Informations = new List<Information>(),
+						SocialMediaUrls = new List<SocialMediaUrl>(),
+						Function = function
+					};
+					break;
+				case ItemType.Organisation:
+					item = new Organisation()
+					{
+						ItemType = itemType,
+						Name = name,
+						CreationDate = DateTime.Now,
+						LastUpdatedInfo = DateTime.Now,
+						LastUpdated = DateTime.Now,
+						Description = description,
+						NumberOfFollowers = 0,
+						TrendingPercentage = 0.0,
+						Baseline = 0.0,
+						Informations = new List<Information>(),
+						SocialMediaUrls = new List<SocialMediaUrl>()
+					};
+					break;
+				case ItemType.Theme:
+					item = new Theme()
+					{
+						ItemType = itemType,
+						Name = name,
+						CreationDate = DateTime.Now,
+						LastUpdatedInfo = DateTime.Now,
+						LastUpdated = DateTime.Now,
+						Description = description,
+						NumberOfFollowers = 0,
+						TrendingPercentage = 0.0,
+						Baseline = 0.0,
+						Informations = new List<Information>(),
+						Category = category
+					};
+					break;
+				default:
+					item = null;
+					break;
+			}
+
+			if (item == null) return item;
+			else
+			{
+				itemRepo.CreateItem(item);
+				return item;
+			}
+
+		}
+
+		/// <summary>
+		/// Updates the name of a given item.
+		/// </summary>
+		public Item ChangeItemName(int itemId, string name)
+		{
+			InitRepo();
+
+			//Get item
+			Item itemToUpdate = GetItem(itemId);
+			if (itemToUpdate == null) return null;
+
+			//Update item
+			itemToUpdate.Name = name;
+			itemToUpdate.LastUpdated = DateTime.Now;
+
+			//Update database
+			itemRepo.UpdateItem(itemToUpdate);
+			return itemToUpdate;
+		}
+
+		/// <summary>
+		/// Updates the description of a given item.
+		/// </summary>
+		public Item ChangeItemDescription(int itemId, string description)
+		{
+			InitRepo();
+
+			//Get item
+			Item itemToUpdate = GetItem(itemId);
+			if (itemToUpdate == null) return null;
+
+			//Update item
+			itemToUpdate.Description = description;
+			itemToUpdate.LastUpdated = DateTime.Now;
+
+			//Update database
+			itemRepo.UpdateItem(itemToUpdate);
+			return itemToUpdate;
+		}
+
+		/// <summary>
+		/// Removes an item from the database.
+		/// </summary>
+		public void RemoveItem(int itemId)
+		{
+			InitRepo();
+			Item itemToRemove = GetItem(itemId);
+			if (itemToRemove != null) itemRepo.DeleteItem(itemToRemove);
 		}
 
 		/// <summary>
@@ -94,6 +228,6 @@ namespace BAR.BL.Managers
 		{
 			if (uowManager == null) itemRepo = new ItemRepository();
 			else itemRepo = new ItemRepository(uowManager.UnitOfWork);
-		}
+		}		
 	}
 }

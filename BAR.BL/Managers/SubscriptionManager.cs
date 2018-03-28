@@ -13,7 +13,7 @@ namespace BAR.BL.Managers
 	/// </summary>
 	public class SubscriptionManager : ISubscriptionManager
 	{
-		private SubscriptionRepository subRepo;
+		private ISubscriptionRepository subRepo;
 		private UnitOfWorkManager uowManager;
 
 		/// <summary>
@@ -32,7 +32,7 @@ namespace BAR.BL.Managers
 		/// NOTE
 		/// THIS METHOD USES UNIT OF WORK
 		/// </summary>		
-		public void CreateSubscription(int userId, int itemId, int threshold = 10)
+		public Subscription CreateSubscription(int userId, int itemId, int threshold = 10)
 		{
 			uowManager = new UnitOfWorkManager();
 			InitRepo();
@@ -40,10 +40,12 @@ namespace BAR.BL.Managers
 			//get user
 			IUserManager userManager = new UserManager(uowManager);
 			User user = userManager.GetUser(userId);
+			if (user == null) return null;
 
 			//get item
 			IItemManager itemManager = new ItemManager(uowManager);
 			Item item = itemManager.GetItem(itemId);
+			if (item == null) return null;
 
 			//make subscription		
 			Subscription sub = new Subscription()
@@ -51,11 +53,14 @@ namespace BAR.BL.Managers
 				SubscribedUser = user,
 				SubscribedItem = item,
 				Threshold = threshold,
+				DateSubscribed = DateTime.Now,
 				Alerts = new List<Alert>()
 			};
+			item.NumberOfFollowers++;
 			subRepo.CreateSubscription(sub);
-
 			uowManager.Save();
+
+			return sub;
 		}
 
 		/// <summary>
@@ -74,17 +79,21 @@ namespace BAR.BL.Managers
 			foreach (Subscription sub in subs)
 			{
 				double thresh = sub.Threshold;
-				if (per >=  thresh)
+				if (per >= thresh)
 				{
 					sub.Alerts.Add(new Alert()
 					{
 						Subscription = sub,
+						AlertType = new AlertType()
+						{
+							Name = "Trending alert"
+						},
 						TimeStamp = DateTime.Now,
 						IsRead = false
 					});
 					subsToUpdate.Add(sub);
 				}
-				
+
 			}
 			subRepo.UpdateSubscriptions(subsToUpdate);
 		}
@@ -97,11 +106,11 @@ namespace BAR.BL.Managers
 			InitRepo();
 			return subRepo.ReadAlerts(userId, true);
 		}
-		
+
 		/// <summary>
 		/// Retrieves a single alert for a specific user.
 		/// </summary>
-		public Alert GetAlert(int userId, int alertId) 
+		public Alert GetAlert(int userId, int alertId)
 		{
 			InitRepo();
 			return subRepo.ReadAlert(userId, alertId);
@@ -110,15 +119,21 @@ namespace BAR.BL.Managers
 		/// <summary>
 		/// Changed the isRead property of an Alert to true.
 		/// </summary>
-		public void ChangeAlertToRead(int userId, int alertId) 
+		public Alert ChangeAlertToRead(int userId, int alertId)
 		{
 			InitRepo();
-			Alert alert = GetAlert(userId, alertId);
-			if (alert != null) 
-			{
-				alert.IsRead = true;
-				subRepo.UpdateSubScription(alert.Subscription);
-			}
+
+			//Get Alert
+			Alert alertToUpdate = GetAlert(userId, alertId);
+			if (alertToUpdate == null) return null;
+
+			//Change alert
+			alertToUpdate.IsRead = true;
+
+			//Update database
+			subRepo.UpdateSubScription(alertToUpdate.Subscription);
+
+			return alertToUpdate;
 		}
 
 		/// <summary>
@@ -127,49 +142,80 @@ namespace BAR.BL.Managers
 		public void RemoveAlert(int userId, int alertId)
 		{
 			InitRepo();
-			Alert alert = GetAlert(userId, alertId);
-				if (alert != null) 
-				{
-					Subscription sub = alert.Subscription;
-					sub.Alerts.Remove(alert);
-					subRepo.UpdateSubScription(sub);
-				}
+
+			//Get alert
+			Alert alertToRemove = GetAlert(userId, alertId);
+			if (alertToRemove == null) return;
+
+			//Remove alert
+			Subscription sub = alertToRemove.Subscription;
+			sub.Alerts.Remove(alertToRemove);
+
+			//Update database
+			subRepo.UpdateSubScription(sub);
 		}
-		
+
 		/// <summary>
 		/// Gets the subscription of a specific user, with alerts.
 		/// </summary>
-		public IEnumerable<Subscription> GetSubscriptionsWithAlertsForUser(int userId) 
+		public IEnumerable<Subscription> GetSubscriptionsWithAlertsForUser(int userId)
 		{
 			InitRepo();
 			return subRepo.ReadSubscriptionsWithAlertsForUser(userId);
 		}
-		
+
 		/// <summary>
 		/// Gets the subscription of a specific user, with items.
 		/// </summary>
-		public IEnumerable<Subscription> GetSubscriptionsWithItemsForUser(int userId) 
+		public IEnumerable<Subscription> GetSubscriptionsWithItemsForUser(int userId)
 		{
 			InitRepo();
 			return subRepo.ReadSubscriptionsWithItemsForUser(userId);
 		}
-		
+
 		/// <summary>
 		/// Gets a subscription by Subscription id.
 		/// </summary>
-		public Subscription GetSubscription(int subId) {
+		public Subscription GetSubscription(int subId)
+		{
 			InitRepo();
 			return subRepo.ReadSubscription(subId);
 		}
-		
+
 		/// <summary>
 		/// Removes a subscription by Subscription id.
 		/// </summary>
-		public void RemoveSubscription(int subId) {
+		public void RemoveSubscription(int subId)
+		{
 			InitRepo();
+			Subscription subscriptionToRemove = GetSubscription(subId);
+			if (subscriptionToRemove == null) return;
+
+			subscriptionToRemove.SubscribedItem.NumberOfFollowers--;
+			//id parameter is needed to delete alers with subscription in repo
 			subRepo.DeleteSubscription(subId);
 		}
-		
+
+		/// <summary>
+		/// Updates the treshold of a specific user
+		/// </summary>
+		public Subscription ChangeSubscriptionTresh(int subId, int treshhold)
+		{
+			InitRepo();
+
+			//Get sub
+			Subscription subToUpdate = GetSubscription(subId);
+			if (subToUpdate == null) return null;
+
+			//Change sub
+			subToUpdate.Threshold = treshhold;
+
+			//Update database
+			subRepo.UpdateSubScription(subToUpdate);
+
+			return subToUpdate;
+		}
+
 		/// <summary>
 		/// Determines if the repo needs a unit of work
 		/// if the unitOfWorkManager is present.

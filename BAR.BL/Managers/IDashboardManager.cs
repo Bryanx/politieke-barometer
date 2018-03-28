@@ -15,8 +15,8 @@ namespace BAR.BL.Managers
 
 		Widget CreateWidget(int dashboardId, WidgetType widgetType, string title, int rowNbr, int colNbr, int rowspan = 1, int colspan = 1);
 
-		Widget UpdateWidgetPos(int widgetId, int rowNbr, int colNbr, int rowspan = 1, int colspan = 1);
-		Widget UpdateWidgetTitle(int widgetId, string title);
+		Widget ChangeWidgetPos(int widgetId, int rowNbr, int colNbr, int rowspan = 1, int colspan = 1);
+		Widget ChangeWidgetTitle(int widgetId, string title);
 
 		void RemoveWidget(int widgetId);
 

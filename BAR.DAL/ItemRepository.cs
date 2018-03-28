@@ -67,7 +67,7 @@ namespace BAR.DAL
 		/// </summary>
 		public IEnumerable<Item> ReadAllItemsForUpdatedSince(DateTime since)
 		{
-			return ctx.Items.Where(item => item.LastUpdated >= since).AsEnumerable();
+			return ctx.Items.Where(item => item.LastUpdatedInfo >= since).AsEnumerable();
 		}
 
 		/// <summary>
@@ -87,7 +87,7 @@ namespace BAR.DAL
 		public int UpdateLastUpdated(int itemId, DateTime lastUpdated)
 		{
 			Item itemToUpdate = ReadItemWithInformations(itemId);
-			itemToUpdate.LastUpdated = lastUpdated;
+			itemToUpdate.LastUpdatedInfo = lastUpdated;
 			return UpdateItem(itemToUpdate);
 		}
 
