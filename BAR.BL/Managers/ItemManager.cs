@@ -84,7 +84,7 @@ namespace BAR.BL.Managers
 		public IEnumerable<Item> GetAllOrganisations()
 		{
 			InitRepo();
-			IEnumerable<Item> items = itemRepo.ReadAllItems();
+			IEnumerable<Item> items = GetAllItems();
 			return items.Where(item => item.ItemType == ItemType.Organisation).AsEnumerable();
 		}
 
@@ -94,7 +94,7 @@ namespace BAR.BL.Managers
 		public IEnumerable<Item> GetAllThemes()
 		{
 			InitRepo();
-			IEnumerable<Item> items = itemRepo.ReadAllItems();
+			IEnumerable<Item> items = GetAllItems();
 			return items.Where(item => item.ItemType == ItemType.Theme).AsEnumerable();
 		}
 		/// <summary>
@@ -198,7 +198,7 @@ namespace BAR.BL.Managers
 			InitRepo();
 
 			//Get item
-			Item itemToUpdate = itemRepo.ReadItem(itemId);
+			Item itemToUpdate = GetItem(itemId);
 			if (itemToUpdate == null) return null;
 
 			//Update item
@@ -218,7 +218,7 @@ namespace BAR.BL.Managers
 			InitRepo();
 
 			//Get item
-			Item itemToUpdate = itemRepo.ReadItem(itemId);
+			Item itemToUpdate = GetItem(itemId);
 			if (itemToUpdate == null) return null;
 
 			//Update item
@@ -236,7 +236,7 @@ namespace BAR.BL.Managers
 		public void RemoveItem(int itemId)
 		{
 			InitRepo();
-			Item itemToRemove = itemRepo.ReadItem(itemId);
+			Item itemToRemove = GetItem(itemId);
 			if (itemToRemove != null) itemRepo.DeleteItem(itemToRemove);
 		}
 
