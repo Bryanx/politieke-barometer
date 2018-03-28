@@ -32,7 +32,7 @@ namespace BAR.BL.Managers
 		/// NOTE
 		/// THIS METHOD USES UNIT OF WORK
 		/// </summary>		
-		public void CreateSubscription(int userId, int itemId, int threshold = 10)
+		public Subscription CreateSubscription(int userId, int itemId, int threshold = 10)
 		{
 			uowManager = new UnitOfWorkManager();
 			InitRepo();
@@ -40,10 +40,12 @@ namespace BAR.BL.Managers
 			//get user
 			IUserManager userManager = new UserManager(uowManager);
 			User user = userManager.GetUser(userId);
+			if (user == null) return null;
 
 			//get item
 			IItemManager itemManager = new ItemManager(uowManager);
 			Item item = itemManager.GetItem(itemId);
+			if (item == null) return null;
 
 			//make subscription		
 			Subscription sub = new Subscription()
@@ -51,11 +53,14 @@ namespace BAR.BL.Managers
 				SubscribedUser = user,
 				SubscribedItem = item,
 				Threshold = threshold,
+				DateSubscribed = DateTime.Now,
 				Alerts = new List<Alert>()
 			};
+			item.NumberOfFollowers++;
 			subRepo.CreateSubscription(sub);
-
 			uowManager.Save();
+
+			return sub;
 		}
 
 		/// <summary>
@@ -169,7 +174,27 @@ namespace BAR.BL.Managers
 			InitRepo();
 			subRepo.DeleteSubscription(subId);
 		}
-		
+
+		/// <summary>
+		/// Updates the treshold of a specific user
+		/// </summary>
+		public Subscription ChangeSubscriptionTresh(int subId, int treshhold)
+		{
+			InitRepo();
+
+			//Get sub
+			Subscription subToUpdate = subRepo.ReadSubscription(subId);
+			if (subToUpdate == null) return null;
+
+			//Change sub
+			subToUpdate.Threshold = treshhold;
+
+			//Update database
+			subRepo.UpdateSubScription(subToUpdate);
+
+			return subToUpdate;
+		}
+
 		/// <summary>
 		/// Determines if the repo needs a unit of work
 		/// if the unitOfWorkManager is present.
@@ -178,6 +203,6 @@ namespace BAR.BL.Managers
 		{
 			if (uowManager == null) subRepo = new SubscriptionRepository();
 			else subRepo = new SubscriptionRepository(uowManager.UnitOfWork);
-		}
+		}		
 	}
 }
