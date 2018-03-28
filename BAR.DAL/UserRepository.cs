@@ -18,6 +18,7 @@ namespace BAR.DAL
 		/// <param name="context"></param>
 		public UserRepository(BarometerDbContext context): base(context)
 		{
+      this.ctx = context;
 		}
 
 		/// <summary>

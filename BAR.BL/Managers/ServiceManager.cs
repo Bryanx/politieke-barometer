@@ -16,9 +16,9 @@ namespace BAR.BL.Managers
     {
       var clientKey = ConfigurationManager.AppSettings["SendGridClient"];
       var client = new SendGridClient(clientKey);
-      var from = new EmailAddress("Services@supportcenter.be", "Support Center");
+      var from = new EmailAddress("Politiek@barometer.be", "Politieke barometer");
       var subject = message.Subject;
-      var to = new EmailAddress(message.Destination, "Support Center User");
+      var to = new EmailAddress(message.Destination, "Politieke barometer gebruiker");
       var plainTextContent = "";
       var htmlContent = message.Body;
       var msg = MailHelper.CreateSingleEmail(from, to, subject, plainTextContent, htmlContent);

@@ -32,13 +32,13 @@ namespace BAR.BL.Managers
 		/// NOTE
 		/// THIS METHOD USES UNIT OF WORK
 		/// </summary>		
-		public void CreateSubscription(int userId, int itemId, int treshhold = 10)
+		public void CreateSubscription(string userId, int itemId, UserManager userManager, int treshhold = 10)
 		{
 			uowManager = new UnitOfWorkManager();
 			InitRepo();
 
 			//get user
-			IUserManager userManager = new UserManager(uowManager);
+			//IUserManager userManager = new UserManager(uowManager);
 			User user = userManager.GetUser(userId);
 
 			//get item
@@ -92,7 +92,7 @@ namespace BAR.BL.Managers
 		/// <summary>
 		/// Gets all the alerts for a specific user
 		/// </summary>
-		public IEnumerable<Alert> GetAllAlerts(int userId)
+		public IEnumerable<Alert> GetAllAlerts(string userId)
 		{
 			InitRepo();
 			return subRepo.ReadAlerts(userId, true);
@@ -101,7 +101,7 @@ namespace BAR.BL.Managers
 		/// <summary>
 		/// Retrieves a single alert for a specific user.
 		/// </summary>
-		public Alert GetAlert(int userId, int alertId) 
+		public Alert GetAlert(string userId, int alertId) 
 		{
 			InitRepo();
 			return subRepo.ReadAlert(userId, alertId);
@@ -110,7 +110,7 @@ namespace BAR.BL.Managers
 		/// <summary>
 		/// Changed the isRead property of an Alert to true.
 		/// </summary>
-		public void ChangeAlertToRead(int userId, int alertId) 
+		public void ChangeAlertToRead(string userId, int alertId) 
 		{
 			InitRepo();
 			Alert alert = GetAlert(userId, alertId);
@@ -124,7 +124,7 @@ namespace BAR.BL.Managers
 		/// <summary>
 		/// Removes a specific alert for a specific user.
 		/// </summary>
-		public void RemoveAlert(int userId, int alertId)
+		public void RemoveAlert(string userId, int alertId)
 		{
 			InitRepo();
 			Alert alert = GetAlert(userId, alertId);
@@ -139,7 +139,7 @@ namespace BAR.BL.Managers
 		/// <summary>
 		/// Gets the subscription of a specific user, with alerts.
 		/// </summary>
-		public IEnumerable<Subscription> GetSubscriptionsWithAlertsForUser(int userId) 
+		public IEnumerable<Subscription> GetSubscriptionsWithAlertsForUser(string userId) 
 		{
 			InitRepo();
 			return subRepo.ReadSubscriptionsWithAlertsForUser(userId);
@@ -148,7 +148,7 @@ namespace BAR.BL.Managers
 		/// <summary>
 		/// Gets the subscription of a specific user, with items.
 		/// </summary>
-		public IEnumerable<Subscription> GetSubscriptionsWithItemsForUser(int userId) 
+		public IEnumerable<Subscription> GetSubscriptionsWithItemsForUser(string userId) 
 		{
 			InitRepo();
 			return subRepo.ReadSubscriptionsWithItemsForUser(userId);

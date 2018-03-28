@@ -1,4 +1,4 @@
-@using System
+﻿@using System
 @using System.Web.Optimization
 @using BAR.UI.MVC.Controllers
 @model BAR.UI.MVC.Models.UserSubscribedPeopleDTO
@@ -76,9 +76,13 @@
             <a data-toggle="tooltip" data-placement="top" title="Lock">
                 <span class="glyphicon glyphicon-eye-close" aria-hidden="true"></span>
             </a>
-            <a data-toggle="tooltip" data-placement="top" title="Logout" href="login.html">
+            @using (Html.BeginForm("LogOff", "User", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+            {
+            @Html.AntiForgeryToken()
+            <a data-toggle="tooltip" data-placement="top" title="Logout" href="javascript:document.getElementById('logoutForm').submit()">
                 <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
             </a>
+            }
         </div>
         <!-- /menu footer buttons -->
     </div>

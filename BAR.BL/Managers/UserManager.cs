@@ -19,6 +19,7 @@ namespace BAR.BL.Managers
 
 		public UserManager(UserRepository userRepository): base(userRepository)
 		{
+			this.userRepo = userRepository;
 		}
 
 		public static UserManager Create(IdentityFactoryOptions<UserManager> options, IOwinContext context)

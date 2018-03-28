@@ -1,8 +1,15 @@
-﻿using BAR.BL.Managers;
+﻿using BAR.BL.Domain.Users;
+using BAR.BL.Managers;
 using BAR.DAL.EF;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
+using Microsoft.Owin;
+using Microsoft.Owin.Security.Cookies;
+using Microsoft.Owin.Security.Google;
 using Owin;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Web;
 
@@ -23,12 +30,12 @@ namespace BAR.UI.MVC
       app.UseCookieAuthentication(new CookieAuthenticationOptions
       {
         AuthenticationType = DefaultAuthenticationTypes.ApplicationCookie,
-        LoginPath = new PathString("/Account/Login"),
+        LoginPath = new PathString("/User/Login"),
         Provider = new CookieAuthenticationProvider
         {
           // Enables the application to validate the security stamp when the user logs in.
           // This is a security feature which is used when you change a password or add an external login to your account.  
-          OnValidateIdentity = SecurityStampValidator.OnValidateIdentity<SupportCenterUserManager, SupportCenterUser>(
+          OnValidateIdentity = SecurityStampValidator.OnValidateIdentity<UserManager, User>(
                   validateInterval: TimeSpan.FromMinutes(30),
                   regenerateIdentity: (manager, user) => user.GenerateUserIdentityAsync(manager))
         }
@@ -55,6 +62,5 @@ namespace BAR.UI.MVC
         ClientSecret = ConfigurationManager.AppSettings["GoogleClientSecret"]
       });
     }
-  }
   }
 }
