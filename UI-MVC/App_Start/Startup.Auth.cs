@@ -5,12 +5,14 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security.Cookies;
+using Microsoft.Owin.Security.Facebook;
 using Microsoft.Owin.Security.Google;
 using Owin;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
+using System.Net.Http;
 using System.Web;
 
 namespace BAR.UI.MVC
@@ -50,16 +52,27 @@ namespace BAR.UI.MVC
       // This is similar to the RememberMe option when you log in.
       app.UseTwoFactorRememberBrowserCookie(DefaultAuthenticationTypes.TwoFactorRememberBrowserCookie);
 
-
-      app.UseFacebookAuthentication(
-         appId: ConfigurationManager.AppSettings["FacebookAppId"],
-         appSecret: ConfigurationManager.AppSettings["FacebookAppSecret"]
-         );
-
-      app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
+      app.UseFacebookAuthentication(new FacebookAuthenticationOptions()
       {
-        ClientId = ConfigurationManager.AppSettings["GoogleClientId"],
-        ClientSecret = ConfigurationManager.AppSettings["GoogleClientSecret"]
+        AppId = ConfigurationManager.AppSettings["FacebookAppId"],
+        AppSecret = ConfigurationManager.AppSettings["FacebookAppSecret"],
+        BackchannelHttpHandler = new HttpClientHandler(),
+        UserInformationEndpoint = "https://graph.facebook.com/v2.8/me?fields=id,name,email,first_name,last_name",
+        Scope = { "email" },
+        Provider = new FacebookAuthenticationProvider()
+        {
+          OnAuthenticated = async context =>
+          {
+            context.Identity.AddClaim(new System.Security.Claims.Claim("FacebookAccessToken", context.AccessToken));
+            foreach (var claim in context.User)
+            {
+              var claimType = string.Format("urn:facebook:{0}", claim.Key);
+              string claimValue = claim.Value.ToString();
+              if (!context.Identity.HasClaim(claimType, claimValue))
+                context.Identity.AddClaim(new System.Security.Claims.Claim(claimType, claimValue, "XmlSchemaString", "Facebook"));
+            }
+          }
+        }
       });
     }
   }

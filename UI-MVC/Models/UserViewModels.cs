@@ -14,14 +14,24 @@ namespace BAR.UI.MVC.Models
     public string Email { get; set; }
 
     [Required]
-    [Display(Name = "UserRoles")]
-    public string UserRoles { get; set; }
+    [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 2)]
+    [Display(Name = "Firstname")]
+    public string Firstname { get; set; }
+
+    [Required]
+    [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 2)]
+    [Display(Name = "Lastname")]
+    public string Lastname { get; set; }
+
+    [Required]
+    [Display(Name = "Gender")]
+    public Gender Gender { get; set; }
 
     [Required]
     [Display(Name = "Date of Birth")]
     [DataType(DataType.Date)]
     [DisplayFormat(DataFormatString = "{0:yyyy/MM/dd}", ApplyFormatInEditMode = true)]
-    public DateTime BirthDate { get; set; }
+    public DateTime DateOfBirth { get; set; }
 
   }
 

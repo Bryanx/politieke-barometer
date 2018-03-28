@@ -1,37 +1,47 @@
-﻿@model BAR.UI.MVC.Models.RegisterViewModel
+﻿@model BAR.UI.MVC.Models.ExternalLoginConfirmationViewModel
 
 @{
   ViewBag.Title = "Register";
 }
-
-<h2>Register</h2>
-
-@using (Html.BeginForm("Register", "User", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-{
-@Html.AntiForgeryToken()
+<h2>@ViewBag.Title.</h2>
 <div class="form-group">
     <div class="col-md-offset-2 col-md-10">
-        <h4>Registreer je voor een nieuw account</h4>
-        </div>
+        <h3>Koppel je @ViewBag.LoginProvider account</h3>
     </div>
+</div>
+@using (Html.BeginForm("ExternalLoginConfirmation", "User", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+@Html.AntiForgeryToken()
+
+<div class="form-group">
+    <div class="col-md-offset-2 col-md-10">
         <hr />
-        @Html.ValidationSummary("", new { @class = "text-danger" })
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <p class="text-info">
+            Je bent succelvol ingelogd met <strong>@ViewBag.LoginProvider</strong>.
+            Vul de overige registratievelden in en klik op registreer.
+        </p>
+    </div>
+</div>
         <div class="form-group">
             @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
             <div class="col-md-4">
                 @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
             </div>
         </div>
         <div class="form-group">
             @Html.LabelFor(m => m.Firstname, new { @class = "col-md-2 control-label" })
             <div class="col-md-4">
                 @Html.TextBoxFor(m => m.Firstname, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.Firstname, "", new { @class = "text-danger" })
             </div>
         </div>
         <div class="form-group">
             @Html.LabelFor(m => m.Lastname, new { @class = "col-md-2 control-label" })
             <div class="col-md-4">
                 @Html.TextBoxFor(m => m.Lastname, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.Lastname, "", new { @class = "text-danger" })
             </div>
         </div>
         <div class="form-group">
@@ -47,28 +57,13 @@
                 @Html.ValidationMessageFor(model => model.DateOfBirth, "", new { @class = "text-danger" })
             </div>
         </div>
-        <div class="form-group">
-            @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
-            <div class="col-md-4">
-                @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
-            </div>
-        </div>
-        <div class="form-group">
-            @Html.LabelFor(m => m.ConfirmPassword, new { @class = "col-md-2 control-label" })
-            <div class="col-md-4">
-                @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
-            </div>
-        </div>
-
-
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" class="btn btn-default" value="Register" />
+                <input type="submit" class="btn btn-default" value="Registreren" />
             </div>
         </div>
-        }
+}
 
-
-        <link href="~/Content/themes/base/jquery-ui.min.css" rel="stylesheet" />
-        <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+<link href="~/Content/themes/base/jquery-ui.min.css" rel="stylesheet" />
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">

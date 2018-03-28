@@ -76,7 +76,7 @@
             <a data-toggle="tooltip" data-placement="top" title="Lock">
                 <span class="glyphicon glyphicon-eye-close" aria-hidden="true"></span>
             </a>
-            @using (Html.BeginForm("LogOff", "User", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+            @using (Html.BeginForm("LogOff", "User", FormMethod.Post, new { id = "logoutForm" }))
             {
             @Html.AntiForgeryToken()
             <a data-toggle="tooltip" data-placement="top" title="Logout" href="javascript:document.getElementById('logoutForm').submit()">
@@ -122,7 +122,11 @@
                             <a href="javascript:;">Weekly review</a>
                         </li>
                         <li>
-                            <a href="login.html"><i class="fa fa-sign-out pull-right"></i> Log Out</a>
+                           @using (Html.BeginForm("LogOff", "User", FormMethod.Post, new { id = "logoutForm2" }))
+                           {
+                             @Html.AntiForgeryToken()
+                             <a href="javascript:document.getElementById('logoutForm2').submit()"><i class="fa fa-sign-out pull-right"></i> Log Out</a>
+                           }
                         </li>
                     </ul>
                 </li>
