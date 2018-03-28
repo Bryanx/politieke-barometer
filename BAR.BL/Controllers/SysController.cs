@@ -40,7 +40,7 @@ namespace BAR.BL.Controllers
 		/// </summary>
 		public void DetermineTrending()
 		{
-			IEnumerable<Item> allItems = itemManager.getAllItems();
+			IEnumerable<Item> allItems = itemManager.GetAllItems();
 
 			foreach(Item item in allItems)
 			{
@@ -62,7 +62,7 @@ namespace BAR.BL.Controllers
 		/// </summary>
 		public void GenerateAlerts()
 		{
-			IEnumerable<Item> allItems = itemManager.getAllItems();
+			IEnumerable<Item> allItems = itemManager.GetAllItems();
 			
 			foreach (Item item in allItems)
 			{
