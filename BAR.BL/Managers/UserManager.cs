@@ -18,10 +18,14 @@ namespace BAR.BL.Managers
 		private UnitOfWorkManager uowManager;
 		private UserRepository userRepo;
 
-		public UserManager(UserRepository userRepository): base(userRepository)
+    /// <summary>
+    /// When unit of work is present, it will effect
+    /// initRepo-method. (see documentation of initRepo)
+    /// </summary>
+    public UserManager(UserRepository userRepository, UnitOfWorkManager uowManager = null) : base(userRepository)
 		{
-			this.userRepo = userRepository;
-
+      this.uowManager = uowManager;
+      this.userRepo = userRepository;
     }
 
     /// <summary>
@@ -79,15 +83,6 @@ namespace BAR.BL.Managers
       AddRoles(roleManager);
       return manager;
 		}
-
-    /// <summary>
-    /// When unit of work is present, it will effect
-    /// initRepo-method. (see documentation of initRepo)
-    /// </summary>
-    //  public UserManager(UnitOfWorkManager uowManager = null)
-    //{
-    //	this.uowManager = uowManager;
-    //}
 
     /// <summary>
     /// Returns a list of all users.
