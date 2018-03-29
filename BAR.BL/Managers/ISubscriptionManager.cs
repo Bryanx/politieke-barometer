@@ -10,7 +10,7 @@ namespace BAR.BL.Managers
 		IEnumerable<Subscription> GetSubscriptionsWithAlertsForUser(string userId);
 		IEnumerable<Subscription> GetSubscriptionsWithItemsForUser(string userId);
 
-		Subscription CreateSubscription(string userId, int itemId, UserManager userManager, int treshhold = 10);
+		Subscription CreateSubscription(string userId, int itemId, int treshhold = 10);
 
 		Subscription ChangeSubscriptionTresh(int subId, int treshhold);
 

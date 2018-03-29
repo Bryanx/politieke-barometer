@@ -32,14 +32,14 @@ namespace BAR.BL.Managers
 		/// NOTE
 		/// THIS METHOD USES UNIT OF WORK
 		/// </summary>		
-		public Subscription CreateSubscription(string userId, int itemId, UserManager userManager, int threshold = 10)
+		public Subscription CreateSubscription(string userId, int itemId, int threshold = 10)
 		{
 			uowManager = new UnitOfWorkManager();
 			InitRepo();
 
 			//get user
-			//IUserManager userManager = new UserManager(uowManager);
-			User user = userManager.GetUser(userId);
+			IUserManager userManager = new UserManager(null, uowManager);
+			User user = new UserManager().GetUser(userId);
 			if (user == null) return null;
 
 			//get item
