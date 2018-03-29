@@ -84,6 +84,11 @@ namespace BAR.BL.Managers
 		/// <summary>
 		/// Returns a list of all users.
 		/// 
+		/// WARNING
+		/// This method uses identity
+		/// InitRepo() should not be called on in this method.
+		/// if so, it may produce errors.
+		/// 
 		/// NOTE
 		/// if you plan to use identity, then the repository
 		/// will already be known. because it was initialized in the constructor.
@@ -97,6 +102,11 @@ namespace BAR.BL.Managers
 
 		/// <summary>
 		/// Returns a user for a specific userId.
+		/// 
+		/// WARNING
+		/// This method uses identity
+		/// InitRepo() should not be called on in this method.
+		/// if so, it may produce errors.
 		/// 
 		/// NOTE
 		/// if you plan to use identity, then the repository
