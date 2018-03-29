@@ -29,7 +29,12 @@ namespace BAR.UI.MVC.Controllers
 		[AllowAnonymous]
 		public ActionResult Login(string returnUrl)
 		{
-			ViewBag.ReturnUrl = returnUrl;
+      if (User.Identity.IsAuthenticated)
+      {
+        return RedirectToAction("Index", "User");
+      }
+
+      ViewBag.ReturnUrl = returnUrl;
 			return View();
 		}
 
@@ -40,7 +45,12 @@ namespace BAR.UI.MVC.Controllers
 		[ValidateAntiForgeryToken]
 		public async Task<ActionResult> Login(LoginViewModel model, string returnUrl)
 		{
-			SignInManager signInManager = HttpContext.GetOwinContext().Get<SignInManager>();
+      if (User.Identity.IsAuthenticated)
+      {
+        return RedirectToAction("Index", "User");
+      }
+
+      SignInManager signInManager = HttpContext.GetOwinContext().Get<SignInManager>();
 			//var status = CheckRCaptcha();
 
 			//if (status == false)
@@ -64,7 +74,7 @@ namespace BAR.UI.MVC.Controllers
 					return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
 				case SignInStatus.Failure:
 				default:
-					ModelState.AddModelError("", "Invalid login attempt.");
+					ModelState.AddModelError("", "Ongeldige inlogpoging.");
 					return View(model);
 			}
 		}
@@ -74,8 +84,11 @@ namespace BAR.UI.MVC.Controllers
 		[AllowAnonymous]
 		public ActionResult Register()
 		{
-			RegisterViewModel registerViewModel = new RegisterViewModel();
-		 // ViewBag.RoleList = new SelectList(UserManager.GetAllRoles(), "Name", "Name");
+      if (User.Identity.IsAuthenticated)
+      {
+        return RedirectToAction("Index", "User");
+      }
+      RegisterViewModel registerViewModel = new RegisterViewModel();
 			return View(registerViewModel);
 		}
 
@@ -86,7 +99,12 @@ namespace BAR.UI.MVC.Controllers
 		[ValidateAntiForgeryToken]
 		public async Task<ActionResult> Register(RegisterViewModel model)
 		{
-			SignInManager signInManager = HttpContext.GetOwinContext().Get<SignInManager>();
+      if (User.Identity.IsAuthenticated)
+      {
+        return RedirectToAction("Index", "User");
+      }
+
+      SignInManager signInManager = HttpContext.GetOwinContext().Get<SignInManager>();
 			UserManager userManager = HttpContext.GetOwinContext().GetUserManager<UserManager>();
 
 			if (ModelState.IsValid)
@@ -95,14 +113,12 @@ namespace BAR.UI.MVC.Controllers
 				var result = await userManager.CreateAsync(user, model.Password);
 				if (result.Succeeded)
 				{
-					//Add claim to user
-					//await UserManager.AddClaimAsync(user.Id, new Claim(ClaimTypes.DateOfBirth, model.DateOfBirth.ToShortDateString()));
 					//Send an email with this link
 					string code = await userManager.GenerateEmailConfirmationTokenAsync(user.Id);
 					var callbackUrl = Url.Action("ConfirmEmail", "User", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-					await userManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+					await userManager.SendEmailAsync(user.Id, "Bevestig je registratie", "Bevestig je registratie door <a href=\"" + callbackUrl + "\">hier</a> te klikken.");
 					//Assign Role to user    
-					//await UserManager.AddToRoleAsync(user.Id, model.UserRoles);
+					await userManager.AddToRoleAsync(user.Id, "User");
 					//Login
 					await signInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
 
@@ -153,10 +169,6 @@ namespace BAR.UI.MVC.Controllers
         return View(model);
       }
 
-      // The following code protects for brute force attacks against the two factor codes. 
-      // If a user enters incorrect codes for a specified amount of time then the user account 
-      // will be locked out for a specified amount of time. 
-      // You can configure the account lockout settings in IdentityConfig
       var result = await signInManager.TwoFactorSignInAsync(model.Provider, model.Code, isPersistent: model.RememberMe, rememberBrowser: model.RememberBrowser);
       switch (result)
       {
@@ -166,7 +178,7 @@ namespace BAR.UI.MVC.Controllers
           return View("Lockout");
         case SignInStatus.Failure:
         default:
-          ModelState.AddModelError("", "Invalid code.");
+          ModelState.AddModelError("", "Ongeldige code.");
           return View(model);
       }
     }
@@ -215,7 +227,7 @@ namespace BAR.UI.MVC.Controllers
         // Send an email with this link
         string code = await userManager.GeneratePasswordResetTokenAsync(user.Id);
         var callbackUrl = Url.Action("ResetPassword", "User", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-        await userManager.SendEmailAsync(user.Id, "Reset Password", "Please reset your password by clicking <a href=\"" + callbackUrl + "\">here</a>");
+        await userManager.SendEmailAsync(user.Id, "Reset wachtwoord", "Je kan je wachtwoord resetten door <a href=\"" + callbackUrl + "\">hier</a> te klikken.");
         return RedirectToAction("ForgotPasswordConfirmation", "User");
       }
 
@@ -340,7 +352,7 @@ namespace BAR.UI.MVC.Controllers
         return RedirectToAction("Login");
       }
 
-      var externalIdentity = await authenticationManager.GetExternalIdentityAsync(DefaultAuthenticationTypes.ExternalCookie);
+      //Get information from the social provider best on available claims
       var firstname = loginInfo.ExternalIdentity.Claims.First(c => c.Type == "urn:facebook:first_name").Value;
       var lastname = loginInfo.ExternalIdentity.Claims.First(c => c.Type == "urn:facebook:last_name").Value;
 
@@ -394,9 +406,9 @@ namespace BAR.UI.MVC.Controllers
         if (result.Succeeded)
         {
           result = await userManager.AddLoginAsync(user.Id, info.Login);
+     
           //Assign Role to user Here      
-          //await userManager.AddToRoleAsync(user.Id, model.UserRoles);
-          //await UserManager.AddClaimAsync(user.Id, new Claim(ClaimTypes.DateOfBirth, model.DateOfBirth.ToShortDateString()));
+          await userManager.AddToRoleAsync(user.Id, "User");
 
           if (result.Succeeded)
           {

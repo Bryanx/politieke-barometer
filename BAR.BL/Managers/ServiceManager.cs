@@ -10,6 +10,9 @@ using System.Threading.Tasks;
 
 namespace BAR.BL.Managers
 {
+  /// <summary>
+  /// Configures Identity with our SendGrid API.
+  /// </summary>
   public class EmailService : IIdentityMessageService
   {
     public async Task SendAsync(IdentityMessage message)
@@ -26,6 +29,9 @@ namespace BAR.BL.Managers
     }
   }
 
+  /// <summary>
+  /// Configures Identity with our Twilio API.
+  /// </summary>
   public class SmsService : IIdentityMessageService
   {
     private readonly ITwilioMessageSender _messageSender;

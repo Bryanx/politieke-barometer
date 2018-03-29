@@ -12,13 +12,9 @@ namespace BAR.DAL
 	{
 		private BarometerDbContext ctx;
 
-		/// <summary>
-		/// Gets called by Owin at startup
-		/// </summary>
-		/// <param name="context"></param>
-		public UserRepository(BarometerDbContext context): base(context)
+		public UserRepository(BarometerDbContext ctx): base(ctx)
 		{
-      this.ctx = context;
+      this.ctx = ctx;
 		}
 
 		/// <summary>

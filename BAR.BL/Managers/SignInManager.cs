@@ -17,6 +17,12 @@ namespace BAR.BL.Managers
         {
     }
 
+    /// <summary>
+    /// Creates an instance of SignInManager and returns it as a callback function to Owin.
+    /// </summary>
+    /// <param name="options"></param>
+    /// <param name="context"></param>
+    /// <returns></returns>
     public static SignInManager Create(IdentityFactoryOptions<SignInManager> options, IOwinContext context)
     {
       return new SignInManager(context.GetUserManager<UserManager>(), context.Authentication);

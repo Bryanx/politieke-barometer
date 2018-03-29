@@ -9,6 +9,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using BAR.DAL.EF;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace BAR.BL.Managers
 {
@@ -20,13 +21,21 @@ namespace BAR.BL.Managers
 		public UserManager(UserRepository userRepository): base(userRepository)
 		{
 			this.userRepo = userRepository;
-		}
 
+    }
+
+    /// <summary>
+    /// Creates an instance of UserManager and returns it as a callback function to Owin.
+    /// </summary>
+    /// <param name="options"></param>
+    /// <param name="context"></param>
+    /// <returns></returns>
 		public static UserManager Create(IdentityFactoryOptions<UserManager> options, IOwinContext context)
 		{
 			var manager = new UserManager(new UserRepository(context.Get<BarometerDbContext>()));
-			//Configure validation logic for usernames
-			manager.UserValidator = new UserValidator<User>(manager)
+      var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(context.Get<BarometerDbContext>()));
+      //Configure validation logic for usernames
+      manager.UserValidator = new UserValidator<User>(manager)
 			{
 				AllowOnlyAlphanumericUserNames = false,
 				RequireUniqueEmail = true
@@ -65,22 +74,25 @@ namespace BAR.BL.Managers
 				manager.UserTokenProvider =
 						new DataProtectorTokenProvider<User>(dataProtectionProvider.Create("ASP.NET Identity"));
 			}
-			return manager;
+
+      //Add roles
+      AddRoles(roleManager);
+      return manager;
 		}
 
-		/// <summary>
-		/// When unit of work is present, it will effect
-		/// initRepo-method. (see documentation of initRepo)
-		/// </summary>
-		//  public UserManager(UnitOfWorkManager uowManager = null)
-		//{
-		//	this.uowManager = uowManager;
-		//}
+    /// <summary>
+    /// When unit of work is present, it will effect
+    /// initRepo-method. (see documentation of initRepo)
+    /// </summary>
+    //  public UserManager(UnitOfWorkManager uowManager = null)
+    //{
+    //	this.uowManager = uowManager;
+    //}
 
-		/// <summary>
-		/// Returns a list of all users.
-		/// </summary>
-		public IEnumerable<User> GetAllUsers()
+    /// <summary>
+    /// Returns a list of all users.
+    /// </summary>
+    public IEnumerable<User> GetAllUsers()
 		{
 			//InitRepo();
 			return userRepo.ReadAllUsers();
@@ -95,14 +107,46 @@ namespace BAR.BL.Managers
 			return userRepo.ReadUser(userId);
 		}
 
-		/// <summary>
-		/// Determines if the repo needs a unit of work
-		/// if the unitOfWorkManager is present
-		/// </summary>
-		//private void InitRepo()
-		//{
-		//	if (uowManager == null) userRepo = new UserRepository();
-		//	else userRepo = new UserRepository(uowManager.UnitOfWork);
-		//}
-	}
+    private static void AddRoles(RoleManager<IdentityRole> roleManager)
+    {
+      if (!roleManager.RoleExists("Admin"))
+      {
+        //Create Admin role
+        var role = new IdentityRole
+        {
+          Name = "Admin"
+        };
+        roleManager.Create(role);
+      }
+      //Create SuperAdmin role  
+      if (!roleManager.RoleExists("SuperAdmin"))
+      {
+        var role = new IdentityRole
+        {
+          Name = "SuperAdmin"
+        };
+        roleManager.Create(role);
+
+      }
+      //Create User role   
+      if (!roleManager.RoleExists("User"))
+      {
+        var role = new IdentityRole
+        {
+          Name = "User"
+        };
+        roleManager.Create(role);
+      }
+    }
+
+    /// <summary>
+    /// Determines if the repo needs a unit of work
+    /// if the unitOfWorkManager is present
+    /// </summary>
+    //private void InitRepo()
+    //{
+    //	if (uowManager == null) userRepo = new UserRepository();
+    //	else userRepo = new UserRepository(uowManager.UnitOfWork);
+    //}
+  }
 }

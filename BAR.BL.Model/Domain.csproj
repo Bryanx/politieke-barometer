@@ -73,7 +73,6 @@
     <Compile Include="Users\Gender.cs" />
     <Compile Include="Users\Question.cs" />
     <Compile Include="Users\QuestionType.cs" />
-    <Compile Include="Users\Role.cs" />
     <Compile Include="Users\Subscription.cs" />
     <Compile Include="Users\User.cs" />
     <Compile Include="Widgets\Dashboard.cs" />

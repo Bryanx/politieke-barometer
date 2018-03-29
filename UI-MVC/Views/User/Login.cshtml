@@ -2,10 +2,8 @@
 @model BAR.UI.MVC.Models.LoginViewModel
 
 @{
-  ViewBag.Title = "Login";
+  ViewBag.Title = "Inloggen";
 }
-
-<h2>Login</h2>
 
 @using (Html.BeginForm("Login", "User", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 {
@@ -48,10 +46,10 @@
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <p>
-                    @Html.ActionLink("Register as a new user", "Register")
+                    @Html.ActionLink("Registreer je als nieuwe gebruiker", "Register")
                 </p>
                 <p>
-                    @Html.ActionLink("Forgot your password?", "ForgotPassword")
+                    @Html.ActionLink("Wachtwoord vergeten?", "ForgotPassword")
                 </p>
             </div>
         </div>
