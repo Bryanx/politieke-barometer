@@ -18,28 +18,25 @@ namespace BAR.BL.Managers
 		private UnitOfWorkManager uowManager;
 		private UserRepository userRepo;
 
-    /// <summary>
-    /// When unit of work is present, it will effect
-    /// initRepo-method. (see documentation of initRepo)
-    /// </summary>
-    public UserManager(UserRepository userRepository, UnitOfWorkManager uowManager = null) : base(userRepository)
+		/// <summary>
+		/// When unit of work is present, it will effect
+		/// initRepo-method. (see documentation of initRepo)
+		/// </summary>
+		public UserManager(UserRepository userRepository = null, UnitOfWorkManager uowManager = null) : base(userRepository)
 		{
-      this.uowManager = uowManager;
-      this.userRepo = userRepository;
-    }
+			this.uowManager = uowManager;
+			this.userRepo = userRepository;
+		}
 
-    /// <summary>
-    /// Creates an instance of UserManager and returns it as a callback function to Owin.
-    /// </summary>
-    /// <param name="options"></param>
-    /// <param name="context"></param>
-    /// <returns></returns>
+		/// <summary>
+		/// Creates an instance of UserManager and returns it as a callback function to Owin.
+		/// </summary>
 		public static UserManager Create(IdentityFactoryOptions<UserManager> options, IOwinContext context)
 		{
 			var manager = new UserManager(new UserRepository(context.Get<BarometerDbContext>()));
-      var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(context.Get<BarometerDbContext>()));
-      //Configure validation logic for usernames
-      manager.UserValidator = new UserValidator<User>(manager)
+			var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(context.Get<BarometerDbContext>()));
+			//Configure validation logic for usernames
+			manager.UserValidator = new UserValidator<User>(manager)
 			{
 				AllowOnlyAlphanumericUserNames = false,
 				RequireUniqueEmail = true
@@ -79,17 +76,17 @@ namespace BAR.BL.Managers
 						new DataProtectorTokenProvider<User>(dataProtectionProvider.Create("ASP.NET Identity"));
 			}
 
-      //Add roles
-      AddRoles(roleManager);
-      return manager;
+			//Add roles
+			AddRoles(roleManager);
+			return manager;
 		}
 
-    /// <summary>
-    /// Returns a list of all users.
-    /// </summary>
-    public IEnumerable<User> GetAllUsers()
+		/// <summary>
+		/// Returns a list of all users.
+		/// </summary>
+		public IEnumerable<User> GetAllUsers()
 		{
-			//InitRepo();
+			if (userRepo == null) InitRepo();
 			return userRepo.ReadAllUsers();
 		}
 
@@ -98,50 +95,50 @@ namespace BAR.BL.Managers
 		/// </summary>
 		public User GetUser(string userId)
 		{
-			//InitRepo();
+			if (userRepo == null) InitRepo();
 			return userRepo.ReadUser(userId);
 		}
 
-    private static void AddRoles(RoleManager<IdentityRole> roleManager)
-    {
-      if (!roleManager.RoleExists("Admin"))
-      {
-        //Create Admin role
-        var role = new IdentityRole
-        {
-          Name = "Admin"
-        };
-        roleManager.Create(role);
-      }
-      //Create SuperAdmin role  
-      if (!roleManager.RoleExists("SuperAdmin"))
-      {
-        var role = new IdentityRole
-        {
-          Name = "SuperAdmin"
-        };
-        roleManager.Create(role);
+		private static void AddRoles(RoleManager<IdentityRole> roleManager)
+		{
+			if (!roleManager.RoleExists("Admin"))
+			{
+				//Create Admin role
+				var role = new IdentityRole
+				{
+					Name = "Admin"
+				};
+				roleManager.Create(role);
+			}
+			//Create SuperAdmin role  
+			if (!roleManager.RoleExists("SuperAdmin"))
+			{
+				var role = new IdentityRole
+				{
+					Name = "SuperAdmin"
+				};
+				roleManager.Create(role);
 
-      }
-      //Create User role   
-      if (!roleManager.RoleExists("User"))
-      {
-        var role = new IdentityRole
-        {
-          Name = "User"
-        };
-        roleManager.Create(role);
-      }
-    }
+			}
+			//Create User role   
+			if (!roleManager.RoleExists("User"))
+			{
+				var role = new IdentityRole
+				{
+					Name = "User"
+				};
+				roleManager.Create(role);
+			}
+		}
 
-    /// <summary>
-    /// Determines if the repo needs a unit of work
-    /// if the unitOfWorkManager is present
-    /// </summary>
-    //private void InitRepo()
-    //{
-    //	if (uowManager == null) userRepo = new UserRepository();
-    //	else userRepo = new UserRepository(uowManager.UnitOfWork);
-    //}
-  }
+		/// <summary>
+		/// Determines if the repo needs a unit of work
+		/// if the unitOfWorkManager is present
+		/// </summary>
+		private void InitRepo()
+		{
+			if (uowManager == null) userRepo = new UserRepository();
+			else userRepo = new UserRepository(null, uowManager.UnitOfWork);
+		}
+	}
 }
