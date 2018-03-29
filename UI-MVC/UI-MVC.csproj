@@ -371,6 +371,7 @@
     <Content Include="Scripts\site.js" />
     <Content Include="Scripts\underscore.min.js" />
     <Content Include="Views\Shared\DisplayTemplates\PersonDTO.cshtml" />
+    <Content Include="Views\Shared\Layouts\_HomeLayout(temp).cshtml" />
     <Content Include="Views\Shared\Layouts\_MemberLayout.cshtml" />
     <Content Include="Views\Shared\Layouts\_VisitorLayout.cshtml" />
     <Content Include="Views\Shared\Partials\NavBarLinks.cshtml" />
