@@ -20,7 +20,7 @@ namespace BAR.UI.MVC.Controllers {
         /// </summary>
         [HttpGet]
         [Route("api/User/{id}/GetAlerts")]
-        public IHttpActionResult GetAlerts(int id) {
+        public IHttpActionResult GetAlerts(string id) {
             //TODO: Remove counter, temporary solution because db is rebuild on every load.
             if (FirstCall) {
                 FirstCall = false;
@@ -47,34 +47,11 @@ namespace BAR.UI.MVC.Controllers {
         }
 
         /// <summary>
-        /// Gets a user.
-        /// </summary>
-        [HttpGet]
-        [Route("api/User/{id}")]
-        public IHttpActionResult GetUser(int id) {
-            User user = UserManager.GetUser(id);
-            return Ok(user);
-        }
-        
-        /// <summary>
-        /// Updates/Creates a user.
-        /// </summary>
-        [HttpPost]
-        [Route("api/User/{id}")]
-        public IHttpActionResult UpdateUser(UserSubscribedPeopleDTO usr) {
-            User user = UserManager.GetUser(usr.User.UserId);
-            User newUser = user.CopyTo<User>(usr.User);
-            UserManager.ChangeUser(newUser);
-            return StatusCode(HttpStatusCode.NoContent);
-        }
-        
-        
-        /// <summary>
         /// Updates an alert from a specific user. Sets its property isRead to true.
         /// </summary>
         [HttpPut]
         [Route("api/User/{id}/Alert/{alertId}/Read")]
-        public IHttpActionResult MarkAlertAsRead(int id, int alertId) {
+        public IHttpActionResult MarkAlertAsRead(string id, int alertId) {
             SubManager.ChangeAlertToRead(id, alertId);
             return StatusCode(HttpStatusCode.NoContent);
         }
@@ -84,7 +61,7 @@ namespace BAR.UI.MVC.Controllers {
         /// </summary>
         [HttpDelete]
         [Route("api/User/{userId}/Alert/{alertId}/Delete")]
-        public IHttpActionResult DeleteAlert(int userId, int alertId) {
+        public IHttpActionResult DeleteAlert(string userId, int alertId) {
             SubManager.RemoveAlert(userId, alertId);
             return StatusCode(HttpStatusCode.NoContent);
         }

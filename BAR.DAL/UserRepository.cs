@@ -4,11 +4,12 @@ using System.Collections.Generic;
 using System.Linq;
 using BAR.DAL.EF;
 using System.Data.Entity;
+using Microsoft.AspNet.Identity.EntityFramework;
 using System.Data.Entity.Migrations;
 
 namespace BAR.DAL
 {
-	public class UserRepository : IUserRepository
+	public class UserRepository : UserStore<User>, IUserRepository
 	{
 		private BarometerDbContext ctx;
 
@@ -16,9 +17,23 @@ namespace BAR.DAL
 		/// If uow is present then the constructor
 		/// will get the context from uow.
 		/// </summary>
+		public UserRepository(BarometerDbContext ctx, UnitOfWork uow = null) : base(ctx)
+		{
+			if (uow == null) this.ctx = new BarometerDbContext();
+			else ctx = uow.Context;
+		}
+
+		/// <summary>
+		/// This constructor is used if
+		/// you plan to not work with identity.
+		/// 
+		/// WARNING
+		/// Methods that are being used with identity will not
+		/// work if you plan to use this constructor
+		/// </summary>
 		public UserRepository(UnitOfWork uow = null)
 		{
-			if (uow == null) ctx = new BarometerDbContext();
+			if (uow == null) this.ctx = new BarometerDbContext();
 			else ctx = uow.Context;
 		}
 
@@ -41,15 +56,27 @@ namespace BAR.DAL
 		/// <summary>
 		/// Returns a list of users for a specific role
 		/// </summary>
-		public IEnumerable<User> ReadAllUsersForRole(int roleId)
+		public IEnumerable<User> ReadAllUsersForRole(string roleId)
 		{
-			return ctx.Users.Where(user => user.Role.RoleId == roleId).AsEnumerable();
+			List<User> userList = new List<User>();
+			IdentityUserRole role;
+			foreach (var user in ctx.Users)
+			{
+				role = null;
+				role = user.Roles.Where(x => x.RoleId.Equals(roleId)).SingleOrDefault();
+				if (role != null)
+				{
+					userList.Add(user);
+				}
+			}
+
+			return userList.AsEnumerable();
 		}
 
 		/// <summary>
 		/// Returns the user from a specific userId.
 		/// </summary>
-		public User ReadUser(int userId)
+		public User ReadUser(string userId)
 		{
 			var user = ctx.Users.Find(userId);
 			return user;
@@ -58,10 +85,10 @@ namespace BAR.DAL
 		/// <summary>
 		/// Returns a user with their activities.
 		/// </summary>
-		public User ReadUserWithActivities(int userId)
+		public User ReadUserWithActivities(string userId)
 		{
 			return ctx.Users.Include(user => user.Activities)
-				.Where(user => user.UserId == userId).SingleOrDefault();
+				.Where(user => user.Id.Equals(userId)).SingleOrDefault();
 		}
 
 		/// <summary>
@@ -79,10 +106,10 @@ namespace BAR.DAL
 		/// <summary>
 		/// Reads all the activities for a specific user.
 		/// </summary>
-		public IEnumerable<Activity> ReadActivitiesForUser(int userId)
+		public IEnumerable<Activity> ReadActivitiesForUser(string userId)
 		{
 			return ctx.Users.Include(user => user.Activities).
-				Where(user => user.UserId == userId).SingleOrDefault().Activities.AsEnumerable();
+				Where(user => user.Id.Equals(userId)).SingleOrDefault().Activities.AsEnumerable();
 		}
 
 		/// <summary>
@@ -126,27 +153,27 @@ namespace BAR.DAL
 		/// NOTE
 		/// Normally we don't delete a user, we disable his account but keep the information.
 		/// </summary>
-		public int DeleteUser(int userId)
+		public int DeleteUser(string userId)
 		{
 			User userToDelete = ReadUserWithActivities(userId);
 			ctx.Users.Remove(userToDelete);
 			return ctx.SaveChanges();
 		}
 
-        /// <summary>
-        /// Deletes a given list of users
-        /// Returns -1 if SaveChanges() is delayed by unit of work.
-        /// 
-        /// WARNING
-        /// if users are deleted, all the acitivies of the users also need to be deleted.
-        /// Dashboard of the users also needs to be deleted.
-        /// 
-        /// NOTE
-        /// Normally we don't delete a users, we disable his account but keep the information.
-        /// </summary>
-        public int DeleteUsers(IEnumerable<int> userIds)
+		/// <summary>
+		/// Deletes a given list of users
+		/// Returns -1 if SaveChanges() is delayed by unit of work.
+		/// 
+		/// WARNING
+		/// if users are deleted, all the acitivies of the users also need to be deleted.
+		/// Dashboard of the users also needs to be deleted.
+		/// 
+		/// NOTE
+		/// Normally we don't delete a users, we disable his account but keep the information
+		/// </summary>
+		public int DeleteUsers(IEnumerable<string> userIds)
 		{
-			foreach (int userid in userIds)
+			foreach (string userid in userIds)
 			{
 				User userToDelete = ReadUserWithActivities(userid);
 				ctx.Users.Remove(userToDelete);

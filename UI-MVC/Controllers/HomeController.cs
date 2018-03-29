@@ -28,7 +28,7 @@ namespace BAR.UI.MVC.Controllers {
                     Baseline = item.Baseline
                 });
             }
-            return View(personen.AsEnumerable());
+            return View("Index", "~/Views/Shared/Layouts/_HomeLayout(temp).cshtml", personen.AsEnumerable());
         }
     }
 }

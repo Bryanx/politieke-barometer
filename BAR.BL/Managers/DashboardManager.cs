@@ -135,13 +135,13 @@ namespace BAR.BL.Managers
 		/// NOTE
 		/// THIS METHOD USES UNIT OF WORK
 		/// </summary>
-		public Dashboard CreateDashboard(int userId, DashboardType dashType)
+		public Dashboard CreateDashboard(string userId, DashboardType dashType)
 		{
 			uowManager = new UnitOfWorkManager();
 			InitRepo();
 
 			//Get user
-			UserManager userManager = new UserManager(uowManager);
+			UserManager userManager = new UserManager(null, uowManager);
 			User user = userManager.GetUser(userId);
 			if (user == null) return null;
 

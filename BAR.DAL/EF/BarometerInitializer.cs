@@ -11,7 +11,7 @@ using System.Text;
 
 namespace BAR.DAL.EF
 {
-	internal class BarometerInitializer : DropCreateDatabaseAlways<BarometerDbContext>
+	internal class BarometerInitializer : DropCreateDatabaseIfModelChanges<BarometerDbContext>
 	{
 		/// <summary>
 		/// Dummy data from the json file will be generated

@@ -8,20 +8,20 @@
 @section CustomCSS{
     @Styles.Render("~/bundles/datatables")
 }
-<div class="right_col" role="main">
-    <div class="col-md-12 col-sm-12 col-xs-12">
 
-        <h1>Politici-overzicht</h1>
-        <hr/>
+<div class="col-md-12 col-sm-12 col-xs-12">
 
-        <p class="text-muted font-16 m-b-30">
-            Extra informatie over de politici en uitleg over de attributen etc.
-        </p>
+    <h1>Politici-overzicht</h1>
+    <hr/>
 
-        @Html.Partial("Partials/PersonTable", Model)
-    </div>
-    <div style="visibility: hidden">t</div>
+    <p class="text-muted font-16 m-b-30">
+        Extra informatie over de politici en uitleg over de attributen etc.
+    </p>
+
+    @Html.Partial("Partials/PersonTable", Model)
 </div>
+<div style="visibility: hidden">t</div>
+
 @section CustomJS{
     @Scripts.Render("~/bundles/datatablesScripts")
 }
