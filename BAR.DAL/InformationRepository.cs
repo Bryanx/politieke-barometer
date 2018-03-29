@@ -28,7 +28,7 @@ namespace BAR.DAL
 
 		/// <summary>
 		/// Creates a new instance of an information objects and
-		/// persist that to the database.
+		/// persists it to the database.
 		/// Returns -1 if SaveChanges() is delayed by unit of work.
 		/// </summary>
 		public int CreateInformation(Information info)
@@ -42,7 +42,7 @@ namespace BAR.DAL
 		/// Returns -1 if SaveChanges() is delayed by unit of work.
 		/// 
 		/// WARNING
-		/// All the propertyvalues of the information also need the be deleted.
+		/// All of the the propertyvalues of the information also need to be deleted.
 		/// 
 		/// NOTE
 		/// Normally we don't delete informations.
@@ -123,7 +123,7 @@ namespace BAR.DAL
 
 		/// <summary>
 		/// Gets the number of informations of a specific given item
-		/// form since till now.
+		/// from the creation date untill now.
 		/// </summary
 		public int ReadNumberInfo(int itemId, DateTime since)
 		{

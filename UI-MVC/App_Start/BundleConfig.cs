@@ -4,9 +4,9 @@ namespace BAR.UI.MVC {
     public class BundleConfig {
 
         /// Script fields
-        private static readonly string Jquery ="~/Scripts/jquery-2.2.4.js";
-        private static readonly string JqueryValidate ="~/Scripts/jquery.validate*";
-        private static readonly string Timeago ="~/Scripts/jquery.timeago.js";
+        private static readonly string Jquery ="~/Scripts/jquery/jquery-3.3.1.min.js";
+        private static readonly string JqueryValidate ="~/Scripts/jquery/jquery.validate*";
+        private static readonly string Timeago ="~/Scripts/jquery/jquery.timeago.js";
         private static readonly string Modernizr ="~/Scripts/modernizr-*";
         private static readonly string[] Bootstrap = {
             "~/Scripts/bootstrap.js",
@@ -16,16 +16,11 @@ namespace BAR.UI.MVC {
             "~/Scripts/fastclick.js"
         };
         private static readonly string[] Gridstack = {
-            "~/Scripts/jquery-ui.js",
+            "~/Scripts/jquery/jquery-ui.js",
             "~/Scripts/underscore.min.js",
             "~/Scripts/gridstack/gridstack.js",
             "~/Scripts/gridstack/gridstack.jQueryUI.js",
             "~/Content/build/js/widgets.js"
-        };
-        private static readonly string[] Notifications = {
-            "~/Scripts/pnotify/pnotify.js",
-            "~/Scripts/pnotify/pnotify.buttons.js",
-            "~/Scripts/pnotify/pnotify.nonblock.js"
         };
         private static readonly string[] Jqvmap = {
             "~/Scripts/jqvmap/jquery.vmap.min.js",
@@ -80,7 +75,7 @@ namespace BAR.UI.MVC {
             "~/Scripts/datatables/datatables.net-responsive-bs/css/responsive.bootstrap.min.css",
             "~/Scripts/datatables/datatables.net-scroller-bs/css/scroller.bootstrap.min.css"
         };
-        private static readonly string CustomCss ="~/Content/build/css/custom/custom.css";
+        private static readonly string CustomCss ="~/Content/build/css/custom.css";
 
         public static void RegisterBundles(BundleCollection bundles) {
             //Scripts
@@ -94,7 +89,6 @@ namespace BAR.UI.MVC {
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(Bootstrap));
             bundles.Add(new ScriptBundle("~/bundles/gridstack").Include(Gridstack));
             bundles.Add(new ScriptBundle("~/bundles/morrisCharts").Include(MorrisCharts));
-            bundles.Add(new ScriptBundle("~/bundles/pnotify").Include(Notifications));
             bundles.Add(new ScriptBundle("~/bundles/datatablesScripts").Include(DataTables));
             bundles.Add(new ScriptBundle("~/bundles/custom").Include(CustomScripts));
             

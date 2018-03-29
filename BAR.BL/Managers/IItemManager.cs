@@ -7,11 +7,20 @@ using System.Threading.Tasks;
 
 namespace BAR.BL.Managers
 {
-  public interface IItemManager
-  {
-    void DetermineTrending(int itemId);
-    double GetTrendingPer(int itemId);
-    Item GetItem(int itemId);
-    IEnumerable<Item> getAllItems();
-  }
+	public interface IItemManager
+	{	
+		Item GetItem(int itemId);
+		IEnumerable<Item> GetAllItems();
+		IEnumerable<Item> GetItemsForType(ItemType type);
+
+		Item CreateItem(ItemType itemType, string name, string description = "", string function = "", Category category = null);
+
+		Item ChangeItemName(int itemId, string name);
+		Item ChangeItemDescription(int itemId, string description);
+
+		void RemoveItem(int itemId);
+
+		void DetermineTrending(int itemId);
+		double GetTrendingPer(int itemId);
+	}
 }

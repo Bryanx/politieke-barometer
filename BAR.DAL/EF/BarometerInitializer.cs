@@ -15,7 +15,7 @@ namespace BAR.DAL.EF
 	{
 		/// <summary>
 		/// Dummy data from the json file will be generated
-		/// in this file for the first wave of information
+		/// in this file for the first wave of information.
 		/// </summary>
 		protected override void Seed(BarometerDbContext ctx)
 		{
@@ -35,7 +35,7 @@ namespace BAR.DAL.EF
 			{
 				SubscribedItem = ctx.Items.Find(1),
 				SubscribedUser = ctx.Users.Find(1),
-				Treshhold = 60,
+				Threshold = 60,
 				Alerts = new List<Alert>()
 			};
 			ctx.Subscriptions.Add(s1);
@@ -44,7 +44,7 @@ namespace BAR.DAL.EF
 			{
 				SubscribedItem = ctx.Items.Find(2),
 				SubscribedUser = ctx.Users.Find(1),
-				Treshhold = 60,
+				Threshold = 60,
 				Alerts = new List<Alert>()
 			};
 
@@ -54,7 +54,7 @@ namespace BAR.DAL.EF
 			{
 				SubscribedItem = ctx.Items.Find(3),
 				SubscribedUser = ctx.Users.Find(2),
-				Treshhold = 60,
+				Threshold = 60,
 				Alerts = new List<Alert>()
 			};
 
@@ -64,7 +64,7 @@ namespace BAR.DAL.EF
 			{
 				SubscribedItem = ctx.Items.Find(4),
 				SubscribedUser = ctx.Users.Find(2),
-				Treshhold = 60,
+				Threshold = 60,
 				Alerts = new List<Alert>()
 			};
 
@@ -75,7 +75,7 @@ namespace BAR.DAL.EF
 
 
 		/// <summary>
-		/// Generates all the sources we get our information from.
+		/// Generates all of the sources we get our information from.
 		/// </summary>
 		private void GenerateSources(BarometerDbContext ctx)
 		{
@@ -89,7 +89,7 @@ namespace BAR.DAL.EF
 		}
 
 		/// <summary>
-		/// Preformance gain if you put all items in a list
+		/// Performance gain if you put all items in a list
 		/// and then in the context with addRange();
 		/// </summary>
 		private void GenerateProperties(BarometerDbContext ctx)
@@ -148,7 +148,7 @@ namespace BAR.DAL.EF
 		}
 
 		/// <summary>
-		/// Generates informations objects based on the
+		/// Generates information objects based on the
 		/// JSON-file.
 		/// </summary>
 		private void GenerateInformations(BarometerDbContext ctx)
@@ -316,8 +316,8 @@ namespace BAR.DAL.EF
 		}
 
 		/// <summary>
-		/// Zal de ID van de personen teruggeven
-		/// Als de politicus nog niet bestaat zal deze aangemaakt worden
+		/// Will return the ID of the people
+		/// If the person does not exist, he will be created.
 		/// </summary>
 		private Item GeneratePeople(string personFullName, BarometerDbContext ctx)
 		{

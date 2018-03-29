@@ -35,7 +35,7 @@ namespace BAR.DAL
 		}
 
 		/// <summary>
-		/// Gives back a list of alle the items for a specif type
+		/// Gives back a list of all the items for a specific type
 		/// </summary>
 		public IEnumerable<Item> ReadItemsForType(ItemType type)
 		{
@@ -43,7 +43,7 @@ namespace BAR.DAL
 		}
 
 		/// <summary>
-		/// Does the same thing as ReadItem but it loeds all the
+		/// Does the same thing as ReadItem but it loads all the
 		/// informations with it.
 		/// </summary>
 		public Item ReadItemWithInformations(int itemId)
@@ -63,11 +63,11 @@ namespace BAR.DAL
 
 		/// <summary>
 		/// Gives back a list of items that were
-		/// last updated from now until a given date.
+		/// last updated from a given date untill now.
 		/// </summary>
 		public IEnumerable<Item> ReadAllItemsForUpdatedSince(DateTime since)
 		{
-			return ctx.Items.Where(item => item.LastUpdated >= since).AsEnumerable();
+			return ctx.Items.Where(item => item.LastUpdatedInfo >= since).AsEnumerable();
 		}
 
 		/// <summary>
@@ -87,7 +87,7 @@ namespace BAR.DAL
 		public int UpdateLastUpdated(int itemId, DateTime lastUpdated)
 		{
 			Item itemToUpdate = ReadItemWithInformations(itemId);
-			itemToUpdate.LastUpdated = lastUpdated;
+			itemToUpdate.LastUpdatedInfo = lastUpdated;
 			return UpdateItem(itemToUpdate);
 		}
 

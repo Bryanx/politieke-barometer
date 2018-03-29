@@ -5,6 +5,7 @@ using System.Linq;
 using BAR.DAL.EF;
 using System.Data.Entity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using System.Data.Entity.Migrations;
 
 namespace BAR.DAL
 {
@@ -36,7 +37,6 @@ namespace BAR.DAL
 			else ctx = uow.Context;
 		}
 
-
 		/// <summary>
 		/// Returns a list of all users.
 		/// </summary>
@@ -54,7 +54,7 @@ namespace BAR.DAL
 		}
 
 		/// <summary>
-		/// Returns a list of users for a spefic role
+		/// Returns a list of users for a specific role
 		/// </summary>
 		public IEnumerable<User> ReadAllUsersForRole(string roleId)
 		{
@@ -74,7 +74,7 @@ namespace BAR.DAL
 		}
 
 		/// <summary>
-		/// Returns the user form a specific userId.
+		/// Returns the user from a specific userId.
 		/// </summary>
 		public User ReadUser(string userId)
 		{
@@ -83,7 +83,7 @@ namespace BAR.DAL
 		}
 
 		/// <summary>
-		/// Gives back a user with their activities.
+		/// Returns a user with their activities.
 		/// </summary>
 		public User ReadUserWithActivities(string userId)
 		{
@@ -151,7 +151,7 @@ namespace BAR.DAL
 		/// Dashboard of the user also needs to be deleted.
 		/// 
 		/// NOTE
-		/// Normally we don't delete a user, but we keep the information
+		/// Normally we don't delete a user, we disable his account but keep the information.
 		/// </summary>
 		public int DeleteUser(string userId)
 		{
@@ -169,7 +169,7 @@ namespace BAR.DAL
 		/// Dashboard of the users also needs to be deleted.
 		/// 
 		/// NOTE
-		/// Normally we don't delete a users, but we keep the information
+		/// Normally we don't delete a users, we disable his account but keep the information
 		/// </summary>
 		public int DeleteUsers(IEnumerable<string> userIds)
 		{
