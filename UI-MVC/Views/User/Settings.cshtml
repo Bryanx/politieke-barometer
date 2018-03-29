@@ -1,68 +1,249 @@
-﻿<div class="row">
+﻿@using System.Web.Optimization
+@using BAR.BL.Domain.Users
+@using Microsoft.Ajax.Utilities
+@model BAR.UI.MVC.Models.UserSubscribedPeopleDTO
+
+<!-- User Settings -->
+<div class="row">
     <div class="col-md-12 col-sm-12 col-xs-12">
         <div class="x_panel">
             <div class="x_title">
-                <h2>Form Design <small>different form elements</small></h2>
+                <h2>Gebruiker instellingen</h2>
                 <div class="clearfix"></div>
             </div>
             <div class="x_content">
                 <br/>
-                <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
-
+                <form method="post" action="/api/User/@ViewBag.Id" id="userSettingsForm" class="form-horizontal">
+                    @Html.HiddenFor(model => model.User.UserId)
                     <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">
-                            First Name <span class="required">*</span>
+                            Voornaam <span class="required">*</span>
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                            <input type="text" id="first-name" required="required" class="form-control col-md-7 col-xs-12">
+                            @Html.TextBoxFor(model => model.User.FirstName, "", new {@class = "form-control col-md-7 col-xs-12"})
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">
-                            Last Name <span class="required">*</span>
+                            Achternaam <span class="required">*</span>
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                            <input type="text" id="last-name" name="last-name" required="required" class="form-control col-md-7 col-xs-12">
+                            @Html.TextBoxFor(model => model.User.LastName, "", new {@class = "form-control col-md-7 col-xs-12"})
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">Middle Name / Initial</label>
-                        <div class="col-md-6 col-sm-6 col-xs-12">
-                            <input id="middle-name" class="form-control col-md-7 col-xs-12" type="text" name="middle-name">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Gender</label>
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Geslacht</label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
                             <div id="gender" class="btn-group" data-toggle="buttons">
-                                <label class="btn btn-default" data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">
-                                    <input type="radio" name="gender" value="male"> &nbsp; Male &nbsp;
-                                </label>
-                                <label class="btn btn-primary" data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">
-                                    <input type="radio" name="gender" value="female"> Female
-                                </label>
+                                @if (Model.User.Gender == Gender.MAN) {
+                                    <label class="btn btn-default active">
+                                        @Html.RadioButtonFor(model => model.User.Gender, Gender.MAN) Man
+                                    </label>
+                                    <label class="btn btn-default">
+                                        @Html.RadioButtonFor(model => model.User.Gender, Gender.WOMAN) Vrouw
+                                    </label>
+                                } else {
+                                    <label class="btn btn-default">
+                                        @Html.RadioButtonFor(model => model.User.Gender, Gender.MAN) Man
+                                    </label>
+                                    <label class="btn btn-default active">
+                                        @Html.RadioButtonFor(model => model.User.Gender, Gender.WOMAN) Vrouw
+                                    </label>
+                                }
                             </div>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">
-                            Date Of Birth <span class="required">*</span>
+                            Geboortedatum
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                            <input id="birthday" class="date-picker form-control col-md-7 col-xs-12" required="required" type="text">
+                            @Html.TextBoxFor(model => model.User.DateOfBirth, new {@class = "form-control col-md-7 col-xs-12"})
+                            @Html.ValidationMessageFor(model => model.User.DateOfBirth, "", new {@class = "text-danger"})
                         </div>
                     </div>
-                    <div class="ln_solid"></div>
                     <div class="form-group">
                         <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
-                            <button class="btn btn-primary" type="button">Cancel</button>
-                            <button class="btn btn-primary" type="reset">Reset</button>
-                            <button type="submit" class="btn btn-success">Submit</button>
+                            <button type="submit" class="btn btn-dark">Opslaan</button>
+                            <div id="messageSettings" style="display: inline"></div>
                         </div>
                     </div>
-
                 </form>
             </div>
         </div>
     </div>
 </div>
+
+<!-- Alert Settings -->
+<div class="row">
+    <div class="col-md-6 col-xs-12">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>Alert instellingen</h2>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+                <br/>
+                <form method="post" action="/api/User/@ViewBag.Id" id="alertSettingsForm" class="form-horizontal">
+                    @Html.HiddenFor(model => model.User.UserId)
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.User.AlertsViaWebsite,"Alerts ontvangen op deze website", htmlAttributes: new { @class = "control-label col-md-6 col-sm-6 col-xs-12" })
+                        <div class="col-md-3 col-sm-3 col-xs-12">
+                            @Html.DropDownListFor(model => model.User.AlertsViaWebsite, new List<SelectListItem>()
+                            {
+                                new SelectListItem() { Text = "Ja", Value = "True" },
+                                new SelectListItem() { Text = "Nee", Value = "False"}
+                            }, new { @class="form-control" })
+                            @Html.ValidationMessageFor(model => model.User.AlertsViaWebsite, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.User.AlertsViaEmail,"Alerts ontvangen per email", htmlAttributes: new { @class = "control-label col-md-6 col-sm-6 col-xs-12" })
+                        <div class="col-md-3 col-sm-3 col-xs-12">
+                            @Html.DropDownListFor(model => model.User.AlertsViaEmail, new List<SelectListItem>()
+                            {
+                                new SelectListItem() { Text = "Ja", Value = "True" },
+                                new SelectListItem() { Text = "Nee", Value = "False"}
+                            }, new { @class="form-control" })
+                            @Html.ValidationMessageFor(model => model.User.AlertsViaEmail, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.User.WeeklyReviewViaEmail,"Weekly review ontvangen per email", htmlAttributes: new { @class = "control-label col-md-6 col-sm-6 col-xs-12" })
+                        <div class="col-md-3 col-sm-3 col-xs-12">
+                            @Html.DropDownListFor(model => model.User.WeeklyReviewViaEmail, new List<SelectListItem>()
+                            {
+                                new SelectListItem() { Text = "Ja", Value = "True" },
+                                new SelectListItem() { Text = "Nee", Value = "False"}
+                            }, new { @class="form-control" })
+                            @Html.ValidationMessageFor(model => model.User.WeeklyReviewViaEmail, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-6">
+                            <button type="submit" class="btn btn-dark">Opslaan</button>
+                            <div id="alertSettingsMessage" style="display: inline"></div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Account Settings -->
+    <div class="col-md-6 col-xs-12">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>Account instellingen</h2>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+                <br/>
+                <form method="post" action="/api/User/@ViewBag.Id" id="accountSettingsForm" class="form-horizontal">
+                    @Html.HiddenFor(model => model.User.UserId)
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">
+                            E-mailadres <span class="required">*</span>
+                        </label>
+                        <div class="col-md-9 col-sm-9 col-xs-12">
+                            @Html.TextBoxFor(model => model.User.EmailAdress, "", new {type = "email", @class = "form-control col-md-7 col-xs-12"})
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">
+                            Wachtwoord <span class="required">*</span>
+                        </label>
+                        <div class="col-md-9 col-sm-9 col-xs-12">
+@*                            @Html.TextBoxFor(model => model.User.LastName, "", new {type = "password", @class = "form-control col-md-7 col-xs-12"})*@
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">
+                            Wachtwoord <span class="required">*</span>
+                        </label>
+                        <div class="col-md-9 col-sm-9 col-xs-12">
+@*                            @Html.TextBoxFor(model => model.User.LastName, "", new {type = "password", @class = "form-control col-md-7 col-xs-12"})*@
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+                            <button type="submit" class="btn btn-dark">Opslaan</button>
+                            <div id="accountSettingsMessage" style="display: inline"></div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Remove account Settings -->
+<div class="row">
+<div class="col-md-6 col-xs-12">
+    <div class="x_panel">
+        <div class="x_title">
+            <h2>Account deactiveren</h2>
+            <div class="clearfix"></div>
+        </div>
+        <div class="x_content">
+            <br/>
+            <form method="post" action="/api/User/@ViewBag.Id" id="removeAccountForm" class="form-horizontal">
+                @Html.HiddenFor(model => model.User.UserId)
+                <div class="form-group">
+                    <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+                        Let op. Bij het verwijderen van uw account worden al uw instellingen, grafieken en widgets verwijderd.
+                        <br/>
+                        <br/>
+                        <button type="submit" class="btn btn-danger">Account verwijderen</button>
+                        <div id="removeAccountMessage" style="display: inline"></div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</div>
+
+@section CustomJS{
+    <script type="text/javascript">
+        //When the user settings form is submitted: post request to webapi
+        $("#userSettingsForm").on("submit", function(event) {
+            submitForm($(this), event, $("#messageSettings"));
+        });
+        $("#alertSettingsForm").on("submit", function(event) {
+            submitForm($(this), event, $("#alertSettingsMessage"));
+        });
+        $("#accountSettingsForm").on("submit", function(event) {
+            submitForm($(this), event, $("#accountSettingsMessage"));
+        });
+        
+        //Ajax call in generic function so every form can use the same code.
+        function submitForm($this, event, message) {
+                $.ajax({
+                    type: $this.attr('method'),
+                    url: $this.attr('action'),
+                    data: $this.serialize(),
+                    succes: message
+                        .addClass('green')
+                        .html("Saved.")
+                        .fadeOut(1000,
+                            function() {
+                                $(this)
+                                    .removeClass()
+                                    .html("")
+                                    .css("display", "inline");
+                            })
+                }).fail(() => message
+                    .addClass('red')
+                    .html("Mislukt.")
+                    .fadeOut(1000,
+                        function() {
+                            $(this)
+                                .removeClass()
+                                .html("")
+                                .css("display", "inline");
+                        }));
+                event.preventDefault();
+        }
+    </script>
+}

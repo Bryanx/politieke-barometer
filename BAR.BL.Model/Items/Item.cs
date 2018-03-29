@@ -14,6 +14,7 @@ namespace BAR.BL.Domain.Items
 		public SubPlatform SubPlatform { get; set; }
 		public string Name { get; set; }
 		public DateTime CreationDate { get; set; }
+		public DateTime? LastUpdatedInfo { get; set; }
 		public DateTime? LastUpdated { get; set; }
 		public string Description { get; set; }
 		public int NumberOfFollowers { get; set; }

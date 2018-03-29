@@ -25,7 +25,7 @@ namespace BAR.BL.Controllers
 		}
 
 		/// <summary>
-		/// When new data arrives this method will be triggerd to determine
+		/// When new data arrives this method will be triggered to determine
 		/// a new baseline and a new trending percentage for a specific item.
 		/// </summary>
 		public void DetermineTrending(int itemId)
@@ -37,11 +37,10 @@ namespace BAR.BL.Controllers
 		/// Is used to trigger the determination
 		/// of adjusting the baseline and the trending percentage 
 		/// of a specific item.
-		/// 
 		/// </summary>
 		public void DetermineTrending()
 		{
-			IEnumerable<Item> allItems = itemManager.getAllItems();
+			IEnumerable<Item> allItems = itemManager.GetAllItems();
 
 			foreach(Item item in allItems)
 			{
@@ -59,11 +58,11 @@ namespace BAR.BL.Controllers
 		}
 
 		/// <summary>
-		/// Generates alersts for all items.
+		/// Generates alerts for all items.
 		/// </summary>
 		public void GenerateAlerts()
 		{
-			IEnumerable<Item> allItems = itemManager.getAllItems();
+			IEnumerable<Item> allItems = itemManager.GetAllItems();
 			
 			foreach (Item item in allItems)
 			{

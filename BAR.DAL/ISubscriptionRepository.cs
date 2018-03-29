@@ -11,12 +11,15 @@ namespace BAR.DAL
 	{
 		//Read
 		Subscription ReadSubscription(int subscriptionId);
+		Subscription ReadSubscriptionWithAlerts(int subscriptionId);
+		Subscription ReadEditableSubscription(int subscriptionId);
 		IEnumerable<Subscription> ReadAllSubscriptions();
 		IEnumerable<Subscription> ReadSubscriptionsForItem(int itemId);
 		IEnumerable<Subscription> ReadSubscriptionsForUser(string userId);
 		IEnumerable<Subscription> ReadSubscriptionsWithAlertsForUser(string userId);
 		IEnumerable<Subscription> ReadSubscriptionsWithItemsForUser(string userId);
 		IEnumerable<Subscription> ReadSubscritpionsWithAlerts(int itemId);
+		Alert ReadAlert(string userId, int alertId);
 		IEnumerable<Alert> ReadAlerts(string userId, bool showable = false);
 
 		//Create

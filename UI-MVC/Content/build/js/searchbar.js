@@ -10,5 +10,4 @@ function init() {
             $(this).parents('.input-group-btn').find('.btn-search').html(selText);
         });
     });
-
 }

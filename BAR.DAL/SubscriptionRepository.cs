@@ -27,10 +27,10 @@ namespace BAR.DAL
 		}
 
 		/// <summary>
-		/// Gives back a collection of alerts from a specific user.
+		/// returns a collection of alerts from a specific user.
 		/// 
-		/// If showalbe is true, the method will return a list of alerts
-		/// where you can alse access the item and the user of a specific alert.
+		/// If showable is true, the method will return a list of alerts
+		/// where you can also access the item and the user of a specific alert.
 		/// </summary>
 		public IEnumerable<Alert> ReadAlerts(string userId, bool showable = false)
 		{
@@ -71,7 +71,7 @@ namespace BAR.DAL
 		}
 
 		/// <summary>
-		/// Gives back a collection of subscriptions form a specific item.
+		/// Returns a collection of subscriptions from a specific item.
 		/// </summary>
 		public IEnumerable<Subscription> ReadSubscriptionsForItem(int itemId)
 		{
@@ -79,7 +79,7 @@ namespace BAR.DAL
 		}
 
 		/// <summary>
-		/// Returns a list of subscriptions with their alerts.
+		/// Returns a list of subscriptions with their alerts
 		/// for a specific item.
 		/// </summary>
 		public IEnumerable<Subscription> ReadSubscritpionsWithAlerts(int itemId)
@@ -113,7 +113,7 @@ namespace BAR.DAL
 		}
 
 		/// <summary>
-		/// Gives a subscription object based on the subscription id.
+		/// Returns a subscription object based on the subscription id.
 		/// </summary>
 		public Subscription ReadSubscription(int subscriptionId)
 		{
@@ -121,7 +121,30 @@ namespace BAR.DAL
 		}
 
 		/// <summary>
-		/// Gives back all the subscritons.
+		/// Gives back a subscription with their alerts
+		/// </summary>
+		public Subscription ReadSubscriptionWithAlerts(int subscriptionId)
+		{
+			return ctx.Subscriptions.Include(sub => sub.Alerts)
+									.Where(sub => sub.SubscriptionId == subscriptionId).SingleOrDefault();
+		}
+
+		/// <summary>
+		/// Gives back an subscription with:
+		/// - Alerts
+		/// - User
+		/// - Item
+		/// </summary>
+		public Subscription ReadEditableSubscription(int subscriptionId)
+		{
+			return ctx.Subscriptions.Include(sub => sub.Alerts)
+									.Include(sub => sub.SubscribedItem)
+									.Include(sub => sub.SubscribedUser)
+									.Where(sub => sub.SubscriptionId == subscriptionId).SingleOrDefault();
+		}
+
+		/// <summary>
+		/// Returns all the subscriptons.
 		/// </summary>
 		public IEnumerable<Subscription> ReadAllSubscriptions()
 		{
@@ -129,7 +152,7 @@ namespace BAR.DAL
 		}
 
 		/// <summary>
-		/// Create's a new subscription and persist that
+		/// Creates a new subscription and persist that
 		/// subscription to the database.
 		/// Returns -1 if SaveChanges() is delayed by unit of work.
 		/// </summary>
@@ -218,6 +241,6 @@ namespace BAR.DAL
 		{
 			IEnumerable<Subscription> subs = ReadSubscriptionsForItem(itemId);
 			return DeleteSubscriptions(subs);
-		}		
+		}	
 	}
 }

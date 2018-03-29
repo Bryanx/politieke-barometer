@@ -30,27 +30,15 @@
 <body class="nav-sm">
 <div class="container body">
 <div class="main_container">
-<div class="col-md-3 left_col nav-fixed">
+<div class="col-md-3 left_col">
     <div class="left_col scroll-view">
-        <div class="navbar nav_title" style="border: 0;">
-            <a href="/" class="site_title">
+        <div class="navbar" style="border: 0;">
+            <a href='@Url.Action("Index","Home")'>
                 <i class="small-logo"></i>
             </a>
         </div>
 
         <div class="clearfix"></div>
-
-        <!-- menu profile quick info -->
-        <div class="profile clearfix">
-            <div class="profile_pic">
-                <img src="../../Content/build/images/img.jpg" alt="..." class="img-circle profile_img">
-            </div>
-            <div class="profile_info">
-                <span>Welkom,</span>
-                <h2>@Html.DisplayFor(modelItem => Model.User.FirstName)</h2>
-            </div>
-        </div>
-        <!-- /menu profile quick info -->
 
         <br/>
 
@@ -91,7 +79,6 @@
 <!-- top navigation -->
 <div class="top_nav">
     <div class="nav_menu">
-        <nav>
             <div class="nav toggle">
                 <a id="menu_toggle">
                     <i class="fa fa-bars"></i>
@@ -100,10 +87,10 @@
 
             <!-- login -->
             <ul class="nav navbar-nav navbar-right">
-                <li class="">
-                    <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown"
+                <li class="user-profile">
+                    <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown"
                        aria-expanded="false">
-                        <img src="../../Content/build/images/img.jpg" alt="">@Html.DisplayFor(modelItem => Model.User.FirstName)
+                        <img src="../../Content/build/images/user.png" alt=""><span class="userNameNav">@Html.DisplayFor(modelItem => Model.User.FirstName)</span>
                         <span class=" fa fa-angle-down"></span>
                     </a>
                     <ul class="dropdown-menu dropdown-usermenu pull-right">
@@ -134,7 +121,7 @@
                 <li role="presentation" class="dropdown">
                     <a id="alertDropdown" href="javascript:;" class="dropdown-toggle info-number" data-toggle="dropdown"
                        aria-menu1expanded="false">
-                        <i class="fa fa-envelope-o"></i>
+                        <i class="fa fa-bell"></i>
                         <span id="alertCount" class="badge bg-green"></span>
                     </a>
                     <div class="dropdown-menu msg_list" role="menu">
@@ -143,14 +130,12 @@
                             <li class="alertWindowsSettings"><a>Intellingen</a></li>
                         </ul>
                         <ul id="alertMenu" class=" list-unstyled msg_list">
-                            <div class="loadingAlerts"></div>
                         </ul>
                     </div>
                 </li>
             </ul>
             <!-- search -->
             @Html.Partial("Partials/SearchBar")
-        </nav>
     </div>
 </div>
 <!-- /top navigation -->
@@ -173,19 +158,24 @@
 </div>
 
 <!-- Scripts -->
-@Scripts.Render("~/bundles/jquery","~/bundles/bootstrap","~/bundles/flot","~/bundles/dates","~/bundles/pnotify","~/bundles/timeago")
-
+@Scripts.Render("~/bundles/jquery","~/bundles/bootstrap","~/bundles/flot","~/bundles/dates","~/bundles/timeago", "~/Scripts/vue.min.js")
 <script type="text/javascript">
     
+    //global variables
+    var res = {
+        alertLoader: $("<div />", { class: "loadingAlerts" }),
+        alertcount: 0,
+        subscriptionAmount: $('.subscription').length
+    };
+    
     //Alerts:
-    var alertcount;
     //Updates the alert count icon
     function updateAlertCount() {
-        if (this.alertcount <= 0) {
+        if (res.alertcount <= 0 ) {
             $('#alertCount').hide();
         } else {
             $('#alertCount').show();
-            $('#alertCount').html(this.alertcount);
+            $('#alertCount').html(res.alertcount);
         }
     }
     
@@ -205,7 +195,7 @@
         var alert = $(`#alert${id}`);
         if (!alert.hasClass('alertRead')) {
             alert.addClass('alertRead');
-            this.alertcount = alertcount - 1;
+            res.alertcount = res.alertcount - 1;
             updateAlertCount();
         }
         $.ajax(`/api/User/${@ViewBag.Id}/Alert/${id}/Read`,
@@ -213,10 +203,10 @@
                     type: 'PUT',
                     dataType: 'json'
                 })
-            .done(() => {/*ok*/})
+            .done(() => { /*ok*/ })
             .fail(() => alert('Cannot change alert.'));
     }
-    
+
     //Generates the HTML for one alert item in the dropdown alert menu
     function generateAlertHTML(alert) {
         var read = "";
@@ -241,9 +231,9 @@
 
             }));
         var alertBody = $("<a />",
-        {
-            href: `/Person/Details/${alert.AlertId}`
-        });
+            {
+                href: `/Person/Details/${alert.AlertId}`
+            });
         var alertIcon = $("<div />",
             {
                 "class": "alertIcon"
@@ -253,6 +243,7 @@
             }));
         var alertContent = $("<span />",
             {
+                "class": "font_16",
                 html: `<strong>${alert.Name}</strong> is nu trending!`
             });
         var alertTime = $("<span />",
@@ -264,39 +255,42 @@
         alertItem.append(alertCloseButton).append(alertBody);
         return alertItem;
     }
-        
+
 
     //Inserts the HTML for the alerts inside the alert dropdownlist in the top-navbar
     function InsertAlerts(alertData) {
         $('#alertMenu').empty();
         var counter = 0;
-        for (var i = 0; i < alertData.length; i++) {
-            var alertItem = generateAlertHTML(alertData[i]);
-            
-            //Add alert to alert dropdownlist
-            $('#alertMenu').append(alertItem);
+        $.each(alertData,
+            (key, value) => {
+                var alertItem = generateAlertHTML(value);
 
-            if (!alertData[i].IsRead) {
-                counter++;
-            }
-        }
+                //Add alert to alert dropdownlist
+                $('#alertMenu').append(alertItem);
+
+                if (!value.IsRead) {
+                    counter++;
+                }
+            });
+
         //Update the alertCounter
-        this.alertcount = counter;
+        res.alertcount = counter;
         updateAlertCount();
     }
-    
+
     //Ajax GET request: loads all alerts and calls InsertAlerts() method to add HTML to the page.
     function loadAlerts() {
         //show loading gif
-        $(".loadingAlerts").css("display","block");
-        $.ajax('/api/User/@ViewBag.Id/GetAlerts',
-                {
-                    type: 'GET',
-                    dataType: 'json'
-                })
+        $(".loadingAlerts").css("display", "block");
+        $.ajax({
+                type: 'GET',
+                url: '/api/User/@ViewBag.Id/GetAlerts',
+                dataType: 'json',
+                beforeSend: () => $("#alertMenu").append(res.alertLoader),
+            })
             .done(data => {
                 //hide loading gif
-                $(".loadingAlerts").css("display", "none");
+                $("#alertMenu").find(res.alertLoader).remove();
                 //There are alerts available
                 if (data != undefined) {
                     var alertData = data;
@@ -306,9 +300,9 @@
                         "<li id=\"seeAllAlerts\"><div class=\"text-center\"><a><strong>Bekijk alle alerts</strong></a></div></li>");
                 } else { //No available alerts
                     $('#alertMenu').empty();
-                    $('#alertMenu').append("<li class=\"noAlertsAvailable\"><i class=\"fa fa-envelope-o\"></i></br>" +
+                    $('#alertMenu').append("<li class=\"noAlertsAvailable\"><i class=\"fa fa-bell\"></i></br>" +
                         "<strong>Je hebt geen alerts.</strong></br>" +
-                        "Abboneer jezelf op personen, partijen of thema's</br>" +
+                        "Abonneer jezelf op personen, partijen of thema's</br>" +
                         "om te zien wanneer ze trending zijn.</li>");
                 }
             })

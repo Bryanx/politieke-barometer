@@ -12,7 +12,7 @@ namespace BAR.DAL
 		private BarometerDbContext ctx;
 
 		/// <summary>
-		/// If uow is present then the constructor
+		/// If uow is present, the constructor
 		/// will get the context from uow.
 		/// </summary>
 		public DashboardRepository(UnitOfWork uow = null)
@@ -87,7 +87,7 @@ namespace BAR.DAL
 		}
 
 		/// <summary>
-		/// Create's a new dashboard and persist that
+		/// Creates a new dashboard and persist that
 		/// to the database.
 		/// Returns -1 if SaveChanges() is delayed by unit of work.
 		/// </summary>
@@ -98,18 +98,19 @@ namespace BAR.DAL
 		}
 
 		/// <summary>
-		/// Create's a new widget and persist that
+		/// Creates a new widget and persist that widget
 		/// to the database.
 		/// Returns -1 if SaveChanges() is delayed by unit of work.
 		/// 
 		/// WARNING
-		/// widget needs to linked to dashboard.
+		/// widget needs to be linked to dashboard.
 		/// Alternative: call ReadDashboard(), add widget to the list, updateDashboard();
 		/// </summary>
 		public int CreateWidget(Widget widget, int dashboardId)
 		{
-			Dashboard dasboardToAddWidget = ReadDashboard(dashboardId);
+			Dashboard dasboardToAddWidget = ReadDashboardWithWidgets(dashboardId);
 			dasboardToAddWidget.Widgets.Add(widget);
+			widget.Dashboard = dasboardToAddWidget;
 			return UpdateDashboard(dasboardToAddWidget);
 		}
 
@@ -163,7 +164,7 @@ namespace BAR.DAL
 		public int DeleteDashboard(int dashboardId)
 		{
 			Dashboard dashboardToDelete = ReadDashboardWithWidgets(dashboardId);
-			ctx.Dashboards.Remove(dashboardToDelete);
+			if (dashboardToDelete != null) ctx.Dashboards.Remove(dashboardToDelete);
 			return ctx.SaveChanges();
 		}
 

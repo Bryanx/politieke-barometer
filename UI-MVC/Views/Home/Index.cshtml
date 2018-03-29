@@ -1,4 +1,5 @@
-﻿@using BAR.BL.Domain.Items
+﻿@using System.Web.Optimization
+@using BAR.BL.Domain.Items
 @model IEnumerable<BAR.UI.MVC.Models.PersonDTO>
 
 @{
@@ -15,49 +16,10 @@
     <div class="col-md-12 col-sm-12 col-xs-12 main-header-container">
         <div class="logo"></div>
         <div class="main-header">
-            <h1 class="main-header-title">Bekijk welke <span class="underline">politici</span> trending zijn<br/>op social media.</h1>
+            <h1 class="main-header-title">Bekijk welke <span class="underline">politici</span> trending zijn<br/>op social media.
+                </h1>
         </div>
-        <div class="searchbar">
-            <form class="navbar-search zero-margin" role="search">
-                <div class="input-group zero-margin w-100">
-                    <div id="search-dropdown" class="input-group-btn">
-                        <button type="button" class="btn btn-search btn-default dropdown-toggle" data-toggle="dropdown">
-                            <span class="glyphicon glyphicon-search"></span>
-                            <span class="label-icon">Zoeken</span>
-                            <span class="caret"></span>
-                        </button>
-                        <ul class="dropdown-menu dropdown-menu-left dropdown-search pull-left" role="menu">
-                            <li>
-                                <a href="#">
-                                    <span class="fa fa-user"></span>
-                                    <span class="label-icon">Personen</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    <span class="fa fa-briefcase"></span>
-                                    <span class="label-icon">Partijen</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    <span class="fa fa-paperclip"></span>
-                                    <span class="label-icon">Thema's</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-
-                    <input type="text" class="form-control search-field" placeholder="naar politici, partijen of thema's...">
-
-                    <div class="input-group-btn">
-                        <button type="button" class="btn btn-search btn-default btn-search-submit">
-                            GO
-                        </button>
-                    </div>
-                </div>
-            </form>
-        </div>
+        @Html.Partial("Partials/SearchBar")
     </div>
 </div>
 <!-- header end -->
@@ -513,13 +475,15 @@
 @section CustomJS{
     <script src="../../Scripts/mjolnic-bootstrap-colorpicker/dist/js/bootstrap-colorpicker.min.js"></script>
     <script type="text/javascript">
-        $(window).scroll(function() {
+        $(window).scroll(() => {
             //After scrolling 100px from the top...
             if ($(window).scrollTop() >= 100) {
                 $('.left_col').css('left', '0');
             } else {
-                $('.left_col').css('left', '-70px');
+                $('.left_col').css('left', '-100px');
             }
         });
+
+        (() => $('.search-field').focus())($);
     </script>
 }

@@ -101,6 +101,15 @@ namespace BAR.BL.Managers
 		}
 
 		/// <summary>
+		/// Creates a user
+		/// </summary>
+		public int CreateUser(User user)
+		{
+			InitRepo();
+			return userRepo.CreateUser(user);
+		}
+		
+		/// <summary>
 		/// Returns a user for a specific userId.
 		/// 
 		/// WARNING
@@ -117,6 +126,15 @@ namespace BAR.BL.Managers
 		{
 			if (userRepo == null) InitRepo();
 			return userRepo.ReadUser(userId);
+		}
+		
+		/// <summary>
+		/// Returns a user for a specific userId.
+		/// </summary>
+		public void ChangeUser(User user)
+		{
+			InitRepo();
+			userRepo.UpdateUser(user);
 		}
 
 		private static void AddRoles(RoleManager<IdentityRole> roleManager)
@@ -153,7 +171,7 @@ namespace BAR.BL.Managers
 
 		/// <summary>
 		/// Determines if the repo needs a unit of work
-		/// if the unitOfWorkManager is present
+		/// if the unitOfWorkManager is present.
 		/// </summary>
 		private void InitRepo()
 		{
