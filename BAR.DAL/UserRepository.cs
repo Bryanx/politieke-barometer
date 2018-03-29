@@ -22,6 +22,14 @@ namespace BAR.DAL
 			else ctx = uow.Context;
 		}
 
+		/// <summary>
+		/// This constructor is used if
+		/// you plan to not work with identity.
+		/// 
+		/// WARNING
+		/// Methods that are being used with identity will not
+		/// work if you plan to use this constructor
+		/// </summary>
 		public UserRepository(UnitOfWork uow = null)
 		{
 			if (uow == null) this.ctx = new BarometerDbContext();

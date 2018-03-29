@@ -83,6 +83,11 @@ namespace BAR.BL.Managers
 
 		/// <summary>
 		/// Returns a list of all users.
+		/// 
+		/// NOTE
+		/// if you plan to use identity, then the repository
+		/// will already be known. because it was initialized in the constructor.
+		/// if not then a new repository shall be created via the initRepo() method.
 		/// </summary>
 		public IEnumerable<User> GetAllUsers()
 		{
@@ -92,6 +97,11 @@ namespace BAR.BL.Managers
 
 		/// <summary>
 		/// Returns a user for a specific userId.
+		/// 
+		/// NOTE
+		/// if you plan to use identity, then the repository
+		/// will already be known. because it was initialized in the constructor.
+		/// if not then a new repository shall be created via the initRepo() method.
 		/// </summary>
 		public User GetUser(string userId)
 		{
