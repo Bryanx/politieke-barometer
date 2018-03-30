@@ -7,11 +7,12 @@ using BAR.BL.Controllers;
 using BAR.BL.Domain.Users;
 using BAR.BL.Managers;
 using BAR.UI.MVC.Models;
+using Microsoft.AspNet.Identity;
 
-namespace BAR.UI.MVC.Controllers {
+namespace BAR.UI.MVC.Controllers.api {
     public class UserApiController : ApiController {
         public ISubscriptionManager SubManager = new SubscriptionManager();
-        public IUserManager UserManager = new UserManager();
+//        public IUserManager UserManager = new UserManager();
         public static bool FirstCall = true;
 
         /// <summary>
@@ -63,6 +64,13 @@ namespace BAR.UI.MVC.Controllers {
         [Route("api/User/{userId}/Alert/{alertId}/Delete")]
         public IHttpActionResult DeleteAlert(string userId, int alertId) {
             SubManager.RemoveAlert(userId, alertId);
+            return StatusCode(HttpStatusCode.NoContent);
+        }
+
+        [HttpPost]
+        [Route("api/Subscribe/{itemId}")]
+        public IHttpActionResult CreateSubscription(int itemId) {
+            SubManager.CreateSubscription("84ed9974-f5e2-4275-844f-f9d5d76dcac2", itemId);
             return StatusCode(HttpStatusCode.NoContent);
         }
         

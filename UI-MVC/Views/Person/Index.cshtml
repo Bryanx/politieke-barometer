@@ -1,5 +1,5 @@
 @using System.Web.Optimization
-@model IEnumerable<BAR.UI.MVC.Models.PersonDTO>
+@model BAR.UI.MVC.Models.UserSubscribedPeopleDTO
 
 @{
     ViewBag.Title = "Politici";
@@ -18,7 +18,7 @@
         Extra informatie over de politici en uitleg over de attributen etc.
     </p>
 
-    @Html.Partial("Partials/PersonTable", Model)
+    @Html.Partial("Partials/PersonTable", Model.People)
 </div>
 <div style="visibility: hidden">t</div>
 
