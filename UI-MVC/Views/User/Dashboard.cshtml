@@ -55,7 +55,7 @@
                     }
                 }
             });
-            $.ajax(`/api/User/${@ViewBag.Id}/Subscription/${itemId}/Delete`,
+            $.ajax(`/api/User/Subscription/${itemId}/Delete`,
                     {
                         type: 'DELETE',
                         dataType: 'json'

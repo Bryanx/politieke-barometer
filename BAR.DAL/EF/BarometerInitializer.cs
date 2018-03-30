@@ -1,4 +1,4 @@
-﻿using BAR.BL.Domain.Data;
+using BAR.BL.Domain.Data;
 using BAR.BL.Domain.Items;
 using BAR.BL.Domain.Users;
 using Newtonsoft.Json;

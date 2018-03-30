@@ -51,7 +51,7 @@ namespace BAR.BL
 		private void InitRepo()
 		{
 			if (uowManager == null) userRepo = new UserRepository();
-			else userRepo = new UserRepository(null, uowManager.UnitOfWork);
+			else userRepo = new UserRepository(uowManager.UnitOfWork);
 		}
 	}
 }

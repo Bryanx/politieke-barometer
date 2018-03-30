@@ -1,4 +1,4 @@
-﻿using BAR.BL.Domain.Items;
+using BAR.BL.Domain.Items;
 using System;
 using System.Collections.Generic;
 using System.Linq;
