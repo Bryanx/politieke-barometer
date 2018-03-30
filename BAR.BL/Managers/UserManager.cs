@@ -1,13 +1,9 @@
-﻿using BAR.BL.Managers;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using BAR.BL.Domain.Users;
 using BAR.DAL;
 
-namespace BAR.BL
+namespace BAR.BL.Managers
 {
 	/// <summary>
 	/// This class is mainly for workig with a manager
@@ -125,7 +121,7 @@ namespace BAR.BL
 		private void InitRepo()
 		{
 			if (uowManager == null) userRepo = new UserRepository();
-			else userRepo = new UserRepository(null, uowManager.UnitOfWork);
+			else userRepo = new UserRepository(uowManager.UnitOfWork);
 		}
 	}
 }

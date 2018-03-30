@@ -14,8 +14,12 @@ namespace BAR.DAL
 		private BarometerDbContext ctx;
 
 		/// <summary>
-		/// If uow is present then the constructor
-		/// will get the context from uow.
+		/// This constructor is used if
+		/// you plan to not work with identity.
+		/// 
+		/// WARNING
+		/// Methods that are being used with identity will not
+		/// work if you plan to use this constructor
 		/// </summary>
 		public UserRepository(BarometerDbContext ctx, UnitOfWork uow = null) : base(ctx)
 		{
