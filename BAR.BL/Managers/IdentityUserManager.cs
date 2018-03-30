@@ -21,14 +21,14 @@ namespace BAR.BL.Managers
 		/// <summary>
 		/// TODO
 		/// </summary>
-		public IdentityUserManager(UserRepository userRepository = null) : base(userRepository) { }
+		public IdentityUserManager(UserIdentityRepository userRepository = null) : base(userRepository) { }
 
 		/// <summary>
 		/// Creates an instance of UserManager and returns it as a callback function to Owin.
 		/// </summary>
 		public static IdentityUserManager Create(IdentityFactoryOptions<IdentityUserManager> options, IOwinContext context)
 		{
-			var manager = new IdentityUserManager(new UserRepository(context.Get<BarometerDbContext>()));
+			var manager = new IdentityUserManager(new UserIdentityRepository(context.Get<BarometerDbContext>()));
 			var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(context.Get<BarometerDbContext>()));
 			//Configure validation logic for usernames
 			manager.UserValidator = new UserValidator<User>(manager)
