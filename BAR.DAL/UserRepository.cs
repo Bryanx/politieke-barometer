@@ -22,6 +22,12 @@ namespace BAR.DAL
 			if (uow == null) this.ctx = new BarometerDbContext();
 			else ctx = uow.Context;
 		}
+		
+		public UserRepository(UnitOfWork uow) : base(uow.Context)
+		{
+			if (uow == null) this.ctx = new BarometerDbContext();
+			else ctx = uow.Context;
+		}
 
 		/// <summary>
 		/// This constructor is used if

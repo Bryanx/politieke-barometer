@@ -57,6 +57,7 @@
     <Compile Include="Data\Property.cs" />
     <Compile Include="Data\PropertyValue.cs" />
     <Compile Include="Data\Source.cs" />
+    <Compile Include="Items\Category.cs" />
     <Compile Include="Items\Item.cs" />
     <Compile Include="Items\ItemType.cs" />
     <Compile Include="Items\Organisation.cs" />
@@ -69,7 +70,6 @@
     <Compile Include="Users\Alert.cs" />
     <Compile Include="Users\AlertType.cs" />
     <Compile Include="Users\Area.cs" />
-    <Compile Include="Items\Category.cs" />
     <Compile Include="Users\Gender.cs" />
     <Compile Include="Users\Question.cs" />
     <Compile Include="Users\QuestionType.cs" />
@@ -82,8 +82,8 @@
     <Compile Include="Widgets\WidgetType.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
-    <None Include="packages.config" />
+    <Content Include="App.config" />
+    <Content Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

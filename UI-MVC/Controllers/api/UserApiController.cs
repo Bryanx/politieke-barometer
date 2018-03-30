@@ -11,8 +11,7 @@ using Microsoft.AspNet.Identity;
 
 namespace BAR.UI.MVC.Controllers.api {
     public class UserApiController : ApiController {
-        public ISubscriptionManager SubManager = new SubscriptionManager();
-//        public IUserManager UserManager = new UserManager();
+        public ISubscriptionManager SubManager = new SubscriptionManager(new UnitOfWorkManager());
         public static bool FirstCall = true;
 
         /// <summary>
@@ -70,7 +69,9 @@ namespace BAR.UI.MVC.Controllers.api {
         [HttpPost]
         [Route("api/Subscribe/{itemId}")]
         public IHttpActionResult CreateSubscription(int itemId) {
-            SubManager.CreateSubscription("84ed9974-f5e2-4275-844f-f9d5d76dcac2", itemId);
+            String text = "";
+            string userId = User.Identity.GetUserId();
+            SubManager.CreateSubscription(userId, itemId);
             return StatusCode(HttpStatusCode.NoContent);
         }
         

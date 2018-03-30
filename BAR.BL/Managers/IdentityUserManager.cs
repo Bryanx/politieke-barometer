@@ -13,27 +13,22 @@ using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace BAR.BL.Managers
 {
-	public class UserManager : UserManager<User>, IUserManager
+	/// <summary>
+	/// TODO
+	/// </summary>
+	public class IdentityUserManager : UserManager<User>
 	{
-		private UnitOfWorkManager uowManager;
-		private UserRepository userRepo;
-
 		/// <summary>
-		/// When unit of work is present, it will effect
-		/// initRepo-method. (see documentation of initRepo)
+		/// TODO
 		/// </summary>
-		public UserManager(UserRepository userRepository = null, UnitOfWorkManager uowManager = null) : base(userRepository)
-		{
-			this.uowManager = uowManager;
-			this.userRepo = userRepository;
-		}
+		public IdentityUserManager(UserRepository userRepository = null) : base(userRepository) { }
 
 		/// <summary>
 		/// Creates an instance of UserManager and returns it as a callback function to Owin.
 		/// </summary>
-		public static UserManager Create(IdentityFactoryOptions<UserManager> options, IOwinContext context)
+		public static IdentityUserManager Create(IdentityFactoryOptions<IdentityUserManager> options, IOwinContext context)
 		{
-			var manager = new UserManager(new UserRepository(context.Get<BarometerDbContext>()));
+			var manager = new IdentityUserManager(new UserRepository(context.Get<BarometerDbContext>()));
 			var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(context.Get<BarometerDbContext>()));
 			//Configure validation logic for usernames
 			manager.UserValidator = new UserValidator<User>(manager)
@@ -82,61 +77,8 @@ namespace BAR.BL.Managers
 		}
 
 		/// <summary>
-		/// Returns a list of all users.
-		/// 
-		/// WARNING
-		/// This method uses identity
-		/// InitRepo() should not be called on in this method.
-		/// if so, it may produce errors.
-		/// 
-		/// NOTE
-		/// if you plan to use identity, then the repository
-		/// will already be known. because it was initialized in the constructor.
-		/// if not then a new repository shall be created via the initRepo() method.
+		/// TODO
 		/// </summary>
-		public IEnumerable<User> GetAllUsers()
-		{
-			if (userRepo == null) InitRepo();
-			return userRepo.ReadAllUsers();
-		}
-
-		/// <summary>
-		/// Creates a user
-		/// </summary>
-		public int CreateUser(User user)
-		{
-			InitRepo();
-			return userRepo.CreateUser(user);
-		}
-		
-		/// <summary>
-		/// Returns a user for a specific userId.
-		/// 
-		/// WARNING
-		/// This method uses identity
-		/// InitRepo() should not be called on in this method.
-		/// if so, it may produce errors.
-		/// 
-		/// NOTE
-		/// if you plan to use identity, then the repository
-		/// will already be known. because it was initialized in the constructor.
-		/// if not then a new repository shall be created via the initRepo() method.
-		/// </summary>
-		public User GetUser(string userId)
-		{
-			if (userRepo == null) InitRepo();
-			return userRepo.ReadUser(userId);
-		}
-		
-		/// <summary>
-		/// Returns a user for a specific userId.
-		/// </summary>
-		public void ChangeUser(User user)
-		{
-			InitRepo();
-			userRepo.UpdateUser(user);
-		}
-
 		private static void AddRoles(RoleManager<IdentityRole> roleManager)
 		{
 			if (!roleManager.RoleExists("Admin"))
@@ -167,16 +109,6 @@ namespace BAR.BL.Managers
 				};
 				roleManager.Create(role);
 			}
-		}
-
-		/// <summary>
-		/// Determines if the repo needs a unit of work
-		/// if the unitOfWorkManager is present.
-		/// </summary>
-		private void InitRepo()
-		{
-			if (uowManager == null) userRepo = new UserRepository();
-			else userRepo = new UserRepository(null, uowManager.UnitOfWork);
 		}
 	}
 }

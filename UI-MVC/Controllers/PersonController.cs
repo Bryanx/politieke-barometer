@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
+using BAR.BL;
 using BAR.BL.Domain.Items;
 using BAR.BL.Managers;
 using BAR.UI.MVC.Models;
 using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.Owin;
 
 namespace BAR.UI.MVC.Controllers {
     public class PersonController : Controller {
@@ -33,7 +31,7 @@ namespace BAR.UI.MVC.Controllers {
             }
 
             if (User.Identity.IsAuthenticated) {
-                UserManager userManager = HttpContext.GetOwinContext().GetUserManager<UserManager>();
+                UserManager userManager = new UserManager();
                 UserSubscribedPeopleDTO usr = new UserSubscribedPeopleDTO() {
                     User = userManager.GetUser(User.Identity.GetUserId()),
                     People = personen
@@ -64,7 +62,7 @@ namespace BAR.UI.MVC.Controllers {
                 Baseline = item.Baseline
             });
             if (User.Identity.IsAuthenticated) {
-                UserManager userManager = HttpContext.GetOwinContext().GetUserManager<UserManager>();
+                UserManager userManager = new UserManager();
                 UserSubscribedPeopleDTO usr = new UserSubscribedPeopleDTO() {
                     User = userManager.GetUser(User.Identity.GetUserId()),
                     People = persoon
