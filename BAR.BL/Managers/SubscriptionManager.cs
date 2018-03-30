@@ -47,8 +47,14 @@ namespace BAR.BL.Managers
 			Item item = itemManager.GetItem(itemId);
 			if (item == null) return null;
 
+			//Check if sub already exists
+			//if the counter is 0 then a new subscrption will not be created.
+			IEnumerable<Subscription> subs = GetSubscriptionsWithItemsForUser(userId);
+			if (subs.Where(sub => sub.SubscribedItem.ItemId == itemId).Count() != 0) return null;
+
+
 			//make subscription		
-			Subscription sub = new Subscription()
+			Subscription subscription = new Subscription()
 			{
 				SubscribedUser = user,
 				SubscribedItem = item,
@@ -57,10 +63,10 @@ namespace BAR.BL.Managers
 				Alerts = new List<Alert>()
 			};
 			item.NumberOfFollowers++;
-			subRepo.CreateSubscription(sub);
+			subRepo.CreateSubscription(subscription);
 			uowManager.Save();
 
-			return sub;
+			return subscription;
 		}
 
 		/// <summary>
