@@ -180,7 +180,7 @@
     }
     
     function removeAlert(alertId) {
-        $.ajax(`/api/User/${@ViewBag.Id}/Alert/${alertId}/Delete`,
+        $.ajax(`/api/User/Alert/${alertId}/Delete`,
                 {
                     type: 'DELETE',
                     dataType: 'json'
@@ -198,7 +198,7 @@
             res.alertcount = res.alertcount - 1;
             updateAlertCount();
         }
-        $.ajax(`/api/User/${@ViewBag.Id}/Alert/${id}/Read`,
+        $.ajax(`/api/User/Alert/${id}/Read`,
                 {
                     type: 'PUT',
                     dataType: 'json'
@@ -284,7 +284,7 @@
         $(".loadingAlerts").css("display", "block");
         $.ajax({
                 type: 'GET',
-                url: '/api/User/@ViewBag.Id/GetAlerts',
+                url: '/api/User/GetAlerts',
                 dataType: 'json',
                 beforeSend: () => $("#alertMenu").append(res.alertLoader),
             })

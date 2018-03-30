@@ -19,8 +19,8 @@ namespace BAR.UI.MVC.Controllers.api {
         /// This request is used on the member
         /// </summary>
         [HttpGet]
-        [Route("api/User/{id}/GetAlerts")]
-        public IHttpActionResult GetAlerts(string id) {
+        [Route("api/User/GetAlerts")]
+        public IHttpActionResult GetAlerts() {
             //TODO: Remove counter, temporary solution because db is rebuild on every load.
             if (FirstCall) {
                 FirstCall = false;
@@ -29,7 +29,7 @@ namespace BAR.UI.MVC.Controllers.api {
                 sys.GenerateAlerts();
             }
 
-            IEnumerable<Alert> alertsToShow = SubManager.GetAllAlerts(id);
+            IEnumerable<Alert> alertsToShow = SubManager.GetAllAlerts(User.Identity.GetUserId());
             if (alertsToShow == null || alertsToShow.Count() == 0) return StatusCode(HttpStatusCode.NoContent);
             
             //Made DTO class to prevent circular references
@@ -50,9 +50,9 @@ namespace BAR.UI.MVC.Controllers.api {
         /// Updates an alert from a specific user. Sets its property isRead to true.
         /// </summary>
         [HttpPut]
-        [Route("api/User/{id}/Alert/{alertId}/Read")]
-        public IHttpActionResult MarkAlertAsRead(string id, int alertId) {
-            SubManager.ChangeAlertToRead(id, alertId);
+        [Route("api/User/Alert/{alertId}/Read")]
+        public IHttpActionResult MarkAlertAsRead(int alertId) {
+            SubManager.ChangeAlertToRead(User.Identity.GetUserId(), alertId);
             return StatusCode(HttpStatusCode.NoContent);
         }
         
@@ -60,9 +60,9 @@ namespace BAR.UI.MVC.Controllers.api {
         /// Removes an alert from a specific user.
         /// </summary>
         [HttpDelete]
-        [Route("api/User/{userId}/Alert/{alertId}/Delete")]
-        public IHttpActionResult DeleteAlert(string userId, int alertId) {
-            SubManager.RemoveAlert(userId, alertId);
+        [Route("api/User/Alert/{alertId}/Delete")]
+        public IHttpActionResult DeleteAlert(int alertId) {
+            SubManager.RemoveAlert(User.Identity.GetUserId(), alertId);
             return StatusCode(HttpStatusCode.NoContent);
         }
 
