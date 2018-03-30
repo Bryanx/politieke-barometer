@@ -79,7 +79,7 @@ namespace BAR.BL.Managers
 			foreach (Subscription sub in subs)
 			{
 				double thresh = sub.Threshold;
-				if (per >= thresh && sub.SubscribedUser.AlertsViaWebsite)
+				if (per >= thresh && sub.SubscribedUser.AlertsViaWebsite && sub.SubscribedUser.IsActive)
 				{
 					sub.Alerts.Add(new Alert()
 					{

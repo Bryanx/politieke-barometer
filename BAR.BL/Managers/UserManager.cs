@@ -28,6 +28,25 @@ namespace BAR.BL
 		}
 
 		/// <summary>
+		/// Changes a user account to non-active or active
+		/// </summary>
+		public User ChangeUserAccount(string userId, bool active)
+		{
+			InitRepo();
+
+			//Get user
+			User userToUpdate = userRepo.ReadUser(userId);
+			if (userToUpdate == null) return null;
+
+			//Change user
+			userToUpdate.IsActive = active;
+
+			//Update database
+			userRepo.UpdateUser(userToUpdate);
+			return userToUpdate;
+		}
+
+		/// <summary>
 		/// Changes the basic information of a specific user
 		/// 
 		/// NOTE: This method changes the following things:
