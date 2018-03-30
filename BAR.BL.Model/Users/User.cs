@@ -18,6 +18,7 @@ namespace BAR.BL.Domain.Users
 		public bool AlertsViaEmail { get; set; }
 		public bool AlertsViaWebsite { get; set; }
 		public bool WeeklyReviewViaEmail { get; set; }
+		public bool IsActive { get; set; }
 		public Gender Gender { get; set; }
 		public DateTime? DateOfBirth { get; set; }
 		public Area Area { get; set; }

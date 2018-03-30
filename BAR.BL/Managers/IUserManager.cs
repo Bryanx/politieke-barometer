@@ -11,5 +11,9 @@ namespace BAR.BL.Managers
 	{
 		User GetUser(string userId);
 		IEnumerable<User> GetAllUsers();
+
+		User ChangeUserBasicInfo(string userId, string firstname, string lastname, Gender gender, DateTime dateOfBrith);
+		User ChangeUserAlerts(string userId, bool alertWebsite, bool alertMail, bool alertWeeklyReview);
+		User ChangeUserAccount(string userId, bool active);
 	}
 }

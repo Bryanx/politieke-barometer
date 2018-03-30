@@ -75,11 +75,11 @@ namespace BAR.BL.Managers
 			double per = (itemManager.GetTrendingPer(itemId) * 100) - 100;
 
 			List<Subscription> subsToUpdate = new List<Subscription>();
-			IEnumerable<Subscription> subs = subRepo.ReadSubscritpionsWithAlerts(itemId);
+			IEnumerable<Subscription> subs = subRepo.ReadEditableSubscriptionsForItem(itemId);
 			foreach (Subscription sub in subs)
 			{
 				double thresh = sub.Threshold;
-				if (per >= thresh)
+				if (per >= thresh && sub.SubscribedUser.AlertsViaWebsite && sub.SubscribedUser.IsActive)
 				{
 					sub.Alerts.Add(new Alert()
 					{

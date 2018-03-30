@@ -12,7 +12,6 @@ using BAR.BL;
 
 namespace BAR.UI.MVC.Controllers.api {
     public class UserApiController : ApiController {
-        public ISubscriptionManager SubManager = new SubscriptionManager(new UnitOfWorkManager());
         public static bool FirstCall = true;
 
         /// <summary>
@@ -22,6 +21,7 @@ namespace BAR.UI.MVC.Controllers.api {
         [HttpGet]
         [Route("api/User/GetAlerts")]
         public IHttpActionResult GetAlerts() {
+            ISubscriptionManager SubManager = new SubscriptionManager();
             //TODO: Remove counter, temporary solution because db is rebuild on every load.
             if (FirstCall) {
                 FirstCall = false;
@@ -53,6 +53,7 @@ namespace BAR.UI.MVC.Controllers.api {
         [HttpPut]
         [Route("api/User/Alert/{alertId}/Read")]
         public IHttpActionResult MarkAlertAsRead(int alertId) {
+            ISubscriptionManager SubManager = new SubscriptionManager();
             SubManager.ChangeAlertToRead(User.Identity.GetUserId(), alertId);
             return StatusCode(HttpStatusCode.NoContent);
         }
@@ -63,6 +64,7 @@ namespace BAR.UI.MVC.Controllers.api {
         [HttpDelete]
         [Route("api/User/Alert/{alertId}/Delete")]
         public IHttpActionResult DeleteAlert(int alertId) {
+            ISubscriptionManager SubManager = new SubscriptionManager();
             SubManager.RemoveAlert(User.Identity.GetUserId(), alertId);
             return StatusCode(HttpStatusCode.NoContent);
         }
@@ -70,6 +72,7 @@ namespace BAR.UI.MVC.Controllers.api {
         [HttpPost]
         [Route("api/Subscribe/{itemId}")]
         public IHttpActionResult CreateSubscription(int itemId) {
+            ISubscriptionManager SubManager = new SubscriptionManager();
             String text = "";
             string userId = User.Identity.GetUserId();
             SubManager.CreateSubscription(userId, itemId);
@@ -82,6 +85,7 @@ namespace BAR.UI.MVC.Controllers.api {
         [HttpDelete]
         [Route("api/User/{id}/Subscription/{subId}/Delete")]
         public IHttpActionResult DeleteSubscription(int subId) {
+            ISubscriptionManager SubManager = new SubscriptionManager();
             SubManager.RemoveSubscription(subId);
             return StatusCode(HttpStatusCode.NoContent);
         }

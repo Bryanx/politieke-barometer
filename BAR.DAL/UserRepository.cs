@@ -62,20 +62,8 @@ namespace BAR.DAL
 		/// </summary>
 		public IEnumerable<User> ReadAllUsersForRole(string roleId)
 		{
-			List<User> userList = new List<User>();
-			IdentityUserRole role;
-			foreach (var user in ctx.Users)
-			{
-				role = null;
-				role = user.Roles.Where(x => x.RoleId.Equals(roleId)).SingleOrDefault();
-				if (role != null)
-				{
-					userList.Add(user);
-				}
-			}
-
-			return userList.AsEnumerable();
-		}
+      return ctx.Users.Where(x => x.Roles.Any(y => y.RoleId.Equals(roleId))).AsEnumerable();
+    }
 
 		/// <summary>
 		/// Returns the user from a specific userId.
