@@ -10,7 +10,8 @@ using BAR.DAL;
 namespace BAR.BL
 {
 	/// <summary>
-	/// TODO
+	/// This class is mainly for workig with a manager
+	/// that is not related to the identity framework.
 	/// </summary>
 	public class UserManager : IUserManager
 	{
@@ -24,6 +25,34 @@ namespace BAR.BL
 		public UserManager(UnitOfWorkManager uowManager = null)
 		{
 			this.uowManager = uowManager;
+		}
+
+		/// <summary>
+		/// Changes the basic information of a specific user
+		/// 
+		/// NOTE: This method changes the following things:
+		/// - firstname
+		/// - lastname
+		/// - gender
+		/// - date of birth
+		/// </summary>
+		public User ChangeUserBasicInfo(string userId, string firstname, string lastname, Gender gender, DateTime dateOfBrith)
+		{
+			InitRepo();
+
+			//Get User
+			User userToUpdate = userRepo.ReadUser(userId);
+			if (userToUpdate == null) return null;
+
+			//Change user
+			userToUpdate.FirstName = firstname;
+			userToUpdate.LastName = lastname;
+			userToUpdate.Gender = gender;
+			userToUpdate.DateOfBirth = dateOfBrith;
+
+			//Update database
+			userRepo.UpdateUser(userToUpdate);
+			return userToUpdate;
 		}
 
 		/// <summary>
