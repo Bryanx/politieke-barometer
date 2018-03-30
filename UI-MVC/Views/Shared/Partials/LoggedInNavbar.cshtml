@@ -1,0 +1,53 @@
+﻿@using BAR.UI.MVC.Controllers
+@model BAR.UI.MVC.Models.BaseViewModel
+<ul class="nav navbar-nav navbar-right">
+    <li class="user-profile">
+        <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown"
+           aria-expanded="false">
+            <img src="../../Content/build/images/user.png" alt=""><span class="userNameNav">@Html.DisplayFor(modelItem => Model.User.FirstName)</span>
+            <span class=" fa fa-angle-down"></span>
+        </a>
+        <ul class="dropdown-menu pull-right">
+            <li>
+                <a href="javascript:;"> Dashboard</a>
+            </li>
+            <li>
+                <a href='@Url.Action(nameof(UserController.Settings), "User")'>
+                    <span>Instellingen</span>
+                </a>
+            </li>
+            <li>
+                <a href="javascript:;">Alerts</a>
+            </li>
+            <li>
+                <a href="javascript:;">Weekly review</a>
+            </li>
+            <li>
+                @using (Html.BeginForm("LogOff", "User", FormMethod.Post, new {id = "logoutForm2"})) {
+                    @Html.AntiForgeryToken()
+                    <a href="javascript:document.getElementById('logoutForm2').submit()"><i class="fa fa-sign-out pull-right"></i> Log Out</a>
+                }
+            </li>
+        </ul>
+    </li>
+    <!-- alerts -->
+    <li role="presentation" class="dropdown">
+        <a id="alertDropdown" href="javascript:;" class="dropdown-toggle info-number" data-toggle="dropdown"
+           aria-menu1expanded="false">
+            <i class="fa fa-bell"></i>
+            <span id="alertCount" class="badge bg-green"></span>
+        </a>
+        <div class="dropdown-menu msg_list" role="menu">
+            <ul class="list-unstyled msg_list msg_headers">
+                <li class="alertMenuHeader">
+                    <strong>Alerts</strong>
+                </li>
+                <li class="alertWindowsSettings">
+                    <a>Intellingen</a>
+                </li>
+            </ul>
+            <ul id="alertMenu" class=" list-unstyled msg_list">
+            </ul>
+        </div>
+    </li>
+</ul>

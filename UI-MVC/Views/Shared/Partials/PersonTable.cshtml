@@ -1,10 +1,11 @@
-﻿@model IEnumerable<BAR.UI.MVC.Models.PersonDTO>
+﻿@using BAR.BL.Domain.Items
+@model BAR.UI.MVC.Models.UserViewModel
 
 <table id="datatable-responsive" class="table projects table-hover" cellspacing="0" width="100%">
     <thead>
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Name)
+            Naam
         </th>
         <th>
             Vermeldingen
@@ -18,11 +19,42 @@
         <th title="Berekend op basis van het aantal tweets">
             Trending %
         </th>
+    @if (User.Identity.IsAuthenticated) {
         <th>
         </th>
+    }
     </tr>
     </thead>
     <tbody>
-    @Html.DisplayForModel()
+    @foreach (var item in Model.People) {
+        <tr class="subscription">
+            <td>
+                <a href='@Url.Action("Details", "Person", new {id = item.ItemId})'><i class="fa fa-user"></i> @item.Name</a>
+            </td>
+            <td>
+                @item.NumberOfMentions
+            </td>
+            <td class="green">
+                @item.NumberOfMentions
+                <i class="glyphicon glyphicon-arrow-up"></i>
+            </td>
+            <td class="red">
+                @item.NumberOfMentions
+                <i class="glyphicon glyphicon-arrow-down"></i>
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TrendingPercentage) %
+            </td>
+        @if (User.Identity.IsAuthenticated) {
+            <td>
+                @if (item.Subscribed == false) {
+                    <a class="btn btn-success btn-xs" onclick="personSubscribe(@item.ItemId)" title="Deze persoon volgen">Abonneer</a>
+                } else {
+                    <a class="btn btn-danger btn-xs" onclick="personUnsubscribe(@item.ItemId)" title="Uitschrijven"><i class="fa fa-trash-o"></i></a>
+                }
+            </td>
+        }
+        </tr>
+    }
     </tbody>
 </table>

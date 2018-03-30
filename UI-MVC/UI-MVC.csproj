@@ -203,9 +203,10 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AlertDTO.cs" />
+    <Compile Include="Models\BaseViewModel.cs" />
     <Compile Include="Models\Graph.cs" />
     <Compile Include="Models\PersonDTO.cs" />
-    <Compile Include="Models\UserSubscribedPeopleDTO.cs" />
+    <Compile Include="Models\UserViewModel.cs" />
     <Compile Include="Models\UserViewModels.cs" />
     <Compile Include="Models\Widget.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -370,10 +371,11 @@
     <Content Include="Scripts\nprogress.js" />
     <Content Include="Scripts\site.js" />
     <Content Include="Scripts\underscore.min.js" />
-    <Content Include="Views\Shared\DisplayTemplates\PersonDTO.cshtml" />
     <Content Include="Views\Shared\Layouts\_HomeLayout(temp).cshtml" />
     <Content Include="Views\Shared\Layouts\_MemberLayout.cshtml" />
     <Content Include="Views\Shared\Layouts\_VisitorLayout.cshtml" />
+    <Content Include="Views\Shared\Partials\LoggedInNavbar.cshtml" />
+    <Content Include="Views\Shared\Partials\LoginModal.cshtml" />
     <Content Include="Views\Shared\Partials\NavBarLinks.cshtml" />
     <Content Include="Views\Shared\Partials\PersonTable.cshtml" />
     <Content Include="Views\Shared\Partials\SearchBar.cshtml" />

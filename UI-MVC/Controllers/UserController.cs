@@ -441,19 +441,19 @@ namespace BAR.UI.MVC.Controllers
 		{
 			var id = User.Identity.GetUserId();
 			ViewBag.Id = id;
-			UserSubscribedPeopleDTO model = GetUserSubscribedModel(id);
+			UserViewModel model = GetUserSubscribedModel(id);
 			return View("Dashboard","~/Views/Shared/Layouts/_MemberLayout.cshtml", model);
 		}
 
 		public ActionResult Settings() {
 			var id = User.Identity.GetUserId();
 			ViewBag.Id = id;
-			UserSubscribedPeopleDTO model = GetUserSubscribedModel(id);
+			UserViewModel model = GetUserSubscribedModel(id);
 			return View("Settings","~/Views/Shared/Layouts/_MemberLayout.cshtml", model);
 		}
 		
 	
-		private UserSubscribedPeopleDTO GetUserSubscribedModel(string id) {
+		private UserViewModel GetUserSubscribedModel(string id) {
 			IUserManager userManager = new UserManager();
 			User user = userManager.GetUser(id);
 			//TODO: These next statements should be in a method in BL
@@ -470,10 +470,10 @@ namespace BAR.UI.MVC.Controllers
 					NumberOfFollowers = item.NumberOfFollowers,
 					TrendingPercentage = Math.Floor(item.TrendingPercentage),
 					NumberOfMentions = item.NumberOfMentions,
-					Baseline = item.Baseline
+					Baseline = item.Baseline,
 				});
 			}
-			return new UserSubscribedPeopleDTO() {
+			return new UserViewModel() {
 				User = user,
 				People = people
 			};

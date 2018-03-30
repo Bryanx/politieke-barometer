@@ -83,10 +83,12 @@ namespace BAR.UI.MVC.Controllers.api {
         /// Removes a Subscription from a specific user.
         /// </summary>
         [HttpDelete]
-        [Route("api/User/{id}/Subscription/{subId}/Delete")]
-        public IHttpActionResult DeleteSubscription(int subId) {
-            ISubscriptionManager SubManager = new SubscriptionManager();
-            SubManager.RemoveSubscription(subId);
+        [Route("api/User/Subscription/{itemId}/Delete")]
+        public IHttpActionResult DeleteSubscription(int itemId) {
+            ISubscriptionManager subManager = new SubscriptionManager();
+            IEnumerable<Subscription> subs = subManager.GetSubscriptionsWithItemsForUser(User.Identity.GetUserId());
+            Subscription sub = subs.Single(s => s.SubscribedItem.ItemId == itemId);
+            subManager.RemoveSubscription(sub.SubscriptionId);
             return StatusCode(HttpStatusCode.NoContent);
         }
     }

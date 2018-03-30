@@ -1,5 +1,5 @@
 ﻿@using System.Web.Optimization
-@model BAR.UI.MVC.Models.UserSubscribedPeopleDTO
+@model BAR.UI.MVC.Models.UserViewModel
 @{
     ViewBag.Title = "Dashboard";
 }
@@ -32,7 +32,7 @@
         <br/>
         <h1>Abonnementen</h1>
         <hr/>
-        @Html.Partial("Subscriptions", Model.People)
+        @Html.Partial("Subscriptions", Model)
     </section>
 }
 
@@ -40,7 +40,7 @@
 
 @section CustomJS{
     @Scripts.Render("~/bundles/gridstack", "~/bundles/morrisCharts")
-    <script type="text/javascript">
+    <script type="text/javascript" defer>
         //Subscriptions:
         function personUnsubscribe(itemId) {
             $('.subscription').click(function() {

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using BAR.BL.Domain;
 using BAR.BL.Domain.Data;
+using BAR.BL.Domain.Users;
 
 namespace BAR.UI.MVC.Models {
     public class PersonDTO {
@@ -14,5 +15,6 @@ namespace BAR.UI.MVC.Models {
         public double TrendingPercentage { get; set; }
         public int NumberOfMentions { get; set; }
         public double Baseline { get; set; }
+        public bool? Subscribed { get; set; }
     }
 }

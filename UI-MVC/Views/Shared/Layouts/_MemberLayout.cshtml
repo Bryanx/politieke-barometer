@@ -1,7 +1,8 @@
 ﻿@using System
+@using System.Activities.Statements
 @using System.Web.Optimization
 @using BAR.UI.MVC.Controllers
-@model BAR.UI.MVC.Models.UserSubscribedPeopleDTO
+@model BAR.UI.MVC.Models.BaseViewModel
 
 <!DOCTYPE html>
 <html lang="en">
@@ -52,27 +53,6 @@
 
         </div>
         <!-- /sidebar menu -->
-
-        <!-- /menu footer buttons -->
-        <div class="sidebar-footer hidden-small">
-            <a data-toggle="tooltip" data-placement="top" title="Settings">
-                <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
-            </a>
-            <a data-toggle="tooltip" data-placement="top" title="FullScreen">
-                <span class="glyphicon glyphicon-fullscreen" aria-hidden="true"></span>
-            </a>
-            <a data-toggle="tooltip" data-placement="top" title="Lock">
-                <span class="glyphicon glyphicon-eye-close" aria-hidden="true"></span>
-            </a>
-            @using (Html.BeginForm("LogOff", "User", FormMethod.Post, new { id = "logoutForm" }))
-            {
-            @Html.AntiForgeryToken()
-            <a data-toggle="tooltip" data-placement="top" title="Logout" href="javascript:document.getElementById('logoutForm').submit()">
-                <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
-            </a>
-            }
-        </div>
-        <!-- /menu footer buttons -->
     </div>
 </div>
 
@@ -85,55 +65,12 @@
                 </a>
             </div>
 
-            <!-- login -->
-            <ul class="nav navbar-nav navbar-right">
-                <li class="user-profile">
-                    <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown"
-                       aria-expanded="false">
-                        <img src="../../Content/build/images/user.png" alt=""><span class="userNameNav">@Html.DisplayFor(modelItem => Model.User.FirstName)</span>
-                        <span class=" fa fa-angle-down"></span>
-                    </a>
-                    <ul class="dropdown-menu pull-right">
-                        <li>
-                            <a href="javascript:;"> Dashboard</a>
-                        </li>
-                        <li>
-                            <a href='@Url.Action(nameof(UserController.Settings), "User")'>
-                                <span>Instellingen</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="javascript:;">Alerts</a>
-                        </li>
-                        <li>
-                            <a href="javascript:;">Weekly review</a>
-                        </li>
-                        <li>
-                           @using (Html.BeginForm("LogOff", "User", FormMethod.Post, new { id = "logoutForm2" }))
-                           {
-                             @Html.AntiForgeryToken()
-                             <a href="javascript:document.getElementById('logoutForm2').submit()"><i class="fa fa-sign-out pull-right"></i> Log Out</a>
-                           }
-                        </li>
-                    </ul>
-                </li>
-                <!-- alerts -->
-                <li role="presentation" class="dropdown">
-                    <a id="alertDropdown" href="javascript:;" class="dropdown-toggle info-number" data-toggle="dropdown"
-                       aria-menu1expanded="false">
-                        <i class="fa fa-bell"></i>
-                        <span id="alertCount" class="badge bg-green"></span>
-                    </a>
-                    <div class="dropdown-menu msg_list" role="menu">
-                        <ul class="list-unstyled msg_list msg_headers">
-                            <li class="alertMenuHeader"><strong>Alerts</strong></li>
-                            <li class="alertWindowsSettings"><a>Intellingen</a></li>
-                        </ul>
-                        <ul id="alertMenu" class=" list-unstyled msg_list">
-                        </ul>
-                    </div>
-                </li>
-            </ul>
+        <!-- login -->
+        @if (Model.User != null) {
+            @Html.Partial("Partials/LoggedInNavbar", Model)
+        } else {
+            @Html.Partial("Partials/LoginModal", Model)
+        }
             <!-- search -->
             @Html.Partial("Partials/SearchBar")
     </div>
@@ -160,25 +97,25 @@
 <!-- Scripts -->
 @Scripts.Render("~/bundles/jquery","~/bundles/bootstrap","~/bundles/flot","~/bundles/dates","~/bundles/timeago", "~/Scripts/vue.min.js")
 <script type="text/javascript">
-    
+
     //global variables
     var res = {
         alertLoader: $("<div />", { class: "loadingAlerts" }),
         alertcount: 0,
         subscriptionAmount: $('.subscription').length
     };
-    
+
     //Alerts:
     //Updates the alert count icon
     function updateAlertCount() {
-        if (res.alertcount <= 0 ) {
+        if (res.alertcount <= 0) {
             $('#alertCount').hide();
         } else {
             $('#alertCount').show();
             $('#alertCount').html(res.alertcount);
         }
     }
-    
+
     function removeAlert(alertId) {
         $.ajax(`/api/User/Alert/${alertId}/Delete`,
                 {
@@ -188,7 +125,7 @@
             .done(() => loadAlerts())
             .fail(() => alert('Cannot change alert.'));
     }
-    
+
     //When an alert is clicked, this function is called.
     //It sets the property isRead of the Alert to true.
     function markAsRead(id) {
@@ -305,11 +242,40 @@
                         "Abonneer jezelf op personen, partijen of thema's</br>" +
                         "om te zien wanneer ze trending zijn.</li>");
                 }
-            })
-            .fail(() => {
-                //TODO: if request fails proper error handling
-            });
+            }).fail(() => {
+            //TODO: if request fails proper error handling
+        });
     }
+
+    function submitForm($this, event, message=null) {
+        $.ajax({
+            type: $this.attr('method'),
+            url: $this.attr('action'),
+            data: $this.serialize(),
+            succes: message
+                .addClass('green')
+                .html("Saved.")
+                .fadeOut(1000,
+                    function() {
+                        $(this)
+                            .removeClass()
+                            .html("")
+                            .css("display", "inline");
+                    })
+        }).fail(() => message
+            .addClass('red')
+            .html("Mislukt.")
+            .fadeOut(1000,
+                function() {
+                    $(this)
+                        .removeClass()
+                        .html("")
+                        .css("display", "inline");
+                }));
+        event.preventDefault();
+    }
+
+
     (() => {
         loadAlerts();
         //Everytime the alert button is clicked, they are reloaded.
