@@ -48,7 +48,7 @@ namespace BAR.BL.Managers
 			if (item == null) return null;
 
 			//Check if sub already exists
-			//if possible item is null, then we can make a subscription
+			//if the counter is 0 then a new subscrption will not be created.
 			IEnumerable<Subscription> subs = GetSubscriptionsWithItemsForUser(userId);
 			if (subs.Where(sub => sub.SubscribedItem.ItemId == itemId).Count() != 0) return null;
 
