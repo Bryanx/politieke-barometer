@@ -14,7 +14,6 @@
             <div class="x_content">
                 <br/>
                 <form method="post" action="/api/User/@ViewBag.Id" id="userSettingsForm" class="form-horizontal">
-                    @Html.HiddenFor(model => model.User.UserId)
                     <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">
                             Voornaam <span class="required">*</span>
@@ -85,7 +84,6 @@
             <div class="x_content">
                 <br/>
                 <form method="post" action="/api/User/@ViewBag.Id" id="alertSettingsForm" class="form-horizontal">
-                    @Html.HiddenFor(model => model.User.UserId)
                     <div class="form-group">
                         @Html.LabelFor(model => model.User.AlertsViaWebsite,"Alerts ontvangen op deze website", htmlAttributes: new { @class = "control-label col-md-6 col-sm-6 col-xs-12" })
                         <div class="col-md-3 col-sm-3 col-xs-12">
@@ -140,7 +138,6 @@
             <div class="x_content">
                 <br/>
                 <form method="post" action="/api/User/@ViewBag.Id" id="accountSettingsForm" class="form-horizontal">
-                    @Html.HiddenFor(model => model.User.UserId)
                     <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">
                             E-mailadres <span class="required">*</span>
@@ -188,7 +185,6 @@
         <div class="x_content">
             <br/>
             <form method="post" action="/api/User/@ViewBag.Id" id="removeAccountForm" class="form-horizontal">
-                @Html.HiddenFor(model => model.User.UserId)
                 <div class="form-group">
                     <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
                         Let op. Bij het verwijderen van uw account worden al uw instellingen, grafieken en widgets verwijderd.

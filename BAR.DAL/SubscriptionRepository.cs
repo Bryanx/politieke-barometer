@@ -32,20 +32,20 @@ namespace BAR.DAL
 		/// If showable is true, the method will return a list of alerts
 		/// where you can also access the item and the user of a specific alert.
 		/// </summary>
-		public IEnumerable<Alert> ReadAlerts(int userId, bool showable = false)
+		public IEnumerable<Alert> ReadAlerts(string userId, bool showable = false)
 		{
 			IEnumerable<Subscription> userSubs;
 			if (!showable)
 			{
 				userSubs = ctx.Subscriptions.Include(sub => sub.Alerts)
-				.Where(sub => sub.SubscribedUser.UserId == userId).AsEnumerable();
+				.Where(sub => sub.SubscribedUser.Id.Equals(userId)).AsEnumerable();
 			}
 			else
 			{
 				userSubs = ctx.Subscriptions.Include(sub => sub.Alerts)
 											.Include(sub => sub.SubscribedItem)
 											.Include(sub => sub.SubscribedUser)
-				.Where(sub => sub.SubscribedUser.UserId == userId).AsEnumerable();
+				.Where(sub => sub.SubscribedUser.Id.Equals(userId)).AsEnumerable();
 			}
 
 			List<Alert> alersToRead = new List<Alert>();
@@ -58,7 +58,7 @@ namespace BAR.DAL
 		/// Because a user can have multiple subscriptions, we look for the alert in each subscription
 		/// To update the alert you have to update its Subscription (alerts have no DbSet)
 		/// </summary>
-		public Alert ReadAlert(int userId, int alertId) 
+		public Alert ReadAlert(string userId, int alertId) 
 		{
 			foreach (Subscription sub in ReadSubscriptionsWithAlertsForUser(userId).ToList()) {
 				if (sub.Alerts != null) {
@@ -91,25 +91,25 @@ namespace BAR.DAL
 		/// <summary>
 		/// Returns a list of subscriptions of a user.
 		/// </summary>
-		public IEnumerable<Subscription> ReadSubscriptionsForUser(int userId)
+		public IEnumerable<Subscription> ReadSubscriptionsForUser(string userId)
 		{
-			return ctx.Subscriptions.Where(sub => sub.SubscribedUser.UserId == userId).AsEnumerable();
+			return ctx.Subscriptions.Where(sub => sub.SubscribedUser.Id.Equals(userId)).AsEnumerable();
 		}
 
 		/// <summary>
 		/// Returns a list of subscriptions with their alerts.
 		/// </summary>
-		public IEnumerable<Subscription> ReadSubscriptionsWithAlertsForUser(int userId)
+		public IEnumerable<Subscription> ReadSubscriptionsWithAlertsForUser(string userId)
 		{
-			return ctx.Subscriptions.Include(sub => sub.Alerts).Where(sub => sub.SubscribedUser.UserId == userId).AsEnumerable();
+			return ctx.Subscriptions.Include(sub => sub.Alerts).Where(sub => sub.SubscribedUser.Id.Equals(userId)).AsEnumerable();
 		}
 		
 		/// <summary>
 		/// Returns a list of subscriptions with their items.
 		/// </summary>
-		public IEnumerable<Subscription> ReadSubscriptionsWithItemsForUser(int userId)
+		public IEnumerable<Subscription> ReadSubscriptionsWithItemsForUser(string userId)
 		{
-			return ctx.Subscriptions.Include(sub => sub.SubscribedItem).Where(sub => sub.SubscribedUser.UserId == userId).AsEnumerable();
+			return ctx.Subscriptions.Include(sub => sub.SubscribedItem).Where(sub => sub.SubscribedUser.Id.Equals(userId)).AsEnumerable();
 		}
 
 		/// <summary>
@@ -186,7 +186,7 @@ namespace BAR.DAL
 		/// Updates all the subscriptions for a specific user.
 		/// Returns -1 if SaveChanges() is delayed by unit of work.
 		/// </summary>
-		public int UpdateSubscriptionsForUser(int userId)
+		public int UpdateSubscriptionsForUser(string userId)
 		{
 			IEnumerable<Subscription> subs = ReadSubscriptionsForUser(userId);
 			return UpdateSubscriptions(subs);
@@ -227,7 +227,7 @@ namespace BAR.DAL
 		/// Deletes all the subscriptons for a specific user.
 		/// Returns -1 if SaveChanges() is delayed by unit of work.
 		/// </summary>
-		public int DeleteSubscriptionsForUser(int userId)
+		public int DeleteSubscriptionsForUser(string userId)
 		{
 			IEnumerable<Subscription> subs = ReadSubscriptionsForUser(userId);
 			return DeleteSubscriptions(subs);

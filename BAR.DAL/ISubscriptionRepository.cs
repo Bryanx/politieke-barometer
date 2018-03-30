@@ -15,12 +15,12 @@ namespace BAR.DAL
 		Subscription ReadEditableSubscription(int subscriptionId);
 		IEnumerable<Subscription> ReadAllSubscriptions();
 		IEnumerable<Subscription> ReadSubscriptionsForItem(int itemId);
-		IEnumerable<Subscription> ReadSubscriptionsForUser(int userId);
-		IEnumerable<Subscription> ReadSubscriptionsWithAlertsForUser(int userId);
-		IEnumerable<Subscription> ReadSubscriptionsWithItemsForUser(int userId);
+		IEnumerable<Subscription> ReadSubscriptionsForUser(string userId);
+		IEnumerable<Subscription> ReadSubscriptionsWithAlertsForUser(string userId);
+		IEnumerable<Subscription> ReadSubscriptionsWithItemsForUser(string userId);
 		IEnumerable<Subscription> ReadSubscritpionsWithAlerts(int itemId);
-		Alert ReadAlert(int userId, int alertId);
-		IEnumerable<Alert> ReadAlerts(int userId, bool showable = false);
+		Alert ReadAlert(string userId, int alertId);
+		IEnumerable<Alert> ReadAlerts(string userId, bool showable = false);
 
 		//Create
 		int CreateSubscription(Subscription sub);
@@ -28,13 +28,13 @@ namespace BAR.DAL
 		//Update
 		int UpdateSubScription(Subscription sub);
 		int UpdateSubscriptions(IEnumerable<Subscription> subs);
-		int UpdateSubscriptionsForUser(int userId);
+		int UpdateSubscriptionsForUser(string userId);
 		int UpdateSubscriptionsForItem(int itemId);
 
 		//Delete
 		int DeleteSubscription(int subId);
 		int DeleteSubscriptions(IEnumerable<Subscription> subs);
-		int DeleteSubscriptionsForUser(int userId);
+		int DeleteSubscriptionsForUser(string userId);
 		int DeleteSubscriptionsForItem(int itemId);
 	}
 }
