@@ -38,8 +38,8 @@ namespace BAR.BL.Managers
 			InitRepo();
 
 			//get user
-			IUserManager userManager = new UserManager(null, uowManager);
-			User user = new UserManager().GetUser(userId);
+			IUserManager userManager = new UserManager(uowManager);
+			User user = userManager.GetUser(userId);
 			if (user == null) return null;
 
 			//get item

@@ -141,7 +141,7 @@ namespace BAR.BL.Managers
 			InitRepo();
 
 			//Get user
-			UserManager userManager = new UserManager(null, uowManager);
+			UserManager userManager = new UserManager(uowManager);
 			User user = userManager.GetUser(userId);
 			if (user == null) return null;
 

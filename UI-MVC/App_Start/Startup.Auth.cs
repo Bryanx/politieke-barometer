@@ -23,7 +23,7 @@ namespace BAR.UI.MVC
     {
       // Configure the db context, user manager and signin manager to use a single instance per request
       app.CreatePerOwinContext(BarometerDbContext.Create);
-      app.CreatePerOwinContext<UserManager>(UserManager.Create);
+      app.CreatePerOwinContext<IdentityUserManager>(IdentityUserManager.Create);
       app.CreatePerOwinContext<SignInManager>(SignInManager.Create);
 
       // Enable the application to use a cookie to store information for the signed in user
@@ -37,7 +37,7 @@ namespace BAR.UI.MVC
         {
           // Enables the application to validate the security stamp when the user logs in.
           // This is a security feature which is used when you change a password or add an external login to your account.  
-          OnValidateIdentity = SecurityStampValidator.OnValidateIdentity<UserManager, User>(
+          OnValidateIdentity = SecurityStampValidator.OnValidateIdentity<IdentityUserManager, User>(
                   validateInterval: TimeSpan.FromMinutes(30),
                   regenerateIdentity: (manager, user) => user.GenerateUserIdentityAsync(manager))
         }
