@@ -122,8 +122,9 @@
     <Compile Include="Managers\SubscriptionManager.cs" />
     <Compile Include="Managers\TwilioMessageSender.cs" />
     <Compile Include="Managers\UnitOfWorkManager.cs" />
-    <Compile Include="Managers\UserManager.cs" />
+    <Compile Include="Managers\IdentityUserManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UserManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

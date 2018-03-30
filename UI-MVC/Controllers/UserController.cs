@@ -16,6 +16,7 @@ using System.Net;
 using Microsoft.Owin.Security;
 using System.Configuration;
 using System.Security.Claims;
+using BAR.BL;
 
 namespace BAR.UI.MVC.Controllers
 {
@@ -105,7 +106,7 @@ namespace BAR.UI.MVC.Controllers
       }
 
       SignInManager signInManager = HttpContext.GetOwinContext().Get<SignInManager>();
-			UserManager userManager = HttpContext.GetOwinContext().GetUserManager<UserManager>();
+			IdentityUserManager userManager = HttpContext.GetOwinContext().GetUserManager<IdentityUserManager>();
 
 			if (ModelState.IsValid)
 			{
@@ -188,7 +189,7 @@ namespace BAR.UI.MVC.Controllers
     [AllowAnonymous]
     public async Task<ActionResult> ConfirmEmail(string userId, string code)
     {
-      UserManager userManager = HttpContext.GetOwinContext().GetUserManager<UserManager>();
+      IdentityUserManager userManager = HttpContext.GetOwinContext().GetUserManager<IdentityUserManager>();
 
       if (userId == null || code == null)
       {
@@ -213,7 +214,7 @@ namespace BAR.UI.MVC.Controllers
     [ValidateAntiForgeryToken]
     public async Task<ActionResult> ForgotPassword(ForgotPasswordViewModel model)
     {
-      UserManager userManager = HttpContext.GetOwinContext().GetUserManager<UserManager>();
+      IdentityUserManager userManager = HttpContext.GetOwinContext().GetUserManager<IdentityUserManager>();
 
       if (ModelState.IsValid)
       {
@@ -258,7 +259,7 @@ namespace BAR.UI.MVC.Controllers
     [ValidateAntiForgeryToken]
     public async Task<ActionResult> ResetPassword(ResetPasswordViewModel model)
     {
-      UserManager userManager = HttpContext.GetOwinContext().GetUserManager<UserManager>();
+      IdentityUserManager userManager = HttpContext.GetOwinContext().GetUserManager<IdentityUserManager>();
 
       if (!ModelState.IsValid)
       {
@@ -304,7 +305,7 @@ namespace BAR.UI.MVC.Controllers
     public async Task<ActionResult> SendCode(string returnUrl, bool rememberMe)
     {
       SignInManager signInManager = HttpContext.GetOwinContext().Get<SignInManager>();
-      UserManager userManager = HttpContext.GetOwinContext().GetUserManager<UserManager>();
+      IdentityUserManager userManager = HttpContext.GetOwinContext().GetUserManager<IdentityUserManager>();
 
       var userId = await signInManager.GetVerifiedUserIdAsync();
       if (userId == null)
@@ -383,7 +384,7 @@ namespace BAR.UI.MVC.Controllers
     public async Task<ActionResult> ExternalLoginConfirmation(ExternalLoginConfirmationViewModel model, string returnUrl)
     {
       IAuthenticationManager authenticationManager = HttpContext.GetOwinContext().Authentication;
-      UserManager userManager = HttpContext.GetOwinContext().GetUserManager<UserManager>();
+      IdentityUserManager userManager = HttpContext.GetOwinContext().GetUserManager<IdentityUserManager>();
       SignInManager signInManager = HttpContext.GetOwinContext().Get<SignInManager>();
 
       if (User.Identity.IsAuthenticated)
@@ -453,7 +454,7 @@ namespace BAR.UI.MVC.Controllers
 		
 	
 		private UserSubscribedPeopleDTO GetUserSubscribedModel(string id) {
-			UserManager userManager = HttpContext.GetOwinContext().GetUserManager<UserManager>();
+			IUserManager userManager = new UserManager();
 			User user = userManager.GetUser(id);
 			//TODO: These next statements should be in a method in BL
 			IEnumerable<Subscription> subs = subManager.GetSubscriptionsWithItemsForUser(id);

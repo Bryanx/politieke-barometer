@@ -12,7 +12,7 @@ namespace BAR.BL.Managers
 {
   public class SignInManager : SignInManager<User, string>
   {
-    public SignInManager(UserManager userManager, IAuthenticationManager authenticationManager)
+    public SignInManager(IdentityUserManager userManager, IAuthenticationManager authenticationManager)
             : base(userManager, authenticationManager)
         {
     }
@@ -25,7 +25,7 @@ namespace BAR.BL.Managers
     /// <returns></returns>
     public static SignInManager Create(IdentityFactoryOptions<SignInManager> options, IOwinContext context)
     {
-      return new SignInManager(context.GetUserManager<UserManager>(), context.Authentication);
+      return new SignInManager(context.GetUserManager<IdentityUserManager>(), context.Authentication);
     }
   }
 }

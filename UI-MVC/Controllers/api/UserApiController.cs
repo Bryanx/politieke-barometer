@@ -7,6 +7,7 @@ using BAR.BL.Controllers;
 using BAR.BL.Domain.Users;
 using BAR.BL.Managers;
 using BAR.UI.MVC.Models;
+using BAR.BL;
 
 namespace BAR.UI.MVC.Controllers {
     public class UserApiController : ApiController {
