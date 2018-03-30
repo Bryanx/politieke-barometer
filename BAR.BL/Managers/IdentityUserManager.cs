@@ -22,7 +22,6 @@ namespace BAR.BL.Managers
 		/// TODO
 		/// </summary>
 		public IdentityUserManager(UserIdentityRepository userRepository = null) : base(userRepository) { }
-
 		/// <summary>
 		/// Creates an instance of UserManager and returns it as a callback function to Owin.
 		/// </summary>

@@ -9,9 +9,23 @@ using System.Data.Entity.Migrations;
 
 namespace BAR.DAL
 {
-	public class UserRepository : IUserRepository
+	public class UserRepository : UserStore<User>, IUserRepository
 	{
 		private BarometerDbContext ctx;
+
+		/// <summary>
+		/// This constructor is used if
+		/// you plan to not work with identity.
+		/// 
+		/// WARNING
+		/// Methods that are being used with identity will not
+		/// work if you plan to use this constructor
+		/// </summary>
+		public UserRepository(BarometerDbContext ctx, UnitOfWork uow = null) : base(ctx)
+		{
+			if (uow == null) this.ctx = new BarometerDbContext();
+			else ctx = uow.Context;
+		}
 
 		/// <summary>
 		/// This constructor is used if

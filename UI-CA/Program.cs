@@ -223,7 +223,7 @@ namespace BAR.UI.CA
 		/// </summary>
 		private static void ShowAllUsers()
 		{
-			IEnumerable<User> allUsers = new UserManager().GetAllUsers();
+			IEnumerable<User> allUsers = new IdentityUserManager().GetAllUsers();
 
 			foreach (User user in allUsers)
 			{

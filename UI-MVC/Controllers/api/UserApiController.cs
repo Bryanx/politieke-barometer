@@ -8,6 +8,7 @@ using BAR.BL.Domain.Users;
 using BAR.BL.Managers;
 using BAR.UI.MVC.Models;
 using Microsoft.AspNet.Identity;
+using BAR.BL;
 
 namespace BAR.UI.MVC.Controllers.api {
     public class UserApiController : ApiController {
