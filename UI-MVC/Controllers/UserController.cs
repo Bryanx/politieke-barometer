@@ -439,18 +439,32 @@ namespace BAR.UI.MVC.Controllers
 		/// </summary>
 		public ActionResult Index()
 		{
-			var id = User.Identity.GetUserId();
-			ViewBag.Id = id;
-			UserSubscribedPeopleDTO model = GetUserSubscribedModel(id);
-			return View("Dashboard","~/Views/Shared/Layouts/_MemberLayout.cshtml", model);
+      UserWrapperModel userWrapperModel = new UserWrapperModel
+      {
+        userSubscribedPeopleDTO = GetUserSubscribedModel(User.Identity.GetUserId())
+      };
+			return View("Dashboard","~/Views/Shared/Layouts/_MemberLayout.cshtml", userWrapperModel);
 		}
 
-		public ActionResult Settings() {
-			var id = User.Identity.GetUserId();
-			ViewBag.Id = id;
-			UserSubscribedPeopleDTO model = GetUserSubscribedModel(id);
-			return View("Settings","~/Views/Shared/Layouts/_MemberLayout.cshtml", model);
-		}
+    public ActionResult Settings()
+    {
+      var id = User.Identity.GetUserId();
+      IUserManager userManager = new UserManager();
+      User user = userManager.GetUser(id);
+      SettingsViewModel settingsViewModel = new SettingsViewModel
+      {
+        Firstname = user.FirstName,
+        Lastname = user.LastName,
+        Gender = user.Gender,
+        DateOfBirth = user.DateOfBirth ?? DateTime.Now
+      };
+      UserWrapperModel userWrapperModel = new UserWrapperModel
+      {
+        userSubscribedPeopleDTO = GetUserSubscribedModel(User.Identity.GetUserId()),
+        SettingsViewModel = settingsViewModel
+      };
+      return View("Settings", "~/Views/Shared/Layouts/_MemberLayout.cshtml", userWrapperModel);
+    }
 		
 	
 		private UserSubscribedPeopleDTO GetUserSubscribedModel(string id) {

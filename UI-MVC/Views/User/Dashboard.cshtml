@@ -1,5 +1,5 @@
 ﻿@using System.Web.Optimization
-@model BAR.UI.MVC.Models.UserSubscribedPeopleDTO
+@model BAR.UI.MVC.Models.UserWrapperModel
 @{
     ViewBag.Title = "Dashboard";
 }
@@ -27,12 +27,12 @@
 <div style="visibility: hidden">space</div>
 
 <!-- Subscriptions -->
-@if (Model.People.Any()) {
+@if (Model.userSubscribedPeopleDTO.People.Any()) {
     <section>
         <br/>
         <h1>Abonnementen</h1>
         <hr/>
-        @Html.Partial("Subscriptions", Model.People)
+        @Html.Partial("Subscriptions", Model.userSubscribedPeopleDTO.People)
     </section>
 }
 
