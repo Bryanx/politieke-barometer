@@ -144,6 +144,21 @@ namespace BAR.DAL
 		}
 
 		/// <summary>
+		/// Gives back a list of subscriptions for a specific item
+		/// Gives back a list of subscriptions with:
+		/// - Alerts
+		/// - User
+		/// - Item
+		/// </summary>
+		public IEnumerable<Subscription> ReadEditableSubscriptionsForItem(int itemId)
+		{
+			return ctx.Subscriptions.Include(sub => sub.Alerts)
+									.Include(sub => sub.SubscribedItem)
+									.Include(sub => sub.SubscribedUser)
+									.Where(sub => sub.SubscribedItem.ItemId == itemId).AsEnumerable();
+		}
+
+		/// <summary>
 		/// Returns all the subscriptons.
 		/// </summary>
 		public IEnumerable<Subscription> ReadAllSubscriptions()
@@ -241,6 +256,6 @@ namespace BAR.DAL
 		{
 			IEnumerable<Subscription> subs = ReadSubscriptionsForItem(itemId);
 			return DeleteSubscriptions(subs);
-		}	
+		}		
 	}
 }

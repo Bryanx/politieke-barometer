@@ -31,6 +31,32 @@ namespace BAR.BL
 		/// Changes the basic information of a specific user
 		/// 
 		/// NOTE: This method changes the following things:
+		/// - Receiving alerts via website
+		/// - Receiving alerts via mail
+		/// - Receiving weekly review via mail
+		/// </summary>
+		public User ChangeUserAlerts(string userId, bool alertWebsite, bool alertMail, bool alertWeeklyReview)
+		{
+			InitRepo();
+
+			//Get user
+			User userToUpdate = userRepo.ReadUser(userId);
+			if (userToUpdate == null) return null;
+
+			//Update user
+			userToUpdate.AlertsViaWebsite = alertWebsite;
+			userToUpdate.AlertsViaEmail = alertMail;
+			userToUpdate.WeeklyReviewViaEmail = alertWeeklyReview;
+
+			//Update database
+			userRepo.UpdateUser(userToUpdate);
+			return userToUpdate;
+		}
+
+		/// <summary>
+		/// Changes the basic information of a specific user
+		/// 
+		/// NOTE: This method changes the following things:
 		/// - firstname
 		/// - lastname
 		/// - gender
