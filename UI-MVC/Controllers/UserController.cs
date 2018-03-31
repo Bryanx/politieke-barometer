@@ -432,14 +432,16 @@ namespace BAR.UI.MVC.Controllers
     }
 
     #endregion
-
-    public ISubscriptionManager subManager = new SubscriptionManager();
+		
+	private const string INDEX_PAGE_TITLE = "Dashboard";
+	public ISubscriptionManager subManager = new SubscriptionManager();
 		/// <summary>
 		/// Dashboard of the user
 		/// </summary>
 		public ActionResult Index() 
 		{
 			ItemViewModel itemViewModel = GetPersonViewModel(User.Identity.GetUserId());
+			itemViewModel.PageTitle = INDEX_PAGE_TITLE;
 			return View("Dashboard","~/Views/Shared/Layouts/_MemberLayout.cshtml", itemViewModel);
 		}
 
