@@ -437,13 +437,10 @@ namespace BAR.UI.MVC.Controllers
 		/// <summary>
 		/// Dashboard of the user
 		/// </summary>
-		public ActionResult Index()
+		public ActionResult Index() 
 		{
-      UserWrapperModel userWrapperModel = new UserWrapperModel
-      {
-        UserSubscribedPeopleDTO = GetUserSubscribedModel(User.Identity.GetUserId())
-      };
-			return View("Dashboard","~/Views/Shared/Layouts/_MemberLayout.cshtml", userWrapperModel);
+			PersonViewModel personViewModel = GetPersonViewModel(User.Identity.GetUserId());
+			return View("Dashboard","~/Views/Shared/Layouts/_MemberLayout.cshtml", personViewModel);
 		}
 
     public ActionResult Settings()
@@ -452,21 +449,17 @@ namespace BAR.UI.MVC.Controllers
       User user = userManager.GetUser(User.Identity.GetUserId());
       SettingsViewModel settingsViewModel = new SettingsViewModel
       {
+	    User = user,
         Firstname = user.FirstName,
         Lastname = user.LastName,
         Gender = user.Gender,
         DateOfBirth = user.DateOfBirth ?? DateTime.Now
       };
-      UserWrapperModel userWrapperModel = new UserWrapperModel
-      {
-        UserSubscribedPeopleDTO = GetUserSubscribedModel(User.Identity.GetUserId()),
-        SettingsViewModel = settingsViewModel
-      };
-      return View("Settings", "~/Views/Shared/Layouts/_MemberLayout.cshtml", userWrapperModel);
+      return View("Settings", "~/Views/Shared/Layouts/_MemberLayout.cshtml", settingsViewModel);
     }
 		
 	
-		private UserSubscribedPeopleDTO GetUserSubscribedModel(string id) {
+		private PersonViewModel GetPersonViewModel(string id) {
 			IUserManager userManager = new UserManager();
 			User user = userManager.GetUser(id);
 			//TODO: These next statements should be in a method in BL
@@ -486,7 +479,7 @@ namespace BAR.UI.MVC.Controllers
 					Baseline = item.Baseline
 				});
 			}
-			return new UserSubscribedPeopleDTO() {
+			return new PersonViewModel() {
 				User = user,
 				People = people
 			};

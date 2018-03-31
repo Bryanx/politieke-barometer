@@ -209,9 +209,7 @@
     <Compile Include="Models\BaseViewModel.cs" />
     <Compile Include="Models\Graph.cs" />
     <Compile Include="Models\PersonDTO.cs" />
-    <Compile Include="Models\UserViewModel.cs" />
     <Compile Include="Models\UserViewModels.cs" />
-    <Compile Include="Models\UserWrapperModel.cs" />
     <Compile Include="Models\Widget.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />

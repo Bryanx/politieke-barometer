@@ -39,20 +39,12 @@ namespace BAR.UI.MVC.Controllers {
                 });
             }
 
-            if (User.Identity.IsAuthenticated) {
-                UserManager userManager = new UserManager();
-                UserViewModel usr = new UserViewModel() {
-                    User = userManager.GetUser(User.Identity.GetUserId()),
-                    People = personen
-                };
-                return View("Index", "~/Views/Shared/Layouts/_MemberLayout.cshtml", usr);
-            } else {
-                UserViewModel usr = new UserViewModel() {
-                    User = null,
-                    People = personen
-                };
-                return View("Index", "~/Views/Shared/Layouts/_VisitorLayout.cshtml", usr);
-            }
+            UserManager userManager = new UserManager();
+            PersonViewModel personViewModel = new PersonViewModel() {
+                User = User.Identity.IsAuthenticated ? userManager.GetUser(User.Identity.GetUserId()) : null,
+                People = personen
+            };
+            return View("Index", "~/Views/Shared/Layouts/_VisitorLayout.cshtml", personViewModel);
         }
 
         // GET: Default/Details/5 (Specific person page)
@@ -70,20 +62,12 @@ namespace BAR.UI.MVC.Controllers {
                 NumberOfMentions = item.NumberOfMentions,
                 Baseline = item.Baseline
             });
-            if (User.Identity.IsAuthenticated) {
-                UserManager userManager = new UserManager();
-                UserViewModel uvm = new UserViewModel() {
-                    User = userManager.GetUser(User.Identity.GetUserId()),
-                    People = persoon
-                };
-                return View("Details", "~/Views/Shared/Layouts/_MemberLayout.cshtml", uvm);
-            } else {
-                UserViewModel uvm = new UserViewModel() {
-                    User = null,
-                    People = persoon
-                };
-                return View("Details", "~/Views/Shared/Layouts/_VisitorLayout.cshtml", uvm);
-            }
+            UserManager userManager = new UserManager();
+            PersonViewModel personViewModel = new PersonViewModel() {
+                User = User.Identity.IsAuthenticated ? userManager.GetUser(User.Identity.GetUserId()) : null,
+                People = persoon
+            };
+            return View("Details", "~/Views/Shared/Layouts/_MemberLayout.cshtml", personViewModel);
         }
     }
 }
