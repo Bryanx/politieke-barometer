@@ -812,6 +812,8 @@ a:hover, a:focus {
   position: relative;
   display: block;
   cursor: pointer; }
+  .nav.side-menu > li:hover {
+    background: #26313c; }
   .nav.side-menu > li > i {
     margin-bottom: 6px; }
     .nav.side-menu > li > i:hover {

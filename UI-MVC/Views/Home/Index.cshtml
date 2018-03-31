@@ -1,9 +1,9 @@
 ﻿@using System.Web.Optimization
 @using BAR.BL.Domain.Items
-@model IEnumerable<BAR.UI.MVC.Models.ItemDTO>
+@model BAR.UI.MVC.Models.ItemViewModel
 
 @{
-    ViewBag.Title = "Home Page";
+    ViewBag.Title = Model.PageTitle;
 }
 
 @section CustomCSS{
@@ -28,7 +28,7 @@
 <!-- top tiles -->
 <div class="row tile_count">
     @{ int i = 0;}
-    @foreach (var item in Model) {
+    @foreach (var item in Model.People) {
         if (i < 6) {
             <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
                 <span class="count_top"><i class="fa fa-user"></i> @item.Name</span>
@@ -84,7 +84,7 @@
             <p><strong>Aantal vermeldingen van politici op social media</strong></p>
             @{ int j = 1;}
             <table>
-            @foreach (var item in Model.OrderByDescending(m => m.TrendingPercentage)) {
+            @foreach (var item in Model.People.OrderByDescending(m => m.TrendingPercentage)) {
                 if (j <= 5) {
                     <tr>
                         <div class="widget_summary">
@@ -95,7 +95,7 @@
                             <div class="w_center w_55">
                                 <div class="progress">
                                     <div class="progress-bar bg-green" role="progressbar" aria-valuenow="@item.TrendingPercentage"
-                                         aria-valuemin="0" aria-valuemax="@Model.Max(m => m.TrendingPercentage)" style="width: @(item.TrendingPercentage*3)%;">
+                                         aria-valuemin="0" aria-valuemax="@Model.People.Max(m => m.TrendingPercentage)" style="width: @(item.TrendingPercentage*3)%;">
                                         <span class="sr-only">@item.TrendingPercentage% Complete</span>
                                     </div>
                                 </div>
