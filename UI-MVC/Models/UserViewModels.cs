@@ -1,4 +1,4 @@
-﻿using BAR.BL.Domain.Users;
+﻿﻿using BAR.BL.Domain.Users;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
