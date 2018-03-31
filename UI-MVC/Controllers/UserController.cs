@@ -110,7 +110,7 @@ namespace BAR.UI.MVC.Controllers
 
 			if (ModelState.IsValid)
 			{
-				var user = new User { UserName = model.Email, Email = model.Email, FirstName = model.Firstname, LastName = model.Lastname, Gender = model.Gender, DateOfBirth = model.DateOfBirth };
+				var user = new User { UserName = model.Email, Email = model.Email, FirstName = model.Firstname, LastName = model.Lastname, Gender = model.Gender, DateOfBirth = model.DateOfBirth, AlertsViaWebsite = true};
 				var result = await userManager.CreateAsync(user, model.Password);
 				if (result.Succeeded)
 				{
