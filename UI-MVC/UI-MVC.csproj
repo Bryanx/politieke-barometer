@@ -88,6 +88,9 @@
     <Reference Include="Microsoft.Owin.Security.OAuth, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Owin.Security.OAuth.4.0.0\lib\net451\Microsoft.Owin.Security.OAuth.dll</HintPath>
     </Reference>
+    <Reference Include="MvcBreadCrumbs, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\packages\MvcBreadCrumbs.0.69\lib\MvcBreadCrumbs.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed">
       <HintPath>..\packages\Newtonsoft.Json.11.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
@@ -197,11 +200,11 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\api\AlertApiController.cs" />
     <Compile Include="Controllers\api\UserApiController.cs" />
+    <Compile Include="Controllers\api\WidgetController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\OrganisationController.cs" />
     <Compile Include="Controllers\PersonController.cs" />
     <Compile Include="Controllers\UserController.cs" />
-    <Compile Include="Controllers\WidgetController.cs" />
     <Compile Include="DAL\WidgetManager.cs" />
     <Compile Include="ExtensionMethods.cs" />
     <Compile Include="Global.asax.cs">

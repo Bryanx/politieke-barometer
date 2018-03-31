@@ -17,6 +17,7 @@ using Microsoft.Owin.Security;
 using System.Configuration;
 using System.Security.Claims;
 using BAR.BL;
+ using MvcBreadCrumbs;
 
 namespace BAR.UI.MVC.Controllers
 {
@@ -438,13 +439,16 @@ namespace BAR.UI.MVC.Controllers
 		/// <summary>
 		/// Dashboard of the user
 		/// </summary>
+		[BreadCrumb(Clear = true, Label = INDEX_PAGE_TITLE)]
 		public ActionResult Index() 
 		{
+			BreadCrumb.Add(Url.Action("Index", "Home"), "Home");
 			ItemViewModel itemViewModel = GetPersonViewModel(User.Identity.GetUserId());
 			itemViewModel.PageTitle = INDEX_PAGE_TITLE;
 			return View("Dashboard","~/Views/Shared/Layouts/_MemberLayout.cshtml", itemViewModel);
 		}
 
+	[BreadCrumb(Clear = true)]
     public ActionResult Settings()
     {
       IUserManager userManager = new UserManager();

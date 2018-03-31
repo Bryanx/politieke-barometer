@@ -2,6 +2,7 @@
 @using System.Activities.Statements
 @using System.Web.Optimization
 @using BAR.UI.MVC.Controllers
+@using MvcBreadCrumbs
 @model BAR.UI.MVC.Models.BaseViewModel
 
 <!DOCTYPE html>
@@ -78,9 +79,10 @@
 <!-- /top navigation -->
 
 <!-- page content -->
-<div class="right_col" role="main">
-    @RenderBody()
-</div>
+    <div class="right_col" role="main">
+        @Html.Raw(BreadCrumb.Display())
+        @RenderBody()
+    </div>
 <!-- /page content -->
 
 <!-- footer content -->
@@ -95,7 +97,7 @@
 </div>
 
 <!-- Scripts -->
-@Scripts.Render("~/bundles/jquery","~/bundles/bootstrap","~/bundles/flot","~/bundles/dates","~/bundles/timeago", "~/Scripts/vue.min.js")
+@Scripts.Render("~/bundles/jquery","~/bundles/bootstrap","~/bundles/dates","~/bundles/timeago", "~/Scripts/vue.min.js")
 <script type="text/javascript">
 
     //global variables

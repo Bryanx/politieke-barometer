@@ -8,12 +8,14 @@ using BAR.BL.Domain.Items;
 using BAR.BL.Managers;
 using BAR.UI.MVC.Models;
 using Microsoft.AspNet.Identity;
+using MvcBreadCrumbs;
 
 namespace BAR.UI.MVC.Controllers {
     public class HomeController : Controller {
         private const string INDEX_PAGE_TITLE = "Politieke Barometer";
         IItemManager itemMgr = new ItemManager();
         
+        [BreadCrumb(Label = "Home")]
         [AllowAnonymous]
         public ActionResult Index() {
             List<ItemDTO> personen = new List<ItemDTO>();
