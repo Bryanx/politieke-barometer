@@ -7,7 +7,7 @@ namespace BAR.UI.MVC.Models
 {
   public class UserWrapperModel
   {
-    public UserSubscribedPeopleDTO userSubscribedPeopleDTO { get; set; }
+    public UserSubscribedPeopleDTO UserSubscribedPeopleDTO { get; set; }
     public SettingsViewModel SettingsViewModel { get; set; }
   }
 }

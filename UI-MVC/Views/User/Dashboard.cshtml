@@ -27,12 +27,12 @@
 <div style="visibility: hidden">space</div>
 
 <!-- Subscriptions -->
-@if (Model.userSubscribedPeopleDTO.People.Any()) {
+@if (Model.UserSubscribedPeopleDTO.People.Any()) {
     <section>
         <br/>
         <h1>Abonnementen</h1>
         <hr/>
-        @Html.Partial("Subscriptions", Model.userSubscribedPeopleDTO.People)
+        @Html.Partial("Subscriptions", Model.UserSubscribedPeopleDTO.People)
     </section>
 }
 

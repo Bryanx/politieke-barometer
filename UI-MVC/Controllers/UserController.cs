@@ -442,16 +442,15 @@ namespace BAR.UI.MVC.Controllers
 		{
       UserWrapperModel userWrapperModel = new UserWrapperModel
       {
-        userSubscribedPeopleDTO = GetUserSubscribedModel(User.Identity.GetUserId())
+        UserSubscribedPeopleDTO = GetUserSubscribedModel(User.Identity.GetUserId())
       };
 			return View("Dashboard","~/Views/Shared/Layouts/_MemberLayout.cshtml", userWrapperModel);
 		}
 
     public ActionResult Settings()
     {
-      var id = User.Identity.GetUserId();
       IUserManager userManager = new UserManager();
-      User user = userManager.GetUser(id);
+      User user = userManager.GetUser(User.Identity.GetUserId());
       SettingsViewModel settingsViewModel = new SettingsViewModel
       {
         Firstname = user.FirstName,
@@ -461,7 +460,7 @@ namespace BAR.UI.MVC.Controllers
       };
       UserWrapperModel userWrapperModel = new UserWrapperModel
       {
-        userSubscribedPeopleDTO = GetUserSubscribedModel(User.Identity.GetUserId()),
+        UserSubscribedPeopleDTO = GetUserSubscribedModel(User.Identity.GetUserId()),
         SettingsViewModel = settingsViewModel
       };
       return View("Settings", "~/Views/Shared/Layouts/_MemberLayout.cshtml", userWrapperModel);
