@@ -1,7 +1,7 @@
 ﻿@using System.Web.Optimization
-@model BAR.UI.MVC.Models.UserWrapperModel
+@model BAR.UI.MVC.Models.ItemViewModel
 @{
-    ViewBag.Title = "Dashboard";
+    ViewBag.Title = Model.PageTitle;
 }
 
 @section CustomCSS{
@@ -9,7 +9,7 @@
 }
 
 <section>
-    <h1>Widgets met grafieken</h1>
+    <h1>@Model.PageTitle</h1>
     <hr/>
     <div>
         <button id="btnAddLine" class="btn btn-primary">Add line chart</button>
@@ -27,12 +27,12 @@
 <div style="visibility: hidden">space</div>
 
 <!-- Subscriptions -->
-@if (Model.UserSubscribedPeopleDTO.People.Any()) {
+@if (Model.People.Any()) {
     <section>
         <br/>
         <h1>Abonnementen</h1>
         <hr/>
-        @Html.Partial("Subscriptions", Model.UserSubscribedPeopleDTO.People)
+        @Html.Partial("Subscriptions", Model)
     </section>
 }
 

@@ -1,4 +1,4 @@
-﻿using BAR.BL.Domain.Users;
+﻿﻿using BAR.BL.Domain.Users;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -154,7 +154,7 @@ namespace BAR.UI.MVC.Models
     public string Email { get; set; }
   }
 
-  public class SettingsViewModel
+  public class SettingsViewModel : BaseViewModel
   {
     [Required]
     [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 2)]
@@ -201,5 +201,9 @@ namespace BAR.UI.MVC.Models
     [DataType(DataType.Password)]
     [Display(Name = "Password new")]
     public string PasswordNew { get; set; }
+  }
+  
+  public class ItemViewModel : BaseViewModel {
+    public IEnumerable<ItemDTO> People { get; set; }
   }
 }

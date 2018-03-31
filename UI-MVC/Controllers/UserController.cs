@@ -1,4 +1,4 @@
-﻿using System;
+﻿﻿using System;
 using BAR.BL.Controllers;
 using BAR.BL.Domain.Users;
 using BAR.BL.Managers;
@@ -90,8 +90,7 @@ namespace BAR.UI.MVC.Controllers
         return RedirectToAction("Index", "User");
       }
       RegisterViewModel registerViewModel = new RegisterViewModel();
-
-      return View(registerViewModel);
+			return View(registerViewModel);
 		}
 
 		//
@@ -111,7 +110,7 @@ namespace BAR.UI.MVC.Controllers
 
 			if (ModelState.IsValid)
 			{
-				var user = new User { UserName = model.Email, Email = model.Email, FirstName = model.Firstname, LastName = model.Lastname, Gender = model.Gender, DateOfBirth = model.DateOfBirth };
+				var user = new User { UserName = model.Email, Email = model.Email, FirstName = model.Firstname, LastName = model.Lastname, Gender = model.Gender, DateOfBirth = model.DateOfBirth, AlertsViaWebsite = true};
 				var result = await userManager.CreateAsync(user, model.Password);
 				if (result.Succeeded)
 				{
@@ -433,18 +432,17 @@ namespace BAR.UI.MVC.Controllers
     }
 
     #endregion
-
-    public ISubscriptionManager subManager = new SubscriptionManager();
+		
+	private const string INDEX_PAGE_TITLE = "Dashboard";
+	public ISubscriptionManager subManager = new SubscriptionManager();
 		/// <summary>
 		/// Dashboard of the user
 		/// </summary>
-		public ActionResult Index()
+		public ActionResult Index() 
 		{
-      UserWrapperModel userWrapperModel = new UserWrapperModel
-      {
-        UserSubscribedPeopleDTO = GetUserSubscribedModel(User.Identity.GetUserId())
-      };
-			return View("Dashboard","~/Views/Shared/Layouts/_MemberLayout.cshtml", userWrapperModel);
+			ItemViewModel itemViewModel = GetPersonViewModel(User.Identity.GetUserId());
+			itemViewModel.PageTitle = INDEX_PAGE_TITLE;
+			return View("Dashboard","~/Views/Shared/Layouts/_MemberLayout.cshtml", itemViewModel);
 		}
 
     public ActionResult Settings()
@@ -453,29 +451,25 @@ namespace BAR.UI.MVC.Controllers
       User user = userManager.GetUser(User.Identity.GetUserId());
       SettingsViewModel settingsViewModel = new SettingsViewModel
       {
+	    User = user,
         Firstname = user.FirstName,
         Lastname = user.LastName,
         Gender = user.Gender,
         DateOfBirth = user.DateOfBirth ?? DateTime.Now
       };
-      UserWrapperModel userWrapperModel = new UserWrapperModel
-      {
-        UserSubscribedPeopleDTO = GetUserSubscribedModel(User.Identity.GetUserId()),
-        SettingsViewModel = settingsViewModel
-      };
-      return View("Settings", "~/Views/Shared/Layouts/_MemberLayout.cshtml", userWrapperModel);
+      return View("Settings", "~/Views/Shared/Layouts/_MemberLayout.cshtml", settingsViewModel);
     }
 		
 	
-		private UserSubscribedPeopleDTO GetUserSubscribedModel(string id) {
+		private ItemViewModel GetPersonViewModel(string id) {
 			IUserManager userManager = new UserManager();
 			User user = userManager.GetUser(id);
 			//TODO: These next statements should be in a method in BL
 			IEnumerable<Subscription> subs = subManager.GetSubscriptionsWithItemsForUser(id);
 			List<Item> items = subs.Select(s => s.SubscribedItem).ToList();
-			List<PersonDTO> people = new List<PersonDTO>();
+			List<ItemDTO> people = new List<ItemDTO>();
 			foreach (Item item in items) {
-				people.Add(new PersonDTO() {
+				people.Add(new ItemDTO() {
 					ItemId = item.ItemId,
 					Name = item.Name,
 					CreationDate = item.CreationDate,
@@ -487,7 +481,7 @@ namespace BAR.UI.MVC.Controllers
 					Baseline = item.Baseline
 				});
 			}
-			return new UserSubscribedPeopleDTO() {
+			return new ItemViewModel() {
 				User = user,
 				People = people
 			};

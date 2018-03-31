@@ -1094,6 +1094,9 @@ a {
     position: relative;
     display: block;
     cursor: pointer;
+    &:hover {
+      background: #26313c;
+    }
     > i {
       margin-bottom: 6px;
       &:hover {
