@@ -95,13 +95,13 @@ namespace BAR.UI.MVC.Controllers.api {
 
     [HttpPost]
     [Route("api/User/UpdateAccount")]
-    public async Task<IHttpActionResult> UpdateAccount(SettingsViewModel settingsViewModel)
+    public async Task<IHttpActionResult> UpdateAccount(UserWrapperModel userWrapperModel)
     {
       IdentityUserManager userManager = HttpContext.Current.GetOwinContext().GetUserManager<IdentityUserManager>();
       User user = await userManager.FindByIdAsync(User.Identity.GetUserId());
-      if (await userManager.CheckPasswordAsync(user, settingsViewModel.Password))
+      if (await userManager.CheckPasswordAsync(user, userWrapperModel.SettingsViewModel.Password))
       {
-        await userManager.ChangePasswordAsync(User.Identity.GetUserId(), settingsViewModel.Password, settingsViewModel.PasswordNew);
+        await userManager.ChangePasswordAsync(User.Identity.GetUserId(), userWrapperModel.SettingsViewModel.Password, userWrapperModel.SettingsViewModel.PasswordNew);
         return StatusCode(HttpStatusCode.NoContent);
       }
       return StatusCode(HttpStatusCode.NotAcceptable);

@@ -90,7 +90,8 @@ namespace BAR.UI.MVC.Controllers
         return RedirectToAction("Index", "User");
       }
       RegisterViewModel registerViewModel = new RegisterViewModel();
-			return View(registerViewModel);
+
+      return View(registerViewModel);
 		}
 
 		//
@@ -123,8 +124,8 @@ namespace BAR.UI.MVC.Controllers
 					//Login
 					await signInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
 
-					return RedirectToAction("Index", "Home");
-				}
+          return RedirectToAction("Index", "User");
+        }
 				AddErrors(result);
 			}
 			return View(model);
