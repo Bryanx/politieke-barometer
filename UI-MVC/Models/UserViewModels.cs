@@ -108,7 +108,6 @@ namespace BAR.UI.MVC.Models
     [Display(Name = "Gender")]
     public Gender Gender { get; set; }
 
-    [Required]
     [Display(Name = "Date of Birth")]
     [DataType(DataType.Date)]
     [DisplayFormat(DataFormatString = "{0:yyyy/MM/dd}", ApplyFormatInEditMode = true)]
@@ -153,5 +152,54 @@ namespace BAR.UI.MVC.Models
     [EmailAddress]
     [Display(Name = "Email")]
     public string Email { get; set; }
+  }
+
+  public class SettingsViewModel
+  {
+    [Required]
+    [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 2)]
+    [Display(Name = "Firstname")]
+    public string Firstname { get; set; }
+
+    [Required]
+    [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 2)]
+    [Display(Name = "Lastname")]
+    public string Lastname { get; set; }
+
+    [Required]
+    [Display(Name = "Alerts via email")]
+    public bool AlertsViaEmail { get; set; }
+
+    [Required]
+    [Display(Name = "Alerts via website")]
+    public bool AlertsViaWebsite { get; set; }
+
+    [Required]
+    [Display(Name = "Weekly review via email")]
+    public bool WeeklyReviewViaEmail { get; set; }
+
+    [Required]
+    [Display(Name = "Gender")]
+    public Gender Gender { get; set; }
+
+    [Display(Name = "Date of Birth")]
+    [DataType(DataType.Date)]
+    [DisplayFormat(DataFormatString = "{0:yyyy/MM/dd}", ApplyFormatInEditMode = true)]
+    public DateTime DateOfBirth { get; set; }
+
+    [Display(Name = "Area")]
+    public Area Area { get; set; }
+
+    [Required]
+    [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
+    [DataType(DataType.Password)]
+    [Display(Name = "Password")]
+    public string Password { get; set; }
+
+    [Required]
+    [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
+    [DataType(DataType.Password)]
+    [Display(Name = "Password new")]
+    public string PasswordNew { get; set; }
   }
 }

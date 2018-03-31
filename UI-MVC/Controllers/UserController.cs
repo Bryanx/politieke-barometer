@@ -123,8 +123,8 @@ namespace BAR.UI.MVC.Controllers
 					//Login
 					await signInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
 
-					return RedirectToAction("Index", "Home");
-				}
+          return RedirectToAction("Index", "User");
+        }
 				AddErrors(result);
 			}
 			return View(model);
@@ -439,21 +439,34 @@ namespace BAR.UI.MVC.Controllers
 		/// </summary>
 		public ActionResult Index()
 		{
-			var id = User.Identity.GetUserId();
-			ViewBag.Id = id;
-			UserViewModel model = GetUserSubscribedModel(id);
-			return View("Dashboard","~/Views/Shared/Layouts/_MemberLayout.cshtml", model);
+      UserWrapperModel userWrapperModel = new UserWrapperModel
+      {
+        UserSubscribedPeopleDTO = GetUserSubscribedModel(User.Identity.GetUserId())
+      };
+			return View("Dashboard","~/Views/Shared/Layouts/_MemberLayout.cshtml", userWrapperModel);
 		}
 
-		public ActionResult Settings() {
-			var id = User.Identity.GetUserId();
-			ViewBag.Id = id;
-			UserViewModel model = GetUserSubscribedModel(id);
-			return View("Settings","~/Views/Shared/Layouts/_MemberLayout.cshtml", model);
-		}
+    public ActionResult Settings()
+    {
+      IUserManager userManager = new UserManager();
+      User user = userManager.GetUser(User.Identity.GetUserId());
+      SettingsViewModel settingsViewModel = new SettingsViewModel
+      {
+        Firstname = user.FirstName,
+        Lastname = user.LastName,
+        Gender = user.Gender,
+        DateOfBirth = user.DateOfBirth ?? DateTime.Now
+      };
+      UserWrapperModel userWrapperModel = new UserWrapperModel
+      {
+        UserSubscribedPeopleDTO = GetUserSubscribedModel(User.Identity.GetUserId()),
+        SettingsViewModel = settingsViewModel
+      };
+      return View("Settings", "~/Views/Shared/Layouts/_MemberLayout.cshtml", userWrapperModel);
+    }
 		
 	
-		private UserViewModel GetUserSubscribedModel(string id) {
+		private UserSubscribedPeopleDTO GetUserSubscribedModel(string id) {
 			IUserManager userManager = new UserManager();
 			User user = userManager.GetUser(id);
 			//TODO: These next statements should be in a method in BL
@@ -470,10 +483,10 @@ namespace BAR.UI.MVC.Controllers
 					NumberOfFollowers = item.NumberOfFollowers,
 					TrendingPercentage = Math.Floor(item.TrendingPercentage),
 					NumberOfMentions = item.NumberOfMentions,
-					Baseline = item.Baseline,
+					Baseline = item.Baseline
 				});
 			}
-			return new UserViewModel() {
+			return new UserSubscribedPeopleDTO() {
 				User = user,
 				People = people
 			};
