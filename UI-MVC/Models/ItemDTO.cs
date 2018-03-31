@@ -5,7 +5,7 @@ using BAR.BL.Domain.Data;
 using BAR.BL.Domain.Users;
 
 namespace BAR.UI.MVC.Models {
-    public class PersonDTO {
+    public class ItemDTO {
         public int ItemId { get; set; }
         public string Name { get; set; }
         public DateTime CreationDate { get; set; }

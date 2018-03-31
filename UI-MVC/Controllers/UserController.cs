@@ -439,8 +439,8 @@ namespace BAR.UI.MVC.Controllers
 		/// </summary>
 		public ActionResult Index() 
 		{
-			PersonViewModel personViewModel = GetPersonViewModel(User.Identity.GetUserId());
-			return View("Dashboard","~/Views/Shared/Layouts/_MemberLayout.cshtml", personViewModel);
+			ItemViewModel itemViewModel = GetPersonViewModel(User.Identity.GetUserId());
+			return View("Dashboard","~/Views/Shared/Layouts/_MemberLayout.cshtml", itemViewModel);
 		}
 
     public ActionResult Settings()
@@ -459,15 +459,15 @@ namespace BAR.UI.MVC.Controllers
     }
 		
 	
-		private PersonViewModel GetPersonViewModel(string id) {
+		private ItemViewModel GetPersonViewModel(string id) {
 			IUserManager userManager = new UserManager();
 			User user = userManager.GetUser(id);
 			//TODO: These next statements should be in a method in BL
 			IEnumerable<Subscription> subs = subManager.GetSubscriptionsWithItemsForUser(id);
 			List<Item> items = subs.Select(s => s.SubscribedItem).ToList();
-			List<PersonDTO> people = new List<PersonDTO>();
+			List<ItemDTO> people = new List<ItemDTO>();
 			foreach (Item item in items) {
-				people.Add(new PersonDTO() {
+				people.Add(new ItemDTO() {
 					ItemId = item.ItemId,
 					Name = item.Name,
 					CreationDate = item.CreationDate,
@@ -479,7 +479,7 @@ namespace BAR.UI.MVC.Controllers
 					Baseline = item.Baseline
 				});
 			}
-			return new PersonViewModel() {
+			return new ItemViewModel() {
 				User = user,
 				People = people
 			};

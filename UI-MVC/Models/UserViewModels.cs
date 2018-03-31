@@ -203,7 +203,7 @@ namespace BAR.UI.MVC.Models
     public string PasswordNew { get; set; }
   }
   
-  public class PersonViewModel : BaseViewModel {
-    public IEnumerable<PersonDTO> People { get; set; }
+  public class ItemViewModel : BaseViewModel {
+    public IEnumerable<ItemDTO> People { get; set; }
   }
 }

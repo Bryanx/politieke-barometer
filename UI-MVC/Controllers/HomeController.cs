@@ -14,9 +14,9 @@ namespace BAR.UI.MVC.Controllers {
         IItemManager itemMgr = new ItemManager();
         
         public ActionResult Index() {
-            List<PersonDTO> personen = new List<PersonDTO>();
+            List<ItemDTO> personen = new List<ItemDTO>();
             foreach (Item item in itemMgr.GetAllItems()) {
-                personen.Add(new PersonDTO() {
+                personen.Add(new ItemDTO() {
                     ItemId = item.ItemId,
                     Name = item.Name,
                     CreationDate = item.CreationDate,

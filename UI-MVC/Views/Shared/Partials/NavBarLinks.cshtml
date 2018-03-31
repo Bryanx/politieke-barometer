@@ -1,7 +1,7 @@
 ﻿@using BAR.UI.MVC.Controllers
 <!-- temp dashboard link for logged in users.-->
 <li>
-    <a href='@Url.Action(nameof(UserController.Index), "User")'><i class="fa fa-bar-chart-o"></i> Dashboard </a>
+    <a href='@Url.Action(nameof(UserController.Index), "User")'><i class="fa fa-bar-chart-o"></i>Dashboard</a>
 </li>
 <li>
 <a href='/#nieuws'><i class="fa fa-newspaper-o"></i> Nieuws </a>
@@ -9,9 +9,9 @@
 <li>
     <a href='@Url.Action(nameof(PersonController.Index), "Person")'><i class="fa fa-users"></i>Personen</a>
 </li>
-@*<li>*@
-@*    <a href='@Url.Action("Index", "Partijen")'><i class="fa fa-briefcase"></i>Partijen</a>*@
-@*</li>*@
+<li>
+    <a href='@Url.Action(nameof(OrganisationController.Index), "Organisation")'><i class="fa fa-briefcase"></i>Partijen</a>
+</li>
 @*<li>*@
 @*    <a href='@Url.Action("Index", "Themas")'><i class="fa fa-tag"></i>Thema's</a>*@
 @*</li>*@

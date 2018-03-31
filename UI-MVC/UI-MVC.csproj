@@ -197,6 +197,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\api\UserApiController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\OrganisationController.cs" />
     <Compile Include="Controllers\PersonController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\WidgetController.cs" />
@@ -208,7 +209,7 @@
     <Compile Include="Models\AlertDTO.cs" />
     <Compile Include="Models\BaseViewModel.cs" />
     <Compile Include="Models\Graph.cs" />
-    <Compile Include="Models\PersonDTO.cs" />
+    <Compile Include="Models\ItemDTO.cs" />
     <Compile Include="Models\UserViewModels.cs" />
     <Compile Include="Models\Widget.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -373,6 +374,7 @@
     <Content Include="Scripts\nprogress.js" />
     <Content Include="Scripts\site.js" />
     <Content Include="Scripts\underscore.min.js" />
+    <Content Include="Views\Organisation\Index.cshtml" />
     <Content Include="Views\Shared\Layouts\_HomeLayout(temp).cshtml" />
     <Content Include="Views\Shared\Layouts\_MemberLayout.cshtml" />
     <Content Include="Views\Shared\Layouts\_VisitorLayout.cshtml" />

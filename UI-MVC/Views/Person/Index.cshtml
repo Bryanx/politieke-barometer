@@ -1,8 +1,8 @@
 @using System.Web.Optimization
-@model BAR.UI.MVC.Models.PersonViewModel
+@model BAR.UI.MVC.Models.ItemViewModel
 
 @{
-    ViewBag.Title = "Politici";
+    ViewBag.Title = Model.PageTitle;
 }
 
 @section CustomCSS{
@@ -11,7 +11,7 @@
 
 <div class="col-md-12 col-sm-12 col-xs-12">
 
-    <h1>Politici-overzicht</h1>
+    <h1>@Model.PageTitle</h1>
     <hr/>
     <p class="text-muted font-16 m-b-30">
         Extra informatie over de politici en uitleg over de attributen etc.
