@@ -8,7 +8,11 @@ using BAR.BL.Domain.Users;
 using BAR.BL.Managers;
 using BAR.UI.MVC.Models;
 using Microsoft.AspNet.Identity;
+using Microsoft.Owin.Host.SystemWeb;
 using BAR.BL;
+using System.Web;
+using Microsoft.AspNet.Identity.Owin;
+using System.Threading.Tasks;
 
 namespace BAR.UI.MVC.Controllers.api {
     public class UserApiController : ApiController {
@@ -73,7 +77,6 @@ namespace BAR.UI.MVC.Controllers.api {
         [Route("api/Subscribe/{itemId}")]
         public IHttpActionResult CreateSubscription(int itemId) {
             ISubscriptionManager SubManager = new SubscriptionManager();
-            String text = "";
             string userId = User.Identity.GetUserId();
             SubManager.CreateSubscription(userId, itemId);
             return StatusCode(HttpStatusCode.NoContent);
@@ -89,5 +92,19 @@ namespace BAR.UI.MVC.Controllers.api {
             SubManager.RemoveSubscription(subId);
             return StatusCode(HttpStatusCode.NoContent);
         }
+
+    [HttpPost]
+    [Route("api/User/UpdateAccount")]
+    public async Task<IHttpActionResult> UpdateAccount(UserWrapperModel userWrapperModel)
+    {
+      IdentityUserManager userManager = HttpContext.Current.GetOwinContext().GetUserManager<IdentityUserManager>();
+      User user = await userManager.FindByIdAsync(User.Identity.GetUserId());
+      if (await userManager.CheckPasswordAsync(user, userWrapperModel.SettingsViewModel.Password))
+      {
+        await userManager.ChangePasswordAsync(User.Identity.GetUserId(), userWrapperModel.SettingsViewModel.Password, userWrapperModel.SettingsViewModel.PasswordNew);
+        return StatusCode(HttpStatusCode.NoContent);
+      }
+      return StatusCode(HttpStatusCode.NotAcceptable);
     }
+  }
 }

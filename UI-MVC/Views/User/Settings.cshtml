@@ -1,7 +1,7 @@
 ﻿@using System.Web.Optimization
 @using BAR.BL.Domain.Users
 @using Microsoft.Ajax.Utilities
-@model BAR.UI.MVC.Models.UserSubscribedPeopleDTO
+@model BAR.UI.MVC.Models.UserWrapperModel
 
 <!-- User Settings -->
 <div class="row">
@@ -13,13 +13,13 @@
             </div>
             <div class="x_content">
                 <br/>
-                <form method="post" action="/api/User/@ViewBag.Id" id="userSettingsForm" class="form-horizontal">
+                <form method="post" action="/api/User" id="userSettingsForm" class="form-horizontal">
                     <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">
                             Voornaam <span class="required">*</span>
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                            @Html.TextBoxFor(model => model.User.FirstName, "", new {@class = "form-control col-md-7 col-xs-12"})
+                            @Html.TextBoxFor(model => model.SettingsViewModel.Firstname, "", new {@class = "form-control col-md-7 col-xs-12"})
                         </div>
                     </div>
                     <div class="form-group">
@@ -27,26 +27,26 @@
                             Achternaam <span class="required">*</span>
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                            @Html.TextBoxFor(model => model.User.LastName, "", new {@class = "form-control col-md-7 col-xs-12"})
+                            @Html.TextBoxFor(model => model.SettingsViewModel.Lastname, "", new {@class = "form-control col-md-7 col-xs-12"})
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">Geslacht</label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
                             <div id="gender" class="btn-group" data-toggle="buttons">
-                                @if (Model.User.Gender == Gender.MAN) {
+                                @if (Model.SettingsViewModel.Gender == Gender.MAN) {
                                     <label class="btn btn-default active">
-                                        @Html.RadioButtonFor(model => model.User.Gender, Gender.MAN) Man
+                                        @Html.RadioButtonFor(model => model.SettingsViewModel.Gender, Gender.MAN) Man
                                     </label>
                                     <label class="btn btn-default">
-                                        @Html.RadioButtonFor(model => model.User.Gender, Gender.WOMAN) Vrouw
+                                        @Html.RadioButtonFor(model => model.SettingsViewModel.Gender, Gender.WOMAN) Vrouw
                                     </label>
                                 } else {
                                     <label class="btn btn-default">
-                                        @Html.RadioButtonFor(model => model.User.Gender, Gender.MAN) Man
+                                        @Html.RadioButtonFor(model => model.SettingsViewModel.Gender, Gender.MAN) Man
                                     </label>
                                     <label class="btn btn-default active">
-                                        @Html.RadioButtonFor(model => model.User.Gender, Gender.WOMAN) Vrouw
+                                        @Html.RadioButtonFor(model => model.SettingsViewModel.Gender, Gender.WOMAN) Vrouw
                                     </label>
                                 }
                             </div>
@@ -57,18 +57,18 @@
                             Geboortedatum
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                            @Html.TextBoxFor(model => model.User.DateOfBirth, new {@class = "form-control col-md-7 col-xs-12"})
-                            @Html.ValidationMessageFor(model => model.User.DateOfBirth, "", new {@class = "text-danger"})
+                            @Html.TextBoxFor(model => model.SettingsViewModel.DateOfBirth, new {@class = "form-control col-md-7 col-xs-12"})
+                            @Html.ValidationMessageFor(model => model.SettingsViewModel.DateOfBirth, "", new {@class = "text-danger"})
                         </div>
                     </div>
-                    @Html.HiddenFor(model => model.User.Area.AreaId)
+                    @Html.HiddenFor(model => model.SettingsViewModel.Area.AreaId)
                         <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">
                             Land
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                            @Html.TextBoxFor(model => model.User.Area.Country, new {@class = "form-control col-md-7 col-xs-12"})
-                            @Html.ValidationMessageFor(model => model.User.Area.Country, "", new {@class = "text-danger"})
+                            @Html.TextBoxFor(model => model.SettingsViewModel.Area.Country, new {@class = "form-control col-md-7 col-xs-12"})
+                            @Html.ValidationMessageFor(model => model.SettingsViewModel.Area.Country, "", new {@class = "text-danger"})
                         </div>
                     </div>
                     <div class="form-group">
@@ -93,38 +93,38 @@
             </div>
             <div class="x_content">
                 <br/>
-                <form method="post" action="/api/User/@ViewBag.Id" id="alertSettingsForm" class="form-horizontal">
+                <form method="post" action="/api/User" id="alertSettingsForm" class="form-horizontal">
                     <div class="form-group">
-                        @Html.LabelFor(model => model.User.AlertsViaWebsite,"Alerts ontvangen op deze website", htmlAttributes: new { @class = "control-label col-md-6 col-sm-6 col-xs-12" })
+                        @Html.LabelFor(model => model.SettingsViewModel.AlertsViaWebsite,"Alerts ontvangen op deze website", htmlAttributes: new { @class = "control-label col-md-6 col-sm-6 col-xs-12" })
                         <div class="col-md-3 col-sm-3 col-xs-12">
-                            @Html.DropDownListFor(model => model.User.AlertsViaWebsite, new List<SelectListItem>()
+                            @Html.DropDownListFor(model => model.SettingsViewModel.AlertsViaWebsite, new List<SelectListItem>()
                             {
                                 new SelectListItem() { Text = "Ja", Value = "True" },
                                 new SelectListItem() { Text = "Nee", Value = "False"}
                             }, new { @class="form-control" })
-                            @Html.ValidationMessageFor(model => model.User.AlertsViaWebsite, "", new { @class = "text-danger" })
+                            @Html.ValidationMessageFor(model => model.SettingsViewModel.AlertsViaWebsite, "", new { @class = "text-danger" })
                         </div>
                     </div>
                     <div class="form-group">
-                        @Html.LabelFor(model => model.User.AlertsViaEmail,"Alerts ontvangen per email", htmlAttributes: new { @class = "control-label col-md-6 col-sm-6 col-xs-12" })
+                        @Html.LabelFor(model => model.SettingsViewModel.AlertsViaEmail,"Alerts ontvangen per email", htmlAttributes: new { @class = "control-label col-md-6 col-sm-6 col-xs-12" })
                         <div class="col-md-3 col-sm-3 col-xs-12">
-                            @Html.DropDownListFor(model => model.User.AlertsViaEmail, new List<SelectListItem>()
+                            @Html.DropDownListFor(model => model.SettingsViewModel.AlertsViaEmail, new List<SelectListItem>()
                             {
                                 new SelectListItem() { Text = "Ja", Value = "True" },
                                 new SelectListItem() { Text = "Nee", Value = "False"}
                             }, new { @class="form-control" })
-                            @Html.ValidationMessageFor(model => model.User.AlertsViaEmail, "", new { @class = "text-danger" })
+                            @Html.ValidationMessageFor(model => model.SettingsViewModel.AlertsViaEmail, "", new { @class = "text-danger" })
                         </div>
                     </div>
                     <div class="form-group">
-                        @Html.LabelFor(model => model.User.WeeklyReviewViaEmail,"Weekly review ontvangen per email", htmlAttributes: new { @class = "control-label col-md-6 col-sm-6 col-xs-12" })
+                        @Html.LabelFor(model => model.SettingsViewModel.WeeklyReviewViaEmail,"Weekly review ontvangen per email", htmlAttributes: new { @class = "control-label col-md-6 col-sm-6 col-xs-12" })
                         <div class="col-md-3 col-sm-3 col-xs-12">
-                            @Html.DropDownListFor(model => model.User.WeeklyReviewViaEmail, new List<SelectListItem>()
+                            @Html.DropDownListFor(model => model.SettingsViewModel.WeeklyReviewViaEmail, new List<SelectListItem>()
                             {
                                 new SelectListItem() { Text = "Ja", Value = "True" },
                                 new SelectListItem() { Text = "Nee", Value = "False"}
                             }, new { @class="form-control" })
-                            @Html.ValidationMessageFor(model => model.User.WeeklyReviewViaEmail, "", new { @class = "text-danger" })
+                            @Html.ValidationMessageFor(model => model.SettingsViewModel.WeeklyReviewViaEmail, "", new { @class = "text-danger" })
                         </div>
                     </div>
                     <div class="form-group">
@@ -147,22 +147,23 @@
             </div>
             <div class="x_content">
                 <br/>
-                <form method="post" action="/api/User/@ViewBag.Id" id="accountSettingsForm" class="form-horizontal">
+                <form method="post" action="/api/User/UpdateAccount" id="accountSettingsForm" class="form-horizontal">
                     <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">
-                            E-mailadres <span class="required">*</span>
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="password">
+                           Wachtwoord <span class="required">*</span>
                         </label>
                         <div class="col-md-9 col-sm-9 col-xs-12">
-                            @Html.TextBoxFor(model => model.User.EmailAdress, "", new {type = "email", @class = "form-control col-md-7 col-xs-12"})
+                            @Html.PasswordFor(model => model.SettingsViewModel.Password, new {type = "password", @class = "form-control col-md-7 col-xs-12"})
+                            @Html.ValidationMessageFor(model => model.SettingsViewModel.Password, "", new { @class = "text-danger" })
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">
-                           Nieuw wachtwoord <span class="required">*</span>
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="passwordnew">
+                            Nieuw wachtwoord <span class="required">*</span>
                         </label>
                         <div class="col-md-9 col-sm-9 col-xs-12">
-                            @Html.PasswordFor(model => model.User.PasswordHash, new {type = "password", @class = "form-control col-md-7 col-xs-12"})
-                            @Html.ValidationMessageFor(m => Model.User.PasswordHash, "", new { @class = "text-danger" })
+                            @Html.PasswordFor(model => model.SettingsViewModel.PasswordNew, new { type = "password", @class = "form-control col-md-7 col-xs-12" })
+                            @Html.ValidationMessageFor(model => model.SettingsViewModel.PasswordNew, "", new { @class = "text-danger" })
                         </div>
                     </div>
                     <div class="form-group">
@@ -187,7 +188,7 @@
         </div>
         <div class="x_content">
             <br/>
-            <form method="post" action="/api/User/@ViewBag.Id" id="removeAccountForm" class="form-horizontal">
+            <form method="post" action="/api/User" id="removeAccountForm" class="form-horizontal">
                 <div class="form-group">
                     <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
                         Let op. Bij het verwijderen van uw account worden al uw instellingen, grafieken en widgets verwijderd.

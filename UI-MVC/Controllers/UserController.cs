@@ -90,7 +90,8 @@ namespace BAR.UI.MVC.Controllers
         return RedirectToAction("Index", "User");
       }
       RegisterViewModel registerViewModel = new RegisterViewModel();
-			return View(registerViewModel);
+
+      return View(registerViewModel);
 		}
 
 		//
@@ -123,8 +124,8 @@ namespace BAR.UI.MVC.Controllers
 					//Login
 					await signInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
 
-					return RedirectToAction("Index", "Home");
-				}
+          return RedirectToAction("Index", "User");
+        }
 				AddErrors(result);
 			}
 			return View(model);
@@ -439,18 +440,31 @@ namespace BAR.UI.MVC.Controllers
 		/// </summary>
 		public ActionResult Index()
 		{
-			var id = User.Identity.GetUserId();
-			ViewBag.Id = id;
-			UserSubscribedPeopleDTO model = GetUserSubscribedModel(id);
-			return View("Dashboard","~/Views/Shared/Layouts/_MemberLayout.cshtml", model);
+      UserWrapperModel userWrapperModel = new UserWrapperModel
+      {
+        UserSubscribedPeopleDTO = GetUserSubscribedModel(User.Identity.GetUserId())
+      };
+			return View("Dashboard","~/Views/Shared/Layouts/_MemberLayout.cshtml", userWrapperModel);
 		}
 
-		public ActionResult Settings() {
-			var id = User.Identity.GetUserId();
-			ViewBag.Id = id;
-			UserSubscribedPeopleDTO model = GetUserSubscribedModel(id);
-			return View("Settings","~/Views/Shared/Layouts/_MemberLayout.cshtml", model);
-		}
+    public ActionResult Settings()
+    {
+      IUserManager userManager = new UserManager();
+      User user = userManager.GetUser(User.Identity.GetUserId());
+      SettingsViewModel settingsViewModel = new SettingsViewModel
+      {
+        Firstname = user.FirstName,
+        Lastname = user.LastName,
+        Gender = user.Gender,
+        DateOfBirth = user.DateOfBirth ?? DateTime.Now
+      };
+      UserWrapperModel userWrapperModel = new UserWrapperModel
+      {
+        UserSubscribedPeopleDTO = GetUserSubscribedModel(User.Identity.GetUserId()),
+        SettingsViewModel = settingsViewModel
+      };
+      return View("Settings", "~/Views/Shared/Layouts/_MemberLayout.cshtml", userWrapperModel);
+    }
 		
 	
 		private UserSubscribedPeopleDTO GetUserSubscribedModel(string id) {

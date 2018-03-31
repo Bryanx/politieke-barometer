@@ -1,7 +1,7 @@
 ﻿@using System
 @using System.Web.Optimization
 @using BAR.UI.MVC.Controllers
-@model BAR.UI.MVC.Models.UserSubscribedPeopleDTO
+@model BAR.UI.MVC.Models.UserWrapperModel
 
 <!DOCTYPE html>
 <html lang="en">
@@ -90,7 +90,7 @@
                 <li class="user-profile">
                     <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown"
                        aria-expanded="false">
-                        <img src="../../Content/build/images/user.png" alt=""><span class="userNameNav">@Html.DisplayFor(modelItem => Model.User.FirstName)</span>
+                        <img src="../../Content/build/images/user.png" alt=""><span class="userNameNav">@Html.DisplayFor(modelItem => Model.UserSubscribedPeopleDTO.User.FirstName)</span>
                         <span class=" fa fa-angle-down"></span>
                     </a>
                     <ul class="dropdown-menu pull-right">
