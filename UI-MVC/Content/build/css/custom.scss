@@ -55,14 +55,12 @@ html {
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
-  width: 70px;
-  height: 70px;
+  width: 50px;
+  height: 50px;
   display: inline-block;
-  margin-top: -30px;
-  margin-bottom: -30px;
-  margin-left: -20px;
+  margin-top: -20px;
+  margin-bottom: -20px;
   margin-right: 5px;
-  border: 5px solid #f7f7f7;
 }
 
 .table > {
@@ -136,10 +134,16 @@ MODIFYABLE DASHBOARD
   background-repeat: no-repeat;
   background-size: contain;
   background-position: center center;
-  height: 100px;
+  height: 60px;
   display: block;
-  margin: 5px 10px;
+  margin: 10px 10px;
   border-bottom: 1px solid #a5a9ac;
+}
+
+.small-logo.colored {
+  background-image: url("../images/logo-colored-smaller.png");
+  border: none;
+  height: 50px;
 }
 
 /*
@@ -500,15 +504,20 @@ html, body {
   .container.body .col-md-3.left_col {
     width: 100px;
     padding: 0;
-    z-index: 2;
+    z-index: 10;
     position: fixed;
     height: 100%;
+    top: 0;
     &.menu_fixed {
       position: fixed;
       height: 100%;
     }
     .mCSB_container, .mCustomScrollBox {
       overflow: visible;
+    }
+    &:hover .toggle {
+      display: flex;
+      margin-left: 0px;
     }
   }
   .hidden-small {
@@ -517,7 +526,6 @@ html, body {
   .container.body .right_col {
     padding: 15px 20px;
     margin-left: 100px;
-    margin-top: 70px;
     z-index: 2;
   }
   .navbar.nav_title {
@@ -712,13 +720,10 @@ html, body {
   flex-direction: row;
   justify-content: space-between;
   background-color: #FFF;
-  margin-bottom: 10px;
   width: 100%;
   color: white;
-  z-index: 99999;
-  position: fixed !important;
+  z-index: 5;
   height: 70px;
-  box-shadow: 0 1px 4px 1px rgba(0, 0, 0, 0.05);
   top: 0;
 }
 
@@ -1070,12 +1075,13 @@ a {
 
 a {
   &:hover, &:focus {
-    text-decoration: none;
+    text-decoration: underline;
   }
 }
 
 .navbar {
   margin-bottom: 0;
+  width: 100px;
 }
 
 .navbar-header {
@@ -1095,7 +1101,6 @@ a {
     li {
       display: inline-block;
       float: right;
-      position: static;
     }
   }
   .dropdown-menu li {
@@ -1109,6 +1114,7 @@ a {
 @media (min-width: 480px) {
   .top_nav .navbar-right li {
     position: relative;
+    z-index: 20;
   }
 }
 
@@ -1220,11 +1226,14 @@ a {
 }
 
 .breadcrumb {
+  position: relative;
   background-color: hsla(0, 0%, 94%, 1);
   color: white;
   margin: -15px -20px 0 -20px;
   padding-left: 20px;
   border-radius: 0;
+  box-shadow: inset 0 3px 3px -2px rgba(0, 0, 0, 0.05);
+  z-index: 15;
 }
 
 #alertDropdown {
@@ -1326,22 +1335,43 @@ a {
   }
 }
 
-.toggle {
-  display: flex;
-  margin: 0;
-  padding: 0;
-  width: 100px;
-  a {
-    display: block !important;
-    margin: auto;
-    width: 20px;
-    height: 20px;
-    cursor: pointer;
-    display: inline;
-    i {
-      font-size: 22px;
+.hover-nav {
+    position: fixed;
+    height: 100%;
+    left: 100px;
+    top: 0px;
+    width: 50px;
+    display: flex;
+    align-items:center;
+    &:hover .toggle {
+      display: flex;
+      margin-left: 0px;
     }
+}
+
+.toggle {
+  display: none;
+  align-items: center;
+  flex-direction: row;
+  margin: 0 0 0 -25px;
+  padding: 0;
+  width: 25px;
+  height: 50px;
+  background-color: var(--secondary-color);
+  cursor: pointer;
+  border-radius: 0 5px 5px 0;
+  transition: 1s all;
+  &:hover {
+    background: #26313c;
+    margin: 0;
   }
+    i {
+      color: white;
+      margin: auto;
+      display: flex;
+      align-self: center;
+      font-size: 12px;
+    }
 }
 
 .nav.child_menu > li > a {
@@ -2135,6 +2165,7 @@ ul.msg_list li.noAlertsAvailable {
   right: 0;
   left: auto;
   width: 220px;
+  z-index: 20;
 }
 
 .loadingAlerts {

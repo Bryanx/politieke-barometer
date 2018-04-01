@@ -51,20 +51,26 @@
                     @Html.Partial("Partials/NavBarLinks")
                 </ul>
             </div>
-
         </div>
         <!-- /sidebar menu -->
+    </div>
+    <div class="hover-nav">
+        <a id="menu_toggle">
+            <div class="nav toggle">
+                <i class="fa fa-arrow-left"></i>
+            </div>
+        </a>
     </div>
 </div>
 
 <!-- top navigation -->
 <div class="top_nav">
     <div class="nav_menu">
-            <div class="nav toggle">
-                <a id="menu_toggle">
-                    <i class="fa fa-bars"></i>
-                </a>
-            </div>
+        <div class="navbar" style="border: 0;">
+            <a href='@Url.Action("Index", "Home")'>
+                <i class="small-logo colored"></i>
+            </a>
+        </div>
 
         <!-- login -->
         @if (Model.User != null) {
@@ -72,8 +78,8 @@
         } else {
             @Html.Partial("Partials/LoginModal", Model)
         }
-            <!-- search -->
-            @Html.Partial("Partials/SearchBar")
+        <!-- search -->
+        @Html.Partial("Partials/SearchBar")
     </div>
 </div>
 <!-- /top navigation -->

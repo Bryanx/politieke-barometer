@@ -10,7 +10,7 @@ using Microsoft.AspNet.Identity;
 namespace BAR.UI.MVC.Controllers {
     public class OrganisationController : Controller {
         
-        private const string INDEX_PAGE_TITLE = "Partijen-overzicht";
+        private const string INDEX_PAGE_TITLE = "Partij-overzicht";
         IItemManager itemMgr = new ItemManager();
         
         [AllowAnonymous]
