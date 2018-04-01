@@ -8,20 +8,16 @@ using BAR.BL.Domain.Users;
 using BAR.BL.Managers;
 using BAR.UI.MVC.Models;
 using Microsoft.AspNet.Identity;
-using MvcBreadCrumbs;
 using WebGrease.Css.Extensions;
 
 namespace BAR.UI.MVC.Controllers {
-    [BreadCrumb]
     public class PersonController : Controller {
         
         private const string INDEX_PAGE_TITLE = "Politici-overzicht";
         IItemManager itemMgr = new ItemManager();
         
         [AllowAnonymous]
-        [BreadCrumb(Clear = true, Label = INDEX_PAGE_TITLE)]
         public ActionResult Index() {
-            BreadCrumb.Add(Url.Action("Index", "Home"), "Home");
             ISubscriptionManager subMgr = new SubscriptionManager();
             IEnumerable<Subscription> subs = subMgr.GetSubscriptionsWithItemsForUser(User.Identity.GetUserId());
             List<ItemDTO> personen = new List<ItemDTO>();
@@ -57,10 +53,8 @@ namespace BAR.UI.MVC.Controllers {
         }
 
         // GET: Default/Details/5 (Specific person page)
-        [BreadCrumb]
         public ActionResult Details(int id) {
             Item item = itemMgr.GetItem(id);
-            BreadCrumb.SetLabel(item.Name);
             List<ItemDTO> persoon = new List<ItemDTO>();
             persoon.Add(new ItemDTO() {
                 ItemId = item.ItemId,

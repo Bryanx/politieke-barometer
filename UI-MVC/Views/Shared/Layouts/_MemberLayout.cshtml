@@ -2,7 +2,7 @@
 @using System.Activities.Statements
 @using System.Web.Optimization
 @using BAR.UI.MVC.Controllers
-@using MvcBreadCrumbs
+@using MvcSiteMapProvider.Web.Html
 @model BAR.UI.MVC.Models.BaseViewModel
 
 <!DOCTYPE html>
@@ -79,10 +79,10 @@
 <!-- /top navigation -->
 
 <!-- page content -->
-    <div class="right_col" role="main">
-        @Html.Raw(BreadCrumb.Display())
-        @RenderBody()
-    </div>
+<div class="right_col" role="main">
+    @Html.MvcSiteMap().SiteMapPath("BootstrapSiteMapPathHelperModel")
+    @RenderBody()
+</div>
 <!-- /page content -->
 
 <!-- footer content -->

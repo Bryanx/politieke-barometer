@@ -870,10 +870,8 @@ a:hover, a:focus {
 .breadcrumb {
   background-color: #f0f0f0;
   color: white;
-  margin-top: -15px;
-  margin-left: -20px;
-  margin-right: -21px;
-  margin-bottom: 0;
+  margin: -15px -21px 0 -20px;
+  padding-left: 20px;
   border-radius: 0; }
 
 #alertDropdown {

@@ -6,19 +6,15 @@ using BAR.BL.Domain.Users;
 using BAR.BL.Managers;
 using BAR.UI.MVC.Models;
 using Microsoft.AspNet.Identity;
-using MvcBreadCrumbs;
 
 namespace BAR.UI.MVC.Controllers {
-    [BreadCrumb]
     public class OrganisationController : Controller {
         
         private const string INDEX_PAGE_TITLE = "Partijen-overzicht";
         IItemManager itemMgr = new ItemManager();
         
-        [BreadCrumb(Clear = true, Label = INDEX_PAGE_TITLE)]
         [AllowAnonymous]
         public ActionResult Index() {
-            BreadCrumb.Add(Url.Action("Index", "Home"), "Home");
             ISubscriptionManager subMgr = new SubscriptionManager();
             IEnumerable<Subscription> subs = subMgr.GetSubscriptionsWithItemsForUser(User.Identity.GetUserId());
             List<ItemDTO> personen = new List<ItemDTO>();
