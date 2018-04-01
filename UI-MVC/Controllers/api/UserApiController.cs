@@ -51,5 +51,14 @@ namespace BAR.UI.MVC.Controllers.api {
 
             return StatusCode(HttpStatusCode.NotAcceptable);
         }
+
+    [HttpPost]
+    [Route("api/User/UpdateProfile")]
+    public IHttpActionResult UpdateProfile(SettingsViewModel model)
+    {
+      UserManager userManager = new UserManager();
+      User user = userManager.ChangeUserBasicInfo(User.Identity.GetUserId(), model.Firstname, model.Lastname, model.Gender, model.DateOfBirth);
+      return StatusCode(HttpStatusCode.NoContent);
     }
+  }
 }

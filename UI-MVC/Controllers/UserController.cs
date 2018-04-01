@@ -432,21 +432,21 @@ namespace BAR.UI.MVC.Controllers
     }
 
     #endregion
-		
-	private const string INDEX_PAGE_TITLE = "Dashboard";
-	public ISubscriptionManager subManager = new SubscriptionManager();
+
 		/// <summary>
 		/// Dashboard of the user
 		/// </summary>
 		public ActionResult Index() 
 		{
-			ItemViewModel itemViewModel = GetPersonViewModel(User.Identity.GetUserId());
-			itemViewModel.PageTitle = INDEX_PAGE_TITLE;
+      const string INDEX_PAGE_TITLE = "Dashboard";
+      ItemViewModel itemViewModel = GetPersonViewModel(User.Identity.GetUserId());     
+      itemViewModel.PageTitle = INDEX_PAGE_TITLE;
 			return View("Dashboard","~/Views/Shared/Layouts/_MemberLayout.cshtml", itemViewModel);
 		}
 
     public ActionResult Settings()
     {
+      const string SETTINGS_PAGE_TITLE = "Instellingen";
       IUserManager userManager = new UserManager();
       User user = userManager.GetUser(User.Identity.GetUserId());
       SettingsViewModel settingsViewModel = new SettingsViewModel
@@ -457,12 +457,14 @@ namespace BAR.UI.MVC.Controllers
         Gender = user.Gender,
         DateOfBirth = user.DateOfBirth ?? DateTime.Now
       };
+      settingsViewModel.PageTitle = SETTINGS_PAGE_TITLE;
       return View("Settings", "~/Views/Shared/Layouts/_MemberLayout.cshtml", settingsViewModel);
     }
 		
 	
 		private ItemViewModel GetPersonViewModel(string id) {
-			IUserManager userManager = new UserManager();
+      ISubscriptionManager subManager = new SubscriptionManager();
+      IUserManager userManager = new UserManager();
 			User user = userManager.GetUser(id);
 			//TODO: These next statements should be in a method in BL
 			IEnumerable<Subscription> subs = subManager.GetSubscriptionsWithItemsForUser(id);
