@@ -1,7 +1,16 @@
 ﻿@using BAR.BL.Domain.Items
 @model BAR.UI.MVC.Models.ItemViewModel
 
-<table id="datatable-responsive" class="table projects table-hover" cellspacing="0" width="100%">
+<table id="datatable-responsive" class="table" cellspacing="10px" width="100%">
+    
+    <colgroup>
+        <col style="width:35%">
+        <col style="width:15%">
+        <col style="width:12%">
+        <col style="width:12%">
+        <col style="width:12%">
+        <col style="width:75px">
+    </colgroup> 
     <thead>
     <tr>
         <th>
@@ -17,19 +26,20 @@
             Negatief
         </th>
         <th title="Berekend op basis van het aantal tweets">
-            Trending %
+            Trending
         </th>
-    @if (User.Identity.IsAuthenticated) {
-        <th>
-        </th>
-    }
+        @if (User.Identity.IsAuthenticated) {
+            <th>
+            </th>
+        }
     </tr>
     </thead>
     <tbody>
     @foreach (var item in Model.People) {
         <tr class="subscription">
             <td>
-                <a href='@Url.Action("Details", "Person", new {id = item.ItemId})'><i class="fa fa-user"></i> @item.Name</a>
+                <div class="img-circle person-image"></div>
+                <a href='@Url.Action("Details", "Person", new {id = item.ItemId})'> @item.Name</a>
             </td>
             <td>
                 @item.NumberOfMentions
@@ -45,15 +55,15 @@
             <td>
                 @Html.DisplayFor(modelItem => item.TrendingPercentage) %
             </td>
-        @if (User.Identity.IsAuthenticated) {
-            <td>
-                @if (item.Subscribed == false) {
-                    <a class="btn btn-success btn-xs" onclick="personSubscribe(@item.ItemId)" title="Deze persoon volgen">Abonneer</a>
-                } else {
-                    <a class="btn btn-danger btn-xs" onclick="personUnsubscribe(@item.ItemId)" title="Uitschrijven"><i class="fa fa-trash-o"></i></a>
-                }
-            </td>
-        }
+            @if (User.Identity.IsAuthenticated) {
+                <td>
+                    @if (item.Subscribed == false) {
+                        <a class="btn btn-success btn-xs" onclick="personSubscribe(@item.ItemId)" title="Deze persoon volgen">Abonneer</a>
+                    } else {
+                        <a class="btn btn-danger btn-xs" onclick="personUnsubscribe(@item.ItemId)" title="Uitschrijven">Uitschrijven</a>
+                    }
+                </td>
+            }
         </tr>
     }
     </tbody>

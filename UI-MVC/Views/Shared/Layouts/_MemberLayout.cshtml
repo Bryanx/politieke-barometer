@@ -226,6 +226,10 @@
                 url: '/api/User/GetAlerts',
                 dataType: 'json',
                 beforeSend: () => $("#alertMenu").append(res.alertLoader),
+                error: function(xhr, status, error) {
+                    var err = eval("(" + xhr.responseText + ")");
+                    alert(err.Message);
+                }
             })
             .done(data => {
                 //hide loading gif
@@ -244,9 +248,7 @@
                         "Abonneer jezelf op personen, partijen of thema's</br>" +
                         "om te zien wanneer ze trending zijn.</li>");
                 }
-            }).fail(() => {
-            //TODO: if request fails proper error handling
-        });
+            });
     }
 
     function submitForm($this, event, message=null) {
