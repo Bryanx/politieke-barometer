@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace BAR.UI.MVC.Models
 {
@@ -188,7 +189,8 @@ namespace BAR.UI.MVC.Models
     public DateTime DateOfBirth { get; set; }
 
     [Display(Name = "Area")]
-    public Area Area { get; set; }
+    public int SelectedAreaId { get; set; }
+    public IEnumerable<SelectListItem> Areas { get; set; }
 
     [Required]
     [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]

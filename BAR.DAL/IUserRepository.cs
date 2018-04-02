@@ -17,9 +17,11 @@ namespace BAR.DAL
 		IEnumerable<User> ReadAllUsersForArea(int areaId);
 		IEnumerable<Activity> ReadAllActivities();
 		IEnumerable<Activity> ReadActivitiesForUser(string userId);
+    IEnumerable<Area> ReadAreas();
+    Area ReadArea(int areaId);
 
-		//Create
-		int CreateUser(User user);
+    //Create
+    int CreateUser(User user);
 
 		//update
 		int UpdateUser(User user);

@@ -434,6 +434,9 @@
     <None Include="Scripts\vue-resource.min.js" />
     <None Include="Scripts\vue.js" />
     <None Include="Scripts\vue.min.js" />
+    <Content Include="zipcode-belgium.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BAR.BL.Model\Domain.csproj">

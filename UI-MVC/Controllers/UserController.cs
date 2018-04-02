@@ -449,15 +449,26 @@ namespace BAR.UI.MVC.Controllers
       const string SETTINGS_PAGE_TITLE = "Instellingen";
       IUserManager userManager = new UserManager();
       User user = userManager.GetUser(User.Identity.GetUserId());
+      var areas = userManager.GetAreas().Select(x => new SelectListItem
+      {
+        Value = x.AreaId.ToString(),
+        Text = x.Residence,
+      }).OrderBy(x => x.Text);
+
       SettingsViewModel settingsViewModel = new SettingsViewModel
       {
-	    User = user,
+        User = user,
         Firstname = user.FirstName,
         Lastname = user.LastName,
         Gender = user.Gender,
-        DateOfBirth = user.DateOfBirth ?? DateTime.Now
+        DateOfBirth = user.DateOfBirth ?? DateTime.Now,
+        Areas = areas,
+        AlertsViaWebsite = user.AlertsViaWebsite,
+        AlertsViaEmail = user.AlertsViaEmail,
+        WeeklyReviewViaEmail = user.WeeklyReviewViaEmail
       };
       settingsViewModel.PageTitle = SETTINGS_PAGE_TITLE;
+
       return View("Settings", "~/Views/Shared/Layouts/_MemberLayout.cshtml", settingsViewModel);
     }
 		
