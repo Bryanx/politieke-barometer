@@ -144,6 +144,9 @@ MODIFYABLE DASHBOARD
   background-image: url("../images/logo-colored-smaller.png");
   border: none;
   height: 50px;
+  position: relative;
+  margin-right: 0px;
+  z-index: 9;
 }
 
 /*
@@ -175,6 +178,7 @@ Search
 
 div.nav_menu .searchbar .search-field, form.navbar-form .input-group {
   border: 1px solid transparent;
+  z-index: auto;
 }
 
 .search-focus {
@@ -778,9 +782,6 @@ body .container.body .right_col {
       padding-right: 0;
     }
   }
-  .right_col {
-    padding: 10px !important;
-  }
 }
 
 @media (max-width: 1200px) {
@@ -1337,9 +1338,9 @@ a {
 
 .hover-nav {
     position: fixed;
-    height: 100%;
     left: 100px;
-    top: 0px;
+    top: 50px;
+    bottom: 50px;
     width: 50px;
     display: flex;
     align-items:center;
@@ -1360,7 +1361,7 @@ a {
   background-color: var(--secondary-color);
   cursor: pointer;
   border-radius: 0 5px 5px 0;
-  transition: 1s all;
+  transition: margin 1s;
   &:hover {
     background: #26313c;
     margin: 0;
@@ -1479,6 +1480,7 @@ footer {
 article.media {
   width: 100%;
 }
+
 
 * {
   box-sizing: border-box;
