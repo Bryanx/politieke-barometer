@@ -19,104 +19,82 @@
 
     <!-- Custom Theme Style -->
     @Styles.Render("~/Content/custom")
-    
+
     <!-- Font -->
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
 </head>
 
 <body class="nav-sm">
 <div class="container body">
-<div class="main_container">
-<div class="col-md-3 left_col">
-    <div class="left_col scroll-view">
-        <div class="navbar" style="border: 0;">
-            <a href='@Url.Action("Index","Home")'>
-                <i class="small-logo"></i>
-            </a>
-        </div>
+    <div class="main_container">
 
-        <div class="clearfix"></div>
 
-        <!-- menu profile quick info -->
-        <div class="profile clearfix">
-            <div class="profile_pic">
-                <img src="../../Content/build/images/img.jpg" alt="..." class="img-circle profile_img">
-            </div>
-            <div class="profile_info">
-                <span>Welcome,</span>
-                <h2>John Doe</h2>
+        <!-- top navigation -->
+        <div class="top_nav">
+            <div class="nav_menu">
+                <div class="navbar" style="border: 0;">
+                    <a href='@Url.Action("Index", "Home")'>
+                        <i class="small-logo colored"></i>
+                    </a>
+                </div>
+
+                @Html.Partial("Partials/LoginModal")
+                <!-- search -->
+                @Html.Partial("Partials/SearchBar")
             </div>
         </div>
-        <!-- /menu profile quick info -->
+        <!-- /top navigation -->
 
-        <br/>
+        <!-- page content -->
+        <!-- header -->
+        <div class="right_col" role="main">
+            @RenderBody()
+        </div>
+        <!-- /page content -->
 
-        <!-- sidebar menu -->
-        <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
-            <div class="menu_section">
-                <ul class="nav side-menu">
-                    @Html.Partial("Partials/NavBarLinks")
-                </ul>
+        <!-- navbar left -->
+        <div class="col-md-3 left_col">
+            <div class="left_col scroll-view">
+                <div class="navbar" style="border: 0;">
+                    <a href='@Url.Action("Index", "Home")'>
+                        <i class="small-logo"></i>
+                    </a>
+                </div>
+                <div class="clearfix"></div>
+                <br/>
+                <!-- sidebar menu -->
+                <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
+                    <div class="menu_section">
+                        <ul class="nav side-menu">
+                            @Html.Partial("Partials/NavBarLinks")
+                        </ul>
+                    </div>
+                </div>
+                <!-- /sidebar menu -->
             </div>
-
+            <div class="hover-nav">
+                <a id="menu_toggle">
+                    <div class="nav toggle">
+                        <i class="fa fa-arrow-left"></i>
+                    </div>
+                </a>
+            </div>
         </div>
-        <!-- /sidebar menu -->
+        <!-- /navbar left -->
 
-        <!-- /menu footer buttons -->
-        <div class="sidebar-footer hidden-small">
-            <a data-toggle="tooltip" data-placement="top" title="Settings">
-                <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
-            </a>
-            <a data-toggle="tooltip" data-placement="top" title="FullScreen">
-                <span class="glyphicon glyphicon-fullscreen" aria-hidden="true"></span>
-            </a>
-            <a data-toggle="tooltip" data-placement="top" title="Lock">
-                <span class="glyphicon glyphicon-eye-close" aria-hidden="true"></span>
-            </a>
-            <a data-toggle="tooltip" data-placement="top" title="Logout" href="login.html">
-                <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
-            </a>
-        </div>
-        <!-- /menu footer buttons -->
+        <!-- footer content -->
+        <footer>
+            <div class="pull-right">
+                &copy; @DateTime.Now.Year - Barometer
+            </div>
+            <div class="clearfix"></div>
+        </footer>
+        <!-- /footer content -->
     </div>
-</div>
-
-<!-- top navigation -->
-<div class="top_nav">
-    <div class="nav_menu">
-        <div class="navbar" style="border: 0;">
-            <a href='@Url.Action("Index", "Home")'>
-                <i class="small-logo colored"></i>
-            </a>
-        </div>
-
-        @Html.Partial("Partials/LoginModal")
-        <!-- search -->
-        @Html.Partial("Partials/SearchBar")
-    </div>
-</div>
-<!-- /top navigation -->
-
-<!-- page content -->
-<!-- header -->
-<div class="right_col" role="main">
-    @RenderBody()
-</div>
-<!-- /page content -->
-
-<!-- footer content -->
-<footer>
-    <div class="pull-right">
-        &copy; @DateTime.Now.Year - Barometer
-    </div>
-    <div class="clearfix"></div>
-</footer>
-<!-- /footer content -->
-</div>
 </div>
 
 <!-- Scripts -->
-@Scripts.Render("~/bundles/jquery","~/bundles/bootstrap","~/bundles/flot","~/bundles/map","~/bundles/dates")
+@Scripts.Render("~/bundles/jquery", "~/bundles/bootstrap", "~/bundles/flot", "~/bundles/map", "~/bundles/dates")
 
 @if (IsSectionDefined("CustomJS")) {
     @RenderSection("CustomJS")

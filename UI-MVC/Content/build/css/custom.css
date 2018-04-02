@@ -111,8 +111,7 @@ MODIFYABLE DASHBOARD
   border: none;
   height: 50px;
   position: relative;
-  margin-right: 0px;
-  z-index: 9; }
+  margin-right: 0px; }
 
 /*
 Search
@@ -186,7 +185,7 @@ div.nav_menu .searchbar .search-field, form.navbar-form .input-group {
 Login
  */
 .modal-lg {
-  max-width: 500px;
+  max-width: 600px;
   margin: 30px auto; }
 
 .login-input {
@@ -385,7 +384,6 @@ html, body {
 .nav-sm .container.body .col-md-3.left_col {
   width: 100px;
   padding: 0;
-  z-index: 10;
   position: fixed;
   height: 100%;
   top: 0; }
@@ -401,8 +399,7 @@ html, body {
   visibility: hidden; }
 .nav-sm .container.body .right_col {
   padding: 15px 20px;
-  margin-left: 100px;
-  z-index: 2; }
+  margin-left: 100px; }
 .nav-sm .navbar.nav_title {
   width: 100px; }
   .nav-sm .navbar.nav_title a span {
@@ -420,8 +417,7 @@ html, body {
 
 .nav-sm .main_container .top_nav {
   display: block;
-  margin-left: 0px;
-  z-index: 99999; }
+  margin-left: 0px; }
 .nav-sm .nav.side-menu li a {
   text-align: center !important;
   font-weight: 400;
@@ -832,16 +828,6 @@ a:hover, a:focus {
   .top_nav .navbar-right li {
     position: relative;
     z-index: 20; } }
-/*
-.top_nav .dropdown-menu li i {
-    width: 100%;
-    padding: 12px 20px
-}*/
-.navbar-static-top {
-  position: fixed;
-  top: 0;
-  width: 100%; }
-
 .sidebar-header {
   border-bottom: 0;
   margin-top: 46px; }
@@ -914,8 +900,10 @@ a:hover, a:focus {
   margin: -15px -20px 0 -20px;
   padding-left: 20px;
   border-radius: 0;
-  box-shadow: inset 0 3px 3px -2px rgba(0, 0, 0, 0.05);
-  z-index: 15; }
+  box-shadow: inset 0 3px 3px -2px rgba(0, 0, 0, 0.05); }
+  .breadcrumb > li > a {
+    position: relative;
+    z-index: 15; }
 
 #alertDropdown {
   padding: 17px 17px 16px; }

@@ -146,7 +146,6 @@ MODIFYABLE DASHBOARD
   height: 50px;
   position: relative;
   margin-right: 0px;
-  z-index: 9;
 }
 
 /*
@@ -241,7 +240,7 @@ Login
  */
 
 .modal-lg {
-  max-width: 500px;
+  max-width: 600px;
   margin: 30px auto;
 }
 
@@ -508,7 +507,6 @@ html, body {
   .container.body .col-md-3.left_col {
     width: 100px;
     padding: 0;
-    z-index: 10;
     position: fixed;
     height: 100%;
     top: 0;
@@ -530,7 +528,6 @@ html, body {
   .container.body .right_col {
     padding: 15px 20px;
     margin-left: 100px;
-    z-index: 2;
   }
   .navbar.nav_title {
     width: 100px;
@@ -561,7 +558,6 @@ html, body {
   .main_container .top_nav {
     display: block;
     margin-left: 0px;
-    z-index: 99999;
   }
   .nav {
     &.side-menu li a {
@@ -1119,18 +1115,6 @@ a {
   }
 }
 
-/*
-.top_nav .dropdown-menu li i {
-    width: 100%;
-    padding: 12px 20px
-}*/
-
-.navbar-static-top {
-  position: fixed;
-  top: 0;
-  width: 100%;
-}
-
 .sidebar-header {
   border-bottom: 0;
   margin-top: 46px;
@@ -1234,7 +1218,10 @@ a {
   padding-left: 20px;
   border-radius: 0;
   box-shadow: inset 0 3px 3px -2px rgba(0, 0, 0, 0.05);
-  z-index: 15;
+  > li > a {
+    position: relative;
+    z-index: 15;
+  }
 }
 
 #alertDropdown {
