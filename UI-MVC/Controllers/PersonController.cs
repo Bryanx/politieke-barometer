@@ -54,8 +54,8 @@ namespace BAR.UI.MVC.Controllers {
 
         // GET: Default/Details/5 (Specific person page)
         public ActionResult Details(int id) {
-            List<ItemDTO> persoon = new List<ItemDTO>();
             Item item = itemMgr.GetItem(id);
+            List<ItemDTO> persoon = new List<ItemDTO>();
             persoon.Add(new ItemDTO() {
                 ItemId = item.ItemId,
                 Name = item.Name,

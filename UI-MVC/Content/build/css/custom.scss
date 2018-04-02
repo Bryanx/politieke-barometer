@@ -45,13 +45,38 @@ html {
 }
 
 #datatable-responsive {
-  font-size: 16px !important;
+  font-size: 18px !important;
+  border-collapse: separate;
+  border-spacing: 0 10px;
+}
+
+.person-image {
+  background-image: url("../images/user.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  width: 50px;
+  height: 50px;
+  display: inline-block;
+  margin-top: -20px;
+  margin-bottom: -20px;
+  margin-right: 5px;
 }
 
 .table > {
+  tbody > tr {
+    background: white;
+  }
   tbody > tr > {
     td, th {
-      padding: 12px !important;
+      border: none !important;
+      padding: 18px !important;
+    }
+    td:first-child {
+      border-radius: 5px 0 0 5px;
+    }
+    td:last-child {
+      border-radius: 0 5px 5px 0;
     }
   }
   tfoot > tr > {
@@ -61,9 +86,25 @@ html {
   }
   thead > tr > {
     td, th {
+      background: #ffffff;
+      border: none !important;
+      font-size: 15px;
       padding: 12px !important;
     }
+    th:first-child {
+      border-radius: 5px 0 0 5px;
+    }
+    th:last-child {
+      border-radius: 0 5px 5px 0;
+      &::after {
+        visibility: hidden;
+      }
+    }
+    th::after {
+    font-size: 12px;
+    padding-bottom: 4px;
   }
+}
 }
 
 .no-scrollbar {
@@ -93,10 +134,18 @@ MODIFYABLE DASHBOARD
   background-repeat: no-repeat;
   background-size: contain;
   background-position: center center;
-  height: 100px;
+  height: 60px;
   display: block;
-  margin: 5px 10px;
+  margin: 10px 10px;
   border-bottom: 1px solid #a5a9ac;
+}
+
+.small-logo.colored {
+  background-image: url("../images/logo-colored-smaller.png");
+  border: none;
+  height: 50px;
+  position: relative;
+  margin-right: 0px;
 }
 
 /*
@@ -128,6 +177,7 @@ Search
 
 div.nav_menu .searchbar .search-field, form.navbar-form .input-group {
   border: 1px solid transparent;
+  z-index: auto;
 }
 
 .search-focus {
@@ -190,7 +240,7 @@ Login
  */
 
 .modal-lg {
-  max-width: 500px;
+  max-width: 600px;
   margin: 30px auto;
 }
 
@@ -457,15 +507,19 @@ html, body {
   .container.body .col-md-3.left_col {
     width: 100px;
     padding: 0;
-    z-index: 2;
     position: fixed;
     height: 100%;
+    top: 0;
     &.menu_fixed {
       position: fixed;
       height: 100%;
     }
     .mCSB_container, .mCustomScrollBox {
       overflow: visible;
+    }
+    &:hover .toggle {
+      display: flex;
+      margin-left: 0px;
     }
   }
   .hidden-small {
@@ -474,8 +528,6 @@ html, body {
   .container.body .right_col {
     padding: 15px 20px;
     margin-left: 100px;
-    margin-top: 70px;
-    z-index: 2;
   }
   .navbar.nav_title {
     width: 100px;
@@ -506,7 +558,6 @@ html, body {
   .main_container .top_nav {
     display: block;
     margin-left: 0px;
-    z-index: 99999;
   }
   .nav {
     &.side-menu li a {
@@ -669,13 +720,10 @@ html, body {
   flex-direction: row;
   justify-content: space-between;
   background-color: #FFF;
-  margin-bottom: 10px;
   width: 100%;
   color: white;
-  z-index: 99999;
-  position: fixed !important;
+  z-index: 5;
   height: 70px;
-  box-shadow: 0 1px 4px 1px rgba(0, 0, 0, 0.05);
   top: 0;
 }
 
@@ -729,9 +777,6 @@ body .container.body .right_col {
       width: 100%;
       padding-right: 0;
     }
-  }
-  .right_col {
-    padding: 10px !important;
   }
 }
 
@@ -1027,12 +1072,13 @@ a {
 
 a {
   &:hover, &:focus {
-    text-decoration: none;
+    text-decoration: underline;
   }
 }
 
 .navbar {
   margin-bottom: 0;
+  width: 100px;
 }
 
 .navbar-header {
@@ -1052,7 +1098,6 @@ a {
     li {
       display: inline-block;
       float: right;
-      position: static;
     }
   }
   .dropdown-menu li {
@@ -1066,19 +1111,8 @@ a {
 @media (min-width: 480px) {
   .top_nav .navbar-right li {
     position: relative;
+    z-index: 20;
   }
-}
-
-/*
-.top_nav .dropdown-menu li i {
-    width: 100%;
-    padding: 12px 20px
-}*/
-
-.navbar-static-top {
-  position: fixed;
-  top: 0;
-  width: 100%;
 }
 
 .sidebar-header {
@@ -1173,6 +1207,20 @@ a {
     position: relative;
     display: block;
     padding: 17px 17px 18px;
+  }
+}
+
+.breadcrumb {
+  position: relative;
+  background-color: hsla(0, 0%, 94%, 1);
+  color: white;
+  margin: -15px -20px 0 -20px;
+  padding-left: 20px;
+  border-radius: 0;
+  box-shadow: inset 0 3px 3px -2px rgba(0, 0, 0, 0.05);
+  > li > a {
+    position: relative;
+    z-index: 15;
   }
 }
 
@@ -1275,22 +1323,43 @@ a {
   }
 }
 
-.toggle {
-  display: flex;
-  margin: 0;
-  padding: 0;
-  width: 100px;
-  a {
-    display: block !important;
-    margin: auto;
-    width: 20px;
-    height: 20px;
-    cursor: pointer;
-    display: inline;
-    i {
-      font-size: 22px;
+.hover-nav {
+    position: fixed;
+    left: 100px;
+    top: 50px;
+    bottom: 50px;
+    width: 50px;
+    display: flex;
+    align-items:center;
+    &:hover .toggle {
+      display: flex;
+      margin-left: 0px;
     }
+}
+
+.toggle {
+  display: none;
+  align-items: center;
+  flex-direction: row;
+  margin: 0 0 0 -25px;
+  padding: 0;
+  width: 25px;
+  height: 50px;
+  background-color: var(--secondary-color);
+  cursor: pointer;
+  border-radius: 0 5px 5px 0;
+  transition: margin 1s;
+  &:hover {
+    background: #26313c;
+    margin: 0;
   }
+    i {
+      color: white;
+      margin: auto;
+      display: flex;
+      align-self: center;
+      font-size: 12px;
+    }
 }
 
 .nav.child_menu > li > a {
@@ -1398,6 +1467,7 @@ footer {
 article.media {
   width: 100%;
 }
+
 
 * {
   box-sizing: border-box;
@@ -2084,6 +2154,7 @@ ul.msg_list li.noAlertsAvailable {
   right: 0;
   left: auto;
   width: 220px;
+  z-index: 20;
 }
 
 .loadingAlerts {
@@ -2648,11 +2719,6 @@ a.star {
   width: 100%;
 }
 
-button, .buttons, .btn, .modal-footer .btn + .btn {
-  margin-bottom: 5px;
-  margin-right: 5px;
-}
-
 .btn-group-vertical .btn, .btn-group .btn {
   margin-bottom: 0;
   margin-right: 0;
@@ -2816,7 +2882,7 @@ span.section {
 
 .form-control {
   width: 100%;
-  height: 40px;
+  height: 40px !important;
 }
 
 .form-horizontal .control-label {
@@ -4687,7 +4753,7 @@ fieldset {
       display: block;
       position: relative;
       -moz-opacity: 1;
-      filter: alpha(opacity = 100);
+      filter: alpha(opacity=100);
       opacity: 1;
       color: #666;
     }
@@ -4763,7 +4829,7 @@ fieldset {
     cursor: not-allowed;
     pointer-events: none;
     opacity: .65;
-    filter: alpha(opacity = 65);
+    filter: alpha(opacity=65);
     box-shadow: none;
   }
   a {
@@ -4795,7 +4861,7 @@ fieldset {
         display: block;
         position: relative;
         -moz-opacity: 1;
-        filter: alpha(opacity = 100);
+        filter: alpha(opacity=100);
         opacity: 1;
         color: #666;
       }
@@ -4803,7 +4869,7 @@ fieldset {
         display: block;
         position: relative;
         -moz-opacity: 1;
-        filter: alpha(opacity = 100);
+        filter: alpha(opacity=100);
         opacity: 1;
         color: #666;
       }
@@ -5076,55 +5142,6 @@ ul.notifications {
     float: none;
   }
 }
-
-/* CSS3 Checkbox */
-/*
-.checkbox-input { display:block;position:relative; }
-.checkbox-input:before { display:block;content:"";position:absolute;top:2px;left:0;height:20px;width:20px;background:red;border-radius:3px; }
-
-
- #input + label:after {
-    content: 'click my input';
-    color: blue;
-  }
-
-  #input:focus + label:after {
-    content: 'not valid yet';
-    color: blue;
-  }
-
-  #input:valid + label:after {
-    content: 'looks good';
-    color: red;
-  }
-
-/* CSS3 Checkbox - end */
-/*
-
-/*
-.checkbox 																										{ display: block;position:relative;cursor:pointer; }
-.checkbox input 																								{ position:absolute;z-index:-1;opacity:0;left:0;top:0; }
-.checkbox div 																									{ position:absolute;top:2px;left:0;height:20px;width:20px;background:#e6e6e6;border-radius:3px; }
-.checkbox input:checked ~ div 																			{ background: #1ABC9C; }
-.checkbox:hover input:not([disabled]):checked ~ div,
-.checkbox input:checked:focus ~ div 																	{ background: #1ABC9C; }
-.checkbox input:disabled ~ div 																			{ background: #1ABC9C;opacity: 0.6;pointer-events: none; }
-.checkbox div:after 																							{ content: '';position: absolute;display: none; }
-.checkbox input:checked ~ div:after 																	{ display: block; }
-.checkbox-wp div:after 																					{ left: 7px;top: 3px;width: 7px;height: 11px;border: solid white;border-width: 0 2px 2px 0;transform: rotate(40deg); }
-.checkbox-wp input:disabled ~ div:after 																{ border-color: #F2F2F2; }
-
-
-.checkbox-radio div 																							{ border-radius: 50%; }
-.checkbox-radio div:after 																					{ left: 7px;top: 7px;height: 6px;width: 6px;border-radius: 50%;background: white; }
-.checkbox-radio input:disabled ~ div:after 															{ background: #F2F2F2; }
-
-
-.checkbox, .radio { margin-top:-3px; }
-
-table thead .checkbox { margin-top:-7px;margin-top:-21px; }
-table thead .checkbox.radio { margin-top:-7px;margin-top:-21px; }
-*/
 
 .daterangepicker.xdisplay {
   width: 228px;

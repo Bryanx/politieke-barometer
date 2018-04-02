@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<mvcSiteMap xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns="http://mvcsitemap.codeplex.com/schemas/MvcSiteMap-File-4.0"
+            xsi:schemaLocation="http://mvcsitemap.codeplex.com/schemas/MvcSiteMap-File-4.0 MvcSiteMapSchema.xsd">
+
+  <mvcSiteMapNode title="Home" controller="Home" action="Index">
+    <mvcSiteMapNode title="Dashboard" controller="User" action="Index"/>
+    <mvcSiteMapNode title="Politici-overzicht" controller="Person" action="Index">
+        <mvcSiteMapNode title="Person" action="Details" dynamicNodeProvider="BAR.UI.MVC.PersonDynamicNodeProvider, BAR.UI.MVC" />
+    </mvcSiteMapNode>
+    <mvcSiteMapNode title="Partij-overzicht" controller="Organisation" action="Index"/>
+  </mvcSiteMapNode>
+
+</mvcSiteMap>
