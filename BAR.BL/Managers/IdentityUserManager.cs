@@ -52,18 +52,13 @@ namespace BAR.BL.Managers
 			manager.DefaultAccountLockoutTimeSpan = TimeSpan.FromMinutes(5);
 			manager.MaxFailedAccessAttemptsBeforeLockout = 5;
 
-			//Register two factor authentication providers. This application uses Phone and Emails as a step of receiving a code for verifying the user
-			manager.RegisterTwoFactorProvider("Phone Code", new PhoneNumberTokenProvider<User>
-			{
-				MessageFormat = "Your security code is {0}"
-			});
+			//Register two factor authentication providers
 			manager.RegisterTwoFactorProvider("Email Code", new EmailTokenProvider<User>
 			{
 				Subject = "Security Code",
 				BodyFormat = "Your security code is {0}"
 			});
 			manager.EmailService = new EmailService();
-			manager.SmsService = new SmsService();
 			var dataProtectionProvider = options.DataProtectionProvider;
 			if (dataProtectionProvider != null)
 			{

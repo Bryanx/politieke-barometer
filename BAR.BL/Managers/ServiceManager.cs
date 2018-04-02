@@ -28,28 +28,4 @@ namespace BAR.BL.Managers
       var response = await client.SendEmailAsync(msg);
     }
   }
-
-  /// <summary>
-  /// Configures Identity with our Twilio API.
-  /// </summary>
-  public class SmsService : IIdentityMessageService
-  {
-    private readonly ITwilioMessageSender _messageSender;
-
-    public SmsService() : this(new TwilioMessageSender())
-    {
-    }
-
-    public SmsService(ITwilioMessageSender messageSender)
-    {
-      _messageSender = messageSender;
-    }
-
-    public async Task SendAsync(IdentityMessage message)
-    {
-      await _messageSender.SendMessageAsync(message.Destination,
-                                            ConfigurationManager.AppSettings["SenderID"],
-                                            message.Body);
-    }
-  }
 }

@@ -70,8 +70,7 @@ namespace BAR.DAL
 		/// </summary>
 		public User ReadUser(string userId)
 		{
-			var user = ctx.Users.Find(userId);
-			return user;
+      return ctx.Users.Include(x => x.Area).Where(x => x.Id.Equals(userId)).SingleOrDefault();
 		}
 
 		/// <summary>
@@ -172,5 +171,24 @@ namespace BAR.DAL
 			}
 			return ctx.SaveChanges();
 		}
-	}
+
+    /// <summary>
+    /// Reads all areas.
+    /// </summary>
+    /// <returns></returns>
+    public IEnumerable<Area> ReadAreas()
+    {
+      return ctx.Areas;
+    }
+
+    /// <summary>
+    /// Reads selected area.
+    /// </summary>
+    /// <param name="areaId"></param>
+    /// <returns></returns>
+    public Area ReadArea(int areaId)
+    {
+      return ctx.Areas.Where(x => x.AreaId == areaId).SingleOrDefault();
+    }
+  }
 }

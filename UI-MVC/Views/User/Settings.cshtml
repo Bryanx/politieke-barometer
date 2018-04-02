@@ -14,7 +14,7 @@
             </div>
             <div class="x_content">
                 <br/>
-                <form method="post" action="/api/User" id="userSettingsForm" class="form-horizontal">
+                <form method="post" action="/api/User/UpdateProfile" id="userSettingsForm" class="form-horizontal">
                     <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">
                             Voornaam <span class="required">*</span>
@@ -58,18 +58,16 @@
                             Geboortedatum
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                            @Html.TextBoxFor(model => model.DateOfBirth, new {@class = "form-control col-md-7 col-xs-12"})
+                            @Html.EditorFor(model => model.DateOfBirth, new {@class = "form-control col-md-7 col-xs-12"})
                             @Html.ValidationMessageFor(model => model.DateOfBirth, "", new {@class = "text-danger"})
                         </div>
                     </div>
-                    @Html.HiddenFor(model => model.Area.AreaId)
                         <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">
-                            Land
+                            Woonplaats
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                            @Html.TextBoxFor(model => model.Area.Country, new {@class = "form-control col-md-7 col-xs-12"})
-                            @Html.ValidationMessageFor(model => model.Area.Country, "", new {@class = "text-danger"})
+                            @Html.DropDownListFor(model => model.SelectedAreaId, Model.Areas, "Selecteer je woonplaats", new {@class = "form-control col-md-7 col-xs-12"})
                         </div>
                     </div>
                     <div class="form-group">
@@ -94,38 +92,80 @@
             </div>
             <div class="x_content">
                 <br/>
-                <form method="post" action="/api/User" id="alertSettingsForm" class="form-horizontal">
+                <form method="post" action="/api/User/UpdateAlerts" id="alertSettingsForm" class="form-horizontal">
                     <div class="form-group">
                         @Html.LabelFor(model => model.AlertsViaWebsite,"Alerts ontvangen op deze website", htmlAttributes: new { @class = "control-label col-md-6 col-sm-6 col-xs-12" })
                         <div class="col-md-3 col-sm-3 col-xs-12">
-                            @Html.DropDownListFor(model => model.AlertsViaWebsite, new List<SelectListItem>()
-                            {
-                                new SelectListItem() { Text = "Ja", Value = "True" },
-                                new SelectListItem() { Text = "Nee", Value = "False"}
-                            }, new { @class="form-control" })
-                            @Html.ValidationMessageFor(model => model.AlertsViaWebsite, "", new { @class = "text-danger" })
-                        </div>
+                            <div id="alertsviawebsite" class="btn-group" data-toggle="buttons">
+                                @if (Model.AlertsViaWebsite == true)
+                                {
+                                <label class="btn btn-default active">
+                                    @Html.RadioButtonFor(model => model.AlertsViaWebsite, true) Ja
+                                </label>
+                                <label class="btn btn-default">
+                                    @Html.RadioButtonFor(model => model.AlertsViaWebsite, false) Nee
+                                </label>
+                                }
+                                else
+                                {
+                                <label class="btn btn-default">
+                                    @Html.RadioButtonFor(model => model.AlertsViaWebsite, true) Ja
+                                </label>
+                                <label class="btn btn-default active">
+                                    @Html.RadioButtonFor(model => model.AlertsViaWebsite, false) Nee
+                                </label>
+                                }
+                                </div>
+                            </div>
                     </div>
                     <div class="form-group">
                         @Html.LabelFor(model => model.AlertsViaEmail,"Alerts ontvangen per email", htmlAttributes: new { @class = "control-label col-md-6 col-sm-6 col-xs-12" })
                         <div class="col-md-3 col-sm-3 col-xs-12">
-                            @Html.DropDownListFor(model => model.AlertsViaEmail, new List<SelectListItem>()
-                            {
-                                new SelectListItem() { Text = "Ja", Value = "True" },
-                                new SelectListItem() { Text = "Nee", Value = "False"}
-                            }, new { @class="form-control" })
-                            @Html.ValidationMessageFor(model => model.AlertsViaEmail, "", new { @class = "text-danger" })
+                            <div id="alertsviamail" class="btn-group" data-toggle="buttons">
+                                @if (Model.AlertsViaEmail == true)
+                                {
+                                <label class="btn btn-default active">
+                                    @Html.RadioButtonFor(model => model.AlertsViaEmail, true) Ja
+                                </label>
+                                <label class="btn btn-default">
+                                    @Html.RadioButtonFor(model => model.AlertsViaEmail, false) Nee
+                                </label>
+                                }
+                                else
+                                {
+                                <label class="btn btn-default">
+                                    @Html.RadioButtonFor(model => model.AlertsViaEmail, true) Ja
+                                </label>
+                                <label class="btn btn-default active">
+                                    @Html.RadioButtonFor(model => model.AlertsViaEmail, false) Nee
+                                </label>
+                                }
+                            </div>
                         </div>
                     </div>
                     <div class="form-group">
                         @Html.LabelFor(model => model.WeeklyReviewViaEmail,"Weekly review ontvangen per email", htmlAttributes: new { @class = "control-label col-md-6 col-sm-6 col-xs-12" })
                         <div class="col-md-3 col-sm-3 col-xs-12">
-                            @Html.DropDownListFor(model => model.WeeklyReviewViaEmail, new List<SelectListItem>()
-                            {
-                                new SelectListItem() { Text = "Ja", Value = "True" },
-                                new SelectListItem() { Text = "Nee", Value = "False"}
-                            }, new { @class="form-control" })
-                            @Html.ValidationMessageFor(model => model.WeeklyReviewViaEmail, "", new { @class = "text-danger" })
+                            <div id="weeklyreviewviamail" class="btn-group" data-toggle="buttons">
+                                @if (Model.WeeklyReviewViaEmail == true)
+                                {
+                                <label class="btn btn-default active">
+                                    @Html.RadioButtonFor(model => model.WeeklyReviewViaEmail, true) Ja
+                                </label>
+                                <label class="btn btn-default">
+                                    @Html.RadioButtonFor(model => model.WeeklyReviewViaEmail, false) Nee
+                                </label>
+                                }
+                                else
+                                {
+                                <label class="btn btn-default">
+                                    @Html.RadioButtonFor(model => model.WeeklyReviewViaEmail, true) Ja
+                                </label>
+                                <label class="btn btn-default active">
+                                    @Html.RadioButtonFor(model => model.WeeklyReviewViaEmail, false) Nee
+                                </label>
+                                }
+                            </div>
                         </div>
                     </div>
                     <div class="form-group">
