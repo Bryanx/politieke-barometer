@@ -410,8 +410,6 @@
     <Content Include="Views\User\ForgotPasswordConfirmation.cshtml" />
     <Content Include="Views\User\ResetPassword.cshtml" />
     <Content Include="Views\User\ResetPasswordConfirmation.cshtml" />
-    <Content Include="Views\User\SendCode.cshtml" />
-    <Content Include="Views\User\VerifyCode.cshtml" />
     <Content Include="Views\Lockout.cshtml" />
   </ItemGroup>
   <ItemGroup>
@@ -434,6 +432,9 @@
     <None Include="Scripts\vue-resource.min.js" />
     <None Include="Scripts\vue.js" />
     <None Include="Scripts\vue.min.js" />
+    <Content Include="zipcode-belgium.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BAR.BL.Model\Domain.csproj">
