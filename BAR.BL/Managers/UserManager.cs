@@ -11,7 +11,7 @@ namespace BAR.BL.Managers
 	/// </summary>
 	public class UserManager : IUserManager
 	{
-		private UserRepository userRepo;
+		private IUserRepository userRepo;
 		private UnitOfWorkManager uowManager;
 
 		/// <summary>

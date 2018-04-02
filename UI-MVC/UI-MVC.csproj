@@ -410,8 +410,6 @@
     <Content Include="Views\User\ForgotPasswordConfirmation.cshtml" />
     <Content Include="Views\User\ResetPassword.cshtml" />
     <Content Include="Views\User\ResetPasswordConfirmation.cshtml" />
-    <Content Include="Views\User\SendCode.cshtml" />
-    <Content Include="Views\User\VerifyCode.cshtml" />
     <Content Include="Views\Lockout.cshtml" />
   </ItemGroup>
   <ItemGroup>

@@ -90,6 +90,7 @@ namespace BAR.UI.MVC.Controllers
         return RedirectToAction("Index", "User");
       }
       RegisterViewModel registerViewModel = new RegisterViewModel();
+      registerViewModel.DateOfBirth = DateTime.Now;
 			return View(registerViewModel);
 		}
 
@@ -139,49 +140,6 @@ namespace BAR.UI.MVC.Controllers
       IAuthenticationManager authenticationManager = HttpContext.GetOwinContext().Authentication;
       authenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
       return RedirectToAction("Index", "Home");
-    }
-
-    //
-    // GET: /User/VerifyCode
-    [AllowAnonymous]
-    public async Task<ActionResult> VerifyCode(string provider, string returnUrl, bool rememberMe)
-    {
-      SignInManager signInManager = HttpContext.GetOwinContext().Get<SignInManager>();
-
-      // Require that the user has already logged in via username/password or external login
-      if (!await signInManager.HasBeenVerifiedAsync())
-      {
-        return View("Error");
-      }
-      return View(new VerifyCodeViewModel { Provider = provider, ReturnUrl = returnUrl, RememberMe = rememberMe });
-    }
-
-    //
-    // POST: /User/VerifyCode
-    [HttpPost]
-    [AllowAnonymous]
-    [ValidateAntiForgeryToken]
-    public async Task<ActionResult> VerifyCode(VerifyCodeViewModel model)
-    {
-      SignInManager signInManager = HttpContext.GetOwinContext().Get<SignInManager>();
-
-      if (!ModelState.IsValid)
-      {
-        return View(model);
-      }
-
-      var result = await signInManager.TwoFactorSignInAsync(model.Provider, model.Code, isPersistent: model.RememberMe, rememberBrowser: model.RememberBrowser);
-      switch (result)
-      {
-        case SignInStatus.Success:
-          return RedirectToLocal(model.ReturnUrl);
-        case SignInStatus.LockedOut:
-          return View("Lockout");
-        case SignInStatus.Failure:
-        default:
-          ModelState.AddModelError("", "Ongeldige code.");
-          return View(model);
-      }
     }
 
     //
@@ -300,46 +258,6 @@ namespace BAR.UI.MVC.Controllers
     }
 
     //
-    // GET: /User/SendCode
-    [AllowAnonymous]
-    public async Task<ActionResult> SendCode(string returnUrl, bool rememberMe)
-    {
-      SignInManager signInManager = HttpContext.GetOwinContext().Get<SignInManager>();
-      IdentityUserManager userManager = HttpContext.GetOwinContext().GetUserManager<IdentityUserManager>();
-
-      var userId = await signInManager.GetVerifiedUserIdAsync();
-      if (userId == null)
-      {
-        return View("Error");
-      }
-      var userFactors = await userManager.GetValidTwoFactorProvidersAsync(userId);
-      var factorOptions = userFactors.Select(purpose => new SelectListItem { Text = purpose, Value = purpose }).ToList();
-      return View(new SendCodeViewModel { Providers = factorOptions, ReturnUrl = returnUrl, RememberMe = rememberMe });
-    }
-
-    //
-    // POST: /User/SendCode
-    [HttpPost]
-    [AllowAnonymous]
-    [ValidateAntiForgeryToken]
-    public async Task<ActionResult> SendCode(SendCodeViewModel model)
-    {
-      SignInManager signInManager = HttpContext.GetOwinContext().Get<SignInManager>();
-
-      if (!ModelState.IsValid)
-      {
-        return View();
-      }
-
-      // Generate the token and send it
-      if (!await signInManager.SendTwoFactorCodeAsync(model.SelectedProvider))
-      {
-        return View("Error");
-      }
-      return RedirectToAction("VerifyCode", new { Provider = model.SelectedProvider, ReturnUrl = model.ReturnUrl, RememberMe = model.RememberMe });
-    }
-
-    //
     // GET: /User/ExternalLoginCallback
     [AllowAnonymous]
     public async Task<ActionResult> ExternalLoginCallback(string returnUrl)
@@ -434,7 +352,7 @@ namespace BAR.UI.MVC.Controllers
     #endregion
 
 		/// <summary>
-		/// Dashboard of the user
+		/// Dashboard of the user.
 		/// </summary>
 		public ActionResult Index() 
 		{
@@ -444,6 +362,10 @@ namespace BAR.UI.MVC.Controllers
 			return View("Dashboard","~/Views/Shared/Layouts/_MemberLayout.cshtml", itemViewModel);
 		}
 
+    /// <summary>
+    /// Settings page of the user.
+    /// </summary>
+    /// <returns></returns>
     public ActionResult Settings()
     {
       const string SETTINGS_PAGE_TITLE = "Instellingen";
