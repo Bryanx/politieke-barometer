@@ -1,0 +1,79 @@
+﻿@using BAR.UI.MVC.Controllers
+
+<footer class="joinus">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        Registreer om politici en partijen te volgen.
+    </div>
+</footer>
+<footer>
+    <div class="margin-aligned">
+    <div class="col-md-3 col-sm-3 col-xs-12">
+        <ul>
+            <li>
+                <a href='@Url.Action("Index", "Home")'>
+                    <i class="small-logo colored"></i>
+                </a>
+            </li>
+            <li>
+                &copy; @DateTime.Now.Year - Barometer
+            </li>
+            <li>
+                <button href="mailto:@Model.ContactEmail" class="btn btn-default">Email ons</button>
+            </li>
+        </ul>
+    </div>
+    <div class="col-md-3 col-sm-3 col-xs-12">
+        <h4>Links</h4>
+        <ul>
+            <li>
+                <a href='@Url.Action(nameof(HomeController.Index), "Home")'>Home</a>
+            </li>
+            <li>
+                <a href='@Url.Action(nameof(UserController.Index), "User")'>Dashboard</a>
+            </li>
+            <li>
+                <a href='@Url.Action(nameof(PersonController.Index), "Person")'>Politici</a>
+            </li>
+            <li>
+                <a href='@Url.Action(nameof(OrganisationController.Index), "Organisation")'>Partijen</a>
+            </li>
+        </ul>
+    </div>
+    <div class="col-md-3 col-sm-3 col-xs-12">
+        <h4>Meer info</h4>
+        <ul>
+            <li>
+                <a href='#'>Login/Signup</a>
+            </li>
+            <li>
+                <a href='#'>FAQ</a>
+            </li>
+            <li>
+                <a href='#'>Privacy policy</a>
+            </li>
+        </ul>
+    </div>
+    <div class="col-md-3 col-sm-3 col-xs-12">
+        <h4>Contact</h4>
+        <ul>
+            <li>
+                @Model.ContactStreet
+            </li>
+            <li>
+                @Model.ContactCity
+            </li>
+            <li>
+                <button href="mailto:@Model.ContactEmail" class="btn btn-default">Email ons</button>
+            </li>
+        </ul>
+    </div>
+    </div>
+    <div class="clearfix"></div>
+</footer>
+<footer class="copyright">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="pull-right">
+            &copy; @DateTime.Now.Year - Politieke Barometer
+        </div>
+    </div>
+</footer>

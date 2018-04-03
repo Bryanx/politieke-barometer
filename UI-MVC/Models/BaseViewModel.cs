@@ -3,6 +3,9 @@
 namespace BAR.UI.MVC.Models {
     public class BaseViewModel {
         public string PageTitle { get; set; }
+        public string ContactStreet { get; set; } = "Nationalestraat 24";
+        public string ContactCity { get; set; } = "Antwerpen";
+        public string ContactEmail { get; set; } = "contact@kdg.be";        
         public User User { get; set; }        
     }
 }
