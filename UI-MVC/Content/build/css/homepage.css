@@ -144,7 +144,8 @@ nav_menu {
     border-radius: 5px 0 0 5px !important; } }
 .search-field:focus {
   background-color: #f7f7f7;
-  color: #73879c; }
+  color: #73879c;
+  border: 1px solid transparent; }
   .search-field:focus::placeholder {
     color: #73879c;
     color: #73879c; }

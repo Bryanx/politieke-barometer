@@ -8,7 +8,7 @@ using System.Web.Mvc;
 
 namespace BAR.UI.MVC.Models
 {
-  public class ExternalLoginConfirmationViewModel
+  public class ExternalLoginConfirmationViewModel : BaseViewModel
   {
     [Required]
     [Display(Name = "Email")]
@@ -36,7 +36,7 @@ namespace BAR.UI.MVC.Models
 
   }
 
-  public class ExternalLoginListViewModel
+  public class ExternalLoginListViewModel : BaseViewModel
   {
     public string ReturnUrl { get; set; }
   }
@@ -48,7 +48,7 @@ namespace BAR.UI.MVC.Models
     public string Email { get; set; }
   }
 
-  public class LoginViewModel
+  public class LoginViewModel : BaseViewModel
   {
     [Required]
     [Display(Name = "Email")]
@@ -64,7 +64,7 @@ namespace BAR.UI.MVC.Models
     public bool RememberMe { get; set; }
   }
 
-  public class RegisterViewModel
+  public class RegisterViewModel : BaseViewModel
   {
     [Required]
     [EmailAddress]
@@ -102,7 +102,7 @@ namespace BAR.UI.MVC.Models
     public string ConfirmPassword { get; set; }
   }
 
-  public class ResetPasswordViewModel
+  public class ResetPasswordViewModel : BaseViewModel
   {
     [Required]
     [EmailAddress]
@@ -123,7 +123,7 @@ namespace BAR.UI.MVC.Models
     public string Code { get; set; }
   }
 
-  public class ForgotPasswordViewModel
+  public class ForgotPasswordViewModel : BaseViewModel
   {
     [Required]
     [EmailAddress]

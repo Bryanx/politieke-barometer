@@ -1,72 +1,90 @@
 ﻿@using BAR.UI.MVC.Controllers
+@model BAR.UI.MVC.Models.BaseViewModel
 
-<footer class="joinus">
-    <div class="col-md-12 col-sm-12 col-xs-12">
-        Registreer om politici en partijen te volgen.
-    </div>
-</footer>
+@if (Model.User == null) {
+    <footer class="joinus">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <h1>
+                <strong>Blijf op de hoogte.</strong>
+            </h1>
+            Maak een account om politici of partijen te volgen.
+        </div>
+        <form role="form">
+            <div class="form-group">
+                <div class="col-md-4 col-sm-4 col-xs-12">
+                    <input type="email" class="form-control login-input" placeholder="E-mailadres"/>
+                </div>
+                <div class="col-md-4 col-sm-4 col-xs-12">
+                    <input type="password" class="form-control login-input" placeholder="Password"/>
+                </div>
+                <div class="col-md-4 col-sm-4 col-xs-12">
+                    <div class="form-check login-input">
+                        <button type="button" class="btn btn-default login-input w-100 h-40">Registreer</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </footer>
+}
 <footer>
     <div class="margin-aligned">
-    <div class="col-md-3 col-sm-3 col-xs-12">
-        <ul>
-            <li>
-                <a href='@Url.Action("Index", "Home")'>
-                    <i class="small-logo colored"></i>
-                </a>
-            </li>
-            <li>
-                &copy; @DateTime.Now.Year - Barometer
-            </li>
-            <li>
-                <button href="mailto:@Model.ContactEmail" class="btn btn-default">Email ons</button>
-            </li>
-        </ul>
-    </div>
-    <div class="col-md-3 col-sm-3 col-xs-12">
-        <h4>Links</h4>
-        <ul>
-            <li>
-                <a href='@Url.Action(nameof(HomeController.Index), "Home")'>Home</a>
-            </li>
-            <li>
-                <a href='@Url.Action(nameof(UserController.Index), "User")'>Dashboard</a>
-            </li>
-            <li>
-                <a href='@Url.Action(nameof(PersonController.Index), "Person")'>Politici</a>
-            </li>
-            <li>
-                <a href='@Url.Action(nameof(OrganisationController.Index), "Organisation")'>Partijen</a>
-            </li>
-        </ul>
-    </div>
-    <div class="col-md-3 col-sm-3 col-xs-12">
-        <h4>Meer info</h4>
-        <ul>
-            <li>
-                <a href='#'>Login/Signup</a>
-            </li>
-            <li>
-                <a href='#'>FAQ</a>
-            </li>
-            <li>
-                <a href='#'>Privacy policy</a>
-            </li>
-        </ul>
-    </div>
-    <div class="col-md-3 col-sm-3 col-xs-12">
-        <h4>Contact</h4>
-        <ul>
-            <li>
-                @Model.ContactStreet
-            </li>
-            <li>
-                @Model.ContactCity
-            </li>
-            <li>
-                <button href="mailto:@Model.ContactEmail" class="btn btn-default">Email ons</button>
-            </li>
-        </ul>
-    </div>
+        <div class="col-md-3 col-sm-3 col-xs-12">
+            <ul>
+                <li>
+                    <a href='@Url.Action("Index", "Home")'>
+                        <i class="small-logo colored"></i>
+                    </a>
+                </li>
+                <li>
+                    &copy; @DateTime.Now.Year - Barometer
+                </li>
+                <li>
+                    <button href="mailto:@Model.ContactEmail" class="btn btn-default">Email ons</button>
+                </li>
+            </ul>
+        </div>
+        <div class="col-md-3 col-sm-3 col-xs-12">
+            <h4>Links</h4>
+            <ul>
+                <li>
+                    <a href='@Url.Action(nameof(HomeController.Index), "Home")'>Home</a>
+                </li>
+                <li>
+                    <a href='@Url.Action(nameof(UserController.Index), "User")'>Dashboard</a>
+                </li>
+                <li>
+                    <a href='@Url.Action(nameof(PersonController.Index), "Person")'>Politici</a>
+                </li>
+                <li>
+                    <a href='@Url.Action(nameof(OrganisationController.Index), "Organisation")'>Partijen</a>
+                </li>
+            </ul>
+        </div>
+        <div class="col-md-3 col-sm-3 col-xs-12">
+            <h4>Meer info</h4>
+            <ul>
+                <li>
+                    <a href='#'>Login/Signup</a>
+                </li>
+                <li>
+                    <a href='#'>FAQ</a>
+                </li>
+                <li>
+                    <a href='#'>Privacy policy</a>
+                </li>
+            </ul>
+        </div>
+        <div class="col-md-3 col-sm-3 col-xs-12">
+            <h4>Contact</h4>
+            <ul>
+                <li>
+                    @Model.ContactStreet
+                </li>
+                <li>
+                    @Model.ContactCity
+                </li>
+            </ul>
+        </div>
     </div>
     <div class="clearfix"></div>
 </footer>
