@@ -36,7 +36,7 @@ namespace BAR.UI.MVC.Controllers
       }
 
       ViewBag.ReturnUrl = returnUrl;
-			return View();
+			return View(new LoginViewModel());
 		}
 
 		//
@@ -162,7 +162,7 @@ namespace BAR.UI.MVC.Controllers
     [AllowAnonymous]
     public ActionResult ForgotPassword()
     {
-      return View();
+      return View(new ForgotPasswordViewModel());
     }
 
     //
@@ -199,7 +199,7 @@ namespace BAR.UI.MVC.Controllers
     [AllowAnonymous]
     public ActionResult ForgotPasswordConfirmation()
     {
-      return View();
+      return View(new ForgotPasswordViewModel());
     }
 
     //
@@ -243,7 +243,7 @@ namespace BAR.UI.MVC.Controllers
     [AllowAnonymous]
     public ActionResult ResetPasswordConfirmation()
     {
-      return View();
+      return View(new ResetPasswordViewModel());
     }
 
     //
@@ -346,7 +346,7 @@ namespace BAR.UI.MVC.Controllers
     [AllowAnonymous]
     public ActionResult ExternalLoginFailure()
     {
-      return View();
+      return View(new ExternalLoginConfirmationViewModel());
     }
 
     #endregion
@@ -359,7 +359,7 @@ namespace BAR.UI.MVC.Controllers
       const string INDEX_PAGE_TITLE = "Dashboard";
       ItemViewModel itemViewModel = GetPersonViewModel(User.Identity.GetUserId());     
       itemViewModel.PageTitle = INDEX_PAGE_TITLE;
-			return View("Dashboard","~/Views/Shared/Layouts/_MemberLayout.cshtml", itemViewModel);
+			return View("Dashboard", itemViewModel);
 		}
 
     /// <summary>
@@ -391,7 +391,7 @@ namespace BAR.UI.MVC.Controllers
       };
       settingsViewModel.PageTitle = SETTINGS_PAGE_TITLE;
 
-      return View("Settings", "~/Views/Shared/Layouts/_MemberLayout.cshtml", settingsViewModel);
+      return View("Settings", settingsViewModel);
     }
 		
 	

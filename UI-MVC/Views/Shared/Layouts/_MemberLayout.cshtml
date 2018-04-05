@@ -14,7 +14,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>@ViewData["Title"]</title>
+    <title>@(Model.PageTitle.Length == 0 ? @ViewBag.Title : Model.PageTitle)</title>
 
     @Styles.Render("~/Content/css")
 
@@ -55,8 +55,8 @@
         <!-- /top navigation -->
 
         <!-- page content -->
+        @Html.MvcSiteMap().SiteMapPath("BootstrapSiteMapPathHelperModel")
         <div class="right_col" role="main">
-            @Html.MvcSiteMap().SiteMapPath("BootstrapSiteMapPathHelperModel")
             @RenderBody()
         </div>
         <!-- /page content -->
@@ -70,7 +70,6 @@
                     </a>
                 </div>
                 <div class="clearfix"></div>
-                <br/>
                 <!-- sidebar menu -->
                 <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
                     <div class="menu_section">
@@ -92,12 +91,7 @@
         <!-- /navbar left -->
         
         <!-- footer content -->
-        <footer>
-            <div class="pull-right">
-                &copy; @DateTime.Now.Year - Barometer
-            </div>
-            <div class="clearfix"></div>
-        </footer>
+        @Html.Partial("Partials/Footer", Model)
         <!-- /footer content -->
     </div>
 </div>

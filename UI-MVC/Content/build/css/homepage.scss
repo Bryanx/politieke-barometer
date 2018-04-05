@@ -8,7 +8,7 @@ h1 {
 }
 
 .nav_menu {
-  background-color: transparent;
+  background-color: var(--primary-color);
   box-shadow: none;
   position: relative !important;
 }
@@ -30,10 +30,14 @@ h1 {
 
 .nav.navbar-nav > li > a.signup {
   color: white !important;
-  background-color: var(--primary-color);
+  background-color: rgba(0, 0, 0, 0.1);
   z-index: 2;
+  border: 3px solid white;
+  top: 58px;
+  border-radius: 5px;
   &:hover {
-    background-color: var(--primary-darkest);
+    background-color: white;
+    color: var(--primary-color) !important;
   }
 }
 
@@ -88,27 +92,34 @@ nav_menu {
   width: 200px;
   margin-left: auto;
   margin-right: auto;
-  margin-top: 100px;
+  margin-top: 80px;
 }
 
 .main-header {
   text-align: center;
-  padding: 60px 0 10px 0;
+  padding: 40px 0 10px 0;
   margin-left: auto;
 }
 
 .main-header-title, .main-header {
-  font-family: "Roboto","Helvetica Neue","Helvetica","Arial",sans-serif;
+  font-family: "Roboto", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
   line-height: 1.4;
   font-weight: 600;
   color: white;
 }
 
+.main-header-container-parent {
+  background-image: url("../images/bg-repeat.jpg");
+  background-repeat: repeat-x;
+  background-size: contain;
+}
+
 .main-header-container {
-  background-image: url("../images/parlement-smaller.jpg");
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center center;
+  background-image: url("../images/government2.jpg");
+  background-repeat: repeat-x;
+  background-size: contain;
+  background-position: bottom center;
+  background-color: var(--primary-color);
 }
 
 @media (max-width: 991px) {
@@ -118,25 +129,25 @@ nav_menu {
   }
 }
 
-@media (min-height: 800px) {
+@media (min-height: 700px) {
   .logo {
-    margin-top: 150px;
+    margin-top: 140px;
   }
   .searchbar {
-    margin-bottom: 210px;
+    margin-bottom: 230px;
     margin-top: 15px;
   }
   .main-header-title {
-    font-size: 40px;
+    font-size: 42px;
   }
 }
 
 @media (min-height: 840px) {
   .logo {
-    margin-top: 180px;
+    margin-top: 130px;
   }
   .searchbar {
-    margin-bottom: 240px;
+    margin-bottom: 260px;
     margin-top: 15px;
   }
   .main-header-title {
@@ -159,23 +170,27 @@ nav_menu {
     margin-right: 20px;
   }
   .logo {
-    margin-top: 100px;
+    margin-top: 80px;
   }
   .nav.navbar-nav > li > a.signup {
     right: 0;
+    top: 0;
+    width: 72px;
+  }
+  .navbar-nav {
+    float: right;
+    margin: 0;
   }
   .searchbar {
-    display: block;
-    margin-bottom: 120px;
+    display: block !important;
+    float: none;
+    margin: 0 auto 140px auto !important;
   }
 }
 
 @media (max-width: 650px) {
   #search-dropdown {
     display: none;
-  }
-  .search-field {
-    border-radius: 5px 0 0 5px !important;
   }
 }
 
@@ -186,6 +201,7 @@ nav_menu {
   }
   background-color: #f7f7f7;
   color: #73879c;
+  border: 1px solid transparent;
 }
 
 #menu_toggle {

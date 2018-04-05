@@ -49,7 +49,7 @@ namespace BAR.UI.MVC.Controllers {
                 User = User.Identity.IsAuthenticated ? userManager.GetUser(User.Identity.GetUserId()) : null,
                 People = personen
             };
-            return View("Index", "~/Views/Shared/Layouts/_MemberLayout.cshtml", itemViewModel);
+            return View("Index", itemViewModel);
         }
 
         // GET: Default/Details/5 (Specific person page)
@@ -73,7 +73,7 @@ namespace BAR.UI.MVC.Controllers {
                 User = User.Identity.IsAuthenticated ? userManager.GetUser(User.Identity.GetUserId()) : null,
                 People = persoon
             };
-            return View("Details", "~/Views/Shared/Layouts/_MemberLayout.cshtml", itemViewModel);
+            return View("Details", itemViewModel);
         }
     }
 }

@@ -46,7 +46,7 @@ namespace BAR.UI.MVC.Controllers {
                 User = User.Identity.IsAuthenticated ? userManager.GetUser(User.Identity.GetUserId()) : null,
                 People = personen
             };
-            return View("Index", "~/Views/Shared/Layouts/_MemberLayout.cshtml", itemViewModel);
+            return View("Index", itemViewModel);
         }
     }
 }

@@ -120,16 +120,14 @@ function init_sidebar() {
         
         if ($LEFT_COL.css("left") === "-100px") {
             $LEFT_COL.css("left", "0px");
-            $RIGHT_COL.css("margin-left", "100px");
-            $('.hover-nav').css('left','100px');
 			$('a .toggle i').removeClass('fa-arrow-right').addClass('fa-arrow-left');
-            $('.nav-sm footer').css('margin-left', '100px');
+            $('.hover-nav, .nav-sm footer, .breadcrumb, .right_col')
+				.removeClass('margin-left-0').addClass('margin-left-100');
         } else {
             $LEFT_COL.css("left","-100px");
-            $RIGHT_COL.css("margin-left", "0px");
-            $('.hover-nav').css('left','0');
             $('a .toggle i').removeClass('fa-arrow-left').addClass('fa-arrow-right');
-            $('.nav-sm footer').css('margin-left', '0px');
+            $('.hover-nav, .nav-sm footer, .breadcrumb, .right_col')
+				.removeClass('margin-left-100').addClass('margin-left-0');
         }
 
 		setContentHeight();
