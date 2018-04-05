@@ -7,5 +7,8 @@ namespace BAR.UI.MVC.Models {
         public string ContactCity { get; set; } = "2060 Antwerpen";
         public string ContactEmail { get; set; } = "contact@kdg.be";
         public User User { get; set; }
+        public bool IsAdmin { get; set; }
+        public bool IsSuperAdmin { get; set; }
+        
     }
 }
