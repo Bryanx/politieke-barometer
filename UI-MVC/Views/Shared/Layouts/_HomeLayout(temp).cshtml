@@ -30,81 +30,8 @@
 
 
         <!-- top navigation -->
-        <div class="top_nav">
-            <div class="nav_menu">
-                <div class="nav toggle">
-                    <a id="menu_toggle">
-                        <i class="fa fa-bars"></i>
-                    </a>
-                </div>
-
                 <!-- login -->
-                <ul class="nav navbar-nav navbar-right">
-                    <li class="c-primary">
-                        <a class="signup" href="#" data-toggle="modal" data-target=".bs-example-modal-lg">Login</a>
-                        <div class="modal bs-example-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
-                            <div class="modal-dialog modal-lg">
-                                <div class="modal-content">
-                                    <div class="modal-body">
-                                        <div class="accordion" id="accordion" role="tablist" aria-multiselectable="true">
-                                            <div class="panel">
-                                                <a class="panel-heading" role="tab" id="headingOne" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                                    <h4 class="panel-title">Login</h4>
-                                                </a>
-                                                <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
-                                                    <div class="panel-body">
-                                                        <form role="form">
-                                                            <div class="form-group">
-                                                                <input type="email" class="form-control login-input" placeholder="email@adress.com"/>
-                                                                <input type="password" class="form-control login-input" placeholder="Password"/>
-                                                                <div class="form-check login-input">
-                                                                    <div class="checkbox">
-                                                                        <span class="character-checkbox" id="chbox" onclick="check()"></span>
-                                                                        <span class="checkbox-label c-secondary">Onthoud mij</span>
-                                                                    </div>
-                                                                    <button type="button" class="btn btn-primary login-input w-100 h-40">Login</button>
-                                                                    <a href="javascript:;" class="text-center login-input w-100" data-toggle="modal" data-target=".forget-modal">Forgot your password?</a>
-                                                                </div>
-                                                            </div>
-                                                        </form>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="panel">
-                                                <a class="panel-heading collapsed" role="tab" id="headingTwo" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                                    <h4 class="panel-title">Register</h4>
-                                                </a>
-                                                <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
-                                                    <div class="panel-body">
-                                                        <form role="form">
-                                                            <div class="form-group">
-                                                                <button type="button" class="btn google-btn login-input w-100">Sign in with Google</button>
-                                                                <button type="button" class="btn fb-btn login-input w-100">Sign in with Facebook</button>
-                                                                <input type="email" class="form-control login-input" placeholder="email@adress.com"/>
-                                                                <input type="password" class="form-control login-input" placeholder="Password"/>
-                                                                <div class="form-check login-input">
-                                                                    <div class="checkbox">
-                                                                        <span class="character-checkbox" id="chbox" onclick="check()"></span>
-                                                                        <span class="checkbox-label c-secondary">Ik ga akkoord met de voorwaarden</span>
-                                                                    </div>
-                                                                    <button type="button" class="btn btn-primary login-input w-100 h-40">Register</button>
-                                                                </div>
-                                                            </div>
-                                                        </form>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </li>
-                </ul>
-                <!-- search -->
-                @Html.Partial("Partials/SearchBar")
-            </div>
-        </div>
+                @Html.Partial("Partials/LoginModal")
         <!-- /top navigation -->
 
         <!-- page content -->
@@ -118,23 +45,7 @@
                         <i class="small-logo"></i>
                     </a>
                 </div>
-
                 <div class="clearfix"></div>
-
-                <!-- menu profile quick info -->
-                <div class="profile clearfix">
-                    <div class="profile_pic">
-                        <img src="../../Content/build/images/img.jpg" alt="..." class="img-circle profile_img">
-                    </div>
-                    <div class="profile_info">
-                        <span>Welcome,</span>
-                        <h2>John Doe</h2>
-                    </div>
-                </div>
-                <!-- /menu profile quick info -->
-
-                <br/>
-
                 <!-- sidebar menu -->
                 <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
                     <div class="menu_section">
@@ -145,23 +56,6 @@
 
                 </div>
                 <!-- /sidebar menu -->
-
-                <!-- /menu footer buttons -->
-                <div class="sidebar-footer hidden-small">
-                    <a data-toggle="tooltip" data-placement="top" title="Settings">
-                        <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
-                    </a>
-                    <a data-toggle="tooltip" data-placement="top" title="FullScreen">
-                        <span class="glyphicon glyphicon-fullscreen" aria-hidden="true"></span>
-                    </a>
-                    <a data-toggle="tooltip" data-placement="top" title="Lock">
-                        <span class="glyphicon glyphicon-eye-close" aria-hidden="true"></span>
-                    </a>
-                    <a data-toggle="tooltip" data-placement="top" title="Logout" href="login.html">
-                        <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
-                    </a>
-                </div>
-                <!-- /menu footer buttons -->
             </div>
         </div>
         <!-- footer content -->

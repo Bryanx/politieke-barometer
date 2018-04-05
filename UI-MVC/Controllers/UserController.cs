@@ -359,7 +359,7 @@ namespace BAR.UI.MVC.Controllers
       const string INDEX_PAGE_TITLE = "Dashboard";
       ItemViewModel itemViewModel = GetPersonViewModel(User.Identity.GetUserId());     
       itemViewModel.PageTitle = INDEX_PAGE_TITLE;
-			return View("Dashboard","~/Views/Shared/Layouts/_MemberLayout.cshtml", itemViewModel);
+			return View("Dashboard", itemViewModel);
 		}
 
     /// <summary>
@@ -391,7 +391,7 @@ namespace BAR.UI.MVC.Controllers
       };
       settingsViewModel.PageTitle = SETTINGS_PAGE_TITLE;
 
-      return View("Settings", "~/Views/Shared/Layouts/_MemberLayout.cshtml", settingsViewModel);
+      return View("Settings", settingsViewModel);
     }
 		
 	

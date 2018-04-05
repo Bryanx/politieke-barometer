@@ -267,7 +267,8 @@
     <Content Include="Content\build\images\google-icon-white.svg" />
     <Content Include="Content\build\images\google-icon.svg" />
     <Content Include="Content\build\images\google_normal.png" />
-    <Content Include="Content\build\images\img.jpg" />
+    <Content Include="Content\build\images\government.jpg" />
+    <Content Include="Content\build\images\government2.jpg" />
     <Content Include="Content\build\images\loading.gif" />
     <Content Include="Content\build\images\logo-all-white-smaller.png" />
     <Content Include="Content\build\images\logo-all-white.png" />
@@ -275,9 +276,7 @@
     <Content Include="Content\build\images\logo-white-img.png" />
     <Content Include="Content\build\images\logo-white.png" />
     <Content Include="Content\build\images\mastercard.png" />
-    <Content Include="Content\build\images\media.jpg" />
     <Content Include="Content\build\images\parlement-smaller.jpg" />
-    <Content Include="Content\build\images\parlement.jpg" />
     <Content Include="Content\build\images\paypal.png" />
     <Content Include="Content\build\images\picture.jpg" />
     <Content Include="Content\build\images\user.png" />

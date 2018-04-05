@@ -153,7 +153,8 @@ div.nav_menu .searchbar .search-field, form.navbar-form .input-group {
 .search-field {
   padding-left: 0;
   margin-left: -1px;
-  background: #f7f7f7; }
+  background: #f7f7f7;
+  z-index: auto !important; }
 
 .btn-search {
   margin-right: 0px !important;
