@@ -382,10 +382,10 @@ namespace BAR.UI.MVC.Controllers {
                 Areas = areas,
                 AlertsViaWebsite = user.AlertsViaWebsite,
                 AlertsViaEmail = user.AlertsViaEmail,
-                WeeklyReviewViaEmail = user.WeeklyReviewViaEmail
+                WeeklyReviewViaEmail = user.WeeklyReviewViaEmail,
+                PageTitle = SETTINGS_PAGE_TITLE
             };
             SetRolesToVm(ref settingsViewModel);
-            settingsViewModel.PageTitle = SETTINGS_PAGE_TITLE;
 
             return View("Settings", settingsViewModel);
         }

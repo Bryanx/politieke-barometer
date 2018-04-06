@@ -387,6 +387,9 @@
     <Content Include="Scripts\site.js" />
     <Content Include="Scripts\underscore.min.js" />
     <Content Include="Views\Admin\Index.cshtml" />
+    <Content Include="Views\Admin\ItemManagement.cshtml" />
+    <Content Include="Views\Admin\PageManagement.cshtml" />
+    <Content Include="Views\Admin\UserManagement.cshtml" />
     <Content Include="Views\Organisation\Index.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\BootstrapSiteMapPathHelperModel.cshtml" />
     <Content Include="Views\Shared\Layouts\_HomeLayout(temp).cshtml" />
