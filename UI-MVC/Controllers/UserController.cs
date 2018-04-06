@@ -353,14 +353,10 @@ namespace BAR.UI.MVC.Controllers {
         /// </summary>
         public ActionResult Index() {
             const string INDEX_PAGE_TITLE = "Dashboard";
-            const string ADMIN_ROLE = "Admin";
-            const string SUPER_ADMIN_ROLE = "SuperAdmin";
             string userId = User.Identity.GetUserId();
-            IdentityUserManager userManager = HttpContext.GetOwinContext().GetUserManager<IdentityUserManager>();
             ItemViewModel itemViewModel = GetPersonViewModel(userId);
             itemViewModel.PageTitle = INDEX_PAGE_TITLE;
-            itemViewModel.IsAdmin = userManager.GetRoles(userId).Contains(ADMIN_ROLE);
-            itemViewModel.IsSuperAdmin = userManager.GetRoles(userId).Contains(SUPER_ADMIN_ROLE);
+            SetRolesToVm(ref itemViewModel);
             return View("Dashboard", itemViewModel);
         }
 
@@ -388,11 +384,23 @@ namespace BAR.UI.MVC.Controllers {
                 AlertsViaEmail = user.AlertsViaEmail,
                 WeeklyReviewViaEmail = user.WeeklyReviewViaEmail
             };
+            SetRolesToVm(ref settingsViewModel);
             settingsViewModel.PageTitle = SETTINGS_PAGE_TITLE;
 
             return View("Settings", settingsViewModel);
         }
 
+        /// <summary>
+        /// Checks if the user has any special roles.
+        /// If it has, the given model is updated.
+        /// </summary>
+        private void SetRolesToVm<T>(ref T viewModel) {
+            IList<string> userRoles = HttpContext.GetOwinContext().GetUserManager<IdentityUserManager>()
+                .GetRoles(User.Identity.GetUserId());
+            BaseViewModel m = viewModel as BaseViewModel;
+            m.IsAdmin = userRoles.Contains("Admin");
+            m.IsSuperAdmin = userRoles.Contains("SuperAdmin");
+        }
 
         private ItemViewModel GetPersonViewModel(string id) {
             ISubscriptionManager subManager = new SubscriptionManager();

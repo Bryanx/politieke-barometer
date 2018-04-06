@@ -33,7 +33,6 @@
             </li>
             @if (Model.IsAdmin) {
                 <li>
-                    Admin instellingen
                     <ul>
                         <li>
                             <a href='@Url.Action(nameof(UserController.Index), "Admin")'><i class="fa fa-pie-chart"></i> Admin dashboard</a>
