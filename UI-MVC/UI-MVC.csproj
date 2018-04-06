@@ -217,8 +217,10 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\WebGridHelpers.cs" />
     <Compile Include="Models\AlertDTO.cs" />
     <Compile Include="Models\BaseViewModel.cs" />
+    <Compile Include="Models\AdminViewModels.cs" />
     <Compile Include="Models\Graph.cs" />
     <Compile Include="Models\ItemDTO.cs" />
     <Compile Include="Models\UserViewModels.cs" />
@@ -329,6 +331,7 @@
     <Content Include="Scripts\jquery\jquery-ui-1.11.0.js" />
     <Content Include="Scripts\jquery\jquery-ui-1.11.0.min.js" />
     <Content Include="Scripts\jquery\jquery-ui.js" />
+    <Content Include="Scripts\jquery\jquery.signalR-2.2.0.min.js" />
     <Content Include="Scripts\jquery\jquery.timeago.js" />
     <Content Include="Scripts\bootstrap-progressbar.js" />
     <Content Include="Scripts\bootstrap-progressbar.min.js" />

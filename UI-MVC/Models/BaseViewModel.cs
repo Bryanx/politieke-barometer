@@ -9,6 +9,5 @@ namespace BAR.UI.MVC.Models {
         public User User { get; set; }
         public bool IsAdmin { get; set; }
         public bool IsSuperAdmin { get; set; }
-        
     }
 }

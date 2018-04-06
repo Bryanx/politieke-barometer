@@ -12,7 +12,8 @@ namespace BAR.UI.MVC.Controllers {
         // GET
         public ActionResult Index() {
             const string ADMIN_DASHBOARD_PAGE_TITLE = "Admin Dashboard";
-            return View(GetVm(ADMIN_DASHBOARD_PAGE_TITLE));
+            BaseViewModel vm = GetVm(ADMIN_DASHBOARD_PAGE_TITLE);
+            return View(vm);
 
         }
         
@@ -30,7 +31,9 @@ namespace BAR.UI.MVC.Controllers {
         
         public ActionResult UserManagement() {
             const string USER_MANAGEMENT_PAGE_TITLE = "Gebruikers beheren";
-            return View(GetVm(USER_MANAGEMENT_PAGE_TITLE));
+            BaseViewModel vm = GetVm(USER_MANAGEMENT_PAGE_TITLE);
+            UserManager userManager = new UserManager();
+            return View(new EditUserViewModel(vm, userManager.GetAllUsers()));
         }
         
 
