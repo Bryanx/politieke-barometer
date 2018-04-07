@@ -218,7 +218,6 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\UrlExtensions.cs" />
-    <Compile Include="Helpers\WebGridHelpers.cs" />
     <Compile Include="Models\AlertDTO.cs" />
     <Compile Include="Models\BaseViewModel.cs" />
     <Compile Include="Models\AdminViewModels.cs" />
