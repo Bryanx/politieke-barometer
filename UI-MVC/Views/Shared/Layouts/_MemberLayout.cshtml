@@ -2,6 +2,7 @@
 @using System.Activities.Statements
 @using System.Web.Optimization
 @using BAR.UI.MVC.Controllers
+@using BAR.UI.MVC.Helpers
 @using MvcSiteMapProvider.Web.Html
 @model BAR.UI.MVC.Models.BaseViewModel
 
@@ -37,7 +38,7 @@
         <div class="top_nav">
             <div class="nav_menu">
                 <div class="navbar" style="border: 0;">
-                    <a href='@Url.Action("Index", "Home")'>
+                    <a href='@Url.RootUrl()'>
                         <i class="small-logo colored"></i>
                     </a>
                 </div>

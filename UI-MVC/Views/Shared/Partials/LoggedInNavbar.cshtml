@@ -1,4 +1,5 @@
 ﻿@using BAR.UI.MVC.Controllers
+@using BAR.UI.MVC.Helpers
 @using Microsoft.AspNet.Identity.EntityFramework
 @model BAR.UI.MVC.Models.BaseViewModel
 <ul class="nav navbar-nav navbar-right">
@@ -12,13 +13,13 @@
             <li>
                 <ul>
                     <li>
-                        <a href='@Url.Action(nameof(UserController.Index), "User")'><i class="fa fa-bar-chart"></i> Dashboard</a>
+                        <a href='@Url.DashboardUrl()'><i class="fa fa-bar-chart"></i> Dashboard</a>
                     </li>
                     <li>
-                        <a href='@Url.Action(nameof(UserController.Settings), "User")'><i class="fa fa-gear"></i> Instellingen</a>
+                        <a href='@Url.SettingsUrl()'><i class="fa fa-gear"></i> Instellingen</a>
                     </li>
                     <li>
-                        <a href='@Url.Action(nameof(UserController.Settings), "User")'><i class="fa fa-bell"></i> Alert instellingen</a>
+                        <a href='@Url.SettingsUrl()'><i class="fa fa-bell"></i> Alert instellingen</a>
                     </li>
                     <li>
                         <a href="javascript:;"><i class="fa fa-calendar"></i> Weekly review</a>
@@ -35,16 +36,16 @@
                 <li>
                     <ul>
                         <li>
-                            <a href='@Url.Action(nameof(AdminController.Index), "Admin")'><i class="fa fa-pie-chart"></i> Admin dashboard</a>
+                            <a href='@Url.AdminDashboard()'><i class="fa fa-pie-chart"></i> Admin dashboard</a>
                         </li>
                         <li>
-                            <a href='@Url.Action(nameof(AdminController.PageManagement), "Admin")'><i class="fa fa-edit"></i> Pagina's beheren</a>
+                            <a href='@Url.AdminPageManagement()'><i class="fa fa-edit"></i> Pagina's beheren</a>
                         </li>
                         <li>
-                            <a href='@Url.Action(nameof(AdminController.ItemManagement), "Admin")'><i class="fa fa-object-group"></i> Items beheren</a> <!-- en content importeren -->
+                            <a href='@Url.AdminItemManagement()'><i class="fa fa-object-group"></i> Items beheren</a> <!-- en content importeren -->
                         </li>
                         <li>
-                            <a href='@Url.Action(nameof(AdminController.UserManagement), "Admin")'><i class="fa fa-users"></i> Gebruikers beheren</a> <!-- en gebruikers export -->
+                            <a href='@Url.AdminUserManagement()'><i class="fa fa-users"></i> Gebruikers beheren</a> <!-- en gebruikers export -->
                         </li>
                     </ul>
                 </li>

@@ -7,8 +7,7 @@
     var grid = new WebGrid(Model.Users, canPage: false);
 }
 
-
-<h2>WebGrid Example</h2>
+<h1>@Model.PageTitle</h1>
 
     @if (Model != null)
     {
@@ -50,10 +49,12 @@
                             grid.Column(header: "{CheckBoxHeading}",
                                 format: @<text><input id="select" class="box" name="select" type="checkbox" value="@item.Value.Id" /></text>,
                                 style: "text-center checkbox-width"),
-                            grid.Column("FirstName",
+                            grid.Column("Voornaam",
                                 format: item => Html.EditableTextBox((item.Value as User).FirstName, item.Value as User, "FirstName")),
-                            grid.Column("LastName",
-                                format: item => Html.EditableTextBox((item.Value as User).LastName, item.Value as User, "LastName"))
+                            grid.Column("Achternaam",
+                                format: item => Html.EditableTextBox((item.Value as User).LastName, item.Value as User, "LastName")),
+                            grid.Column("E-mailadres",
+                                format: item => Html.EditableTextBox((item.Value as User).Email, item.Value as User, "E-mailadres"))
                             )
                         )
                         .ToString()
@@ -65,9 +66,6 @@
     }
 
     <div class="more-button text-center"><button type="button" id="moreButton" class="btn btn-default">Load More</button></div>
-
-
-    <script src="~/Scripts/bootstrap.min.js" async></script>
 
     @using (Html.BeginForm("Export", "User", FormMethod.Post))
     {

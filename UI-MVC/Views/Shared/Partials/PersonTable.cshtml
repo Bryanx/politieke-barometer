@@ -1,4 +1,5 @@
 ﻿@using BAR.BL.Domain.Items
+@using BAR.UI.MVC.Helpers
 @model BAR.UI.MVC.Models.ItemViewModel
 
 <table id="datatable-responsive" class="table" cellspacing="10px" width="100%">
@@ -39,7 +40,7 @@
         <tr class="subscription">
             <td>
                 <div class="img-circle person-image"></div>
-                <a href='@Url.Action("Details", "Person", new {id = item.ItemId})'> @item.Name</a>
+                <a href='@Url.PersonUrl(item.ItemId)'> @item.Name</a>
             </td>
             <td>
                 @item.NumberOfMentions

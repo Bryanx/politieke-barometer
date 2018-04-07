@@ -14,19 +14,16 @@ namespace BAR.UI.MVC.Controllers {
             const string ADMIN_DASHBOARD_PAGE_TITLE = "Admin Dashboard";
             BaseViewModel vm = GetVm(ADMIN_DASHBOARD_PAGE_TITLE);
             return View(vm);
-
         }
         
         public ActionResult PageManagement() {
             const string PAGE_MANAGEMENT_PAGE_TITLE = "Pagina's beheren";
             return View(GetVm(PAGE_MANAGEMENT_PAGE_TITLE));
-
         }
         
         public ActionResult ItemManagement() {
             const string ITEM_MANAGEMENT_PAGE_TITLE = "Items beheren";
             return View(GetVm(ITEM_MANAGEMENT_PAGE_TITLE));
-
         }
         
         public ActionResult UserManagement() {
