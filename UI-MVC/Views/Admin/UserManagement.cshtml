@@ -13,17 +13,17 @@
 @section CustomJS{
     @Scripts.Render("~/bundles/datatablesScripts")
     <script type="text/javascript">
-        function personSubscribe(id) {
+        function deactivateAccount(id) {
             $.ajax({
                 type: 'POST',
-                url: '/api/Subscribe/' + id
+                url: '/api/Admin/DeactivateAccount/' + id
             }).fail(() => {/* ok */ });
             event.preventDefault();
         }
-        function personUnsubscribe(id) {
+        function activateAccount(id) {
             $.ajax({
                 type: 'POST',
-                url: `/api/User/Subscription/${id}/Delete`
+                url: '/api/Admin/ActivateAccount/' + id
             }).fail(() => {/* ok */ });
             event.preventDefault();
         }

@@ -27,7 +27,7 @@ namespace BAR.BL.Managers
 		/// <summary>
 		/// Changes a user account to non-active or active
 		/// </summary>
-		public User ChangeUserAccount(string userId, bool active)
+		public User ChangeUserAccount(string userId, bool deleted)
 		{
 			InitRepo();
 
@@ -36,7 +36,7 @@ namespace BAR.BL.Managers
 			if (userToUpdate == null) return null;
 
 			//Change user
-			userToUpdate.IsActive = active;
+			userToUpdate.Deleted = deleted;
 
 			//Update database
 			userRepo.UpdateUser(userToUpdate);

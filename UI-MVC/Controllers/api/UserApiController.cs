@@ -77,5 +77,23 @@ namespace BAR.UI.MVC.Controllers.api
       User user = userManager.ChangeUserAlerts(User.Identity.GetUserId(), model.AlertsViaWebsite, model.AlertsViaEmail, model.WeeklyReviewViaEmail);
       return StatusCode(HttpStatusCode.NoContent);
     }
+
+    [HttpPost]
+    [Route("api/Admin/DeactivateAccount/{userId}")]
+    public IHttpActionResult DeactivateAccount(string userId)
+    {
+      IUserManager userManager = new UserManager();
+      userManager.ChangeUserAccount(userId, false);
+      return StatusCode(HttpStatusCode.NoContent);
+    }
+
+    [HttpPost]
+    [Route("api/Admin/ActivateAccount/{userId}")]
+    public IHttpActionResult ActivateAccount(string userId)
+    {
+      IUserManager userManager = new UserManager();
+      userManager.ChangeUserAccount(userId, true);
+      return StatusCode(HttpStatusCode.NoContent);
+    }
   }
 }

@@ -3,12 +3,13 @@
 <table id="datatable-responsive" class="table" cellspacing="10px" width="100%">
 
     <colgroup>
-        <col style="width:15%">
-        <col style="width:15%">
+        <col style="width:11%">
+        <col style="width:11%">
         <col style="width:12%">
         <col style="width:12%">
         <col style="width:16%">
         <col style="width:10%">
+        <col style="width:8%">
         <col style="width:8%">
         <col style="width:12%">
     </colgroup>
@@ -34,29 +35,31 @@
             </th>
             <th>
             </th>
-            <td>
+            <th>
                 Rol
-            </td>
+            </th>
+            <th>
+            </th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model.Users)
+        @for (int i = 0; i < Model.Users.Count(); i++)
         {
         <tr class="subscription">
             <td>
                 <div class="img-circle person-image"></div>
-                @item.FirstName
+                @Model.Users.ElementAt(i).FirstName
             </td>
             <td>
-                @item.LastName
+                @Model.Users.ElementAt(i).LastName
             </td>
-            @if (item.Gender == BAR.BL.Domain.Users.Gender.MAN)
+            @if (Model.Users.ElementAt(i).Gender == BAR.BL.Domain.Users.Gender.MAN)
             {
             <td>
                 Man
             </td>
             }
-            else if (item.Gender == BAR.BL.Domain.Users.Gender.WOMAN)
+            else if (Model.Users.ElementAt(i).Gender == BAR.BL.Domain.Users.Gender.WOMAN)
             {
             <td>
                 Vrouw
@@ -69,12 +72,12 @@
             </td>
             }
             <td>
-                @item.DateOfBirth.Value.ToShortDateString()
+                @Model.Users.ElementAt(i).DateOfBirth.Value.ToShortDateString()
             </td>
             <td>
-                @item.Email
+                @Model.Users.ElementAt(i).Email
             </td>
-            @if (item.Deleted)
+            @if (Model.Users.ElementAt(i).Deleted)
             {
             <td class="red">
                 Non-actief
@@ -87,17 +90,20 @@
             </td>
             }
             <td>
-                @if (item.Deleted)
+                @if (Model.Users.ElementAt(i).Deleted)
                 {
-                <a class="btn btn-success btn-xs" @*onclick="personSubscribe(@item.ItemId)"*@ title="Verwijderde gebruiker herstellen">Herstellen</a>
+                <a class="btn btn-success btn-xs" onclick="activateAccount(@Model.Users.ElementAt(i).Id)" title="Verwijderde gebruiker herstellen">Herstellen</a>
                 }
                 else
                 {
-                <a class="btn btn-danger btn-xs" @*onclick="personUnsubscribe(@item.ItemId)"*@ title="Gebruiker verwijderen">Verwijderen</a>
+                <a class="btn btn-danger btn-xs" onclick="deactivateAccount(@Model.Users.ElementAt(i).Id)" title="Gebruiker verwijderen">Verwijderen</a>
                 }
             </td>
             <td>
-                @Html.DropDownListFor(model => model.User.Roles, Model.Roles, "Selecteer een rol")
+                @ViewBag.CurrentRoles[i]
+            </td>
+            <td>
+                @Html.DropDownListFor(model => model.User.Roles, Model.Roles, "Verander rol")
             </td>
         </tr>
         }

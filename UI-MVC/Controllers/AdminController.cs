@@ -7,6 +7,7 @@ using BAR.UI.MVC.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using System.Linq;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace BAR.UI.MVC.Controllers
 {
@@ -35,6 +36,14 @@ namespace BAR.UI.MVC.Controllers
     {
       const string USER_MANAGEMENT_PAGE_TITLE = "Gebruikers beheren";
       UserManager userManager = new UserManager();
+      IdentityUserManager identityUserManager = HttpContext.GetOwinContext().GetUserManager<IdentityUserManager>();
+      IEnumerable<User> users = userManager.GetAllUsers();
+      List<string> currentRoles = new List<string>();
+      for (int i = 0; i < users.Count(); i++)
+      {
+        currentRoles.Add(identityUserManager.GetRoles(users.ElementAt(i).Id).FirstOrDefault());
+      }
+      ViewBag.CurrentRoles = currentRoles;
       var roles = userManager.GetAllRoles().Select(x => new SelectListItem
       {
         Value = x.Id,
