@@ -91,6 +91,7 @@ namespace BAR.UI.MVC {
             bundles.Add(new ScriptBundle("~/bundles/morrisCharts").Include(MorrisCharts));
             bundles.Add(new ScriptBundle("~/bundles/datatablesScripts").Include(DataTables));
             bundles.Add(new ScriptBundle("~/bundles/custom").Include(CustomScripts));
+            bundles.Add(new ScriptBundle("~/bundles/bootstrap-wysiwyg").IncludeDirectory("~/Scripts/bootstrap-wysiwyg", "*.js"));
             
             //Styles
             bundles.Add(new StyleBundle("~/Content/css").Include(DefaultCss));

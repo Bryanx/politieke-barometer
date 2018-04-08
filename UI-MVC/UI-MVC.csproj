@@ -332,6 +332,7 @@
     <Content Include="data.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Scripts\bootstrap-wysiwyg\bootstrap-wysiwyg.min.js" />
     <Content Include="Scripts\jquery\jquery-ui-1.11.0.js" />
     <Content Include="Scripts\jquery\jquery-ui-1.11.0.min.js" />
     <Content Include="Scripts\jquery\jquery-ui.js" />
@@ -350,7 +351,7 @@
     <Content Include="Scripts\datatables\datatables.net\js\jquery.dataTables.js" />
     <Content Include="Scripts\datatables\datatables.net\js\jquery.dataTables.min.js" />
     <Content Include="Scripts\dates\date.min.js" />
-    <Content Include="Scripts\dates\daterangepicker.js" />
+    <Content Include="Scripts\dates\daterangepicker.min.js" />
     <Content Include="Scripts\dates\moment.min.js" />
     <Content Include="Scripts\fastclick.js" />
     <Content Include="Scripts\flot\curvedLines.js" />
@@ -438,6 +439,9 @@
     <None Include="Mvc.sitemap" />
     <None Include="MvcSiteMapSchema.xsd" />
     <None Include="packages.config" />
+    <None Include="Scripts\bootstrap-wysiwyg\bootstrap-wysiwyg.js" />
+    <None Include="Scripts\bootstrap-wysiwyg\jquery.hotkeys.min.js" />
+    <None Include="Scripts\bootstrap-wysiwyg\prettify.min.js" />
     <None Include="Scripts\bootstrap.js" />
     <None Include="Scripts\bootstrap.min.js" />
     <None Include="Scripts\jquery\jquery-3.3.1-vsdoc.js" />

@@ -1,4 +1,5 @@
-﻿@model BAR.UI.MVC.Models.BaseViewModel
+﻿@using System.Web.Optimization
+@model BAR.UI.MVC.Models.BaseViewModel
 
 @section CustomCSS{
     <link href="../../Scripts/mjolnic-bootstrap-colorpicker/dist/css/bootstrap-colorpicker.min.css" rel="stylesheet">
@@ -230,20 +231,22 @@
                             <textarea name="descr" id="descr" style="display: none;"></textarea>
                         </div>
                     </div>
+                    <div class="col-sm-6 col-md-6 col-xs-12 center-margin">
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-dark">Opslaan</button>
+                            <div id="messageSettings" style="display: inline"></div>
+                        </div>
+                    </div>
                 </form>
             </div>
-
         </div>
     </div>
-</div>
 </div>
 
 
 @section CustomJS{
-    <script src="../../Scripts/mjolnic-bootstrap-colorpicker/dist/js/bootstrap-colorpicker.min.js"></script>
+    @Scripts.Render("~/bundles/bootstrap-wysiwyg", "~/Scripts/mjolnic-bootstrap-colorpicker/dist/js/bootstrap-colorpicker.min.js")
     <script>
-
-
         /**
          * When a colorpicker is changed, the page CSS updates automatically.
          */
