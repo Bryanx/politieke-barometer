@@ -19,6 +19,13 @@ namespace BAR.UI.MVC.Helpers {
             return RootUrl(helper) + "#nieuws";
         }
 
+        public static string PrivacyUrl(this UrlHelper helper) {
+            return helper.RouteUrl("Default", new {
+                controller = "Home",
+                action = nameof(HomeController.Privacy)
+            });
+        }
+
         #region UserUrls
         
         public static string DashboardUrl(this UrlHelper helper) {

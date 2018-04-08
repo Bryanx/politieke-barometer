@@ -4,6 +4,8 @@ using BAR.UI.MVC.Models;
 using Microsoft.AspNet.Identity;
 
 namespace BAR.UI.MVC.Controllers {
+    
+    [Authorize(Roles="SuperAdmin")]
     public class SuperAdminController : Controller {
         
         IUserManager userManager = new UserManager();

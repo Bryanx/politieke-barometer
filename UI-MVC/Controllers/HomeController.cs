@@ -24,5 +24,13 @@ namespace BAR.UI.MVC.Controllers {
                 People = Mapper.Map<IList<Item>, IList<ItemDTO>>(itemMgr.GetAllItems().ToList())
             });
         }
+
+        [AllowAnonymous]
+        public ActionResult Privacy() {
+            return View(new BaseViewModel() {
+                PageTitle = "Privacy en veiligheid",
+                User = User.Identity.IsAuthenticated ? userManager.GetUser(User.Identity.GetUserId()) : null
+            });
+        }
     }
 }

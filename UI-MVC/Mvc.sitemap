@@ -4,6 +4,7 @@
             xsi:schemaLocation="http://mvcsitemap.codeplex.com/schemas/MvcSiteMap-File-4.0 MvcSiteMapSchema.xsd">
 
   <mvcSiteMapNode title="Home" controller="Home" action="Index">
+    <mvcSiteMapNode title="Privacy" controller="Home" action="Privacy"/>
     <mvcSiteMapNode title="Dashboard" controller="User" action="Index">
         <mvcSiteMapNode title="Instellingen" controller="User" action="Settings"/>
     </mvcSiteMapNode>
@@ -20,5 +21,4 @@
     <mvcSiteMapNode title="Admins beheren" controller="SuperAdmin" action="AdminManagement"/>
     <mvcSiteMapNode title="Deelplatformen beheren" controller="SuperAdmin" action="PlatformManagement"/>
   </mvcSiteMapNode>
-
 </mvcSiteMap>
