@@ -1,3 +1,97 @@
 ﻿@model BAR.UI.MVC.Models.BaseViewModel
 
-<h2>title</h2>
+@section CustomCSS{
+    <link href="../../Scripts/mjolnic-bootstrap-colorpicker/dist/css/bootstrap-colorpicker.min.css" rel="stylesheet">
+}
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>Pagina opmaak</h2>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+                <br/>
+                <form class="form-horizontal form-label-left">
+                    <div class="form-group">
+                        <label class="control-label col-md-4 col-sm-4 col-xs-12">Primaire kleur</label>
+                        <div class="col-md-3 col-sm-3 col-xs-12">
+                            <div id="cp-primary" class="cp-primary input-group">
+                                <input id="ip-primary" type="text" value="#e01ab5" class="form-control"/>
+                                <span class="input-group-addon">
+                                    <i></i>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-4 col-sm-4 col-xs-12">Secundaire kleur</label>
+                        <div class="col-md-3 col-sm-3 col-xs-12">
+                            <div id="cp-secondary" class="input-group demo2">
+                                <input id="ip-secondary" type="text" value="#e01ab5" class="form-control"/>
+                                <span class="input-group-addon">
+                                    <i></i>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-4 col-sm-4 col-xs-12">Tertiaire kleur</label>
+                        <div class="col-md-3 col-sm-3 col-xs-12">
+                            <div id="cp-tertiary" class="input-group demo2">
+                                <input id="ip-tertiary" type="text" value="#e01ab5" class="form-control"/>
+                                <span class="input-group-addon">
+                                    <i></i>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section CustomJS{
+    <script src="../../Scripts/mjolnic-bootstrap-colorpicker/dist/js/bootstrap-colorpicker.min.js"></script>
+    <script>
+        var htmlselector = document.getElementsByTagName('html')[0];
+        var primary_color = window.getComputedStyle(document.documentElement).getPropertyValue('--primary-color').split(' ').join(''),
+        secondary_color = window.getComputedStyle(document.documentElement).getPropertyValue('--secondary-color').split(' ').join('');
+        var tertiary_color = window.getComputedStyle(document.documentElement).getPropertyValue('--tertiary-color').split(' ').join('');
+
+        
+        function rgb2hex(rgb) {
+            rgb = rgb.toString();
+            rgb = rgb.match(/^rgba?[\s+]?\([\s+]?(\d+)[\s+]?,[\s+]?(\d+)[\s+]?,[\s+]?(\d+)[\s+]?/i);
+            return (rgb && rgb.length === 4) ? "#" +
+                ("0" + parseInt(rgb[1], 10).toString(16)).slice(-2) +
+                ("0" + parseInt(rgb[2], 10).toString(16)).slice(-2) +
+                ("0" + parseInt(rgb[3], 10).toString(16)).slice(-2) : '';
+        }
+        $('#cp-primary').colorpicker().on('changeColor',
+            (e) => {
+                primary_color = rgb2hex(e.color);
+                htmlselector.setAttribute("style", "--primary-color: " + primary_color);
+            });
+
+        $('#cp-secondary').colorpicker().on('changeColor',
+            (e) => {
+                secondary_color = rgb2hex(e.color);
+                htmlselector.setAttribute("style", "--secondary-color: " + secondary_color);
+            });
+
+        $('#cp-tertiary').colorpicker().on('changeColor',
+            (e) => {
+                tertiary_color = rgb2hex(e.color);
+                htmlselector.setAttribute("style", "--tertiary-color: " + tertiary_color);
+            });
+        
+        (() => {
+            $('#ip-primary').val(primary_color).trigger('change');
+            $('#ip-secondary').val(secondary_color).trigger('change');
+            $('#ip-tertiary').val(tertiary_color).trigger('change');
+        })($);
+    </script>
+}
