@@ -180,8 +180,4 @@ namespace BAR.UI.MVC.Models
     [Display(Name = "Nieuw wachtwoord")]
     public string PasswordNew { get; set; }
   }
-  
-  public class ItemViewModel : BaseViewModel {
-    public IEnumerable<ItemDTO> People { get; set; }
-  }
 }

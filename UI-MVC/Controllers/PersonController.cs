@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
+using AutoMapper;
 using BAR.BL;
 using BAR.BL.Domain.Items;
 using BAR.BL.Domain.Users;
@@ -9,12 +10,14 @@ using BAR.BL.Managers;
 using BAR.UI.MVC.Models;
 using Microsoft.AspNet.Identity;
 using WebGrease.Css.Extensions;
+using static BAR.UI.MVC.Models.ItemViewModels;
 
 namespace BAR.UI.MVC.Controllers {
     public class PersonController : Controller {
         
         private const string INDEX_PAGE_TITLE = "Politici-overzicht";
-        IItemManager itemMgr = new ItemManager();
+        private IItemManager itemMgr = new ItemManager();
+        private UserManager userManager = new UserManager();
         
         [AllowAnonymous]
         public ActionResult Index() {
@@ -43,7 +46,6 @@ namespace BAR.UI.MVC.Controllers {
                 }
             }
 
-            UserManager userManager = new UserManager();
             ItemViewModel itemViewModel = new ItemViewModel() {
                 PageTitle = INDEX_PAGE_TITLE,
                 User = User.Identity.IsAuthenticated ? userManager.GetUser(User.Identity.GetUserId()) : null,
@@ -55,25 +57,12 @@ namespace BAR.UI.MVC.Controllers {
         // GET: Default/Details/5 (Specific person page)
         public ActionResult Details(int id) {
             Item item = itemMgr.GetItem(id);
-            List<ItemDTO> persoon = new List<ItemDTO>();
-            persoon.Add(new ItemDTO() {
-                ItemId = item.ItemId,
-                Name = item.Name,
-                CreationDate = item.CreationDate,
-                LastUpdated = item.LastUpdatedInfo,
-                Description = item.Description,
-                NumberOfFollowers = item.NumberOfFollowers,
-                TrendingPercentage = Math.Floor(item.TrendingPercentage),
-                NumberOfMentions = item.NumberOfMentions,
-                Baseline = item.Baseline
-            });
-            UserManager userManager = new UserManager();
-            ItemViewModel itemViewModel = new ItemViewModel() {
-                PageTitle = persoon.First().Name,
+            PersonViewModel personViewModel = new PersonViewModel() {
+                PageTitle = item.Name,
                 User = User.Identity.IsAuthenticated ? userManager.GetUser(User.Identity.GetUserId()) : null,
-                People = persoon
+                Person = Mapper.Map(item, new ItemDTO())
             };
-            return View("Details", itemViewModel);
+            return View("Details", personViewModel);
         }
     }
 }
