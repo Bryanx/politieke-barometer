@@ -215,6 +215,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\OrganisationController.cs" />
     <Compile Include="Controllers\PersonController.cs" />
+    <Compile Include="Controllers\SuperAdminController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="DAL\WidgetManager.cs" />
     <Compile Include="Global.asax.cs">
@@ -407,6 +408,9 @@
     <Content Include="Views\Shared\Partials\NavBarLinks.cshtml" />
     <Content Include="Views\Shared\Partials\PersonTable.cshtml" />
     <Content Include="Views\Shared\Partials\SearchBar.cshtml" />
+    <Content Include="Views\SuperAdmin\AdminManagement.cshtml" />
+    <Content Include="Views\SuperAdmin\PlatformManagement.cshtml" />
+    <Content Include="Views\SuperAdmin\SourceManagement.cshtml" />
     <Content Include="Views\User\Dashboard.cshtml" />
     <Content Include="Views\User\Settings.cshtml" />
     <Content Include="Views\User\Subscriptions.cshtml" />

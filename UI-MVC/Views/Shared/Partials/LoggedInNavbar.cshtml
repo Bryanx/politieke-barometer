@@ -32,20 +32,35 @@
                     </li>
                 </ul>
             </li>
-            @if (User.IsInRole("Admin")) {
-                <li>
+            @if (User.IsInRole("Admin") || User.IsInRole("SuperAdmin")) {
+                <li class="divider-top">
                     <ul>
                         <li>
                             <a href='@Url.AdminDashboard()'><i class="fa fa-pie-chart"></i> Admin dashboard</a>
                         </li>
                         <li>
-                            <a href='@Url.AdminPageManagement()'><i class="fa fa-edit"></i> Pagina's beheren</a>
+                            <a href='@Url.PageManagement()'><i class="fa fa-edit"></i> Pagina's beheren</a>
                         </li>
                         <li>
-                            <a href='@Url.AdminItemManagement()'><i class="fa fa-object-group"></i> Items beheren</a> <!-- en content importeren -->
+                            <a href='@Url.ItemManagement()'><i class="fa fa-object-group"></i> Items beheren</a> <!-- en content importeren -->
                         </li>
                         <li>
-                            <a href='@Url.AdminUserManagement()'><i class="fa fa-users"></i> Gebruikers beheren</a> <!-- en gebruikers export -->
+                            <a href='@Url.UserManagement()'><i class="fa fa-users"></i> Gebruikers beheren</a> <!-- en gebruikers export -->
+                        </li>
+                    </ul>
+                </li>
+            }
+            @if (User.IsInRole("SuperAdmin")) {
+                <li class="divider-top">
+                    <ul>
+                        <li>
+                            <a href='@Url.SourceManagement()'><i class="fa fa-paperclip"></i> Bronnen beheren</a>
+                        </li>
+                        <li>
+                            <a href='@Url.AdminManagement()'><i class="fa fa-user-plus"></i> Admins beheren</a>
+                        </li>
+                        <li>
+                            <a href='@Url.PlatformManagement()'><i class="fa fa-bank"></i> Deelplatformen beheren</a>
                         </li>
                     </ul>
                 </li>

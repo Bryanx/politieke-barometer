@@ -1639,7 +1639,7 @@ ul.msg_list li a {
   user-select: none; }
 .dropdown-menu > li > ul {
   padding: 0; }
-.dropdown-menu > li:nth-child(2) {
+.dropdown-menu > .divider-top {
   border-top: 1px solid #f0f0f0;
   margin-top: 5px;
   padding-top: 5px; }

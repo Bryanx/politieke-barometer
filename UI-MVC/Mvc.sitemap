@@ -16,6 +16,9 @@
         <mvcSiteMapNode title="Items beheren" controller="Admin" action="ItemManagement"/>
         <mvcSiteMapNode title="Gebruikers beheren" controller="Admin" action="UserManagement"/>
     </mvcSiteMapNode>
+    <mvcSiteMapNode title="Bronnen beheren" controller="SuperAdmin" action="SourceManagement"/>
+    <mvcSiteMapNode title="Admins beheren" controller="SuperAdmin" action="AdminManagement"/>
+    <mvcSiteMapNode title="Deelplatformen beheren" controller="SuperAdmin" action="PlatformManagement"/>
   </mvcSiteMapNode>
 
 </mvcSiteMap>

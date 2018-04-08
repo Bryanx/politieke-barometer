@@ -71,27 +71,52 @@ namespace BAR.UI.MVC.Helpers {
             });
         }
 
-        public static string AdminPageManagement(this UrlHelper helper) {
+        public static string PageManagement(this UrlHelper helper) {
             return helper.RouteUrl("Default", new {
                 controller = "Admin",
                 action = nameof(AdminController.PageManagement)
             });
         }
 
-        public static string AdminItemManagement(this UrlHelper helper) {
+        public static string ItemManagement(this UrlHelper helper) {
             return helper.RouteUrl("Default", new {
                 controller = "Admin",
                 action = nameof(AdminController.ItemManagement)
             });
         }
 
-        public static string AdminUserManagement(this UrlHelper helper) {
+        public static string UserManagement(this UrlHelper helper) {
             return helper.RouteUrl("Default", new {
                 controller = "Admin",
                 action = nameof(AdminController.UserManagement)
             });
         }
         
+        #endregion
+        
+        #region SuperAdminUrls
+
+        public static string SourceManagement(this UrlHelper helper) {
+            return helper.RouteUrl("Default", new {
+                controller = "SuperAdmin",
+                action = nameof(SuperAdminController.SourceManagement)
+            });
+        }
+        
+        public static string AdminManagement(this UrlHelper helper) {
+            return helper.RouteUrl("Default", new {
+                controller = "SuperAdmin",
+                action = nameof(SuperAdminController.AdminManagement)
+            });
+        }
+        
+        public static string PlatformManagement(this UrlHelper helper) {
+            return helper.RouteUrl("Default", new {
+                controller = "SuperAdmin",
+                action = nameof(SuperAdminController.PlatformManagement)
+            });
+        }
+
         #endregion
     }
 }
