@@ -1,10 +1,40 @@
+// Variables:
+
+$font-default: Roboto, Helvetica, Arial, sans-serif;
+
+@mixin diagonal-gradient($color1, $color2) {
+  background-image: -webkit-gradient(linear, 0% 0%, 100% 100%, color-stop(0, $color1), $color2);
+  background-image: -webkit-repeating-linear-gradient(top left, $color1 0%, $color2 100%);
+  background-image: repeating-linear-gradient(to bottom right, $color1 0%, $color2 100%);
+  background-image: -ms-repeating-linear-gradient(top left, $color1 0%, $color2 100%);
+  filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#{$color1}', endColorstr='#{$color2}');
+}
+
+@mixin border-radius($radius: 5px) {
+  -webkit-border-radius: $radius;
+  -moz-border-radius: $radius;
+  border-radius: $radius;
+}
+
+@mixin box-shadow($val) {
+  -webkit-box-shadow: $val;
+  -moz-box-shadow: $val;
+  box-shadow: $val;
+}
+
+/*
+=========================================================
+======================== GENERAL ========================
+=========================================================
+*/
+
 html {
   --primary-color: #0f8ec4;
   --primary-darker: #0e85b8;
   --primary-darkest: #0d77a4;
   --secondary-lighter: #3c3c3c;
   --secondary-color: #303E4D;
-  --secondary-darker: #090004;
+  --secondary-darker: #2a3744;
   --secondary-darkest: #1f2e3f;
   --tertiary-color: #278e87;
 }
@@ -13,12 +43,6 @@ html {
   background: var(--primary-color);
   color: white;
 }
-
-/*
-=========================================================
-======================== GENERAL ========================
-=========================================================
-*/
 
 .c-primary {
   color: var(--primary-color);
@@ -180,13 +204,13 @@ div.nav_menu .searchbar .search-field, form.navbar-form .input-group {
 }
 
 .search-focus {
-  border-radius: 5px;
+  @include border-radius;
   border: 1px solid var(--primary-color) !important;
 }
 
 .search-field, .btn-search {
   color: #65686a;
-  font-family: Roboto, Artial, sans-serif;
+  font: $font-default;
   font-size: 18px;
   transition: 0.1s;
   border: none;
@@ -277,7 +301,7 @@ Login
   width: 25px;
   height: 25px;
   cursor: pointer;
-  border-radius: 3px;
+  @include border-radius(3px);
   border: 1px solid #ccc;
   vertical-align: middle;
   display: inline-block;
@@ -935,7 +959,7 @@ body .container.body .right_col {
 body {
   color: #73879C;
   background: #F7F7F7;
-  font-family: "Helvetica Neue", Roboto, Arial, "Droid Sans", sans-serif;
+  font-family: $font-default;
   font-size: 15px;
   font-weight: 400;
   line-height: 1.471;
@@ -1230,7 +1254,7 @@ a {
   padding-left: 20px;
   border-radius: 0;
   margin-left: 100px;
-  box-shadow: inset 0 3px 3px -2px rgba(0, 0, 0, 0.05);
+  @include box-shadow(inset 0px 3px 3px -2px rgba(0, 0, 0, 0.05));
   > li > a {
     position: relative;
     z-index: 15;
@@ -1317,7 +1341,7 @@ a {
   padding: 0;
   .form-control {
     border-right: 0;
-    box-shadow: inset 0 1px 0px rgba(0, 0, 0, 0.075);
+    @include box-shadow(inset 0 1px 0px rgba(0, 0, 0, 0.075));
     border-radius: 25px 0px 0px 25px;
     padding-left: 20px;
     border: 1px solid rgba(221, 226, 232, 0.49);
@@ -1330,7 +1354,7 @@ a {
     border-radius: 0px 25px 25px 0px;
     border: 1px solid rgba(221, 226, 232, 0.49);
     border-left: 0;
-    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+    @include box-shadow(inset 0 1px 1px rgba(0, 0, 0, 0.075));
     color: #93A2B2;
     margin-bottom: 0 !important;
   }
@@ -1427,7 +1451,7 @@ footer {
 
       &:first-child {
         > li {
-        line-height: auto !important;
+          line-height: auto !important;
         }
       }
       > li {
@@ -1437,7 +1461,7 @@ footer {
         > a > i.small-logo.colored {
           width: 120px;
           margin: 0 !important;
-           vertical-align: baseline;
+          vertical-align: baseline;
         }
       }
     }
@@ -1456,30 +1480,22 @@ footer.joinus {
   padding-bottom: 100px;
   text-align: center;
   color: white;
-  background-color: #1b8ea6;
-  /* IE9, iOS 3.2+ */
-  background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIHZpZXdCb3g9IjAgMCAxIDEiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjxsaW5lYXJHcmFkaWVudCBpZD0idnNnZyIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMTAwJSIgeTI9IjEwMCUiPjxzdG9wIHN0b3AtY29sb3I9IiMwZjhlYzQiIHN0b3Atb3BhY2l0eT0iMSIgb2Zmc2V0PSIwIi8+PHN0b3Agc3RvcC1jb2xvcj0iIzI3OGU4NyIgc3RvcC1vcGFjaXR5PSIxIiBvZmZzZXQ9IjEiLz48L2xpbmVhckdyYWRpZW50PjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiIGZpbGw9InVybCgjdnNnZykiIC8+PC9zdmc+);
-  background-image: -webkit-gradient(linear, 0% 0%, 100% 100%,color-stop(0, rgb(15, 142, 196)),color-stop(1, rgb(39, 142, 135)));
-  /* Android 2.3 */
-  background-image: -webkit-repeating-linear-gradient(top left,rgb(15, 142, 196) 0%,rgb(39, 142, 135) 100%);
-  /* IE10+ */
-  background-image: repeating-linear-gradient(to bottom right,rgb(15, 142, 196) 0%,rgb(39, 142, 135) 100%);
-  background-image: -ms-repeating-linear-gradient(top left,rgb(15, 142, 196) 0%,rgb(39, 142, 135) 100%);
-    > div {
-      margin-bottom: 20px;  
-    }
-    input {
+  @include diagonal-gradient(#0f8ec4, #278e87);
+  > div {
+    margin-bottom: 20px;
+  }
+  input {
+    color: #cfcfcf;
+    border: 1px solid transparent;
+    background: rgba(0, 0, 0, 0.1);
+    &::placeholder {
       color: #cfcfcf;
-      border: 1px solid transparent;
-      background: rgba(0,0,0,0.1);
-      &::placeholder {
-        color: #cfcfcf;
-      }
-      &:focus {
-        border: 1px solid transparent;
-        background: rgba(0,0,0,0.2);
-      }
     }
+    &:focus {
+      border: 1px solid transparent;
+      background: rgba(0, 0, 0, 0.2);
+    }
+  }
 }
 
 .nav-sm footer {
@@ -1648,8 +1664,8 @@ h2 {
   padding: 10px 17px;
   display: inline-block;
   background: white;
-  box-shadow: 0 1px 4px 1px rgba(0, 0, 0, 0.05);
-  border-radius: 5px;
+  @include box-shadow(0 1px 4px 1px rgba(0, 0, 0, 0.05));
+  @include border-radius;
   -webkit-column-break-inside: avoid;
   -moz-column-break-inside: avoid;
   column-break-inside: avoid;
@@ -1758,10 +1774,8 @@ legend {
   display: inline-block;
   margin-right: 3px;
   a {
-    border-radius: 4px;
+    @include border-radius(4px);
     color: #768399;
-    -moz-border-radius: 4px;
-    -webkit-border-radius: 4px;
   }
 }
 
@@ -2077,8 +2091,7 @@ td {
     }
     &.paginate_button, &.paginate_active {
       border: 1px solid #aaa;
-      -webkit-border-radius: 5px;
-      -moz-border-radius: 5px;
+      @include border-radius;
       padding: 2px 5px;
       margin: 0 3px;
       cursor: pointer;
@@ -2312,7 +2325,7 @@ ul.to_do {
   padding: 0;
   li {
     background: #f3f3f3;
-    border-radius: 3px;
+    @include border-radius(3px);
     position: relative;
     padding: 7px;
     margin-bottom: 5px;
@@ -2326,7 +2339,7 @@ ul.to_do {
 .dashboard-widget {
   background: #f6f6f6;
   border-top: 5px solid #79C3DF;
-  border-radius: 3px;
+  @include border-radius(3px);
   padding: 5px 10px 10px;
   .dashboard-widget-title {
     font-weight: normal;
@@ -2342,7 +2355,7 @@ ul.to_do {
       color: #33a1c9;
       padding: 3px 6px;
       border: 1px solid #abd9ea;
-      border-radius: 5px;
+      @include border-radius;
       background: white;
     }
   }
@@ -2376,7 +2389,7 @@ ul.quick-list {
     vertical-align: top;
     background: white;
     border: 1px solid #abd9ea;
-    border-radius: 5px;
+    @include border-radius;
     text-align: center;
     float: right;
     padding: 2px;
@@ -2553,7 +2566,7 @@ li.user-profile {
 
 .user-profile img {
   width: 35px;
-  border-radius: 50%;
+  @include border-radius(50%);
   margin-right: 10px;
 }
 
@@ -2575,7 +2588,7 @@ ul.top_profiles {
     width: 50px;
     height: 50px;
     margin: 5px 10px 5px 0;
-    border-radius: 50%;
+    @include border-radius(50%);
     padding: 9px 12px;
     i {
       font-size: 30px;
@@ -2585,7 +2598,7 @@ ul.top_profiles {
     background: #ccc;
     width: 52px;
     margin-right: 10px;
-    border-radius: 10px;
+    @include border-radius(10px);
     padding: 5px;
     .month {
       margin: 0;
@@ -2631,7 +2644,7 @@ h4.graph_title {
   line-height: 32px;
   height: 32px;
   padding-left: 10px;
-  border-radius: 4px;
+  @include border-radius(4px);
   .fa {
     width: 32px;
     font-size: 16px;
@@ -2658,13 +2671,11 @@ h4.graph_title {
   display: block;
   margin-bottom: 12px;
   border: 1px solid #E4E4E4;
-  -webkit-border-radius: 5px;
   overflow: hidden;
   padding-bottom: 5px;
   -webkit-background-clip: padding-box;
-  -moz-border-radius: 5px;
   -moz-background-clip: padding;
-  border-radius: 5px;
+  @include border-radius;
   background-clip: padding-box;
   background: white;
   transition: all 300ms ease-in-out;
@@ -2785,7 +2796,7 @@ a.star {
 
 .mail_content {
   background: none repeat scroll 0 0 white;
-  border-radius: 4px;
+  @include border-radius(4px);
   margin-top: 20px;
   min-height: 500px;
   padding: 10px 11px;
@@ -2807,7 +2818,7 @@ a.star {
     }
     .cn {
       background: none repeat scroll 0 0 #39B3D7;
-      border-radius: 12px;
+      @include border-radius(12px);
       color: white;
       float: right;
       font-style: normal;
@@ -3080,7 +3091,7 @@ input.parsley-error, textarea.parsley-error, select.parsley-error {
 .bad {
   input, select, textarea {
     border: 1px solid #CE5454;
-    box-shadow: 0 0 4px -2px #CE5454;
+    @include box-shadow(0 0 4px -2px #CE5454);
     position: relative;
     left: 0;
     -moz-animation: .7s 1 shake linear;
@@ -3176,7 +3187,7 @@ input.parsley-error, textarea.parsley-error, select.parsley-error {
 }
 
 .btn {
-  border-radius: 3px;
+  @include border-radius(3px);
 }
 
 a {
@@ -3215,7 +3226,7 @@ a {
 }
 
 .btn-round {
-  border-radius: 30px;
+  @include border-radius(30px);
 }
 
 .btn.btn-app {
@@ -3243,7 +3254,7 @@ a {
     border-color: #aaa;
   }
   &:active, &:focus {
-    box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+    @include box-shadow(inset 0 3px 5px rgba(0, 0, 0, 0.125));
   }
   > .badge {
     position: absolute;
@@ -3284,7 +3295,7 @@ textarea {
   filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
   border: 1px solid #cccccc;
   border-bottom-color: #b3b3b3;
-  border-radius: 4px;
+  @include border-radius(4px);
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
 }
 
@@ -3346,8 +3357,7 @@ textarea {
 }
 
 span.tag {
-  -moz-border-radius: 2px;
-  -webkit-border-radius: 2px;
+  @include border-radius(2px);
   display: block;
   float: left;
   padding: 5px 9px;
@@ -3357,7 +3367,6 @@ span.tag {
   margin-right: 5px;
   font-weight: 500;
   margin-bottom: 5px;
-  font-family: helvetica;
   a {
     color: #F1F6F7 !important;
   }
@@ -3373,7 +3382,6 @@ span.tag {
   input {
     width: 80px;
     margin: 0px;
-    font-family: helvetica;
     font-size: 13px;
     border: 1px solid transparent;
     padding: 3px;
@@ -3521,7 +3529,7 @@ ul.timeline li {
       width: 14px;
       height: 14px;
       border: 3px solid #d2d3d2;
-      border-radius: 14px;
+      @include border-radius(14px);
       background: #f9f9f9;
     }
   }
@@ -3559,14 +3567,14 @@ ul.social li {
 .thumb img {
   width: 50px;
   height: 50px;
-  border-radius: 50%;
+  @include border-radius(50%);
 }
 
 .chat {
   .thumb img {
     width: 27px;
     height: 27px;
-    border-radius: 50%;
+    @include border-radius(50%);
   }
   .status {
     float: left;
@@ -3578,7 +3586,7 @@ ul.social li {
     display: block;
     border: 2px solid white;
     z-index: 12312;
-    border-radius: 50%;
+    @include border-radius(50%);
     &.online {
       background: var(--primary-color);
     }
@@ -3671,11 +3679,11 @@ ul.widget_tally {
 .pie_bg {
   border-bottom: 1px solid rgba(101, 204, 182, 0.16);
   padding-bottom: 15px;
-  border-radius: 4px;
+  @include border-radius(4px);
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffffff', endColorstr='#ffe6e6e6', GradientType=0);
   filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
   padding-bottom: 10px;
-  box-shadow: 0 4px 6px -6px #222;
+  @include box-shadow(0 4px 6px -6px #222);
 }
 
 .widget_tally_box .flex {
@@ -3712,7 +3720,7 @@ ul.widget_profile_box {
       height: 35px;
       border: 1px solid rgba(52, 73, 94, 0.44);
       display: block;
-      border-radius: 50%;
+      @include border-radius(50%);
       padding: 0px;
       &:hover {
         color: var(--primary-color) !important;
@@ -3826,7 +3834,7 @@ ul.messages li img.avatar, img.avatar {
   width: 32px;
   float: left;
   display: inline-block;
-  border-radius: 2px;
+  @include border-radius(2px);
   padding: 2px;
   background: #f7f7f7;
   border: 1px solid #e6e6e6;
@@ -3928,7 +3936,7 @@ ul {
 }
 
 .avatar img {
-  border-radius: 50%;
+  @include border-radius(50%);
   max-width: 45px;
 }
 
@@ -4009,7 +4017,7 @@ ul {
     width: 120px;
     line-height: 20px;
     background-color: #555;
-    box-shadow: 0 0 3px rgba(0, 0, 0, 0.3);
+    @include box-shadow(0 0 3px rgba(0, 0, 0, 0.3));
   }
   &.ui-ribbon-primary .ui-ribbon {
     &:after, &:before {
@@ -4055,7 +4063,7 @@ ul {
   overflow: hidden;
   position: relative;
   text-align: center;
-  box-shadow: 1px 1px 2px #e6e6e6;
+  @include box-shadow(1px 1px 2px #e6e6e6);
   cursor: default;
   .mask, .content {
     position: absolute;
@@ -4108,7 +4116,7 @@ ul {
     background: #000;
     color: white;
     text-transform: uppercase;
-    box-shadow: 0 0 1px #000;
+    @include box-shadow(0 0 1px #000);
   }
 }
 
@@ -4323,7 +4331,7 @@ ul {
   height: 25px;
   border: 2px solid rgba(51, 51, 51, 0.28) !important;
   padding: 2px;
-  border-radius: 50px;
+  @include border-radius(50px);
 }
 
 .product_gallery a {
@@ -4461,7 +4469,7 @@ a.hiddenanchor {
     text-decoration: underline;
   }
   h1 {
-    font: normal 25px Helvetica, Arial, sans-serif;
+    font: normal 25px $font-default;
     letter-spacing: -0.05em;
     line-height: 20px;
     margin: 10px 0 30px;
@@ -4513,9 +4521,7 @@ a.hiddenanchor {
     position: relative;
     input {
       &[type="text"], &[type="email"], &[type="password"] {
-        border-radius: 3px;
-        -ms-box-shadow: 0 1px 0 white, 0 -2px 5px rgba(0, 0, 0, 0.08) inset;
-        -o-box-shadow: 0 1px 0 white, 0 -2px 5px rgba(0, 0, 0, 0.08) inset;
+        @include border-radius(3px);
         box-shadow: 0 1px 0 white, 0 -2px 5px rgba(0, 0, 0, 0.08) inset;
         border: 1px solid #c8c8c8;
         color: #777;
@@ -4523,9 +4529,7 @@ a.hiddenanchor {
         width: 100%;
       }
       &[type="text"]:focus, &[type="email"]:focus, &[type="password"]:focus {
-        -ms-box-shadow: 0 0 2px #ed1c24 inset;
-        -o-box-shadow: 0 0 2px #ed1c24 inset;
-        box-shadow: 0 0 2px #A97AAD inset;
+        @include box-shadow(0 0 2px #A97AAD inset);
         background-color: white;
         border: 1px solid #A878AF;
         outline: none;
@@ -4567,9 +4571,7 @@ a.hiddenanchor {
   background: #f7f9fa;
   background: linear-gradient(top, #f7f9fa 0%, #f0f0f0 100%);
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#f7f9fa', endColorstr='#f0f0f0', GradientType=0);
-  -ms-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1) inset;
-  -o-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1) inset;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1) inset;
+  @include box-shadow(0 1px 2px rgba(0, 0, 0, 0.1) inset);
   border-radius: 0 0 5px 5px;
   border-top: 1px solid #CFD5D9;
   padding: 15px 0;
@@ -4617,7 +4619,7 @@ header {
   border: 1px solid #ccc;
   padding: 4px;
   box-sizing: content-box;
-  box-shadow: rgba(0, 0, 0, 0.07451) 0px 1px 1px 0px inset;
+  @include box-shadow(rgba(0, 0, 0, 0.07451) 0px 1px 1px 0px inset);
   border-top-right-radius: 3px;
   border-bottom-right-radius: 3px;
   border-bottom-left-radius: 3px;
@@ -4879,7 +4881,7 @@ fieldset {
         width: 40px;
         height: 40px;
         line-height: 40px;
-        border-radius: 100px;
+        @include border-radius(100px);
         display: block;
         margin: 0 auto 5px;
         font-size: 16px;
@@ -4995,7 +4997,7 @@ fieldset {
           width: 40px;
           height: 40px;
           line-height: 40px;
-          border-radius: 100px;
+          @include border-radius(100px);
           display: block;
           margin: 0 auto 5px;
           font-size: 16px;
@@ -5163,7 +5165,7 @@ ul.notifications {
     float: right;
     margin: 3px;
     width: 36px;
-    box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.3);
+    @include box-shadow(3px 3px 3px rgba(0, 0, 0, 0.3));
     &:last-child {
       margin-left: 0;
     }
@@ -5181,8 +5183,8 @@ ul.notifications {
   .text {
     padding: 5px 15px;
     height: 140px;
-    border-radius: 7px;
-    box-shadow: 6px 6px 6px rgba(0, 0, 0, 0.3);
+    @include border-radius(7px);
+    @include box-shadow(6px 6px 6px rgba(0, 0, 0, 0.3));
   }
   div p {
     display: inline-block;
