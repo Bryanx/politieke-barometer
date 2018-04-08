@@ -96,6 +96,23 @@ namespace BAR.BL.Managers
 		}
 
 		/// <summary>
+		/// Returns all people
+		/// </summary>
+		public IEnumerable<Item> GetAllPeople() 
+		{
+			return GetAllItems().Where(item => item is Person);
+		}
+
+		/// <summary>
+		/// Returns all organisations
+		/// </summary>
+		public IEnumerable<Item> GetAllOrganisations() 
+		{
+			return GetAllItems().Where(item => item is Organisation);
+
+		}
+
+		/// <summary>
 		/// Creates a new item based on the given parameters
 		/// </summary>
 		public Item CreateItem(ItemType itemType, string name, string description = "", string function = "", Category category = null)
