@@ -4,11 +4,18 @@
             xsi:schemaLocation="http://mvcsitemap.codeplex.com/schemas/MvcSiteMap-File-4.0 MvcSiteMapSchema.xsd">
 
   <mvcSiteMapNode title="Home" controller="Home" action="Index">
-    <mvcSiteMapNode title="Dashboard" controller="User" action="Index"/>
+    <mvcSiteMapNode title="Dashboard" controller="User" action="Index">
+        <mvcSiteMapNode title="Instellingen" controller="User" action="Settings"/>
+    </mvcSiteMapNode>
     <mvcSiteMapNode title="Politici-overzicht" controller="Person" action="Index">
         <mvcSiteMapNode title="Person" action="Details" dynamicNodeProvider="BAR.UI.MVC.PersonDynamicNodeProvider, BAR.UI.MVC" />
     </mvcSiteMapNode>
     <mvcSiteMapNode title="Partij-overzicht" controller="Organisation" action="Index"/>
+    <mvcSiteMapNode title="Admin Dashboard" controller="Admin" action="Index">
+        <mvcSiteMapNode title="Page Management" controller="Admin" action="PageManagement"/>
+        <mvcSiteMapNode title="Item Management" controller="Admin" action="ItemManagement"/>
+        <mvcSiteMapNode title="User Management" controller="Admin" action="UserManagement"/>
+    </mvcSiteMapNode>
   </mvcSiteMapNode>
 
 </mvcSiteMap>
