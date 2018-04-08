@@ -22,47 +22,30 @@ namespace BAR.UI.MVC.Controllers {
         [AllowAnonymous]
         public ActionResult Index() {
             ISubscriptionManager subMgr = new SubscriptionManager();
+            IList<ItemDTO> people = Mapper.Map<IList<Item>, IList<ItemDTO>>(itemMgr.GetAllItems().ToList());
             IEnumerable<Subscription> subs = subMgr.GetSubscriptionsWithItemsForUser(User.Identity.GetUserId());
-            List<ItemDTO> personen = new List<ItemDTO>();
-            foreach (Item item in itemMgr.GetAllItems()) {
-                bool subbed = false;
+            foreach (ItemDTO item in people) {
                 foreach (var sub in subs) {
-                    if (sub.SubscribedItem.ItemId == item.ItemId) subbed = true;
-                }
-
-                if (item is Person) {
-                    personen.Add(new ItemDTO() {
-                        ItemId = item.ItemId,
-                        Name = item.Name,
-                        CreationDate = item.CreationDate,
-                        LastUpdated = item.LastUpdatedInfo,
-                        Description = item.Description,
-                        NumberOfFollowers = item.NumberOfFollowers,
-                        TrendingPercentage = Math.Floor(item.TrendingPercentage),
-                        NumberOfMentions = item.NumberOfMentions,
-                        Baseline = item.Baseline,
-                        Subscribed = subbed
-                    });
+                    if (sub.SubscribedItem.ItemId == item.ItemId) item.Subscribed = true;
                 }
             }
-
-            ItemViewModel itemViewModel = new ItemViewModel() {
+            return View("Index", 
+                new ItemViewModel() {
                 PageTitle = INDEX_PAGE_TITLE,
                 User = User.Identity.IsAuthenticated ? userManager.GetUser(User.Identity.GetUserId()) : null,
-                People = personen
-            };
-            return View("Index", itemViewModel);
+                People = people
+            });
         }
 
         // GET: Default/Details/5 (Specific person page)
         public ActionResult Details(int id) {
             Item item = itemMgr.GetItem(id);
-            PersonViewModel personViewModel = new PersonViewModel() {
+            return View("Details", 
+                new PersonViewModel() {
                 PageTitle = item.Name,
                 User = User.Identity.IsAuthenticated ? userManager.GetUser(User.Identity.GetUserId()) : null,
                 Person = Mapper.Map(item, new ItemDTO())
-            };
-            return View("Details", personViewModel);
+            });
         }
     }
 }

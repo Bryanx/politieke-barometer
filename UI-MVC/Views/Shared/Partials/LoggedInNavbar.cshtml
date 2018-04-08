@@ -32,7 +32,7 @@
                     </li>
                 </ul>
             </li>
-            @if (Model.IsAdmin) {
+            @if (User.IsInRole("Admin")) {
                 <li>
                     <ul>
                         <li>

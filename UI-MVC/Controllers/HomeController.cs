@@ -14,17 +14,15 @@ namespace BAR.UI.MVC.Controllers {
         private const string INDEX_PAGE_TITLE = "Politieke Barometer";
         private IItemManager itemMgr = new ItemManager();
         private UserManager userManager = new UserManager();
-        private readonly IMapper mapper;
 
         [AllowAnonymous]
         public ActionResult Index() {
-            IEnumerable<ItemDTO> people = mapper.Map(itemMgr.GetAllItems(), new List<ItemDTO>());
-            ItemViewModel itemViewModel = new ItemViewModel() {
+            return View("Index", "~/Views/Shared/Layouts/_HomeLayout(temp).cshtml", 
+                new ItemViewModel() {
                 PageTitle = INDEX_PAGE_TITLE,
                 User = User.Identity.IsAuthenticated ? userManager.GetUser(User.Identity.GetUserId()) : null,
-                People = people
-            };
-            return View("Index", "~/Views/Shared/Layouts/_HomeLayout(temp).cshtml", itemViewModel);
+                People = Mapper.Map<IList<Item>, IList<ItemDTO>>(itemMgr.GetAllItems().ToList())
+            });
         }
     }
 }
