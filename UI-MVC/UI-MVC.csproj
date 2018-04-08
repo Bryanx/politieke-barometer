@@ -221,6 +221,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\ShowAdminLinks.cs" />
     <Compile Include="Helpers\UrlExtensions.cs" />
     <Compile Include="Models\AlertDTO.cs" />
     <Compile Include="Models\BaseViewModel.cs" />
@@ -406,7 +407,9 @@
     <Content Include="Views\Shared\Partials\Footer.cshtml" />
     <Content Include="Views\Shared\Partials\LoggedInNavbar.cshtml" />
     <Content Include="Views\Shared\Partials\LoginModal.cshtml" />
+    <Content Include="Views\Shared\Partials\NavBarAdminLinks.cshtml" />
     <Content Include="Views\Shared\Partials\NavBarLinks.cshtml" />
+    <Content Include="Views\Shared\Partials\NavBarSuperAdminLinks.cshtml" />
     <Content Include="Views\Shared\Partials\PersonTable.cshtml" />
     <Content Include="Views\Shared\Partials\SearchBar.cshtml" />
     <Content Include="Views\SuperAdmin\AdminManagement.cshtml" />

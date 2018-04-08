@@ -11,60 +11,25 @@
         </a>
         <ul class="dropdown-menu pull-right">
             <li>
-                <ul>
-                    <li>
-                        <a href='@Url.DashboardUrl()'><i class="fa fa-bar-chart"></i> Dashboard</a>
-                    </li>
-                    <li>
-                        <a href='@Url.SettingsUrl()'><i class="fa fa-gear"></i> Instellingen</a>
-                    </li>
-                    <li>
-                        <a href='@Url.SettingsUrl()'><i class="fa fa-bell"></i> Alert instellingen</a>
-                    </li>
-                    <li>
-                        <a href="javascript:;"><i class="fa fa-calendar"></i> Weekly review</a>
-                    </li>
-                    <li>
-                        @using (Html.BeginForm("LogOff", "User", FormMethod.Post, new {id = "logoutForm2"})) {
-                            @Html.AntiForgeryToken()
-                            <a href="javascript:document.getElementById('logoutForm2').submit()"><i class="fa fa-sign-out"></i> Uitloggen</a>
-                        }
-                    </li>
-                </ul>
+                <a href='@Url.DashboardUrl()'><i class="fa fa-bar-chart"></i> Dashboard</a>
             </li>
-            @if (User.IsInRole("Admin") || User.IsInRole("SuperAdmin")) {
-                <li class="divider-top">
-                    <ul>
-                        <li>
-                            <a href='@Url.AdminDashboard()'><i class="fa fa-pie-chart"></i> Admin dashboard</a>
-                        </li>
-                        <li>
-                            <a href='@Url.PageManagement()'><i class="fa fa-edit"></i> Pagina's beheren</a>
-                        </li>
-                        <li>
-                            <a href='@Url.ItemManagement()'><i class="fa fa-object-group"></i> Items beheren</a> <!-- en content importeren -->
-                        </li>
-                        <li>
-                            <a href='@Url.UserManagement()'><i class="fa fa-users"></i> Gebruikers beheren</a> <!-- en gebruikers export -->
-                        </li>
-                    </ul>
-                </li>
-            }
-            @if (User.IsInRole("SuperAdmin")) {
-                <li class="divider-top">
-                    <ul>
-                        <li>
-                            <a href='@Url.SourceManagement()'><i class="fa fa-paperclip"></i> Bronnen beheren</a>
-                        </li>
-                        <li>
-                            <a href='@Url.AdminManagement()'><i class="fa fa-bank"></i> Admins beheren</a>
-                        </li>
-                        <li>
-                            <a href='@Url.PlatformManagement()'><i class="fa fa-globe"></i> Deelplatformen beheren</a>
-                        </li>
-                    </ul>
-                </li>
-            }
+            <li>
+                <a href='@Url.SettingsUrl()'><i class="fa fa-gear"></i> Instellingen</a>
+            </li>
+            <li>
+                <a href='@Url.SettingsUrl()'><i class="fa fa-bell"></i> Alert instellingen</a>
+            </li>
+            <li>
+                <a href="javascript:;"><i class="fa fa-calendar"></i> Weekly review</a>
+            </li>
+            <li>
+                @using (Html.BeginForm("LogOff", "User", FormMethod.Post, new {id = "logoutForm2"})) {
+                    @Html.AntiForgeryToken()
+                    <a href="javascript:document.getElementById('logoutForm2').submit()"><i class="fa fa-sign-out"></i> Uitloggen</a>
+                }
+            </li>
+            @Html.ShowAdminLinks(User)
+            @Html.ShowSuperAdminLinks(User)
         </ul>
     </li>
     <!-- alerts -->
