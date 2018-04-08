@@ -87,7 +87,8 @@ nav_menu {
   font-family: "Roboto", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
   line-height: 1.4;
   font-weight: 600;
-  color: white; }
+  color: white;
+  text-shadow: 0 0 5px var(--primary-color); }
 
 .main-header-container-parent {
   background-image: url("../images/bg-repeat.jpg");
