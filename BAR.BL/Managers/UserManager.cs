@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using BAR.BL.Domain.Users;
 using BAR.DAL;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace BAR.BL.Managers
 {
@@ -147,5 +148,11 @@ namespace BAR.BL.Managers
 			if (uowManager == null) userRepo = new UserRepository();
 			else userRepo = new UserRepository(uowManager.UnitOfWork);
 		}
+
+    public IEnumerable<IdentityRole> GetAllRoles()
+    {
+      InitRepo();
+      return userRepo.ReadAllRoles();
+    }
   }
 }

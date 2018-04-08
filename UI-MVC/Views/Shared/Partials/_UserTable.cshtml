@@ -1,0 +1,105 @@
+﻿@model BAR.UI.MVC.Models.EditUserViewModel
+
+<table id="datatable-responsive" class="table" cellspacing="10px" width="100%">
+
+    <colgroup>
+        <col style="width:15%">
+        <col style="width:15%">
+        <col style="width:12%">
+        <col style="width:12%">
+        <col style="width:16%">
+        <col style="width:10%">
+        <col style="width:8%">
+        <col style="width:12%">
+    </colgroup>
+    <thead>
+        <tr>
+            <th>
+                Voornaam
+            </th>
+            <th>
+                Achternaam
+            </th>
+            <th>
+                Geslacht
+            </th>
+            <th>
+                Geboortedatum
+            </th>
+            <th>
+                Email
+            </th>
+            <th>
+                Status
+            </th>
+            <th>
+            </th>
+            <td>
+                Rol
+            </td>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Users)
+        {
+        <tr class="subscription">
+            <td>
+                <div class="img-circle person-image"></div>
+                @item.FirstName
+            </td>
+            <td>
+                @item.LastName
+            </td>
+            @if (item.Gender == BAR.BL.Domain.Users.Gender.MAN)
+            {
+            <td>
+                Man
+            </td>
+            }
+            else if (item.Gender == BAR.BL.Domain.Users.Gender.WOMAN)
+            {
+            <td>
+                Vrouw
+            </td>
+            }
+            else
+            {
+            <td>
+                Iets anders
+            </td>
+            }
+            <td>
+                @item.DateOfBirth.Value.ToShortDateString()
+            </td>
+            <td>
+                @item.Email
+            </td>
+            @if (item.Deleted)
+            {
+            <td class="red">
+                Non-actief
+            </td>
+            }
+            else
+            {
+            <td class="green">
+                Actief
+            </td>
+            }
+            <td>
+                @if (item.Deleted)
+                {
+                <a class="btn btn-success btn-xs" @*onclick="personSubscribe(@item.ItemId)"*@ title="Verwijderde gebruiker herstellen">Herstellen</a>
+                }
+                else
+                {
+                <a class="btn btn-danger btn-xs" @*onclick="personUnsubscribe(@item.ItemId)"*@ title="Gebruiker verwijderen">Verwijderen</a>
+                }
+            </td>
+            <td>
+                @Html.DropDownListFor(model => model.User.Roles, Model.Roles, "Selecteer een rol")
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>

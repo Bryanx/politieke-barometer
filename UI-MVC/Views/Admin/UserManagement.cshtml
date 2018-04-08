@@ -1,3 +1,31 @@
-﻿@model BAR.UI.MVC.Models.EditUserViewModel
+﻿@using System.Web.Optimization
+@model BAR.UI.MVC.Models.EditUserViewModel
+
+@section CustomCSS{
+    @Styles.Render("~/bundles/datatables")
+}
 
 <h1>@Model.PageTitle</h1>
+<hr />
+@Html.Partial("Partials/_UserTable", Model)
+<div style="visibility: hidden">space</div>
+
+@section CustomJS{
+    @Scripts.Render("~/bundles/datatablesScripts")
+    <script type="text/javascript">
+        function personSubscribe(id) {
+            $.ajax({
+                type: 'POST',
+                url: '/api/Subscribe/' + id
+            }).fail(() => {/* ok */ });
+            event.preventDefault();
+        }
+        function personUnsubscribe(id) {
+            $.ajax({
+                type: 'POST',
+                url: `/api/User/Subscription/${id}/Delete`
+            }).fail(() => {/* ok */ });
+            event.preventDefault();
+        }
+    </script>
+}

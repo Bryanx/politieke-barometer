@@ -2,7 +2,7 @@
 @using BAR.UI.MVC.Helpers
 @model BAR.UI.MVC.Models.BaseViewModel
 
-@if (Model.User == null) {
+@if (!User.Identity.IsAuthenticated) {
     <footer class="joinus">
         <div class="col-md-12 col-sm-12 col-xs-12">
             <h1>
