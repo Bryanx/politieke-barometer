@@ -11,10 +11,10 @@
         <mvcSiteMapNode title="Person" action="Details" dynamicNodeProvider="BAR.UI.MVC.PersonDynamicNodeProvider, BAR.UI.MVC" />
     </mvcSiteMapNode>
     <mvcSiteMapNode title="Partij-overzicht" controller="Organisation" action="Index"/>
-    <mvcSiteMapNode title="Admin Dashboard" controller="Admin" action="Index">
-        <mvcSiteMapNode title="Page Management" controller="Admin" action="PageManagement"/>
-        <mvcSiteMapNode title="Item Management" controller="Admin" action="ItemManagement"/>
-        <mvcSiteMapNode title="User Management" controller="Admin" action="UserManagement"/>
+    <mvcSiteMapNode title="Admin dashboard" controller="Admin" action="Index">
+        <mvcSiteMapNode title="Pagina's beheren" controller="Admin" action="PageManagement"/>
+        <mvcSiteMapNode title="Items beheren" controller="Admin" action="ItemManagement"/>
+        <mvcSiteMapNode title="Gebruikers beheren" controller="Admin" action="UserManagement"/>
     </mvcSiteMapNode>
   </mvcSiteMapNode>
 
