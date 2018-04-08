@@ -1,4 +1,5 @@
 ﻿@using BAR.UI.MVC.Controllers
+@using BAR.UI.MVC.Helpers
 @model BAR.UI.MVC.Models.BaseViewModel
 
 @if (Model.User == null) {
@@ -31,7 +32,7 @@
         <div class="col-md-3 col-sm-3 col-xs-12">
             <ul>
                 <li>
-                    <a href='@Url.Action("Index", "Home")'>
+                    <a href='@Url.RootUrl()'>
                         <i class="small-logo colored"></i>
                     </a>
                 </li>
@@ -47,16 +48,16 @@
             <h4>Links</h4>
             <ul>
                 <li>
-                    <a href='@Url.Action(nameof(HomeController.Index), "Home")'>Home</a>
+                    <a href='@Url.RootUrl()'>Home</a>
                 </li>
                 <li>
-                    <a href='@Url.Action(nameof(UserController.Index), "User")'>Dashboard</a>
+                    <a href='@Url.DashboardUrl()'>Dashboard</a>
                 </li>
                 <li>
-                    <a href='@Url.Action(nameof(PersonController.Index), "Person")'>Politici</a>
+                    <a href='@Url.PersonUrl()'>Politici</a>
                 </li>
                 <li>
-                    <a href='@Url.Action(nameof(OrganisationController.Index), "Organisation")'>Partijen</a>
+                    <a href='@Url.OrganisationUrl()'>Partijen</a>
                 </li>
             </ul>
         </div>

@@ -1,5 +1,6 @@
 ﻿@using System
 @using System.Web.Optimization
+@using BAR.UI.MVC.Helpers
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -41,7 +42,7 @@
         <div class="col-md-3 left_col">
             <div class="left_col scroll-view">
                 <div class="navbar" style="border: 0;">
-                    <a href='@Url.Action("Index", "Home")'>
+                    <a href='@Url.RootUrl()'>
                         <i class="small-logo"></i>
                     </a>
                 </div>
