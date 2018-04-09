@@ -1,6 +1,12 @@
 ﻿@using System
+@using System.Activities.Statements
 @using System.Web.Optimization
+@using BAR.UI.MVC.Controllers
 @using BAR.UI.MVC.Helpers
+@using BAR.UI.MVC.Models
+@using MvcSiteMapProvider.Web.Html
+@model BAR.UI.MVC.Models.BaseViewModel
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,7 +16,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>@ViewData["Title"]</title>
+    <title>@(Model.PageTitle.Length == 0 ? @ViewBag.Title : Model.PageTitle)</title>
 
     @Styles.Render("~/Content/css")
 
@@ -29,16 +35,37 @@
 <div class="container body">
     <div class="main_container">
 
-
         <!-- top navigation -->
+        <div class="top_nav">
+            <div class="nav_menu">
+                <div class="navbar" style="border: 0;">
+                    <a href='@Url.RootUrl()'>
+                        <i class="small-logo colored"></i>
+                    </a>
+                </div>
+
                 <!-- login -->
-                @Html.Partial("Partials/LoginModal")
+                @Html.ShowNavLogin(Model)
+                <!-- search -->
+                @Html.Partial("Partials/_SearchBar")
+            </div>
+        </div>
         <!-- /top navigation -->
 
+        <!-- breadcrumbs -->
+        @Html.MvcSiteMap().SiteMapPath("BootstrapSiteMapPathHelperModel")
+        
         <!-- page content -->
-        <!-- header -->
-        @RenderBody()
+        @if (IsSectionDefined("Homepage")) {
+            @RenderSection("Homepage")
+        }
+        
+        <div class="right_col" role="main">
+            @RenderBody()
+        </div>
         <!-- /page content -->
+
+        <!-- navbar left -->
         <div class="col-md-3 left_col">
             <div class="left_col scroll-view">
                 <div class="navbar" style="border: 0;">
@@ -47,26 +74,37 @@
                     </a>
                 </div>
                 <div class="clearfix"></div>
+                
                 <!-- sidebar menu -->
                 <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
                     <div class="menu_section">
                         <ul class="nav side-menu">
-                            @Html.Partial("Partials/NavBarLinks")
+                            @Html.LeftNavBarHelper(Model)
                         </ul>
                     </div>
-
                 </div>
                 <!-- /sidebar menu -->
+                
+            </div>
+            <div class="hover-nav">
+                <a id="menu_toggle">
+                    <div class="nav toggle">
+                        <i class="fa fa-arrow-left"></i>
+                    </div>
+                </a>
             </div>
         </div>
+        <!-- /navbar left -->
+        
         <!-- footer content -->
-        @Html.Partial("Partials/Footer")
+        @Html.Partial("Partials/_Footer")
         <!-- /footer content -->
     </div>
 </div>
 
 <!-- Scripts -->
-@Scripts.Render("~/bundles/jquery", "~/bundles/bootstrap", "~/bundles/flot", "~/bundles/map", "~/bundles/dates")
+@Scripts.Render("~/bundles/jquery", "~/bundles/bootstrap", "~/bundles/dates", "~/bundles/timeago", "~/Scripts/vue.min.js")
+@Scripts.Render("~/Content/build/js/alerts.js")
 
 @if (IsSectionDefined("CustomJS")) {
     @RenderSection("CustomJS")
@@ -74,7 +112,6 @@
 
 <!-- Custom Theme Scripts -->
 @Scripts.Render("~/bundles/custom")
-
 
 </body>
 </html>

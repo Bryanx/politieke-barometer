@@ -4,11 +4,23 @@
             xsi:schemaLocation="http://mvcsitemap.codeplex.com/schemas/MvcSiteMap-File-4.0 MvcSiteMapSchema.xsd">
 
   <mvcSiteMapNode title="Home" controller="Home" action="Index">
-    <mvcSiteMapNode title="Dashboard" controller="User" action="Index"/>
+    <mvcSiteMapNode title="Privacy" controller="Home" action="Privacy"/>
+    <mvcSiteMapNode title="Wachtwoord vergeten" controller="User" action="ForgotPassword"/>
+    <mvcSiteMapNode title="Vraag en Antwoord" controller="Home" action="Faq"/>
+    <mvcSiteMapNode title="Dashboard" controller="User" action="Index">
+        <mvcSiteMapNode title="Instellingen" controller="User" action="Settings"/>
+    </mvcSiteMapNode>
     <mvcSiteMapNode title="Politici-overzicht" controller="Person" action="Index">
         <mvcSiteMapNode title="Person" action="Details" dynamicNodeProvider="BAR.UI.MVC.PersonDynamicNodeProvider, BAR.UI.MVC" />
     </mvcSiteMapNode>
     <mvcSiteMapNode title="Partij-overzicht" controller="Organisation" action="Index"/>
+    <mvcSiteMapNode title="Admin dashboard" controller="Admin" action="Index">
+        <mvcSiteMapNode title="Pagina's beheren" controller="Admin" action="PageManagement"/>
+        <mvcSiteMapNode title="Items beheren" controller="Admin" action="ItemManagement"/>
+        <mvcSiteMapNode title="Gebruikers beheren" controller="Admin" action="UserManagement"/>
+    </mvcSiteMapNode>
+    <mvcSiteMapNode title="Bronnen beheren" controller="SuperAdmin" action="SourceManagement"/>
+    <mvcSiteMapNode title="Admins beheren" controller="SuperAdmin" action="AdminManagement"/>
+    <mvcSiteMapNode title="Deelplatformen beheren" controller="SuperAdmin" action="PlatformManagement"/>
   </mvcSiteMapNode>
-
 </mvcSiteMap>

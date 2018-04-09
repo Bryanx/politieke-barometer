@@ -17,6 +17,7 @@ using Microsoft.Owin.Security;
 using System.Configuration;
 using System.Security.Claims;
 using BAR.BL;
+using static BAR.UI.MVC.Models.ItemViewModels;
 
 namespace BAR.UI.MVC.Controllers
 {

@@ -19,6 +19,20 @@ namespace BAR.UI.MVC.Helpers {
             return RootUrl(helper) + "#nieuws";
         }
 
+        public static string PrivacyUrl(this UrlHelper helper) {
+            return helper.RouteUrl("Default", new {
+                controller = "Home",
+                action = nameof(HomeController.Privacy)
+            });
+        }
+        
+        public static string FaqUrl(this UrlHelper helper) {
+            return helper.RouteUrl("Default", new {
+                controller = "Home",
+                action = nameof(HomeController.Faq)
+            });
+        }
+
         #region UserUrls
         
         public static string DashboardUrl(this UrlHelper helper) {
@@ -32,6 +46,13 @@ namespace BAR.UI.MVC.Helpers {
             return helper.RouteUrl("Default", new {
                 controller = "User",
                 action = nameof(UserController.Settings)
+            });
+        }
+        
+        public static string ForgotPasswordUrl(this UrlHelper helper) {
+            return helper.RouteUrl("Default", new {
+                controller = "User",
+                action = nameof(UserController.ForgotPassword)
             });
         }
         
@@ -71,27 +92,52 @@ namespace BAR.UI.MVC.Helpers {
             });
         }
 
-        public static string AdminPageManagement(this UrlHelper helper) {
+        public static string PageManagement(this UrlHelper helper) {
             return helper.RouteUrl("Default", new {
                 controller = "Admin",
                 action = nameof(AdminController.PageManagement)
             });
         }
 
-        public static string AdminItemManagement(this UrlHelper helper) {
+        public static string ItemManagement(this UrlHelper helper) {
             return helper.RouteUrl("Default", new {
                 controller = "Admin",
                 action = nameof(AdminController.ItemManagement)
             });
         }
 
-        public static string AdminUserManagement(this UrlHelper helper) {
+        public static string UserManagement(this UrlHelper helper) {
             return helper.RouteUrl("Default", new {
                 controller = "Admin",
                 action = nameof(AdminController.UserManagement)
             });
         }
         
+        #endregion
+        
+        #region SuperAdminUrls
+
+        public static string SourceManagement(this UrlHelper helper) {
+            return helper.RouteUrl("Default", new {
+                controller = "SuperAdmin",
+                action = nameof(SuperAdminController.SourceManagement)
+            });
+        }
+        
+        public static string AdminManagement(this UrlHelper helper) {
+            return helper.RouteUrl("Default", new {
+                controller = "SuperAdmin",
+                action = nameof(SuperAdminController.AdminManagement)
+            });
+        }
+        
+        public static string PlatformManagement(this UrlHelper helper) {
+            return helper.RouteUrl("Default", new {
+                controller = "SuperAdmin",
+                action = nameof(SuperAdminController.PlatformManagement)
+            });
+        }
+
         #endregion
     }
 }
