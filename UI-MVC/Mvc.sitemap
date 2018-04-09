@@ -5,6 +5,7 @@
 
   <mvcSiteMapNode title="Home" controller="Home" action="Index">
     <mvcSiteMapNode title="Privacy" controller="Home" action="Privacy"/>
+    <mvcSiteMapNode title="Vraag en Antwoord" controller="Home" action="Faq"/>
     <mvcSiteMapNode title="Dashboard" controller="User" action="Index">
         <mvcSiteMapNode title="Instellingen" controller="User" action="Settings"/>
     </mvcSiteMapNode>

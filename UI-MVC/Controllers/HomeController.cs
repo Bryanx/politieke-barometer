@@ -12,6 +12,8 @@ using static BAR.UI.MVC.Models.ItemViewModels;
 namespace BAR.UI.MVC.Controllers {
     public class HomeController : Controller {
         private const string INDEX_PAGE_TITLE = "Politieke Barometer";
+        private const string PRIVACY_PAGE_TITLE = "Privacy en veiligheid";
+        private const string FAQ_PAGE_TITLE = "Vraag en antwoord";
         private IItemManager itemMgr = new ItemManager();
         private UserManager userManager = new UserManager();
 
@@ -28,7 +30,15 @@ namespace BAR.UI.MVC.Controllers {
         [AllowAnonymous]
         public ActionResult Privacy() {
             return View(new BaseViewModel() {
-                PageTitle = "Privacy en veiligheid",
+                PageTitle = PRIVACY_PAGE_TITLE,
+                User = User.Identity.IsAuthenticated ? userManager.GetUser(User.Identity.GetUserId()) : null
+            });
+        }
+        
+        [AllowAnonymous]
+        public ActionResult Faq() {
+            return View(new BaseViewModel() {
+                PageTitle = FAQ_PAGE_TITLE,
                 User = User.Identity.IsAuthenticated ? userManager.GetUser(User.Identity.GetUserId()) : null
             });
         }

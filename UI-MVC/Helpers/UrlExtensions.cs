@@ -25,6 +25,13 @@ namespace BAR.UI.MVC.Helpers {
                 action = nameof(HomeController.Privacy)
             });
         }
+        
+        public static string FaqUrl(this UrlHelper helper) {
+            return helper.RouteUrl("Default", new {
+                controller = "Home",
+                action = nameof(HomeController.Faq)
+            });
+        }
 
         #region UserUrls
         
