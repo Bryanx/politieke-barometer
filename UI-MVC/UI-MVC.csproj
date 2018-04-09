@@ -48,6 +48,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AutoMapper, Version=6.2.2.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005">
+      <HintPath>..\packages\AutoMapper.6.2.2\lib\net45\AutoMapper.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
@@ -212,17 +215,20 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\OrganisationController.cs" />
     <Compile Include="Controllers\PersonController.cs" />
+    <Compile Include="Controllers\SuperAdminController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="DAL\WidgetManager.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\NavBarHelpers.cs" />
     <Compile Include="Helpers\UrlExtensions.cs" />
     <Compile Include="Models\AlertDTO.cs" />
     <Compile Include="Models\BaseViewModel.cs" />
     <Compile Include="Models\AdminViewModels.cs" />
     <Compile Include="Models\Graph.cs" />
     <Compile Include="Models\ItemDTO.cs" />
+    <Compile Include="Models\ItemViewModels.cs" />
     <Compile Include="Models\UserViewModels.cs" />
     <Compile Include="Models\Widget.cs" />
     <Compile Include="PersonDynamicNodeProvider.cs" />
@@ -283,6 +289,7 @@
     <Content Include="Content\build\images\paypal.png" />
     <Content Include="Content\build\images\picture.jpg" />
     <Content Include="Content\build\images\user.png" />
+    <Content Include="Content\build\js\alerts.js" />
     <Content Include="Content\build\js\custom.js" />
     <Content Include="Content\build\js\custom.min.js" />
     <Content Include="Content\build\js\searchbar.js" />
@@ -328,6 +335,7 @@
     <Content Include="data.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Scripts\bootstrap-wysiwyg\bootstrap-wysiwyg.min.js" />
     <Content Include="Scripts\jquery\jquery-ui-1.11.0.js" />
     <Content Include="Scripts\jquery\jquery-ui-1.11.0.min.js" />
     <Content Include="Scripts\jquery\jquery-ui.js" />
@@ -346,7 +354,7 @@
     <Content Include="Scripts\datatables\datatables.net\js\jquery.dataTables.js" />
     <Content Include="Scripts\datatables\datatables.net\js\jquery.dataTables.min.js" />
     <Content Include="Scripts\dates\date.min.js" />
-    <Content Include="Scripts\dates\daterangepicker.js" />
+    <Content Include="Scripts\dates\daterangepicker.min.js" />
     <Content Include="Scripts\dates\moment.min.js" />
     <Content Include="Scripts\fastclick.js" />
     <Content Include="Scripts\flot\curvedLines.js" />
@@ -392,19 +400,29 @@
     <Content Include="Views\Admin\ItemManagement.cshtml" />
     <Content Include="Views\Admin\PageManagement.cshtml" />
     <Content Include="Views\Admin\UserManagement.cshtml" />
+    <Content Include="Views\Home\Faq.cshtml" />
+    <Content Include="Views\Home\Privacy.cshtml" />
     <Content Include="Views\Organisation\Index.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\BootstrapSiteMapPathHelperModel.cshtml" />
-    <Content Include="Views\Shared\Layouts\_HomeLayout(temp).cshtml" />
-    <Content Include="Views\Shared\Layouts\_MemberLayout.cshtml" />
-    <Content Include="Views\Shared\Partials\Footer.cshtml" />
-    <Content Include="Views\Shared\Partials\LoggedInNavbar.cshtml" />
-    <Content Include="Views\Shared\Partials\LoginModal.cshtml" />
-    <Content Include="Views\Shared\Partials\NavBarLinks.cshtml" />
-    <Content Include="Views\Shared\Partials\PersonTable.cshtml" />
-    <Content Include="Views\Shared\Partials\SearchBar.cshtml" />
+    <Content Include="Views\Shared\Partials\_ExternalLoginsListPartial.cshtml" />
+    <Content Include="Views\Shared\Partials\_Footer.cshtml" />
+    <Content Include="Views\Shared\Partials\_FooterRegister.cshtml" />
+    <Content Include="Views\Shared\Partials\_LoggedInLeftNavBarLinks.cshtml" />
+    <Content Include="Views\Shared\Partials\_LoggedInNavbar.cshtml" />
+    <Content Include="Views\Shared\Partials\_LoginModal.cshtml" />
+    <Content Include="Views\Shared\Partials\_NavBarAdminLinks.cshtml" />
+    <Content Include="Views\Shared\Partials\_NavBarSuperAdminLinks.cshtml" />
+    <Content Include="Views\Shared\Partials\_PersonTable.cshtml" />
+    <Content Include="Views\Shared\Partials\_RegisterModal.cshtml" />
+    <Content Include="Views\Shared\Partials\_SearchBar.cshtml" />
+    <Content Include="Views\Shared\Partials\_Subscriptions.cshtml" />
+    <Content Include="Views\Shared\Partials\_VisitorLeftNavBarLinks.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\SuperAdmin\AdminManagement.cshtml" />
+    <Content Include="Views\SuperAdmin\PlatformManagement.cshtml" />
+    <Content Include="Views\SuperAdmin\SourceManagement.cshtml" />
     <Content Include="Views\User\Dashboard.cshtml" />
     <Content Include="Views\User\Settings.cshtml" />
-    <Content Include="Views\User\Subscriptions.cshtml" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -420,7 +438,6 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\User\Register.cshtml" />
     <Content Include="Views\User\Login.cshtml" />
-    <Content Include="Views\Shared\_ExternalLoginsListPartial.cshtml" />
     <Content Include="Views\User\ConfirmEmail.cshtml" />
     <Content Include="Views\User\ExternalLoginConfirmation.cshtml" />
     <Content Include="Views\User\ExternalLoginFailure.cshtml" />
@@ -434,6 +451,9 @@
     <None Include="Mvc.sitemap" />
     <None Include="MvcSiteMapSchema.xsd" />
     <None Include="packages.config" />
+    <None Include="Scripts\bootstrap-wysiwyg\bootstrap-wysiwyg.js" />
+    <None Include="Scripts\bootstrap-wysiwyg\jquery.hotkeys.min.js" />
+    <None Include="Scripts\bootstrap-wysiwyg\prettify.min.js" />
     <None Include="Scripts\bootstrap.js" />
     <None Include="Scripts\bootstrap.min.js" />
     <None Include="Scripts\jquery\jquery-3.3.1-vsdoc.js" />

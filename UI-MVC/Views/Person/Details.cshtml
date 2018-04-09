@@ -1,5 +1,5 @@
 @using System.Web.Optimization
-@model BAR.UI.MVC.Models.ItemViewModel
+@model BAR.UI.MVC.Models.ItemViewModels.PersonViewModel
 
 @{
     ViewBag.Title = Model.PageTitle;
@@ -7,7 +7,7 @@
 
 <div class="page-title">
     <div class="title_left">
-        <h3>Persoon - @Html.DisplayFor(model => model.People.First().Name)</h3>
+        <h3>Persoon - @Html.DisplayFor(model => model.Person.Name)</h3>
     </div>
 
     <div class="title_right">
@@ -64,7 +64,7 @@
             <img class="img-responsive avatar-view" src="../../Content/build/images/picture.jpg" alt="Avatar" title="Change the avatar">
         </div>
     </div>
-    <h3>@Html.DisplayFor(model => model.People.First().Name)</h3>
+    <h3>@Html.DisplayFor(model => model.Person.Name)</h3>
 
     <ul class="list-unstyled user_data">
         <li>
@@ -82,7 +82,7 @@
     </ul>
 
     @if (User.Identity.IsAuthenticated) {
-        <form method="post" action="/api/Subscribe/@Model.People.First().ItemId" id="subscribeForm">
+        <form method="post" action="/api/Subscribe/@Model.Person.ItemId" id="subscribeForm">
             <button type="submit" class="btn btn-success">Abonneer</button>
             <div id="subscribeMessage" style="display: inline"></div>
         </form>

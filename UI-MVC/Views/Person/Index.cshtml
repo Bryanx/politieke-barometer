@@ -1,5 +1,5 @@
 @using System.Web.Optimization
-@model BAR.UI.MVC.Models.ItemViewModel
+@model BAR.UI.MVC.Models.ItemViewModels.ItemViewModel
 
 @section CustomCSS{
     @Styles.Render("~/bundles/datatables")
@@ -7,7 +7,7 @@
 
 <h1>@Model.PageTitle</h1>
 <hr/>
-@Html.Partial("Partials/PersonTable", Model)
+@Html.Partial("Partials/_PersonTable", Model)
 <div style="visibility: hidden">space</div>
 
 @section CustomJS{

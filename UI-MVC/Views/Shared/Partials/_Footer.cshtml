@@ -2,31 +2,7 @@
 @using BAR.UI.MVC.Helpers
 @model BAR.UI.MVC.Models.BaseViewModel
 
-@if (Model.User == null) {
-    <footer class="joinus">
-        <div class="col-md-12 col-sm-12 col-xs-12">
-            <h1>
-                <strong>Blijf op de hoogte.</strong>
-            </h1>
-            Maak een account om politici of partijen te volgen.
-        </div>
-        <form role="form">
-            <div class="form-group">
-                <div class="col-md-4 col-sm-4 col-xs-12">
-                    <input type="email" class="form-control login-input" placeholder="E-mailadres"/>
-                </div>
-                <div class="col-md-4 col-sm-4 col-xs-12">
-                    <input type="password" class="form-control login-input" placeholder="Password"/>
-                </div>
-                <div class="col-md-4 col-sm-4 col-xs-12">
-                    <div class="form-check login-input">
-                        <button type="button" class="btn btn-default login-input w-100 h-40">Registreer</button>
-                    </div>
-                </div>
-            </div>
-        </form>
-    </footer>
-}
+@Html.FooterHelper(Model)
 <footer>
     <div class="margin-aligned">
         <div class="col-md-3 col-sm-3 col-xs-12">
@@ -48,16 +24,16 @@
             <h4>Links</h4>
             <ul>
                 <li>
-                    <a href='@Url.RootUrl()'>Home</a>
+                    <a href="@Url.RootUrl()">Home</a>
                 </li>
                 <li>
-                    <a href='@Url.DashboardUrl()'>Dashboard</a>
+                    <a href="@Url.DashboardUrl()">Dashboard</a>
                 </li>
                 <li>
-                    <a href='@Url.PersonUrl()'>Politici</a>
+                    <a href="@Url.PersonUrl()">Politici</a>
                 </li>
                 <li>
-                    <a href='@Url.OrganisationUrl()'>Partijen</a>
+                    <a href="@Url.OrganisationUrl()">Partijen</a>
                 </li>
             </ul>
         </div>
@@ -68,10 +44,10 @@
                     <a href='#'>Login/Signup</a>
                 </li>
                 <li>
-                    <a href='#'>FAQ</a>
+                    <a href="@Url.FaqUrl()">Vraag en antwoord</a>
                 </li>
                 <li>
-                    <a href='#'>Privacy policy</a>
+                    <a href="@Url.PrivacyUrl()">Privacy</a>
                 </li>
             </ul>
         </div>

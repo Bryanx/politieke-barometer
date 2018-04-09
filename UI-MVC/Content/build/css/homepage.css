@@ -6,7 +6,7 @@ h1 {
   line-height: 45px; }
 
 .nav_menu {
-  background-color: var(--primary-color);
+  background-color: transparent;
   box-shadow: none;
   position: relative !important; }
 
@@ -78,6 +78,9 @@ nav_menu {
   margin-right: auto;
   margin-top: 80px; }
 
+.small-logo.colored {
+  display: none; }
+
 .main-header {
   text-align: center;
   padding: 40px 0 10px 0;
@@ -87,7 +90,8 @@ nav_menu {
   font-family: "Roboto", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
   line-height: 1.4;
   font-weight: 600;
-  color: white; }
+  color: white;
+  text-shadow: 0 0 10px var(--primary-color); }
 
 .main-header-container-parent {
   background-image: url("../images/bg-repeat.jpg");
@@ -177,5 +181,11 @@ div.nav_menu .searchbar {
 
 .right_col {
   margin-top: 0 !important; }
+
+.navbar-right {
+  position: relative;
+  z-index: 999; }
+  .navbar-right > li > a > span, .navbar-right > li > a > i {
+    color: white; }
 
 /*# sourceMappingURL=homepage.css.map */

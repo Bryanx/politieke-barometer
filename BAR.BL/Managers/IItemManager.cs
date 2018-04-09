@@ -11,6 +11,8 @@ namespace BAR.BL.Managers
 	{	
 		Item GetItem(int itemId);
 		IEnumerable<Item> GetAllItems();
+		IEnumerable<Item> GetAllPeople();
+		IEnumerable<Item> GetAllOrganisations();
 		IEnumerable<Item> GetItemsForType(ItemType type);
 
 		Item CreateItem(ItemType itemType, string name, string description = "", string function = "", Category category = null);

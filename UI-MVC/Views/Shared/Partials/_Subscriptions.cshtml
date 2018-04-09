@@ -1,4 +1,4 @@
-﻿@model BAR.UI.MVC.Models.ItemViewModel
+﻿@model BAR.UI.MVC.Models.ItemViewModels.ItemViewModel
 <div class="row">
 <div id="peopleSubscriptions" class="col-md-12 col-sm-12 col-xs-12">
     <div class="x_panel">
@@ -13,7 +13,7 @@
             <div class="table-responsive">
                 <table class="table table-striped jambo_table bulk_action">
                     <tbody>
-                    @Html.Partial("Partials/PersonTable", Model)
+                    @Html.Partial("Partials/_PersonTable", Model)
                     </tbody>
                 </table>
             </div>
