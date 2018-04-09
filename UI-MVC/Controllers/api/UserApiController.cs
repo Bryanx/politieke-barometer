@@ -83,7 +83,7 @@ namespace BAR.UI.MVC.Controllers.api
     public IHttpActionResult DeactivateAccount(string userId)
     {
       IUserManager userManager = new UserManager();
-      userManager.ChangeUserAccount(userId, false);
+      userManager.ChangeUserAccount(userId, true);
       return StatusCode(HttpStatusCode.NoContent);
     }
 
@@ -92,7 +92,7 @@ namespace BAR.UI.MVC.Controllers.api
     public IHttpActionResult ActivateAccount(string userId)
     {
       IUserManager userManager = new UserManager();
-      userManager.ChangeUserAccount(userId, true);
+      userManager.ChangeUserAccount(userId, false);
       return StatusCode(HttpStatusCode.NoContent);
     }
   }

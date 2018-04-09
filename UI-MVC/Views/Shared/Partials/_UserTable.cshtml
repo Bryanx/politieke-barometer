@@ -92,11 +92,11 @@
             <td>
                 @if (Model.Users.ElementAt(i).Deleted)
                 {
-                <a class="btn btn-success btn-xs" onclick="activateAccount(@Model.Users.ElementAt(i).Id)" title="Verwijderde gebruiker herstellen">Herstellen</a>
+                <a id="@i" class="btn btn-success btn-xs" onclick="activateAccount('@Model.Users.ElementAt(i).Id', '@(i)')" title="Verwijderde gebruiker herstellen">Herstellen</a>
                 }
                 else
                 {
-                <a class="btn btn-danger btn-xs" onclick="deactivateAccount(@Model.Users.ElementAt(i).Id)" title="Gebruiker verwijderen">Verwijderen</a>
+                <a id="@i" class="btn btn-danger btn-xs" onclick="deactivateAccount('@Model.Users.ElementAt(i).Id', '@(i)')" title="Gebruiker verwijderen">Verwijderen</a>
                 }
             </td>
             <td>

@@ -13,18 +13,29 @@
 @section CustomJS{
     @Scripts.Render("~/bundles/datatablesScripts")
     <script type="text/javascript">
-        function deactivateAccount(id) {
+        function deactivateAccount(id, htmlId) {
             $.ajax({
                 type: 'POST',
                 url: '/api/Admin/DeactivateAccount/' + id
-            }).fail(() => {/* ok */ });
+            }).fail(() => {/* ok */ })
+                .done(function () {
+                    alert(htmlId);
+                    $("#htmlId").removeClass("btn-danger");
+                    $("#htmlId").addClass("btn-success");
+                    $("#htmlId").text("Herstellen");
+                });
             event.preventDefault();
         }
-        function activateAccount(id) {
+        function activateAccount(id, htmlId) {
             $.ajax({
                 type: 'POST',
                 url: '/api/Admin/ActivateAccount/' + id
-            }).fail(() => {/* ok */ });
+            }).fail(() => {/* ok */ }).done(function () {
+                alert(htmlId);
+                $("#htmlId").removeClass("btn-success");
+                $("#htmlId").addClass("btn-danger");
+                $("#htmlId").text("Verwijderen");
+            });
             event.preventDefault();
         }
     </script>
