@@ -5199,6 +5199,35 @@ function init_DataTables() {
 		}), TableManageButtons.init()
 	}
 }
+
+//Generic Ajax call
+function submitForm($this, event, message=null) {
+    $.ajax({
+        type: $this.attr('method'),
+        url: $this.attr('action'),
+        data: $this.serialize(),
+        succes: message
+            .addClass('green')
+            .html("Saved.")
+            .fadeOut(1000,
+                function() {
+                    $(this)
+                        .removeClass()
+                        .html("")
+                        .css("display", "inline");
+                })
+    }).fail(() => message
+        .addClass('red')
+        .html("Mislukt.")
+        .fadeOut(1000,
+            function() {
+                $(this)
+                    .removeClass()
+                    .html("")
+                    .css("display", "inline");
+            }));
+    event.preventDefault();
+}
 	
 function check() {
 	if ($('.showchbox').length) {
