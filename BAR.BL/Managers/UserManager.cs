@@ -154,5 +154,11 @@ namespace BAR.BL.Managers
       InitRepo();
       return userRepo.ReadAllRoles();
     }
+
+    public IdentityRole GetRole(string userId)
+    {
+      InitRepo();
+      return userRepo.ReadRole(userId);
+    }
   }
 }

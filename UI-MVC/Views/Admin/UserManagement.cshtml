@@ -34,7 +34,8 @@
             $.ajax({
                 type: 'POST',
                 url: '/api/Admin/ActivateAccount/' + id
-            }).fail(() => {/* ok */ }).done(function () {
+            }).fail(() => {/* ok */ })
+                .done(function () {
                 $("#btn" + htmlId).removeClass("btn-success");
                 $("#btn" + htmlId).addClass("btn-danger");
                 $("#btn" + htmlId).text("Verwijderen");
@@ -43,6 +44,19 @@
                 $("#td" + htmlId).removeClass("red");
                 $("#td" + htmlId).addClass("green");
                 $("#td" + htmlId).text("Actief");
+            });
+            event.preventDefault();
+        }
+        function changeRole(id, htmlId) {
+            $.ajax({
+                type: "POST",
+                url: "/api/Admin/ChangeRole/" + id,
+                contentType: 'application/json; charset=utf-8',
+                dataType: "json",
+                data: JSON.stringify($("#dd" + htmlId + " option:selected").text())
+            }).fail(() => {/* ok */ })
+                .done(function () {
+                    $("#td2" + htmlId).text($("#dd" + htmlId + " option:selected").text());
             });
             event.preventDefault();
         }

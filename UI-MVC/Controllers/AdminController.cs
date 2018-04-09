@@ -11,6 +11,7 @@ using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace BAR.UI.MVC.Controllers
 {
+  [Authorize(Roles ="Admin, SuperAdmin")]
   public class AdminController : Controller
   {
     // GET

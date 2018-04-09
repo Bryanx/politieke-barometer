@@ -21,6 +21,7 @@ namespace BAR.DAL
     IEnumerable<Area> ReadAreas();
     Area ReadArea(int areaId);
     IEnumerable<IdentityRole> ReadAllRoles();
+    IdentityRole ReadRole(string userId);
 
     //Create
     int CreateUser(User user);

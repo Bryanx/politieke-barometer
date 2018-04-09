@@ -195,5 +195,10 @@ namespace BAR.DAL
     {
       return ctx.Roles;
     }
+
+    public IdentityRole ReadRole(string userId)
+    {
+      return ctx.Roles.Where(x => x.Users.Any(y => y.UserId.Equals(userId))).FirstOrDefault();
+    }
   }
 }

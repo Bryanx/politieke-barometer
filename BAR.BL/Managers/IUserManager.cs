@@ -19,5 +19,6 @@ namespace BAR.BL.Managers
     IEnumerable<Area> GetAreas();
     Area GetArea(int areaId);
     IEnumerable<IdentityRole> GetAllRoles();
+    IdentityRole GetRole(string userId);
   }
 }
