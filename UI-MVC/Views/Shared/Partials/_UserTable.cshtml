@@ -71,32 +71,40 @@
                 Iets anders
             </td>
             }
-            <td>
-                @Model.Users.ElementAt(i).DateOfBirth.Value.ToShortDateString()
-            </td>
+            @if (Model.Users.ElementAt(i).DateOfBirth != null)
+            {
+                <td>
+                    @Model.Users.ElementAt(i).DateOfBirth.Value.ToShortDateString()
+                </td>
+             } else
+             {
+                <td>
+                    N/B
+                </td>
+             }
             <td>
                 @Model.Users.ElementAt(i).Email
             </td>
             @if (Model.Users.ElementAt(i).Deleted)
             {
-            <td class="red">
+            <td id=@String.Format("td{0}", i) class="red">
                 Non-actief
             </td>
             }
             else
             {
-            <td class="green">
+            <td id=@String.Format("td{0}", i) class="green">
                 Actief
             </td>
             }
             <td>
                 @if (Model.Users.ElementAt(i).Deleted)
                 {
-                <a id="@i" class="btn btn-success btn-xs" onclick="activateAccount('@Model.Users.ElementAt(i).Id', '@(i)')" title="Verwijderde gebruiker herstellen">Herstellen</a>
+                <a id=@String.Format("btn{0}", i) class="btn btn-success btn-xs" onclick="activateAccount('@Model.Users.ElementAt(i).Id', '@i')" title="Verwijderde gebruiker herstellen">Herstellen</a>
                 }
                 else
                 {
-                <a id="@i" class="btn btn-danger btn-xs" onclick="deactivateAccount('@Model.Users.ElementAt(i).Id', '@(i)')" title="Gebruiker verwijderen">Verwijderen</a>
+                <a id=@String.Format("btn{0}", i) class="btn btn-danger btn-xs" onclick="deactivateAccount('@Model.Users.ElementAt(i).Id', '@i')" title="Gebruiker verwijderen">Verwijderen</a>
                 }
             </td>
             <td>
