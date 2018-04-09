@@ -21,7 +21,7 @@ namespace BAR.UI.MVC.Helpers {
         }
 
         public static MvcHtmlString FooterHelper(this HtmlHelper helper, BaseViewModel model) {
-            if (model.User == null) return helper.Partial("Partials/FooterRegister", model);
+            if (model.User == null) return helper.Partial("Partials/FooterRegister", new RegisterViewModel());
             return MvcHtmlString.Empty;
         }
     }

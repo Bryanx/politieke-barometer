@@ -3,6 +3,7 @@
 @using System.Web.Optimization
 @using BAR.UI.MVC.Controllers
 @using BAR.UI.MVC.Helpers
+@using BAR.UI.MVC.Models
 @using MvcSiteMapProvider.Web.Html
 @model BAR.UI.MVC.Models.BaseViewModel
 
@@ -92,7 +93,7 @@
         <!-- /navbar left -->
         
         <!-- footer content -->
-        @Html.Partial("Partials/Footer", Model)
+        @Html.Partial("Partials/Footer")
         <!-- /footer content -->
     </div>
 </div>
