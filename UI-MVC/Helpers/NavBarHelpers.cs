@@ -24,5 +24,10 @@ namespace BAR.UI.MVC.Helpers {
             if (model.User == null) return helper.Partial("Partials/_FooterRegister", new RegisterViewModel());
             return MvcHtmlString.Empty;
         }
+        
+        public static MvcHtmlString LeftNavBarHelper(this HtmlHelper helper, BaseViewModel model) {
+            if (model.User == null) return helper.Partial("Partials/_LoggedInLeftNavBarLinks");
+            return helper.Partial("Partials/_VisitorLeftNavBarLinks");
+        }
     }
 }
