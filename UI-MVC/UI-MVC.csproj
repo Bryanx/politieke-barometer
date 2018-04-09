@@ -407,6 +407,7 @@
     <Content Include="Views\Shared\Layouts\_HomeLayout(temp).cshtml" />
     <Content Include="Views\Shared\Layouts\_MemberLayout.cshtml" />
     <Content Include="Views\Shared\Partials\Footer.cshtml" />
+    <Content Include="Views\Shared\Partials\FooterRegister.cshtml" />
     <Content Include="Views\Shared\Partials\LoggedInNavbar.cshtml" />
     <Content Include="Views\Shared\Partials\LoginModal.cshtml" />
     <Content Include="Views\Shared\Partials\NavBarAdminLinks.cshtml" />

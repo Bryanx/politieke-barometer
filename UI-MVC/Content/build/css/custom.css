@@ -1220,7 +1220,7 @@ h2 {
 .x_panel {
   position: relative;
   width: 100%;
-  margin-bottom: 10px;
+  margin-bottom: 15px;
   padding: 10px 17px;
   display: inline-block;
   background: var(--white);
@@ -2301,7 +2301,8 @@ span.section {
   box-shadow: none; }
 
 .form-horizontal .control-label {
-  padding-top: 8px; }
+  padding-top: 8px;
+  }
 
 .form-control:focus {
   border: 1px solid var(--primary-color);
