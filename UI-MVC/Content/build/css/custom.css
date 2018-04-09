@@ -230,6 +230,8 @@ Login
     position: absolute;
     pointer-events: none;
     font-family: 'FontAwesome'; }
+  .checkbox > input {
+    margin-left: 0 !important; }
 
 .character-checkbox {
   width: 25px;
@@ -2301,8 +2303,7 @@ span.section {
   box-shadow: none; }
 
 .form-horizontal .control-label {
-  padding-top: 8px;
-  }
+  padding-top: 8px; }
 
 .form-control:focus {
   border: 1px solid var(--primary-color);

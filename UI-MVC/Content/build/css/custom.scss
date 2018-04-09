@@ -314,6 +314,9 @@ Login
     pointer-events: none;
     font-family: 'FontAwesome';
   }
+  > input {
+    margin-left: 0 !important;
+  }
 }
 
 .character-checkbox {

@@ -8,7 +8,7 @@ h1 {
 }
 
 .nav_menu {
-  background-color: var(--primary-color);
+  background-color: transparent;
   box-shadow: none;
   position: relative !important;
 }
@@ -93,6 +93,10 @@ nav_menu {
   margin-left: auto;
   margin-right: auto;
   margin-top: 80px;
+}
+
+.small-logo.colored {
+  display: none;
 }
 
 .main-header {
@@ -222,4 +226,12 @@ div.nav_menu .searchbar {
 
 .right_col {
   margin-top: 0 !important;
+}
+
+.navbar-right {
+  position: relative;
+  z-index: 999;
+  > li > a > span, > li > a > i {
+    color: white;
+  }
 }

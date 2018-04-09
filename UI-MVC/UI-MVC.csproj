@@ -404,8 +404,6 @@
     <Content Include="Views\Home\Privacy.cshtml" />
     <Content Include="Views\Organisation\Index.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\BootstrapSiteMapPathHelperModel.cshtml" />
-    <Content Include="Views\Shared\Layouts\_HomeLayout(temp).cshtml" />
-    <Content Include="Views\Shared\Layouts\_MemberLayout.cshtml" />
     <Content Include="Views\Shared\Partials\Footer.cshtml" />
     <Content Include="Views\Shared\Partials\FooterRegister.cshtml" />
     <Content Include="Views\Shared\Partials\LoggedInNavbar.cshtml" />
@@ -415,6 +413,7 @@
     <Content Include="Views\Shared\Partials\NavBarSuperAdminLinks.cshtml" />
     <Content Include="Views\Shared\Partials\PersonTable.cshtml" />
     <Content Include="Views\Shared\Partials\SearchBar.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\SuperAdmin\AdminManagement.cshtml" />
     <Content Include="Views\SuperAdmin\PlatformManagement.cshtml" />
     <Content Include="Views\SuperAdmin\SourceManagement.cshtml" />
@@ -507,6 +506,9 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Views\Shared\Layouts" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

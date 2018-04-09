@@ -56,6 +56,10 @@
         @Html.MvcSiteMap().SiteMapPath("BootstrapSiteMapPathHelperModel")
         
         <!-- page content -->
+        @if (IsSectionDefined("Homepage")) {
+            @RenderSection("Homepage")
+        }
+        
         <div class="right_col" role="main">
             @RenderBody()
         </div>

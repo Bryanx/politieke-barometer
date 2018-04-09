@@ -19,8 +19,7 @@ namespace BAR.UI.MVC.Controllers {
 
         [AllowAnonymous]
         public ActionResult Index() {
-            return View("Index", "~/Views/Shared/Layouts/_HomeLayout(temp).cshtml", 
-                new ItemViewModel() {
+            return View(new ItemViewModel() {
                 PageTitle = INDEX_PAGE_TITLE,
                 User = User.Identity.IsAuthenticated ? userManager.GetUser(User.Identity.GetUserId()) : null,
                 People = Mapper.Map<IList<Item>, IList<ItemDTO>>(itemMgr.GetAllItems().ToList())

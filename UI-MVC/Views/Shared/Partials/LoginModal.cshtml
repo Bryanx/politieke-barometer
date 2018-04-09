@@ -1,4 +1,6 @@
-﻿<!-- login -->
+﻿@model BAR.UI.MVC.Models.LoginViewModel
+
+<!-- login -->
 <ul class="nav navbar-nav navbar-right">
     <li class="c-primary">
         <a class="signup" href="#" data-toggle="modal" data-target=".bs-example-modal-lg">Login</a>
@@ -13,20 +15,23 @@
                                 </a>
                                 <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
                                     <div class="panel-body">
-                                        <form role="form">
+                                        @using (Html.BeginForm("Login", "User", new {ReturnUrl = ViewBag.ReturnUrl}, FormMethod.Post, new {role = "form"})) {
+                                            @Html.AntiForgeryToken()
                                             <div class="form-group">
-                                                <input type="email" class="form-control login-input" placeholder="email@adress.com"/>
-                                                <input type="password" class="form-control login-input" placeholder="Password"/>
+                                                @Html.TextBoxFor(m => m.Email, new {@class = "form-control login-input", @placeholder = "E-mailadres"})
+                                                @Html.ValidationMessageFor(m => m.Email, "", new {@class = "text-danger"})
+                                                @Html.PasswordFor(m => m.Password, new {@class = "form-control login-input", @placeholder = "Wachtwoord"})
+                                                @Html.ValidationMessageFor(m => m.Password, "", new {@class = "text-danger"})
                                                 <div class="form-check login-input">
                                                     <div class="checkbox">
-                                                        <span class="character-checkbox" id="chbox" onclick="check()"></span>
-                                                        <span class="checkbox-label c-secondary">Onthoud mij</span>
+                                                        @Html.CheckBoxFor(m => m.RememberMe)
+                                                        @Html.LabelFor(m => m.RememberMe)
                                                     </div>
-                                                    <button type="button" class="btn btn-primary login-input w-100 h-40">Login</button>
+                                                    <button type="submit" class="btn btn-primary login-input w-100 h-40">Login</button>
                                                     <a href="javascript:;" class="text-center login-input w-100" data-toggle="modal" data-target=".forget-modal">Forgot your password?</a>
                                                 </div>
                                             </div>
-                                        </form>
+                                        }
                                     </div>
                                 </div>
                             </div>
