@@ -1,10 +1,13 @@
 ﻿@using BAR.UI.MVC.Models
 @model BAR.UI.MVC.Models.RegisterViewModel
 
+@Html.Partial("Partials/_ExternalLoginsListPartial", new ExternalLoginListViewModel {ReturnUrl = ViewBag.ReturnUrl})
+
 @using (Html.BeginForm("Register", "User", FormMethod.Post)) {
     @Html.AntiForgeryToken()
     <div class="form-group">
-        @Html.Partial("Partials/_ExternalLoginsListPartial", new ExternalLoginListViewModel { ReturnUrl = ViewBag.ReturnUrl })
+        @Html.ValidationSummary("", new { @class = "text-danger" })
+        @Html.TextBoxFor(m => m.Firstname, new {@class = "form-control login-input", @placeholder = "Voornaam"})
         @Html.TextBoxFor(m => m.Email, new {@class = "form-control login-input", @placeholder = "E-mailadres"})
         @Html.PasswordFor(m => m.Password, new {@class = "form-control login-input", @placeholder = "Wachtwoord"})
         <div class="form-check login-input">
