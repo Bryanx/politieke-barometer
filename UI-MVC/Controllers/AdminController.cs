@@ -52,6 +52,7 @@ namespace BAR.UI.MVC.Controllers
       }).OrderBy(x => x.Text);
       EditUserViewModel vm = new EditUserViewModel()
       {
+        User = userManager.GetUser(User.Identity.GetUserId()),
         PageTitle = USER_MANAGEMENT_PAGE_TITLE,
         Users = userManager.GetAllUsers(),
         Roles = roles
