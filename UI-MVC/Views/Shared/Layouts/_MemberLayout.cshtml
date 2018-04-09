@@ -44,11 +44,7 @@
                 </div>
 
                 <!-- login -->
-                @if (Model.User != null) {
-                    @Html.Partial("Partials/LoggedInNavbar", Model)
-                } else {
-                    @Html.Partial("Partials/LoginModal", Model)
-                }
+                @Html.ShowNavLogin(Model)
                 <!-- search -->
                 @Html.Partial("Partials/SearchBar")
             </div>

@@ -18,5 +18,10 @@ namespace BAR.UI.MVC.Helpers {
             }
             return MvcHtmlString.Empty;
         }
+        
+        public static MvcHtmlString ShowNavLogin(this HtmlHelper helper, BaseViewModel model) {
+            if (model.User != null) return helper.Partial("Partials/LoggedInNavbar", model);
+            return helper.Partial("Partials/LoginModal", model);;
+        }
     }
 }
