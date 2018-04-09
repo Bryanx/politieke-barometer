@@ -247,7 +247,7 @@ Login
 .panel .form-control, .h-40 {
   height: 40px; }
 
-.google-btn {
+.Google-btn {
   background-color: #3484EF;
   background-image: url(../images/google-icon-white.svg);
   background-position: 10px;
@@ -260,7 +260,7 @@ Login
   padding: 0 4em 0 4em;
   text-decoration: none; }
 
-.fb-btn {
+.Facebook-btn {
   background-color: #3C66AF;
   background-image: url(../images/facebook-app-logo-white.svg);
   background-position: 10px;

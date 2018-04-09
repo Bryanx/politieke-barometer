@@ -1,10 +1,10 @@
-﻿@model BAR.UI.MVC.Models.RegisterViewModel
+﻿@using BAR.UI.MVC.Models
+@model BAR.UI.MVC.Models.RegisterViewModel
 
 @using (Html.BeginForm("Register", "User", FormMethod.Post)) {
     @Html.AntiForgeryToken()
     <div class="form-group">
-        <button type="button" class="btn google-btn login-input w-100">Sign in with Google</button>
-        <button type="button" class="btn fb-btn login-input w-100">Sign in with Facebook</button>
+        @Html.Partial("Partials/_ExternalLoginsListPartial", new ExternalLoginListViewModel { ReturnUrl = ViewBag.ReturnUrl })
         @Html.TextBoxFor(m => m.Email, new {@class = "form-control login-input", @placeholder = "E-mailadres"})
         @Html.PasswordFor(m => m.Password, new {@class = "form-control login-input", @placeholder = "Wachtwoord"})
         <div class="form-check login-input">

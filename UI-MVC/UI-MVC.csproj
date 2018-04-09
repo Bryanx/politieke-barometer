@@ -404,6 +404,7 @@
     <Content Include="Views\Home\Privacy.cshtml" />
     <Content Include="Views\Organisation\Index.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\BootstrapSiteMapPathHelperModel.cshtml" />
+    <Content Include="Views\Shared\Partials\_ExternalLoginsListPartial.cshtml" />
     <Content Include="Views\Shared\Partials\_Footer.cshtml" />
     <Content Include="Views\Shared\Partials\_FooterRegister.cshtml" />
     <Content Include="Views\Shared\Partials\_LoggedInNavbar.cshtml" />
@@ -436,7 +437,6 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\User\Register.cshtml" />
     <Content Include="Views\User\Login.cshtml" />
-    <Content Include="Views\Shared\_ExternalLoginsListPartial.cshtml" />
     <Content Include="Views\User\ConfirmEmail.cshtml" />
     <Content Include="Views\User\ExternalLoginConfirmation.cshtml" />
     <Content Include="Views\User\ExternalLoginFailure.cshtml" />
