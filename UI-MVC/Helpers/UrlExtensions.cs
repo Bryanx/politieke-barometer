@@ -49,6 +49,13 @@ namespace BAR.UI.MVC.Helpers {
             });
         }
         
+        public static string ForgotPasswordUrl(this UrlHelper helper) {
+            return helper.RouteUrl("Default", new {
+                controller = "User",
+                action = nameof(UserController.ForgotPassword)
+            });
+        }
+        
         #endregion
 
         #region ItemUrls

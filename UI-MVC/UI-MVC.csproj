@@ -412,6 +412,7 @@
     <Content Include="Views\Shared\Partials\_NavBarLinks.cshtml" />
     <Content Include="Views\Shared\Partials\_NavBarSuperAdminLinks.cshtml" />
     <Content Include="Views\Shared\Partials\_PersonTable.cshtml" />
+    <Content Include="Views\Shared\Partials\_RegisterModal.cshtml" />
     <Content Include="Views\Shared\Partials\_SearchBar.cshtml" />
     <Content Include="Views\Shared\Partials\_Subscriptions.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
@@ -506,9 +507,6 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Views\Shared\Layouts" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

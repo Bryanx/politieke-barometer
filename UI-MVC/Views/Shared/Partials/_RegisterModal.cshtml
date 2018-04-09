@@ -1,0 +1,18 @@
+﻿@model BAR.UI.MVC.Models.RegisterViewModel
+
+@using (Html.BeginForm("Register", "User", FormMethod.Post)) {
+    @Html.AntiForgeryToken()
+    <div class="form-group">
+        <button type="button" class="btn google-btn login-input w-100">Sign in with Google</button>
+        <button type="button" class="btn fb-btn login-input w-100">Sign in with Facebook</button>
+        @Html.TextBoxFor(m => m.Email, new {@class = "form-control login-input", @placeholder = "E-mailadres"})
+        @Html.PasswordFor(m => m.Password, new {@class = "form-control login-input", @placeholder = "Wachtwoord"})
+        <div class="form-check login-input">
+            <div class="checkbox">
+                <span class="character-checkbox" id="chbox" onclick="check()"></span>
+                <span class="checkbox-label c-secondary">Ik ga akkoord met de voorwaarden</span>
+            </div>
+            <button type="submit" class="btn btn-primary login-input w-100 h-40">Register</button>
+        </div>
+    </div>
+}
