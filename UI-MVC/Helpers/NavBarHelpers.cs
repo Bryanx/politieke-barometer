@@ -6,22 +6,22 @@ using BAR.UI.MVC.Models;
 namespace BAR.UI.MVC.Helpers {
     public static class NavBarHelpers {
         public static MvcHtmlString ShowAdminLinks(this HtmlHelper helper, IPrincipal user) {
-            if (user.IsInRole("Admin") || user.IsInRole("SuperAdmin")) return helper.Partial("Partials/NavBarAdminLinks");
+            if (user.IsInRole("Admin") || user.IsInRole("SuperAdmin")) return helper.Partial("Partials/_NavBarAdminLinks");
             return MvcHtmlString.Empty;
         }
 
         public static MvcHtmlString ShowSuperAdminLinks(this HtmlHelper helper, IPrincipal user) {
-            if (user.IsInRole("SuperAdmin")) return helper.Partial("Partials/NavBarSuperAdminLinks");
+            if (user.IsInRole("SuperAdmin")) return helper.Partial("Partials/_NavBarSuperAdminLinks");
             return MvcHtmlString.Empty;
         }
         
         public static MvcHtmlString ShowNavLogin(this HtmlHelper helper, BaseViewModel model) {
-            if (model.User != null) return helper.Partial("Partials/LoggedInNavbar", model);
-            return helper.Partial("Partials/LoginModal", new LoginViewModel());
+            if (model.User != null) return helper.Partial("Partials/_LoggedInNavbar", model);
+            return helper.Partial("Partials/_LoginModal", new LoginViewModel());
         }
 
         public static MvcHtmlString FooterHelper(this HtmlHelper helper, BaseViewModel model) {
-            if (model.User == null) return helper.Partial("Partials/FooterRegister", new RegisterViewModel());
+            if (model.User == null) return helper.Partial("Partials/_FooterRegister", new RegisterViewModel());
             return MvcHtmlString.Empty;
         }
     }
