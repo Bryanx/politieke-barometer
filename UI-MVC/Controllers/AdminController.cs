@@ -6,48 +6,58 @@ using BAR.BL.Managers;
 using BAR.UI.MVC.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
+using System.Linq;
+using Microsoft.AspNet.Identity.EntityFramework;
 
-namespace BAR.UI.MVC.Controllers {
-    public class AdminController : Controller {
-        // GET
-        public ActionResult Index() {
-            const string ADMIN_DASHBOARD_PAGE_TITLE = "Admin Dashboard";
-            BaseViewModel vm = GetVm(ADMIN_DASHBOARD_PAGE_TITLE);
-            return View(vm);
-        }
-        
-        public ActionResult PageManagement() {
-            const string PAGE_MANAGEMENT_PAGE_TITLE = "Pagina's beheren";
-            return View(GetVm(PAGE_MANAGEMENT_PAGE_TITLE));
-        }
-        
-        public ActionResult ItemManagement() {
-            const string ITEM_MANAGEMENT_PAGE_TITLE = "Items beheren";
-            return View(GetVm(ITEM_MANAGEMENT_PAGE_TITLE));
-        }
-        
-        public ActionResult UserManagement() {
-            const string USER_MANAGEMENT_PAGE_TITLE = "Gebruikers beheren";
-            BaseViewModel vm = GetVm(USER_MANAGEMENT_PAGE_TITLE);
-            UserManager userManager = new UserManager();
-            return View(new EditUserViewModel(vm, userManager.GetAllUsers()));
-        }
-        
-
-        /// <summary>
-        /// Checks if the user has any special roles.
-        /// If it has, the given model is updated.
-        /// </summary>
-        private BaseViewModel GetVm(string pageTitle) {
-            IUserManager userManager = new UserManager();
-            User user = userManager.GetUser(User.Identity.GetUserId());
-            IList<string> userRoles = HttpContext.GetOwinContext().GetUserManager<IdentityUserManager>().GetRoles(User.Identity.GetUserId());
-            return new BaseViewModel() {
-                User = user,
-                PageTitle = pageTitle,
-                IsAdmin = userRoles.Contains("Admin"),
-                IsSuperAdmin = userRoles.Contains("SuperAdmin")
-            };
-        }
+namespace BAR.UI.MVC.Controllers
+{
+  [Authorize(Roles ="Admin, SuperAdmin")]
+  public class AdminController : Controller
+  {
+    // GET
+    public ActionResult Index()
+    {
+      const string ADMIN_DASHBOARD_PAGE_TITLE = "Admin Dashboard";
+      return HttpNotFound();
     }
+
+    public ActionResult PageManagement()
+    {
+      const string PAGE_MANAGEMENT_PAGE_TITLE = "Pagina's beheren";
+      return HttpNotFound();
+    }
+
+    public ActionResult ItemManagement()
+    {
+      const string ITEM_MANAGEMENT_PAGE_TITLE = "Items beheren";
+      return HttpNotFound();
+    }
+
+    public ActionResult UserManagement()
+    {
+      const string USER_MANAGEMENT_PAGE_TITLE = "Gebruikers beheren";
+      UserManager userManager = new UserManager();
+      IdentityUserManager identityUserManager = HttpContext.GetOwinContext().GetUserManager<IdentityUserManager>();
+      IEnumerable<User> users = userManager.GetAllUsers();
+      List<string> currentRoles = new List<string>();
+      for (int i = 0; i < users.Count(); i++)
+      {
+        currentRoles.Add(identityUserManager.GetRoles(users.ElementAt(i).Id).FirstOrDefault());
+      }
+      ViewBag.CurrentRoles = currentRoles;
+      var roles = userManager.GetAllRoles().Select(x => new SelectListItem
+      {
+        Value = x.Id,
+        Text = x.Name,
+      }).OrderBy(x => x.Text);
+      EditUserViewModel vm = new EditUserViewModel()
+      {
+        User = userManager.GetUser(User.Identity.GetUserId()),
+        PageTitle = USER_MANAGEMENT_PAGE_TITLE,
+        Users = userManager.GetAllUsers(),
+        Roles = roles
+      };
+      return View(vm);
+    }
+  }
 }

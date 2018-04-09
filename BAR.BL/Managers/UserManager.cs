@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using BAR.BL.Domain.Users;
 using BAR.DAL;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace BAR.BL.Managers
 {
@@ -26,7 +27,7 @@ namespace BAR.BL.Managers
 		/// <summary>
 		/// Changes a user account to non-active or active
 		/// </summary>
-		public User ChangeUserAccount(string userId, bool active)
+		public User ChangeUserAccount(string userId, bool deleted)
 		{
 			InitRepo();
 
@@ -35,7 +36,7 @@ namespace BAR.BL.Managers
 			if (userToUpdate == null) return null;
 
 			//Change user
-			userToUpdate.IsActive = active;
+			userToUpdate.Deleted = deleted;
 
 			//Update database
 			userRepo.UpdateUser(userToUpdate);
@@ -147,5 +148,17 @@ namespace BAR.BL.Managers
 			if (uowManager == null) userRepo = new UserRepository();
 			else userRepo = new UserRepository(uowManager.UnitOfWork);
 		}
+
+    public IEnumerable<IdentityRole> GetAllRoles()
+    {
+      InitRepo();
+      return userRepo.ReadAllRoles();
+    }
+
+    public IdentityRole GetRole(string userId)
+    {
+      InitRepo();
+      return userRepo.ReadRole(userId);
+    }
   }
 }

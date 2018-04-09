@@ -1,4 +1,5 @@
 ﻿using BAR.BL.Domain.Users;
+using Microsoft.AspNet.Identity.EntityFramework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,6 +20,8 @@ namespace BAR.DAL
 		IEnumerable<Activity> ReadActivitiesForUser(string userId);
     IEnumerable<Area> ReadAreas();
     Area ReadArea(int areaId);
+    IEnumerable<IdentityRole> ReadAllRoles();
+    IdentityRole ReadRole(string userId);
 
     //Create
     int CreateUser(User user);

@@ -77,5 +77,40 @@ namespace BAR.UI.MVC.Controllers.api
       User user = userManager.ChangeUserAlerts(User.Identity.GetUserId(), model.AlertsViaWebsite, model.AlertsViaEmail, model.WeeklyReviewViaEmail);
       return StatusCode(HttpStatusCode.NoContent);
     }
+
+    [HttpPost]
+    [Route("api/Admin/DeactivateAccount/{userId}")]
+    public IHttpActionResult DeactivateAccount(string userId)
+    {
+      IUserManager userManager = new UserManager();
+      userManager.ChangeUserAccount(userId, true);
+      return StatusCode(HttpStatusCode.NoContent);
+    }
+
+    [HttpPost]
+    [Route("api/Admin/ActivateAccount/{userId}")]
+    public IHttpActionResult ActivateAccount(string userId)
+    {
+      IUserManager userManager = new UserManager();
+      userManager.ChangeUserAccount(userId, false);
+      return StatusCode(HttpStatusCode.NoContent);
+    }
+
+    [HttpPost]
+    [Route("api/Admin/ChangeRole/{userId}")]
+    public IHttpActionResult ChangeRole(string userId, [FromBody]string roleName)
+    {
+      if (roleName.Equals("User") || roleName.Equals("Admin") || roleName.Equals("SuperAdmin"))
+      {
+        IUserManager userManager = new UserManager();
+        string currentRole = userManager.GetRole(userId).Name;
+        IdentityUserManager identityUserManager =
+            HttpContext.Current.GetOwinContext().GetUserManager<IdentityUserManager>();
+        identityUserManager.RemoveFromRole(userId, currentRole);
+        identityUserManager.AddToRole(userId, roleName);
+        return StatusCode(HttpStatusCode.NoContent);
+      }    
+      return StatusCode(HttpStatusCode.NotAcceptable);
+    }
   }
 }

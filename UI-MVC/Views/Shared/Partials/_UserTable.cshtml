@@ -1,0 +1,119 @@
+﻿@model BAR.UI.MVC.Models.EditUserViewModel
+
+<table id="datatable-responsive" class="table" cellspacing="10px" width="100%">
+
+    <colgroup>
+        <col style="width:11%">
+        <col style="width:11%">
+        <col style="width:12%">
+        <col style="width:12%">
+        <col style="width:16%">
+        <col style="width:10%">
+        <col style="width:8%">
+        <col style="width:8%">
+        <col style="width:12%">
+    </colgroup>
+    <thead>
+        <tr>
+            <th>
+                Voornaam
+            </th>
+            <th>
+                Achternaam
+            </th>
+            <th>
+                Geslacht
+            </th>
+            <th>
+                Geboortedatum
+            </th>
+            <th>
+                Email
+            </th>
+            <th>
+                Status
+            </th>
+            <th>
+            </th>
+            <th>
+                Rol
+            </th>
+            <th>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @for (int i = 0; i < Model.Users.Count(); i++)
+        {
+        <tr class="subscription">
+            <td>
+                <div class="img-circle person-image"></div>
+                @Model.Users.ElementAt(i).FirstName
+            </td>
+            <td>
+                @Model.Users.ElementAt(i).LastName
+            </td>
+            @if (Model.Users.ElementAt(i).Gender == BAR.BL.Domain.Users.Gender.MAN)
+            {
+            <td>
+                Man
+            </td>
+            }
+            else if (Model.Users.ElementAt(i).Gender == BAR.BL.Domain.Users.Gender.WOMAN)
+            {
+            <td>
+                Vrouw
+            </td>
+            }
+            else
+            {
+            <td>
+                Iets anders
+            </td>
+            }
+            @if (Model.Users.ElementAt(i).DateOfBirth != null)
+            {
+                <td>
+                    @Model.Users.ElementAt(i).DateOfBirth.Value.ToShortDateString()
+                </td>
+             } else
+             {
+                <td>
+                    N/B
+                </td>
+             }
+            <td>
+                @Model.Users.ElementAt(i).Email
+            </td>
+            @if (Model.Users.ElementAt(i).Deleted)
+            {
+            <td id=@String.Format("td{0}", i) class="red">
+                Non-actief
+            </td>
+            }
+            else
+            {
+            <td id=@String.Format("td{0}", i) class="green">
+                Actief
+            </td>
+            }
+            <td>
+                @if (Model.Users.ElementAt(i).Deleted)
+                {
+                <a id=@String.Format("btn{0}", i) class="btn btn-success btn-xs" onclick="activateAccount('@Model.Users.ElementAt(i).Id', '@i')" title="Verwijderde gebruiker herstellen">Herstellen</a>
+                }
+                else
+                {
+                <a id=@String.Format("btn{0}", i) class="btn btn-danger btn-xs" onclick="deactivateAccount('@Model.Users.ElementAt(i).Id', '@i')" title="Gebruiker verwijderen">Verwijderen</a>
+                }
+            </td>
+            <td id=@String.Format("td2{0}", i)>
+                @ViewBag.CurrentRoles[i]
+            </td>
+            <td>
+                @Html.DropDownListFor(model => model.User.Roles, Model.Roles, "Verander rol", new { @onchange = String.Format("changeRole('{0}', '{1}')", Model.Users.ElementAt(i).Id, i), id = String.Format("dd{0}", i) })
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>

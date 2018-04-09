@@ -190,5 +190,15 @@ namespace BAR.DAL
     {
       return ctx.Areas.Where(x => x.AreaId == areaId).SingleOrDefault();
     }
+
+    public IEnumerable<IdentityRole> ReadAllRoles()
+    {
+      return ctx.Roles;
+    }
+
+    public IdentityRole ReadRole(string userId)
+    {
+      return ctx.Roles.Where(x => x.Users.Any(y => y.UserId.Equals(userId))).FirstOrDefault();
+    }
   }
 }

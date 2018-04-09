@@ -1,4 +1,5 @@
 ﻿using BAR.BL.Domain.Users;
+using Microsoft.AspNet.Identity.EntityFramework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,5 +18,7 @@ namespace BAR.BL.Managers
 		User ChangeUserAccount(string userId, bool active);
     IEnumerable<Area> GetAreas();
     Area GetArea(int areaId);
+    IEnumerable<IdentityRole> GetAllRoles();
+    IdentityRole GetRole(string userId);
   }
 }
