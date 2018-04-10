@@ -22,7 +22,7 @@ namespace BAR.UI.MVC.Controllers {
         [AllowAnonymous]
         public ActionResult Index() {
             ISubscriptionManager subMgr = new SubscriptionManager();
-            IList<ItemDTO> people = Mapper.Map<IList<Item>, IList<ItemDTO>>(itemMgr.GetAllPeople().ToList());
+            IList<ItemDTO> people = Mapper.Map(itemMgr.GetAllPeople(), new List<ItemDTO>());
             IEnumerable<Subscription> subs = subMgr.GetSubscriptionsWithItemsForUser(User.Identity.GetUserId());
             foreach (ItemDTO item in people) {
                 foreach (var sub in subs) {
@@ -33,7 +33,7 @@ namespace BAR.UI.MVC.Controllers {
                 new ItemViewModel() {
                 PageTitle = INDEX_PAGE_TITLE,
                 User = User.Identity.IsAuthenticated ? userManager.GetUser(User.Identity.GetUserId()) : null,
-                People = people
+                Items = people
             });
         }
 

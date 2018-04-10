@@ -53,7 +53,7 @@ body {
   font-size: 22px !important; }
 
 #datatable-responsive {
-  font-size: 18px !important;
+  font-size: 16px !important;
   border-collapse: separate;
   border-spacing: 0 10px; }
 
@@ -73,7 +73,8 @@ body {
   background: var(--white); }
 .table > tbody > tr > td, .table > tbody > tr > th {
   border: none !important;
-  padding: 18px !important; }
+  padding: 18px !important;
+  vertical-align: middle !important; }
 .table > tbody > tr > td:first-child {
   border-radius: 5px 0 0 5px; }
 .table > tbody > tr > td:last-child {
@@ -800,6 +801,9 @@ a {
 
 .btn:focus, .btn:active:focus, .btn.active:focus, .btn.focus, .btn:active.focus, .btn.active.focus {
   outline: 0; }
+
+.subscription > td > a:hover {
+  text-decoration: none; }
 
 a:hover, a:focus {
   text-decoration: underline; }
@@ -4124,5 +4128,16 @@ ul.notifications {
 .input-group.date .input-group-addon {
   border-radius: 0px !important;
   background-color: var(--white) !important; }
+
+.loadMessage {
+  position: absolute;
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  background-image: url("../images/rolling.svg");
+  background-position: center;
+  background-size: cover;
+  margin-top: 8px;
+  margin-left: 5px; }
 
 /*# sourceMappingURL=custom.css.map */

@@ -88,7 +88,7 @@ body {
 }
 
 #datatable-responsive {
-  font-size: 18px !important;
+  font-size: 16px !important;
   border-collapse: separate;
   border-spacing: 0 10px;
 }
@@ -114,6 +114,7 @@ body {
     td, th {
       border: none !important;
       padding: 18px !important;
+      vertical-align: middle !important;
     }
     td:first-child {
       border-radius: 5px 0 0 5px;
@@ -1095,6 +1096,9 @@ a {
   }
 }
 
+.subscription > td > a:hover {
+  text-decoration: none;
+}
 a {
   &:hover, &:focus {
     text-decoration: underline;
@@ -5251,4 +5255,16 @@ ul.notifications {
 .input-group.date .input-group-addon {
   border-radius: 0px !important;
   background-color: var(--white) !important;
+}
+
+.loadMessage {
+  position: absolute;
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  background-image: url("../images/rolling.svg");
+  background-position: center;
+  background-size: cover;
+  margin-top: 8px;
+  margin-left: 5px;
 }

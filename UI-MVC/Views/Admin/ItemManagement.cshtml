@@ -1,3 +1,63 @@
-﻿@model BAR.UI.MVC.Models.BaseViewModel
+﻿@using System.Web.Optimization
+@model BAR.UI.MVC.Models.ItemViewModels.ItemViewModel
 
-<h2>title</h2>
+@section CustomCSS{
+    @Styles.Render("~/bundles/datatables")
+}
+
+<h1>
+    @Model.PageTitle <a class="btn btn-dark btn-xs">Content importeren</a>
+</h1>
+
+<hr/>
+
+@Html.Partial("Partials/_ItemTable", Model)
+
+<div style="visibility: hidden">space</div>
+
+
+
+@section CustomJS{
+    @Scripts.Render("~/bundles/datatablesScripts")
+    <script type="text/javascript">
+        (() => {
+            var loader = $("<div />",
+                {
+                    "class": "loadMessage"
+                });
+            
+            $(".removeItem").click(function() {
+                var el = $(this);
+                var id = el.data('item-id');
+                $.ajax({
+                        type: 'POST',
+                        url: '/api/Admin/DeleteItem/' + id
+                    }).fail(() => { alert("Cannot remove item.") })
+                    .done(function() {
+                        $(el).toggleClass("btn-danger")
+                            .toggleClass("btn-dark")
+                            .toggleText("Herstellen", "Verwijderen");
+                    });
+            });
+            
+            var wto;
+            $(".renameItem").on('input propertychange paste',
+                function() {
+                    clearTimeout(wto);
+                    var el = $(this);
+                    var id = el.data('item-id');
+                    el.after(loader);
+                    wto = setTimeout(function() {
+                            $.ajax({
+                                    type: 'POST',
+                                    url: '/api/Admin/RenameItem/' + id + '/' + el.val()
+                                }).fail(() => { /**/ })
+                                .done(function() {
+                                    el.parent().find(loader).remove();
+                                });
+                        },
+                        1000);
+                });
+        })($);
+    </script>
+}
