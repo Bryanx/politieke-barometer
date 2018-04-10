@@ -28,7 +28,10 @@ namespace BAR.UI.MVC.Controllers
     public ActionResult PageManagement()
     {
       const string PAGE_MANAGEMENT_PAGE_TITLE = "Pagina's beheren";
-      return HttpNotFound();
+      return View(new BaseViewModel() {
+        User = userManager.GetUser(User.Identity.GetUserId()),
+        PageTitle = PAGE_MANAGEMENT_PAGE_TITLE
+      });
     }
 
     public ActionResult ItemManagement()
