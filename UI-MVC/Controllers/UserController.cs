@@ -297,6 +297,12 @@ namespace BAR.UI.MVC.Controllers
       //Get information from the social provider best on available claims
       var firstname = loginInfo.ExternalIdentity.Claims.First(c => c.Type == "urn:facebook:first_name").Value;
       var lastname = loginInfo.ExternalIdentity.Claims.First(c => c.Type == "urn:facebook:last_name").Value;
+      var id = loginInfo.ExternalIdentity.Claims.First(c => c.Type == "urn:facebook:id").Value;
+
+      //Get profile picure as byte array
+      var webClient = new WebClient();
+      var photoUrl = String.Format("https://graph.facebook.com/{0}/picture?type=large", id);
+      byte[] imageData = webClient.DownloadData(photoUrl);
 
       // Sign in the user with this external login provider if the user already has a login
       var result = await signInManager.ExternalSignInAsync(loginInfo, isPersistent: false);
@@ -319,8 +325,9 @@ namespace BAR.UI.MVC.Controllers
                 Email = loginInfo.Email,
                 Firstname = firstname,
                 Lastname = lastname,
-                DateOfBirth = DateTime.Now
-              });
+                DateOfBirth = DateTime.Now,
+                ImageData = imageData
+      });
       }
     }
 
@@ -357,7 +364,8 @@ namespace BAR.UI.MVC.Controllers
           FirstName = model.Firstname,
           LastName = model.Lastname,
           Gender = model.Gender,
-          DateOfBirth = model.DateOfBirth
+          DateOfBirth = model.DateOfBirth,
+          ProfilePicture = model.ImageData
         };
         var result = await userManager.CreateAsync(user);
 
@@ -454,6 +462,7 @@ namespace BAR.UI.MVC.Controllers
 
     public FileContentResult ProfilePicture()
     {
+
       IUserManager userManager = new UserManager();
       User user = userManager.GetUser(User.Identity.GetUserId());
 
@@ -461,6 +470,7 @@ namespace BAR.UI.MVC.Controllers
       {
         return new FileContentResult(user.ProfilePicture, "image/jpeg");
       }
+
       return null;
     }
 
