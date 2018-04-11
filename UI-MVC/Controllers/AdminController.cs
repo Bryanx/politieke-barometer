@@ -7,6 +7,7 @@ using BAR.UI.MVC.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using System.Linq;
+using AutoMapper;
 using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace BAR.UI.MVC.Controllers
@@ -14,6 +15,9 @@ namespace BAR.UI.MVC.Controllers
   [Authorize(Roles ="Admin, SuperAdmin")]
   public class AdminController : Controller
   {
+    
+    private UserManager userManager = new UserManager();
+
     // GET
     public ActionResult Index()
     {
@@ -24,19 +28,26 @@ namespace BAR.UI.MVC.Controllers
     public ActionResult PageManagement()
     {
       const string PAGE_MANAGEMENT_PAGE_TITLE = "Pagina's beheren";
-      return HttpNotFound();
+      return View(new BaseViewModel() {
+        User = userManager.GetUser(User.Identity.GetUserId()),
+        PageTitle = PAGE_MANAGEMENT_PAGE_TITLE
+      });
     }
 
     public ActionResult ItemManagement()
     {
       const string ITEM_MANAGEMENT_PAGE_TITLE = "Items beheren";
-      return HttpNotFound();
+      IItemManager itemManager = new ItemManager();
+      return View(new ItemViewModels.ItemViewModel() {
+        User = userManager.GetUser(User.Identity.GetUserId()),
+        PageTitle = ITEM_MANAGEMENT_PAGE_TITLE,
+        Items = Mapper.Map(itemManager.GetAllItems(), new List<ItemDTO>())
+      });
     }
 
     public ActionResult UserManagement()
     {
       const string USER_MANAGEMENT_PAGE_TITLE = "Gebruikers beheren";
-      UserManager userManager = new UserManager();
       IdentityUserManager identityUserManager = HttpContext.GetOwinContext().GetUserManager<IdentityUserManager>();
       IEnumerable<User> users = userManager.GetAllUsers();
       List<string> currentRoles = new List<string>();
@@ -54,7 +65,7 @@ namespace BAR.UI.MVC.Controllers
       {
         User = userManager.GetUser(User.Identity.GetUserId()),
         PageTitle = USER_MANAGEMENT_PAGE_TITLE,
-        Users = userManager.GetAllUsers(),
+        Users = users,
         Roles = roles
       };
       return View(vm);

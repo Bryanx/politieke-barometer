@@ -87,7 +87,7 @@ namespace BAR.BL.Managers
 		}
 
 		/// <summary>
-		/// Returns a list of all items.
+		/// Returns a list of all items (deleted and undeleted).
 		/// </summary>
 		public IEnumerable<Item> GetAllItems()
 		{
@@ -96,19 +96,19 @@ namespace BAR.BL.Managers
 		}
 
 		/// <summary>
-		/// Returns all people
+		/// Returns all (undeleted) people
 		/// </summary>
 		public IEnumerable<Item> GetAllPeople() 
 		{
-			return GetAllItems().Where(item => item is Person);
+			return GetAllItems().Where(item => item is Person).Where(item => item.Deleted == false);
 		}
 
 		/// <summary>
-		/// Returns all organisations
+		/// Returns all (undeleted) organisations
 		/// </summary>
 		public IEnumerable<Item> GetAllOrganisations() 
 		{
-			return GetAllItems().Where(item => item is Organisation);
+			return GetAllItems().Where(item => item is Organisation).Where(item => item.Deleted == false);
 
 		}
 
@@ -221,6 +221,25 @@ namespace BAR.BL.Managers
 			//Update item
 			itemToUpdate.Description = description;
 			itemToUpdate.LastUpdated = DateTime.Now;
+
+			//Update database
+			itemRepo.UpdateItem(itemToUpdate);
+			return itemToUpdate;
+		}
+		
+		/// <summary>
+		/// Changes an item to non-active or active
+		/// </summary>
+		public Item ChangeItemActivity(int itemId)
+		{
+			InitRepo();
+
+			//Get item
+			Item itemToUpdate = itemRepo.ReadItem(itemId);
+			if (itemToUpdate == null) return null;
+
+			//Change item (toggle Deleted)
+			itemToUpdate.Deleted = !itemToUpdate.Deleted;
 
 			//Update database
 			itemRepo.UpdateItem(itemToUpdate);

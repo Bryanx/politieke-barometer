@@ -22,7 +22,7 @@ namespace BAR.UI.MVC.Controllers {
             return View(new ItemViewModel() {
                 PageTitle = INDEX_PAGE_TITLE,
                 User = User.Identity.IsAuthenticated ? userManager.GetUser(User.Identity.GetUserId()) : null,
-                People = Mapper.Map<IList<Item>, IList<ItemDTO>>(itemMgr.GetAllItems().ToList())
+                Items = Mapper.Map<IList<Item>, IList<ItemDTO>>(itemMgr.GetAllItems().ToList())
             });
         }
 

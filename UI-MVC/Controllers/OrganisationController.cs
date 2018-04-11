@@ -31,7 +31,7 @@ namespace BAR.UI.MVC.Controllers {
                 new ItemViewModel() {
                     PageTitle = INDEX_PAGE_TITLE,
                     User = User.Identity.IsAuthenticated ? userManager.GetUser(User.Identity.GetUserId()) : null,
-                    People = people
+                    Items = people
                 });
         }
     }

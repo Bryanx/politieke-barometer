@@ -463,7 +463,7 @@ namespace BAR.UI.MVC.Controllers
       return new ItemViewModel()
       {
         User = user,
-        People = people
+        Items = people
       };
     }
 
