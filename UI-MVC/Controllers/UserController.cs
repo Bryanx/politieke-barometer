@@ -449,7 +449,7 @@ namespace BAR.UI.MVC.Controllers
         IUserManager userManager = new UserManager();
         userManager.ChangeProfilePicture(User.Identity.GetUserId(), poImgFile);
       }
-      return RedirectToAction("Index", "Home");
+      return RedirectToAction("Settings", "User");
     }
 
     public FileContentResult ProfilePicture()
