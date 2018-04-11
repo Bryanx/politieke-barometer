@@ -318,7 +318,8 @@ namespace BAR.UI.MVC.Controllers
               {
                 Email = loginInfo.Email,
                 Firstname = firstname,
-                Lastname = lastname
+                Lastname = lastname,
+                DateOfBirth = DateTime.Now
               });
       }
     }
