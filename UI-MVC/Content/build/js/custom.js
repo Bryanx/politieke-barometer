@@ -5223,6 +5223,27 @@ function submitForm($this, event, message=null) {
     event.preventDefault();
 }
 
+//Generic ajax toggle button
+var wto;
+function ajaxToggleSubscribe($this) {
+	clearTimeout(wto);
+	var id = $this.data('item-id');
+	var text = $this.html();
+	$this.html("<i class='fa fa-circle-o-notch fa-spin'></i>");
+	wto = setTimeout(function() {
+			$.ajax({
+				type: 'POST',
+				url: '/api/ToggleSubscribe/' + id
+			}).fail(() => { /* ok */ })
+				.done(function() {
+					if (text === "Abonneer") $this.html("Uitschrijven");
+					else $this.html("Abonneer");
+					$this.toggleClass("btn-danger btn-success");
+				});
+		},
+		500);
+}
+
 $.fn.toggleText = function(t1, t2){
     if (this.text() === t1) this.text(t2);
     else                   this.text(t1);

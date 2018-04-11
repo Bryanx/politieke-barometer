@@ -17,11 +17,12 @@ namespace BAR.UI.MVC.Controllers {
         
         private const string INDEX_PAGE_TITLE = "Politici-overzicht";
         private IItemManager itemMgr = new ItemManager();
-        private UserManager userManager = new UserManager();
+        private IUserManager userManager = new UserManager();            
+        private ISubscriptionManager subMgr = new SubscriptionManager();
+
         
         [AllowAnonymous]
         public ActionResult Index() {
-            ISubscriptionManager subMgr = new SubscriptionManager();
             IList<ItemDTO> people = Mapper.Map(itemMgr.GetAllPeople(), new List<ItemDTO>());
             IEnumerable<Subscription> subs = subMgr.GetSubscriptionsWithItemsForUser(User.Identity.GetUserId());
             foreach (ItemDTO item in people) {
@@ -39,12 +40,15 @@ namespace BAR.UI.MVC.Controllers {
 
         // GET: Default/Details/5 (Specific person page)
         public ActionResult Details(int id) {
+            IEnumerable<Item> subs = subMgr.GetSubscribedItemsForUser(User.Identity.GetUserId());
             Item item = itemMgr.GetItem(id);
+            Item subbedItem = subs.FirstOrDefault(i => i.ItemId == item.ItemId);
             return View("Details", 
                 new PersonViewModel() {
                 PageTitle = item.Name,
                 User = User.Identity.IsAuthenticated ? userManager.GetUser(User.Identity.GetUserId()) : null,
-                Person = Mapper.Map(item, new ItemDTO())
+                Person = Mapper.Map(item, new ItemDTO()),
+                Subscribed = subbedItem != null
             });
         }
     }
