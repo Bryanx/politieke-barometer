@@ -123,6 +123,7 @@ namespace BAR.UI.MVC.Controllers
           LastName = model.Lastname,
           Gender = model.Gender,
           DateOfBirth = model.DateOfBirth,
+          IsActive = true,
           AlertsViaWebsite = true
         };
         var result = await userManager.CreateAsync(user, model.Password);

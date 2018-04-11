@@ -12,6 +12,9 @@ using Microsoft.AspNet.Identity;
 namespace BAR.UI.MVC.Controllers.api {
     public class AlertApiController : ApiController {
         
+        private ISubscriptionManager SubManager = new SubscriptionManager();
+        private static bool firstRun = true;
+        
         /// <summary>
         /// Get Request for alerts of a specific user (id)
         /// This request is used on the member
@@ -19,23 +22,24 @@ namespace BAR.UI.MVC.Controllers.api {
         [HttpGet]
         [Route("api/User/GetAlerts")]
         public IHttpActionResult GetAlerts() {
-            ISubscriptionManager SubManager = new SubscriptionManager();
             //TODO: Remove counter, temporary solution because db is rebuild on every load.
+            if (firstRun) {
+                firstRun = false;
                 SysController sys = new SysController();
                 sys.DetermineTrending();
                 sys.GenerateAlerts();
+            }
 
             IEnumerable<Alert> alertsToShow = SubManager.GetAllAlerts(User.Identity.GetUserId());
-            if (alertsToShow == null || alertsToShow.Count() == 0) return StatusCode(HttpStatusCode.NoContent);
+            if (alertsToShow == null || !alertsToShow.Any()) return StatusCode(HttpStatusCode.NoContent);
             
             //Made DTO class to prevent circular references
             List<AlertDTO> lijst = new List<AlertDTO>();
             foreach (Alert alert in alertsToShow) {
-                var date = (DateTime) alert.TimeStamp;
                 lijst.Add(new AlertDTO() {
                     AlertId=alert.AlertId,
                     Name=alert.Subscription.SubscribedItem.Name,
-                    TimeStamp=date,
+                    TimeStamp=alert.TimeStamp,
                     IsRead = alert.IsRead
                 });
             }
@@ -48,7 +52,6 @@ namespace BAR.UI.MVC.Controllers.api {
         [HttpPut]
         [Route("api/User/Alert/{alertId}/Read")]
         public IHttpActionResult MarkAlertAsRead(int alertId) {
-            ISubscriptionManager SubManager = new SubscriptionManager();
             SubManager.ChangeAlertToRead(User.Identity.GetUserId(), alertId);
             return StatusCode(HttpStatusCode.NoContent);
         }
@@ -59,7 +62,6 @@ namespace BAR.UI.MVC.Controllers.api {
         [HttpDelete]
         [Route("api/User/Alert/{alertId}/Delete")]
         public IHttpActionResult DeleteAlert(int alertId) {
-            ISubscriptionManager SubManager = new SubscriptionManager();
             SubManager.RemoveAlert(User.Identity.GetUserId(), alertId);
             return StatusCode(HttpStatusCode.NoContent);
         }
