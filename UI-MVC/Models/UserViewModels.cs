@@ -172,5 +172,8 @@ namespace BAR.UI.MVC.Models
     [DataType(DataType.Password)]
     [Display(Name = "Nieuw wachtwoord")]
     public string PasswordNew { get; set; }
+
+    [Display(Name = "Profielfoto")]
+    public byte[] ProfilePicture { get; set; }
   }
 }

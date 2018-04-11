@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using BAR.BL.Domain.Users;
 using BAR.DAL;
 using Microsoft.AspNet.Identity.EntityFramework;
+using System.Web;
+using System.IO;
 
 namespace BAR.BL.Managers
 {
@@ -159,6 +161,27 @@ namespace BAR.BL.Managers
     {
       InitRepo();
       return userRepo.ReadRole(userId);
+    }
+
+    public User ChangeProfilePicture(string userId, HttpPostedFileBase poImgFile)
+    {
+      InitRepo();
+
+      //Get User
+      User userToUpdate = userRepo.ReadUser(userId);
+      if (userToUpdate == null) return null;
+
+      //Change profile picture
+      byte[] imageData = null;
+      using (var binary = new BinaryReader(poImgFile.InputStream))
+      {
+        imageData = binary.ReadBytes(poImgFile.ContentLength);
+      }
+      userToUpdate.ProfilePicture = imageData;
+
+      //Update database
+      userRepo.UpdateUser(userToUpdate);
+      return userToUpdate;
     }
   }
 }

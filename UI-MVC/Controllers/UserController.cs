@@ -318,7 +318,8 @@ namespace BAR.UI.MVC.Controllers
               {
                 Email = loginInfo.Email,
                 Firstname = firstname,
-                Lastname = lastname
+                Lastname = lastname,
+                DateOfBirth = DateTime.Now
               });
       }
     }
@@ -433,6 +434,34 @@ namespace BAR.UI.MVC.Controllers
       };
 
       return View("Settings", settingsViewModel);
+    }
+
+    //
+    // POST: /User/Settings
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public ActionResult Settings([Bind(Exclude = "ProfilePicture")]SettingsViewModel model)
+    {
+      if (Request.Files.Count > 0)
+      {
+        HttpPostedFileBase poImgFile = Request.Files["ProfilePicture"];
+
+        IUserManager userManager = new UserManager();
+        userManager.ChangeProfilePicture(User.Identity.GetUserId(), poImgFile);
+      }
+      return RedirectToAction("Index", "Home");
+    }
+
+    public FileContentResult ProfilePicture()
+    {
+      IUserManager userManager = new UserManager();
+      User user = userManager.GetUser(User.Identity.GetUserId());
+
+      if (user.ProfilePicture != null)
+      {
+        return new FileContentResult(user.ProfilePicture, "image/jpeg");
+      }
+      return null;
     }
 
     private ItemViewModel GetPersonViewModel(string id)
