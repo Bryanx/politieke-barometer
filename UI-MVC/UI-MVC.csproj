@@ -336,6 +336,20 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Scripts\bootstrap-wysiwyg\bootstrap-wysiwyg.min.js" />
+    <Content Include="Scripts\datatables\datatables.net-buttons-bs\css\buttons.bootstrap.css" />
+    <Content Include="Scripts\datatables\datatables.net-buttons-bs\css\buttons.bootstrap.min.css" />
+    <Content Include="Scripts\datatables\datatables.net-buttons-bs\js\buttons.bootstrap.js" />
+    <Content Include="Scripts\datatables\datatables.net-buttons-bs\js\buttons.bootstrap.min.js" />
+    <Content Include="Scripts\datatables\datatables.net-buttons\js\buttons.colVis.js" />
+    <Content Include="Scripts\datatables\datatables.net-buttons\js\buttons.colVis.min.js" />
+    <Content Include="Scripts\datatables\datatables.net-buttons\js\buttons.flash.js" />
+    <Content Include="Scripts\datatables\datatables.net-buttons\js\buttons.flash.min.js" />
+    <Content Include="Scripts\datatables\datatables.net-buttons\js\buttons.html5.js" />
+    <Content Include="Scripts\datatables\datatables.net-buttons\js\buttons.html5.min.js" />
+    <Content Include="Scripts\datatables\datatables.net-buttons\js\buttons.print.js" />
+    <Content Include="Scripts\datatables\datatables.net-buttons\js\buttons.print.min.js" />
+    <Content Include="Scripts\datatables\datatables.net-buttons\js\dataTables.buttons.js" />
+    <Content Include="Scripts\datatables\datatables.net-buttons\js\dataTables.buttons.min.js" />
     <Content Include="Scripts\jquery\jquery-ui-1.11.0.js" />
     <Content Include="Scripts\jquery\jquery-ui-1.11.0.min.js" />
     <Content Include="Scripts\jquery\jquery-ui.js" />
@@ -396,6 +410,7 @@
     <Content Include="Scripts\nprogress.js" />
     <Content Include="Scripts\site.js" />
     <Content Include="Scripts\underscore.min.js" />
+    <Content Include="test.json" />
     <Content Include="Views\Admin\Index.cshtml" />
     <Content Include="Views\Admin\ItemManagement.cshtml" />
     <Content Include="Views\Admin\PageManagement.cshtml" />

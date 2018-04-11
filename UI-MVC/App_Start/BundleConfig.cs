@@ -49,8 +49,6 @@ namespace BAR.UI.MVC {
         private static readonly string[] DataTables = {
             "~/Scripts/datatables/datatables.net/js/jquery.dataTables.min.js",
             "~/Scripts/datatables/datatables.net-bs/js/dataTables.bootstrap.min.js",
-            "~/Scripts/datatables/datatables.net-responsive/js/dataTables.responsive.min.js",
-            "~/Scripts/datatables/datatables.net-responsive-bs/js/responsive.bootstrap.js"
             
         };
         private static readonly string[] CustomScripts = {
@@ -72,8 +70,7 @@ namespace BAR.UI.MVC {
         };
         private static readonly string[] DatatablesCss = {
             "~/Scripts/datatables/datatables.net-bs/css/dataTables.bootstrap.min.css",
-            "~/Scripts/datatables/datatables.net-responsive-bs/css/responsive.bootstrap.min.css",
-            "~/Scripts/datatables/datatables.net-scroller-bs/css/scroller.bootstrap.min.css"
+            "~/Scripts/datatables/datatables.net-responsive-bs/css/responsive.bootstrap.min.css"
         };
         private static readonly string CustomCss ="~/Content/build/css/custom.css";
 
@@ -89,14 +86,20 @@ namespace BAR.UI.MVC {
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(Bootstrap));
             bundles.Add(new ScriptBundle("~/bundles/gridstack").Include(Gridstack));
             bundles.Add(new ScriptBundle("~/bundles/morrisCharts").Include(MorrisCharts));
-            bundles.Add(new ScriptBundle("~/bundles/datatablesScripts").Include(DataTables));
             bundles.Add(new ScriptBundle("~/bundles/custom").Include(CustomScripts));
             bundles.Add(new ScriptBundle("~/bundles/bootstrap-wysiwyg").IncludeDirectory("~/Scripts/bootstrap-wysiwyg", "*.js"));
+            
+            //Script tables
+            bundles.Add(new ScriptBundle("~/bundles/datatables").Include(DataTables));
+            bundles.Add(new ScriptBundle("~/bundles/datatables-responsive").IncludeDirectory("~/Scripts/datatables/datatables.net-responsive-bs", "*.js", true));
+            bundles.Add(new ScriptBundle("~/bundles/datatables-buttons").IncludeDirectory("~/Scripts/datatables/datatables.net-buttons", "*.js", true));
+            bundles.Add(new ScriptBundle("~/bundles/datatables-buttons-bs").IncludeDirectory("~/Scripts/datatables/datatables.net-buttons-bs", "*.js", true));
             
             //Styles
             bundles.Add(new StyleBundle("~/Content/css").Include(DefaultCss));
             bundles.Add(new StyleBundle("~/Content/custom").Include(CustomCss));
-            bundles.Add(new StyleBundle("~/bundles/datatables").Include(DatatablesCss));
+            bundles.Add(new StyleBundle("~/bundles/datatables-css").Include(DatatablesCss));
+            bundles.Add(new StyleBundle("~/bundles/datatables-buttons-css").IncludeDirectory("~/Scripts/datatables/datatables.net-buttons-bs", "*.css", true));
         }
     }
 }

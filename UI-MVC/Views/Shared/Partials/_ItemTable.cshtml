@@ -2,22 +2,25 @@
 @using BAR.UI.MVC.Helpers
 @model BAR.UI.MVC.Models.ItemViewModels.ItemViewModel
 
-<table id="datatable-infinite" class="table" cellspacing="10px" width="100%">
+<table id="datatable-buttons" class="table" cellspacing="10px" width="100%">
+
     <colgroup>
-        <col style="width: 60px">
-        <col style="width: 35%">
-        <col style="width: 15%">
+        <col style="width: 30%">
         <col style="width: 12%">
-        <col style="width: 12%">
-        <col style="width: 12%">
-        <col style="width: 75px">
+        <col style="width: 8%">
+        <col style="width: 8%">
+        <col style="width: 8%">
+        <col style="width: 8%">
+        <col style="width: 13%">
+        <col style="width: 100px">
     </colgroup>
     <thead>
     <tr>
         <th>
+            Naam
         </th>
         <th>
-            Naam
+            Categorie
         </th>
         <th>
             Vermeldingen
@@ -31,6 +34,9 @@
         <th title="Berekend op basis van het aantal tweets">
             Trending
         </th>
+        <th>
+            Aanmaak datum
+        </th>
         @if (User.Identity.IsAuthenticated) {
             <th>
             </th>
@@ -38,13 +44,13 @@
     </tr>
     </thead>
     <tbody>
-    @foreach (var item in Model.People) {
+    @foreach (var item in Model.Items) {
         <tr class="subscription">
             <td>
-                <div class="img-circle person-image"></div>
+                @Html.TextBoxFor(i => item.Name, new {@class = "renameItem form-control", data_item_id = @item.ItemId})
             </td>
             <td>
-                <a href='@Url.PersonUrl(item.ItemId)'> @item.Name</a>
+                @item.ItemType
             </td>
             <td>
                 @item.NumberOfMentions
@@ -60,15 +66,16 @@
             <td>
                 @Html.DisplayFor(modelItem => item.TrendingPercentage) %
             </td>
-            @if (User.Identity.IsAuthenticated) {
-                <td>
-                    @if (item.Subscribed == false) {
-                        <a class="btn btn-success btn-xs" onclick="personSubscribe(@item.ItemId)" title="Deze persoon volgen">Abonneer</a>
-                    } else {
-                        <a class="btn btn-danger btn-xs" onclick="personUnsubscribe(@item.ItemId)" title="Uitschrijven">Uitschrijven</a>
-                    }
-                </td>
-            }
+            <td>
+                @item.CreationDate.ToShortDateString()
+            </td>
+            <td>
+                @if (item.Deleted) {
+                    <a class="removeItem btn btn-dark btn-xs" data-item-id="@item.ItemId" title="Item herstellen">Herstellen</a>
+                } else {
+                    <a class="removeItem btn btn-danger btn-xs" data-item-id="@item.ItemId" title="Item verwijderen">Verwijderen</a>
+                }
+            </td>
         </tr>
     }
     </tbody>
