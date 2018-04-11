@@ -64,6 +64,16 @@ body {
   margin-bottom: -20px;
   margin-right: 5px; }
 
+.shadowed {
+  -webkit-box-shadow: 0 1px 4px 1px rgba(0, 0, 0, 0.05);
+  -moz-box-shadow: 0 1px 4px 1px rgba(0, 0, 0, 0.05);
+  -o-box-shadow: 0 1px 4px 1px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 1px 4px 1px rgba(0, 0, 0, 0.05);
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  margin: 20px 0px !important; }
+
 .table > thead {
   margin: 0 -20px;
   background-image: -webkit-gradient(linear, 0% 0%, 100% 100%, color-stop(0, #0f8ec4), #278e87);
@@ -96,12 +106,14 @@ body {
     background: #f2faff; }
   .table > tbody > tr > td {
     border: none !important;
-    padding: 5px 5px 5px 12px;
+    padding: 15px 5px 15px 12px;
     vertical-align: middle !important; }
     .table > tbody > tr > td > a {
       width: 75px; }
     .table > tbody > tr > td .person-image {
-      margin: 0 !important; }
+      margin: 0 !important;
+      width: 40px;
+      height: 40px; }
     .table > tbody > tr > td:last-child {
       padding-right: 12px; }
   .table > tbody > tr:first-child > td {

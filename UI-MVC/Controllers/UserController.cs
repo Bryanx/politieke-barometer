@@ -16,6 +16,7 @@ using System.Net;
 using Microsoft.Owin.Security;
 using System.Configuration;
 using System.Security.Claims;
+using AutoMapper;
 using BAR.BL;
 using static BAR.UI.MVC.Models.ItemViewModels;
 
@@ -439,31 +440,15 @@ namespace BAR.UI.MVC.Controllers
     {
       ISubscriptionManager subManager = new SubscriptionManager();
       IUserManager userManager = new UserManager();
-      User user = userManager.GetUser(id);
-      //TODO: These next statements should be in a method in BL
-      IEnumerable<Subscription> subs = subManager.GetSubscriptionsWithItemsForUser(id);
-      List<Item> items = subs.Select(s => s.SubscribedItem).ToList();
-      List<ItemDTO> people = new List<ItemDTO>();
-      foreach (Item item in items)
-      {
-        people.Add(new ItemDTO()
-        {
-          ItemId = item.ItemId,
-          Name = item.Name,
-          CreationDate = item.CreationDate,
-          LastUpdated = item.LastUpdatedInfo,
-          Description = item.Description,
-          NumberOfFollowers = item.NumberOfFollowers,
-          TrendingPercentage = Math.Floor(item.TrendingPercentage),
-          NumberOfMentions = item.NumberOfMentions,
-          Baseline = item.Baseline
-        });
+      IEnumerable<Item> items = subManager.GetSubscribedItemsForUser(id);
+      List<ItemDTO> itemDtos = Mapper.Map(items, new List<ItemDTO>());
+      foreach (ItemDTO dto in itemDtos) {
+        dto.Subscribed = true;
       }
-
       return new ItemViewModel()
       {
-        User = user,
-        Items = people
+        User = userManager.GetUser(id),
+        Items = itemDtos
       };
     }
 

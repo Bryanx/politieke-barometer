@@ -22,8 +22,7 @@ namespace BAR.UI.MVC.Controllers {
         [AllowAnonymous]
         public ActionResult Index() {
             ISubscriptionManager subMgr = new SubscriptionManager();
-            IEnumerable<Item> or = itemMgr.GetAllPeople();
-            IList<ItemDTO> people = Mapper.Map(or, new List<ItemDTO>());
+            IList<ItemDTO> people = Mapper.Map(itemMgr.GetAllPeople(), new List<ItemDTO>());
             IEnumerable<Subscription> subs = subMgr.GetSubscriptionsWithItemsForUser(User.Identity.GetUserId());
             foreach (ItemDTO item in people) {
                 foreach (var sub in subs) {

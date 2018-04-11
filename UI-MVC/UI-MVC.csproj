@@ -432,7 +432,6 @@
     <Content Include="Views\Shared\Partials\_PersonTable.cshtml" />
     <Content Include="Views\Shared\Partials\_RegisterModal.cshtml" />
     <Content Include="Views\Shared\Partials\_SearchBar.cshtml" />
-    <Content Include="Views\Shared\Partials\_Subscriptions.cshtml" />
     <Content Include="Views\Shared\Partials\_VisitorLeftNavBarLinks.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\SuperAdmin\AdminManagement.cshtml" />

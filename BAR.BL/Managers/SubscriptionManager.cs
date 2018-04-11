@@ -178,6 +178,14 @@ namespace BAR.BL.Managers
 			InitRepo();
 			return subRepo.ReadSubscriptionsWithItemsForUser(userId);
 		}
+		
+		/// <summary>
+		/// Gets the subscribed items for a specific user.
+		/// </summary>
+		public IEnumerable<Item> GetSubscribedItemsForUser(string userId) {
+			InitRepo();
+			return GetSubscriptionsWithItemsForUser(userId).Select(s => s.SubscribedItem);
+		}
 
 		/// <summary>
 		/// Gets a subscription by Subscription id.
