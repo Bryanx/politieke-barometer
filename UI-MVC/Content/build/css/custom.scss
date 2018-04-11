@@ -19,7 +19,15 @@ $font-default: Roboto, Helvetica, Arial, sans-serif;
 @mixin box-shadow($val) {
   -webkit-box-shadow: $val;
   -moz-box-shadow: $val;
+  -o-box-shadow: $val;
   box-shadow: $val;
+}
+
+@mixin transition($val) {
+  -webkit-transition: $val;
+  -moz-transition: $val;
+  -o-transition: $val;
+  transition: $val;
 }
 
 /*
@@ -133,6 +141,9 @@ body {
       border: none !important;
       padding: 5px 5px 5px 12px;
       vertical-align: middle !important;
+      > a {
+        width: 75px;
+      }
       .person-image {
         margin: 0 !important;
       }
@@ -3200,7 +3211,7 @@ a {
   background: var(--primary-darker);
   border: 1px solid var(--primary-darker);
   &:hover, &:focus, &:active, &.active {
-    background: var(--primary-darker);
+    background: var(--primary-darkest) !important;
   }
 }
 
@@ -5262,4 +5273,16 @@ ul.notifications {
 .input-group.date .input-group-addon {
   border-radius: 0px !important;
   background-color: var(--white) !important;
+}
+
+.loadMessage {
+  position: absolute;
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  background-image: url("../images/rolling.svg");
+  background-position: center;
+  background-size: cover;
+  margin-top: 8px;
+  margin-left: 5px; 
 }

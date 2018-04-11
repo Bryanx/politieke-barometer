@@ -18,30 +18,22 @@ namespace BAR.UI.MVC.Controllers.api
 {
   public class UserApiController : ApiController
   {
+    /// <summary>
+    /// Toggles a Subscription for a specific user (based on wether the subscriptions exists or not).
+    /// </summary>
     [HttpPost]
-    [Route("api/Subscribe/{itemId}")]
-    public IHttpActionResult CreateSubscription(int itemId)
+    [Route("api/ToggleSubscribe/{itemId}")]
+    public IHttpActionResult ToggleSubscribe(int itemId)
     {
       ISubscriptionManager SubManager = new SubscriptionManager();
       string userId = User.Identity.GetUserId();
-      SubManager.CreateSubscription(userId, itemId);
+      SubManager.ToggleSubscription(userId, itemId);
       return StatusCode(HttpStatusCode.NoContent);
     }
-
+    
     /// <summary>
-    /// Removes a Subscription from a specific user.
+    /// Updates a user account.
     /// </summary>
-    [HttpDelete]
-    [Route("api/User/Subscription/{itemId}/Delete")]
-    public IHttpActionResult DeleteSubscription(int itemId)
-    {
-      ISubscriptionManager subManager = new SubscriptionManager();
-      IEnumerable<Subscription> subs = subManager.GetSubscriptionsWithItemsForUser(User.Identity.GetUserId());
-      Subscription sub = subs.Single(s => s.SubscribedItem.ItemId == itemId);
-      subManager.RemoveSubscription(sub.SubscriptionId);
-      return StatusCode(HttpStatusCode.NoContent);
-    }
-
     [HttpPost]
     [Route("api/User/UpdateAccount")]
     public async Task<IHttpActionResult> UpdateAccount(SettingsViewModel model)
@@ -57,7 +49,10 @@ namespace BAR.UI.MVC.Controllers.api
 
       return StatusCode(HttpStatusCode.NotAcceptable);
     }
-
+    
+    /// <summary>
+    /// Updates user profile.
+    /// </summary>
     [HttpPost]
     [Route("api/User/UpdateProfile")]
     public IHttpActionResult UpdateProfile(SettingsViewModel model)
@@ -68,7 +63,10 @@ namespace BAR.UI.MVC.Controllers.api
       User user = userManager.ChangeUserBasicInfo(User.Identity.GetUserId(), model.Firstname, model.Lastname, model.Gender, model.DateOfBirth, area);
       return StatusCode(HttpStatusCode.NoContent);
     }
-
+    
+    /// <summary>
+    /// Updates user alert settings.
+    /// </summary>
     [HttpPost]
     [Route("api/User/UpdateAlerts")]
     public IHttpActionResult UpdateAlerts(SettingsViewModel model)
@@ -77,7 +75,10 @@ namespace BAR.UI.MVC.Controllers.api
       User user = userManager.ChangeUserAlerts(User.Identity.GetUserId(), model.AlertsViaWebsite, model.AlertsViaEmail, model.WeeklyReviewViaEmail);
       return StatusCode(HttpStatusCode.NoContent);
     }
-
+    
+    /// <summary>
+    /// Deactivate user account.
+    /// </summary>
     [HttpPost]
     [Route("api/Admin/DeactivateAccount/{userId}")]
     public IHttpActionResult DeactivateAccount(string userId)
@@ -86,7 +87,10 @@ namespace BAR.UI.MVC.Controllers.api
       userManager.ChangeUserAccount(userId, true);
       return StatusCode(HttpStatusCode.NoContent);
     }
-
+    
+    /// <summary>
+    /// Activate user account.
+    /// </summary>
     [HttpPost]
     [Route("api/Admin/ActivateAccount/{userId}")]
     public IHttpActionResult ActivateAccount(string userId)
@@ -95,7 +99,10 @@ namespace BAR.UI.MVC.Controllers.api
       userManager.ChangeUserAccount(userId, false);
       return StatusCode(HttpStatusCode.NoContent);
     }
-
+    
+    /// <summary>
+    /// Change user role.
+    /// </summary>
     [HttpPost]
     [Route("api/Admin/ChangeRole/{userId}")]
     public IHttpActionResult ChangeRole(string userId, [FromBody]string roleName)

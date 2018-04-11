@@ -36,11 +36,6 @@
 	};
 
 })(jQuery, 'smartresize');
-/**
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 
 var CURRENT_URL = window.location.href.split('#')[0].split('?')[0],
 	$BODY = $('body'),
@@ -56,7 +51,6 @@ var CURRENT_URL = window.location.href.split('#')[0].split('?')[0],
 	primary_darkest = window.getComputedStyle(document.documentElement).getPropertyValue('--primary-darkest').split(' ').join(''),
 	secondary_color = window.getComputedStyle(document.documentElement).getPropertyValue('--secondary-color').split(' ').join('');
 	tertiary_color = window.getComputedStyle(document.documentElement).getPropertyValue('--tertiary-color').split(' ').join('');
-
 
 // Sidebar
 function init_sidebar() {

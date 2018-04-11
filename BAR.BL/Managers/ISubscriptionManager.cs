@@ -11,7 +11,7 @@ namespace BAR.BL.Managers
 		IEnumerable<Subscription> GetSubscriptionsWithItemsForUser(string userId);
 
 		Subscription CreateSubscription(string userId, int itemId, int treshhold = 10);
-
+		void ToggleSubscription(string userId, int itemId);
 		Subscription ChangeSubscriptionTresh(int subId, int treshhold);
 
 		void RemoveSubscription(int subId);

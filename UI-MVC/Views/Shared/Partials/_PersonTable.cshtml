@@ -62,10 +62,10 @@
             </td>
             @if (User.Identity.IsAuthenticated) {
                 <td>
-                    @if (item.Subscribed == false) {
-                        <a class="btn btn-success btn-xs" onclick="personSubscribe(@item.ItemId)" title="Deze persoon volgen">Abonneer</a>
+                    @if (item.Subscribed != true) {
+                        <a class="subscribeItem btn btn-success btn-xs" data-item-id="@item.ItemId" title="Deze persoon volgen">Abonneer</a>
                     } else {
-                        <a class="btn btn-danger btn-xs" onclick="personUnsubscribe(@item.ItemId)" title="Uitschrijven">Uitschrijven</a>
+                        <a class="subscribeItem btn btn-danger btn-xs" data-item-id="@item.ItemId" title="Uitschrijven">Uitschrijven</a>
                     }
                 </td>
             }

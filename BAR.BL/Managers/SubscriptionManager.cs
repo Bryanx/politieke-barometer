@@ -189,6 +189,18 @@ namespace BAR.BL.Managers
 		}
 
 		/// <summary>
+		/// Toggles a subscription on wether the subscription exists or not.
+		/// </summary>
+		public void ToggleSubscription(string userId, int itemId) {
+			IEnumerable<Subscription> subs = GetSubscriptionsWithItemsForUser(userId);
+			if (subs.Select(s => s.SubscribedItem.ItemId).Contains(itemId)) {
+				RemoveSubscription(subs.First(s => s.SubscribedItem.ItemId == itemId).SubscriptionId);
+			} else {
+				CreateSubscription(userId, itemId);
+			}
+		}
+
+		/// <summary>
 		/// Removes a subscription by Subscription id.
 		/// </summary>
 		public void RemoveSubscription(int subId)

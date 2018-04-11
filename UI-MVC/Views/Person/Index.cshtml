@@ -13,30 +13,36 @@
 @section CustomJS{
     @Scripts.Render("~/bundles/datatables")
     <script type="text/javascript">
-        function personSubscribe(id) {
-            $.ajax({
-                type: 'POST',
-                url: '/api/Subscribe/'+id
-            }).fail(() => {/* ok */});
-            event.preventDefault();
-        }
-        function personUnsubscribe(id) {
-            $.ajax({
-                type: 'POST',
-                url: `/api/User/Subscription/${id}/Delete`
-            }).fail(() => {/* ok */});
-            event.preventDefault();
-        }
-
         (() => {
-            $('#datatable-infinite').dataTable( {
-                "searching":false,
+            $('#datatable-infinite').dataTable({
+                "searching": false,
                 "bScrollInfinite": true,
                 "bScrollCollapse": true,
                 "sScrollY": "1000px",
                 "paging": false,
                 "bProcessing": true,
                 "info": false
+            });
+
+            var wto;
+            $('.subscribeItem').click(function() {
+                clearTimeout(wto);
+                var $this = $(this);
+                var id = $this.data('item-id');
+                var text = $this.html();
+                $this.html("<i class='fa fa-circle-o-notch fa-spin'></i>");
+                wto = setTimeout(function() {
+                        $.ajax({
+                                type: 'POST',
+                                url: '/api/ToggleSubscribe/' + id
+                            }).fail(() => { /* ok */ })
+                            .done(function() {
+                                if (text === "Abonneer") $this.html("Uitschrijven");
+                                else $this.html("Abonneer");
+                                $this.toggleClass("btn-danger btn-success");
+                            });
+                    },
+                    500);
             });
         })($);
     </script>
