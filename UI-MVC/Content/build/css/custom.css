@@ -52,11 +52,6 @@ body {
 .font_22 {
   font-size: 22px !important; }
 
-#datatable-responsive {
-  font-size: 16px !important;
-  border-collapse: separate;
-  border-spacing: 0 10px; }
-
 .person-image {
   background-image: url("../images/user.png");
   background-position: center;
@@ -69,32 +64,54 @@ body {
   margin-bottom: -20px;
   margin-right: 5px; }
 
+.table > thead {
+  margin: 0 -20px;
+  background-image: -webkit-gradient(linear, 0% 0%, 100% 100%, color-stop(0, #0f8ec4), #278e87);
+  background-image: -webkit-repeating-linear-gradient(top left, #0f8ec4 0%, #278e87 100%);
+  background-image: repeating-linear-gradient(to bottom right, #0f8ec4 0%, #278e87 100%);
+  background-image: -ms-repeating-linear-gradient(top left, #0f8ec4 0%, #278e87 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#0f8ec4', endColorstr='#278e87');
+  color: var(--white); }
+  .table > thead > tr > th {
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    font-size: 12px;
+    padding: 12px;
+    vertical-align: middle; }
+    .table > thead > tr > th:first-child, .table > thead > tr > th:last-child {
+      -webkit-border-radius: 5px 0 0 0;
+      -moz-border-radius: 5px 0 0 0;
+      border-radius: 5px 0 0 0; }
+      .table > thead > tr > th:first-child::after, .table > thead > tr > th:last-child::after {
+        visibility: hidden; }
+    .table > thead > tr > th:last-child {
+      -webkit-border-radius: 0 5px 0 0;
+      -moz-border-radius: 0 5px 0 0;
+      border-radius: 0 5px 0 0; }
+    .table > thead > tr > th::after {
+      bottom: 12px !important;
+      vertical-align: middle; }
 .table > tbody > tr {
   background: var(--white); }
-.table > tbody > tr > td, .table > tbody > tr > th {
-  border: none !important;
-  padding: 18px !important;
-  vertical-align: middle !important; }
-.table > tbody > tr > td:first-child {
-  border-radius: 5px 0 0 5px; }
-.table > tbody > tr > td:last-child {
-  border-radius: 0 5px 5px 0; }
-.table > tfoot > tr > td, .table > tfoot > tr > th {
-  padding: 12px !important; }
-.table > thead > tr > td, .table > thead > tr > th {
-  background: var(--white);
-  border: none !important;
-  font-size: 15px;
-  padding: 12px !important; }
-.table > thead > tr > th:first-child {
-  border-radius: 5px 0 0 5px; }
-.table > thead > tr > th:last-child {
-  border-radius: 0 5px 5px 0; }
-  .table > thead > tr > th:last-child::after {
-    visibility: hidden; }
-.table > thead > tr > th::after {
-  font-size: 12px;
-  padding-bottom: 4px; }
+  .table > tbody > tr:hover {
+    background: #f2faff; }
+  .table > tbody > tr > td {
+    border: none !important;
+    padding: 5px 5px 5px 12px;
+    vertical-align: middle !important; }
+    .table > tbody > tr > td .person-image {
+      margin: 0 !important; }
+    .table > tbody > tr > td:last-child {
+      padding-right: 12px; }
+  .table > tbody > tr:first-child > td {
+    padding-top: 10px; }
+  .table > tbody > tr:last-child > td:first-child {
+    -webkit-border-radius: 0 0 0 5px;
+    -moz-border-radius: 0 0 0 5px;
+    border-radius: 0 0 0 5px; }
+  .table > tbody > tr:last-child > td:last-child {
+    -webkit-border-radius: 0 0 5px 0;
+    -moz-border-radius: 0 0 5px 0;
+    border-radius: 0 0 5px 0; }
 
 .no-scrollbar {
   overflow-y: hidden !important; }
@@ -907,6 +924,7 @@ a:hover, a:focus {
   padding-left: 20px;
   border-radius: 0;
   margin-left: 100px;
+  margin-bottom: 0px;
   -webkit-box-shadow: inset 0px 3px 3px -2px rgba(0, 0, 0, 0.05);
   -moz-box-shadow: inset 0px 3px 3px -2px rgba(0, 0, 0, 0.05);
   box-shadow: inset 0px 3px 3px -2px rgba(0, 0, 0, 0.05); }
@@ -1479,7 +1497,6 @@ table.jambo_table {
   float: left; }
 
 .dataTables_filter {
-  width: 50%;
   float: right;
   text-align: right; }
 
@@ -2303,8 +2320,11 @@ span.section {
 
 .form-control {
   width: 100%;
-  height: 40px !important;
+  height: 40px;
   box-shadow: none; }
+
+.input-sm {
+  height: 30px; }
 
 .form-horizontal .control-label {
   padding-top: 8px; }
@@ -4128,16 +4148,5 @@ ul.notifications {
 .input-group.date .input-group-addon {
   border-radius: 0px !important;
   background-color: var(--white) !important; }
-
-.loadMessage {
-  position: absolute;
-  display: inline-block;
-  width: 20px;
-  height: 20px;
-  background-image: url("../images/rolling.svg");
-  background-position: center;
-  background-size: cover;
-  margin-top: 8px;
-  margin-left: 5px; }
 
 /*# sourceMappingURL=custom.css.map */

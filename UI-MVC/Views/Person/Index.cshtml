@@ -2,7 +2,7 @@
 @model BAR.UI.MVC.Models.ItemViewModels.ItemViewModel
 
 @section CustomCSS{
-    @Styles.Render("~/bundles/datatables")
+    @Styles.Render("~/bundles/datatables-css")
 }
 
 <h1>@Model.PageTitle</h1>
@@ -11,7 +11,7 @@
 <div style="visibility: hidden">space</div>
 
 @section CustomJS{
-    @Scripts.Render("~/bundles/datatablesScripts")
+    @Scripts.Render("~/bundles/datatables")
     <script type="text/javascript">
         function personSubscribe(id) {
             $.ajax({
@@ -27,5 +27,17 @@
             }).fail(() => {/* ok */});
             event.preventDefault();
         }
+
+        (() => {
+            $('#datatable-infinite').dataTable( {
+                "searching":false,
+                "bScrollInfinite": true,
+                "bScrollCollapse": true,
+                "sScrollY": "1000px",
+                "paging": false,
+                "bProcessing": true,
+                "info": false
+            });
+        })($);
     </script>
 }

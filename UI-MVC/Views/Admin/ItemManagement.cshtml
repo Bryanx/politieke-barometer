@@ -2,7 +2,7 @@
 @model BAR.UI.MVC.Models.ItemViewModels.ItemViewModel
 
 @section CustomCSS{
-    @Styles.Render("~/bundles/datatables")
+    @Styles.Render("~/bundles/datatables-css", "~/bundles/datatables-buttons-css")
 }
 
 <h1>
@@ -18,7 +18,8 @@
 
 
 @section CustomJS{
-    @Scripts.Render("~/bundles/datatablesScripts")
+    @Scripts.Render("~/bundles/datatables")
+    @Scripts.Render("~/bundles/datatables-buttons", "~/bundles/datatables-buttons-bs")
     <script type="text/javascript">
         (() => {
             var loader = $("<div />",

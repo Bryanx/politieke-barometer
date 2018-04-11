@@ -1,4 +1,4 @@
-// Variables:
+// Functies:
 
 $font-default: Roboto, Helvetica, Arial, sans-serif;
 
@@ -7,7 +7,7 @@ $font-default: Roboto, Helvetica, Arial, sans-serif;
   background-image: -webkit-repeating-linear-gradient(top left, $color1 0%, $color2 100%);
   background-image: repeating-linear-gradient(to bottom right, $color1 0%, $color2 100%);
   background-image: -ms-repeating-linear-gradient(top left, $color1 0%, $color2 100%);
-  filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#{$color1}', endColorstr='#{$color2}');
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#{$color1}', endColorstr='#{$color2}');
 }
 
 @mixin border-radius($radius: 5px) {
@@ -42,7 +42,6 @@ html {
   --font-color: #73879C;
   --link-color: #5A738E;
 }
-
 
 html, body {
   height: 100%;
@@ -87,12 +86,6 @@ body {
   font-size: 22px !important;
 }
 
-#datatable-responsive {
-  font-size: 16px !important;
-  border-collapse: separate;
-  border-spacing: 0 10px;
-}
-
 .person-image {
   background-image: url("../images/user.png");
   background-position: center;
@@ -107,46 +100,56 @@ body {
 }
 
 .table > {
-  tbody > tr {
-    background: var(--white);
-  }
-  tbody > tr > {
-    td, th {
-      border: none !important;
-      padding: 18px !important;
-      vertical-align: middle !important;
-    }
-    td:first-child {
-      border-radius: 5px 0 0 5px;
-    }
-    td:last-child {
-      border-radius: 0 5px 5px 0;
-    }
-  }
-  tfoot > tr > {
-    td, th {
-      padding: 12px !important;
-    }
-  }
-  thead > tr > {
-    td, th {
-      background: var(--white);
-      border: none !important;
-      font-size: 15px;
-      padding: 12px !important;
-    }
-    th:first-child {
-      border-radius: 5px 0 0 5px;
-    }
-    th:last-child {
-      border-radius: 0 5px 5px 0;
+  thead {
+    margin: 0 -20px;
+    @include diagonal-gradient(#0f8ec4, #278e87);
+    color: var(--white);
+    > tr > th {
+      border: 1px solid rgba(white, 0.2);
+      font-size: 12px;
+      padding: 12px;
+      vertical-align: middle;
+      &:first-child, &:last-child {
+        @include border-radius(5px 0 0 0);
+        &::after {
+          visibility: hidden;
+        }
+      }
+      &:last-child {
+        @include border-radius(0 5px 0 0);
+      }
       &::after {
-        visibility: hidden;
+        bottom: 12px !important;
+        vertical-align: middle;
       }
     }
-    th::after {
-      font-size: 12px;
-      padding-bottom: 4px;
+  }
+  tbody > tr {
+    background: var(--white);
+    &:hover {
+      background: #f2faff;
+    }
+    > td {
+      border: none !important;
+      padding: 5px 5px 5px 12px;
+      vertical-align: middle !important;
+      .person-image {
+        margin: 0 !important;
+      }
+      &:last-child {
+        padding-right: 12px;
+      }
+    }
+    &:first-child > td {
+      padding-top: 10px;
+    }
+    &:last-child > td {
+      &:first-child {
+        @include border-radius(0 0 0 5px);
+      }
+      &:last-child {
+        @include border-radius(0 0 5px 0);
+      }
     }
   }
 }
@@ -983,7 +986,6 @@ body .container.body .right_col {
   }
 }
 
-
 .fixed_height_670 {
   height: 670px;
 }
@@ -1099,6 +1101,7 @@ a {
 .subscription > td > a:hover {
   text-decoration: none;
 }
+
 a {
   &:hover, &:focus {
     text-decoration: underline;
@@ -1246,6 +1249,7 @@ a {
   padding-left: 20px;
   border-radius: 0;
   margin-left: 100px;
+  margin-bottom: 0px;
   @include box-shadow(inset 0px 3px 3px -2px rgba(0, 0, 0, 0.05));
   > li > a {
     position: relative;
@@ -1970,7 +1974,6 @@ table.jambo_table {
 }
 
 .dataTables_filter {
-  width: 50%;
   float: right;
   text-align: right;
 }
@@ -2989,8 +2992,12 @@ span.section {
 
 .form-control {
   width: 100%;
-  height: 40px !important;
+  height: 40px;
   box-shadow: none;
+}
+
+.input-sm {
+  height: 30px;
 }
 
 .form-horizontal .control-label {
@@ -5255,16 +5262,4 @@ ul.notifications {
 .input-group.date .input-group-addon {
   border-radius: 0px !important;
   background-color: var(--white) !important;
-}
-
-.loadMessage {
-  position: absolute;
-  display: inline-block;
-  width: 20px;
-  height: 20px;
-  background-image: url("../images/rolling.svg");
-  background-position: center;
-  background-size: cover;
-  margin-top: 8px;
-  margin-left: 5px;
 }

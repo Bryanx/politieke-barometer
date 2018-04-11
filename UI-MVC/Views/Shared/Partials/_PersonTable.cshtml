@@ -2,18 +2,20 @@
 @using BAR.UI.MVC.Helpers
 @model BAR.UI.MVC.Models.ItemViewModels.ItemViewModel
 
-<table id="datatable-responsive" class="table" cellspacing="10px" width="100%">
-    
+<table id="datatable-infinite" class="table" cellspacing="10px" width="100%">
     <colgroup>
-        <col style="width:35%">
-        <col style="width:15%">
-        <col style="width:12%">
-        <col style="width:12%">
-        <col style="width:12%">
-        <col style="width:75px">
-    </colgroup> 
+        <col style="width: 60px">
+        <col style="width: 35%">
+        <col style="width: 15%">
+        <col style="width: 12%">
+        <col style="width: 12%">
+        <col style="width: 12%">
+        <col style="width: 75px">
+    </colgroup>
     <thead>
     <tr>
+        <th>
+        </th>
         <th>
             Naam
         </th>
@@ -40,6 +42,8 @@
         <tr class="subscription">
             <td>
                 <div class="img-circle person-image"></div>
+            </td>
+            <td>
                 <a href='@Url.PersonUrl(item.ItemId)'> @item.Name</a>
             </td>
             <td>
