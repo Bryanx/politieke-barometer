@@ -31,7 +31,7 @@
                 wto = setTimeout(function() {
                         $.ajax({
                                 type: 'POST',
-                                url: '/api/Admin/DeleteItem/' + id
+                                url: '/api/Admin/ToggleDeleteItem/' + id
                             }).fail(() => { alert("Cannot remove item.") })
                             .done(function() {
                                 if (text === "Herstellen") $this.html("Verwijderen");

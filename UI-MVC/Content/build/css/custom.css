@@ -1639,8 +1639,7 @@ ul.msg_headers li {
 ul.msg_list li#seeAllAlerts {
   background: var(--white);
   padding: 10px;
-  border-top: 1px solid #d9dee4;
-  margin-bottom: -4px; }
+  border-top: 1px solid #d9dee4; }
 ul.msg_headers li:nth-child(2), ul.msg_headers li.alertMenuHeader {
   color: var(--font-color);
   padding: 0 10px;
