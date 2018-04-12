@@ -32,14 +32,13 @@ namespace BAR.UI.MVC.Controllers.api
     }
     
     /// <summary>
-    /// Updates a user account.
+    /// Updates password from logged-in user.
     /// </summary>
     [HttpPost]
     [Route("api/User/UpdateAccount")]
     public async Task<IHttpActionResult> UpdateAccount(SettingsViewModel model)
     {
-      IdentityUserManager userManager =
-          HttpContext.Current.GetOwinContext().GetUserManager<IdentityUserManager>();
+      IdentityUserManager userManager = HttpContext.Current.GetOwinContext().GetUserManager<IdentityUserManager>();
       User user = await userManager.FindByIdAsync(User.Identity.GetUserId());
       if (await userManager.CheckPasswordAsync(user, model.Password))
       {
@@ -49,9 +48,9 @@ namespace BAR.UI.MVC.Controllers.api
 
       return StatusCode(HttpStatusCode.NotAcceptable);
     }
-    
+
     /// <summary>
-    /// Updates user profile.
+    /// Updates general profile info from logged-in user.
     /// </summary>
     [HttpPost]
     [Route("api/User/UpdateProfile")]
@@ -63,9 +62,9 @@ namespace BAR.UI.MVC.Controllers.api
       User user = userManager.ChangeUserBasicInfo(User.Identity.GetUserId(), model.Firstname, model.Lastname, model.Gender, model.DateOfBirth, area);
       return StatusCode(HttpStatusCode.NoContent);
     }
-    
+
     /// <summary>
-    /// Updates user alert settings.
+    /// Updates alert preferences from logged-in user.
     /// </summary>
     [HttpPost]
     [Route("api/User/UpdateAlerts")]

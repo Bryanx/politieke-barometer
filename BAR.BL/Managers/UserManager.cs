@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using BAR.BL.Domain.Users;
 using BAR.DAL;
 using Microsoft.AspNet.Identity.EntityFramework;
+using System.Web;
+using System.IO;
 
 namespace BAR.BL.Managers
 {
 	/// <summary>
-	/// This class is mainly for workig with a manager
-	/// that is not related to the identity framework.
+	/// This will handle all user related requests.
 	/// </summary>
 	public class UserManager : IUserManager
 	{
@@ -24,10 +25,20 @@ namespace BAR.BL.Managers
 			this.uowManager = uowManager;
 		}
 
-		/// <summary>
-		/// Changes a user account to non-active or active
-		/// </summary>
-		public User ChangeUserAccount(string userId)
+    /// <summary>
+    /// Determines if the repo needs a unit of work
+    /// if the unitOfWorkManager is present.
+    /// </summary>
+    private void InitRepo()
+    {
+      if (uowManager == null) userRepo = new UserRepository();
+      else userRepo = new UserRepository(uowManager.UnitOfWork);
+    }
+
+    /// <summary>
+    /// Changes a user account to non-active or active.
+    /// </summary>
+    public User ChangeUserAccount(string userId)
 		{
 			InitRepo();
 
@@ -44,7 +55,7 @@ namespace BAR.BL.Managers
 		}
 
 		/// <summary>
-		/// Changes the basic information of a specific user
+		/// Changes the basic information of a specific user.
 		/// 
 		/// NOTE: This method changes the following things:
 		/// - Receiving alerts via website
@@ -121,7 +132,6 @@ namespace BAR.BL.Managers
     /// <summary>
     /// Returns all areas.
     /// </summary>
-    /// <returns></returns>
     public IEnumerable<Area> GetAreas()
     {
       InitRepo();
@@ -131,8 +141,6 @@ namespace BAR.BL.Managers
     /// <summary>
     /// Returns selected area.
     /// </summary>
-    /// <param name="areaId"></param>
-    /// <returns></returns>
     public Area GetArea(int areaId)
     {
       InitRepo();
@@ -140,25 +148,45 @@ namespace BAR.BL.Managers
     }
 
     /// <summary>
-    /// Determines if the repo needs a unit of work
-    /// if the unitOfWorkManager is present.
+    /// Returns a list of all roles.
     /// </summary>
-    private void InitRepo()
-		{
-			if (uowManager == null) userRepo = new UserRepository();
-			else userRepo = new UserRepository(uowManager.UnitOfWork);
-		}
-
     public IEnumerable<IdentityRole> GetAllRoles()
     {
       InitRepo();
       return userRepo.ReadAllRoles();
     }
 
+    /// <summary>
+    /// Returns role of a given user.
+    /// </summary>
     public IdentityRole GetRole(string userId)
     {
       InitRepo();
       return userRepo.ReadRole(userId);
+    }
+
+    /// <summary>
+    /// Changes profile picture of given user.
+    /// </summary>
+    public User ChangeProfilePicture(string userId, HttpPostedFileBase poImgFile)
+    {
+      InitRepo();
+
+      //Get User
+      User userToUpdate = userRepo.ReadUser(userId);
+      if (userToUpdate == null) return null;
+
+      //Change profile picture
+      byte[] imageData = null;
+      using (var binary = new BinaryReader(poImgFile.InputStream))
+      {
+        imageData = binary.ReadBytes(poImgFile.ContentLength);
+      }
+      userToUpdate.ProfilePicture = imageData;
+
+      //Update database
+      userRepo.UpdateUser(userToUpdate);
+      return userToUpdate;
     }
   }
 }

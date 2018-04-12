@@ -14,15 +14,21 @@ namespace BAR.UI.MVC.Controllers {
     public class SuperAdminController : Controller {
         
         IUserManager userManager = new UserManager();
-        
+
+        /// <summary>
+        /// Sourcemanagement page of the SuperAdmin.
+        /// </summary>
         public ActionResult SourceManagement() {
             const string PAGE_TITLE = "Bronnen beheren";
             return View(new BaseViewModel {
                 PageTitle = PAGE_TITLE,
                 User = userManager.GetUser(User.Identity.GetUserId())
             });
-        }       
+        }     
         
+        /// <summary>
+        /// Platformmanagement page of the SuperAdmin.
+        /// </summary>
         public ActionResult PlatformManagement() {
             const string PAGE_TITLE = "Deelplatformen beheren";
             return View(new BaseViewModel {
@@ -30,7 +36,10 @@ namespace BAR.UI.MVC.Controllers {
                 User = userManager.GetUser(User.Identity.GetUserId())
             });
         }
-    
+        
+        /// <summary>
+        /// Adminmanagement page of the SuperAdmin.
+        /// </summary>
         public ActionResult AdminManagement()
         {
             const string USER_MANAGEMENT_PAGE_TITLE = "Admins beheren";

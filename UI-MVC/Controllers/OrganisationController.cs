@@ -17,6 +17,9 @@ namespace BAR.UI.MVC.Controllers {
         IItemManager itemMgr = new ItemManager();
         private UserManager userManager = new UserManager();
         
+        /// <summary>
+        /// Organisation page for logged-in and non-logged-in users.
+        /// </summary>
         [AllowAnonymous]
         public ActionResult Index() {
             ISubscriptionManager subMgr = new SubscriptionManager();

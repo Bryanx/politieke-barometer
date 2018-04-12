@@ -34,6 +34,9 @@ namespace BAR.UI.MVC.Models
     [DisplayFormat(DataFormatString = "{0:yyyy/MM/dd}", ApplyFormatInEditMode = true)]
     public DateTime DateOfBirth { get; set; }
 
+    [Display(Name = "Profielfoto")]
+    public byte[] ImageData { get; set; }
+
   }
 
   public class ExternalLoginListViewModel : BaseViewModel
@@ -172,5 +175,8 @@ namespace BAR.UI.MVC.Models
     [DataType(DataType.Password)]
     [Display(Name = "Nieuw wachtwoord")]
     public string PasswordNew { get; set; }
+
+    [Display(Name = "Profielfoto")]
+    public byte[] ProfilePicture { get; set; }
   }
 }

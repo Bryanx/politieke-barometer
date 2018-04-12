@@ -2,9 +2,11 @@
 using Microsoft.AspNet.Identity.EntityFramework;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace BAR.BL.Managers
 {
@@ -12,10 +14,10 @@ namespace BAR.BL.Managers
 	{
 		User GetUser(string userId);
 		IEnumerable<User> GetAllUsers();
-
 		User ChangeUserBasicInfo(string userId, string firstname, string lastname, Gender gender, DateTime dateOfBrith, Area area);
 		User ChangeUserAlerts(string userId, bool alertWebsite, bool alertMail, bool alertWeeklyReview);
 		User ChangeUserAccount(string userId);
+		User ChangeProfilePicture(string userId, HttpPostedFileBase poImgFile);
     IEnumerable<Area> GetAreas();
     Area GetArea(int areaId);
     IEnumerable<IdentityRole> GetAllRoles();

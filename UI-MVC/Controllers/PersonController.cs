@@ -20,7 +20,9 @@ namespace BAR.UI.MVC.Controllers {
         private IUserManager userManager = new UserManager();            
         private ISubscriptionManager subMgr = new SubscriptionManager();
 
-        
+        /// <summary>
+        /// Item page for logged-in and non-logged-in users.
+        /// </summary>
         [AllowAnonymous]
         public ActionResult Index() {
             IList<ItemDTO> people = Mapper.Map(itemMgr.GetAllPeople(), new List<ItemDTO>());
@@ -38,7 +40,9 @@ namespace BAR.UI.MVC.Controllers {
             });
         }
 
-        // GET: Default/Details/5 (Specific person page)
+        /// <summary>
+        /// Detailed item page for logged-in and non-logged-in users.
+        /// </summary>
         public ActionResult Details(int id) {
             IEnumerable<Item> subs = subMgr.GetSubscribedItemsForUser(User.Identity.GetUserId());
             Item item = itemMgr.GetItem(id);

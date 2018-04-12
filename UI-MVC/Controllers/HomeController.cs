@@ -17,6 +17,9 @@ namespace BAR.UI.MVC.Controllers {
         private IItemManager itemMgr = new ItemManager();
         private UserManager userManager = new UserManager();
 
+        /// <summary>
+        /// Landing page for logged-in and non-logged-in users.
+        /// </summary>
         [AllowAnonymous]
         public ActionResult Index() {
             return View(new ItemViewModel() {
@@ -25,7 +28,9 @@ namespace BAR.UI.MVC.Controllers {
                 Items = Mapper.Map<IList<Item>, IList<ItemDTO>>(itemMgr.GetAllItems().ToList())
             });
         }
-
+        /// <summary>
+        /// Privacy page for logged-in and non-logged-in users.
+        /// </summary>
         [AllowAnonymous]
         public ActionResult Privacy() {
             return View(new BaseViewModel() {
@@ -34,6 +39,9 @@ namespace BAR.UI.MVC.Controllers {
             });
         }
         
+        /// <summary>
+        /// FAQ page for logged-in and non-logged-in users.
+        /// </summary>
         [AllowAnonymous]
         public ActionResult Faq() {
             return View(new BaseViewModel() {
