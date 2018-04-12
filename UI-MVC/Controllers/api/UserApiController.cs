@@ -77,26 +77,14 @@ namespace BAR.UI.MVC.Controllers.api
     }
     
     /// <summary>
-    /// Deactivate user account.
+    /// Toggle user account acitivity
     /// </summary>
     [HttpPost]
-    [Route("api/Admin/DeactivateAccount/{userId}")]
-    public IHttpActionResult DeactivateAccount(string userId)
+    [Route("api/Admin/ToggleAccountActivity/{userId}")]
+    public IHttpActionResult ToggleAccountActivity(string userId)
     {
       IUserManager userManager = new UserManager();
-      userManager.ChangeUserAccount(userId, true);
-      return StatusCode(HttpStatusCode.NoContent);
-    }
-    
-    /// <summary>
-    /// Activate user account.
-    /// </summary>
-    [HttpPost]
-    [Route("api/Admin/ActivateAccount/{userId}")]
-    public IHttpActionResult ActivateAccount(string userId)
-    {
-      IUserManager userManager = new UserManager();
-      userManager.ChangeUserAccount(userId, false);
+      userManager.ChangeUserAccount(userId);
       return StatusCode(HttpStatusCode.NoContent);
     }
     

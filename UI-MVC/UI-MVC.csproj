@@ -420,6 +420,7 @@
     <Content Include="Views\Home\Privacy.cshtml" />
     <Content Include="Views\Organisation\Index.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\BootstrapSiteMapPathHelperModel.cshtml" />
+    <Content Include="Views\Shared\Partials\_AdminTable.cshtml" />
     <Content Include="Views\Shared\Partials\_ExternalLoginsListPartial.cshtml" />
     <Content Include="Views\Shared\Partials\_Footer.cshtml" />
     <Content Include="Views\Shared\Partials\_FooterRegister.cshtml" />

@@ -1211,6 +1211,9 @@ article.media {
     #integration-list ul > li:hover {
       background: #efefef; }
 
+.greyed-out {
+  background: #f0f0f0 !important; }
+
 .expand {
   display: block;
   text-decoration: none;

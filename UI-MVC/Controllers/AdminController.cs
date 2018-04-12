@@ -56,19 +56,28 @@ namespace BAR.UI.MVC.Controllers
         currentRoles.Add(identityUserManager.GetRoles(users.ElementAt(i).Id).FirstOrDefault());
       }
       ViewBag.CurrentRoles = currentRoles;
-      var roles = userManager.GetAllRoles().Select(x => new SelectListItem
-      {
-        Value = x.Id,
-        Text = x.Name,
-      }).OrderBy(x => x.Text);
       EditUserViewModel vm = new EditUserViewModel()
       {
         User = userManager.GetUser(User.Identity.GetUserId()),
         PageTitle = USER_MANAGEMENT_PAGE_TITLE,
-        Users = users,
-        Roles = roles
+        Users = users
       };
+      FillViewModels(vm);
       return View(vm);
+    }
+    
+    private void FillViewModels(EditUserViewModel vm) {
+      vm.AdminRoles = userManager.GetAllRoles().Select(x => new SelectListItem
+      {
+        Value = x.Id,
+        Text = x.Name,
+      }).OrderBy(x => x.Text);
+      vm.UserRoles = userManager.GetAllRoles().Where(r=>r.Name == "Admin" || r.Name == "User")
+        .Select(x => new SelectListItem
+        {
+          Value = x.Id,
+          Text = x.Name,
+        }).OrderBy(x => x.Text);
     }
   }
 }

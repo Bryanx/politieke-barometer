@@ -15,7 +15,7 @@ namespace BAR.BL.Managers
 
 		User ChangeUserBasicInfo(string userId, string firstname, string lastname, Gender gender, DateTime dateOfBrith, Area area);
 		User ChangeUserAlerts(string userId, bool alertWebsite, bool alertMail, bool alertWeeklyReview);
-		User ChangeUserAccount(string userId, bool active);
+		User ChangeUserAccount(string userId);
     IEnumerable<Area> GetAreas();
     Area GetArea(int areaId);
     IEnumerable<IdentityRole> GetAllRoles();
