@@ -9,6 +9,7 @@ using BAR.BL.Managers;
 using BAR.BL.Domain.Items;
 using BAR.BL.Domain.Users;
 using BAR.BL.Controllers;
+using BAR.BL.DataReader;
 
 namespace BAR.UI.CA
 {
@@ -133,14 +134,14 @@ namespace BAR.UI.CA
 		/// </summary>
 		private static void AddAlertsForTrendingItems()
 		{
-			SysController sys = new SysController();
-			IEnumerable<Item> allItems = new ItemManager().getAllItems();
-			int itemSize = allItems.Count();
+			//SysController sys = new SysController();
+			//IEnumerable<Item> allItems = new ItemManager().getAllItems();
+			//int itemSize = allItems.Count();
 
-			for (int i = 1; i < itemSize; i++)
-			{
-				sys.GenerateAlerts(i);
-			}
+			//for (int i = 1; i < itemSize; i++)
+			//{
+			//	sys.GenerateAlerts(i);
+			//}
 		}
 
 		/// <summary>
@@ -149,17 +150,17 @@ namespace BAR.UI.CA
 		/// </summary>
 		private static void ShowUserAlerts()
 		{
-			Console.Write("UserID: ");
-			int userId = Convert.ToInt32(Console.ReadLine());
+			//Console.Write("UserID: ");
+			//int userId = Convert.ToInt32(Console.ReadLine());
 
-			IEnumerable<Alert> allUserAlerts = new SubscriptionManager().GetAllAlerts(userId);
+			//IEnumerable<Alert> allUserAlerts = new SubscriptionManager().GetAllAlerts(userId);
 
-			foreach (Alert alert in allUserAlerts)
-			{
-				Console.WriteLine("alertId: " + alert.AlertId + " for " + alert.Subscription.SubscribedUser.FirstName +
-					" that is subscribed to " + alert.Subscription.SubscribedItem.Name);
+			//foreach (Alert alert in allUserAlerts)
+			//{
+			//	Console.WriteLine("alertId: " + alert.AlertId + " for " + alert.Subscription.SubscribedUser.FirstName +
+			//		" that is subscribed to " + alert.Subscription.SubscribedItem.Name);
 
-			}
+			//}
 		}
 
 		/// <summary>
@@ -167,19 +168,19 @@ namespace BAR.UI.CA
 		/// </summary>
 		private static void SubscribeOnItem()
 		{
-			Console.Write("UserID: ");
-			int userId = Convert.ToInt32(Console.ReadLine());
+			//Console.Write("UserID: ");
+			//int userId = Convert.ToInt32(Console.ReadLine());
 
 
-			Console.Write("ItemId: ");
-			int itemId = Convert.ToInt32(Console.ReadLine());
+			//Console.Write("ItemId: ");
+			//int itemId = Convert.ToInt32(Console.ReadLine());
 
-			Console.Write("Threshold (In percentages boven de baseline): ");
-			int treshold = Convert.ToInt32(Console.ReadLine());
+			//Console.Write("Threshold (In percentages boven de baseline): ");
+			//int treshold = Convert.ToInt32(Console.ReadLine());
 
 
-			var sm = new SubscriptionManager();
-			sm.CreateSubscription(userId, itemId, treshold);
+			//var sm = new SubscriptionManager();
+			//sm.CreateSubscription(userId, itemId, treshold);
 		}
 
 		/// <summary>
@@ -189,7 +190,7 @@ namespace BAR.UI.CA
 		private static void CalculateTrending()
 		{
 			SysController sys = new SysController();
-			IEnumerable<Item> allItems = new ItemManager().getAllItems();
+			IEnumerable<Item> allItems = new ItemManager().GetAllItems();
 			int itemSize = allItems.Count();
 
 			for (int i = 1; i < itemSize; i++)
@@ -203,7 +204,7 @@ namespace BAR.UI.CA
 		/// </summary>
 		private static void ShowAllItems()
 		{
-			IEnumerable<Item> allItems = new ItemManager().getAllItems();
+			IEnumerable<Item> allItems = new ItemManager().GetAllItems();
 
 			foreach (Item item in allItems)
 			{
@@ -223,14 +224,21 @@ namespace BAR.UI.CA
 		/// </summary>
 		private static void ShowAllUsers()
 		{
-			IEnumerable<User> allUsers = new IdentityUserManager().GetAllUsers();
+			//IEnumerable<User> allUsers = new IdentityUserManager().GetAllUsers();
 
-			foreach (User user in allUsers)
-			{
-				Console.WriteLine(user.FirstName + " " + user.LastName);
+			//foreach (User user in allUsers)
+			//{
+			//	Console.WriteLine(user.FirstName + " " + user.LastName);
 
-			}
+			//}
 		}		
+
+		private static void ReadJson()
+		{
+			JsonReader jsonReader = new JsonReader();
+
+			jsonReader.ReadJson();      
+		}
 	}
 }
 
