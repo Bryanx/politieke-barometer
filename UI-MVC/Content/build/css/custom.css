@@ -444,7 +444,8 @@ Login
   padding: 0;
   position: fixed;
   height: 100%;
-  top: 0; }
+  top: 0;
+  transition: left .2s; }
   .nav-sm .container.body .col-md-3.left_col.menu_fixed {
     position: fixed;
     height: 100%; }
