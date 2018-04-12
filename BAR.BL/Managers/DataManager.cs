@@ -183,13 +183,21 @@ namespace BAR.BL.Managers
         };
         information.PropertieValues.Add(propertyValue);
 
+        //Add connection to Item (Person)
+        //Read persons
+        information.Item = new List<Item>();
+        for (int j = 0; j < deserializedJson[i].persons.Count; j++)
+        {
+          information.Item.Add(GeneratePeople(deserializedJson[i].persons[j]));
+        }
+
         //Add other information
         information.Source = dataRepo.ReadSource("Twitter");
         information.CreationDate = DateTime.Now;
         informationList.Add(information);
       }
       dataRepo.CreateInformations(informationList);
-      return false;
+      return true;
     }
 
     private Item GeneratePeople(string personFullName)
@@ -199,15 +207,7 @@ namespace BAR.BL.Managers
 
       if (person == null)
       {
-        person = new Person()
-        {
-          Name = personFullName,
-          CreationDate = DateTime.Now,
-          Baseline = 0,
-          TrendingPercentage = 0
-        };
-        ctx.Items.Add(person);
-        ctx.SaveChanges();
+        person = itemManager.CreateItem(ItemType.Person, personFullName);
       }
 
       return person;

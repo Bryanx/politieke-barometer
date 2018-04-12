@@ -130,119 +130,119 @@ namespace BAR.DAL.EF
     /// Generates information objects based on the
     /// JSON-file.
     /// </summary>
-    private void GenerateInformations(BarometerDbContext ctx)
-    {
-      string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "data.json");
-      string json = File.ReadAllText(path);
-      dynamic deserializedJson = JsonConvert.DeserializeObject(json);
+    //private void GenerateInformations(BarometerDbContext ctx)
+    //{
+    //  string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "data.json");
+    //  string json = File.ReadAllText(path);
+    //  dynamic deserializedJson = JsonConvert.DeserializeObject(json);
 
-      for (int i = 0; i < 150; i++)
-      {
-        PropertyValue propertyValue;
-        Information information = new Information
-        {
-          PropertieValues = new List<PropertyValue>()
-        };
-        //Read hashtags
-        for (int j = 0; j < deserializedJson.records[i].hashtags.Count; j++)
-        {
-          propertyValue = new PropertyValue
-          {
-            Property = ctx.Properties.Where(x => x.Name.Equals("Hashtag")).SingleOrDefault(),
-            Value = deserializedJson.records[i].hashtags[j],
-            Confidence = 1
-          };
-          information.PropertieValues.Add(propertyValue);
-        }
-        //Read words
-        for (int j = 0; j < deserializedJson.records[i].words.Count; j++)
-        {
-          propertyValue = new PropertyValue
-          {
-            Property = ctx.Properties.Where(x => x.Name.Equals("Word")).SingleOrDefault(),
-            Value = deserializedJson.records[i].words[j],
-            Confidence = 1
-          };
-          information.PropertieValues.Add(propertyValue);
-        }
-        //Read geo
-        propertyValue = new PropertyValue
-        {
-          Property = ctx.Properties.Where(x => x.Name.Equals("Geo")).SingleOrDefault(),
-          Value = deserializedJson.records[i].geo,
-          Confidence = 1
-        };
-        information.PropertieValues.Add(propertyValue);
-        //Read postId
-        propertyValue = new PropertyValue
-        {
-          Property = ctx.Properties.Where(x => x.Name.Equals("PostId")).SingleOrDefault(),
-          Value = deserializedJson.records[i].id,
-          Confidence = 1
-        };
-        information.PropertieValues.Add(propertyValue);
-        //Read userId
-        propertyValue = new PropertyValue
-        {
-          Property = ctx.Properties.Where(x => x.Name.Equals("UserId")).SingleOrDefault(),
-          Value = deserializedJson.records[i].user_id,
-          Confidence = 1
-        };
-        information.PropertieValues.Add(propertyValue);
-        //Read sentiment
-        propertyValue = new PropertyValue
-        {
-          Property = ctx.Properties.Where(x => x.Name.Equals("Sentiment")).SingleOrDefault(),
-          Value = deserializedJson.records[i].sentiment[0],
-          Confidence = deserializedJson.records[i].sentiment[1]
-        };
-        information.PropertieValues.Add(propertyValue);
-        //Read retweet
-        propertyValue = new PropertyValue
-        {
-          Property = ctx.Properties.Where(x => x.Name.Equals("Retweet")).SingleOrDefault(),
-          Value = deserializedJson.records[i].retweet,
-          Confidence = 1
-        };
-        information.PropertieValues.Add(propertyValue);
-        //Read urls
-        for (int j = 0; j < deserializedJson.records[i].urls.Count; j++)
-        {
-          propertyValue = new PropertyValue
-          {
-            Property = ctx.Properties.Where(x => x.Name.Equals("Url")).SingleOrDefault(),
-            Value = deserializedJson.records[i].urls[j],
-            Confidence = 1
-          };
-          information.PropertieValues.Add(propertyValue);
-        }
-        //Read mentions
-        for (int j = 0; j < deserializedJson.records[i].mentions.Count; j++)
-        {
-          propertyValue = new PropertyValue
-          {
-            Property = ctx.Properties.Where(x => x.Name.Equals("Mention")).SingleOrDefault(),
-            Value = deserializedJson.records[i].mentions[j],
-            Confidence = 1
-          };
-          information.PropertieValues.Add(propertyValue);
-        }
-        //Add source
-        string source = Convert.ToString(deserializedJson.records[i].source);
-        information.Source = ctx.Sources.Where(s => s.Name.ToLower().Equals(source)).SingleOrDefault();
-        //Add connection to Item (Person)
-        string personFullName = String.Format("{0} {1}", deserializedJson.records[i].politician[0], deserializedJson.records[i].politician[1]);
-        information.Item = GeneratePeople(personFullName, ctx);
-        //Add date
-        string datum = Convert.ToString(deserializedJson.records[i].date);
-        DateTime myInfoDate = DateTime.ParseExact(datum, "yyyy-MM-dd HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture);
-        information.CreationDate = myInfoDate;
+    //  for (int i = 0; i < 150; i++)
+    //  {
+    //    PropertyValue propertyValue;
+    //    Information information = new Information
+    //    {
+    //      PropertieValues = new List<PropertyValue>()
+    //    };
+    //    //Read hashtags
+    //    for (int j = 0; j < deserializedJson.records[i].hashtags.Count; j++)
+    //    {
+    //      propertyValue = new PropertyValue
+    //      {
+    //        Property = ctx.Properties.Where(x => x.Name.Equals("Hashtag")).SingleOrDefault(),
+    //        Value = deserializedJson.records[i].hashtags[j],
+    //        Confidence = 1
+    //      };
+    //      information.PropertieValues.Add(propertyValue);
+    //    }
+    //    //Read words
+    //    for (int j = 0; j < deserializedJson.records[i].words.Count; j++)
+    //    {
+    //      propertyValue = new PropertyValue
+    //      {
+    //        Property = ctx.Properties.Where(x => x.Name.Equals("Word")).SingleOrDefault(),
+    //        Value = deserializedJson.records[i].words[j],
+    //        Confidence = 1
+    //      };
+    //      information.PropertieValues.Add(propertyValue);
+    //    }
+    //    //Read geo
+    //    propertyValue = new PropertyValue
+    //    {
+    //      Property = ctx.Properties.Where(x => x.Name.Equals("Geo")).SingleOrDefault(),
+    //      Value = deserializedJson.records[i].geo,
+    //      Confidence = 1
+    //    };
+    //    information.PropertieValues.Add(propertyValue);
+    //    //Read postId
+    //    propertyValue = new PropertyValue
+    //    {
+    //      Property = ctx.Properties.Where(x => x.Name.Equals("PostId")).SingleOrDefault(),
+    //      Value = deserializedJson.records[i].id,
+    //      Confidence = 1
+    //    };
+    //    information.PropertieValues.Add(propertyValue);
+    //    //Read userId
+    //    propertyValue = new PropertyValue
+    //    {
+    //      Property = ctx.Properties.Where(x => x.Name.Equals("UserId")).SingleOrDefault(),
+    //      Value = deserializedJson.records[i].user_id,
+    //      Confidence = 1
+    //    };
+    //    information.PropertieValues.Add(propertyValue);
+    //    //Read sentiment
+    //    propertyValue = new PropertyValue
+    //    {
+    //      Property = ctx.Properties.Where(x => x.Name.Equals("Sentiment")).SingleOrDefault(),
+    //      Value = deserializedJson.records[i].sentiment[0],
+    //      Confidence = deserializedJson.records[i].sentiment[1]
+    //    };
+    //    information.PropertieValues.Add(propertyValue);
+    //    //Read retweet
+    //    propertyValue = new PropertyValue
+    //    {
+    //      Property = ctx.Properties.Where(x => x.Name.Equals("Retweet")).SingleOrDefault(),
+    //      Value = deserializedJson.records[i].retweet,
+    //      Confidence = 1
+    //    };
+    //    information.PropertieValues.Add(propertyValue);
+    //    //Read urls
+    //    for (int j = 0; j < deserializedJson.records[i].urls.Count; j++)
+    //    {
+    //      propertyValue = new PropertyValue
+    //      {
+    //        Property = ctx.Properties.Where(x => x.Name.Equals("Url")).SingleOrDefault(),
+    //        Value = deserializedJson.records[i].urls[j],
+    //        Confidence = 1
+    //      };
+    //      information.PropertieValues.Add(propertyValue);
+    //    }
+    //    //Read mentions
+    //    for (int j = 0; j < deserializedJson.records[i].mentions.Count; j++)
+    //    {
+    //      propertyValue = new PropertyValue
+    //      {
+    //        Property = ctx.Properties.Where(x => x.Name.Equals("Mention")).SingleOrDefault(),
+    //        Value = deserializedJson.records[i].mentions[j],
+    //        Confidence = 1
+    //      };
+    //      information.PropertieValues.Add(propertyValue);
+    //    }
+    //    //Add source
+    //    string source = Convert.ToString(deserializedJson.records[i].source);
+    //    information.Source = ctx.Sources.Where(s => s.Name.ToLower().Equals(source)).SingleOrDefault();
+    //    //Add connection to Item (Person)
+    //    string personFullName = String.Format("{0} {1}", deserializedJson.records[i].politician[0], deserializedJson.records[i].politician[1]);
+    //    information.Item = GeneratePeople(personFullName, ctx);
+    //    //Add date
+    //    string datum = Convert.ToString(deserializedJson.records[i].date);
+    //    DateTime myInfoDate = DateTime.ParseExact(datum, "yyyy-MM-dd HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture);
+    //    information.CreationDate = myInfoDate;
 
-        //Add information object to the DbSet
-        ctx.Informations.Add(information);
-      }
-      ctx.SaveChanges();
-    }
+    //    //Add information object to the DbSet
+    //    ctx.Informations.Add(information);
+    //  }
+    //  ctx.SaveChanges();
+    //}
 
     /// <summary>
     /// Will return the ID of the people
