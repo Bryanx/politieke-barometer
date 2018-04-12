@@ -33,7 +33,7 @@ namespace BAR.DAL
 		/// </summary>
 		public int CreateInformations(List<Information> infos)
 		{
-      ctx.Informations.AddRange(infos);
+			ctx.Informations.AddRange(infos);
 			return ctx.SaveChanges();
 		}
 
@@ -80,8 +80,9 @@ namespace BAR.DAL
 		/// </summary>
 		public IEnumerable<Information> ReadAllInfoForId(int itemId)
 		{
-			return ctx.Informations.Where(info => info.Item.ItemId == itemId).AsEnumerable();
-		}
+      return ctx.Informations
+              .Where(info => info.Items.Any(item => item.ItemId == itemId)).AsEnumerable();
+    }
 
 		/// <summary>
 		/// Gives back a list of information-objects.
@@ -151,16 +152,16 @@ namespace BAR.DAL
 			return ctx.SaveChanges();
 		}
 
-    public Property ReadProperty(string propertyName)
-    {
-      return ctx.Properties.Where(x => x.Name.Equals(propertyName)).SingleOrDefault();
-    }
+		public Property ReadProperty(string propertyName)
+		{
+			return ctx.Properties.Where(x => x.Name.Equals(propertyName)).SingleOrDefault();
+		}
 
-    public Source ReadSource(string sourceName)
-    {
-      return ctx.Sources.Where(x => x.Name.Equals(sourceName)).SingleOrDefault();
-    }
-  }
+		public Source ReadSource(string sourceName)
+		{
+			return ctx.Sources.Where(x => x.Name.Equals(sourceName)).SingleOrDefault();
+		}
+	}
 }
 
 
