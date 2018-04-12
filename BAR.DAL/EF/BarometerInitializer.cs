@@ -11,7 +11,7 @@ using System.Text;
 
 namespace BAR.DAL.EF
 {
-  internal class BarometerInitializer : DropCreateDatabaseIfModelChanges<BarometerDbContext>
+  internal class BarometerInitializer : DropCreateDatabaseAlways<BarometerDbContext>
   {
     /// <summary>
     /// Dummy data from the json file will be generated
@@ -114,7 +114,8 @@ namespace BAR.DAL.EF
         PropertyValue propertyValue;
         Information information = new Information
         {
-          PropertieValues = new List<PropertyValue>()
+          PropertieValues = new List<PropertyValue>(),
+          Items = new List<Item>()
         };
         //Read hashtags
         for (int j = 0; j < deserializedJson.records[i].hashtags.Count; j++)
@@ -205,7 +206,8 @@ namespace BAR.DAL.EF
         information.Source = ctx.Sources.Where(s => s.Name.ToLower().Equals(source)).SingleOrDefault();
         //Add connection to Item (Person)
         string personFullName = String.Format("{0} {1}", deserializedJson.records[i].politician[0], deserializedJson.records[i].politician[1]);
-        information.Item = GeneratePeople(personFullName, ctx);
+        Item person = GeneratePeople(personFullName, ctx);
+        information.Items.Add(person);
         //Add date
         string datum = Convert.ToString(deserializedJson.records[i].date);
         DateTime myInfoDate = DateTime.ParseExact(datum, "yyyy-MM-dd HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture);
@@ -233,7 +235,7 @@ namespace BAR.DAL.EF
           Name = personFullName,
           CreationDate = DateTime.Now,
           Baseline = 0,
-          TrendingPercentage = 0
+          TrendingPercentage = 0 
         };
         ctx.Items.Add(person);
         ctx.SaveChanges();
