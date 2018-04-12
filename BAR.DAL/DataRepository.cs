@@ -80,9 +80,9 @@ namespace BAR.DAL
 		/// </summary>
 		public IEnumerable<Information> ReadAllInfoForId(int itemId)
 		{
-      return ctx.Informations
-              .Where(info => info.Items.Any(item => item.ItemId == itemId)).AsEnumerable();
-    }
+			return ctx.Informations
+							.Where(info => info.Items.Any(item => item.ItemId == itemId)).AsEnumerable();
+		}
 
 		/// <summary>
 		/// Gives back a list of information-objects.
@@ -118,8 +118,8 @@ namespace BAR.DAL
 		public IEnumerable<Information> ReadInformationsForDate(int itemId, DateTime since)
 		{
 			return ctx.Informations
-					.Where(info => info.Item.ItemId == itemId)
-					.Where(info => info.CreationDate >= since).AsEnumerable();
+				.Where(info => info.Items.Any(item => item.ItemId == itemId))
+				.Where(info => info.CreationDate >= since).AsEnumerable();
 		}
 
 		/// <summary>
@@ -128,7 +128,8 @@ namespace BAR.DAL
 		/// </summary
 		public int ReadNumberInfo(int itemId, DateTime since)
 		{
-			return ctx.Informations.Where(info => info.Item.ItemId == itemId)
+			return ctx.Informations
+				.Where(info => info.Items.Any(item => item.ItemId == itemId))
 				.Where(info => info.CreationDate >= since).Count();
 		}
 
