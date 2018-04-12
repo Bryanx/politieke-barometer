@@ -15,16 +15,20 @@ namespace BAR.UI.MVC.Controllers
   [Authorize(Roles ="Admin, SuperAdmin")]
   public class AdminController : Controller
   {
-    
     private UserManager userManager = new UserManager();
 
-    // GET
+    /// <summary>
+    /// Dashboard page of admin.
+    /// </summary>
     public ActionResult Index()
     {
       const string ADMIN_DASHBOARD_PAGE_TITLE = "Admin Dashboard";
       return HttpNotFound();
     }
 
+    /// <summary>
+    /// Page management page of admin.
+    /// </summary>
     public ActionResult PageManagement()
     {
       const string PAGE_MANAGEMENT_PAGE_TITLE = "Pagina's beheren";
@@ -34,6 +38,9 @@ namespace BAR.UI.MVC.Controllers
       });
     }
 
+    /// <summary>
+    /// Item management page of admin.
+    /// </summary>
     public ActionResult ItemManagement()
     {
       const string ITEM_MANAGEMENT_PAGE_TITLE = "Items beheren";
@@ -45,6 +52,9 @@ namespace BAR.UI.MVC.Controllers
       });
     }
 
+    /// <summary>
+    /// User management page of admin.
+    /// </summary>
     public ActionResult UserManagement()
     {
       const string USER_MANAGEMENT_PAGE_TITLE = "Gebruikers beheren";
