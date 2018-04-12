@@ -21,7 +21,7 @@ namespace BAR.DAL.EF
     {
       GenerateSources(ctx);
       GenerateProperties(ctx);
-      GenerateInformations(ctx);
+      //GenerateInformations(ctx);
       GenerateAreas(ctx);
     }
 
@@ -48,13 +48,49 @@ namespace BAR.DAL.EF
     {
       List<Property> propertiesList = new List<Property>();
 
-      Property hashtag = new Property
+      Property gender = new Property
       {
-        Name = "Hashtag"
+        Name = "Gender"
+      };
+      Property age = new Property
+      {
+        Name = "Age"
+      };
+      Property education = new Property
+      {
+        Name = "Education"
+      };
+      Property language = new Property
+      {
+        Name = "Language"
+      };
+      Property personality = new Property
+      {
+        Name = "Personality"
       };
       Property word = new Property
       {
         Name = "Word"
+      };
+      Property sentiment = new Property
+      {
+        Name = "Sentiment"
+      };
+      Property hashtag = new Property
+      {
+        Name = "Hashtag"
+      };
+      Property mention = new Property
+      {
+        Name = "Mention"
+      };
+      Property url = new Property
+      {
+        Name = "Url"
+      };
+      Property date = new Property
+      {
+        Name = "Date"
       };
       Property geo = new Property
       {
@@ -63,37 +99,28 @@ namespace BAR.DAL.EF
       Property postId = new Property
       {
         Name = "PostId"
-      };
-      Property userId = new Property
-      {
-        Name = "UserId"
-      };
-      Property sentiment = new Property
-      {
-        Name = "Sentiment"
-      };
+      };     
       Property retweet = new Property
       {
         Name = "Retweet"
       };
-      Property url = new Property
-      {
-        Name = "Url"
-      };
-      Property mention = new Property
-      {
-        Name = "Mention"
-      };
 
-      propertiesList.Add(hashtag);
+
+
+      propertiesList.Add(gender);
+      propertiesList.Add(age);
+      propertiesList.Add(education);
+      propertiesList.Add(language);
+      propertiesList.Add(personality);
       propertiesList.Add(word);
+      propertiesList.Add(sentiment);
+      propertiesList.Add(hashtag);
+      propertiesList.Add(mention);
+      propertiesList.Add(url);
+      propertiesList.Add(date);
       propertiesList.Add(geo);
       propertiesList.Add(postId);
-      propertiesList.Add(userId);
-      propertiesList.Add(sentiment);
       propertiesList.Add(retweet);
-      propertiesList.Add(url);
-      propertiesList.Add(mention);
 
       ctx.Properties.AddRange(propertiesList);
       ctx.SaveChanges();
@@ -209,7 +236,7 @@ namespace BAR.DAL.EF
         //Add date
         string datum = Convert.ToString(deserializedJson.records[i].date);
         DateTime myInfoDate = DateTime.ParseExact(datum, "yyyy-MM-dd HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture);
-        information.CreatetionDate = myInfoDate;
+        information.CreationDate = myInfoDate;
 
         //Add information object to the DbSet
         ctx.Informations.Add(information);

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BAR.DAL
 {
-	public interface IInformationRepository
+	public interface IDataRepository
 	{
 		//Read
 		int ReadNumberInfo(int itemId, DateTime since);
@@ -16,9 +16,11 @@ namespace BAR.DAL
 		IEnumerable<Information> ReadAllInformations();
 		IEnumerable<Information> ReadAllInfoForId(int itemId);
 		IEnumerable<Information> ReadInformationsForDate(int itemId, DateTime since);
+    Property ReadProperty(string propertyName);
+    Source ReadSource(string sourceName);
 
 		//Create
-		int CreateInformation(Information info);
+		int CreateInformations(List<Information> infos);
 
 		//Update
 		int UpdateInformation(Information info);

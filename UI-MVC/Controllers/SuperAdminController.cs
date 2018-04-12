@@ -5,6 +5,8 @@ using Microsoft.AspNet.Identity;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Collections.Generic;
+using System.Text;
+using System;
 
 namespace BAR.UI.MVC.Controllers
 {
@@ -45,20 +47,29 @@ namespace BAR.UI.MVC.Controllers
       });
     }
 
-    public async Task<ActionResult> SynchronizeData()
+    public ActionResult SynchronizeData()
     {
-      HttpClient client = new HttpClient();
-      var values = new Dictionary<string, string>
-        {
-          { "name", "Geert Bourgeois" }
-        };
-      var content = new FormUrlEncodedContent(values);
-      client.DefaultRequestHeaders.TryAddWithoutValidation("X-API-Key", "aEN3K6VJPEoh3sMp9ZVA73kkr");
-      client.DefaultRequestHeaders.TryAddWithoutValidation("Content-Type", "application/json; charset=utf-8");
-      client.DefaultRequestHeaders.TryAddWithoutValidation("Accept", "application/json; charset=utf-8");
-      var response = await client.PostAsync("http://kdg.textgain.com/query", content);
+      using (HttpClient client = new HttpClient())
+      {
+        //Make request
+        HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, "http://kdg.textgain.com/query");
+        request.Headers.Add("Accept", "application/json");
+        request.Headers.Add("X-API-Key", "aEN3K6VJPEoh3sMp9ZVA73kkr");
 
-      var responseString = await response.Content.ReadAsStringAsync();
+        request.Content = new StringContent("{\"name\":\"Annick De Ridder\"}", Encoding.UTF8, "application/json");
+
+        //Send request
+        HttpResponseMessage response = client.SendAsync(request).Result;
+
+        //Read response
+        if (response.IsSuccessStatusCode)
+        {
+          var json = response.Content.ReadAsStringAsync().Result;
+          IDataManager dataManager = new DataManager();
+          dataManager.SynchronizeData(json);
+        }
+        else throw new Exception("Error: " + response.StatusCode);
+      }
       return null;
     }
   }

@@ -141,6 +141,11 @@ namespace BAR.DAL
 		{
 			foreach (Item item in items) ctx.Items.Remove(item);
 			return ctx.SaveChanges();
-		}		
-	}
+		}
+
+    public Item ReadPerson(string personName)
+    {
+      return ctx.Items.Where(i => i.Name.Equals(personName)).SingleOrDefault();
+    }
+  }
 }

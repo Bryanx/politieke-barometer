@@ -10,6 +10,8 @@ namespace BAR.BL.Managers
 	public interface IDataManager
 	{
 		int GetNumberInfo(int itemId, DateTime since);
-		IEnumerable<Information> getAllInformationForId(int itemId);
-	}
+		IEnumerable<Information> GetAllInformationForId(int itemId);
+    bool SynchronizeData(string json);
+
+  }
 }

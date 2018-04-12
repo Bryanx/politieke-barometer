@@ -36,10 +36,10 @@ namespace BAR.BL.Managers
 			InitRepo();
 
 			DataManager dataManager = new DataManager();
-			IEnumerable<Information> allInfoForId = dataManager.getAllInformationForId(itemId);
+			IEnumerable<Information> allInfoForId = dataManager.GetAllInformationForId(itemId);
 
-			DateTime earliestInfoDate = allInfoForId.Min(item => item.CreatetionDate).Value;
-			DateTime lastInfoDate = allInfoForId.Max(item => item.CreatetionDate).Value;
+			DateTime earliestInfoDate = allInfoForId.Min(item => item.CreationDate).Value;
+			DateTime lastInfoDate = allInfoForId.Max(item => item.CreationDate).Value;
 
 			int period = (lastInfoDate - earliestInfoDate).Days;
 
@@ -264,6 +264,11 @@ namespace BAR.BL.Managers
 		{
 			if (uowManager == null) itemRepo = new ItemRepository();
 			else itemRepo = new ItemRepository(uowManager.UnitOfWork);
-		}		
-	}
+		}
+
+    public Item GetPerson(string personName)
+    {
+      return itemRepo.ReadPerson(personName);
+    }
+  }
 }
