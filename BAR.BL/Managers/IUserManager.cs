@@ -14,10 +14,9 @@ namespace BAR.BL.Managers
 	{
 		User GetUser(string userId);
 		IEnumerable<User> GetAllUsers();
-
 		User ChangeUserBasicInfo(string userId, string firstname, string lastname, Gender gender, DateTime dateOfBrith, Area area);
 		User ChangeUserAlerts(string userId, bool alertWebsite, bool alertMail, bool alertWeeklyReview);
-		User ChangeUserAccount(string userId, bool active);
+		User DeactivateUserAccount(string userId, bool active);
     User ChangeProfilePicture(string userId, HttpPostedFileBase poImgFile);
     IEnumerable<Area> GetAreas();
     Area GetArea(int areaId);

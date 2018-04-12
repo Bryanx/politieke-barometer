@@ -415,7 +415,6 @@ namespace BAR.UI.MVC.Controllers
     /// <summary>
     /// Settings page of the user.
     /// </summary>
-    /// <returns></returns>
     public ActionResult Settings()
     {
       const string SETTINGS_PAGE_TITLE = "Instellingen";
@@ -444,8 +443,10 @@ namespace BAR.UI.MVC.Controllers
       return View("Settings", settingsViewModel);
     }
 
-    //
-    // POST: /User/Settings
+    /// <summary>
+    /// POST
+    /// Changes profile picture of logged-in user.
+    /// </summary>
     [HttpPost]
     [ValidateAntiForgeryToken]
     public ActionResult Settings([Bind(Exclude = "ProfilePicture")]SettingsViewModel model)
@@ -453,27 +454,29 @@ namespace BAR.UI.MVC.Controllers
       if (Request.Files.Count > 0)
       {
         HttpPostedFileBase poImgFile = Request.Files["ProfilePicture"];
-
         IUserManager userManager = new UserManager();
         userManager.ChangeProfilePicture(User.Identity.GetUserId(), poImgFile);
       }
       return RedirectToAction("Settings", "User");
     }
 
+    /// <summary>
+    /// Returns image of byte array.
+    /// </summary>
     public FileContentResult ProfilePicture()
     {
-
       IUserManager userManager = new UserManager();
       User user = userManager.GetUser(User.Identity.GetUserId());
-
       if (user.ProfilePicture != null)
       {
         return new FileContentResult(user.ProfilePicture, "image/jpeg");
       }
-
       return null;
     }
 
+    /// <summary>
+    /// Gets user model with all his subscribed items.
+    /// </summary>
     private ItemViewModel GetPersonViewModel(string id)
     {
       ISubscriptionManager subManager = new SubscriptionManager();

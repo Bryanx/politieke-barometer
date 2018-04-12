@@ -15,28 +15,35 @@ namespace BAR.UI.MVC.Controllers
   [Authorize(Roles ="Admin, SuperAdmin")]
   public class AdminController : Controller
   {
-    
-    private UserManager userManager = new UserManager();
-
-    // GET
+    /// <summary>
+    /// Dashboard page of admin.
+    /// </summary>
     public ActionResult Index()
     {
       const string ADMIN_DASHBOARD_PAGE_TITLE = "Admin Dashboard";
       return HttpNotFound();
     }
 
+    /// <summary>
+    /// Page management page of admin.
+    /// </summary>
     public ActionResult PageManagement()
     {
       const string PAGE_MANAGEMENT_PAGE_TITLE = "Pagina's beheren";
+      UserManager userManager = new UserManager();
       return View(new BaseViewModel() {
         User = userManager.GetUser(User.Identity.GetUserId()),
         PageTitle = PAGE_MANAGEMENT_PAGE_TITLE
       });
     }
 
+    /// <summary>
+    /// Item management page of admin.
+    /// </summary>
     public ActionResult ItemManagement()
     {
       const string ITEM_MANAGEMENT_PAGE_TITLE = "Items beheren";
+      UserManager userManager = new UserManager();
       IItemManager itemManager = new ItemManager();
       return View(new ItemViewModels.ItemViewModel() {
         User = userManager.GetUser(User.Identity.GetUserId()),
@@ -45,9 +52,13 @@ namespace BAR.UI.MVC.Controllers
       });
     }
 
+    /// <summary>
+    /// User management page of admin.
+    /// </summary>
     public ActionResult UserManagement()
     {
       const string USER_MANAGEMENT_PAGE_TITLE = "Gebruikers beheren";
+      UserManager userManager = new UserManager();
       IdentityUserManager identityUserManager = HttpContext.GetOwinContext().GetUserManager<IdentityUserManager>();
       IEnumerable<User> users = userManager.GetAllUsers();
       List<string> currentRoles = new List<string>();
