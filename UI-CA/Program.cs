@@ -133,7 +133,6 @@ namespace BAR.UI.CA
 		/// </summary>
 		private static void AddAlertsForTrendingItems()
 		{
-			int itemSize = allItems.Count();
 			//SysController sys = new SysController();
 			//IEnumerable<Item> allItems = new ItemManager().getAllItems();
 			//int itemSize = allItems.Count();
