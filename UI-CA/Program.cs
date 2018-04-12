@@ -9,6 +9,7 @@ using BAR.BL.Managers;
 using BAR.BL.Domain.Items;
 using BAR.BL.Domain.Users;
 using BAR.BL.Controllers;
+using BAR.BL.DataReader;
 
 namespace BAR.UI.CA
 {
@@ -231,6 +232,13 @@ namespace BAR.UI.CA
 
 			//}
 		}		
+
+		private static void ReadJson()
+		{
+			JsonReader jsonReader = new JsonReader();
+
+			jsonReader.ReadJson();      
+		}
 	}
 }
 
