@@ -185,11 +185,11 @@ namespace BAR.BL.Managers
 
         //Add connection to Item (Person)
         //Read persons
-        information.Item = new List<Item>();
+        information.Items = new List<Item>();
         for (int j = 0; j < deserializedJson[i].persons.Count; j++)
         {
           string name = deserializedJson[i].persons[j];
-          information.Item.Add(GeneratePeople(name));
+          information.Items.Add(GeneratePeople(name));
         }
 
         //Add other information

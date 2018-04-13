@@ -33,7 +33,7 @@ namespace BAR.DAL
 		/// </summary>
 		public int CreateInformations(List<Information> infos)
 		{
-      ctx.Informations.AddRange(infos);
+			ctx.Informations.AddRange(infos);
 			return ctx.SaveChanges();
 		}
 
@@ -80,7 +80,8 @@ namespace BAR.DAL
 		/// </summary>
 		public IEnumerable<Information> ReadAllInfoForId(int itemId)
 		{
-			return ctx.Informations.Where(info => info.Item.Any(x => x.ItemId == itemId)).AsEnumerable();
+			return ctx.Informations
+							.Where(info => info.Items.Any(item => item.ItemId == itemId)).AsEnumerable();
 		}
 
 		/// <summary>
@@ -117,8 +118,8 @@ namespace BAR.DAL
 		public IEnumerable<Information> ReadInformationsForDate(int itemId, DateTime since)
 		{
 			return ctx.Informations
-					.Where((info => info.Item.Any(x => x.ItemId == itemId)))
-					.Where(info => info.CreationDate >= since).AsEnumerable();
+				.Where(info => info.Items.Any(item => item.ItemId == itemId))
+				.Where(info => info.CreationDate >= since).AsEnumerable();
 		}
 
 		/// <summary>
@@ -127,7 +128,8 @@ namespace BAR.DAL
 		/// </summary
 		public int ReadNumberInfo(int itemId, DateTime since)
 		{
-			return ctx.Informations.Where((info => info.Item.Any(x => x.ItemId == itemId)))
+			return ctx.Informations
+				.Where(info => info.Items.Any(item => item.ItemId == itemId))
 				.Where(info => info.CreationDate >= since).Count();
 		}
 
@@ -151,16 +153,16 @@ namespace BAR.DAL
 			return ctx.SaveChanges();
 		}
 
-    public Property ReadProperty(string propertyName)
-    {
-      return ctx.Properties.Where(x => x.Name.Equals(propertyName)).SingleOrDefault();
-    }
+		public Property ReadProperty(string propertyName)
+		{
+			return ctx.Properties.Where(x => x.Name.Equals(propertyName)).SingleOrDefault();
+		}
 
-    public Source ReadSource(string sourceName)
-    {
-      return ctx.Sources.Where(x => x.Name.Equals(sourceName)).SingleOrDefault();
-    }
-  }
+		public Source ReadSource(string sourceName)
+		{
+			return ctx.Sources.Where(x => x.Name.Equals(sourceName)).SingleOrDefault();
+		}
+	}
 }
 
 
