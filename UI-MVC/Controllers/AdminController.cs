@@ -11,6 +11,9 @@ using AutoMapper;
 
 namespace BAR.UI.MVC.Controllers
 {
+	/// <summary>
+	/// This controller is used for admins and superadmins.
+	/// </summary>
 	[Authorize(Roles = "Admin, SuperAdmin")]
 	public class AdminController : Controller
 	{
