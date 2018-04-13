@@ -13,7 +13,7 @@ namespace BAR.DAL
 	/// </summary>
 	public class DashboardRepository : IDashboardRepository
 	{
-		private BarometerDbContext ctx;
+		private readonly BarometerDbContext ctx;
 
 		/// <summary>
 		/// If uow is present, the constructor

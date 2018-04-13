@@ -18,7 +18,7 @@ namespace BAR.DAL
 	/// </summary>
 	public class InformationRepository : IInformationRepository
 	{
-		private BarometerDbContext ctx;
+		private readonly BarometerDbContext ctx;
 
 		/// <summary>
 		/// If uow is present then the constructor
