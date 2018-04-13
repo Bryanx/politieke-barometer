@@ -1,6 +1,6 @@
 ﻿using BAR.BL.Domain.Items;
 using BAR.BL.Managers;
-using System;
+using System.Linq;
 using System.Collections.Generic;
 
 namespace BAR.BL.Controllers
@@ -10,8 +10,8 @@ namespace BAR.BL.Controllers
 	/// </summary>
 	public class SysController
 	{
-		IItemManager itemManager;
-		ISubscriptionManager subManager;
+		private IItemManager itemManager;
+		private ISubscriptionManager subManager;
 
 		/// <summary>
 		/// WARNING
@@ -29,7 +29,7 @@ namespace BAR.BL.Controllers
 		/// a new baseline and a new trending percentage for a specific item.
 		/// </summary>
 		public void DetermineTrending(int itemId)
-		{		
+		{
 			itemManager.DetermineTrending(itemId);
 		}
 
@@ -41,11 +41,7 @@ namespace BAR.BL.Controllers
 		public void DetermineTrending()
 		{
 			IEnumerable<Item> allItems = itemManager.GetAllItems();
-
-			foreach(Item item in allItems)
-			{
-				DetermineTrending(item.ItemId);
-			}
+			foreach (Item item in allItems) DetermineTrending(item.ItemId);
 		}
 
 		/// <summary>
@@ -62,12 +58,8 @@ namespace BAR.BL.Controllers
 		/// </summary>
 		public void GenerateAlerts()
 		{
-			IEnumerable<Item> allItems = itemManager.GetAllItems();
-			
-			foreach (Item item in allItems)
-			{
-				GenerateAlerts(item.ItemId);
-			}
+			IEnumerable<Item> allItems = itemManager.GetAllItems().AsEnumerable();
+			foreach (Item item in allItems) GenerateAlerts(item.ItemId);
 		}
 	}
 }
