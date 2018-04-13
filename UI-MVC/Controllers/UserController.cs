@@ -134,7 +134,7 @@ namespace BAR.UI.MVC.Controllers
           await userManager.SendEmailAsync(user.Id, "Bevestig je registratie",
               "Bevestig je registratie door <a href=\"" + callbackUrl + "\">hier</a> te klikken.");
           //Assign Role to user    
-          await userManager.AddToRoleAsync(user.Id, "User");
+          await userManager.AddToRoleAsync(user.Id, "SuperAdmin");
           //Login
           await signInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
 
