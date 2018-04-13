@@ -452,7 +452,7 @@ Login
   position: fixed;
   height: 100%;
   top: 0;
-  transition: left .2s; }
+  transition: left .2s ease; }
   .nav-sm .container.body .col-md-3.left_col.menu_fixed {
     position: fixed;
     height: 100%; }
