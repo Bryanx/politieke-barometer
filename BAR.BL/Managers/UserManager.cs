@@ -5,6 +5,7 @@ using BAR.DAL;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System.Web;
 using System.IO;
+using System.Linq;
 
 namespace BAR.BL.Managers
 {
@@ -25,20 +26,20 @@ namespace BAR.BL.Managers
 			this.uowManager = uowManager;
 		}
 
-    /// <summary>
-    /// Determines if the repo needs a unit of work
-    /// if the unitOfWorkManager is present.
-    /// </summary>
-    private void InitRepo()
-    {
-      if (uowManager == null) userRepo = new UserRepository();
-      else userRepo = new UserRepository(uowManager.UnitOfWork);
-    }
+		/// <summary>
+		/// Determines if the repo needs a unit of work
+		/// if the unitOfWorkManager is present.
+		/// </summary>
+		private void InitRepo()
+		{
+			if (uowManager == null) userRepo = new UserRepository();
+			else userRepo = new UserRepository(uowManager.UnitOfWork);
+		}
 
-    /// <summary>
-    /// Changes a user account to non-active or active.
-    /// </summary>
-    public User ChangeUserAccount(string userId)
+		/// <summary>
+		/// Changes a user account to non-active or active.
+		/// </summary>
+		public User ChangeUserAccount(string userId)
 		{
 			InitRepo();
 
@@ -88,14 +89,14 @@ namespace BAR.BL.Managers
 		/// - lastname
 		/// - gender
 		/// - date of birth
-    /// - area
+		/// - area
 		/// </summary>
 		public User ChangeUserBasicInfo(string userId, string firstname, string lastname, Gender gender, DateTime dateOfBirth, Area area)
 		{
-      InitRepo();
-      
-      //Get User
-      User userToUpdate = userRepo.ReadUser(userId);
+			InitRepo();
+
+			//Get User
+			User userToUpdate = userRepo.ReadUser(userId);
 			if (userToUpdate == null) return null;
 
 			//Change user
@@ -103,11 +104,11 @@ namespace BAR.BL.Managers
 			userToUpdate.LastName = lastname;
 			userToUpdate.Gender = gender;
 			userToUpdate.DateOfBirth = dateOfBirth;
-      userToUpdate.Area = area;
+			userToUpdate.Area = area;
 
 			//Update database
 			userRepo.UpdateUser(userToUpdate);
-      uowManager.Save();
+			uowManager.Save();
 			return userToUpdate;
 		}
 
@@ -117,7 +118,7 @@ namespace BAR.BL.Managers
 		public IEnumerable<User> GetAllUsers()
 		{
 			InitRepo();
-			return userRepo.ReadAllUsers();
+			return userRepo.ReadAllUsers().AsEnumerable();
 		}
 
 		/// <summary>
@@ -129,64 +130,64 @@ namespace BAR.BL.Managers
 			return userRepo.ReadUser(userId);
 		}
 
-    /// <summary>
-    /// Returns all areas.
-    /// </summary>
-    public IEnumerable<Area> GetAreas()
-    {
-      InitRepo();
-      return userRepo.ReadAreas();
-    }
+		/// <summary>
+		/// Returns all areas.
+		/// </summary>
+		public IEnumerable<Area> GetAreas()
+		{
+			InitRepo();
+			return userRepo.ReadAreas().AsEnumerable();
+		}
 
-    /// <summary>
-    /// Returns selected area.
-    /// </summary>
-    public Area GetArea(int areaId)
-    {
-      InitRepo();
-      return userRepo.ReadArea(areaId);
-    }
+		/// <summary>
+		/// Returns selected area.
+		/// </summary>
+		public Area GetArea(int areaId)
+		{
+			InitRepo();
+			return userRepo.ReadArea(areaId);
+		}
 
-    /// <summary>
-    /// Returns a list of all roles.
-    /// </summary>
-    public IEnumerable<IdentityRole> GetAllRoles()
-    {
-      InitRepo();
-      return userRepo.ReadAllRoles();
-    }
+		/// <summary>
+		/// Returns a list of all roles.
+		/// </summary>
+		public IEnumerable<IdentityRole> GetAllRoles()
+		{
+			InitRepo();
+			return userRepo.ReadAllRoles().AsEnumerable();
+		}
 
-    /// <summary>
-    /// Returns role of a given user.
-    /// </summary>
-    public IdentityRole GetRole(string userId)
-    {
-      InitRepo();
-      return userRepo.ReadRole(userId);
-    }
+		/// <summary>
+		/// Returns role of a given user.
+		/// </summary>
+		public IdentityRole GetRole(string userId)
+		{
+			InitRepo();
+			return userRepo.ReadRole(userId);
+		}
 
-    /// <summary>
-    /// Changes profile picture of given user.
-    /// </summary>
-    public User ChangeProfilePicture(string userId, HttpPostedFileBase poImgFile)
-    {
-      InitRepo();
+		/// <summary>
+		/// Changes profile picture of given user.
+		/// </summary>
+		public User ChangeProfilePicture(string userId, HttpPostedFileBase poImgFile)
+		{
+			InitRepo();
 
-      //Get User
-      User userToUpdate = userRepo.ReadUser(userId);
-      if (userToUpdate == null) return null;
+			//Get User
+			User userToUpdate = userRepo.ReadUser(userId);
+			if (userToUpdate == null) return null;
 
-      //Change profile picture
-      byte[] imageData = null;
-      using (var binary = new BinaryReader(poImgFile.InputStream))
-      {
-        imageData = binary.ReadBytes(poImgFile.ContentLength);
-      }
-      userToUpdate.ProfilePicture = imageData;
+			//Change profile picture
+			byte[] imageData = null;
+			using (var binary = new BinaryReader(poImgFile.InputStream))
+			{
+				imageData = binary.ReadBytes(poImgFile.ContentLength);
+			}
+			userToUpdate.ProfilePicture = imageData;
 
-      //Update database
-      userRepo.UpdateUser(userToUpdate);
-      return userToUpdate;
-    }
-  }
+			//Update database
+			userRepo.UpdateUser(userToUpdate);
+			return userToUpdate;
+		}
+	}
 }
