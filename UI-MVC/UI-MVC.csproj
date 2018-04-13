@@ -426,6 +426,7 @@
     <Content Include="Views\Shared\Partials\_ExternalLoginsListPartial.cshtml" />
     <Content Include="Views\Shared\Partials\_Footer.cshtml" />
     <Content Include="Views\Shared\Partials\_FooterRegister.cshtml" />
+    <Content Include="Views\Shared\Partials\_GraphWizard.cshtml" />
     <Content Include="Views\Shared\Partials\_ItemTable.cshtml" />
     <Content Include="Views\Shared\Partials\_LoggedInLeftNavBarLinks.cshtml" />
     <Content Include="Views\Shared\Partials\_LoggedInNavbar.cshtml" />

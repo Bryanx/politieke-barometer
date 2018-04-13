@@ -958,6 +958,15 @@ a:hover, a:focus {
     position: relative;
     z-index: 15; }
 
+.no-widgets {
+  margin: 100px 0; }
+  .no-widgets > h1 {
+    margin-bottom: 20px !important; }
+  .no-widgets > a {
+    cursor: pointer; }
+    .no-widgets > a:hover {
+      text-decoration: none; }
+
 #alertDropdown {
   padding: 17px 17px 16px; }
 

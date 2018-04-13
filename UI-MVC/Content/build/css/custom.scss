@@ -114,14 +114,12 @@ body {
 }
 
 .table {
-  
-
-.user-profile img {
-  width: 35px;
-  height: 35px;
-  @include border-radius(50%);
-  margin-right: 10px;
-}
+  .user-profile img {
+    width: 35px;
+    height: 35px;
+    @include border-radius(50%);
+    margin-right: 10px;
+  }
 
   > thead {
     margin: 0 -20px;
@@ -1287,6 +1285,19 @@ a {
   > li > a {
     position: relative;
     z-index: 15;
+  }
+}
+
+.no-widgets {
+  margin: 100px 0;
+  > h1 {
+    margin-bottom: 20px !important;
+  }
+  > a {
+    cursor: pointer;
+    &:hover {
+      text-decoration: none;
+    }
   }
 }
 
@@ -5303,5 +5314,5 @@ ul.notifications {
   background-position: center;
   background-size: cover;
   margin-top: 8px;
-  margin-left: 5px; 
+  margin-left: 5px;
 }
