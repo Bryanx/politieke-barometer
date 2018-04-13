@@ -28,11 +28,13 @@
 
 <!-- Subscriptions -->
 @if (Model.Items.Any()) {
-    <section>
+    <section class="subscriptions">
         <br/>
         <h1>Abonnementen</h1>
         <hr/>
-        @Html.Partial("Partials/_Subscriptions", Model)
+        <section class="shadowed">
+            @Html.Partial("Partials/_PersonTable", Model)
+        </section>
     </section>
 }
 
@@ -41,33 +43,6 @@
 @section CustomJS{
     @Scripts.Render("~/bundles/gridstack", "~/bundles/morrisCharts")
     <script type="text/javascript">
-        //Subscriptions:
-        function personUnsubscribe(itemId) {
-            $('.subscription').click(function() {
-                var id = $(this).attr('data-id');
-                if (id === itemId.toString()) {
-                    if (res.subscriptionAmount === 1) {
-                        $('#peopleSubscriptions').empty();
-                        res.alertcount = 0;
-                        updateAlertCount();
-                    } else {
-                        $(this).empty();
-                    }
-                }
-            });
-            $.ajax(`/api/User/Subscription/${itemId}/Delete`,
-                    {
-                        type: 'DELETE',
-                        dataType: 'json'
-                    })
-                .done(() => {
-                    loadAlerts();
-                    res.subscriptionAmount--;
-                })
-                //TODO: if FAIL proper error handling
-                .fail(() => alert('Subscriptions could not be loaded.'));
-        }
-
         //Widgets:
         //GET Request for widgets
         function loadWidgets() {
@@ -85,6 +60,31 @@
         (() => {
             $('#saveWidgets').on('click', saveGrid);
             loadWidgets();
+            
+            var wto;
+            $('.subscribeItem').click(function() {
+                clearTimeout(wto);
+                var $this = $(this);
+                var id = $this.data('item-id');
+                if (res.subscriptionAmount === 1) {
+                    $('.subscriptions').empty();
+                    res.alertcount = 0;
+                    updateAlertCount();
+                } else {
+                    $this.parent().parent().empty();
+                }
+                wto = setTimeout(function() {
+                        $.ajax({
+                                type: 'POST',
+                                url: '/api/ToggleSubscribe/' + id
+                            }).fail(() => { /* ok */ })
+                            .done(function() {
+                                loadAlerts();
+                                res.subscriptionAmount--;
+                            });
+                    },
+                    500);
+            });
         })($);
     </script>
 }

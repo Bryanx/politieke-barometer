@@ -82,10 +82,11 @@
     </ul>
 
     @if (User.Identity.IsAuthenticated) {
-        <form method="post" action="/api/Subscribe/@Model.Person.ItemId" id="subscribeForm">
-            <button type="submit" class="btn btn-success">Abonneer</button>
-            <div id="subscribeMessage" style="display: inline"></div>
-        </form>
+        if (Model.Subscribed != true) {
+            <a class="w-100px subscribeItem btn btn-success" data-item-id="@Model.Person.ItemId" title="Deze persoon volgen">Abonneer</a>
+        } else {
+            <a class="w-100px subscribeItem btn btn-danger" data-item-id="@Model.Person.ItemId" title="Uitschrijven">Uitschrijven</a>
+        }
     }
     <br/>
 
@@ -302,10 +303,10 @@
 
 @section CustomJS{
     @Scripts.Render("~/bundles/morrisCharts")
-    <script type="text/javascript">
-        $("#subscribeForm").on("submit",
-            function(event) {
-                submitForm($(this), event, $("#subscribeMessage"));
-            });
+    <script type="text/javascript" defer>
+        $('.subscribeItem').click(function() {
+            ajaxToggleSubscribe($(this));
+        });
+
     </script>
 }

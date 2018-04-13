@@ -1,3 +1,46 @@
-﻿@model BAR.UI.MVC.Models.BaseViewModel
+﻿@using System.Web.Optimization
+@model BAR.UI.MVC.Models.EditUserViewModel
 
-<h1>title</h1>
+@section CustomCSS{
+    @Styles.Render("~/bundles/datatables")
+}
+
+<h1>@Model.PageTitle</h1>
+<hr />
+@Html.Partial("Partials/_AdminTable", Model)
+<div style="visibility: hidden">space</div>
+
+@section CustomJS{
+    @Scripts.Render("~/bundles/datatables")
+    <script type="text/javascript">
+
+        $('.accountActivityChange').click(function() {
+            var $this = $(this);
+            var id = $this.data('item-id');
+            console.log($this.text());
+            $.ajax({
+                    type: 'POST',
+                    url: '/api/Admin/ToggleAccountActivity/' + id
+                }).fail(() => {/* ok */ })
+                .done(function () {
+                    $this.toggleClass("btn-danger btn-success")
+                        .toggleText("Herstellen", "Verwijderen")
+                        .parent().parent().toggleClass("greyed-out");
+                });
+        });
+        
+        function changeRole(id, htmlId) {
+            $.ajax({
+                    type: "POST",
+                    url: "/api/Admin/ChangeRole/" + id,
+                    contentType: 'application/json; charset=utf-8',
+                    dataType: "json",
+                    data: JSON.stringify($("#dd" + htmlId + " option:selected").text())
+                }).fail(() => {/* ok */ })
+                .done(function () {
+                    $("#td2" + htmlId).text($("#dd" + htmlId + " option:selected").text());
+                });
+            event.preventDefault();
+        }
+    </script>
+}

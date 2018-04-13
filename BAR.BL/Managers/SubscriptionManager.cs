@@ -178,6 +178,14 @@ namespace BAR.BL.Managers
 			InitRepo();
 			return subRepo.ReadSubscriptionsWithItemsForUser(userId);
 		}
+		
+		/// <summary>
+		/// Gets the subscribed items for a specific user.
+		/// </summary>
+		public IEnumerable<Item> GetSubscribedItemsForUser(string userId) {
+			InitRepo();
+			return GetSubscriptionsWithItemsForUser(userId).Select(s => s.SubscribedItem);
+		}
 
 		/// <summary>
 		/// Gets a subscription by Subscription id.
@@ -186,6 +194,18 @@ namespace BAR.BL.Managers
 		{
 			InitRepo();
 			return subRepo.ReadSubscription(subId);
+		}
+
+		/// <summary>
+		/// Toggles a subscription on wether the subscription exists or not.
+		/// </summary>
+		public void ToggleSubscription(string userId, int itemId) {
+			IEnumerable<Subscription> subs = GetSubscriptionsWithItemsForUser(userId);
+			if (subs.Select(s => s.SubscribedItem.ItemId).Contains(itemId)) {
+				RemoveSubscription(subs.First(s => s.SubscribedItem.ItemId == itemId).SubscriptionId);
+			} else {
+				CreateSubscription(userId, itemId);
+			}
 		}
 
 		/// <summary>

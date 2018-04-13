@@ -13,51 +13,33 @@
 @section CustomJS{
     @Scripts.Render("~/bundles/datatables")
     <script type="text/javascript">
-        function deactivateAccount(id, htmlId) {
+
+        $('.accountActivityChange').click(function() {
+            var $this = $(this);
+            var id = $this.data('item-id');
+            console.log($this.text());
             $.ajax({
-                type: 'POST',
-                url: '/api/Admin/DeactivateAccount/' + id
-            }).fail(() => {/* ok */ })
+                    type: 'POST',
+                    url: '/api/Admin/ToggleAccountActivity/' + id
+                }).fail(() => {/* ok */ })
                 .done(function () {
-                    $("#btn" + htmlId).removeClass("btn-danger");
-                    $("#btn" + htmlId).addClass("btn-success");
-                    $("#btn" + htmlId).text("Herstellen");
-                    $("#btn" + htmlId).attr("onclick", "activateAccount('" + id + "', '" + htmlId + "')");
-                    $("#btn" + htmlId).attr("title", "Verwijderde gebruiker herstellen");
-                    $("#td" + htmlId).removeClass("green");
-                    $("#td" + htmlId).addClass("red");
-                    $("#td" + htmlId).text("Non-actief");
+                    $this.toggleClass("btn-danger btn-success")
+                        .toggleText("Herstellen", "Verwijderen")
+                        .parent().parent().toggleClass("greyed-out");
                 });
-            event.preventDefault();
-        }
-        function activateAccount(id, htmlId) {
-            $.ajax({
-                type: 'POST',
-                url: '/api/Admin/ActivateAccount/' + id
-            }).fail(() => {/* ok */ })
-                .done(function () {
-                $("#btn" + htmlId).removeClass("btn-success");
-                $("#btn" + htmlId).addClass("btn-danger");
-                $("#btn" + htmlId).text("Verwijderen");
-                $("#btn" + htmlId).attr("onclick", "deactivateAccount('" + id + "', '" + htmlId + "')");
-                $("#btn" + htmlId).attr("title", "Gebruiker verwijderen");
-                $("#td" + htmlId).removeClass("red");
-                $("#td" + htmlId).addClass("green");
-                $("#td" + htmlId).text("Actief");
-            });
-            event.preventDefault();
-        }
+        });
+        
         function changeRole(id, htmlId) {
             $.ajax({
-                type: "POST",
-                url: "/api/Admin/ChangeRole/" + id,
-                contentType: 'application/json; charset=utf-8',
-                dataType: "json",
-                data: JSON.stringify($("#dd" + htmlId + " option:selected").text())
-            }).fail(() => {/* ok */ })
+                    type: "POST",
+                    url: "/api/Admin/ChangeRole/" + id,
+                    contentType: 'application/json; charset=utf-8',
+                    dataType: "json",
+                    data: JSON.stringify($("#dd" + htmlId + " option:selected").text())
+                }).fail(() => {/* ok */ })
                 .done(function () {
                     $("#td2" + htmlId).text($("#dd" + htmlId + " option:selected").text());
-            });
+                });
             event.preventDefault();
         }
     </script>

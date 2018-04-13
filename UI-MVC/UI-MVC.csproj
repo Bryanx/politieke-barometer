@@ -223,6 +223,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\CustomHelpers.cs" />
     <Compile Include="Helpers\NavBarHelpers.cs" />
     <Compile Include="Helpers\UrlExtensions.cs" />
     <Compile Include="Models\AlertDTO.cs" />
@@ -422,6 +423,7 @@
     <Content Include="Views\Home\Privacy.cshtml" />
     <Content Include="Views\Organisation\Index.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\BootstrapSiteMapPathHelperModel.cshtml" />
+    <Content Include="Views\Shared\Partials\_AdminTable.cshtml" />
     <Content Include="Views\Shared\Partials\_ExternalLoginsListPartial.cshtml" />
     <Content Include="Views\Shared\Partials\_Footer.cshtml" />
     <Content Include="Views\Shared\Partials\_FooterRegister.cshtml" />
@@ -434,7 +436,6 @@
     <Content Include="Views\Shared\Partials\_PersonTable.cshtml" />
     <Content Include="Views\Shared\Partials\_RegisterModal.cshtml" />
     <Content Include="Views\Shared\Partials\_SearchBar.cshtml" />
-    <Content Include="Views\Shared\Partials\_Subscriptions.cshtml" />
     <Content Include="Views\Shared\Partials\_VisitorLeftNavBarLinks.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\SuperAdmin\AdminManagement.cshtml" />

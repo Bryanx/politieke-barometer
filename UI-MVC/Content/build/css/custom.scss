@@ -19,7 +19,15 @@ $font-default: Roboto, Helvetica, Arial, sans-serif;
 @mixin box-shadow($val) {
   -webkit-box-shadow: $val;
   -moz-box-shadow: $val;
+  -o-box-shadow: $val;
   box-shadow: $val;
+}
+
+@mixin transition($val) {
+  -webkit-transition: $val;
+  -moz-transition: $val;
+  -o-transition: $val;
+  transition: $val;
 }
 
 /*
@@ -86,7 +94,7 @@ body {
   font-size: 22px !important;
 }
 
-.person-image {
+.person-image, .person-image-top {
   background-image: url("../images/user.png");
   background-position: center;
   background-repeat: no-repeat;
@@ -99,8 +107,23 @@ body {
   margin-right: 5px;
 }
 
-.table > {
-  thead {
+.shadowed {
+  @include box-shadow(0 1px 4px 1px rgba(0, 0, 0, 0.05));
+  @include border-radius(5px);
+  margin: 20px 0px !important;
+}
+
+.table {
+  
+
+.user-profile img {
+  width: 35px;
+  height: 35px;
+  @include border-radius(50%);
+  margin-right: 10px;
+}
+
+  > thead {
     margin: 0 -20px;
     @include diagonal-gradient(#0f8ec4, #278e87);
     color: var(--white);
@@ -124,17 +147,22 @@ body {
       }
     }
   }
-  tbody > tr {
+  > tbody > tr {
     background: var(--white);
     &:hover {
       background: #f2faff;
     }
     > td {
       border: none !important;
-      padding: 5px 5px 5px 12px;
+      padding: 15px 5px 15px 12px;
       vertical-align: middle !important;
+      > a {
+        width: 75px;
+      }
       .person-image {
         margin: 0 !important;
+        width: 40px;
+        height: 40px;
       }
       &:last-child {
         padding-right: 12px;
@@ -174,6 +202,10 @@ MODIFYABLE DASHBOARD
 
 .w-100 {
   width: 100% !important;
+}
+
+.w-100px {
+  width: 100px !important;
 }
 
 .small-logo {
@@ -560,6 +592,7 @@ Login
     position: fixed;
     height: 100%;
     top: 0;
+    transition: left .2s ease;
     &.menu_fixed {
       position: fixed;
       height: 100%;
@@ -1238,7 +1271,7 @@ a {
   > li > a {
     position: relative;
     display: block;
-    padding: 17px 17px 18px;
+    padding: 20px 17px 19px;
   }
 }
 
@@ -1587,6 +1620,10 @@ article.media {
       background: #efefef;
     }
   }
+}
+
+.greyed-out {
+  background: #f0f0f0 !important;
 }
 
 .expand {
@@ -2136,7 +2173,6 @@ ul {
     background: var(--white);
     padding: 10px;
     border-top: 1px solid #d9dee4;
-    margin-bottom: -4px;
   }
   &.msg_headers li {
     &:nth-child(2), &.alertMenuHeader {
@@ -2557,12 +2593,6 @@ li.user-profile {
   > ul.dropdown-menu {
     width: 300px !important;
   }
-}
-
-.user-profile img {
-  width: 35px;
-  @include border-radius(50%);
-  margin-right: 10px;
 }
 
 ul.top_profiles {
@@ -3200,7 +3230,7 @@ a {
   background: var(--primary-darker);
   border: 1px solid var(--primary-darker);
   &:hover, &:focus, &:active, &.active {
-    background: var(--primary-darker);
+    background: var(--primary-darkest) !important;
   }
 }
 
@@ -5262,4 +5292,16 @@ ul.notifications {
 .input-group.date .input-group-addon {
   border-radius: 0px !important;
   background-color: var(--white) !important;
+}
+
+.loadMessage {
+  position: absolute;
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  background-image: url("../images/rolling.svg");
+  background-position: center;
+  background-size: cover;
+  margin-top: 8px;
+  margin-left: 5px; 
 }

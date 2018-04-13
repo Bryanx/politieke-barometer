@@ -6,18 +6,18 @@
     <li class="user-profile">
         <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown"
            aria-expanded="false">
-            <img src="@Url.ProfilePictureUrl()"/><span class="userNameNav">@Html.DisplayFor(modelItem => Model.User.FirstName)</span>
-            <span class=" fa fa-angle-down"></span>
+            @Html.ImageHelper(@Url.ProfilePictureUrl(), htmlAttributes: new {@class = "img-circle person-image-top", onerror = "this.onload = null; this.src='/Content/build/images/user.png';"})
+            <span class="userNameNav">@Model.User.FirstName</span>
         </a>
         <ul class="dropdown-menu pull-right">
             <li>
-                <a href='@Url.DashboardUrl()'><i class="fa fa-bar-chart"></i> Dashboard</a>
+                <a href="@Url.DashboardUrl()"><i class="fa fa-bar-chart"></i> Dashboard</a>
             </li>
             <li>
-                <a href='@Url.SettingsUrl()'><i class="fa fa-gear"></i> Instellingen</a>
+                <a href="@Url.SettingsUrl()"><i class="fa fa-gear"></i> Instellingen</a>
             </li>
             <li>
-                <a href='@Url.SettingsUrl()'><i class="fa fa-bell"></i> Alert instellingen</a>
+                <a href="@Url.SettingsUrl()"><i class="fa fa-bell"></i> Alert instellingen</a>
             </li>
             <li>
                 <a href="javascript:;"><i class="fa fa-calendar"></i> Weekly review</a>
@@ -45,7 +45,7 @@
                     <strong>Alerts</strong>
                 </li>
                 <li class="alertWindowsSettings">
-                    <a>Intellingen</a>
+                    <a href="@Url.SettingsUrl()">Intellingen</a>
                 </li>
             </ul>
             <ul id="alertMenu" class=" list-unstyled msg_list">

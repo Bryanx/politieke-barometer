@@ -19,32 +19,18 @@ namespace BAR.UI.MVC.Controllers.api
   public class UserApiController : ApiController
   {
     /// <summary>
-    /// Creates a Subscription for logged-in user.
+    /// Toggles a Subscription for a specific user (based on wether the subscriptions exists or not).
     /// </summary>
     [HttpPost]
-    [Route("api/Subscribe/{itemId}")]
-    public IHttpActionResult CreateSubscription(int itemId)
+    [Route("api/ToggleSubscribe/{itemId}")]
+    public IHttpActionResult ToggleSubscribe(int itemId)
     {
       ISubscriptionManager SubManager = new SubscriptionManager();
       string userId = User.Identity.GetUserId();
-      SubManager.CreateSubscription(userId, itemId);
+      SubManager.ToggleSubscription(userId, itemId);
       return StatusCode(HttpStatusCode.NoContent);
     }
-
-    /// <summary>
-    /// Removes a Subscription from logged-in user.
-    /// </summary>
-    [HttpDelete]
-    [Route("api/User/Subscription/{itemId}/Delete")]
-    public IHttpActionResult DeleteSubscription(int itemId)
-    {
-      ISubscriptionManager subManager = new SubscriptionManager();
-      IEnumerable<Subscription> subs = subManager.GetSubscriptionsWithItemsForUser(User.Identity.GetUserId());
-      Subscription sub = subs.Single(s => s.SubscribedItem.ItemId == itemId);
-      subManager.RemoveSubscription(sub.SubscriptionId);
-      return StatusCode(HttpStatusCode.NoContent);
-    }
-
+    
     /// <summary>
     /// Updates password from logged-in user.
     /// </summary>
@@ -88,33 +74,21 @@ namespace BAR.UI.MVC.Controllers.api
       User user = userManager.ChangeUserAlerts(User.Identity.GetUserId(), model.AlertsViaWebsite, model.AlertsViaEmail, model.WeeklyReviewViaEmail);
       return StatusCode(HttpStatusCode.NoContent);
     }
-
+    
     /// <summary>
-    /// Deactivate account from selected user.
+    /// Toggle user account acitivity
     /// </summary>
     [HttpPost]
-    [Route("api/Admin/DeactivateAccount/{userId}")]
-    public IHttpActionResult DeactivateAccount(string userId)
+    [Route("api/Admin/ToggleAccountActivity/{userId}")]
+    public IHttpActionResult ToggleAccountActivity(string userId)
     {
       IUserManager userManager = new UserManager();
-      userManager.DeactivateUserAccount(userId, true);
+      userManager.ChangeUserAccount(userId);
       return StatusCode(HttpStatusCode.NoContent);
     }
-
+    
     /// <summary>
-    /// Activate account from selected user.
-    /// </summary>
-    [HttpPost]
-    [Route("api/Admin/ActivateAccount/{userId}")]
-    public IHttpActionResult ActivateAccount(string userId)
-    {
-      IUserManager userManager = new UserManager();
-      userManager.DeactivateUserAccount(userId, false);
-      return StatusCode(HttpStatusCode.NoContent);
-    }
-
-    /// <summary>
-    /// Change role for selected user.
+    /// Change user role.
     /// </summary>
     [HttpPost]
     [Route("api/Admin/ChangeRole/{userId}")]
