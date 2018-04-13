@@ -9,7 +9,13 @@ using System.Data.Entity;
 
 namespace BAR.DAL
 {
-
+	/// <summary>
+	/// This class is used for the persistance of
+	/// information. A single information object could be:
+	/// - A tweet
+	/// - A facebook post
+	/// - etc.
+	/// </summary>
 	public class InformationRepository : IInformationRepository
 	{
 		private BarometerDbContext ctx;
