@@ -1,8 +1,6 @@
 ﻿@using BAR.UI.MVC.Models
 @model BAR.UI.MVC.Models.RegisterViewModel
 
-@Html.Partial("Partials/_ExternalLoginsListPartial", new ExternalLoginListViewModel {ReturnUrl = ViewBag.ReturnUrl})
-
 @using (Html.BeginForm("Register", "User", FormMethod.Post)) {
     @Html.AntiForgeryToken()
     <div class="form-group">

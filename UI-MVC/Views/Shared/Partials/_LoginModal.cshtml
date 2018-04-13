@@ -17,6 +17,7 @@
                                 </a>
                                 <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
                                     <div class="panel-body">
+                                        @Html.Partial("Partials/_ExternalLoginsListPartial", new ExternalLoginListViewModel {ReturnUrl = ViewBag.ReturnUrl})
                                         @using (Html.BeginForm("Login", "User", new {ReturnUrl = ViewBag.ReturnUrl}, FormMethod.Post, new {role = "form"})) {
                                             @Html.AntiForgeryToken()
                                             <div class="form-group">
