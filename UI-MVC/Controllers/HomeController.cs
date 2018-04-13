@@ -19,8 +19,8 @@ namespace BAR.UI.MVC.Controllers
 		private const string INDEX_PAGE_TITLE = "Politieke Barometer";
 		private const string PRIVACY_PAGE_TITLE = "Privacy en veiligheid";
 		private const string FAQ_PAGE_TITLE = "Vraag en antwoord";
-		private readonly IItemManager itemMgr = new ItemManager();
-		private readonly IUserManager userManager = new UserManager();
+		private IItemManager itemManager;
+		private IUserManager userManager;
 
 		/// <summary>
 		/// Landing page for logged-in and non-logged-in users.
@@ -28,11 +28,15 @@ namespace BAR.UI.MVC.Controllers
 		[AllowAnonymous]
 		public ActionResult Index()
 		{
+			userManager = new UserManager();
+			itemManager = new ItemManager();
+
+			//Assembling the view
 			return View(new ItemViewModel()
 			{
 				PageTitle = INDEX_PAGE_TITLE,
 				User = User.Identity.IsAuthenticated ? userManager.GetUser(User.Identity.GetUserId()) : null,
-				Items = Mapper.Map<IList<Item>, IList<ItemDTO>>(itemMgr.GetAllItems().ToList())
+				Items = Mapper.Map<IList<Item>, IList<ItemDTO>>(itemManager.GetAllItems().ToList())
 			});
 		}
 		/// <summary>
@@ -41,6 +45,9 @@ namespace BAR.UI.MVC.Controllers
 		[AllowAnonymous]
 		public ActionResult Privacy()
 		{
+			userManager = new UserManager();
+
+			//Assembling the view
 			return View(new BaseViewModel()
 			{
 				PageTitle = PRIVACY_PAGE_TITLE,
@@ -54,6 +61,9 @@ namespace BAR.UI.MVC.Controllers
 		[AllowAnonymous]
 		public ActionResult Faq()
 		{
+			userManager = new UserManager();
+
+			//Assembling the view
 			return View(new BaseViewModel()
 			{
 				PageTitle = FAQ_PAGE_TITLE,

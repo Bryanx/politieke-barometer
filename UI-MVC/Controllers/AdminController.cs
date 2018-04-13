@@ -37,7 +37,7 @@ namespace BAR.UI.MVC.Controllers
 			const string PAGE_MANAGEMENT_PAGE_TITLE = "Pagina's beheren";
 			userManager = new UserManager();
 
-			//Assable the view
+			//Assembling the view
 			return View(new BaseViewModel()
 			{
 				User = userManager.GetUser(User.Identity.GetUserId()),
@@ -54,7 +54,7 @@ namespace BAR.UI.MVC.Controllers
 			itemManager = new ItemManager();
 			userManager = new UserManager();
 
-			//Assemble the view
+			//Assembling the view
 			return View(new ItemViewModels.ItemViewModel()
 			{
 				User = userManager.GetUser(User.Identity.GetUserId()),
