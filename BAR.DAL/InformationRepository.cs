@@ -9,9 +9,7 @@ using System.Data.Entity;
 
 namespace BAR.DAL
 {
-	/// <summary>
-	/// At this moment the repository works HC.
-	/// </summary>
+
 	public class InformationRepository : IInformationRepository
 	{
 		private BarometerDbContext ctx;

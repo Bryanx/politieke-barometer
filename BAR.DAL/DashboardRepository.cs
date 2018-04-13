@@ -7,6 +7,10 @@ using System.Data.Entity;
 
 namespace BAR.DAL
 {
+	/// <summary>
+	/// This class is used for the persistance of
+	/// widgets and dashboards
+	/// </summary>
 	public class DashboardRepository : IDashboardRepository
 	{
 		private BarometerDbContext ctx;
@@ -110,7 +114,6 @@ namespace BAR.DAL
 		{
 			Dashboard dasboardToAddWidget = ReadDashboardWithWidgets(dashboardId);
 			dasboardToAddWidget.Widgets.Add(widget);
-			widget.Dashboard = dasboardToAddWidget;
 			return UpdateDashboard(dasboardToAddWidget);
 		}
 
