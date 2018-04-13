@@ -6,7 +6,7 @@ using BAR.BL.Managers;
 namespace BAR.UI.MVC.Controllers.api
 {
 	/// <summary>
-	/// This controller is used for doing api-calls to get the items.
+	/// This controller is used for doing api-calls to work with items.
 	/// </summary>
 	public class ItemApiController : ApiController
 	{

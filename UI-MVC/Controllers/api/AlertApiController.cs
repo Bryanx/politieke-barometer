@@ -12,7 +12,7 @@ using Microsoft.AspNet.Identity;
 namespace BAR.UI.MVC.Controllers.api
 {
 	/// <summary>
-	/// This controller is used for doing api-calls to get the alerts.
+	/// This controller is used for doing api-calls to work with alerts.
 	/// </summary>
 	public class AlertApiController : ApiController
 	{
