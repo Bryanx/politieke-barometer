@@ -213,7 +213,6 @@
     <Compile Include="Controllers\api\ItemApiController.cs" />
     <Compile Include="Controllers\api\UserApiController.cs" />
     <Compile Include="Controllers\api\WidgetController.cs" />
-    <Compile Include="Controllers\ExtensionMethods.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\OrganisationController.cs" />
     <Compile Include="Controllers\PersonController.cs" />
