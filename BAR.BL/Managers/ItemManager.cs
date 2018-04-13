@@ -98,7 +98,7 @@ namespace BAR.BL.Managers
 		/// <summary>
 		/// Returns all (undeleted) people
 		/// </summary>
-		public IEnumerable<Item> GetAllPeople() 
+		public IEnumerable<Item> GetAllPersons() 
 		{
 			return GetAllItems().Where(item => item is Person).Where(item => item.Deleted == false);
 		}
