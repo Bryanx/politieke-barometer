@@ -17,7 +17,8 @@ namespace BAR.UI.MVC.Controllers
 	[Authorize(Roles = "Admin, SuperAdmin")]
 	public class AdminController : Controller
 	{
-		private readonly IUserManager userManager = new UserManager();
+		private IUserManager userManager;
+		private IItemManager itemManager;
 
 		/// <summary>
 		/// Dashboard page of admin.
@@ -34,6 +35,9 @@ namespace BAR.UI.MVC.Controllers
 		public ActionResult PageManagement()
 		{
 			const string PAGE_MANAGEMENT_PAGE_TITLE = "Pagina's beheren";
+			userManager = new UserManager();
+
+			//Assable the view
 			return View(new BaseViewModel()
 			{
 				User = userManager.GetUser(User.Identity.GetUserId()),
@@ -47,8 +51,10 @@ namespace BAR.UI.MVC.Controllers
 		public ActionResult ItemManagement()
 		{
 			const string ITEM_MANAGEMENT_PAGE_TITLE = "Items beheren";
-			IItemManager itemManager = new ItemManager();
+			itemManager = new ItemManager();
+			userManager = new UserManager();
 
+			//Assemble the view
 			return View(new ItemViewModels.ItemViewModel()
 			{
 				User = userManager.GetUser(User.Identity.GetUserId()),
@@ -63,6 +69,7 @@ namespace BAR.UI.MVC.Controllers
 		public ActionResult UserManagement()
 		{
 			const string USER_MANAGEMENT_PAGE_TITLE = "Gebruikers beheren";
+			userManager = new UserManager();
 
 			//Get Roles
 			IdentityUserManager identityUserManager = HttpContext.GetOwinContext().GetUserManager<IdentityUserManager>();
@@ -91,6 +98,8 @@ namespace BAR.UI.MVC.Controllers
 		/// </summary>
 		private void FillViewModels(EditUserViewModel vm)
 		{
+			userManager = new UserManager();
+
 			vm.AdminRoles = userManager.GetAllRoles().Select(x => new SelectListItem
 			{
 				Value = x.Id,
