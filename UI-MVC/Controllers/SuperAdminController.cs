@@ -65,7 +65,7 @@ namespace BAR.UI.MVC.Controllers
         if (response.IsSuccessStatusCode)
         {
           var json = response.Content.ReadAsStringAsync().Result;
-          IDataManager dataManager = new DataManager(new UnitOfWorkManager());
+          IDataManager dataManager = new DataManager();
           dataManager.SynchronizeData(json);
         }
         else throw new Exception("Error: " + response.StatusCode);

@@ -201,13 +201,12 @@ namespace BAR.BL.Managers
         informationList.Add(information);
       }
       dataRepo.CreateInformations(informationList);
-      uowManager.Save();
       return true;
     }
 
     private Item GeneratePeople(string personFullName)
     {
-      IItemManager itemManager = new ItemManager(uowManager);
+      IItemManager itemManager = new ItemManager();
       Item person = itemManager.GetPerson(personFullName);
 
       if (person == null)
