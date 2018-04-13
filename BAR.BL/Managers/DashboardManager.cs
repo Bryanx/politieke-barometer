@@ -41,7 +41,7 @@ namespace BAR.BL.Managers
 				RowSpan = rowspan,
 				ColumnSpan = colspan,
 			};
-			//repo autmaticly links widget to dashboard in
+			//repo autmaticly links widget to dashboard
 			dashboardRepo.CreateWidget(widget, dashboardId);
 
 			return widget;
