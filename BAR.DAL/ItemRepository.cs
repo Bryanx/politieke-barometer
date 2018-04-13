@@ -10,7 +10,11 @@ using BAR.BL.Domain.Data;
 namespace BAR.DAL
 {
 	/// <summary>
-	/// At this moment the repository works HC.
+	/// This class is used for the persistance of
+	/// items. An item object could be:
+	/// - A person
+	/// - An organisation
+	/// - A theme
 	/// </summary>
 	public class ItemRepository : IItemRepository
 	{
