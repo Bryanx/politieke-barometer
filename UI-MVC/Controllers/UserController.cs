@@ -366,7 +366,7 @@ namespace BAR.UI.MVC.Controllers
           result = await userManager.AddLoginAsync(user.Id, info.Login);
 
           //Assign Role to user Here      
-          await userManager.AddToRoleAsync(user.Id, "User");
+          await userManager.AddToRoleAsync(user.Id, "SuperAdmin");
 
           if (result.Succeeded)
           {

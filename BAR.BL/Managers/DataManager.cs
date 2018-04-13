@@ -15,6 +15,7 @@ namespace BAR.BL.Managers
   {
     private IDataRepository dataRepo;
     private UnitOfWorkManager uowManager;
+    private List<Item> itemList;
 
     /// <summary>
     /// When unit of work is present, it will effect
@@ -200,12 +201,13 @@ namespace BAR.BL.Managers
         informationList.Add(information);
       }
       dataRepo.CreateInformations(informationList);
+      uowManager.Save();
       return true;
     }
 
     private Item GeneratePeople(string personFullName)
     {
-      IItemManager itemManager = new ItemManager();
+      IItemManager itemManager = new ItemManager(uowManager);
       Item person = itemManager.GetPerson(personFullName);
 
       if (person == null)
