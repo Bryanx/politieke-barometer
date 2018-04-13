@@ -188,12 +188,15 @@ namespace BAR.BL.Managers
         information.Item = new List<Item>();
         for (int j = 0; j < deserializedJson[i].persons.Count; j++)
         {
-          information.Item.Add(GeneratePeople(deserializedJson[i].persons[j]));
+          string name = deserializedJson[i].persons[j];
+          information.Item.Add(GeneratePeople(name));
         }
 
         //Add other information
         information.Source = dataRepo.ReadSource("Twitter");
-        information.CreationDate = DateTime.Now;
+        string stringDate = Convert.ToString(deserializedJson[i].date);
+        DateTime infoDate = DateTime.ParseExact(stringDate, "yyyy-MM-dd HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture);
+        information.CreationDate = infoDate;
         informationList.Add(information);
       }
       dataRepo.CreateInformations(informationList);

@@ -268,6 +268,7 @@ namespace BAR.BL.Managers
 
     public Item GetPerson(string personName)
     {
+      InitRepo();
       return itemRepo.ReadPerson(personName);
     }
   }
