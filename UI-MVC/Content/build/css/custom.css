@@ -52,7 +52,7 @@ body {
 .font_22 {
   font-size: 22px !important; }
 
-.person-image {
+.person-image, .person-image-top {
   background-image: url("../images/user.png");
   background-position: center;
   background-repeat: no-repeat;
@@ -74,6 +74,13 @@ body {
   border-radius: 5px;
   margin: 20px 0px !important; }
 
+.table .user-profile img {
+  width: 35px;
+  height: 35px;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  border-radius: 50%;
+  margin-right: 10px; }
 .table > thead {
   margin: 0 -20px;
   background-image: -webkit-gradient(linear, 0% 0%, 100% 100%, color-stop(0, #0f8ec4), #278e87);
@@ -933,7 +940,7 @@ a:hover, a:focus {
 .nav > li > a {
   position: relative;
   display: block;
-  padding: 17px 17px 18px; }
+  padding: 20px 17px 19px; }
 
 .breadcrumb {
   position: relative;
@@ -1971,13 +1978,6 @@ li.user-profile {
   justify-content: flex-end; }
   li.user-profile > ul.dropdown-menu {
     width: 300px !important; }
-
-.user-profile img {
-  width: 35px;
-  -webkit-border-radius: 50%;
-  -moz-border-radius: 50%;
-  border-radius: 50%;
-  margin-right: 10px; }
 
 ul.top_profiles {
   height: 330px;
