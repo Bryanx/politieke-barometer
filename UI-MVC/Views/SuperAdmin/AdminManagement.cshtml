@@ -24,7 +24,7 @@
                 }).fail(() => {/* ok */ })
                 .done(function () {
                     $this.toggleClass("btn-danger btn-success")
-                        .toggleText("Herstellen", "Verwijderen")
+                        .toggleText(@Resources.Recover, @Resources.Remove)
                         .parent().parent().toggleClass("greyed-out");
                 });
         });
