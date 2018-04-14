@@ -126,13 +126,28 @@
   <data name="CreationDate" xml:space="preserve">
     <value />
   </data>
+  <data name="DateOfBirth" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Email" xml:space="preserve">
+    <value />
+  </data>
   <data name="EmailRequired" xml:space="preserve">
     <value>Email obligatoire.</value>
+  </data>
+  <data name="Firstname" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Gender" xml:space="preserve">
+    <value />
   </data>
   <data name="HomepageHeaderTitle" xml:space="preserve">
     <value>Regarde c'est qui que être trending</value>
   </data>
   <data name="ItemManagement" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Lastname" xml:space="preserve">
     <value />
   </data>
   <data name="Logout" xml:space="preserve">
@@ -158,6 +173,9 @@
   </data>
   <data name="Politicians" xml:space="preserve">
     <value>Politiciens</value>
+  </data>
+  <data name="ProfilePicture" xml:space="preserve">
+    <value />
   </data>
   <data name="SearchbarPlaceholder" xml:space="preserve">
     <value>Recherche de politiciens, fêtes ou sujets</value>

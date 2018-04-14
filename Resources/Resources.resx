@@ -120,14 +120,41 @@
   <data name="AdminManagement" xml:space="preserve">
     <value>Admin management</value>
   </data>
+  <data name="AlertsViaEmail" xml:space="preserve">
+    <value>Alerts by email</value>
+  </data>
+  <data name="AlertsViaWebsite" xml:space="preserve">
+    <value>Alerts on website</value>
+  </data>
   <data name="Category" xml:space="preserve">
     <value>Category</value>
+  </data>
+  <data name="City" xml:space="preserve">
+    <value>City</value>
+  </data>
+  <data name="ConfirmPassword" xml:space="preserve">
+    <value>Confirm password</value>
   </data>
   <data name="CreationDate" xml:space="preserve">
     <value>Creation date</value>
   </data>
+  <data name="CurrentPassword" xml:space="preserve">
+    <value>Current password</value>
+  </data>
+  <data name="DateOfBirth" xml:space="preserve">
+    <value>Date of birth</value>
+  </data>
+  <data name="Email" xml:space="preserve">
+    <value>Email</value>
+  </data>
   <data name="EmailRequired" xml:space="preserve">
     <value>Email is required.</value>
+  </data>
+  <data name="Firstname" xml:space="preserve">
+    <value>First name</value>
+  </data>
+  <data name="Gender" xml:space="preserve">
+    <value>Gender</value>
   </data>
   <data name="HomepageHeaderTitle" xml:space="preserve">
     <value>See which politicians are trending</value>
@@ -135,11 +162,17 @@
   <data name="ItemManagement" xml:space="preserve">
     <value>Item management</value>
   </data>
+  <data name="Lastname" xml:space="preserve">
+    <value>Last name</value>
+  </data>
   <data name="Logout" xml:space="preserve">
     <value>Logout</value>
   </data>
   <data name="Name" xml:space="preserve">
     <value>Name</value>
+  </data>
+  <data name="NewPassword" xml:space="preserve">
+    <value>New password</value>
   </data>
   <data name="NumberOfFollowers" xml:space="preserve">
     <value>Followers</value>
@@ -156,8 +189,14 @@
   <data name="Parties" xml:space="preserve">
     <value>Parties</value>
   </data>
+  <data name="Password" xml:space="preserve">
+    <value>Password</value>
+  </data>
   <data name="Politicians" xml:space="preserve">
     <value>Politicians</value>
+  </data>
+  <data name="ProfilePicture" xml:space="preserve">
+    <value>Profile picture</value>
   </data>
   <data name="SearchbarPlaceholder" xml:space="preserve">
     <value>Search for politicians, parties or topics.</value>
@@ -176,5 +215,8 @@
   </data>
   <data name="UserManagement" xml:space="preserve">
     <value>User management</value>
+  </data>
+  <data name="WeeklyReviewViaEmail" xml:space="preserve">
+    <value>Weekly Review by email</value>
   </data>
 </root>

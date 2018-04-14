@@ -126,14 +126,29 @@
   <data name="CreationDate" xml:space="preserve">
     <value>Aanmaak datum</value>
   </data>
+  <data name="DateOfBirth" xml:space="preserve">
+    <value>Geboortedatum</value>
+  </data>
+  <data name="Email" xml:space="preserve">
+    <value>E-mailadres</value>
+  </data>
   <data name="EmailRequired" xml:space="preserve">
     <value>E-mailadres is verplicht.</value>
+  </data>
+  <data name="Firstname" xml:space="preserve">
+    <value>Voornaam</value>
+  </data>
+  <data name="Gender" xml:space="preserve">
+    <value>Geslacht</value>
   </data>
   <data name="HomepageHeaderTitle" xml:space="preserve">
     <value>Bekijk welke politici trending zijn</value>
   </data>
   <data name="ItemManagement" xml:space="preserve">
     <value>Items beheren</value>
+  </data>
+  <data name="Lastname" xml:space="preserve">
+    <value>Achternaam</value>
   </data>
   <data name="Logout" xml:space="preserve">
     <value>Uitloggen</value>
@@ -158,6 +173,9 @@
   </data>
   <data name="Politicians" xml:space="preserve">
     <value>Politici</value>
+  </data>
+  <data name="ProfilePicture" xml:space="preserve">
+    <value>Profiel foto</value>
   </data>
   <data name="SearchbarPlaceholder" xml:space="preserve">
     <value>Zoeken naar politici, partijen of thema's</value>
