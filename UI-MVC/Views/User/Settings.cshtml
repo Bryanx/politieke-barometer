@@ -8,7 +8,7 @@
     <div class="col-md-8 col-xs-12">
         <div class="x_panel">
             <div class="x_title">
-                <h2>Gebruiker instellingen</h2>
+                <h2>@Resources.User @Resources.Settings.ToLower()</h2>
                 <div class="clearfix"></div>
             </div>
             <div class="x_content">
@@ -19,7 +19,7 @@
                             @Html.DisplayNameFor(m => m.Firstname) <span class="required">*</span>
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                            @Html.TextBoxFor(model => model.Firstname, "", new {@class = "form-control col-md-7 col-xs-12"})
+                            @Html.TextBoxFor(model => model.Firstname, "", new {@class = "form-control col-md-7 col-xs-12", placeholder=@Html.DisplayNameFor(m => m.Firstname)})
                         </div>
                     </div>
                     <div class="form-group">
@@ -27,7 +27,7 @@
                             @Html.DisplayNameFor(m => m.Lastname)
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                            @Html.TextBoxFor(model => model.Lastname, "", new {@class = "form-control col-md-7 col-xs-12"})
+                            @Html.TextBoxFor(model => model.Lastname, "", new {@class = "form-control col-md-7 col-xs-12", placeholder = @Html.DisplayNameFor(m => m.Lastname) })
                         </div>
                     </div>
                     <div class="form-group">
@@ -36,17 +36,17 @@
                             <div id="gender" class="btn-group" data-toggle="buttons">
                                 @if (Model.Gender == Gender.MAN) {
                                     <label class="btn btn-default active">
-                                        @Html.RadioButtonFor(model => model.Gender, Gender.MAN) Man
+                                        @Html.RadioButtonFor(model => model.Gender, Gender.MAN) @Resources.Man
                                     </label>
                                     <label class="btn btn-default">
-                                        @Html.RadioButtonFor(model => model.Gender, Gender.WOMAN) Vrouw
+                                        @Html.RadioButtonFor(model => model.Gender, Gender.WOMAN) @Resources.Woman
                                     </label>
                                 } else {
                                     <label class="btn btn-default">
-                                        @Html.RadioButtonFor(model => model.Gender, Gender.MAN) Man
+                                        @Html.RadioButtonFor(model => model.Gender, Gender.MAN) @Resources.Man
                                     </label>
                                     <label class="btn btn-default active">
-                                        @Html.RadioButtonFor(model => model.Gender, Gender.WOMAN) Vrouw
+                                        @Html.RadioButtonFor(model => model.Gender, Gender.WOMAN) @Resources.Woman
                                     </label>
                                 }
                             </div>
@@ -66,12 +66,12 @@
                             @Html.DisplayNameFor(m => m.SelectedAreaId)
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                            @Html.DropDownListFor(model => model.SelectedAreaId, Model.Areas, "Selecteer je woonplaats", new {@class = "form-control col-md-7 col-xs-12"})
+                            @Html.DropDownListFor(model => model.SelectedAreaId, Model.Areas, @Resources.SelectYourCity, new {@class = "form-control col-md-7 col-xs-12"})
                         </div>
                     </div>
                     <div class="form-group">
                         <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
-                            <button type="submit" class="btn btn-dark">Opslaan</button>
+                            <button type="submit" class="btn btn-dark">@Resources.Save</button>
                             <div id="messageSettings" style="display: inline"></div>
                         </div>
                     </div>
@@ -84,7 +84,7 @@
     <div class="col-md-4 col-xs-12">
         <div class="x_panel">
             <div class="x_title">
-                <h2>Profielfoto</h2>
+                <h2>@Resources.ProfilePicture</h2>
                 <div class="clearfix"></div>
             </div>
             <div class="x_content">
@@ -104,7 +104,7 @@
                     </div>
                     <div class="form-group">
                         <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
-                            <button type="submit" class="btn btn-dark">Opslaan</button>
+                            <button type="submit" class="btn btn-dark">@Resources.Save</button>
                             <div style="display: inline"></div>
                         </div>
                     </div>
@@ -119,7 +119,7 @@
     <div class="col-md-6 col-xs-12">
         <div class="x_panel">
             <div class="x_title">
-                <h2>Alert instellingen</h2>
+                <h2>Alert @Resources.Settings.ToLower()</h2>
                 <div class="clearfix"></div>
             </div>
             <div class="x_content">
@@ -132,19 +132,19 @@
                                 @if (Model.AlertsViaWebsite == true)
                                 {
                                 <label class="btn btn-default active">
-                                    @Html.RadioButtonFor(model => model.AlertsViaWebsite, true) Ja
+                                    @Html.RadioButtonFor(model => model.AlertsViaWebsite, true) @Resources.Yes
                                 </label>
                                 <label class="btn btn-default">
-                                    @Html.RadioButtonFor(model => model.AlertsViaWebsite, false) Nee
+                                    @Html.RadioButtonFor(model => model.AlertsViaWebsite, false) @Resources.No
                                 </label>
                                 }
                                 else
                                 {
                                 <label class="btn btn-default">
-                                    @Html.RadioButtonFor(model => model.AlertsViaWebsite, true) Ja
+                                    @Html.RadioButtonFor(model => model.AlertsViaWebsite, true) @Resources.Yes
                                 </label>
                                 <label class="btn btn-default active">
-                                    @Html.RadioButtonFor(model => model.AlertsViaWebsite, false) Nee
+                                    @Html.RadioButtonFor(model => model.AlertsViaWebsite, false) @Resources.No
                                 </label>
                                 }
                                 </div>
@@ -157,19 +157,19 @@
                                 @if (Model.AlertsViaEmail)
                                 {
                                 <label class="btn btn-default active">
-                                    @Html.RadioButtonFor(model => model.AlertsViaEmail, true) Ja
+                                    @Html.RadioButtonFor(model => model.AlertsViaEmail, true) @Resources.Yes
                                 </label>
                                 <label class="btn btn-default">
-                                    @Html.RadioButtonFor(model => model.AlertsViaEmail, false) Nee
+                                    @Html.RadioButtonFor(model => model.AlertsViaEmail, false) @Resources.No
                                 </label>
                                 }
                                 else
                                 {
                                 <label class="btn btn-default">
-                                    @Html.RadioButtonFor(model => model.AlertsViaEmail, true) Ja
+                                    @Html.RadioButtonFor(model => model.AlertsViaEmail, true) @Resources.Yes
                                 </label>
                                 <label class="btn btn-default active">
-                                    @Html.RadioButtonFor(model => model.AlertsViaEmail, false) Nee
+                                    @Html.RadioButtonFor(model => model.AlertsViaEmail, false) @Resources.No
                                 </label>
                                 }
                             </div>
@@ -182,19 +182,19 @@
                                 @if (Model.WeeklyReviewViaEmail)
                                 {
                                 <label class="btn btn-default active">
-                                    @Html.RadioButtonFor(model => model.WeeklyReviewViaEmail, true) Ja
+                                    @Html.RadioButtonFor(model => model.WeeklyReviewViaEmail, true) @Resources.Yes
                                 </label>
                                 <label class="btn btn-default">
-                                    @Html.RadioButtonFor(model => model.WeeklyReviewViaEmail, false) Nee
+                                    @Html.RadioButtonFor(model => model.WeeklyReviewViaEmail, false) @Resources.No
                                 </label>
                                 }
                                 else
                                 {
                                 <label class="btn btn-default">
-                                    @Html.RadioButtonFor(model => model.WeeklyReviewViaEmail, true) Ja
+                                    @Html.RadioButtonFor(model => model.WeeklyReviewViaEmail, true) @Resources.Yes
                                 </label>
                                 <label class="btn btn-default active">
-                                    @Html.RadioButtonFor(model => model.WeeklyReviewViaEmail, false) Nee
+                                    @Html.RadioButtonFor(model => model.WeeklyReviewViaEmail, false) @Resources.No
                                 </label>
                                 }
                             </div>
@@ -202,7 +202,7 @@
                     </div>
                     <div class="form-group">
                         <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-6">
-                            <button type="submit" class="btn btn-dark">Opslaan</button>
+                            <button type="submit" class="btn btn-dark">@Resources.Save</button>
                             <div id="alertSettingsMessage" style="display: inline"></div>
                         </div>
                     </div>
@@ -215,7 +215,7 @@
     <div class="col-md-6 col-xs-12">
         <div class="x_panel">
             <div class="x_title">
-                <h2>Account instellingen</h2>
+                <h2>Account @Resources.Settings</h2>
                 <div class="clearfix"></div>
             </div>
             <div class="x_content">
@@ -241,7 +241,7 @@
                     </div>
                     <div class="form-group">
                         <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
-                            <button type="submit" class="btn btn-dark">Opslaan</button>
+                            <button type="submit" class="btn btn-dark">@Resources.Save</button>
                             <div id="accountSettingsMessage" style="display: inline"></div>
                         </div>
                     </div>
@@ -256,7 +256,7 @@
 <div class="col-md-6 col-xs-12">
     <div class="x_panel">
         <div class="x_title">
-            <h2>Account deactiveren</h2>
+            <h2>@Resources.DeleteAccount</h2>
             <div class="clearfix"></div>
         </div>
         <div class="x_content">
@@ -264,10 +264,10 @@
             <form method="post" action="/api/User" id="removeAccountForm" class="form-horizontal">
                 <div class="form-group">
                     <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
-                        Let op. Bij het verwijderen van uw account worden al uw instellingen, grafieken en widgets verwijderd.
+                        @Resources.DeleteAccountWarning
                         <br/>
                         <br/>
-                        <button type="submit" class="btn btn-danger">Account verwijderen</button>
+                        <button type="submit" class="btn btn-danger">@Resources.DeleteAccount</button>
                         <div id="removeAccountMessage" style="display: inline"></div>
                     </div>
                 </div>
@@ -292,13 +292,14 @@
         
         //Ajax call in generic function so every form can use the same code.
         function submitForm($this, event, message) {
+            $this.validate();
                 $.ajax({
                     type: $this.attr('method'),
                     url: $this.attr('action'),
                     data: $this.serialize(),
                     succes: message
                         .addClass('green')
-                        .html("Saved.")
+                        .html("@Resources.Saved")
                         .fadeOut(1000,
                             function() {
                                 $(this)
@@ -308,7 +309,7 @@
                             })
                 }).fail(() => message
                     .addClass('red')
-                    .html("Mislukt.")
+                    .html("@Resources.Failed")
                     .fadeOut(1000,
                         function() {
                             $(this)

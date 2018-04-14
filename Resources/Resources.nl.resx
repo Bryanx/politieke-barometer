@@ -129,6 +129,9 @@
   <data name="DateOfBirth" xml:space="preserve">
     <value>Geboortedatum</value>
   </data>
+  <data name="DeleteAccountWarning" xml:space="preserve">
+    <value>Let op. Bij het verwijderen van uw account worden al uw instellingen, grafieken en widgets verwijderd.</value>
+  </data>
   <data name="Email" xml:space="preserve">
     <value>E-mailadres</value>
   </data>

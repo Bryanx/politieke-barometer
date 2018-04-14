@@ -884,7 +884,7 @@ a:hover, a:focus {
     margin-top: 0; }
 
 .nav .culture-form > form {
-  position: absolute;
+  position: fixed;
   bottom: 0;
   width: 100px; }
   .nav .culture-form > form > div.control-group {

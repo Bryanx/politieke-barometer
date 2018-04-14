@@ -144,11 +144,20 @@
   <data name="DateOfBirth" xml:space="preserve">
     <value>Date of birth</value>
   </data>
+  <data name="DeleteAccount" xml:space="preserve">
+    <value>Delete account</value>
+  </data>
+  <data name="DeleteAccountWarning" xml:space="preserve">
+    <value>Warning. When deleting your account al your settings, graphs and widgets will be removed.</value>
+  </data>
   <data name="Email" xml:space="preserve">
     <value>Email</value>
   </data>
   <data name="EmailRequired" xml:space="preserve">
     <value>Email is required.</value>
+  </data>
+  <data name="Failed" xml:space="preserve">
+    <value>Failed</value>
   </data>
   <data name="Firstname" xml:space="preserve">
     <value>First name</value>
@@ -168,11 +177,17 @@
   <data name="Logout" xml:space="preserve">
     <value>Logout</value>
   </data>
+  <data name="Man" xml:space="preserve">
+    <value>Man</value>
+  </data>
   <data name="Name" xml:space="preserve">
     <value>Name</value>
   </data>
   <data name="NewPassword" xml:space="preserve">
     <value>New password</value>
+  </data>
+  <data name="No" xml:space="preserve">
+    <value>No</value>
   </data>
   <data name="NumberOfFollowers" xml:space="preserve">
     <value>Followers</value>
@@ -198,8 +213,17 @@
   <data name="ProfilePicture" xml:space="preserve">
     <value>Profile picture</value>
   </data>
+  <data name="Save" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="Saved" xml:space="preserve">
+    <value>Saved</value>
+  </data>
   <data name="SearchbarPlaceholder" xml:space="preserve">
     <value>Search for politicians, parties or topics.</value>
+  </data>
+  <data name="SelectYourCity" xml:space="preserve">
+    <value>Select your city.</value>
   </data>
   <data name="Settings" xml:space="preserve">
     <value>Settings</value>
@@ -213,10 +237,19 @@
   <data name="Topics" xml:space="preserve">
     <value>Topics</value>
   </data>
+  <data name="User" xml:space="preserve">
+    <value>User</value>
+  </data>
   <data name="UserManagement" xml:space="preserve">
     <value>User management</value>
   </data>
   <data name="WeeklyReviewViaEmail" xml:space="preserve">
     <value>Weekly Review by email</value>
+  </data>
+  <data name="Woman" xml:space="preserve">
+    <value>Woman</value>
+  </data>
+  <data name="Yes" xml:space="preserve">
+    <value>Yes</value>
   </data>
 </root>

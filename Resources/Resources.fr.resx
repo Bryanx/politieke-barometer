@@ -133,7 +133,7 @@
     <value />
   </data>
   <data name="EmailRequired" xml:space="preserve">
-    <value>Email obligatoire.</value>
+    <value />
   </data>
   <data name="Firstname" xml:space="preserve">
     <value />
@@ -142,7 +142,7 @@
     <value />
   </data>
   <data name="HomepageHeaderTitle" xml:space="preserve">
-    <value>Regarde c'est qui que être trending</value>
+    <value />
   </data>
   <data name="ItemManagement" xml:space="preserve">
     <value />
@@ -163,22 +163,22 @@
     <value />
   </data>
   <data name="On" xml:space="preserve">
-    <value>sur</value>
+    <value />
   </data>
   <data name="PageManagement" xml:space="preserve">
     <value />
   </data>
   <data name="Parties" xml:space="preserve">
-    <value>Fêtes</value>
+    <value />
   </data>
   <data name="Politicians" xml:space="preserve">
-    <value>Politiciens</value>
+    <value />
   </data>
   <data name="ProfilePicture" xml:space="preserve">
     <value />
   </data>
   <data name="SearchbarPlaceholder" xml:space="preserve">
-    <value>Recherche de politiciens, fêtes ou sujets</value>
+    <value />
   </data>
   <data name="Settings" xml:space="preserve">
     <value />
@@ -190,7 +190,7 @@
     <value />
   </data>
   <data name="Topics" xml:space="preserve">
-    <value>Sujets</value>
+    <value />
   </data>
   <data name="UserManagement" xml:space="preserve">
     <value />
