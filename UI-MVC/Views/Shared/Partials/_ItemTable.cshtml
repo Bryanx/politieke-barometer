@@ -17,25 +17,25 @@
     <thead>
     <tr>
         <th>
-            @Html.DisplayNameFor(m => m.Items.First().Name)
+            @Resources.Name
         </th>
         <th>
-            @Html.DisplayNameFor(m => m.Items.First().ItemType)
+            @Resources.Category
         </th>
         <th>
-            @Html.DisplayNameFor(m => m.Items.First().NumberOfMentions)
+            @Resources.Mentions
         </th>
         <th>
-            Positief
+            @Resources.Positive
         </th>
         <th>
-            Negatief
+            @Resources.Negative
         </th>
-        <th title="Berekend op basis van het aantal tweets">
-            Trending
+        <th title=@Resources.CalculatedByAmountOfTweets>
+            @Resources.Trending
         </th>
         <th>
-            @Html.DisplayNameFor(m => m.Items.First().CreationDate)
+            @Resources.CreationDate
         </th>
         @if (User.Identity.IsAuthenticated) {
             <th>
@@ -71,9 +71,9 @@
             </td>
             <td>
                 @if (item.Deleted) {
-                    <a class="removeItem btn btn-dark btn-xs" data-item-id="@item.ItemId" title="Item herstellen">Herstellen</a>
+                    <a class="removeItem btn btn-dark btn-xs" data-item-id="@item.ItemId" title=@Resources.RecoverItem>@Resources.Recover</a>
                 } else {
-                    <a class="removeItem btn btn-danger btn-xs" data-item-id="@item.ItemId" title="Item verwijderen">Verwijderen</a>
+                    <a class="removeItem btn btn-danger btn-xs" data-item-id="@item.ItemId" title=@Resources.RemoveItem>@Resources.Remove</a>
                 }
             </td>
         </tr>

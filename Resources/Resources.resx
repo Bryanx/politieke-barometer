@@ -120,8 +120,14 @@
   <data name="Account" xml:space="preserve">
     <value>Account</value>
   </data>
+  <data name="Admin" xml:space="preserve">
+    <value>Admin</value>
+  </data>
   <data name="AdminManagement" xml:space="preserve">
     <value>Admin management</value>
+  </data>
+  <data name="Alerts" xml:space="preserve">
+    <value>Alerts</value>
   </data>
   <data name="AlertsViaEmail" xml:space="preserve">
     <value>Alerts by email</value>
@@ -129,11 +135,17 @@
   <data name="AlertsViaWebsite" xml:space="preserve">
     <value>Alerts on website</value>
   </data>
+  <data name="CalculatedByAmountOfTweets" xml:space="preserve">
+    <value>Calculated via the amount of tweets.</value>
+  </data>
   <data name="CannotRemoveItem" xml:space="preserve">
     <value>Cannot remove item.</value>
   </data>
   <data name="Category" xml:space="preserve">
     <value>Category</value>
+  </data>
+  <data name="ChangeRole" xml:space="preserve">
+    <value>Change role</value>
   </data>
   <data name="City" xml:space="preserve">
     <value>City</value>
@@ -168,11 +180,17 @@
   <data name="DateOfBirth" xml:space="preserve">
     <value>Date of birth</value>
   </data>
+  <data name="Delete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
   <data name="DeleteAccount" xml:space="preserve">
     <value>Delete account</value>
   </data>
   <data name="DeleteAccountWarning" xml:space="preserve">
     <value>Warning. When deleting your account al your settings, graphs and widgets will be removed.</value>
+  </data>
+  <data name="DeleteUser" xml:space="preserve">
+    <value>Delete user.</value>
   </data>
   <data name="Email" xml:space="preserve">
     <value>Email</value>
@@ -189,6 +207,9 @@
   <data name="EnterEmail" xml:space="preserve">
     <value>Enter your email.</value>
   </data>
+  <data name="ExternalLogin" xml:space="preserve">
+    <value>External login</value>
+  </data>
   <data name="Failed" xml:space="preserve">
     <value>Failed</value>
   </data>
@@ -197,6 +218,9 @@
   </data>
   <data name="Firstname" xml:space="preserve">
     <value>First name</value>
+  </data>
+  <data name="FollowThisPerson" xml:space="preserve">
+    <value>Follow this person.</value>
   </data>
   <data name="ForgotPasswordQuestion" xml:space="preserve">
     <value>Forgot your password?</value>
@@ -209,6 +233,9 @@
   </data>
   <data name="HomepageHeaderTitle" xml:space="preserve">
     <value>See which politicians are trending</value>
+  </data>
+  <data name="IAgreeWithTheTermsAndCondition" xml:space="preserve">
+    <value>I agree with the terms and conditions.</value>
   </data>
   <data name="ImportContent" xml:space="preserve">
     <value>Import content</value>
@@ -231,6 +258,12 @@
   <data name="LoginFailed" xml:space="preserve">
     <value>Login failed</value>
   </data>
+  <data name="LoginUsingYour" xml:space="preserve">
+    <value>Login using your</value>
+  </data>
+  <data name="LoginWith" xml:space="preserve">
+    <value>Login with</value>
+  </data>
   <data name="LoginWithAccount" xml:space="preserve">
     <value>Login with your account.</value>
   </data>
@@ -240,11 +273,20 @@
   <data name="Man" xml:space="preserve">
     <value>Man</value>
   </data>
+  <data name="Mentions" xml:space="preserve">
+    <value>Mentions</value>
+  </data>
   <data name="MoreInfo" xml:space="preserve">
     <value>More info</value>
   </data>
+  <data name="NA" xml:space="preserve">
+    <value>N/A</value>
+  </data>
   <data name="Name" xml:space="preserve">
     <value>Name</value>
+  </data>
+  <data name="Negative" xml:space="preserve">
+    <value>Negative</value>
   </data>
   <data name="NewPassword" xml:space="preserve">
     <value>New password</value>
@@ -264,6 +306,9 @@
   <data name="On" xml:space="preserve">
     <value>on</value>
   </data>
+  <data name="Or" xml:space="preserve">
+    <value>Or</value>
+  </data>
   <data name="PageManagement" xml:space="preserve">
     <value>Page management</value>
   </data>
@@ -282,6 +327,9 @@
   <data name="Politicians" xml:space="preserve">
     <value>Politicians</value>
   </data>
+  <data name="Positive" xml:space="preserve">
+    <value>Positive</value>
+  </data>
   <data name="Privacy" xml:space="preserve">
     <value>Privacy</value>
   </data>
@@ -294,14 +342,26 @@
   <data name="Recover" xml:space="preserve">
     <value>Recover</value>
   </data>
+  <data name="RecoverDeletedUser" xml:space="preserve">
+    <value>Recover deleted user.</value>
+  </data>
+  <data name="RecoverItem" xml:space="preserve">
+    <value>Recover item.</value>
+  </data>
   <data name="Remove" xml:space="preserve">
     <value>Remove</value>
+  </data>
+  <data name="RemoveItem" xml:space="preserve">
+    <value>Remove item.</value>
   </data>
   <data name="Reset" xml:space="preserve">
     <value>Reset</value>
   </data>
   <data name="ResetPassword" xml:space="preserve">
     <value>Reset password</value>
+  </data>
+  <data name="Role" xml:space="preserve">
+    <value>Role</value>
   </data>
   <data name="Save" xml:space="preserve">
     <value>Save</value>
@@ -330,11 +390,20 @@
   <data name="SignupForNewAccount" xml:space="preserve">
     <value>Signup for a new account.</value>
   </data>
+  <data name="SignupToFollow" xml:space="preserve">
+    <value>Signup to follow</value>
+  </data>
   <data name="SourceManagement" xml:space="preserve">
     <value>Source management</value>
   </data>
+  <data name="StayUpToDate" xml:space="preserve">
+    <value>Stay up-to-date.</value>
+  </data>
   <data name="SubPlatformManagement" xml:space="preserve">
     <value>Subplatform management</value>
+  </data>
+  <data name="Subscribe" xml:space="preserve">
+    <value>Subscribe</value>
   </data>
   <data name="SuccesfullyLoggedInWith" xml:space="preserve">
     <value>You have successfully logged in with</value>
@@ -345,11 +414,23 @@
   <data name="Topics" xml:space="preserve">
     <value>Topics</value>
   </data>
+  <data name="Trending" xml:space="preserve">
+    <value>Trending</value>
+  </data>
+  <data name="Unknown" xml:space="preserve">
+    <value>Unknown</value>
+  </data>
+  <data name="Unsubscribe" xml:space="preserve">
+    <value>Unsubscribe</value>
+  </data>
   <data name="User" xml:space="preserve">
     <value>User</value>
   </data>
   <data name="UserManagement" xml:space="preserve">
     <value>User management</value>
+  </data>
+  <data name="WeeklyReview" xml:space="preserve">
+    <value>Weekly review</value>
   </data>
   <data name="WeeklyReviewViaEmail" xml:space="preserve">
     <value>Weekly Review by email</value>

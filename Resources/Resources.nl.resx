@@ -189,6 +189,9 @@
   <data name="SourceManagement" xml:space="preserve">
     <value>Bronnen beheren</value>
   </data>
+  <data name="StayUpToDate" xml:space="preserve">
+    <value>Blijf op de hoogte.</value>
+  </data>
   <data name="SubPlatformManagement" xml:space="preserve">
     <value>Deelplatformen beheren</value>
   </data>
