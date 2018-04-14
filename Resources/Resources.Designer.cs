@@ -88,6 +88,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cannot remove item..
+        /// </summary>
+        public static string CannotRemoveItem {
+            get {
+                return ResourceManager.GetString("CannotRemoveItem", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Category.
         /// </summary>
         public static string Category {
@@ -246,6 +255,15 @@ namespace Resources {
         public static string HomepageHeaderTitle {
             get {
                 return ResourceManager.GetString("HomepageHeaderTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Import content.
+        /// </summary>
+        public static string ImportContent {
+            get {
+                return ResourceManager.GetString("ImportContent", resourceCulture);
             }
         }
         
@@ -417,6 +435,24 @@ namespace Resources {
         public static string QuestionAndAnswer {
             get {
                 return ResourceManager.GetString("QuestionAndAnswer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Recover.
+        /// </summary>
+        public static string Recover {
+            get {
+                return ResourceManager.GetString("Recover", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remove.
+        /// </summary>
+        public static string Remove {
+            get {
+                return ResourceManager.GetString("Remove", resourceCulture);
             }
         }
         

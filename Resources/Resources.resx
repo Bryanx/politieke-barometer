@@ -126,6 +126,9 @@
   <data name="AlertsViaWebsite" xml:space="preserve">
     <value>Alerts on website</value>
   </data>
+  <data name="CannotRemoveItem" xml:space="preserve">
+    <value>Cannot remove item.</value>
+  </data>
   <data name="Category" xml:space="preserve">
     <value>Category</value>
   </data>
@@ -179,6 +182,9 @@
   </data>
   <data name="HomepageHeaderTitle" xml:space="preserve">
     <value>See which politicians are trending</value>
+  </data>
+  <data name="ImportContent" xml:space="preserve">
+    <value>Import content</value>
   </data>
   <data name="ItemManagement" xml:space="preserve">
     <value>Item management</value>
@@ -236,6 +242,12 @@
   </data>
   <data name="QuestionAndAnswer" xml:space="preserve">
     <value>Question and answer</value>
+  </data>
+  <data name="Recover" xml:space="preserve">
+    <value>Recover</value>
+  </data>
+  <data name="Remove" xml:space="preserve">
+    <value>Remove</value>
   </data>
   <data name="Save" xml:space="preserve">
     <value>Save</value>
