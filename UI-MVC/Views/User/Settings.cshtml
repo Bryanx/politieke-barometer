@@ -16,7 +16,7 @@
                 <form method="post" action="/api/User/UpdateProfile" id="userSettingsForm" class="form-horizontal">
                     <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">
-                            Voornaam <span class="required">*</span>
+                            @Html.DisplayNameFor(m => m.Firstname) <span class="required">*</span>
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
                             @Html.TextBoxFor(model => model.Firstname, "", new {@class = "form-control col-md-7 col-xs-12"})
@@ -24,14 +24,14 @@
                     </div>
                     <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">
-                            Achternaam <span class="required">*</span>
+                            @Html.DisplayNameFor(m => m.Lastname)
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
                             @Html.TextBoxFor(model => model.Lastname, "", new {@class = "form-control col-md-7 col-xs-12"})
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Geslacht</label>
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">@Html.DisplayNameFor(m => m.Gender)</label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
                             <div id="gender" class="btn-group" data-toggle="buttons">
                                 @if (Model.Gender == Gender.MAN) {
@@ -54,16 +54,16 @@
                     </div>
                     <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">
-                            Geboortedatum
+                            @Html.DisplayNameFor(m => m.DateOfBirth)
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                            @Html.EditorFor(model => model.DateOfBirth, new {@class = "form-control col-md-7 col-xs-12"})
+                            @Html.EditorFor(model => model.DateOfBirth, new {htmlAttributes = new {@class = "form-control col-md-7 col-xs-12"}})
                             @Html.ValidationMessageFor(model => model.DateOfBirth, "", new {@class = "text-danger"})
                         </div>
                     </div>
-                        <div class="form-group">
+                    <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">
-                            Woonplaats
+                            @Html.DisplayNameFor(m => m.SelectedAreaId)
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
                             @Html.DropDownListFor(model => model.SelectedAreaId, Model.Areas, "Selecteer je woonplaats", new {@class = "form-control col-md-7 col-xs-12"})
@@ -126,7 +126,7 @@
                 <br/>
                 <form method="post" action="/api/User/UpdateAlerts" id="alertSettingsForm" class="form-horizontal">
                     <div class="form-group">
-                        @Html.LabelFor(model => model.AlertsViaWebsite,"Alerts ontvangen op deze website", htmlAttributes: new { @class = "control-label col-md-6 col-sm-6 col-xs-12" })
+                        @Html.LabelFor(model => model.AlertsViaWebsite, htmlAttributes: new { @class = "control-label col-md-6 col-sm-6 col-xs-12" })
                         <div class="col-md-3 col-sm-3 col-xs-12">
                             <div id="alertsviawebsite" class="btn-group" data-toggle="buttons">
                                 @if (Model.AlertsViaWebsite == true)
@@ -151,10 +151,10 @@
                             </div>
                     </div>
                     <div class="form-group">
-                        @Html.LabelFor(model => model.AlertsViaEmail,"Alerts ontvangen per email", htmlAttributes: new { @class = "control-label col-md-6 col-sm-6 col-xs-12" })
+                        @Html.LabelFor(model => model.AlertsViaEmail, htmlAttributes: new { @class = "control-label col-md-6 col-sm-6 col-xs-12" })
                         <div class="col-md-3 col-sm-3 col-xs-12">
                             <div id="alertsviamail" class="btn-group" data-toggle="buttons">
-                                @if (Model.AlertsViaEmail == true)
+                                @if (Model.AlertsViaEmail)
                                 {
                                 <label class="btn btn-default active">
                                     @Html.RadioButtonFor(model => model.AlertsViaEmail, true) Ja
@@ -176,10 +176,10 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        @Html.LabelFor(model => model.WeeklyReviewViaEmail,"Weekly review ontvangen per email", htmlAttributes: new { @class = "control-label col-md-6 col-sm-6 col-xs-12" })
+                        @Html.LabelFor(model => model.WeeklyReviewViaEmail, htmlAttributes: new { @class = "control-label col-md-6 col-sm-6 col-xs-12" })
                         <div class="col-md-3 col-sm-3 col-xs-12">
                             <div id="weeklyreviewviamail" class="btn-group" data-toggle="buttons">
-                                @if (Model.WeeklyReviewViaEmail == true)
+                                @if (Model.WeeklyReviewViaEmail)
                                 {
                                 <label class="btn btn-default active">
                                     @Html.RadioButtonFor(model => model.WeeklyReviewViaEmail, true) Ja
@@ -223,7 +223,7 @@
                 <form method="post" action="/api/User/UpdateAccount" id="accountSettingsForm" class="form-horizontal">
                     <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="password">
-                           Huidig Wachtwoord <span class="required">*</span>
+                            @Html.DisplayNameFor(m => m.Password) <span class="required">*</span>
                         </label>
                         <div class="col-md-9 col-sm-9 col-xs-12">
                             @Html.PasswordFor(model => model.Password, new {type = "password", @class = "form-control col-md-7 col-xs-12"})
@@ -232,7 +232,7 @@
                     </div>
                     <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="passwordnew">
-                            Nieuw wachtwoord <span class="required">*</span>
+                            @Html.DisplayNameFor(m => m.PasswordNew) <span class="required">*</span>
                         </label>
                         <div class="col-md-9 col-sm-9 col-xs-12">
                             @Html.PasswordFor(model => model.PasswordNew, new { type = "password", @class = "form-control col-md-7 col-xs-12" })
