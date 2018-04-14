@@ -7,11 +7,12 @@
     <a href="#"><i class="fa fa-calendar"></i>Weekly Review</a>
 </li>
 <li>
-    <a href="@Url.PersonUrl()"><i class="fa fa-users"></i>Politici</a>
+    <a href="@Url.PersonUrl()"><i class="fa fa-users"></i>@Resources.Politicians</a>
 </li>
 <li>
-    <a href="@Url.OrganisationUrl()"><i class="fa fa-briefcase"></i>Partijen</a>
+    <a href="@Url.OrganisationUrl()"><i class="fa fa-briefcase"></i>@Resources.Parties</a>
 </li>
 <li>
-    <a href='#'><i class="fa fa-tag"></i>Thema's</a>
+    <a href='#'><i class="fa fa-tag"></i>@Resources.Topics</a>
 </li>
+@Html.Partial("Partials/_LanguagePreferences")

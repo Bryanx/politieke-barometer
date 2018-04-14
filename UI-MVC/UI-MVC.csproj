@@ -214,6 +214,7 @@
     <Compile Include="Controllers\api\UserApiController.cs" />
     <Compile Include="Controllers\api\WidgetController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\LanguageController.cs" />
     <Compile Include="Controllers\OrganisationController.cs" />
     <Compile Include="Controllers\PersonController.cs" />
     <Compile Include="Controllers\SuperAdminController.cs" />
@@ -223,6 +224,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\CustomHelpers.cs" />
+    <Compile Include="Helpers\LanguageHelper.cs" />
     <Compile Include="Helpers\NavBarHelpers.cs" />
     <Compile Include="Helpers\UrlExtensions.cs" />
     <Compile Include="Models\AlertDTO.cs" />
@@ -428,6 +430,7 @@
     <Content Include="Views\Shared\Partials\_FooterRegister.cshtml" />
     <Content Include="Views\Shared\Partials\_GraphWizard.cshtml" />
     <Content Include="Views\Shared\Partials\_ItemTable.cshtml" />
+    <Content Include="Views\Shared\Partials\_LanguagePreferences.cshtml" />
     <Content Include="Views\Shared\Partials\_LoggedInLeftNavBarLinks.cshtml" />
     <Content Include="Views\Shared\Partials\_LoggedInNavbar.cshtml" />
     <Content Include="Views\Shared\Partials\_LoginModal.cshtml" />
@@ -443,7 +446,9 @@
     <Content Include="Views\SuperAdmin\SourceManagement.cshtml" />
     <Content Include="Views\User\Dashboard.cshtml" />
     <Content Include="Views\User\Settings.cshtml" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -526,6 +531,10 @@
       <Project>{F5414F35-68D4-4BE7-A2CF-DA5D9977FC0F}</Project>
       <Name>DAL</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Resources\Resources.csproj">
+      <Project>{c18a978a-92e1-4585-944a-a52b38d00d1b}</Project>
+      <Name>Resources</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
@@ -545,7 +554,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>True</UseIIS>
+          <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>5000</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>

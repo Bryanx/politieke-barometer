@@ -15,7 +15,7 @@ namespace BAR.UI.MVC.Controllers
 	/// This controller is used for admins and superadmins.
 	/// </summary>
 	[Authorize(Roles = "Admin, SuperAdmin")]
-	public class AdminController : Controller
+	public class AdminController : LanguageController
 	{
 		private IUserManager userManager;
 		private IItemManager itemManager;

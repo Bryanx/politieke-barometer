@@ -17,13 +17,13 @@
     <thead>
     <tr>
         <th>
-            Naam
+            @Html.DisplayNameFor(m => m.Items.First().Name)
         </th>
         <th>
-            Categorie
+            @Html.DisplayNameFor(m => m.Items.First().ItemType)
         </th>
         <th>
-            Vermeldingen
+            @Html.DisplayNameFor(m => m.Items.First().NumberOfMentions)
         </th>
         <th>
             Positief
@@ -35,7 +35,7 @@
             Trending
         </th>
         <th>
-            Aanmaak datum
+            @Html.DisplayNameFor(m => m.Items.First().CreationDate)
         </th>
         @if (User.Identity.IsAuthenticated) {
             <th>

@@ -17,7 +17,7 @@ namespace BAR.UI.MVC.Controllers
 	/// <summary>
 	/// This controller is used for managing the person-page.
 	/// </summary>
-	public class PersonController : Controller
+	public class PersonController : LanguageController
 	{
 		private const string INDEX_PAGE_TITLE = "Politici-overzicht";
 		private IItemManager itemManager;

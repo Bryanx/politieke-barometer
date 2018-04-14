@@ -15,7 +15,7 @@ namespace BAR.UI.MVC.Controllers
 	/// of the superadmins
 	/// </summary>
 	[Authorize(Roles = "SuperAdmin")]
-	public class SuperAdminController : Controller
+	public class SuperAdminController : LanguageController
 	{
 		private IUserManager userManager;
 

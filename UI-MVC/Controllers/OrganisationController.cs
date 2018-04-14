@@ -15,7 +15,7 @@ namespace BAR.UI.MVC.Controllers
 	/// <summary>
 	/// This controller is used for managing the organisation-page.
 	/// </summary>
-	public class OrganisationController : Controller
+	public class OrganisationController : LanguageController
 	{
 		private const string INDEX_PAGE_TITLE = "Partij-overzicht";
 		private ISubscriptionManager subManager;

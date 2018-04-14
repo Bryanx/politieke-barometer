@@ -1,10 +1,13 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Web;
 using System.Web.Mvc;
 using AutoMapper;
 using BAR.BL.Domain.Items;
 using BAR.BL.Managers;
+using BAR.UI.MVC.Helpers;
 using BAR.UI.MVC.Models;
 using Microsoft.AspNet.Identity;
 using static BAR.UI.MVC.Models.ItemViewModels;
@@ -14,7 +17,7 @@ namespace BAR.UI.MVC.Controllers
 	/// <summary>
 	/// This controller is used for managing the homepage.
 	/// </summary>
-	public class HomeController : Controller
+	public class HomeController : LanguageController
 	{
 		private const string INDEX_PAGE_TITLE = "Politieke Barometer";
 		private const string PRIVACY_PAGE_TITLE = "Privacy en veiligheid";
@@ -70,5 +73,23 @@ namespace BAR.UI.MVC.Controllers
 				User = User.Identity.IsAuthenticated ? userManager.GetUser(User.Identity.GetUserId()) : null
 			});
 		}
+		
+		public ActionResult SetCulture(string culture)
+		{
+			// Validate input
+			culture = LanguageHelper.GetImplementedCulture(culture);
+			// Save culture in a cookie
+			HttpCookie cookie = Request.Cookies["_culture"];
+			if (cookie != null)
+				cookie.Value = culture;   // update cookie value
+			else
+			{
+				cookie = new HttpCookie("_culture");                
+				cookie.Value = culture;
+				cookie.Expires = DateTime.Now.AddYears(1);
+			}
+			Response.Cookies.Add(cookie);
+			return Redirect(Request.UrlReferrer.ToString());
+		}           
 	}
 }

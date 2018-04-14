@@ -1187,6 +1187,28 @@ a {
 }
 
 .nav {
+  .culture-form > form {
+    position: absolute;
+    bottom: 0;
+    width: 100px;
+    > div.control-group {
+      display: inline-block;
+      width: 30px;
+      > label {
+        margin: 0;
+        cursor: pointer;
+        text-align: center;
+        width: 30px;
+        font-size: 12px;
+      }
+      > input {
+        display: none;
+      }
+      input[type="radio"]:checked+label {
+        background: #3b4856;
+      }
+    }
+  }
   &.side-menu > li {
     position: relative;
     display: block;
@@ -1194,6 +1216,9 @@ a {
     &:hover {
       background: #26313c;
     }
+  form {
+    display: inline;
+  }
     > i {
       margin-bottom: 6px;
       &:hover {

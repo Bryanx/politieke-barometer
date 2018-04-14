@@ -1,13 +1,13 @@
 @using BAR.UI.MVC.Helpers
 <li class="divider-top">
-    <a href="@Url.AdminDashboard()"><i class="fa fa-pie-chart"></i> Admin dashboard</a>
+    <a href="@Url.AdminDashboard()"><i class="fa fa-pie-chart"></i> Admin Dashboard</a>
 </li>
 <li>
-    <a href="@Url.PageManagement()"><i class="fa fa-edit"></i> Pagina's beheren</a>
+    <a href="@Url.PageManagement()"><i class="fa fa-edit"></i> @Resources.PageManagement</a>
 </li>
 <li>
-    <a href="@Url.ItemManagement()"><i class="fa fa-object-group"></i> Items beheren</a> <!-- en content importeren -->
+    <a href="@Url.ItemManagement()"><i class="fa fa-object-group"></i> @Resources.ItemManagement</a> <!-- en content importeren -->
 </li>
 <li>
-    <a href="@Url.UserManagement()"><i class="fa fa-users"></i> Gebruikers beheren</a> <!-- en gebruikers export -->
+    <a href="@Url.UserManagement()"><i class="fa fa-users"></i> @Resources.UserManagement</a> <!-- en gebruikers export -->
 </li>

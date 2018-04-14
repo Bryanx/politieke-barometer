@@ -26,7 +26,7 @@ namespace BAR.UI.MVC.Controllers
 	/// This controller is used for managing the users.
 	/// </summary>
 	[Authorize]
-	public class UserController : Controller
+	public class UserController : LanguageController
 	{
 		private IUserManager userManager;
 		private ISubscriptionManager subManager;

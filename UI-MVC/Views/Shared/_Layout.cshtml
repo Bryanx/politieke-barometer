@@ -111,6 +111,13 @@
 }
 <!-- Custom Theme Scripts -->
 @Scripts.Render("~/bundles/custom")
+<script defer>
+    (()=>{
+        $(".culture",".left_col").click(function () {
+            $(this).parents("form").submit(); // post form
+        });
+    })($)
+</script>
 
 </body>
 </html>
