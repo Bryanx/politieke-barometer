@@ -135,11 +135,17 @@
   <data name="ConfirmPassword" xml:space="preserve">
     <value>Confirm password</value>
   </data>
+  <data name="Contact" xml:space="preserve">
+    <value>Contact</value>
+  </data>
   <data name="CreationDate" xml:space="preserve">
     <value>Creation date</value>
   </data>
   <data name="CurrentPassword" xml:space="preserve">
     <value>Current password</value>
+  </data>
+  <data name="Dashboard" xml:space="preserve">
+    <value>Dashboard</value>
   </data>
   <data name="DateOfBirth" xml:space="preserve">
     <value>Date of birth</value>
@@ -156,6 +162,9 @@
   <data name="EmailRequired" xml:space="preserve">
     <value>Email is required.</value>
   </data>
+  <data name="EmailUs" xml:space="preserve">
+    <value>Email us</value>
+  </data>
   <data name="Failed" xml:space="preserve">
     <value>Failed</value>
   </data>
@@ -164,6 +173,9 @@
   </data>
   <data name="Gender" xml:space="preserve">
     <value>Gender</value>
+  </data>
+  <data name="Home" xml:space="preserve">
+    <value>Home</value>
   </data>
   <data name="HomepageHeaderTitle" xml:space="preserve">
     <value>See which politicians are trending</value>
@@ -174,11 +186,17 @@
   <data name="Lastname" xml:space="preserve">
     <value>Last name</value>
   </data>
+  <data name="Links" xml:space="preserve">
+    <value>Links</value>
+  </data>
   <data name="Logout" xml:space="preserve">
     <value>Logout</value>
   </data>
   <data name="Man" xml:space="preserve">
     <value>Man</value>
+  </data>
+  <data name="MoreInfo" xml:space="preserve">
+    <value>More info</value>
   </data>
   <data name="Name" xml:space="preserve">
     <value>Name</value>
@@ -210,8 +228,14 @@
   <data name="Politicians" xml:space="preserve">
     <value>Politicians</value>
   </data>
+  <data name="Privacy" xml:space="preserve">
+    <value>Privacy</value>
+  </data>
   <data name="ProfilePicture" xml:space="preserve">
     <value>Profile picture</value>
+  </data>
+  <data name="QuestionAndAnswer" xml:space="preserve">
+    <value>Question and answer</value>
   </data>
   <data name="Save" xml:space="preserve">
     <value>Save</value>

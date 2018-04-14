@@ -292,7 +292,6 @@
         
         //Ajax call in generic function so every form can use the same code.
         function submitForm($this, event, message) {
-            $this.validate();
                 $.ajax({
                     type: $this.attr('method'),
                     url: $this.attr('action'),

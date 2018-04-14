@@ -115,6 +115,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Contact.
+        /// </summary>
+        public static string Contact {
+            get {
+                return ResourceManager.GetString("Contact", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Creation date.
         /// </summary>
         public static string CreationDate {
@@ -129,6 +138,15 @@ namespace Resources {
         public static string CurrentPassword {
             get {
                 return ResourceManager.GetString("CurrentPassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Dashboard.
+        /// </summary>
+        public static string Dashboard {
+            get {
+                return ResourceManager.GetString("Dashboard", resourceCulture);
             }
         }
         
@@ -178,6 +196,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Email us.
+        /// </summary>
+        public static string EmailUs {
+            get {
+                return ResourceManager.GetString("EmailUs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Failed.
         /// </summary>
         public static string Failed {
@@ -201,6 +228,15 @@ namespace Resources {
         public static string Gender {
             get {
                 return ResourceManager.GetString("Gender", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Home.
+        /// </summary>
+        public static string Home {
+            get {
+                return ResourceManager.GetString("Home", resourceCulture);
             }
         }
         
@@ -232,6 +268,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Links.
+        /// </summary>
+        public static string Links {
+            get {
+                return ResourceManager.GetString("Links", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Logout.
         /// </summary>
         public static string Logout {
@@ -246,6 +291,15 @@ namespace Resources {
         public static string Man {
             get {
                 return ResourceManager.GetString("Man", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to More info.
+        /// </summary>
+        public static string MoreInfo {
+            get {
+                return ResourceManager.GetString("MoreInfo", resourceCulture);
             }
         }
         
@@ -340,11 +394,29 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Privacy.
+        /// </summary>
+        public static string Privacy {
+            get {
+                return ResourceManager.GetString("Privacy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Profile picture.
         /// </summary>
         public static string ProfilePicture {
             get {
                 return ResourceManager.GetString("ProfilePicture", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Question and answer.
+        /// </summary>
+        public static string QuestionAndAnswer {
+            get {
+                return ResourceManager.GetString("QuestionAndAnswer", resourceCulture);
             }
         }
         
