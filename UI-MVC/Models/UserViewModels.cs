@@ -64,7 +64,7 @@ namespace BAR.UI.MVC.Models
     [Display(Name = "Password", ResourceType = typeof(Resources))]
     public string Password { get; set; }
 
-    [Display(Name = "Onthouden?")]
+    [Display(Name = "RememberMeQuestion", ResourceType = typeof(Resources))]
     public bool RememberMe { get; set; }
   }
 
@@ -114,7 +114,8 @@ namespace BAR.UI.MVC.Models
 
     [DataType(DataType.Password)]
     [Display(Name = "ConfirmPassword", ResourceType = typeof(Resources))]
-    [System.ComponentModel.DataAnnotations.Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+    [System.ComponentModel.DataAnnotations.Compare("Password", ErrorMessageResourceType = typeof(Resources),
+      ErrorMessageResourceName = "PasswordNotMatch")]
     public string ConfirmPassword { get; set; }
 
     public string Code { get; set; }

@@ -537,4 +537,13 @@
   <data name="ForgotPassword" xml:space="preserve">
     <value>Forgot password</value>
   </data>
+  <data name="PasswordNotMatch" xml:space="preserve">
+    <value>The password and confirmation password do not match.</value>
+  </data>
+  <data name="RememberMeQuestion" xml:space="preserve">
+    <value>Remember me?</value>
+  </data>
+  <data name="Subscriptions" xml:space="preserve">
+    <value>Subscriptions</value>
+  </data>
 </root>

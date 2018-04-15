@@ -871,6 +871,15 @@ namespace BAR.UI.MVC.App_GlobalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The password and confirmation password do not match..
+        /// </summary>
+        public static string PasswordNotMatch {
+            get {
+                return ResourceManager.GetString("PasswordNotMatch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Photo.
         /// </summary>
         public static string Photo {
@@ -966,6 +975,15 @@ namespace BAR.UI.MVC.App_GlobalResources {
         public static string RecoverItem {
             get {
                 return ResourceManager.GetString("RecoverItem", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remember me?.
+        /// </summary>
+        public static string RememberMeQuestion {
+            get {
+                return ResourceManager.GetString("RememberMeQuestion", resourceCulture);
             }
         }
         
@@ -1164,6 +1182,15 @@ namespace BAR.UI.MVC.App_GlobalResources {
         public static string Subscribe {
             get {
                 return ResourceManager.GetString("Subscribe", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Subscriptions.
+        /// </summary>
+        public static string Subscriptions {
+            get {
+                return ResourceManager.GetString("Subscriptions", resourceCulture);
             }
         }
         

@@ -1,4 +1,5 @@
 ﻿@using System.Web.Optimization
+@using BAR.UI.MVC.App_GlobalResources
 @model BAR.UI.MVC.Models.ItemViewModels.ItemViewModel
 @{
     ViewBag.Title = Model.PageTitle;
@@ -43,7 +44,7 @@
 {
     <section class="subscriptions">
         <br />
-        <h1>Abonnementen</h1>
+        <h1>@Resources.Subscriptions</h1>
         <hr />
         <section class="shadowed">
             @Html.Partial("Partials/_PersonTable", Model)
