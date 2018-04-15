@@ -240,6 +240,9 @@
   <data name="ImportContent" xml:space="preserve">
     <value>Import content</value>
   </data>
+  <data name="IsNowTrending" xml:space="preserve">
+    <value>is now trending!</value>
+  </data>
   <data name="ItemManagement" xml:space="preserve">
     <value>Item management</value>
   </data>
@@ -293,6 +296,9 @@
   </data>
   <data name="No" xml:space="preserve">
     <value>No</value>
+  </data>
+  <data name="NoAlertsMessage" xml:space="preserve">
+    <value>Subscribe yourself to politicians, parties or topics to see when they are trending.</value>
   </data>
   <data name="NowYouCan" xml:space="preserve">
     <value>Now you can</value>
@@ -381,6 +387,9 @@
   <data name="Settings" xml:space="preserve">
     <value>Settings</value>
   </data>
+  <data name="ShowAllAlerts" xml:space="preserve">
+    <value>Show all alerts</value>
+  </data>
   <data name="Signup" xml:space="preserve">
     <value>Signup</value>
   </data>
@@ -440,6 +449,9 @@
   </data>
   <data name="Yes" xml:space="preserve">
     <value>Yes</value>
+  </data>
+  <data name="YouHaveNoAlerts" xml:space="preserve">
+    <value>You have no alerts.</value>
   </data>
   <data name="Your" xml:space="preserve">
     <value>Your</value>

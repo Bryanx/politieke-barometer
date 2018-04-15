@@ -74,6 +74,9 @@ namespace BAR.UI.MVC.Controllers
 			});
 		}
 		
+		/// <summary>
+		/// Saves the language preferences in a cookie.
+		/// </summary>
 		public ActionResult SetCulture(string culture)
 		{
 			// Validate input
@@ -90,6 +93,17 @@ namespace BAR.UI.MVC.Controllers
 			}
 			Response.Cookies.Add(cookie);
 			return Redirect(Request.UrlReferrer.ToString());
-		}           
-	}
+		}      
+		
+		/// <summary>
+		/// Returns a javascript object with language resources.
+		/// This way local resources can be used in javascript files.
+		/// </summary>
+        public ActionResult GetResources()
+        {
+            Response.ContentType = "text/javascript";
+            return View();
+        }
+
+    }
 }

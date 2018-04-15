@@ -497,6 +497,7 @@
     <None Include="Scripts\vue-resource.min.js" />
     <None Include="Scripts\vue.js" />
     <None Include="Scripts\vue.min.js" />
+    <Content Include="Views\Home\GetResources.cshtml" />
     <None Include="Views\Shared\DisplayTemplates\CanonicalHelperModel.ascx" />
     <None Include="Views\Shared\DisplayTemplates\CanonicalHelperModel.cshtml" />
     <None Include="Views\Shared\DisplayTemplates\MenuHelperModel.ascx" />

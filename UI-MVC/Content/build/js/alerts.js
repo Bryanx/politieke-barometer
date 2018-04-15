@@ -81,7 +81,7 @@ function generateAlertHTML(alert) {
     var alertContent = $("<span />",
         {
             "class": "font_16",
-            html: `<strong>${alert.Name}</strong> is nu trending!`
+            html: `<strong>${alert.Name}</strong> ${Resources.IsNowTrending}`
         });
     var alertTime = $("<span />",
         {
@@ -138,13 +138,12 @@ function loadAlerts() {
                 console.log(alertData);
                 InsertAlerts(data);
                 $('#alertMenu').append(
-                    "<li id=\"seeAllAlerts\"><div class=\"text-center\"><a><strong>Bekijk alle alerts</strong></a></div></li>");
+                    "<li id=\"seeAllAlerts\"><div class=\"text-center\"><a><strong>"+Resources.ShowAllAlerts+"</strong></a></div></li>");
             } else { //No available alerts
                 $('#alertMenu').empty();
                 $('#alertMenu').append("<li class=\"noAlertsAvailable\"><i class=\"fa fa-bell\"></i></br>" +
-                    "<strong>Je hebt geen alerts.</strong></br>" +
-                    "Abonneer jezelf op personen, partijen of thema's</br>" +
-                    "om te zien wanneer ze trending zijn.</li>");
+                    `<strong>${Resources.YouHaveNoAlerts}</strong></br>` +
+                    `${NoAlertsMessage}</li>`);
             }
         });
 }

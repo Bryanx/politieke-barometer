@@ -6,12 +6,12 @@
 
 @section CustomCSS{
     <link rel="stylesheet" href="https://unpkg.com/vue-form-wizard/dist/vue-form-wizard.min.css">
-    <link rel="stylesheet" href="../../Content/build/css/gridstack.css"/>
+    <link rel="stylesheet" href="../../Content/build/css/gridstack.css" />
 }
 
 <section>
     <h1>@Model.PageTitle</h1>
-    <hr/>
+    <hr />
     <div>
         <button id="btnAddLine" class="btn btn-primary">Add line chart</button>
         <button id="btnAddPie" class="btn btn-primary">Add donut chart</button>
@@ -26,7 +26,7 @@
 </section>
 
 <div style="visibility: hidden">space</div>
-    
+
 <div class="no-widgets text-center">
     <i class=""></i>
     <h1>Je hebt nog geen grafieken.</h1>
@@ -39,11 +39,12 @@
 <div style="visibility: hidden">space</div>
 
 <!-- Subscriptions -->
-@if (Model.Items.Any()) {
+@if (Model.Items.Any())
+{
     <section class="subscriptions">
-        <br/>
+        <br />
         <h1>Abonnementen</h1>
-        <hr/>
+        <hr />
         <section class="shadowed">
             @Html.Partial("Partials/_PersonTable", Model)
         </section>
@@ -94,7 +95,7 @@
                             model: "intersectValueBase",
                             required: true,
                             validator: VueFormGenerator.validators.string,
-                            values:['United Kingdom','Romania','Germany'],
+                            values: ['United Kingdom', 'Romania', 'Germany'],
                             styleClasses: 'col-xs-12'
                         },
                         {
@@ -113,7 +114,7 @@
                             model: "intersectValueCompare",
                             required: false,
                             validator: VueFormGenerator.validators.string,
-                            values:['United Kingdom','Romania','Germany'],
+                            values: ['United Kingdom', 'Romania', 'Germany'],
                             styleClasses: 'col-xs-12'
                         }
                     ]
@@ -127,7 +128,7 @@
                             model: "graphType",
                             required: true,
                             validator: VueFormGenerator.validators.string,
-                            values:['United Kingdom','Romania','Germany'],
+                            values: ['United Kingdom', 'Romania', 'Germany'],
                             styleClasses: 'col-xs-12'
                         },
                         {
@@ -137,27 +138,27 @@
                             model: "extraInfo",
                             required: false,
                             validator: VueFormGenerator.validators.string,
-                            values:['United Kingdom','Romania','Germany'],
+                            values: ['United Kingdom', 'Romania', 'Germany'],
                             styleClasses: 'col-xs-12'
                         }
                     ]
                 }
             },
             methods: {
-                onComplete: function() {
+                onComplete: function () {
                     alert('Yay. Done!');
                 },
-                validateFirstTab: function(){
+                validateFirstTab: function () {
                     return this.$refs.firstTabForm.validate();
                 },
-                validateSecondTab: function(){
+                validateSecondTab: function () {
                     return this.$refs.secondTabForm.validate();
                 },
-                prettyJSON: function(json) {
+                prettyJSON: function (json) {
                     if (json) {
                         json = JSON.stringify(json, undefined, 4);
                         json = json.replace(/&/g, '&').replace(/</g, '<').replace(/>/g, '>');
-                        return json.replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g, function(match) {
+                        return json.replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g, function (match) {
                             var cls = 'number';
                             if (/^"/.test(match)) {
                                 if (/:$/.test(match)) {
@@ -181,10 +182,10 @@
         //GET Request for widgets
         function loadWidgets() {
             $.ajax('/api/Widget',
-                    {
-                        type: 'GET',
-                        dataType: 'json'
-                    })
+                {
+                    type: 'GET',
+                    dataType: 'json'
+                })
                 //if GET request is succesfull: call loadGrid() in widgets.js -> loads all widgets
                 .done(data => loadGrid(data))
                 //TODO: if FAIL proper error handling
@@ -196,7 +197,7 @@
             loadWidgets();
 
             var wto;
-            $('.subscribeItem').click(function() {
+            $('.subscribeItem').click(function () {
                 clearTimeout(wto);
                 var $this = $(this);
                 var id = $this.data('item-id');
@@ -207,16 +208,16 @@
                 } else {
                     $this.parent().parent().empty();
                 }
-                wto = setTimeout(function() {
-                        $.ajax({
-                                type: 'POST',
-                                url: '/api/ToggleSubscribe/' + id
-                            }).fail(() => { /* ok */ })
-                            .done(function() {
-                                loadAlerts();
-                                res.subscriptionAmount--;
-                            });
-                    },
+                wto = setTimeout(function () {
+                    $.ajax({
+                        type: 'POST',
+                        url: '/api/ToggleSubscribe/' + id
+                    }).fail(() => { /* ok */ })
+                        .done(function () {
+                            loadAlerts();
+                            res.subscriptionAmount--;
+                        });
+                },
                     500);
             });
         })($);

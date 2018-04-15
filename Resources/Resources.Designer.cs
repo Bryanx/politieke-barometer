@@ -430,6 +430,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to is now trending!.
+        /// </summary>
+        public static string IsNowTrending {
+            get {
+                return ResourceManager.GetString("IsNowTrending", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Item management.
         /// </summary>
         public static string ItemManagement {
@@ -588,6 +597,15 @@ namespace Resources {
         public static string No {
             get {
                 return ResourceManager.GetString("No", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Subscribe yourself to politicians, parties or topics to see when they are trending..
+        /// </summary>
+        public static string NoAlertsMessage {
+            get {
+                return ResourceManager.GetString("NoAlertsMessage", resourceCulture);
             }
         }
         
@@ -853,6 +871,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Show all alerts.
+        /// </summary>
+        public static string ShowAllAlerts {
+            get {
+                return ResourceManager.GetString("ShowAllAlerts", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Signup.
         /// </summary>
         public static string Signup {
@@ -1029,6 +1056,15 @@ namespace Resources {
         public static string Yes {
             get {
                 return ResourceManager.GetString("Yes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You have no alerts..
+        /// </summary>
+        public static string YouHaveNoAlerts {
+            get {
+                return ResourceManager.GetString("YouHaveNoAlerts", resourceCulture);
             }
         }
         
