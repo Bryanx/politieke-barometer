@@ -826,11 +826,11 @@ namespace BAR.UI.MVC.App_GlobalResources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to on.
+        ///   Looks up a localized string similar to On social media.
         /// </summary>
-        public static string On {
+        public static string OnSocialMedia {
             get {
-                return ResourceManager.GetString("On", resourceCulture);
+                return ResourceManager.GetString("OnSocialMedia", resourceCulture);
             }
         }
         

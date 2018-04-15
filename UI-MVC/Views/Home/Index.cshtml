@@ -1,6 +1,7 @@
 ﻿@using System.Web.Optimization
 @using BAR.BL.Domain.Items
 @using BAR.UI.MVC
+@using BAR.UI.MVC.App_GlobalResources
 @model BAR.UI.MVC.Models.ItemViewModels.ItemViewModel
 
 @section CustomCSS{
@@ -14,7 +15,7 @@
         <div class="col-md-12 col-sm-12 col-xs-12 main-header-container">
             <div class="logo"></div>
             <div class="main-header">
-                <h1 class="main-header-title">@Resources.HomepageHeaderTitle<br/>@Resources.On social media.
+                <h1 class="main-header-title">@Resources.HomepageHeaderTitle<br/>@Resources.OnSocialMedia.ToLower().
                 </h1>
             </div>
             @Html.Partial("Partials/_SearchBar")

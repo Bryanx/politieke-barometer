@@ -129,6 +129,30 @@
   <data name="AdminManagement" xml:space="preserve">
     <value>Admin management</value>
   </data>
+  <data name="AboutOneHour" xml:space="preserve">
+    <value>About an hour</value>
+  </data>
+  <data name="AboutOneMinute" xml:space="preserve">
+    <value>About a minute</value>
+  </data>
+  <data name="AboutOneMonth" xml:space="preserve">
+    <value>About a month</value>
+  </data>
+  <data name="AboutOneYear" xml:space="preserve">
+    <value>About a year</value>
+  </data>
+  <data name="About_Time" xml:space="preserve">
+    <value>About</value>
+  </data>
+  <data name="Aday" xml:space="preserve">
+    <value>A day</value>
+  </data>
+  <data name="AddAChart" xml:space="preserve">
+    <value>Add a chart.</value>
+  </data>
+  <data name="Ago" xml:space="preserve">
+    <value>Ago</value>
+  </data>
   <data name="Alerts" xml:space="preserve">
     <value>Alerts</value>
   </data>
@@ -195,6 +219,9 @@
   <data name="DateOfBirth" xml:space="preserve">
     <value>Date of birth</value>
   </data>
+  <data name="Days" xml:space="preserve">
+    <value>Days</value>
+  </data>
   <data name="Delete" xml:space="preserve">
     <value>Delete</value>
   </data>
@@ -237,6 +264,9 @@
   <data name="FollowThisPerson" xml:space="preserve">
     <value>Follow this person.</value>
   </data>
+  <data name="ForgotPassword" xml:space="preserve">
+    <value>Forgot password</value>
+  </data>
   <data name="ForgotPasswordQuestion" xml:space="preserve">
     <value>Forgot your password?</value>
   </data>
@@ -249,11 +279,17 @@
   <data name="HomepageHeaderTitle" xml:space="preserve">
     <value>See which politicians are trending</value>
   </data>
+  <data name="Hours" xml:space="preserve">
+    <value>Hours</value>
+  </data>
   <data name="IAgreeWithTheTermsAndCondition" xml:space="preserve">
     <value>I agree with the terms and conditions.</value>
   </data>
   <data name="ImportContent" xml:space="preserve">
     <value>Import content</value>
+  </data>
+  <data name="In_Time" xml:space="preserve">
+    <value>In</value>
   </data>
   <data name="IsNowTrending" xml:space="preserve">
     <value>is now trending!</value>
@@ -263,6 +299,9 @@
   </data>
   <data name="Lastname" xml:space="preserve">
     <value>Last name</value>
+  </data>
+  <data name="LessThenOneMinute" xml:space="preserve">
+    <value>Less then on minute</value>
   </data>
   <data name="Link" xml:space="preserve">
     <value>Link</value>
@@ -294,6 +333,12 @@
   <data name="Mentions" xml:space="preserve">
     <value>Mentions</value>
   </data>
+  <data name="Minutes" xml:space="preserve">
+    <value>Minutes</value>
+  </data>
+  <data name="Months" xml:space="preserve">
+    <value>Months</value>
+  </data>
   <data name="MoreInfo" xml:space="preserve">
     <value>More info</value>
   </data>
@@ -315,6 +360,9 @@
   <data name="NoAlertsMessage" xml:space="preserve">
     <value>Subscribe yourself to politicians, parties or topics to see when they are trending.</value>
   </data>
+  <data name="NoChartsYet" xml:space="preserve">
+    <value>You don't have any charts yet.</value>
+  </data>
   <data name="NowYouCan" xml:space="preserve">
     <value>Now you can</value>
   </data>
@@ -324,8 +372,8 @@
   <data name="NumberOfMentions" xml:space="preserve">
     <value>Mentions</value>
   </data>
-  <data name="On" xml:space="preserve">
-    <value>on</value>
+  <data name="OnSocialMedia" xml:space="preserve">
+    <value>On social media</value>
   </data>
   <data name="Or" xml:space="preserve">
     <value>Or</value>
@@ -338,6 +386,9 @@
   </data>
   <data name="Password" xml:space="preserve">
     <value>Password</value>
+  </data>
+  <data name="PasswordNotMatch" xml:space="preserve">
+    <value>The password and confirmation password do not match.</value>
   </data>
   <data name="Photo" xml:space="preserve">
     <value>Photo</value>
@@ -372,8 +423,14 @@
   <data name="RecoverItem" xml:space="preserve">
     <value>Recover item.</value>
   </data>
+  <data name="RememberMeQuestion" xml:space="preserve">
+    <value>Remember me?</value>
+  </data>
   <data name="Remove" xml:space="preserve">
     <value>Remove</value>
+  </data>
+  <data name="RemoveAlert" xml:space="preserve">
+    <value>Remove alert</value>
   </data>
   <data name="RemoveItem" xml:space="preserve">
     <value>Remove item.</value>
@@ -435,6 +492,9 @@
   <data name="Subscribe" xml:space="preserve">
     <value>Subscribe</value>
   </data>
+  <data name="Subscriptions" xml:space="preserve">
+    <value>Subscriptions</value>
+  </data>
   <data name="SuccesfullyLoggedInWith" xml:space="preserve">
     <value>You have successfully logged in with</value>
   </data>
@@ -456,6 +516,9 @@
   <data name="User" xml:space="preserve">
     <value>User</value>
   </data>
+  <data name="UserController_Login_Ongeldige_inlogpoging_" xml:space="preserve">
+    <value>Ongeldige inlogpoging.</value>
+  </data>
   <data name="UserManagement" xml:space="preserve">
     <value>User management</value>
   </data>
@@ -468,6 +531,9 @@
   <data name="Woman" xml:space="preserve">
     <value>Woman</value>
   </data>
+  <data name="Year" xml:space="preserve">
+    <value>Year</value>
+  </data>
   <data name="Yes" xml:space="preserve">
     <value>Yes</value>
   </data>
@@ -479,71 +545,5 @@
   </data>
   <data name="YourPasswordHasBeenReset" xml:space="preserve">
     <value>Your password has been reset.</value>
-  </data>
-  <data name="UserController_Login_Ongeldige_inlogpoging_" xml:space="preserve">
-    <value>Ongeldige inlogpoging.</value>
-  </data>
-  <data name="AboutOneHour" xml:space="preserve">
-    <value>About an hour</value>
-  </data>
-  <data name="AboutOneMinute" xml:space="preserve">
-    <value>About a minute</value>
-  </data>
-  <data name="AboutOneMonth" xml:space="preserve">
-    <value>About a month</value>
-  </data>
-  <data name="AboutOneYear" xml:space="preserve">
-    <value>About a year</value>
-  </data>
-  <data name="About_Time" xml:space="preserve">
-    <value>About</value>
-  </data>
-  <data name="Aday" xml:space="preserve">
-    <value>A day</value>
-  </data>
-  <data name="AddAChart" xml:space="preserve">
-    <value>Add a chart.</value>
-  </data>
-  <data name="Ago" xml:space="preserve">
-    <value>Ago</value>
-  </data>
-  <data name="Days" xml:space="preserve">
-    <value>Days</value>
-  </data>
-  <data name="Hours" xml:space="preserve">
-    <value>Hours</value>
-  </data>
-  <data name="In_Time" xml:space="preserve">
-    <value>In</value>
-  </data>
-  <data name="LessThenOneMinute" xml:space="preserve">
-    <value>Less then on minute</value>
-  </data>
-  <data name="Minutes" xml:space="preserve">
-    <value>Minutes</value>
-  </data>
-  <data name="Months" xml:space="preserve">
-    <value>Months</value>
-  </data>
-  <data name="NoChartsYet" xml:space="preserve">
-    <value>You don't have any charts yet.</value>
-  </data>
-  <data name="RemoveAlert" xml:space="preserve">
-    <value>Remove alert</value>
-  </data>
-  <data name="Year" xml:space="preserve">
-    <value>Year</value>
-  </data>
-  <data name="ForgotPassword" xml:space="preserve">
-    <value>Forgot password</value>
-  </data>
-  <data name="PasswordNotMatch" xml:space="preserve">
-    <value>The password and confirmation password do not match.</value>
-  </data>
-  <data name="RememberMeQuestion" xml:space="preserve">
-    <value>Remember me?</value>
-  </data>
-  <data name="Subscriptions" xml:space="preserve">
-    <value>Subscriptions</value>
   </data>
 </root>
