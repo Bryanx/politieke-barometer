@@ -7,6 +7,7 @@ using System.Web.Mvc;
 using AutoMapper;
 using BAR.BL.Domain.Items;
 using BAR.BL.Managers;
+using BAR.UI.MVC.App_GlobalResources;
 using BAR.UI.MVC.Helpers;
 using BAR.UI.MVC.Models;
 using Microsoft.AspNet.Identity;
@@ -51,7 +52,7 @@ namespace BAR.UI.MVC.Controllers
 			//Assembling the view
 			return View(new BaseViewModel()
 			{
-				PageTitle = Resources.Resources.PrivacyAndSafety,
+				PageTitle = Resources.PrivacyAndSafety,
 				User = User.Identity.IsAuthenticated ? userManager.GetUser(User.Identity.GetUserId()) : null
 			});
 		}
@@ -67,7 +68,7 @@ namespace BAR.UI.MVC.Controllers
 			//Assembling the view
 			return View(new BaseViewModel()
 			{
-				PageTitle = Resources.Resources.QuestionAndAnswer,
+				PageTitle = Resources.QuestionAndAnswer,
 				User = User.Identity.IsAuthenticated ? userManager.GetUser(User.Identity.GetUserId()) : null
 			});
 		}

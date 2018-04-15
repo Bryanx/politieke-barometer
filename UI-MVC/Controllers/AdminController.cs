@@ -8,6 +8,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using System.Linq;
 using AutoMapper;
+using BAR.UI.MVC.App_GlobalResources;
 
 namespace BAR.UI.MVC.Controllers
 {
@@ -39,7 +40,7 @@ namespace BAR.UI.MVC.Controllers
 			return View(new BaseViewModel()
 			{
 				User = userManager.GetUser(User.Identity.GetUserId()),
-				PageTitle = Resources.Resources.PageManagement
+				PageTitle = Resources.PageManagement
 			});
 		}
 
@@ -55,7 +56,7 @@ namespace BAR.UI.MVC.Controllers
 			return View(new ItemViewModels.ItemViewModel()
 			{
 				User = userManager.GetUser(User.Identity.GetUserId()),
-				PageTitle = Resources.Resources.ItemManagement,
+				PageTitle = Resources.ItemManagement,
 				Items = Mapper.Map(itemManager.GetAllItems(), new List<ItemDTO>())
 			});
 		}
@@ -81,7 +82,7 @@ namespace BAR.UI.MVC.Controllers
 			EditUserViewModel vm = new EditUserViewModel()
 			{
 				User = userManager.GetUser(User.Identity.GetUserId()),
-				PageTitle = Resources.Resources.UserManagement,
+				PageTitle = Resources.UserManagement,
 				Users = users
 			};
 			FillViewModels(vm);

@@ -4,6 +4,7 @@ using System.Web;
 using System.Web.Mvc;
 using BAR.BL.Domain.Users;
 using BAR.BL.Managers;
+using BAR.UI.MVC.App_GlobalResources;
 using BAR.UI.MVC.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
@@ -29,7 +30,7 @@ namespace BAR.UI.MVC.Controllers
 			//Assembling the view
 			return View(new BaseViewModel
 			{
-				PageTitle = Resources.Resources.SourceManagement,
+				PageTitle = Resources.SourceManagement,
 				User = userManager.GetUser(User.Identity.GetUserId())
 			});
 		}
@@ -44,7 +45,7 @@ namespace BAR.UI.MVC.Controllers
 			//Assembling the view
 			return View(new BaseViewModel
 			{
-				PageTitle = Resources.Resources.SubPlatformManagement,
+				PageTitle = Resources.SubPlatformManagement,
 				User = userManager.GetUser(User.Identity.GetUserId())
 			});
 		}
@@ -69,7 +70,7 @@ namespace BAR.UI.MVC.Controllers
 			EditUserViewModel vm = new EditUserViewModel()
 			{
 				User = userManager.GetUser(User.Identity.GetUserId()),
-				PageTitle = Resources.Resources.AdminManagement,
+				PageTitle = Resources.AdminManagement,
 				Users = users,
 			};
 			FillViewModels(vm);

@@ -7,9 +7,9 @@ using System.Linq;
 using System.Web.Mvc;
 using BAR.BL.Domain.Items;
 using BAR.UI.MVC.Models;
-using Subscription = BAR.BL.Domain.Users.Subscription;
 using System.Web;
 using Microsoft.AspNet.Identity.Owin;
+using BAR.UI.MVC.App_GlobalResources;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using System.Net;
@@ -84,7 +84,7 @@ namespace BAR.UI.MVC.Controllers
 					return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
 				case SignInStatus.Failure:
 				default:
-					ModelState.AddModelError("", Resources.Resources.LoginFailed);
+					ModelState.AddModelError("", Resources.LoginFailed);
 					return View(model);
 			}
 		}
@@ -139,8 +139,8 @@ namespace BAR.UI.MVC.Controllers
 					string code = await userManager.GenerateEmailConfirmationTokenAsync(user.Id);
 					var callbackUrl = Url.Action("ConfirmEmail", "User", new { userId = user.Id, code = code },
 						protocol: Request.Url.Scheme);
-					await userManager.SendEmailAsync(user.Id, Resources.Resources.ConfirmAccount,
-						"<a href=\"" + callbackUrl + "\">"+Resources.Resources.ConfirmAccountClickingHere+"</a>");
+					await userManager.SendEmailAsync(user.Id, Resources.ConfirmAccount,
+						"<a href=\"" + callbackUrl + "\">"+Resources.ConfirmAccountClickingHere+"</a>");
 					//Assign Role to user    
 					await userManager.AddToRoleAsync(user.Id, "User");
 					//Login
@@ -212,8 +212,8 @@ namespace BAR.UI.MVC.Controllers
 				string code = await userManager.GeneratePasswordResetTokenAsync(user.Id);
 				var callbackUrl = Url.Action("ResetPassword", "User", new { userId = user.Id, code = code },
 					protocol: Request.Url.Scheme);
-				await userManager.SendEmailAsync(user.Id, Resources.Resources.ResetPassword,
-					"<a href=\"" + callbackUrl + "\">"+Resources.Resources.ResetPasswordByClickingHere+"</a>");
+				await userManager.SendEmailAsync(user.Id, Resources.ResetPassword,
+					"<a href=\"" + callbackUrl + "\">"+Resources.ResetPasswordByClickingHere+"</a>");
 				return RedirectToAction("ForgotPasswordConfirmation", "User");
 			}
 
@@ -415,7 +415,7 @@ namespace BAR.UI.MVC.Controllers
 		{
 			string userId = User.Identity.GetUserId();
 			ItemViewModel itemViewModel = GetPersonViewModel(userId);
-			itemViewModel.PageTitle = Resources.Resources.Dashboard;
+			itemViewModel.PageTitle = Resources.Dashboard;
 
 			//Assebling the view
 			return View("Dashboard", itemViewModel);
@@ -447,7 +447,7 @@ namespace BAR.UI.MVC.Controllers
 				AlertsViaWebsite = user.AlertsViaWebsite,
 				AlertsViaEmail = user.AlertsViaEmail,
 				WeeklyReviewViaEmail = user.WeeklyReviewViaEmail,
-				PageTitle = Resources.Resources.Settings
+				PageTitle = Resources.Settings
 			};
 			return View(settingsViewModel);
 		}
