@@ -17,7 +17,6 @@ namespace BAR.UI.MVC.Controllers
 	/// </summary>
 	public class OrganisationController : LanguageController
 	{
-		private const string INDEX_PAGE_TITLE = "Partij-overzicht";
 		private ISubscriptionManager subManager;
 		private IItemManager itemManager;
 		private IUserManager userManager;
@@ -47,7 +46,7 @@ namespace BAR.UI.MVC.Controllers
 			return View("Index",
 				new ItemViewModel()
 				{
-					PageTitle = INDEX_PAGE_TITLE,
+					PageTitle = Resources.Resources.AllParties,
 					User = User.Identity.IsAuthenticated ? userManager.GetUser(User.Identity.GetUserId()) : null,
 					Items = people
 				});

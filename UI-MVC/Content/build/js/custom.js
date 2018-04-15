@@ -5236,8 +5236,8 @@ function ajaxToggleSubscribe($this) {
 				url: '/api/ToggleSubscribe/' + id
 			}).fail(() => { /* ok */ })
 				.done(function() {
-					if (text === "Abonneer") $this.html("Uitschrijven");
-					else $this.html("Abonneer");
+					if (text === Resources.Subscribe) $this.html(Resources.Unsubscribe);
+					else $this.html(Resources.Subscribe);
 					$this.toggleClass("btn-danger btn-success");
 				});
 		},

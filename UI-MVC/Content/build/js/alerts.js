@@ -60,7 +60,7 @@ function generateAlertHTML(alert) {
     var alertCloseButton = $("<div />",
         {
             "class": "alertClose",
-            title: "Verwijder alert"
+            title: Resources.RemoveAlert
         }).append($("<a />",
         {
             "class": "fa fa-close",

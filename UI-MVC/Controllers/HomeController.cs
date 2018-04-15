@@ -20,8 +20,6 @@ namespace BAR.UI.MVC.Controllers
 	public class HomeController : LanguageController
 	{
 		private const string INDEX_PAGE_TITLE = "Politieke Barometer";
-		private const string PRIVACY_PAGE_TITLE = "Privacy en veiligheid";
-		private const string FAQ_PAGE_TITLE = "Vraag en antwoord";
 		private IItemManager itemManager;
 		private IUserManager userManager;
 
@@ -53,7 +51,7 @@ namespace BAR.UI.MVC.Controllers
 			//Assembling the view
 			return View(new BaseViewModel()
 			{
-				PageTitle = PRIVACY_PAGE_TITLE,
+				PageTitle = Resources.Resources.PrivacyAndSafety,
 				User = User.Identity.IsAuthenticated ? userManager.GetUser(User.Identity.GetUserId()) : null
 			});
 		}
@@ -69,7 +67,7 @@ namespace BAR.UI.MVC.Controllers
 			//Assembling the view
 			return View(new BaseViewModel()
 			{
-				PageTitle = FAQ_PAGE_TITLE,
+				PageTitle = Resources.Resources.QuestionAndAnswer,
 				User = User.Identity.IsAuthenticated ? userManager.GetUser(User.Identity.GetUserId()) : null
 			});
 		}

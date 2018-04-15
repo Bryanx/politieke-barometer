@@ -19,7 +19,6 @@ namespace BAR.UI.MVC.Controllers
 	/// </summary>
 	public class PersonController : LanguageController
 	{
-		private const string INDEX_PAGE_TITLE = "Politici-overzicht";
 		private IItemManager itemManager;
 		private IUserManager userManager;
 		private ISubscriptionManager subManager;
@@ -48,7 +47,7 @@ namespace BAR.UI.MVC.Controllers
 			return View("Index",
 				new ItemViewModel()
 				{
-					PageTitle = INDEX_PAGE_TITLE,
+					PageTitle = Resources.Resources.AllPoliticians,
 					User = User.Identity.IsAuthenticated ? userManager.GetUser(User.Identity.GetUserId()) : null,
 					Items = people
 				});

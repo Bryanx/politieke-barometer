@@ -83,9 +83,9 @@
 
     @if (User.Identity.IsAuthenticated) {
         if (Model.Subscribed != true) {
-            <a class="w-100px subscribeItem btn btn-success" data-item-id="@Model.Person.ItemId" title="Deze persoon volgen">Abonneer</a>
+            <a class="w-100px subscribeItem btn btn-success" data-item-id="@Model.Person.ItemId" title="Deze persoon volgen">@Resources.Subscribe</a>
         } else {
-            <a class="w-100px subscribeItem btn btn-danger" data-item-id="@Model.Person.ItemId" title="Uitschrijven">Uitschrijven</a>
+            <a class="w-100px subscribeItem btn btn-danger" data-item-id="@Model.Person.ItemId" title="Uitschrijven">@Resources.Unsubscribe</a>
         }
     }
     <br/>

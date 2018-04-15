@@ -123,6 +123,9 @@
   <data name="Admin" xml:space="preserve">
     <value>Admin</value>
   </data>
+  <data name="AdminDashboard" xml:space="preserve">
+    <value>Admin dashboard</value>
+  </data>
   <data name="AdminManagement" xml:space="preserve">
     <value>Admin management</value>
   </data>
@@ -134,6 +137,12 @@
   </data>
   <data name="AlertsViaWebsite" xml:space="preserve">
     <value>Alerts on website</value>
+  </data>
+  <data name="AllParties" xml:space="preserve">
+    <value>All parties</value>
+  </data>
+  <data name="AllPoliticians" xml:space="preserve">
+    <value>All politicians</value>
   </data>
   <data name="CalculatedByAmountOfTweets" xml:space="preserve">
     <value>Calculated via the amount of tweets.</value>
@@ -149,6 +158,12 @@
   </data>
   <data name="City" xml:space="preserve">
     <value>City</value>
+  </data>
+  <data name="ConfirmAccount" xml:space="preserve">
+    <value>Confirm your account.</value>
+  </data>
+  <data name="ConfirmAccountClickingHere" xml:space="preserve">
+    <value>Confirm your account by clicking here.</value>
   </data>
   <data name="ConfirmForgotPassword" xml:space="preserve">
     <value>Forgotten password confirmation</value>
@@ -339,6 +354,9 @@
   <data name="Privacy" xml:space="preserve">
     <value>Privacy</value>
   </data>
+  <data name="PrivacyAndSafety" xml:space="preserve">
+    <value>Privacy and safety</value>
+  </data>
   <data name="ProfilePicture" xml:space="preserve">
     <value>Profile picture</value>
   </data>
@@ -365,6 +383,9 @@
   </data>
   <data name="ResetPassword" xml:space="preserve">
     <value>Reset password</value>
+  </data>
+  <data name="ResetPasswordByClickingHere" xml:space="preserve">
+    <value>You can reset your password by clicking here.</value>
   </data>
   <data name="Role" xml:space="preserve">
     <value>Role</value>
@@ -458,5 +479,59 @@
   </data>
   <data name="YourPasswordHasBeenReset" xml:space="preserve">
     <value>Your password has been reset.</value>
+  </data>
+  <data name="UserController_Login_Ongeldige_inlogpoging_" xml:space="preserve">
+    <value>Ongeldige inlogpoging.</value>
+  </data>
+  <data name="AboutOneHour" xml:space="preserve">
+    <value>About an hour</value>
+  </data>
+  <data name="AboutOneMinute" xml:space="preserve">
+    <value>About a minute</value>
+  </data>
+  <data name="AboutOneMonth" xml:space="preserve">
+    <value>About a month</value>
+  </data>
+  <data name="AboutOneYear" xml:space="preserve">
+    <value>About a year</value>
+  </data>
+  <data name="About_Time" xml:space="preserve">
+    <value>About</value>
+  </data>
+  <data name="Aday" xml:space="preserve">
+    <value>A day</value>
+  </data>
+  <data name="AddAChart" xml:space="preserve">
+    <value>Add a chart.</value>
+  </data>
+  <data name="Ago" xml:space="preserve">
+    <value>Ago</value>
+  </data>
+  <data name="Days" xml:space="preserve">
+    <value>Days</value>
+  </data>
+  <data name="Hours" xml:space="preserve">
+    <value>Hours</value>
+  </data>
+  <data name="In_Time" xml:space="preserve">
+    <value>In</value>
+  </data>
+  <data name="LessThenOneMinute" xml:space="preserve">
+    <value>Less then on minute</value>
+  </data>
+  <data name="Minutes" xml:space="preserve">
+    <value>Minutes</value>
+  </data>
+  <data name="Months" xml:space="preserve">
+    <value>Months</value>
+  </data>
+  <data name="NoChartsYet" xml:space="preserve">
+    <value>You don't have any charts yet.</value>
+  </data>
+  <data name="RemoveAlert" xml:space="preserve">
+    <value>Remove alert</value>
+  </data>
+  <data name="Year" xml:space="preserve">
+    <value>Year</value>
   </data>
 </root>

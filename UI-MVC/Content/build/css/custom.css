@@ -959,7 +959,7 @@ a:hover, a:focus {
 .nav > li > a {
   position: relative;
   display: block;
-  padding: 20px 17px 19px; }
+  padding: 19px 17px; }
 
 .breadcrumb {
   position: relative;

@@ -24,13 +24,12 @@ namespace BAR.UI.MVC.Controllers
 		/// </summary>
 		public ActionResult SourceManagement()
 		{
-			const string PAGE_TITLE = "Bronnen beheren";
 			userManager = new UserManager();
 
 			//Assembling the view
 			return View(new BaseViewModel
 			{
-				PageTitle = PAGE_TITLE,
+				PageTitle = Resources.Resources.SourceManagement,
 				User = userManager.GetUser(User.Identity.GetUserId())
 			});
 		}
@@ -40,13 +39,12 @@ namespace BAR.UI.MVC.Controllers
 		/// </summary>
 		public ActionResult PlatformManagement()
 		{
-			const string PAGE_TITLE = "Deelplatformen beheren";
 			userManager = new UserManager();
 
 			//Assembling the view
 			return View(new BaseViewModel
 			{
-				PageTitle = PAGE_TITLE,
+				PageTitle = Resources.Resources.SubPlatformManagement,
 				User = userManager.GetUser(User.Identity.GetUserId())
 			});
 		}
@@ -56,7 +54,6 @@ namespace BAR.UI.MVC.Controllers
 		/// </summary>
 		public ActionResult AdminManagement()
 		{
-			const string USER_MANAGEMENT_PAGE_TITLE = "Admins beheren";
 			IdentityUserManager identityUserManager = HttpContext.GetOwinContext().GetUserManager<IdentityUserManager>();
 			userManager = new UserManager();
 
@@ -72,7 +69,7 @@ namespace BAR.UI.MVC.Controllers
 			EditUserViewModel vm = new EditUserViewModel()
 			{
 				User = userManager.GetUser(User.Identity.GetUserId()),
-				PageTitle = USER_MANAGEMENT_PAGE_TITLE,
+				PageTitle = Resources.Resources.AdminManagement,
 				Users = users,
 			};
 			FillViewModels(vm);
