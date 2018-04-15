@@ -14,6 +14,8 @@ namespace BAR.BL.Managers
 		IEnumerable<Item> GetAllPersons();
 		IEnumerable<Item> GetAllOrganisations();
 		IEnumerable<Item> GetItemsForType(ItemType type);
+		IEnumerable<Item> GetMostTrendingItems(int numberOfItems = 5);
+		IEnumerable<Item> GetMostTrendingItemsForType(ItemType type, int numberOfItems = 5);
 
 		Item CreateItem(ItemType itemType, string name, string description = "", string function = "", Category category = null);
 

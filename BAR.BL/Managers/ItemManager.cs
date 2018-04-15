@@ -60,6 +60,48 @@ namespace BAR.BL.Managers
 		}
 
 		/// <summary>
+		/// Gives back te most trending items
+		/// the number of trending items depends on the
+		/// number that you give via the parameter
+		/// </summary>
+		public IEnumerable<Item> GetMostTrendingItems(int numberOfItems = 5)
+		{
+			//Order the items by populairity
+			IEnumerable<Item> itemsOrderd = GetAllItems()
+				.OrderBy(item => item.TrendingPercentage).AsEnumerable();
+
+			//Get the first items out of the list
+			List<Item> itemsOrderdMostPopulair = new List<Item>();
+			for (int i = 0; i < numberOfItems; i++)
+			{
+				if (i <= itemsOrderd.Count()) itemsOrderdMostPopulair.Add(itemsOrderd.ElementAt(i));
+			}
+
+			return itemsOrderdMostPopulair.AsEnumerable();
+		}
+
+		/// <summary>
+		/// Gives back a list of the most trending items
+		/// for a specific type
+		/// the number of items depends on the parameter "numberOfItems"
+		/// </summary>
+		public IEnumerable<Item> GetMostTrendingItemsForType(ItemType type, int numberOfItems = 5)
+		{
+			//order the items by populairity
+			IEnumerable<Item> itemsOrderd = GetAllItems().Where(item => item.ItemType == type)
+				.OrderBy(item => item.TrendingPercentage).AsEnumerable();
+
+			//Get the first items out of the list
+			List<Item> itemsOrderdMostPopulair = new List<Item>();
+			for (int i = 0; i < numberOfItems; i++)
+			{
+				if (i <= itemsOrderd.Count()) itemsOrderdMostPopulair.Add(itemsOrderd.ElementAt(i));
+			}
+
+			return itemsOrderdMostPopulair.AsEnumerable();
+		}
+
+		/// <summary>
 		/// Returns an item from a specific itemId.
 		/// </summary>
 		public Item GetItem(int itemId)
