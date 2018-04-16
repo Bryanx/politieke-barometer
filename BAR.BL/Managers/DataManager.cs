@@ -55,14 +55,15 @@ namespace BAR.BL.Managers
     }
 
     public bool SynchronizeData(string json)
-    {
-      
-      CheckPeople(json);
-      UpdateInformations(json);
-      return true;
+    {     
+      if (CheckPeople(json) && UpdateInformations(json))
+      {
+        return true;
+      }
+      return false;
     }
 
-    private void UpdateInformations(string json)
+    private bool UpdateInformations(string json)
     {
       uowManager = new UnitOfWorkManager();
       InitRepo();
@@ -84,7 +85,7 @@ namespace BAR.BL.Managers
           Confidence = 1
         };
         information.PropertieValues.Add(propertyValue);
-        //Read gender
+        //Read age
         propertyValue = new PropertyValue
         {
           Property = dataRepo.ReadProperty("Age"),
@@ -128,13 +129,16 @@ namespace BAR.BL.Managers
           information.PropertieValues.Add(propertyValue);
         }
         //Read sentiment
-        propertyValue = new PropertyValue
+        for (int j = 0; j < deserializedJson[i].sentiment.Count; j++)
         {
-          Property = dataRepo.ReadProperty("Sentiment"),
-          Value = deserializedJson[i].sentiment[0],
-          Confidence = deserializedJson[i].sentiment[1]
-        };
-        information.PropertieValues.Add(propertyValue);
+          propertyValue = new PropertyValue
+          {
+            Property = dataRepo.ReadProperty("Sentiment"),
+            Value = deserializedJson[i].sentiment[0],
+            Confidence = deserializedJson[i].sentiment[1]
+          };
+          information.PropertieValues.Add(propertyValue);
+        }
         //Read hashtags
         for (int j = 0; j < deserializedJson[i].hashtags.Count; j++)
         {
@@ -211,9 +215,10 @@ namespace BAR.BL.Managers
       }
       dataRepo.CreateInformations(informationList);
       uowManager.Save();
+      return true;
     }
 
-    private void CheckPeople(string json)
+    private bool CheckPeople(string json)
     {
       dynamic deserializedJson = JsonConvert.DeserializeObject(json);
 
@@ -232,8 +237,26 @@ namespace BAR.BL.Managers
           }
         }
       }
+      return true;
     }
 
+    public SynchronizeAudit GetLastAudit()
+    {
+      InitRepo();
+      return dataRepo.ReadLastAudit();
+    }
+
+    public SynchronizeAudit AddAudit(DateTime timestamp, bool succes)
+    {
+      InitRepo();
+      SynchronizeAudit synchronizeAudit = new SynchronizeAudit()
+      {
+        TimeStamp = timestamp,
+        Succes = succes
+      };
+      dataRepo.CreateAudit(synchronizeAudit);
+      return synchronizeAudit;
+    }
   }
 }
 

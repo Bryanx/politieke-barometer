@@ -162,7 +162,18 @@ namespace BAR.DAL
 		{
 			return ctx.Sources.Where(x => x.Name.Equals(sourceName)).SingleOrDefault();
 		}
-	}
+
+    public SynchronizeAudit ReadLastAudit()
+    {
+      return ctx.SynchronizeAudits.Where(x => x.Succes).OrderByDescending(x => x.TimeStamp).FirstOrDefault();
+    }
+
+    public int CreateAudit(SynchronizeAudit synchronizeAudit)
+    {
+      ctx.SynchronizeAudits.Add(synchronizeAudit);
+      return ctx.SaveChanges();
+    }
+  }
 }
 
 

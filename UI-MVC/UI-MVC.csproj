@@ -209,6 +209,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\api\AlertApiController.cs" />
+    <Compile Include="Controllers\api\DataApiController.cs" />
     <Compile Include="Controllers\api\ItemApiController.cs" />
     <Compile Include="Controllers\api\UserApiController.cs" />
     <Compile Include="Controllers\api\WidgetController.cs" />
