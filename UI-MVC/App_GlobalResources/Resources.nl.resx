@@ -517,7 +517,7 @@
     <value>Gebruiker</value>
   </data>
   <data name="UserController_Login_Ongeldige_inlogpoging_" xml:space="preserve">
-    <value>Ongeldige inlogpoging.</value>
+    <value>Ongeldige gebruikersnaam of wachtwoord.</value>
   </data>
   <data name="UserManagement" xml:space="preserve">
     <value>Gebruikers beheren</value>
