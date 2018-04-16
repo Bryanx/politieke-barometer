@@ -15,7 +15,6 @@ namespace BAR.BL.Managers
   {
     private IDataRepository dataRepo;
     private UnitOfWorkManager uowManager;
-    private List<Item> itemList;
 
     /// <summary>
     /// When unit of work is present, it will effect
@@ -57,7 +56,17 @@ namespace BAR.BL.Managers
 
     public bool SynchronizeData(string json)
     {
+      
+      CheckPeople(json);
+      UpdateInformations(json);
+      return true;
+    }
+
+    private void UpdateInformations(string json)
+    {
+      uowManager = new UnitOfWorkManager();
       InitRepo();
+      IItemManager itemManager = new ItemManager(uowManager);
       dynamic deserializedJson = JsonConvert.DeserializeObject(json);
       List<Information> informationList = new List<Information>();
       for (int i = 0; i < deserializedJson.Count; i++)
@@ -190,7 +199,7 @@ namespace BAR.BL.Managers
         for (int j = 0; j < deserializedJson[i].persons.Count; j++)
         {
           string name = deserializedJson[i].persons[j];
-          information.Items.Add(GeneratePeople(name));
+          information.Items.Add(itemManager.GetPerson(name));
         }
 
         //Add other information
@@ -201,20 +210,28 @@ namespace BAR.BL.Managers
         informationList.Add(information);
       }
       dataRepo.CreateInformations(informationList);
-      return true;
+      uowManager.Save();
     }
 
-    private Item GeneratePeople(string personFullName)
+    private void CheckPeople(string json)
     {
+      dynamic deserializedJson = JsonConvert.DeserializeObject(json);
+
       IItemManager itemManager = new ItemManager();
-      Item person = itemManager.GetPerson(personFullName);
 
-      if (person == null)
+      for (int i = 0; i < deserializedJson.Count; i++)
       {
-        person = itemManager.CreateItem(ItemType.Person, personFullName);
-      }
+        for (int j = 0; j < deserializedJson[i].persons.Count; j++)
+        {
+          string name = deserializedJson[i].persons[j];
+          Item person = itemManager.GetPerson(name);
 
-      return person;
+          if (person == null)
+          {
+            person = itemManager.CreateItem(ItemType.Person, name);
+          }
+        }
+      }
     }
 
   }
