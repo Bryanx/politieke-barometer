@@ -8,6 +8,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using System.Linq;
 using AutoMapper;
+using BAR.UI.MVC.App_GlobalResources;
 
 namespace BAR.UI.MVC.Controllers
 {
@@ -15,7 +16,7 @@ namespace BAR.UI.MVC.Controllers
 	/// This controller is used for admins and superadmins.
 	/// </summary>
 	[Authorize(Roles = "Admin, SuperAdmin")]
-	public class AdminController : Controller
+	public class AdminController : LanguageController
 	{
 		private IUserManager userManager;
 		private IItemManager itemManager;
@@ -25,7 +26,6 @@ namespace BAR.UI.MVC.Controllers
 		/// </summary>
 		public ActionResult Index()
 		{
-			const string ADMIN_DASHBOARD_PAGE_TITLE = "Admin Dashboard";
 			return HttpNotFound();
 		}
 
@@ -34,14 +34,13 @@ namespace BAR.UI.MVC.Controllers
 		/// </summary>
 		public ActionResult PageManagement()
 		{
-			const string PAGE_MANAGEMENT_PAGE_TITLE = "Pagina's beheren";
 			userManager = new UserManager();
 
 			//Assembling the view
 			return View(new BaseViewModel()
 			{
 				User = userManager.GetUser(User.Identity.GetUserId()),
-				PageTitle = PAGE_MANAGEMENT_PAGE_TITLE
+				PageTitle = Resources.PageManagement
 			});
 		}
 
@@ -50,7 +49,6 @@ namespace BAR.UI.MVC.Controllers
 		/// </summary>
 		public ActionResult ItemManagement()
 		{
-			const string ITEM_MANAGEMENT_PAGE_TITLE = "Items beheren";
 			itemManager = new ItemManager();
 			userManager = new UserManager();
 
@@ -58,7 +56,7 @@ namespace BAR.UI.MVC.Controllers
 			return View(new ItemViewModels.ItemViewModel()
 			{
 				User = userManager.GetUser(User.Identity.GetUserId()),
-				PageTitle = ITEM_MANAGEMENT_PAGE_TITLE,
+				PageTitle = Resources.ItemManagement,
 				Items = Mapper.Map(itemManager.GetAllItems(), new List<ItemDTO>())
 			});
 		}
@@ -68,7 +66,6 @@ namespace BAR.UI.MVC.Controllers
 		/// </summary>
 		public ActionResult UserManagement()
 		{
-			const string USER_MANAGEMENT_PAGE_TITLE = "Gebruikers beheren";
 			userManager = new UserManager();
 
 			//Get Roles
@@ -85,7 +82,7 @@ namespace BAR.UI.MVC.Controllers
 			EditUserViewModel vm = new EditUserViewModel()
 			{
 				User = userManager.GetUser(User.Identity.GetUserId()),
-				PageTitle = USER_MANAGEMENT_PAGE_TITLE,
+				PageTitle = Resources.UserManagement,
 				Users = users
 			};
 			FillViewModels(vm);

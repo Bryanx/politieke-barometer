@@ -7,6 +7,7 @@ using BAR.BL;
 using BAR.BL.Domain.Items;
 using BAR.BL.Domain.Users;
 using BAR.BL.Managers;
+using BAR.UI.MVC.App_GlobalResources;
 using BAR.UI.MVC.Models;
 using Microsoft.AspNet.Identity;
 using WebGrease.Css.Extensions;
@@ -17,9 +18,8 @@ namespace BAR.UI.MVC.Controllers
 	/// <summary>
 	/// This controller is used for managing the person-page.
 	/// </summary>
-	public class PersonController : Controller
+	public class PersonController : LanguageController
 	{
-		private const string INDEX_PAGE_TITLE = "Politici-overzicht";
 		private IItemManager itemManager;
 		private IUserManager userManager;
 		private ISubscriptionManager subManager;
@@ -48,7 +48,7 @@ namespace BAR.UI.MVC.Controllers
 			return View("Index",
 				new ItemViewModel()
 				{
-					PageTitle = INDEX_PAGE_TITLE,
+					PageTitle = Resources.AllPoliticians,
 					User = User.Identity.IsAuthenticated ? userManager.GetUser(User.Identity.GetUserId()) : null,
 					Items = people
 				});

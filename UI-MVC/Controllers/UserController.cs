@@ -7,9 +7,9 @@ using System.Linq;
 using System.Web.Mvc;
 using BAR.BL.Domain.Items;
 using BAR.UI.MVC.Models;
-using Subscription = BAR.BL.Domain.Users.Subscription;
 using System.Web;
 using Microsoft.AspNet.Identity.Owin;
+using BAR.UI.MVC.App_GlobalResources;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using System.Net;
@@ -26,7 +26,7 @@ namespace BAR.UI.MVC.Controllers
 	/// This controller is used for managing the users.
 	/// </summary>
 	[Authorize]
-	public class UserController : Controller
+	public class UserController : LanguageController
 	{
 		private IUserManager userManager;
 		private ISubscriptionManager subManager;
@@ -84,7 +84,7 @@ namespace BAR.UI.MVC.Controllers
 					return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
 				case SignInStatus.Failure:
 				default:
-					ModelState.AddModelError("", "Ongeldige inlogpoging.");
+					ModelState.AddModelError("", Resources.LoginFailed);
 					return View(model);
 			}
 		}
@@ -139,8 +139,8 @@ namespace BAR.UI.MVC.Controllers
 					string code = await userManager.GenerateEmailConfirmationTokenAsync(user.Id);
 					var callbackUrl = Url.Action("ConfirmEmail", "User", new { userId = user.Id, code = code },
 						protocol: Request.Url.Scheme);
-					await userManager.SendEmailAsync(user.Id, "Bevestig je registratie",
-						"Bevestig je registratie door <a href=\"" + callbackUrl + "\">hier</a> te klikken.");
+					await userManager.SendEmailAsync(user.Id, Resources.ConfirmAccount,
+						"<a href=\"" + callbackUrl + "\">"+Resources.ConfirmAccountClickingHere+"</a>");
 					//Assign Role to user    
 					await userManager.AddToRoleAsync(user.Id, "User");
 					//Login
@@ -212,8 +212,8 @@ namespace BAR.UI.MVC.Controllers
 				string code = await userManager.GeneratePasswordResetTokenAsync(user.Id);
 				var callbackUrl = Url.Action("ResetPassword", "User", new { userId = user.Id, code = code },
 					protocol: Request.Url.Scheme);
-				await userManager.SendEmailAsync(user.Id, "Reset wachtwoord",
-					"Je kan je wachtwoord resetten door <a href=\"" + callbackUrl + "\">hier</a> te klikken.");
+				await userManager.SendEmailAsync(user.Id, Resources.ResetPassword,
+					"<a href=\"" + callbackUrl + "\">"+Resources.ResetPasswordByClickingHere+"</a>");
 				return RedirectToAction("ForgotPasswordConfirmation", "User");
 			}
 
@@ -413,10 +413,9 @@ namespace BAR.UI.MVC.Controllers
 		/// </summary>
 		public ActionResult Index()
 		{
-			const string INDEX_PAGE_TITLE = "Dashboard";
 			string userId = User.Identity.GetUserId();
 			ItemViewModel itemViewModel = GetPersonViewModel(userId);
-			itemViewModel.PageTitle = INDEX_PAGE_TITLE;
+			itemViewModel.PageTitle = Resources.Dashboard;
 
 			//Assebling the view
 			return View("Dashboard", itemViewModel);
@@ -427,7 +426,6 @@ namespace BAR.UI.MVC.Controllers
 		/// </summary>
 		public ActionResult Settings()
 		{
-			const string SETTINGS_PAGE_TITLE = "Instellingen";
 			userManager = new UserManager();
 
 			User user = userManager.GetUser(User.Identity.GetUserId());
@@ -449,9 +447,9 @@ namespace BAR.UI.MVC.Controllers
 				AlertsViaWebsite = user.AlertsViaWebsite,
 				AlertsViaEmail = user.AlertsViaEmail,
 				WeeklyReviewViaEmail = user.WeeklyReviewViaEmail,
-				PageTitle = SETTINGS_PAGE_TITLE
+				PageTitle = Resources.Settings
 			};
-			return View("Settings", settingsViewModel);
+			return View(settingsViewModel);
 		}
 
 		/// <summary>

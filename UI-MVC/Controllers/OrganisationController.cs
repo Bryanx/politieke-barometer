@@ -6,6 +6,7 @@ using AutoMapper;
 using BAR.BL.Domain.Items;
 using BAR.BL.Domain.Users;
 using BAR.BL.Managers;
+using BAR.UI.MVC.App_GlobalResources;
 using BAR.UI.MVC.Models;
 using Microsoft.AspNet.Identity;
 using static BAR.UI.MVC.Models.ItemViewModels;
@@ -15,9 +16,8 @@ namespace BAR.UI.MVC.Controllers
 	/// <summary>
 	/// This controller is used for managing the organisation-page.
 	/// </summary>
-	public class OrganisationController : Controller
+	public class OrganisationController : LanguageController
 	{
-		private const string INDEX_PAGE_TITLE = "Partij-overzicht";
 		private ISubscriptionManager subManager;
 		private IItemManager itemManager;
 		private IUserManager userManager;
@@ -47,7 +47,7 @@ namespace BAR.UI.MVC.Controllers
 			return View("Index",
 				new ItemViewModel()
 				{
-					PageTitle = INDEX_PAGE_TITLE,
+					PageTitle = Resources.AllParties,
 					User = User.Identity.IsAuthenticated ? userManager.GetUser(User.Identity.GetUserId()) : null,
 					Items = people
 				});

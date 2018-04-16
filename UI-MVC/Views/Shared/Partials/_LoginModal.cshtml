@@ -5,7 +5,7 @@
 <!-- login -->
 <ul class="nav navbar-nav navbar-right">
     <li class="c-primary">
-        <a class="signup" href="#" data-toggle="modal" data-target=".bs-example-modal-lg">Login</a>
+        <a class="signup" href="#" data-toggle="modal" data-target=".bs-example-modal-lg">@Resources.Login</a>
         <div class="modal bs-example-modal-lg fade" tabindex="-1" role="dialog" aria-hidden="true">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
@@ -13,7 +13,7 @@
                         <div class="accordion" id="accordion" role="tablist" aria-multiselectable="true">
                             <div class="panel">
                                 <a class="panel-heading" role="tab" id="headingOne" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                    <h4 class="panel-title">Login</h4>
+                                    <h4 class="panel-title">@Resources.Login</h4>
                                 </a>
                                 <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
                                     <div class="panel-body">
@@ -21,17 +21,17 @@
                                         @using (Html.BeginForm("Login", "User", new {ReturnUrl = ViewBag.ReturnUrl}, FormMethod.Post, new {role = "form"})) {
                                             @Html.AntiForgeryToken()
                                             <div class="form-group">
-                                                @Html.TextBoxFor(m => m.Email, new {@class = "form-control login-input", @placeholder = "E-mailadres"})
+                                                @Html.TextBoxFor(m => m.Email, new {@class = "form-control login-input", @placeholder = Resources.Email})
                                                 @Html.ValidationMessageFor(m => m.Email, "", new {@class = "text-danger"})
-                                                @Html.PasswordFor(m => m.Password, new {@class = "form-control login-input", @placeholder = "Wachtwoord"})
+                                                @Html.PasswordFor(m => m.Password, new {@class = "form-control login-input", @placeholder = Resources.Password})
                                                 @Html.ValidationMessageFor(m => m.Password, "", new {@class = "text-danger"})
                                                 <div class="form-check login-input">
                                                     <div class="checkbox">
                                                         @Html.CheckBoxFor(m => m.RememberMe)
                                                         @Html.LabelFor(m => m.RememberMe)
                                                     </div>
-                                                    <button type="submit" class="btn btn-primary login-input w-100 h-40">Login</button>
-                                                    <a href="@Url.ForgotPasswordUrl()" class="text-center login-input w-100">Forgot your password?</a>
+                                                    <button type="submit" class="btn btn-primary login-input w-100 h-40">@Resources.Login</button>
+                                                    <a href="@Url.ForgotPasswordUrl()" class="text-center login-input w-100">@Resources.ForgotPasswordQuestion</a>
                                                 </div>
                                             </div>
                                         }
@@ -40,7 +40,7 @@
                             </div>
                             <div class="panel">
                                 <a class="panel-heading collapsed" role="tab" id="headingTwo" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                    <h4 class="panel-title">Register</h4>
+                                    <h4 class="panel-title">@Resources.Signup</h4>
                                 </a>
                                 <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
                                     <div class="panel-body">

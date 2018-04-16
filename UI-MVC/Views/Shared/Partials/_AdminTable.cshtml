@@ -16,27 +16,27 @@
     <thead>
         <tr>
             <th>
-                Foto
+                @Resources.Photo
             </th>
             <th>
-                Voornaam
+                @Resources.Firstname
             </th>
             <th>
-                Achternaam
+                @Resources.Lastname
             </th>
             <th>
-                Geslacht
+                @Resources.Gender
             </th>
             <th>
-                Geboortedatum
+                @Resources.DateOfBirth
             </th>
             <th>
-                Email
+                @Resources.Email
             </th>
             <th>
             </th>
             <th>
-                Rol
+                @Resources.Role
             </th>
             <th>
             </th>
@@ -58,15 +58,15 @@
                     </td>
                     @if (Model.Users.ElementAt(i).Gender == BAR.BL.Domain.Users.Gender.MAN) {
                         <td>
-                            Man
+                            @Resources.Man
                         </td>
                     } else if (Model.Users.ElementAt(i).Gender == BAR.BL.Domain.Users.Gender.WOMAN) {
                         <td>
-                            Vrouw
+                            @Resources.Woman
                         </td>
                     } else {
                         <td>
-                            Iets anders
+                            @Resources.Unknown
                         </td>
                     }
                     @if (Model.Users.ElementAt(i).DateOfBirth != null) {
@@ -75,7 +75,7 @@
                         </td>
                     } else {
                         <td>
-                            N/B
+                            @Resources.NA
                         </td>
                     }
                     <td>
@@ -83,16 +83,16 @@
                     </td>
                     <td>
                         @if (Model.Users.ElementAt(i).Deleted) {
-                            <a class="accountActivityChange btn btn-success btn-xs" data-item-id="@Model.Users.ElementAt(i).Id" title="Verwijderde gebruiker herstellen">Herstellen</a>
+                            <a class="accountActivityChange btn btn-success btn-xs" data-item-id="@Model.Users.ElementAt(i).Id" title=@Resources.RecoverDeletedUser>@Resources.Recover</a>
                         } else {
-                            <a class="accountActivityChange btn btn-danger btn-xs" data-item-id="@Model.Users.ElementAt(i).Id" title="Gebruiker verwijderen">Verwijderen</a>
+                            <a class="accountActivityChange btn btn-danger btn-xs" data-item-id="@Model.Users.ElementAt(i).Id" title=@Resources.DeleteUser>@Resources.Delete</a>
                         }
                     </td>
                     <td id=@String.Format("td2{0}", i)>
                         @ViewBag.CurrentRoles[i]
                     </td>
                     <td>
-                        @Html.DropDownListFor(model => model.User.Roles, Model.AdminRoles, "Verander rol", new {@class = "form-control input-sm", @onchange = $"changeRole('{Model.Users.ElementAt(i).Id}', '{i}')", id = $"dd{i}"})
+                        @Html.DropDownListFor(model => model.User.Roles, Model.AdminRoles, Resources.ChangeRole, new {@class = "form-control input-sm", @onchange = $"changeRole('{Model.Users.ElementAt(i).Id}', '{i}')", id = $"dd{i}"})
                     </td>
                 </tr>
             }

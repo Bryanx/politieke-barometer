@@ -57,8 +57,8 @@ body {
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
-  width: 50px;
-  height: 50px;
+  width: 35px;
+  height: 35px;
   display: inline-block;
   margin-top: -20px;
   margin-bottom: -20px;
@@ -883,12 +883,31 @@ a:hover, a:focus {
   .sidebar-header:first-of-type {
     margin-top: 0; }
 
+.nav .culture-form > form {
+  position: fixed;
+  bottom: 0;
+  width: 100px; }
+  .nav .culture-form > form > div.control-group {
+    display: inline-block;
+    width: 30px; }
+    .nav .culture-form > form > div.control-group > label {
+      margin: 0;
+      cursor: pointer;
+      text-align: center;
+      width: 30px;
+      font-size: 12px; }
+    .nav .culture-form > form > div.control-group > input {
+      display: none; }
+    .nav .culture-form > form > div.control-group input[type="radio"]:checked + label {
+      background: #3b4856; }
 .nav.side-menu > li {
   position: relative;
   display: block;
   cursor: pointer; }
   .nav.side-menu > li:hover {
     background: #26313c; }
+  .nav.side-menu > li form {
+    display: inline; }
   .nav.side-menu > li > i {
     margin-bottom: 6px; }
     .nav.side-menu > li > i:hover {
@@ -940,7 +959,7 @@ a:hover, a:focus {
 .nav > li > a {
   position: relative;
   display: block;
-  padding: 20px 17px 19px; }
+  padding: 19px 17px; }
 
 .breadcrumb {
   position: relative;
@@ -957,6 +976,15 @@ a:hover, a:focus {
   .breadcrumb > li > a {
     position: relative;
     z-index: 15; }
+
+.no-widgets {
+  margin: 100px 0; }
+  .no-widgets > h1 {
+    margin-bottom: 20px !important; }
+  .no-widgets > a {
+    cursor: pointer; }
+    .no-widgets > a:hover {
+      text-decoration: none; }
 
 #alertDropdown {
   padding: 17px 17px 16px; }
@@ -1676,7 +1704,8 @@ ul.msg_headers li:nth-child(2) a:hover {
   text-decoration: underline; }
 ul.msg_list li a {
   padding: 3px 5px !important;
-  width: auto; }
+  width: auto;
+  text-decoration: none; }
   ul.msg_list li a .time {
     font-size: 11px;
     font-style: italic;

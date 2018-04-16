@@ -99,8 +99,8 @@ body {
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
-  width: 50px;
-  height: 50px;
+  width: 35px;
+  height: 35px;
   display: inline-block;
   margin-top: -20px;
   margin-bottom: -20px;
@@ -114,14 +114,12 @@ body {
 }
 
 .table {
-  
-
-.user-profile img {
-  width: 35px;
-  height: 35px;
-  @include border-radius(50%);
-  margin-right: 10px;
-}
+  .user-profile img {
+    width: 35px;
+    height: 35px;
+    @include border-radius(50%);
+    margin-right: 10px;
+  }
 
   > thead {
     margin: 0 -20px;
@@ -1189,6 +1187,28 @@ a {
 }
 
 .nav {
+  .culture-form > form {
+    position: fixed;
+    bottom: 0;
+    width: 100px;
+    > div.control-group {
+      display: inline-block;
+      width: 30px;
+      > label {
+        margin: 0;
+        cursor: pointer;
+        text-align: center;
+        width: 30px;
+        font-size: 12px;
+      }
+      > input {
+        display: none;
+      }
+      input[type="radio"]:checked+label {
+        background: #3b4856;
+      }
+    }
+  }
   &.side-menu > li {
     position: relative;
     display: block;
@@ -1196,6 +1216,9 @@ a {
     &:hover {
       background: #26313c;
     }
+  form {
+    display: inline;
+  }
     > i {
       margin-bottom: 6px;
       &:hover {
@@ -1271,7 +1294,7 @@ a {
   > li > a {
     position: relative;
     display: block;
-    padding: 20px 17px 19px;
+    padding: 19px 17px;
   }
 }
 
@@ -1287,6 +1310,19 @@ a {
   > li > a {
     position: relative;
     z-index: 15;
+  }
+}
+
+.no-widgets {
+  margin: 100px 0;
+  > h1 {
+    margin-bottom: 20px !important;
+  }
+  > a {
+    cursor: pointer;
+    &:hover {
+      text-decoration: none;
+    }
   }
 }
 
@@ -2215,6 +2251,7 @@ ul {
   &.msg_list li a {
     padding: 3px 5px !important;
     width: auto;
+    text-decoration: none;
     .time {
       font-size: 11px;
       font-style: italic;
@@ -5303,5 +5340,5 @@ ul.notifications {
   background-position: center;
   background-size: cover;
   margin-top: 8px;
-  margin-left: 5px; 
+  margin-left: 5px;
 }

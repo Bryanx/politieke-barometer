@@ -1,0 +1,549 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Account" xml:space="preserve">
+    <value>Account</value>
+  </data>
+  <data name="Admin" xml:space="preserve">
+    <value>Admin</value>
+  </data>
+  <data name="AdminDashboard" xml:space="preserve">
+    <value>Admin dashboard</value>
+  </data>
+  <data name="AdminManagement" xml:space="preserve">
+    <value>Admin management</value>
+  </data>
+  <data name="AboutOneHour" xml:space="preserve">
+    <value>About an hour</value>
+  </data>
+  <data name="AboutOneMinute" xml:space="preserve">
+    <value>About a minute</value>
+  </data>
+  <data name="AboutOneMonth" xml:space="preserve">
+    <value>About a month</value>
+  </data>
+  <data name="AboutOneYear" xml:space="preserve">
+    <value>About a year</value>
+  </data>
+  <data name="About_Time" xml:space="preserve">
+    <value>About</value>
+  </data>
+  <data name="Aday" xml:space="preserve">
+    <value>A day</value>
+  </data>
+  <data name="AddAChart" xml:space="preserve">
+    <value>Add a chart.</value>
+  </data>
+  <data name="Ago" xml:space="preserve">
+    <value>Ago</value>
+  </data>
+  <data name="Alerts" xml:space="preserve">
+    <value>Alerts</value>
+  </data>
+  <data name="AlertsViaEmail" xml:space="preserve">
+    <value>Alerts by email</value>
+  </data>
+  <data name="AlertsViaWebsite" xml:space="preserve">
+    <value>Alerts on website</value>
+  </data>
+  <data name="AllParties" xml:space="preserve">
+    <value>All parties</value>
+  </data>
+  <data name="AllPoliticians" xml:space="preserve">
+    <value>All politicians</value>
+  </data>
+  <data name="CalculatedByAmountOfTweets" xml:space="preserve">
+    <value>Calculated via the amount of tweets.</value>
+  </data>
+  <data name="CannotRemoveItem" xml:space="preserve">
+    <value>Cannot remove item.</value>
+  </data>
+  <data name="Category" xml:space="preserve">
+    <value>Category</value>
+  </data>
+  <data name="ChangeRole" xml:space="preserve">
+    <value>Change role</value>
+  </data>
+  <data name="City" xml:space="preserve">
+    <value>City</value>
+  </data>
+  <data name="ConfirmAccount" xml:space="preserve">
+    <value>Confirm your account.</value>
+  </data>
+  <data name="ConfirmAccountClickingHere" xml:space="preserve">
+    <value>Confirm your account by clicking here.</value>
+  </data>
+  <data name="ConfirmForgotPassword" xml:space="preserve">
+    <value>Forgotten password confirmation</value>
+  </data>
+  <data name="ConfirmPassword" xml:space="preserve">
+    <value>Confirm password</value>
+  </data>
+  <data name="ConfirmResetPassword" xml:space="preserve">
+    <value>Confirm reset password</value>
+  </data>
+  <data name="ConfirmYourEmail" xml:space="preserve">
+    <value>Confirm your email</value>
+  </data>
+  <data name="ConnectYour" xml:space="preserve">
+    <value>Connect your</value>
+  </data>
+  <data name="Contact" xml:space="preserve">
+    <value>Contact</value>
+  </data>
+  <data name="CreationDate" xml:space="preserve">
+    <value>Creation date</value>
+  </data>
+  <data name="CurrentPassword" xml:space="preserve">
+    <value>Current password</value>
+  </data>
+  <data name="Dashboard" xml:space="preserve">
+    <value>Dashboard</value>
+  </data>
+  <data name="DateOfBirth" xml:space="preserve">
+    <value>Date of birth</value>
+  </data>
+  <data name="Days" xml:space="preserve">
+    <value>Days</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="DeleteAccount" xml:space="preserve">
+    <value>Delete account</value>
+  </data>
+  <data name="DeleteAccountWarning" xml:space="preserve">
+    <value>Warning. When deleting your account al your settings, graphs and widgets will be removed.</value>
+  </data>
+  <data name="DeleteUser" xml:space="preserve">
+    <value>Delete user.</value>
+  </data>
+  <data name="Email" xml:space="preserve">
+    <value>Email</value>
+  </data>
+  <data name="EmailRequired" xml:space="preserve">
+    <value>Email is required.</value>
+  </data>
+  <data name="EmailSentPasswordReset" xml:space="preserve">
+    <value>An email has been sent to reset your password.</value>
+  </data>
+  <data name="EmailUs" xml:space="preserve">
+    <value>Email us</value>
+  </data>
+  <data name="EnterEmail" xml:space="preserve">
+    <value>Enter your email.</value>
+  </data>
+  <data name="ExternalLogin" xml:space="preserve">
+    <value>External login</value>
+  </data>
+  <data name="Failed" xml:space="preserve">
+    <value>Failed</value>
+  </data>
+  <data name="FillTheRemainingFields" xml:space="preserve">
+    <value>Complete the remaining fields and signup.</value>
+  </data>
+  <data name="Firstname" xml:space="preserve">
+    <value>First name</value>
+  </data>
+  <data name="FollowThisPerson" xml:space="preserve">
+    <value>Follow this person.</value>
+  </data>
+  <data name="ForgotPassword" xml:space="preserve">
+    <value>Forgot password</value>
+  </data>
+  <data name="ForgotPasswordQuestion" xml:space="preserve">
+    <value>Forgot your password?</value>
+  </data>
+  <data name="Gender" xml:space="preserve">
+    <value>Gender</value>
+  </data>
+  <data name="Home" xml:space="preserve">
+    <value>Home</value>
+  </data>
+  <data name="HomepageHeaderTitle" xml:space="preserve">
+    <value>See which politicians are trending</value>
+  </data>
+  <data name="Hours" xml:space="preserve">
+    <value>Hours</value>
+  </data>
+  <data name="IAgreeWithTheTermsAndCondition" xml:space="preserve">
+    <value>I agree with the terms and conditions.</value>
+  </data>
+  <data name="ImportContent" xml:space="preserve">
+    <value>Import content</value>
+  </data>
+  <data name="In_Time" xml:space="preserve">
+    <value>In</value>
+  </data>
+  <data name="IsNowTrending" xml:space="preserve">
+    <value>is now trending!</value>
+  </data>
+  <data name="ItemManagement" xml:space="preserve">
+    <value>Item management</value>
+  </data>
+  <data name="Lastname" xml:space="preserve">
+    <value>Last name</value>
+  </data>
+  <data name="LessThenOneMinute" xml:space="preserve">
+    <value>Less then on minute</value>
+  </data>
+  <data name="Link" xml:space="preserve">
+    <value>Link</value>
+  </data>
+  <data name="Links" xml:space="preserve">
+    <value>Links</value>
+  </data>
+  <data name="Login" xml:space="preserve">
+    <value>Login</value>
+  </data>
+  <data name="LoginFailed" xml:space="preserve">
+    <value>Login failed</value>
+  </data>
+  <data name="LoginUsingYour" xml:space="preserve">
+    <value>Login using your</value>
+  </data>
+  <data name="LoginWith" xml:space="preserve">
+    <value>Login with</value>
+  </data>
+  <data name="LoginWithAccount" xml:space="preserve">
+    <value>Login with your account.</value>
+  </data>
+  <data name="Logout" xml:space="preserve">
+    <value>Logout</value>
+  </data>
+  <data name="Man" xml:space="preserve">
+    <value>Man</value>
+  </data>
+  <data name="Mentions" xml:space="preserve">
+    <value>Mentions</value>
+  </data>
+  <data name="Minutes" xml:space="preserve">
+    <value>Minutes</value>
+  </data>
+  <data name="Months" xml:space="preserve">
+    <value>Months</value>
+  </data>
+  <data name="MoreInfo" xml:space="preserve">
+    <value>More info</value>
+  </data>
+  <data name="NA" xml:space="preserve">
+    <value>N/A</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="Negative" xml:space="preserve">
+    <value>Negative</value>
+  </data>
+  <data name="NewPassword" xml:space="preserve">
+    <value>New password</value>
+  </data>
+  <data name="No" xml:space="preserve">
+    <value>No</value>
+  </data>
+  <data name="NoAlertsMessage" xml:space="preserve">
+    <value>Subscribe yourself to politicians, parties or topics to see when they are trending.</value>
+  </data>
+  <data name="NoChartsYet" xml:space="preserve">
+    <value>You don't have any charts yet.</value>
+  </data>
+  <data name="NowYouCan" xml:space="preserve">
+    <value>Now you can</value>
+  </data>
+  <data name="NumberOfFollowers" xml:space="preserve">
+    <value>Followers</value>
+  </data>
+  <data name="NumberOfMentions" xml:space="preserve">
+    <value>Mentions</value>
+  </data>
+  <data name="OnSocialMedia" xml:space="preserve">
+    <value>On social media</value>
+  </data>
+  <data name="Or" xml:space="preserve">
+    <value>Or</value>
+  </data>
+  <data name="PageManagement" xml:space="preserve">
+    <value>Page management</value>
+  </data>
+  <data name="Parties" xml:space="preserve">
+    <value>Parties</value>
+  </data>
+  <data name="Password" xml:space="preserve">
+    <value>Password</value>
+  </data>
+  <data name="PasswordNotMatch" xml:space="preserve">
+    <value>The password and confirmation password do not match.</value>
+  </data>
+  <data name="Photo" xml:space="preserve">
+    <value>Photo</value>
+  </data>
+  <data name="Politician" xml:space="preserve">
+    <value>Politician</value>
+  </data>
+  <data name="Politicians" xml:space="preserve">
+    <value>Politicians</value>
+  </data>
+  <data name="Positive" xml:space="preserve">
+    <value>Positive</value>
+  </data>
+  <data name="Privacy" xml:space="preserve">
+    <value>Privacy</value>
+  </data>
+  <data name="PrivacyAndSafety" xml:space="preserve">
+    <value>Privacy and safety</value>
+  </data>
+  <data name="ProfilePicture" xml:space="preserve">
+    <value>Profile picture</value>
+  </data>
+  <data name="QuestionAndAnswer" xml:space="preserve">
+    <value>Question and answer</value>
+  </data>
+  <data name="Recover" xml:space="preserve">
+    <value>Recover</value>
+  </data>
+  <data name="RecoverDeletedUser" xml:space="preserve">
+    <value>Recover deleted user.</value>
+  </data>
+  <data name="RecoverItem" xml:space="preserve">
+    <value>Recover item.</value>
+  </data>
+  <data name="RememberMeQuestion" xml:space="preserve">
+    <value>Remember me?</value>
+  </data>
+  <data name="Remove" xml:space="preserve">
+    <value>Remove</value>
+  </data>
+  <data name="RemoveAlert" xml:space="preserve">
+    <value>Remove alert</value>
+  </data>
+  <data name="RemoveItem" xml:space="preserve">
+    <value>Remove item.</value>
+  </data>
+  <data name="Reset" xml:space="preserve">
+    <value>Reset</value>
+  </data>
+  <data name="ResetPassword" xml:space="preserve">
+    <value>Reset password</value>
+  </data>
+  <data name="ResetPasswordByClickingHere" xml:space="preserve">
+    <value>You can reset your password by clicking here.</value>
+  </data>
+  <data name="Role" xml:space="preserve">
+    <value>Role</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="Saved" xml:space="preserve">
+    <value>Saved</value>
+  </data>
+  <data name="SearchbarPlaceholder" xml:space="preserve">
+    <value>Search for politicians, parties or topics.</value>
+  </data>
+  <data name="SelectYourCity" xml:space="preserve">
+    <value>Select your city.</value>
+  </data>
+  <data name="SelectYourGender" xml:space="preserve">
+    <value>Select your gender</value>
+  </data>
+  <data name="Settings" xml:space="preserve">
+    <value>Settings</value>
+  </data>
+  <data name="ShowAllAlerts" xml:space="preserve">
+    <value>Show all alerts</value>
+  </data>
+  <data name="Signup" xml:space="preserve">
+    <value>Signup</value>
+  </data>
+  <data name="SignupAsNewUser" xml:space="preserve">
+    <value>Signup as a new user.</value>
+  </data>
+  <data name="SignupForNewAccount" xml:space="preserve">
+    <value>Signup for a new account.</value>
+  </data>
+  <data name="SignupToFollow" xml:space="preserve">
+    <value>Signup to follow</value>
+  </data>
+  <data name="SourceManagement" xml:space="preserve">
+    <value>Source management</value>
+  </data>
+  <data name="StayUpToDate" xml:space="preserve">
+    <value>Stay up-to-date.</value>
+  </data>
+  <data name="SubPlatformManagement" xml:space="preserve">
+    <value>Subplatform management</value>
+  </data>
+  <data name="Subscribe" xml:space="preserve">
+    <value>Subscribe</value>
+  </data>
+  <data name="Subscriptions" xml:space="preserve">
+    <value>Subscriptions</value>
+  </data>
+  <data name="SuccesfullyLoggedInWith" xml:space="preserve">
+    <value>You have successfully logged in with</value>
+  </data>
+  <data name="ThanksEmailConfirm" xml:space="preserve">
+    <value>Thank you for confirming your email address.</value>
+  </data>
+  <data name="Topics" xml:space="preserve">
+    <value>Topics</value>
+  </data>
+  <data name="Trending" xml:space="preserve">
+    <value>Trending</value>
+  </data>
+  <data name="Unknown" xml:space="preserve">
+    <value>Unknown</value>
+  </data>
+  <data name="Unsubscribe" xml:space="preserve">
+    <value>Unsubscribe</value>
+  </data>
+  <data name="User" xml:space="preserve">
+    <value>User</value>
+  </data>
+  <data name="UserController_Login_Ongeldige_inlogpoging_" xml:space="preserve">
+    <value>Ongeldige inlogpoging.</value>
+  </data>
+  <data name="UserManagement" xml:space="preserve">
+    <value>User management</value>
+  </data>
+  <data name="WeeklyReview" xml:space="preserve">
+    <value>Weekly review</value>
+  </data>
+  <data name="WeeklyReviewViaEmail" xml:space="preserve">
+    <value>Weekly Review by email</value>
+  </data>
+  <data name="Woman" xml:space="preserve">
+    <value>Woman</value>
+  </data>
+  <data name="Year" xml:space="preserve">
+    <value>Year</value>
+  </data>
+  <data name="Yes" xml:space="preserve">
+    <value>Yes</value>
+  </data>
+  <data name="YouHaveNoAlerts" xml:space="preserve">
+    <value>You have no alerts.</value>
+  </data>
+  <data name="Your" xml:space="preserve">
+    <value>Your</value>
+  </data>
+  <data name="YourPasswordHasBeenReset" xml:space="preserve">
+    <value>Your password has been reset.</value>
+  </data>
+</root>

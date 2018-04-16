@@ -17,19 +17,19 @@
         <th>
         </th>
         <th>
-            Naam
+            @Resources.Name
         </th>
         <th>
-            Vermeldingen
+            @Resources.Mentions
         </th>
         <th>
-            Positief
+            @Resources.Positive
         </th>
         <th>
-            Negatief
+            @Resources.Negative
         </th>
-        <th title="Berekend op basis van het aantal tweets">
-            Trending
+        <th title=@Resources.CalculatedByAmountOfTweets>
+            @Resources.Trending
         </th>
         @if (User.Identity.IsAuthenticated) {
             <th>
@@ -63,9 +63,9 @@
             @if (User.Identity.IsAuthenticated) {
                 <td>
                     @if (item.Subscribed != true) {
-                        <a class="subscribeItem btn btn-success btn-xs" data-item-id="@item.ItemId" title="Deze persoon volgen">Abonneer</a>
+                    <a class="subscribeItem btn btn-success btn-xs" data-item-id="@item.ItemId" title=@Resources.FollowThisPerson>@Resources.Subscribe</a>
                     } else {
-                        <a class="subscribeItem btn btn-danger btn-xs" data-item-id="@item.ItemId" title="Uitschrijven">Uitschrijven</a>
+                    <a class="subscribeItem btn btn-danger btn-xs" data-item-id="@item.ItemId" title=@Resources.Unsubscribe>@Resources.Unsubscribe</a>
                     }
                 </td>
             }

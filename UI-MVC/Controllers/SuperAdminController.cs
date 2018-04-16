@@ -4,6 +4,7 @@ using System.Web;
 using System.Web.Mvc;
 using BAR.BL.Domain.Users;
 using BAR.BL.Managers;
+using BAR.UI.MVC.App_GlobalResources;
 using BAR.UI.MVC.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
@@ -15,7 +16,7 @@ namespace BAR.UI.MVC.Controllers
 	/// of the superadmins
 	/// </summary>
 	[Authorize(Roles = "SuperAdmin")]
-	public class SuperAdminController : Controller
+	public class SuperAdminController : LanguageController
 	{
 		private IUserManager userManager;
 
@@ -24,13 +25,12 @@ namespace BAR.UI.MVC.Controllers
 		/// </summary>
 		public ActionResult SourceManagement()
 		{
-			const string PAGE_TITLE = "Bronnen beheren";
 			userManager = new UserManager();
 
 			//Assembling the view
 			return View(new BaseViewModel
 			{
-				PageTitle = PAGE_TITLE,
+				PageTitle = Resources.SourceManagement,
 				User = userManager.GetUser(User.Identity.GetUserId())
 			});
 		}
@@ -40,13 +40,12 @@ namespace BAR.UI.MVC.Controllers
 		/// </summary>
 		public ActionResult PlatformManagement()
 		{
-			const string PAGE_TITLE = "Deelplatformen beheren";
 			userManager = new UserManager();
 
 			//Assembling the view
 			return View(new BaseViewModel
 			{
-				PageTitle = PAGE_TITLE,
+				PageTitle = Resources.SubPlatformManagement,
 				User = userManager.GetUser(User.Identity.GetUserId())
 			});
 		}
@@ -56,7 +55,6 @@ namespace BAR.UI.MVC.Controllers
 		/// </summary>
 		public ActionResult AdminManagement()
 		{
-			const string USER_MANAGEMENT_PAGE_TITLE = "Admins beheren";
 			IdentityUserManager identityUserManager = HttpContext.GetOwinContext().GetUserManager<IdentityUserManager>();
 			userManager = new UserManager();
 
@@ -72,7 +70,7 @@ namespace BAR.UI.MVC.Controllers
 			EditUserViewModel vm = new EditUserViewModel()
 			{
 				User = userManager.GetUser(User.Identity.GetUserId()),
-				PageTitle = USER_MANAGEMENT_PAGE_TITLE,
+				PageTitle = Resources.AdminManagement,
 				Users = users,
 			};
 			FillViewModels(vm);
