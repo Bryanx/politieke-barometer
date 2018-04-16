@@ -547,10 +547,6 @@
       <Project>{F5414F35-68D4-4BE7-A2CF-DA5D9977FC0F}</Project>
       <Name>DAL</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Resources\Resources.csproj">
-      <Project>{c18a978a-92e1-4585-944a-a52b38d00d1b}</Project>
-      <Name>Resources</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
