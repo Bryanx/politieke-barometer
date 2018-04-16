@@ -1704,7 +1704,8 @@ ul.msg_headers li:nth-child(2) a:hover {
   text-decoration: underline; }
 ul.msg_list li a {
   padding: 3px 5px !important;
-  width: auto; }
+  width: auto;
+  text-decoration: none; }
   ul.msg_list li a .time {
     font-size: 11px;
     font-style: italic;
