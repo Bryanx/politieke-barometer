@@ -1,3 +1,4 @@
+using BAR.BL.Domain;
 using BAR.BL.Domain.Data;
 using BAR.BL.Domain.Items;
 using BAR.BL.Domain.Users;
@@ -23,6 +24,22 @@ namespace BAR.DAL.EF
       GenerateProperties(ctx);
       GenerateInformations(ctx);
       GenerateAreas(ctx);
+      GenerateSubPlatforms(ctx);
+    }
+
+    /// <summary>
+    /// Generates some subplatforms.
+    /// </summary>
+    /// <param name="ctx"></param>
+    private void GenerateSubPlatforms(BarometerDbContext ctx)
+    {
+      SubPlatform subPlatform = new SubPlatform
+      {
+        Name = "K3ZoektK3",
+        CreationDate = DateTime.Now
+      };
+      ctx.SubPlatforms.Add(subPlatform);
+      ctx.SaveChanges();
     }
 
 
