@@ -12,6 +12,7 @@ using BAR.UI.MVC.Models;
 using Microsoft.AspNet.Identity;
 using WebGrease.Css.Extensions;
 using static BAR.UI.MVC.Models.ItemViewModels;
+using BAR.UI.MVC.Attributes;
 
 namespace BAR.UI.MVC.Controllers
 {
@@ -23,13 +24,19 @@ namespace BAR.UI.MVC.Controllers
 		private IItemManager itemManager;
 		private IUserManager userManager;
 		private ISubscriptionManager subManager;
+    private ISubplatformManager platformManager;
 
 		/// <summary>
 		/// Item page for logged-in and non-logged-in users.
 		/// </summary>
 		[AllowAnonymous]
+		[SubPlatformCheck]
 		public ActionResult Index()
 		{
+			string subPlatform = (string) RouteData.Values["SubPlatform"];
+
+
+      //platformManager = new PlatformManager();
 			itemManager = new ItemManager();
 			userManager = new UserManager();
 			subManager = new SubscriptionManager();
