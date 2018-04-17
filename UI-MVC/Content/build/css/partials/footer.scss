@@ -76,3 +76,19 @@ footer.joinus {
     margin-left: 0;
   }
 }
+
+
+
+@media (min-width: 992px) {
+  footer {
+    padding-left: 100px;
+    padding-right: 100px;
+  }
+}
+
+@media (min-width: 1500px) {
+  footer {
+    padding-left: 200px;
+    padding-right: 200px;
+  }
+}
