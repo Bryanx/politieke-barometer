@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace BAR.UI.MVC.Attributes
 {
-  public class SubPlatformCheck : System.Web.Mvc.ActionFilterAttribute
+  public class SubPlatformCheck : ActionFilterAttribute
   {
     public override void OnActionExecuting(ActionExecutingContext filterContext)
     {
