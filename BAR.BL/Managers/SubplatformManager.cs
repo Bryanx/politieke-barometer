@@ -18,6 +18,7 @@ namespace BAR.BL.Managers
 
 		public SubPlatform GetSubPlatform(string subplatformName)
 		{
+      InitRepo();
 			SubPlatform subPlatform = platformRepo.ReadSubPlatform(subplatformName);
 			return subPlatform;
 		}
