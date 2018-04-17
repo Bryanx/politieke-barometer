@@ -10,6 +10,6 @@ namespace BAR.BL.Managers
   public interface ISubplatformManager
   {
     //Read
-    SubPlatform getSubPlatform(string subplatformName);
+    SubPlatform GetSubPlatform(string subplatformName);
   }
 }

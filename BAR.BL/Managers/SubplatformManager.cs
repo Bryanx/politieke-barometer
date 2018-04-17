@@ -11,12 +11,12 @@ namespace BAR.BL.Managers
 	/// <summary>
 	/// Responsible for managing SubPlatform
 	/// </summary>
-	class SubplatformManager : ISubplatformManager
+	public class SubplatformManager : ISubplatformManager
 	{
 		private ISubplatformRepository platformRepo;
 		private UnitOfWorkManager uowManager;
 
-		public SubPlatform getSubPlatform(string subplatformName)
+		public SubPlatform GetSubPlatform(string subplatformName)
 		{
 			SubPlatform subPlatform = platformRepo.ReadSubPlatform(subplatformName);
 			return subPlatform;
