@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using BAR.BL.Domain.Widgets;
 using BAR.DAL;
 using BAR.BL.Domain.Users;
+using BAR.BL.Domain.Items;
 
 namespace BAR.BL.Managers
 {
@@ -28,22 +29,40 @@ namespace BAR.BL.Managers
 		/// Creates a widget based on the parameters
 		/// and links that widget to a dasboard.
 		/// </summary>
-		public UserWidget CreateWidget(int dashboardId, WidgetType widgetType, string title, int rowNbr, int colNbr, int rowspan = 1, int colspan = 1)
+		public Widget CreateWidget (WidgetType widgetType, string title, int rowNbr, int colNbr, int rowspan = 1, int colspan = 1, int dashboardId = -1)
 		{
 			InitRepo();
+			Widget widget;
 
-			UserWidget widget = new UserWidget()
+			//Checks if a userwidget or an itemWidget needs to be created
+			if (dashboardId == -1)
 			{
-				WidgetType = widgetType,
-				Title = title,
-				RowNumber = rowNbr,
-				ColumnNumber = colNbr,
-				RowSpan = rowspan,
-				ColumnSpan = colspan,
-			};
+				widget = new ItemWidget()
+				{
+					WidgetType = widgetType,
+					Title = title,
+					RowNumber = rowNbr,
+					ColumnNumber = colNbr,
+					RowSpan = rowspan,
+					ColumnSpan = colspan,
+					Items = new List<Item>()
+				};
+			} else
+			{
+				widget = new UserWidget()
+				{
+					WidgetType = widgetType,
+					Title = title,
+					RowNumber = rowNbr,
+					ColumnNumber = colNbr,
+					RowSpan = rowspan,
+					ColumnSpan = colspan,
+					Items = new List<Item>()
+				};
+			}
+			
 			//repo autmaticly links widget to dashboard
 			dashboardRepo.CreateWidget(widget, dashboardId);
-
 			return widget;
 		}
 
