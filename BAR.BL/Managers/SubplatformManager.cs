@@ -174,7 +174,6 @@ namespace BAR.BL.Managers
 			return platform;
 		}
 
-		
 		/// <summary>
 		/// Makes an subplatform and persist that to the database
 		/// </summary>
@@ -188,13 +187,51 @@ namespace BAR.BL.Managers
 				Name = name,
 				CreationDate = DateTime.Now,
 				NumberOfUsers = 0,
-				Questions = new List<Question>()
+				Questions = new List<Question>(),
+				Customization = CreateDefaultCustomization()
 			};
 
 			//Create subplatform
 			platformRepo.CreateSubplatform(platform);
 
 			return platform;
+		}
+
+		private Customization CreateDefaultCustomization()
+		{
+			Customization custom = new Customization()
+			{
+				//Colors
+				PrimaryColor = "#0f8ec4",
+				SecondairyColor = "#303E4D",
+				TertiaryColor = "#278e87",
+				BackgroundColor = "#f7f7f7",
+				TextColor = "#73879C",
+
+				//Navbar and title text
+				PersonAlias = "Persoon",
+				PersonsAlias = "Personen",
+				OrganisationAlias = "Organisation",
+				OrganisationsAlias = "Organisations",
+				ThemeAlias = "Theme",
+				ThemesAlias = "Themes",
+
+				//Privacy
+				PrivacyTitle = "Privacy policy",
+				PrivacyText = "Copyright " + DateTime.Now.Year,
+
+				//FAQ
+				FAQTitle = "Frequently Asked Questions (FAQ)",
+
+				//Contact properties
+				StreetAndHousenumber = "Nationalestraat 24",
+				Zipcode = "2060",
+				City = "Antwerpen",
+				Country = "België",
+				Email = "contact@politiekebarometer.be"
+			};
+
+			return custom;
 		}
 
 		/// <summary>
