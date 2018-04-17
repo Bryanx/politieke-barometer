@@ -56,7 +56,7 @@ namespace BAR.DAL
 		/// <summary>
 		/// Gives back the configuration of a specific subplatform
 		/// </summary>
-		public SubPlatform ReadCustomization(string subplatformName)
+		public SubPlatform ReadSubplatformWithCustomization(string subplatformName)
 		{
 			return ctx.SubPlatforms.Include(platform => platform.Customization)
 									.Where(platform => platform.Name.ToLower().Equals(subplatformName.ToLower())).SingleOrDefault();
