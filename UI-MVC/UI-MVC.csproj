@@ -223,6 +223,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Attributes\SubPLatformCheck.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\api\AlertApiController.cs" />
     <Compile Include="Controllers\api\ItemApiController.cs" />
@@ -546,10 +547,6 @@
     <ProjectReference Include="..\BAR.DAL\DAL.csproj">
       <Project>{F5414F35-68D4-4BE7-A2CF-DA5D9977FC0F}</Project>
       <Name>DAL</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Resources\Resources.csproj">
-      <Project>{c18a978a-92e1-4585-944a-a52b38d00d1b}</Project>
-      <Name>Resources</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

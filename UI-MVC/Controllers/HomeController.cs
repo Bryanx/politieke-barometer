@@ -98,11 +98,11 @@ namespace BAR.UI.MVC.Controllers
 		/// Returns a javascript object with language resources.
 		/// This way local resources can be used in javascript files.
 		/// </summary>
-        public ActionResult GetResources()
-        {
-            Response.ContentType = "text/javascript";
-            return View();
-        }
+				public ActionResult GetResources()
+				{
+						Response.ContentType = "text/javascript";
+						return View();
+				}
 
-    }
+		}
 }
