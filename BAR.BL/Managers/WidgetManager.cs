@@ -10,7 +10,7 @@ namespace BAR.BL.Managers
 	/// Responsable for managing widgets
 	/// and their dashboards 
 	/// </summary>
-	public class DashboardManager : IDashboardManager
+	public class WidgetManager : IWidgetManager
 	{
 		private IWidgetRepository dashboardRepo;
 		private UnitOfWorkManager uowManager;
@@ -19,7 +19,7 @@ namespace BAR.BL.Managers
 		/// When unit of work is present, it will effect
 		/// initRepo-method. (see documentation of initRepo)
 		/// </summary>
-		public DashboardManager(UnitOfWorkManager uowManager = null)
+		public WidgetManager(UnitOfWorkManager uowManager = null)
 		{
 			this.uowManager = uowManager;
 		}

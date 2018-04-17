@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BAR.BL.Managers
 {
-	public interface IDashboardManager
+	public interface IWidgetManager
 	{
 		//widgets
 		UserWidget GetWidget(int widgetId);
