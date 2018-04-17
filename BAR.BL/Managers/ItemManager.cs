@@ -33,30 +33,30 @@ namespace BAR.BL.Managers
 		/// </summary>
 		public void DetermineTrending(int itemId)
 		{
-			InitRepo();
+			//InitRepo();
 
-			DataManager dataManager = new DataManager();
-			IEnumerable<Information> allInfoForId = dataManager.getAllInformationForId(itemId);
+			//DataManager dataManager = new DataManager();
+			//IEnumerable<Information> allInfoForId = dataManager.getAllInformationForId(itemId);
 
-			DateTime earliestInfoDate = allInfoForId.Min(item => item.CreatetionDate).Value;
-			DateTime lastInfoDate = allInfoForId.Max(item => item.CreatetionDate).Value;
+			//DateTime earliestInfoDate = allInfoForId.Min(item => item.CreatetionDate).Value;
+			//DateTime lastInfoDate = allInfoForId.Max(item => item.CreatetionDate).Value;
 
-			int period = (lastInfoDate - earliestInfoDate).Days;
+			//int period = (lastInfoDate - earliestInfoDate).Days;
 
-			Console.WriteLine(earliestInfoDate);
-			Console.WriteLine(lastInfoDate);
+			//Console.WriteLine(earliestInfoDate);
+			//Console.WriteLine(lastInfoDate);
 
-			int aantalBaseline = dataManager.GetNumberInfo(itemId, earliestInfoDate);
-			int aantalTrending = dataManager.GetNumberInfo(itemId, lastInfoDate.AddDays(-1));
+			//int aantalBaseline = dataManager.GetNumberInfo(itemId, earliestInfoDate);
+			//int aantalTrending = dataManager.GetNumberInfo(itemId, lastInfoDate.AddDays(-1));
 
-			// Calculate the baseline = number of information / number of days from the last update until now
-			double baseline = Convert.ToDouble(aantalBaseline) / Convert.ToDouble(period);
+			//// Calculate the baseline = number of information / number of days from the last update until now
+			//double baseline = Convert.ToDouble(aantalBaseline) / Convert.ToDouble(period);
 
-			// Calculate the trendingpercentage = baseline / number of days from the last update until now.
-			double trendingPer = Convert.ToDouble(aantalTrending) / baseline;
+			//// Calculate the trendingpercentage = baseline / number of days from the last update until now.
+			//double trendingPer = Convert.ToDouble(aantalTrending) / baseline;
 
-			itemRepo.UpdateItemTrending(itemId, baseline, trendingPer);
-			itemRepo.UpdateLastUpdated(itemId, DateTime.Now);
+			//itemRepo.UpdateItemTrending(itemId, baseline, trendingPer);
+			//itemRepo.UpdateLastUpdated(itemId, DateTime.Now);
 		}
 
 		/// <summary>
