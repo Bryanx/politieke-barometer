@@ -136,5 +136,23 @@ namespace BAR.DAL
 			foreach (SubPlatform platform in subPlatforms) ctx.Entry(platform).State = EntityState.Modified;
 			return ctx.SaveChanges();
 		}
+
+		/// <summary>
+		/// Updates a specific question in the database
+		/// </summary>
+		public int UpdateQuestion(Question question)
+		{
+			ctx.Entry(question).State = EntityState.Modified;
+			return ctx.SaveChanges();
+		}
+
+		/// <summary>
+		/// Updates a given list of questions in the database
+		/// </summary>
+		public int UpdateQuestions(IEnumerable<Question> questions)
+		{
+			foreach (Question question in questions) ctx.Entry(question).State = EntityState.Modified;
+			return ctx.SaveChanges();
+		}
 	}
 }
