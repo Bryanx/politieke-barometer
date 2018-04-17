@@ -65,6 +65,13 @@ a {
   background: var(--bg-color);
 }
 
+
+.btn-outline {
+  background-color: transparent;
+  color: inherit;
+  transition: all .5s;
+}
+
 .input-group-btn .btn {
   margin-bottom: 0;
 }

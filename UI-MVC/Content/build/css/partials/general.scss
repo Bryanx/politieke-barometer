@@ -1,0 +1,57 @@
+* {
+  box-sizing: border-box;
+  &:before, &:after {
+    box-sizing: border-box;
+  }
+}
+
+html, body {
+  height: 100%;
+  background: var(--bg-color);
+}
+
+header {
+  width: 100%;
+}
+
+body {
+  color: var(--font-color);
+  background: var(--bg-color);
+  font-family: $font-default;
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 1.471;
+}
+
+::selection {
+  background: var(--primary-color);
+  color: var(--white);
+}
+
+h1, .h1, h2, .h2, h3, .h3 {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+h2 {
+  font-size: 18px;
+  font-weight: 400;
+}
+
+a {
+  color: var(--font-color);
+  text-decoration: none;
+  outline: 0;
+  &:hover, &:focus {
+    text-decoration: underline;
+  }
+}
+
+:visited, :focus, :active {
+  outline: 0;
+}
+
+hr {
+  border-top: 1px solid white;
+  border-bottom: 1px solid #d0d0d0;
+}

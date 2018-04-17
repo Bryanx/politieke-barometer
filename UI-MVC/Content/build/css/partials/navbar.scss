@@ -1,4 +1,5 @@
 @import "searchbar";
+@import "navbartoggle";
 
 .nav_menu {
   display: flex;
@@ -13,18 +14,9 @@
   top: 0;
 }
 
-
-
 .dropdown-menu .label-icon {
   margin-left: 5px;
 }
-
-.btn-outline {
-  background-color: transparent;
-  color: inherit;
-  transition: all .5s;
-}
-
 .dropdown-menu > li > a .fa {
   display: inline;
 }
@@ -506,57 +498,25 @@
   position: fixed !important;
 }
 
-/*
-TOGGLE
- */
-
-
-.hover-nav {
-  position: fixed;
-  left: 0px;
-  margin-left: 100px;
-  top: 50px;
-  bottom: 50px;
-  width: 50px;
-  display: flex;
-  align-items: center;
-  transition: all .2s;
-  &:hover .toggle {
-    display: flex;
-    margin-left: 0px;
-    @include animation(0, .2s, ease-in-out, fadeLeft);
-  }
-}
-
-.toggle {
-  display: none;
-  align-items: center;
-  flex-direction: row;
-  margin-left: -25px;
-  padding: 0;
-  width: 25px;
-  height: 50px;
-  background-color: var(--secondary-color);
-  cursor: pointer;
-  @include border-radius(0 5px 5px 0);
-  @include animation(0, .2s, ease-in-out, fadeRight);
-  &:hover {
-    background: #26313c;
-    margin: 0;
-  }
-  i {
-    color: var(--white);
-    margin: auto;
-    display: flex;
-    align-self: center;
-    font-size: 12px;
-  }
-}
-
 
 li.user-profile {
   justify-content: flex-end;
   > ul.dropdown-menu {
     width: 300px !important;
+  }
+}
+
+
+.active a span.fa {
+  text-align: right !important;
+  margin-right: 4px;
+}
+
+.left_col {
+  .mCSB_scrollTools {
+    width: 6px;
+  }
+  .mCSB_dragger {
+    max-height: 400px !important;
   }
 }

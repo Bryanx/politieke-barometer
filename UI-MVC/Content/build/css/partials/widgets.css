@@ -1,0 +1,10 @@
+.no-widgets {
+  margin: 100px 0; }
+  .no-widgets > h1 {
+    margin-bottom: 20px !important; }
+  .no-widgets > a {
+    cursor: pointer; }
+    .no-widgets > a:hover {
+      text-decoration: none; }
+
+/*# sourceMappingURL=widgets.css.map */

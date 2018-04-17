@@ -3,6 +3,7 @@
 @import "modules/colors";
 @import "modules/mediaqueries";
 
+@import "partials/general";
 @import "partials/oneliners";
 @import "partials/buttons";
 @import "partials/alerts";
@@ -19,6 +20,7 @@
 @import "partials/login";
 @import "partials/forms";
 @import "partials/dropdowns";
+@import "partials/dashboard";
 
 /*
 =========================================================
@@ -26,77 +28,10 @@
 =========================================================
 */
 
-* {
-  box-sizing: border-box;
-  &:before, &:after {
-    box-sizing: border-box;
-  }
-}
-
-html, body {
-  height: 100%;
-  background: var(--bg-color);
-}
-
-header {
-  width: 100%;
-}
-
-body {
-  color: var(--font-color);
-  background: var(--bg-color);
-  font-family: $font-default;
-  font-size: 15px;
-  font-weight: 400;
-  line-height: 1.471;
-}
-
-::selection {
-  background: var(--primary-color);
-  color: var(--white);
-}
-
-h1, .h1, h2, .h2, h3, .h3 {
-  margin-top: 10px;
-  margin-bottom: 10px;
-}
-
-h2 {
-  font-size: 18px;
-  font-weight: 400;
-}
-
-a {
-  color: var(--font-color);
-  text-decoration: none;
-  outline: 0;
-  &:hover, &:focus {
-    text-decoration: underline;
-  }
-}
-
-:visited, :focus, :active {
-  outline: 0;
-}
-
-hr {
-  border-top: 1px solid white;
-  border-bottom: 1px solid #d0d0d0;
-}
-
-.open > .dropdown-menu {
-  @include animation(0, .2s, ease-in-out, fade);
-}
 
 /*
 MODIFYABLE DASHBOARD
  */
-
-.grid-stack {
-  position: relative;
-  margin-left: -10px !important;
-  margin-right: -10px !important;
-}
 
 /*
 Login
@@ -117,20 +52,6 @@ Login
 ========================= CUSTOM ========================
 =========================================================
  */
-
-.active a span.fa {
-  text-align: right !important;
-  margin-right: 4px;
-}
-
-.left_col {
-  .mCSB_scrollTools {
-    width: 6px;
-  }
-  .mCSB_dragger {
-    max-height: 400px !important;
-  }
-}
 
 .main_container {
   position: relative;
@@ -196,35 +117,8 @@ Login
   }
 }
 
-.no-widgets {
-  margin: 100px 0;
-  > h1 {
-    margin-bottom: 20px !important;
-  }
-  > a {
-    cursor: pointer;
-    &:hover {
-      text-decoration: none;
-    }
-  }
-}
-
 .main_menu_side {
   padding: 0;
-}
-
-.bs-docs-sidebar .nav > li > a {
-  display: block;
-  padding: 4px 6px;
-}
-
-.tile-stats.sparkline {
-  padding: 10px;
-  text-align: center;
-}
-
-.tooltip {
-  display: block !important;
 }
 
 .right-arrow {
@@ -242,25 +136,6 @@ Login
   display: none;
 }
 
-table.countries_list {
-  width: 100%;
-  td {
-    padding: 0 10px;
-    line-height: 30px;
-    border-top: 1px solid #eeeeee;
-  }
-}
-
-button.DTTT_button, div.DTTT_button, a.DTTT_button {
-  border: 1px solid #E7E7E7 !important;
-  background: #E7E7E7 !important;
-  box-shadow: none !important;
-}
-
-.example_alt_pagination div.dataTables_info {
-  width: 40%;
-}
-
 div.box {
   height: 100px;
   padding: 10px;
@@ -272,15 +147,6 @@ div.box {
 span.right {
   float: right;
   font-size: 14px !important;
-}
-
-
-.ln_solid {
-  border-top: 1px solid #e5e5e5;
-  color: var(--white);
-  background-color: var(--white);
-  height: 1px;
-  margin: 20px 0;
 }
 
 span.section {

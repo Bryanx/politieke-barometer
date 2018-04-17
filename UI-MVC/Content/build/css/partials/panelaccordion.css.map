@@ -1,7 +1,0 @@
-{
-"version": 3,
-"mappings": "AACE,iBAAO;EACL,aAAa,EAAE,GAAG;EAClB,aAAa,EAAE,CAAC;AAElB,yBAAe;EACb,UAAU,EAAE,OAAO;EACnB,OAAO,EAAE,IAAI;EACb,KAAK,EAAE,IAAI;EACX,OAAO,EAAE,KAAK",
-"sources": ["panelaccordion.scss"],
-"names": [],
-"file": "panelaccordion.css"
-}
