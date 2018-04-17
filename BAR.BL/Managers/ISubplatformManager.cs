@@ -14,7 +14,7 @@ namespace BAR.BL.Managers
 		SubPlatform GetSubPlatform(string subplatformName);
 		IEnumerable<SubPlatform> GetSubplatforms();
 
-		SubPlatform CreateSubplatform(string name);
+		SubPlatform AddSubplatform(string name);
 
 		SubPlatform ChangePlatformName(string platformName, string name);
 		Customization ChangePageColors(string platformName, string primaryColor, string secondairyColor, string tertiaryColor, string backgroundColor, string textColor);
@@ -31,8 +31,10 @@ namespace BAR.BL.Managers
 		IEnumerable<Question> GetQuestions(string subplatformName);
 		IEnumerable<Question> GetQuestionsForType(QuestionType type);
 
-		Question CreateQuestion(string platformName, QuestionType type, string title, string anwser);
+		Question AddQuestion(string platformName, QuestionType type, string title, string anwser);
 
-		Question ChangeQuestion(int questionid, QuestionType type, string title, string anwser);
+		Question ChangeQuestion(int questionId, QuestionType type, string title, string anwser);
+
+		void RemoveQuestion(int questionId);
 	}
 }

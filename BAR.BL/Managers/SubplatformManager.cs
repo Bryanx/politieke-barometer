@@ -177,7 +177,7 @@ namespace BAR.BL.Managers
 		/// <summary>
 		/// Makes an subplatform and persist that to the database
 		/// </summary>
-		public SubPlatform CreateSubplatform(string name)
+		public SubPlatform AddSubplatform(string name)
 		{
 			InitRepo();
 
@@ -188,7 +188,7 @@ namespace BAR.BL.Managers
 				CreationDate = DateTime.Now,
 				NumberOfUsers = 0,
 				Questions = new List<Question>(),
-				Customization = CreateDefaultCustomization()
+				Customization = AddDefaultCustomization()
 			};
 
 			//Create subplatform
@@ -200,7 +200,7 @@ namespace BAR.BL.Managers
 		/// <summary>
 		/// Gives back a default customization for a platform.
 		/// </summary>
-		private Customization CreateDefaultCustomization()
+		private Customization AddDefaultCustomization()
 		{
 			Customization custom = new Customization()
 			{
@@ -316,7 +316,7 @@ namespace BAR.BL.Managers
 		/// Unit of work is not realy needed because we work with one context
 		/// Its added just for safety.
 		/// </summary>
-		public Question CreateQuestion(string platformName, QuestionType type, string title, string anwser)
+		public Question AddQuestion(string platformName, QuestionType type, string title, string anwser)
 		{
 			uowManager = new UnitOfWorkManager();
 			InitRepo();
@@ -372,6 +372,20 @@ namespace BAR.BL.Managers
 		{
 			if (uowManager == null) platformRepo = new SubplatformRepository();
 			else platformRepo = new SubplatformRepository(uowManager.UnitOfWork);
-		}	
+		}
+
+		/// <summary>
+		/// Removes a question from the database
+		/// </summary>
+		public void RemoveQuestion(int questionId)
+		{
+			InitRepo();
+
+			//Get question
+			Question question = GetQuestion(questionId);
+			if (question == null) return;
+
+			platformRepo.DeleteQuestion(question);
+		}
 	}
 }
