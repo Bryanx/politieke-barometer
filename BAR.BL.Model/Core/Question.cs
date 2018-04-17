@@ -13,4 +13,4 @@ namespace BAR.BL.Domain.Users
 		public string Title { get; set; }
 		public string Answer { get; set; }
 	}
-}k
+}
