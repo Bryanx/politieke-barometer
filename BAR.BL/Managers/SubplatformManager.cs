@@ -26,6 +26,14 @@ namespace BAR.BL.Managers
 		}
 
 		/// <summary>
+		/// 
+		/// </summary>
+		public SubPlatform CreateSubplatform(string name)
+		{
+			throw new NotImplementedException();
+		}
+
+		/// <summary>
 		/// Returns a speicif subplatform
 		/// </summary>
 		public SubPlatform GetSubPlatform(string subplatformName)

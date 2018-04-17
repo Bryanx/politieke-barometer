@@ -98,7 +98,7 @@ namespace BAR.DAL
 		/// <summary>
 		/// Gives back all the subplatforms that are on the system
 		/// </summary>
-		public IEnumerable<SubPlatform> ReadSubPlatform()
+		public IEnumerable<SubPlatform> ReadSubPlatforms()
 		{
 			return ctx.SubPlatforms.AsEnumerable();
 		}

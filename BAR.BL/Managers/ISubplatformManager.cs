@@ -9,7 +9,12 @@ namespace BAR.BL.Managers
 {
 	public interface ISubplatformManager
 	{
+		//Subplatsorms
 		SubPlatform GetSubPlatform(string subplatformName);
 		IEnumerable<SubPlatform> GetSubplatforms();
+
+		SubPlatform CreateSubplatform(string name);
+
+		//Questions
 	}
 }
