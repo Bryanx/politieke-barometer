@@ -43,8 +43,7 @@ namespace BAR.BL.Managers
 
 			int period = (lastInfoDate - earliestInfoDate).Days;
 
-			Console.WriteLine(earliestInfoDate);
-			Console.WriteLine(lastInfoDate);
+      if (period == 0) period = 1;
 
 			int aantalBaseline = dataManager.GetNumberInfo(itemId, earliestInfoDate);
 			int aantalTrending = dataManager.GetNumberInfo(itemId, lastInfoDate.AddDays(-1));
@@ -100,7 +99,7 @@ namespace BAR.BL.Managers
 		/// </summary>
 		public IEnumerable<Item> GetAllPeople() 
 		{
-			return GetAllItems().Where(item => item is Person).Where(item => item.Deleted == false);
+			return GetAllItems().Where(item => item is Person).Where(item => item.Deleted == false).ToList();
 		}
 
 		/// <summary>

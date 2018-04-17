@@ -46,31 +46,5 @@ namespace BAR.UI.MVC.Controllers
         User = userManager.GetUser(User.Identity.GetUserId())
       });
     }
-
-    public ActionResult SynchronizeData()
-    {
-      using (HttpClient client = new HttpClient())
-      {
-        //Make request
-        HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, "http://kdg.textgain.com/query");
-        request.Headers.Add("Accept", "application/json");
-        request.Headers.Add("X-API-Key", "aEN3K6VJPEoh3sMp9ZVA73kkr");
-
-        request.Content = new StringContent("{\"name\":\"Annick De Ridder\"}", Encoding.UTF8, "application/json");
-
-        //Send request
-        HttpResponseMessage response = client.SendAsync(request).Result;
-
-        //Read response
-        if (response.IsSuccessStatusCode)
-        {
-          var json = response.Content.ReadAsStringAsync().Result;
-          IDataManager dataManager = new DataManager();
-          dataManager.SynchronizeData(json);
-        }
-        else throw new Exception("Error: " + response.StatusCode);
-      }
-      return null;
-    }
   }
 }

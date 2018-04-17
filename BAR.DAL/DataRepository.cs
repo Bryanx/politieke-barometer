@@ -80,8 +80,8 @@ namespace BAR.DAL
 		/// </summary>
 		public IEnumerable<Information> ReadAllInfoForId(int itemId)
 		{
-			return ctx.Informations
-							.Where(info => info.Items.Any(item => item.ItemId == itemId)).AsEnumerable();
+      return ctx.Informations.Include(x => x.Items)
+              .Where(info => info.Items.Any(item => item.ItemId == itemId)).AsEnumerable();
 		}
 
 		/// <summary>
@@ -171,6 +171,17 @@ namespace BAR.DAL
     public int CreateAudit(SynchronizeAudit synchronizeAudit)
     {
       ctx.SynchronizeAudits.Add(synchronizeAudit);
+      return ctx.SaveChanges();
+    }
+
+    public SynchronizeAudit ReadAudit(int synchronizeAuditId)
+    {
+      return ctx.SynchronizeAudits.Where(x => x.SynchronizeAuditId == synchronizeAuditId).SingleOrDefault();
+    }
+
+    public int UpdateAudit(SynchronizeAudit synchronizeAudit)
+    {
+      ctx.Entry(synchronizeAudit).State = EntityState.Modified;
       return ctx.SaveChanges();
     }
   }

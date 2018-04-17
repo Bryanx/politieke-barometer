@@ -19,17 +19,19 @@ namespace BAR.DAL
     Property ReadProperty(string propertyName);
     Source ReadSource(string sourceName);
     SynchronizeAudit ReadLastAudit();
-    int CreateAudit(SynchronizeAudit synchronizeAudit);
+    SynchronizeAudit ReadAudit(int synchronizeAuditId);
 
 		//Create
 		int CreateInformations(List<Information> infos);
+    int CreateAudit(SynchronizeAudit synchronizeAudit);
 
-		//Update
-		int UpdateInformation(Information info);
+    //Update
+    int UpdateInformation(Information info);
 		int UpdateInformations(IEnumerable<Information> infos);
+    int UpdateAudit(SynchronizeAudit synchronizeAudit);
 
-		//Delete
-		int DeleteInformation(int infoId);
+    //Delete
+    int DeleteInformation(int infoId);
 		int DeleteInformations(IEnumerable<int> infoIds);
 	}
 }

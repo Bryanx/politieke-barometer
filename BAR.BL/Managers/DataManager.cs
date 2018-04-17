@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Collections.Generic;
 using BAR.BL.Domain.Data;
 using BAR.DAL;
@@ -54,10 +55,11 @@ namespace BAR.BL.Managers
 			return dataRepo.ReadAllInfoForId(itemId);
 		}
 
-		public bool SynchronizeData(string json)
+		public IEnumerable<Item> SynchronizeData(string json)
 		{
-			if (CheckPeople(json) && UpdateInformations(json)) return true;
-			else return false;
+      IEnumerable<Item> items = CheckPeople(json);
+			if (UpdateInformations(json)) return items;
+			else return null;
 		}
 
 		private bool UpdateInformations(string json)
@@ -65,6 +67,7 @@ namespace BAR.BL.Managers
 			uowManager = new UnitOfWorkManager();
 			InitRepo();
 			IItemManager itemManager = new ItemManager(uowManager);
+      IEnumerable<Item> items = itemManager.GetAllPeople();
 			dynamic deserializedJson = JsonConvert.DeserializeObject(json);
 			List<Information> informationList = new List<Information>();
 			for (int i = 0; i < deserializedJson.Count; i++)
@@ -200,7 +203,7 @@ namespace BAR.BL.Managers
 				for (int j = 0; j < deserializedJson[i].persons.Count; j++)
 				{
 					string name = deserializedJson[i].persons[j];
-					information.Items.Add(itemManager.GetPerson(name));
+					information.Items.Add(items.Where(x => x.Name.Equals(name)).SingleOrDefault());
 				}
 
 				//Add other information
@@ -212,10 +215,11 @@ namespace BAR.BL.Managers
 			}
 			dataRepo.CreateInformations(informationList);
 			uowManager.Save();
+      uowManager = null;
 			return true;
 		}
 
-		private bool CheckPeople(string json)
+		private IEnumerable<Item> CheckPeople(string json)
 		{
 			dynamic deserializedJson = JsonConvert.DeserializeObject(json);
 
@@ -234,7 +238,7 @@ namespace BAR.BL.Managers
 					}
 				}
 			}
-			return true;
+      return itemManager.GetAllPeople();
 		}
 
 		public SynchronizeAudit GetLastAudit()
@@ -254,7 +258,21 @@ namespace BAR.BL.Managers
 			dataRepo.CreateAudit(synchronizeAudit);
 			return synchronizeAudit;
 		}
-	}
+
+    public SynchronizeAudit GetAudit(int synchronizeAuditId)
+    {
+      return dataRepo.ReadAudit(synchronizeAuditId);
+    }
+
+    public SynchronizeAudit ChangeAudit(int synchronizeAuditId)
+    {
+      InitRepo();
+      SynchronizeAudit synchronizeAudit = GetAudit(synchronizeAuditId);
+      synchronizeAudit.Succes = true;
+      dataRepo.UpdateAudit(synchronizeAudit);
+      return synchronizeAudit;
+    }
+  }
 }
 
 

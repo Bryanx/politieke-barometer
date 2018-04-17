@@ -1,4 +1,6 @@
-﻿using BAR.BL.Managers;
+﻿using BAR.BL.Controllers;
+using BAR.BL.Domain.Items;
+using BAR.BL.Managers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,45 +11,59 @@ using System.Web.Http;
 
 namespace BAR.UI.MVC.Controllers.api
 {
-	public class DataApiController : ApiController
-	{
-		private DataManager dataManager;
+  public class DataApiController : ApiController
+  {
+    private IItemManager itemManager;
 
-		[HttpGet]
-		[Route("api/Data/Synchronize")]
-		public IHttpActionResult Synchronize()
-		{
-			dataManager = new DataManager();
+    [HttpGet]
+    [Route("api/Data/Synchronize")]
+    public IHttpActionResult Synchronize()
+    {
+      IDataManager dataManager = new DataManager();
+      string content;
+      if (dataManager.GetLastAudit() == null)
+      {
+        content = "{}";
 
-			//Get Timestamp
-			string content;
-			if (dataManager.GetLastAudit() == null) content = "{}";		
-			else
-			{
-				content = String.Format("{\"since\":\"{0}\"}", dataManager.GetLastAudit().TimeStamp.ToString("yyyy-MM-dd hh:mm"));
-			}
+        //Test with fewer data 
+        //content = "{\"since\":\"2018-04-17 00:00\"}";
+      } else
+      {
+        string stringdate = dataManager.GetLastAudit().TimeStamp.ToString("yyyy-MM-dd HH:mm");
+        content = String.Format("{{\"since\":\"{0}\"}}", stringdate);
+      }
+      int auditId = dataManager.AddAudit(DateTime.Now, false).SynchronizeAuditId;
 
-			using (HttpClient client = new HttpClient())
-			{
-				//Make request
-				HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, "http://kdg.textgain.com/query");
-				request.Headers.Add("Accept", "application/json");
-				request.Headers.Add("X-API-Key", "aEN3K6VJPEoh3sMp9ZVA73kkr");
-				request.Content = new StringContent(content, Encoding.UTF8, "application/json");
+      using (HttpClient client = new HttpClient())
+      {
+        //Make request
+        HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, "http://kdg.textgain.com/query");
+        request.Headers.Add("Accept", "application/json");
+        request.Headers.Add("X-API-Key", "aEN3K6VJPEoh3sMp9ZVA73kkr");
 
-				//Send request
-				HttpResponseMessage response = client.SendAsync(request).Result;
+        request.Content = new StringContent(content, Encoding.UTF8, "application/json");
 
-				//Read response
-				if (response.IsSuccessStatusCode)
-				{
-					var json = response.Content.ReadAsStringAsync().Result;
-					var success = dataManager.SynchronizeData(json);
-					dataManager.AddAudit(DateTime.Now, success);
-					return StatusCode(HttpStatusCode.OK);
-				}
-				else return StatusCode(HttpStatusCode.NotAcceptable);	
-			}
-		}
-	}
+        //Send request
+        HttpResponseMessage response = client.SendAsync(request).Result;
+
+        //Read response
+        if (response.IsSuccessStatusCode)
+        {
+          var json = response.Content.ReadAsStringAsync().Result;
+          var items = dataManager.SynchronizeData(json);
+          if (items != null)
+          {
+            itemManager = new ItemManager();
+            foreach (Item item in items) itemManager.DetermineTrending(item.ItemId);
+            dataManager.ChangeAudit(auditId);
+          }        
+          return StatusCode(HttpStatusCode.OK);
+        }
+        else
+        {
+          return StatusCode(HttpStatusCode.NotAcceptable);
+        }
+      }
+    }
+  }
 }
