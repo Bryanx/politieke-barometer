@@ -1,4 +1,5 @@
-﻿using BAR.BL.Domain.Items;
+﻿using BAR.BL.Domain;
+using BAR.BL.Domain.Items;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +15,8 @@ namespace BAR.BL.Managers
 		IEnumerable<Item> GetAllPersons();
 		IEnumerable<Item> GetAllOrganisations();
 		IEnumerable<Item> GetItemsForType(ItemType type);
+		IEnumerable<Item> GetAllPersonsForSubplatform(string subPlatformName);
+
 
 		Item CreateItem(ItemType itemType, string name, string description = "", string function = "", Category category = null);
 

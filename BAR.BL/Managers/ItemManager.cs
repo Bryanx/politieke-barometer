@@ -113,6 +113,18 @@ namespace BAR.BL.Managers
 		}
 
 		/// <summary>
+		/// Returns all people for specific subplatform
+		/// </summary>
+		/// <param name="subPlatformName"></param>
+		/// <returns></returns>
+		public IEnumerable<Item> GetAllPersonsForSubplatform(string subPlatformName)
+		{
+			return GetAllItems().Where(item => item is Person)
+        .Where(item => item.Deleted == false)
+        .Where(item => item.SubPlatform.Name.Equals(subPlatformName));
+		}
+
+		/// <summary>
 		/// Creates a new item based on the given parameters
 		/// </summary>
 		public Item CreateItem(ItemType itemType, string name, string description = "", string function = "", Category category = null)
@@ -264,6 +276,6 @@ namespace BAR.BL.Managers
 		{
 			if (uowManager == null) itemRepo = new ItemRepository();
 			else itemRepo = new ItemRepository(uowManager.UnitOfWork);
-		}		
+		}
 	}
 }
