@@ -1,0 +1,55 @@
+ul.msg_list li {
+  background: var(--bg-color);
+  border-top: 1px solid #d9dee4;
+  padding: 15px 25px 15px 10px;
+  display: -ms-flexbox;
+  display: flex; }
+ul.msg_headers li {
+  border: none; }
+ul.msg_list li#seeAllAlerts {
+  background: var(--white);
+  padding: 10px;
+  border-top: 1px solid #d9dee4; }
+ul.msg_headers li:nth-child(2), ul.msg_headers li.alertMenuHeader {
+  color: var(--font-color);
+  padding: 0 10px;
+  font-size: 11px;
+  background: transparent;
+  text-align: right;
+  width: 100%; }
+ul.msg_headers li:nth-child(2) a {
+  width: auto;
+  float: right; }
+  ul.msg_headers li:nth-child(2) a:hover {
+    background: transparent; }
+ul.msg_headers li.alertMenuHeader {
+  text-align: left;
+  padding: 2px 15px !important;
+  position: absolute;
+  background: transparent; }
+ul.msg_list > li > a {
+  display: block;
+  clear: both;
+  font-weight: 400;
+  line-height: 1.42857143;
+  white-space: nowrap; }
+ul.msg_list li:last-child a:hover {
+  text-decoration: underline; }
+ul.msg_headers li:nth-child(2) a:hover {
+  text-decoration: underline; }
+ul.msg_list li a {
+  padding: 3px 5px !important;
+  width: auto;
+  text-decoration: none; }
+  ul.msg_list li a .time {
+    font-size: 11px;
+    font-style: italic;
+    font-weight: bold;
+    position: absolute;
+    right: 35px; }
+  ul.msg_list li a .alertTime {
+    display: block !important;
+    font-size: 11px;
+    color: #a5a5a5; }
+
+/*# sourceMappingURL=alerts.css.map */
