@@ -1,3 +1,4 @@
+@import "panelaccordion";
 
 .x_panel {
   position: relative;
@@ -69,6 +70,9 @@
   }
 }
 
+.panel .form-control, .h-40 {
+  height: 40px;
+}
 
 .dashboard_graph .x_title {
   padding: 5px 5px 7px;

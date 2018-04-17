@@ -131,6 +131,16 @@ div {
   padding: 17px 17px 16px;
 }
 
+.info-number .badge {
+  font-size: 10px;
+  font-weight: normal;
+  line-height: 13px;
+  padding: 2px 6px;
+  position: absolute;
+  right: 5px;
+  top: 15px;
+}
+
 @media (min-width: 900px) {
   .navbar-nav .open .dropdown-menu.msg_list {
     width: 400px;

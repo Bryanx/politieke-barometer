@@ -33,6 +33,10 @@ div[data-role="editor-toolbar"] {
   height: 30px;
 }
 
+.input-group {
+  margin-bottom: 10px;
+}
+
 .form-horizontal .control-label {
   padding-top: 8px;
 }
@@ -69,5 +73,15 @@ div[data-role="editor-toolbar"] {
   }
   &.has-feedback-right {
     padding-right: 45px;
+  }
+}
+
+.validate {
+  margin-top: 10px;
+}
+
+.form_wizard {
+  .loader, .msgBox {
+    display: none;
   }
 }
