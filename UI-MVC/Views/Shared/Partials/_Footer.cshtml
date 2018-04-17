@@ -16,43 +16,43 @@
                     &copy; @DateTime.Now.Year - Barometer
                 </li>
                 <li>
-                    <button href="mailto:@Model.ContactEmail" class="btn btn-default">Email ons</button>
+                    <button href="mailto:@Model.ContactEmail" class="btn btn-default">@Resources.EmailUs</button>
                 </li>
             </ul>
         </div>
         <div class="col-md-3 col-sm-3 col-xs-12">
-            <h4>Links</h4>
+            <h4>@Resources.Links</h4>
             <ul>
                 <li>
-                    <a href="@Url.RootUrl()">Home</a>
+                    <a href="@Url.RootUrl()">@Resources.Home</a>
                 </li>
                 <li>
-                    <a href="@Url.DashboardUrl()">Dashboard</a>
+                    <a href="@Url.DashboardUrl()">@Resources.Dashboard</a>
                 </li>
                 <li>
-                    <a href="@Url.PersonUrl()">Politici</a>
+                    <a href="@Url.PersonUrl()">@Resources.Politicians</a>
                 </li>
                 <li>
-                    <a href="@Url.OrganisationUrl()">Partijen</a>
+                    <a href="@Url.OrganisationUrl()">@Resources.Parties</a>
                 </li>
             </ul>
         </div>
         <div class="col-md-3 col-sm-3 col-xs-12">
-            <h4>Meer info</h4>
+            <h4>@Resources.MoreInfo</h4>
             <ul>
                 <li>
                     <a href='#'>Login/Signup</a>
                 </li>
                 <li>
-                    <a href="@Url.FaqUrl()">Vraag en antwoord</a>
+                    <a href="@Url.FaqUrl()">@Resources.QuestionAndAnswer</a>
                 </li>
                 <li>
-                    <a href="@Url.PrivacyUrl()">Privacy</a>
+                    <a href="@Url.PrivacyUrl()">@Resources.Privacy</a>
                 </li>
             </ul>
         </div>
         <div class="col-md-3 col-sm-3 col-xs-12">
-            <h4>Contact</h4>
+            <h4>@Resources.Contact</h4>
             <ul>
                 <li>
                     @Model.ContactStreet

@@ -8,67 +8,106 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using System.Linq;
 using AutoMapper;
-using Microsoft.AspNet.Identity.EntityFramework;
+using BAR.UI.MVC.App_GlobalResources;
 
 namespace BAR.UI.MVC.Controllers
 {
-  [Authorize(Roles ="Admin, SuperAdmin")]
-  public class AdminController : Controller
-  {
-    
-    private UserManager userManager = new UserManager();
+	/// <summary>
+	/// This controller is used for admins and superadmins.
+	/// </summary>
+	[Authorize(Roles = "Admin, SuperAdmin")]
+	public class AdminController : LanguageController
+	{
+		private IUserManager userManager;
+		private IItemManager itemManager;
 
-    // GET
-    public ActionResult Index()
-    {
-      const string ADMIN_DASHBOARD_PAGE_TITLE = "Admin Dashboard";
-      return HttpNotFound();
-    }
+		/// <summary>
+		/// Dashboard page of admin.
+		/// </summary>
+		public ActionResult Index()
+		{
+			return HttpNotFound();
+		}
 
-    public ActionResult PageManagement()
-    {
-      const string PAGE_MANAGEMENT_PAGE_TITLE = "Pagina's beheren";
-      return View(new BaseViewModel() {
-        User = userManager.GetUser(User.Identity.GetUserId()),
-        PageTitle = PAGE_MANAGEMENT_PAGE_TITLE
-      });
-    }
+		/// <summary>
+		/// Page management page of admin.
+		/// </summary>
+		public ActionResult PageManagement()
+		{
+			userManager = new UserManager();
 
-    public ActionResult ItemManagement()
-    {
-      const string ITEM_MANAGEMENT_PAGE_TITLE = "Items beheren";
-      IItemManager itemManager = new ItemManager();
-      return View(new ItemViewModels.ItemViewModel() {
-        User = userManager.GetUser(User.Identity.GetUserId()),
-        PageTitle = ITEM_MANAGEMENT_PAGE_TITLE,
-        Items = Mapper.Map(itemManager.GetAllItems(), new List<ItemDTO>())
-      });
-    }
+			//Assembling the view
+			return View(new BaseViewModel()
+			{
+				User = userManager.GetUser(User.Identity.GetUserId()),
+				PageTitle = Resources.PageManagement
+			});
+		}
 
-    public ActionResult UserManagement()
-    {
-      const string USER_MANAGEMENT_PAGE_TITLE = "Gebruikers beheren";
-      IdentityUserManager identityUserManager = HttpContext.GetOwinContext().GetUserManager<IdentityUserManager>();
-      IEnumerable<User> users = userManager.GetAllUsers();
-      List<string> currentRoles = new List<string>();
-      for (int i = 0; i < users.Count(); i++)
-      {
-        currentRoles.Add(identityUserManager.GetRoles(users.ElementAt(i).Id).FirstOrDefault());
-      }
-      ViewBag.CurrentRoles = currentRoles;
-      var roles = userManager.GetAllRoles().Select(x => new SelectListItem
-      {
-        Value = x.Id,
-        Text = x.Name,
-      }).OrderBy(x => x.Text);
-      EditUserViewModel vm = new EditUserViewModel()
-      {
-        User = userManager.GetUser(User.Identity.GetUserId()),
-        PageTitle = USER_MANAGEMENT_PAGE_TITLE,
-        Users = users,
-        Roles = roles
-      };
-      return View(vm);
-    }
-  }
+		/// <summary>
+		/// Item management page of admin.
+		/// </summary>
+		public ActionResult ItemManagement()
+		{
+			itemManager = new ItemManager();
+			userManager = new UserManager();
+
+			//Assembling the view
+			return View(new ItemViewModels.ItemViewModel()
+			{
+				User = userManager.GetUser(User.Identity.GetUserId()),
+				PageTitle = Resources.ItemManagement,
+				Items = Mapper.Map(itemManager.GetAllItems(), new List<ItemDTO>())
+			});
+		}
+
+		/// <summary>
+		/// User management page of admin.
+		/// </summary>
+		public ActionResult UserManagement()
+		{
+			userManager = new UserManager();
+
+			//Get Roles
+			IdentityUserManager identityUserManager = HttpContext.GetOwinContext().GetUserManager<IdentityUserManager>();
+			IEnumerable<User> users = userManager.GetAllUsers();
+			List<string> currentRoles = new List<string>();
+			for (int i = 0; i < users.Count(); i++)
+			{
+				currentRoles.Add(identityUserManager.GetRoles(users.ElementAt(i).Id).FirstOrDefault());
+			}
+
+			//Assembling the view
+			ViewBag.CurrentRoles = currentRoles;
+			EditUserViewModel vm = new EditUserViewModel()
+			{
+				User = userManager.GetUser(User.Identity.GetUserId()),
+				PageTitle = Resources.UserManagement,
+				Users = users
+			};
+			FillViewModels(vm);
+			return View(vm);
+		}
+
+		/// <summary>
+		/// Fills a viewmodel with selectionlists. the selectionlist will
+		/// be shown in a dropdownmenu.
+		/// </summary>
+		private void FillViewModels(EditUserViewModel vm)
+		{
+			userManager = new UserManager();
+
+			vm.AdminRoles = userManager.GetAllRoles().Select(x => new SelectListItem
+			{
+				Value = x.Id,
+				Text = x.Name,
+			}).OrderBy(x => x.Text);
+			vm.UserRoles = userManager.GetAllRoles().Where(r => r.Name == "Admin" || r.Name == "User")
+			  .Select(x => new SelectListItem
+			  {
+				  Value = x.Id,
+				  Text = x.Name,
+			  }).OrderBy(x => x.Text);
+		}
+	}
 }
