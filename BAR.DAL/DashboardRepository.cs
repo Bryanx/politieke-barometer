@@ -36,7 +36,7 @@ namespace BAR.DAL
 		/// <summary>
 		/// Gives back a list of all the widgets.
 		/// </summary>
-		public IEnumerable<UserWidget> ReadAllWidgets()
+		public IEnumerable<Widget> ReadAllWidgets()
 		{
 			return ctx.Widgets.AsEnumerable();
 		}
@@ -76,7 +76,7 @@ namespace BAR.DAL
 		/// Gives back a widget object for a 
 		/// specific widget id.
 		/// </summary>
-		public UserWidget ReadWidget(int widgetId)
+		public Widget ReadWidget(int widgetId)
 		{
 			return ctx.Widgets.Find(widgetId);
 		}
@@ -110,10 +110,11 @@ namespace BAR.DAL
 		/// widget needs to be linked to dashboard.
 		/// Alternative: call ReadDashboard(), add widget to the list, updateDashboard();
 		/// </summary>
-		public int CreateWidget(UserWidget widget, int dashboardId)
+		public int CreateWidget(Widget widget, int dashboardId)
 		{
 			Dashboard dasboardToAddWidget = ReadDashboardWithWidgets(dashboardId);
-			dasboardToAddWidget.Widgets.Add(widget);
+			if (widget is UserWidget) dasboardToAddWidget.Widgets.Add((UserWidget) widget);
+			else dasboardToAddWidget.Widgets.Add((UserWidget)widget);
 			return UpdateDashboard(dasboardToAddWidget);
 		}
 

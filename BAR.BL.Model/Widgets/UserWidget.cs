@@ -8,7 +8,6 @@ namespace BAR.BL.Domain.Widgets
 {
 	public class UserWidget : Widget
 	{
-		public WidgetType WidgetType { get; set; }
 		public Dashboard Dashboard { get; set; }
 	}
 }

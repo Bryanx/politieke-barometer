@@ -14,24 +14,24 @@ namespace BAR.DAL
 		Dashboard ReadDashboardWithWidgets(int dashboardId);
 		Dashboard ReadGeneralDashboard();
 		IEnumerable<Dashboard> ReadAllDashboards();
-		UserWidget ReadWidget(int widgetId);
-		IEnumerable<UserWidget> ReadAllWidgets();
+		Widget ReadWidget(int widgetId);
+		IEnumerable<Widget> ReadAllWidgets();
 		IEnumerable<UserWidget> ReadWidgetsForDashboard(int dashboardId);
 
 		//Create
 		int CreateDashboard(Dashboard dashboard);
-		int CreateWidget(UserWidget widget, int dashboardId);
+		int CreateWidget(Widget widget, int dashboardId);
 
 		//Update
 		int UpdateDashboard(Dashboard dashboard);
 		int UpdateDashboards(IEnumerable<Dashboard> dashboards);
-		int UpdateWidget(UserWidget widget);
-		int UpdateWidgets(IEnumerable<UserWidget> widgets);
+		int UpdateWidget(Widget widget);
+		int UpdateWidgets(IEnumerable<Widget> widgets);
 
 		//Delete
 		int DeleteDashboard(int dashboardId);
 		int DeleteDashboards(IEnumerable<int> dashboardIds);
-		int DeleteWidget(UserWidget widgetId);
-		int DeleteWidgets(IEnumerable<UserWidget> widgets);
+		int DeleteWidget(Widget widgetId);
+		int DeleteWidgets(IEnumerable<Widget> widgets);
 	}
 }
