@@ -12,9 +12,9 @@ namespace BAR.DAL
 	{
 		//Read
 		SubPlatform ReadSubPlatform(string subplatformName);
+		SubPlatform ReadSubplatformWithCustomization(string subplatformName);
 		IEnumerable<SubPlatform> ReadSubPlatform();
-		Customization ReadCustomization(string subplatformName);
-
+	
 		//Create
 		int CreateSubplatform(SubPlatform subPlatform);
 
