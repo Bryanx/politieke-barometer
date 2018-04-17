@@ -76,3 +76,11 @@ hr {
   padding-right: 10px;
   padding-left: 10px;
 }
+
+.clearfix:after, form:after {
+  content: ".";
+  display: block;
+  height: 0;
+  clear: both;
+  visibility: hidden;
+}

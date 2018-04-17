@@ -4,9 +4,7 @@ a {
   }
 }
 
-.Google-btn {
-  background-color: #3484EF;
-  background-image: url(../../images/google-icon-white.svg);
+%social-button {
   background-position: 10px;
   background-repeat: no-repeat;
   background-size: 2em;
@@ -16,55 +14,27 @@ a {
   line-height: 1em;
   padding: 0 4em 0 4em;
   text-decoration: none;
+}
+
+.Google-btn {
+  background-color: #3484EF;
+  background-image: url(../../images/google-icon-white.svg);
+  @extend %social-button;
 }
 
 .Facebook-btn {
   background-color: #3C66AF;
   background-image: url(../../images/facebook-app-logo-white.svg);
-  background-position: 10px;
-  background-repeat: no-repeat;
-  background-size: 2em;
-  border: none;
-  color: var(--white);
-  height: 40px;
-  line-height: 1em;
-  padding: 0 4em 0 4em;
-  text-decoration: none;
-}
-
-.voiceBtn {
-  width: 20px;
-  color: transparent;
-  background-color: transparent;
-  transform: scale(2, 2);
-  -webkit-transform: scale(2, 2);
-  -moz-transform: scale(2, 2);
-  border: transparent;
-  cursor: pointer;
-  box-shadow: none;
-  -webkit-box-shadow: none;
-}
-
-.button-mail {
-  margin: 0 0 15px !important;
-  text-align: left;
-  width: 100%;
-}
-
-.btn-group-vertical .btn, .btn-group .btn {
-  margin-bottom: 0;
-  margin-right: 0;
+  @extend %social-button;
 }
 
 .btn-search {
-  margin-right: 0px !important;
-  padding-left: 20px;
-  padding-right: 20px;
+  margin-right: 0 !important;
+  padding: 6px 20px;
   border: 1px solid transparent;
-  box-shadow: none;
+  @include box-shadow(none);
   background: var(--bg-color);
 }
-
 
 .btn-outline {
   background-color: transparent;
@@ -102,21 +72,12 @@ a {
   }
 }
 
-.btn-primary, btn-primary:visited {
+.btn-primary {
   color: var(--white);
   background-color: var(--primary-color) !important;
   border-color: var(--primary-darker);
-}
-
-.btn-primary {
-  &:hover {
-    color: var(--white);
-    background-color: var(--primary-darker);
+  &:hover &:active, &:focus {
+    background-color: var(--primary-darker) !important;
     border-color: var(--primary-darkest);
-  }
-  &:active, &:focus {
-    color: var(--white);
-    background-color: var(--primary-darkest) !important;
-    border-color: var(--primary-darkest) !important;
   }
 }

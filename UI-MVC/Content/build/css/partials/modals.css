@@ -1,0 +1,8 @@
+.modal-lg {
+  max-width: 600px;
+  margin: 30px auto; }
+
+.modal-backdrop.in {
+  z-index: 1; }
+
+/*# sourceMappingURL=modals.css.map */

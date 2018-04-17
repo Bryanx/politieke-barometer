@@ -117,7 +117,7 @@ div {
 .navbar-nav .open .dropdown-menu.msg_list {
   width: 300px;
   max-height: 400px;
-  overflow-y: scroll;
+  overflow-y:auto;
   overflow-x: hidden;
 
   .alertRead {

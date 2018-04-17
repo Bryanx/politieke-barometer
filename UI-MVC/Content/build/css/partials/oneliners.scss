@@ -143,3 +143,11 @@
   width: 100%;
   padding: 0;
 }
+
+.col-middle {
+  margin-top: 5%;
+}
+
+.animate {
+  @include animation(0,0.5s,ease,both);
+}

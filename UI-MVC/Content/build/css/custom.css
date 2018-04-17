@@ -165,6 +165,13 @@ hr {
   padding-right: 10px;
   padding-left: 10px; }
 
+.clearfix:after, form:after {
+  content: ".";
+  display: block;
+  height: 0;
+  clear: both;
+  visibility: hidden; }
+
 .right_col {
   background: var(--bg-color); }
 
@@ -277,12 +284,35 @@ hr {
   width: 100%;
   padding: 0; }
 
+.col-middle {
+  margin-top: 5%; }
+
+.animate {
+  -webkit-animation-delay: 0;
+  -webkit-animation-duration: 0.5s;
+  -webkit-animation-name: both;
+  -webkit-animation-timing-function: ease;
+  -webkit-animation-fill-mode: forwards;
+  -moz-animation-delay: 0;
+  -moz-animation-duration: 0.5s;
+  -moz-animation-name: both;
+  -moz-animation-timing-function: ease;
+  -moz-animation-fill-mode: forwards;
+  -o-animation-delay: 0;
+  -o-animation-duration: 0.5s;
+  -o-animation-name: both;
+  -o-animation-timing-function: ease;
+  -o-animation-fill-mode: forwards;
+  animation-delay: 0;
+  animation-duration: 0.5s;
+  animation-name: both;
+  animation-timing-function: ease;
+  animation-fill-mode: forwards; }
+
 a.btn-success, a.btn-primary, a.btn-warning, a.btn-danger {
   color: var(--white); }
 
-.Google-btn {
-  background-color: #3484EF;
-  background-image: url(../../images/google-icon-white.svg);
+.Google-btn, .Facebook-btn {
   background-position: 10px;
   background-repeat: no-repeat;
   background-size: 2em;
@@ -292,46 +322,22 @@ a.btn-success, a.btn-primary, a.btn-warning, a.btn-danger {
   line-height: 1em;
   padding: 0 4em 0 4em;
   text-decoration: none; }
+
+.Google-btn {
+  background-color: #3484EF;
+  background-image: url(../../images/google-icon-white.svg); }
 
 .Facebook-btn {
   background-color: #3C66AF;
-  background-image: url(../../images/facebook-app-logo-white.svg);
-  background-position: 10px;
-  background-repeat: no-repeat;
-  background-size: 2em;
-  border: none;
-  color: var(--white);
-  height: 40px;
-  line-height: 1em;
-  padding: 0 4em 0 4em;
-  text-decoration: none; }
-
-.voiceBtn {
-  width: 20px;
-  color: transparent;
-  background-color: transparent;
-  transform: scale(2, 2);
-  -webkit-transform: scale(2, 2);
-  -moz-transform: scale(2, 2);
-  border: transparent;
-  cursor: pointer;
-  box-shadow: none;
-  -webkit-box-shadow: none; }
-
-.button-mail {
-  margin: 0 0 15px !important;
-  text-align: left;
-  width: 100%; }
-
-.btn-group-vertical .btn, .btn-group .btn {
-  margin-bottom: 0;
-  margin-right: 0; }
+  background-image: url(../../images/facebook-app-logo-white.svg); }
 
 .btn-search {
-  margin-right: 0px !important;
-  padding-left: 20px;
-  padding-right: 20px;
+  margin-right: 0 !important;
+  padding: 6px 20px;
   border: 1px solid transparent;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  -o-box-shadow: none;
   box-shadow: none;
   background: var(--bg-color); }
 
@@ -365,19 +371,13 @@ a.btn-success, a.btn-primary, a.btn-warning, a.btn-danger {
     background-color: #394D5F;
     border-color: #394D5F; }
 
-.btn-primary, btn-primary:visited {
+.btn-primary {
   color: var(--white);
   background-color: var(--primary-color) !important;
   border-color: var(--primary-darker); }
-
-.btn-primary:hover {
-  color: var(--white);
-  background-color: var(--primary-darker);
-  border-color: var(--primary-darkest); }
-.btn-primary:active, .btn-primary:focus {
-  color: var(--white);
-  background-color: var(--primary-darkest) !important;
-  border-color: var(--primary-darkest) !important; }
+  .btn-primary:hover .btn-primary:active, .btn-primary:focus {
+    background-color: var(--primary-darker) !important;
+    border-color: var(--primary-darkest); }
 
 ul.msg_list li {
   background: var(--bg-color);
@@ -467,7 +467,7 @@ div.alertClose {
 .navbar-nav .open .dropdown-menu.msg_list {
   width: 300px;
   max-height: 400px;
-  overflow-y: scroll;
+  overflow-y: auto;
   overflow-x: hidden; }
   .navbar-nav .open .dropdown-menu.msg_list .alertRead {
     background-color: var(--white);
@@ -1804,6 +1804,10 @@ div[data-role="editor-toolbar"] {
   margin-right: 0;
   margin-left: 0; }
 
+span.right {
+  float: right;
+  font-size: 14px !important; }
+
 .form-control-feedback {
   margin-top: 8px;
   height: 23px;
@@ -1950,102 +1954,11 @@ div[data-role="editor-toolbar"] {
       white-space: nowrap;
       margin: 0.1em 0; }
 
-/*
-=========================================================
-======================== GENERAL ========================
-=========================================================
-*/
-/*
-MODIFYABLE DASHBOARD
- */
-/*
-Login
- */
 .modal-lg {
   max-width: 600px;
   margin: 30px auto; }
 
 .modal-backdrop.in {
   z-index: 1; }
-
-/*
-=========================================================
-========================= CUSTOM ========================
-=========================================================
- */
-.sidebar-header {
-  border-bottom: 0;
-  margin-top: 46px; }
-  .sidebar-header:first-of-type {
-    margin-top: 0; }
-
-.main_menu_side {
-  padding: 0; }
-
-.right-arrow {
-  width: 10px;
-  float: right;
-  font-weight: bold;
-  font-size: 20px; }
-
-.col-middle {
-  margin-top: 5%; }
-
-.bulk-actions {
-  display: none; }
-
-div.box {
-  height: 100px;
-  padding: 10px;
-  overflow: auto;
-  border: 1px solid #8080FF;
-  background-color: #E5E5FF; }
-
-span.right {
-  float: right;
-  font-size: 14px !important; }
-
-span.section {
-  display: block;
-  width: 100%;
-  padding: 0;
-  margin-bottom: 20px;
-  font-size: 21px;
-  line-height: inherit;
-  color: #333;
-  border: 1px solid transparent;
-  border-bottom: 1px solid #e5e5e5; }
-
-.widget .verticle_bars li .progress.vertical.progress_wide {
-  width: 65%; }
-
-.animate {
-  -webkit-animation-delay: 0;
-  -webkit-animation-duration: 0.5s;
-  -webkit-animation-name: both;
-  -webkit-animation-timing-function: ease;
-  -webkit-animation-fill-mode: forwards;
-  -moz-animation-delay: 0;
-  -moz-animation-duration: 0.5s;
-  -moz-animation-name: both;
-  -moz-animation-timing-function: ease;
-  -moz-animation-fill-mode: forwards;
-  -o-animation-delay: 0;
-  -o-animation-duration: 0.5s;
-  -o-animation-name: both;
-  -o-animation-timing-function: ease;
-  -o-animation-fill-mode: forwards;
-  animation-delay: 0;
-  animation-duration: 0.5s;
-  animation-name: both;
-  animation-timing-function: ease;
-  animation-fill-mode: forwards; }
-
-.clearfix:after, form:after {
-  content: ".";
-  display: block;
-  height: 0;
-  clear: both;
-  visibility: hidden; }
 
 /*# sourceMappingURL=custom.css.map */

@@ -273,6 +273,7 @@
     <Content Include="Content\build\css\partials\graphs.scss" />
     <Content Include="Content\build\css\partials\images.scss" />
     <Content Include="Content\build\css\partials\login.scss" />
+    <Content Include="Content\build\css\partials\modals.scss" />
     <Content Include="Content\build\css\partials\navbar.scss" />
     <Content Include="Content\build\css\partials\navbartoggle.scss" />
     <Content Include="Content\build\css\partials\oneliners.scss" />
