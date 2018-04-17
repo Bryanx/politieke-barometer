@@ -11,6 +11,8 @@ namespace BAR.UI.MVC.Attributes
     public override void OnActionExecuting(ActionExecutingContext filterContext)
     {
       string subdomain = GetSubDomain(HttpContext.Current.Request.Url);
+      filterContext.RouteData.Values.Add("SubPlatform", subdomain);
+      base.OnActionExecuting(filterContext);
     }
 
     private static string GetSubDomain(Uri url)
