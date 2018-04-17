@@ -10,11 +10,15 @@ using System.Data.Entity;
 namespace BAR.DAL
 {
 	/// <summary>
-	/// At this moment the repository works HC.
+	/// This class is used for the persistance of
+	/// information. A single information object could be:
+	/// - A tweet
+	/// - A facebook post
+	/// - etc.
 	/// </summary>
 	public class DataRepository : IDataRepository
 	{
-		private BarometerDbContext ctx;
+		private readonly BarometerDbContext ctx;
 
 		/// <summary>
 		/// If uow is present then the constructor

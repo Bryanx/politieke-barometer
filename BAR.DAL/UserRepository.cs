@@ -9,35 +9,23 @@ using System.Data.Entity.Migrations;
 
 namespace BAR.DAL
 {
-	public class UserRepository : UserStore<User>, IUserRepository
+	/// <summary>
+	/// This class is used for the persistance of users.
+	/// 
+	/// WARNING
+	/// This class has nothing to do with the identity-framework
+	/// for this, we reference to the UserIdentityRepository.
+	/// </summary>
+	public class UserRepository : IUserRepository
 	{
-		private BarometerDbContext ctx;
+		private readonly BarometerDbContext ctx;
 
 		/// <summary>
-		/// This constructor is used if
-		/// you plan to not work with identity.
-		/// 
-		/// WARNING
-		/// Methods that are being used with identity will not
-		/// work if you plan to use this constructor
-		/// </summary>
-		public UserRepository(BarometerDbContext ctx, UnitOfWork uow = null) : base(ctx)
-		{
-			if (uow == null) this.ctx = new BarometerDbContext();
-			else ctx = uow.Context;
-		}
-
-		/// <summary>
-		/// This constructor is used if
-		/// you plan to not work with identity.
-		/// 
-		/// WARNING
-		/// Methods that are being used with identity will not
-		/// work if you plan to use this constructor
+		/// Checks if manager will work with uow.
 		/// </summary>
 		public UserRepository(UnitOfWork uow = null)
 		{
-			if (uow == null) this.ctx = new BarometerDbContext();
+			if (uow == null) ctx = new BarometerDbContext();
 			else ctx = uow.Context;
 		}
 
@@ -50,7 +38,7 @@ namespace BAR.DAL
 		}
 
 		/// <summary>
-		/// Gives back a list of users from a specific area.
+		/// Returns a list of users from a specific area.
 		/// </summary>
 		public IEnumerable<User> ReadAllUsersForArea(int areaId)
 		{
@@ -58,19 +46,19 @@ namespace BAR.DAL
 		}
 
 		/// <summary>
-		/// Returns a list of users for a specific role
+		/// Returns a list of users for a specific role.
 		/// </summary>
 		public IEnumerable<User> ReadAllUsersForRole(string roleId)
 		{
-      return ctx.Users.Where(x => x.Roles.Any(y => y.RoleId.Equals(roleId))).AsEnumerable();
-    }
+			return ctx.Users.Where(x => x.Roles.Any(y => y.RoleId.Equals(roleId))).AsEnumerable();
+		}
 
 		/// <summary>
-		/// Returns the user from a specific userId.
+		/// Returns the user with a specific userId.
 		/// </summary>
 		public User ReadUser(string userId)
 		{
-      return ctx.Users.Include(x => x.Area).Where(x => x.Id.Equals(userId)).SingleOrDefault();
+			return ctx.Users.Include(x => x.Area).Where(x => x.Id.Equals(userId)).SingleOrDefault();
 		}
 
 		/// <summary>
@@ -104,7 +92,7 @@ namespace BAR.DAL
 		}
 
 		/// <summary>
-		/// Creates an instance of a user in the database
+		/// Creates an instance of a user in the database.
 		/// Returns -1 if SaveChanges() is delayed by unit of work.
 		/// </summary>
 		public int CreateUser(User user)
@@ -113,7 +101,7 @@ namespace BAR.DAL
 			return ctx.SaveChanges();
 		}
 
-		/// <summary>
+		/// <summary>;
 		/// Updates a given user
 		/// Returns -1 if SaveChanges() is delayed by unit of work.
 		/// </summary>
@@ -124,7 +112,7 @@ namespace BAR.DAL
 		}
 
 		/// <summary>
-		/// Updataes a given list of users
+		/// Updates a given list of users.
 		/// Returns -1 if SaveChanges() is delayed by unit of work.
 		/// </summary>
 		public int UpdateUsers(IEnumerable<User> users)
@@ -172,33 +160,36 @@ namespace BAR.DAL
 			return ctx.SaveChanges();
 		}
 
-    /// <summary>
-    /// Reads all areas.
-    /// </summary>
-    /// <returns></returns>
-    public IEnumerable<Area> ReadAreas()
-    {
-      return ctx.Areas;
-    }
+		/// <summary>
+		/// Reads all areas.
+		/// </summary>
+		public IEnumerable<Area> ReadAreas()
+		{
+			return ctx.Areas.AsEnumerable();
+		}
 
-    /// <summary>
-    /// Reads selected area.
-    /// </summary>
-    /// <param name="areaId"></param>
-    /// <returns></returns>
-    public Area ReadArea(int areaId)
-    {
-      return ctx.Areas.Where(x => x.AreaId == areaId).SingleOrDefault();
-    }
+		/// <summary>
+		/// Reads selected area.
+		/// </summary>
+		public Area ReadArea(int areaId)
+		{
+			return ctx.Areas.Find(areaId);
+		}
 
-    public IEnumerable<IdentityRole> ReadAllRoles()
-    {
-      return ctx.Roles;
-    }
+		/// <summary>
+		/// Reads all roles.
+		/// </summary>
+		public IEnumerable<IdentityRole> ReadAllRoles()
+		{
+			return ctx.Roles.AsEnumerable();
+		}
 
-    public IdentityRole ReadRole(string userId)
-    {
-      return ctx.Roles.Where(x => x.Users.Any(y => y.UserId.Equals(userId))).FirstOrDefault();
-    }
-  }
+		/// <summary>
+		/// Reads role of given user.
+		/// </summary>
+		public IdentityRole ReadRole(string userId)
+		{
+			return ctx.Roles.Where(x => x.Users.Any(y => y.UserId.Equals(userId))).FirstOrDefault();
+		}
+	}
 }

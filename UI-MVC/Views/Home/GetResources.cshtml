@@ -1,0 +1,21 @@
+﻿
+@using System.Collections
+@using System.Globalization
+@using System.Resources
+@using BAR.UI.MVC.App_GlobalResources
+@{
+    Layout = null;
+    // Get a set of resources appropriate to
+    // the culture defined by the browser
+    ResourceSet resourceSet =
+      @Resources.ResourceManager.GetResourceSet
+        (CultureInfo.CurrentUICulture, true, true);
+}
+
+// Define the empty object in javascript
+var Resources = {};
+@foreach (DictionaryEntry res in resourceSet)
+{
+    // Create a property on the javascript object for each text resource
+    @:Resources.@res.Key = "@Html.Raw(HttpUtility.JavaScriptStringEncode(res.Value.ToString()))";
+}

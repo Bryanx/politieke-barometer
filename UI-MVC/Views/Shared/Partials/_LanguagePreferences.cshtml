@@ -1,0 +1,26 @@
+﻿@{
+    var culture = System.Threading.Thread.CurrentThread.CurrentUICulture.Name.ToLowerInvariant();
+}
+
+@helper selected(string c, string culture) {
+    if (c == culture) {
+        @:checked="checked"
+    }
+}
+
+<div class="culture-form">
+    @using (Html.BeginForm("SetCulture", "Home", new {@class = "form-horizontal"})) {
+        <div class="control-group">
+            <input class="culture" name="culture" id="en-us" value="en-us" type="radio" @selected("en-us", culture)/>
+            <label for="en-us">EN</label>
+        </div>
+        <div class="control-group">
+            <input class="culture" name="culture" id="nl" value="nl" type="radio" @selected("nl", culture)/>
+            <label for="nl">NL</label>
+        </div>
+        <div class="control-group">
+            <input class="culture" name="culture" id="fr" value="fr" type="radio" @selected("fr", culture)/>
+            <label for="fr">FR</label>
+        </div>
+    }
+</div>

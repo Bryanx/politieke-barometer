@@ -4,6 +4,7 @@ using BAR.BL.Domain.Items;
 using System.Collections.Generic;
 using BAR.BL.Domain.Data;
 using System.Linq;
+using BAR.BL.Domain.Users;
 
 namespace BAR.BL.Managers
 {
@@ -59,6 +60,107 @@ namespace BAR.BL.Managers
 		}
 
 		/// <summary>
+		/// Gives back te most trending items
+		/// the number of trending items depends on the
+		/// number that you give via the parameter
+		/// </summary>
+		public IEnumerable<Item> GetMostTrendingItems(int numberOfItems = 5)
+		{
+			//Order the items by populairity
+			IEnumerable<Item> itemsOrderd = GetAllItems()
+				.OrderBy(item => item.TrendingPercentage).AsEnumerable();
+
+			//Get the first items out of the list
+			List<Item> itemsOrderdMostPopulair = new List<Item>();
+			for (int i = 0; i < numberOfItems; i++)
+			{
+				if (i <= itemsOrderd.Count()) itemsOrderdMostPopulair.Add(itemsOrderd.ElementAt(i));
+			}
+
+			return itemsOrderdMostPopulair.AsEnumerable();
+		}
+
+		/// <summary>
+		/// Gives back a list of the most trending items
+		/// for a specific type
+		/// the number of items depends on the parameter "numberOfItems"
+		/// </summary>
+		public IEnumerable<Item> GetMostTrendingItemsForType(ItemType type, int numberOfItems = 5)
+		{
+			//order the items by populairity
+			IEnumerable<Item> itemsOrderd = GetAllItems().Where(item => item.ItemType == type)
+				.OrderBy(item => item.TrendingPercentage).AsEnumerable();
+
+			//Get the first items out of the list
+			List<Item> itemsOrderdMostPopulair = new List<Item>();
+			for (int i = 0; i < numberOfItems; i++)
+			{
+				if (i <= itemsOrderd.Count()) itemsOrderdMostPopulair.Add(itemsOrderd.ElementAt(i));
+			}
+
+			return itemsOrderdMostPopulair.AsEnumerable();
+		}
+
+		/// <summary>
+		/// Gives back a list of the most trending items
+		/// based on the userId.
+		/// </summary>
+		public IEnumerable<Item> GetMostTredningItemsForUser(string userId, int numberOfItems = 5)
+		{
+			//Get items for userId and order items from user
+			//We need to get every item of the subscription of a specefic user
+			SubscriptionManager subManager = new SubscriptionManager();
+			List<Item> itemsFromUser = new List<Item>();
+			foreach (Subscription sub in subManager.GetSubscriptionsWithItemsForUser(userId))
+			{
+				itemsFromUser.Add(sub.SubscribedItem);
+			}
+
+			//Order items
+			IEnumerable<Item> itemsOrderd = itemsFromUser
+				.OrderBy(item => item.TrendingPercentage).AsEnumerable();
+
+			//Get the first items out of the list
+			List<Item> itemsOrderdMostPopulair = new List<Item>();
+			for (int i = 0; i < numberOfItems; i++)
+			{
+				if (i <= itemsOrderd.Count()) itemsOrderdMostPopulair.Add(itemsOrderd.ElementAt(i));
+			}
+
+			return itemsOrderd;
+		}
+
+		/// <summary>
+		/// Gives back a list of the most trending items
+		/// for a specific type and user
+		/// the number of items depends on the parameter "numberOfItems"
+		/// </summary>
+		public IEnumerable<Item> GetMostTredningItemsForUserAndItemType(string userId, ItemType type, int numberOfItems = 5)
+		{
+			//Get items for userId and order items from user
+			//We need to get every item of the subscription of a specefic user
+			SubscriptionManager subManager = new SubscriptionManager();
+			List<Item> itemsFromUser = new List<Item>();
+			foreach (Subscription sub in subManager.GetSubscriptionsWithItemsForUser(userId))
+			{
+				itemsFromUser.Add(sub.SubscribedItem);
+			}
+
+			//Order items
+			IEnumerable<Item> itemsOrderd = itemsFromUser.Where(item => item.ItemType == type)
+				.OrderBy(item => item.TrendingPercentage).AsEnumerable();
+
+			//Get the first items out of the list
+			List<Item> itemsOrderdMostPopulair = new List<Item>();
+			for (int i = 0; i < numberOfItems; i++)
+			{
+				if (i <= itemsOrderd.Count()) itemsOrderdMostPopulair.Add(itemsOrderd.ElementAt(i));
+			}
+
+			return itemsOrderd;
+		}
+
+		/// <summary>
 		/// Returns an item from a specific itemId.
 		/// </summary>
 		public Item GetItem(int itemId)
@@ -97,7 +199,7 @@ namespace BAR.BL.Managers
 		/// <summary>
 		/// Returns all (undeleted) people
 		/// </summary>
-		public IEnumerable<Item> GetAllPeople() 
+		public IEnumerable<Item> GetAllPersons() 
 		{
 			return GetAllItems().Where(item => item is Person).Where(item => item.Deleted == false).ToList();
 		}

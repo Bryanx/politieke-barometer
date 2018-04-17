@@ -1,4 +1,5 @@
-﻿@using System.Web.Optimization
+﻿﻿@using System.Web.Optimization
+@using System.Web.Optimization
 @model BAR.UI.MVC.Models.ItemViewModels.ItemViewModel
 
 @section CustomCSS{
@@ -6,7 +7,7 @@
 }
 
 <h1>
-    @Model.PageTitle <a class="btn btn-dark btn-xs">Content importeren</a>
+    @Model.PageTitle <a class="btn btn-dark btn-xs">@Resources.ImportContent</a>
 </h1>
 
 <hr/>
@@ -16,45 +17,46 @@
 <div style="visibility: hidden">space</div>
 
 
-
 @section CustomJS{
     @Scripts.Render("~/bundles/datatables")
     @Scripts.Render("~/bundles/datatables-buttons", "~/bundles/datatables-buttons-bs")
     <script type="text/javascript">
         (() => {
-            var loader = $("<div />",
-                {
-                    "class": "loadMessage"
-                });
-            
-            $(".removeItem").click(function() {
-                var el = $(this);
-                var id = el.data('item-id');
-                $.ajax({
-                        type: 'POST',
-                        url: '/api/Admin/DeleteItem/' + id
-                    }).fail(() => { alert("Cannot remove item.") })
-                    .done(function() {
-                        $(el).toggleClass("btn-danger")
-                            .toggleClass("btn-dark")
-                            .toggleText("Herstellen", "Verwijderen");
-                    });
-            });
-            
             var wto;
+            $(".removeItem").click(function() {
+                clearTimeout(wto);
+                var $this = $(this);
+                var id = $this.data('item-id');
+                var text = $this.html();
+                $this.html("<i class='fa fa-circle-o-notch fa-spin'></i>");
+                wto = setTimeout(function() {
+                        $.ajax({
+                                type: 'POST',
+                                url: '/api/Admin/ToggleDeleteItem/' + id
+                            }).fail(() => { alert("@Resources.CannotRemoveItem") })
+                            .done(function() {
+                                if (text === "@Resources.Recover") $this.html("@Resources.Remove");
+                                else $this.html("@Resources.Recover");
+                                $this.toggleClass("btn-danger btn-dark");
+                            });
+                    },
+                    500);
+            });
+
+            var loader = $("<div />", { "class": "loadMessage" });
             $(".renameItem").on('input propertychange paste',
                 function() {
                     clearTimeout(wto);
-                    var el = $(this);
-                    var id = el.data('item-id');
-                    el.after(loader);
+                    var $this = $(this);
+                    var id = $this.data('item-id');
+                    $this.after(loader);
                     wto = setTimeout(function() {
                             $.ajax({
                                     type: 'POST',
-                                    url: '/api/Admin/RenameItem/' + id + '/' + el.val()
+                                    url: '/api/Admin/RenameItem/' + id + '/' + $this.val()
                                 }).fail(() => { /**/ })
                                 .done(function() {
-                                    el.parent().find(loader).remove();
+                                    $this.parent().find(loader).remove();
                                 });
                         },
                         1000);
