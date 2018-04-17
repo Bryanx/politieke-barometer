@@ -23,7 +23,7 @@ namespace BAR.DAL.EF
       GenerateSubPlatforms(ctx);
       GenerateSources(ctx);
       GenerateProperties(ctx);
-      GenerateInformations(ctx);
+      //GenerateInformations(ctx);
       GenerateAreas(ctx);
       GenerateK3(ctx);
     }
@@ -40,11 +40,21 @@ namespace BAR.DAL.EF
         CreationDate = DateTime.Now,
         Baseline = 0,
         TrendingPercentage = 0,
-        SubPlatform = ctx.SubPlatforms.Where(sp => sp.Name.Equals("K3")).SingleOrDefault()
-
+        SubPlatform = ctx.SubPlatforms.Where(sp => sp.Name.Equals("k3")).SingleOrDefault()
       };
 
+      Person Wever = new Person()
+      {
+        Name = "Bart de Wever",
+        CreationDate = DateTime.Now,
+        Baseline = 0,
+        TrendingPercentage = 0,
+        SubPlatform = ctx.SubPlatforms.Where(sp => sp.Name.Equals("politiek")).SingleOrDefault()
+      };
+
+      ctx.Items.Add(Wever);
       ctx.Items.Add(Marthe);
+      ctx.SaveChanges();
     }
 
     /// <summary>
@@ -55,7 +65,7 @@ namespace BAR.DAL.EF
     {
       SubPlatform subPlatform1 = new SubPlatform
       {
-        Name = "K3",
+        Name = "k3",
         CreationDate = DateTime.Now
       };
       ctx.SubPlatforms.Add(subPlatform1);
