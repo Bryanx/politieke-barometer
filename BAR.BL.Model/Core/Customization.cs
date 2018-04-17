@@ -34,7 +34,7 @@ namespace BAR.BL.Domain.Core
 		public string PrivacyText { get; set; }
 
 		//FAQ
-		public string FAQText { get; set; }
+		public string FAQTitle { get; set; }
 
 		//Contact properties
 		public string StreetAndHousenumber { get; set; }

@@ -16,6 +16,13 @@ namespace BAR.BL.Managers
 
 		SubPlatform CreateSubplatform(string name);
 
+		SubPlatform ChangePlatformName(string platformName, string name);
+		Customization ChangePageColors(string platformName, string primaryColor, string secondairyColor, string tertiaryColor, string backgroundColor, string textColor);
+		Customization ChangePageText(string platformName, string personAlias, string personsAlias, string organisationAlias, string organisationsAlias, string themeAlias, string themesAlias);
+		Customization ChangePrivacyText(string platformName, string content, string title = "Privacy policy");
+		Customization ChangeFAQTitle(string platformName, string title);
+		Customization ChangeContactProperties(string platformName, string streetAndHousenumber, string zipcode, string city, string country, string email);
+
 		//Questions
 	}
 }
