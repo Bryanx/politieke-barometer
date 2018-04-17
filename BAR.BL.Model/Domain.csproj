@@ -53,6 +53,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Core\Customization.cs" />
     <Compile Include="Data\Information.cs" />
     <Compile Include="Data\Property.cs" />
     <Compile Include="Data\PropertyValue.cs" />
