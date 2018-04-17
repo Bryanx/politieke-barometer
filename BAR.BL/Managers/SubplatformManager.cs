@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using BAR.BL.Domain;
 using BAR.DAL;
+using BAR.BL.Domain.Core;
 
 namespace BAR.BL.Managers
 {
@@ -26,11 +27,25 @@ namespace BAR.BL.Managers
 		}
 
 		/// <summary>
-		/// 
+		/// Makes an subplatform and persist that to the database
 		/// </summary>
 		public SubPlatform CreateSubplatform(string name)
 		{
-			throw new NotImplementedException();
+			InitRepo();
+
+			//Make subplatform
+			SubPlatform platform = new SubPlatform()
+			{
+				Name = name,
+				CreationDate = DateTime.Now,
+				NumberOfUsers = 0,
+				Questions = new List<Question>()
+			};
+
+			//Create subplatform
+			platformRepo.CreateSubplatform(platform);
+
+			return platform;
 		}
 
 		/// <summary>
@@ -61,6 +76,6 @@ namespace BAR.BL.Managers
 			else platformRepo = new SubplatformRepository(uowManager.UnitOfWork);
 		}
 
-		
+
 	}
 }

@@ -1,4 +1,5 @@
 using BAR.BL.Domain;
+using BAR.BL.Domain.Core;
 using BAR.BL.Domain.Data;
 using BAR.BL.Domain.Items;
 using BAR.BL.Domain.Users;
