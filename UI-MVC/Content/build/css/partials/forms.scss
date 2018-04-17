@@ -1,0 +1,10 @@
+
+textarea {
+  padding: 10px;
+  vertical-align: top;
+  width: 200px;
+  &:focus {
+    outline-style: solid;
+    outline-width: 2px;
+  }
+}

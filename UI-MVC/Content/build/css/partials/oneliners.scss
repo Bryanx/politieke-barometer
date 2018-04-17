@@ -7,14 +7,6 @@
   background: var(--secondary-color);
 }
 
-.c-primary {
-  color: var(--primary-color);
-}
-
-.c-secondary {
-  color: var(--secondary-color);
-}
-
 .font_11 {
   font-size: 11px !important;
 }
@@ -127,4 +119,23 @@
 
 .btn-round {
   @include border-radius(30px);
+}
+
+.center-margin {
+  margin: 0 auto;
+  float: none !important;
+}
+
+.line_30 {
+  line-height: 30px;
+}
+
+.divider {
+  border-bottom: 1px solid #ddd;
+  margin: 10px;
+}
+
+.container {
+  width: 100%;
+  padding: 0;
 }

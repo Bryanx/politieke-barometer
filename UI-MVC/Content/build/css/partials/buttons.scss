@@ -32,6 +32,19 @@ a {
   text-decoration: none;
 }
 
+.voiceBtn {
+  width: 20px;
+  color: transparent;
+  background-color: transparent;
+  transform: scale(2, 2);
+  -webkit-transform: scale(2, 2);
+  -moz-transform: scale(2, 2);
+  border: transparent;
+  cursor: pointer;
+  box-shadow: none;
+  -webkit-box-shadow: none;
+}
+
 .button-mail {
   margin: 0 0 15px !important;
   text-align: left;

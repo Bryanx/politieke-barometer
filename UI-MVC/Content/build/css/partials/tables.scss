@@ -260,3 +260,26 @@ table {
 .greyed-out {
   background: #f0f0f0 !important;
 }
+
+
+
+@media (max-width: 460px) {
+  .dataTables_wrapper .col-sm-6 {
+    width: 100%;
+    margin-bottom: 5px;
+    .dataTables_filter {
+      float: none;
+    }
+  }
+}
+
+@media (max-width: 767px) {
+  .dataTables_length {
+    float: none;
+  }
+}
+
+.dataTables_wrapper > .row {
+  overflow: auto !important;
+  /*prevent datatables overflowing its container*/
+}
