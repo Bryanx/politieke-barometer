@@ -14,7 +14,7 @@ namespace BAR.DAL
 		IEnumerable<SubPlatform> ReadSubPlatform();
 
 		//Create
-		//...
+		int CreateSubplatform(SubPlatform subPlatform);
 
 		//Update
 		//...

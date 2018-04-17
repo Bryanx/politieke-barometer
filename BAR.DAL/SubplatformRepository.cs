@@ -27,6 +27,15 @@ namespace BAR.DAL
 		}
 
 		/// <summary>
+		/// Creates a new instance of a given subplatform in the database
+		/// </summary>
+		public int CreateSubplatform(SubPlatform subPlatform)
+		{
+			ctx.SubPlatforms.Add(subPlatform);
+			return ctx.SaveChanges();
+		}
+
+		/// <summary>
 		/// Reads a subplatform based on name of the subplatform.
 		/// </summary>
 		public SubPlatform ReadSubPlatform(string subplatformName)
