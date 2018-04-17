@@ -365,16 +365,6 @@ namespace BAR.BL.Managers
 		}
 
 		/// <summary>
-		/// Determines if the repo needs a unit of work
-		/// if the unitOfWorkManager is present
-		/// </summary>
-		private void InitRepo()
-		{
-			if (uowManager == null) platformRepo = new SubplatformRepository();
-			else platformRepo = new SubplatformRepository(uowManager.UnitOfWork);
-		}
-
-		/// <summary>
 		/// Removes a question from the database
 		/// </summary>
 		public void RemoveQuestion(int questionId)
@@ -387,5 +377,15 @@ namespace BAR.BL.Managers
 
 			platformRepo.DeleteQuestion(question);
 		}
+
+		/// <summary>
+		/// Determines if the repo needs a unit of work
+		/// if the unitOfWorkManager is present
+		/// </summary>
+		private void InitRepo()
+		{
+			if (uowManager == null) platformRepo = new SubplatformRepository();
+			else platformRepo = new SubplatformRepository(uowManager.UnitOfWork);
+		}	
 	}
 }
