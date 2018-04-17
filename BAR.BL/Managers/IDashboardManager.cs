@@ -10,13 +10,13 @@ namespace BAR.BL.Managers
 	public interface IDashboardManager
 	{
 		//widgets
-		Widget GetWidget(int widgetId);
-		IEnumerable<Widget> GetWidgets(int dashboardId);
+		UserWidget GetWidget(int widgetId);
+		IEnumerable<UserWidget> GetWidgets(int dashboardId);
 
-		Widget CreateWidget(int dashboardId, WidgetType widgetType, string title, int rowNbr, int colNbr, int rowspan = 1, int colspan = 1);
+		UserWidget CreateWidget(int dashboardId, WidgetType widgetType, string title, int rowNbr, int colNbr, int rowspan = 1, int colspan = 1);
 
-		Widget ChangeWidgetPos(int widgetId, int rowNbr, int colNbr, int rowspan = 1, int colspan = 1);
-		Widget ChangeWidgetTitle(int widgetId, string title);
+		UserWidget ChangeWidgetPos(int widgetId, int rowNbr, int colNbr, int rowspan = 1, int colspan = 1);
+		UserWidget ChangeWidgetTitle(int widgetId, string title);
 
 		void RemoveWidget(int widgetId);
 

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BAR.BL.Domain.Widgets
 {
-	public class Widget
+	public class UserWidget
 	{
 		public int WidgetId { get; set; }
 		public string Title { get; set; }

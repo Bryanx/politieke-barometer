@@ -28,11 +28,11 @@ namespace BAR.BL.Managers
 		/// Creates a widget based on the parameters
 		/// and links that widget to a dasboard.
 		/// </summary>
-		public Widget CreateWidget(int dashboardId, WidgetType widgetType, string title, int rowNbr, int colNbr, int rowspan = 1, int colspan = 1)
+		public UserWidget CreateWidget(int dashboardId, WidgetType widgetType, string title, int rowNbr, int colNbr, int rowspan = 1, int colspan = 1)
 		{
 			InitRepo();
 
-			Widget widget = new Widget()
+			UserWidget widget = new UserWidget()
 			{
 				WidgetType = widgetType,
 				Title = title,
@@ -53,7 +53,7 @@ namespace BAR.BL.Managers
 		public void RemoveWidget(int widgetId)
 		{
 			InitRepo();
-			Widget widgetToRemove = GetWidget(widgetId);
+			UserWidget widgetToRemove = GetWidget(widgetId);
 			if (widgetToRemove != null) dashboardRepo.DeleteWidget(widgetToRemove);
 		}
 
@@ -61,7 +61,7 @@ namespace BAR.BL.Managers
 		/// Gives back a widget for a
 		/// specific widgetId.
 		/// </summary>
-		public Widget GetWidget(int widgetId)
+		public UserWidget GetWidget(int widgetId)
 		{
 			InitRepo();
 			return dashboardRepo.ReadWidget(widgetId);
@@ -71,7 +71,7 @@ namespace BAR.BL.Managers
 		/// Gives back a list of widgets
 		/// for a specific dashboard.
 		/// </summary>
-		public IEnumerable<Widget> GetWidgets(int dashboardId)
+		public IEnumerable<UserWidget> GetWidgets(int dashboardId)
 		{
 			InitRepo();
 			return dashboardRepo.ReadWidgetsForDashboard(dashboardId);
@@ -80,12 +80,12 @@ namespace BAR.BL.Managers
 		/// <summary>
 		/// Updates the position of the widget.
 		/// </summary>
-		public Widget ChangeWidgetPos(int widgetId, int rowNbr, int colNbr, int rowspan = 1, int colspan = 1)
+		public UserWidget ChangeWidgetPos(int widgetId, int rowNbr, int colNbr, int rowspan = 1, int colspan = 1)
 		{
 			InitRepo();
 
 			//get widget
-			Widget widgetToUpdate = GetWidget(widgetId);
+			UserWidget widgetToUpdate = GetWidget(widgetId);
 			if (widgetToUpdate == null) return null;
 
 			//update widget
@@ -103,12 +103,12 @@ namespace BAR.BL.Managers
 		/// <summary>
 		/// Updates the position of the widget.
 		/// </summary>
-		public Widget ChangeWidgetTitle(int widgetId, string title)
+		public UserWidget ChangeWidgetTitle(int widgetId, string title)
 		{
 			InitRepo();
 
 			//get widget
-			Widget widgetToUpdate = GetWidget(widgetId);
+			UserWidget widgetToUpdate = GetWidget(widgetId);
 			if (widgetToUpdate == null) return null;
 
 			//update widget
@@ -150,7 +150,7 @@ namespace BAR.BL.Managers
 			{
 				DashboardType = dashType,
 				User = user,
-				Widgets = new List<Widget>(),
+				Widgets = new List<UserWidget>(),
 				Activities = new List<Activity>()
 			};
 			

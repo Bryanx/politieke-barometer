@@ -36,7 +36,7 @@ namespace BAR.DAL
 		/// <summary>
 		/// Gives back a list of all the widgets.
 		/// </summary>
-		public IEnumerable<Widget> ReadAllWidgets()
+		public IEnumerable<UserWidget> ReadAllWidgets()
 		{
 			return ctx.Widgets.AsEnumerable();
 		}
@@ -76,7 +76,7 @@ namespace BAR.DAL
 		/// Gives back a widget object for a 
 		/// specific widget id.
 		/// </summary>
-		public Widget ReadWidget(int widgetId)
+		public UserWidget ReadWidget(int widgetId)
 		{
 			return ctx.Widgets.Find(widgetId);
 		}
@@ -85,7 +85,7 @@ namespace BAR.DAL
 		/// Gives back a list of widgets for a
 		/// specific dashboard id.
 		/// </summary>
-		public IEnumerable<Widget> ReadWidgetsForDashboard(int dashboardId)
+		public IEnumerable<UserWidget> ReadWidgetsForDashboard(int dashboardId)
 		{
 			return ctx.Widgets.Where(wid => wid.Dashboard.DashboardId == dashboardId).AsEnumerable();
 		}
@@ -110,7 +110,7 @@ namespace BAR.DAL
 		/// widget needs to be linked to dashboard.
 		/// Alternative: call ReadDashboard(), add widget to the list, updateDashboard();
 		/// </summary>
-		public int CreateWidget(Widget widget, int dashboardId)
+		public int CreateWidget(UserWidget widget, int dashboardId)
 		{
 			Dashboard dasboardToAddWidget = ReadDashboardWithWidgets(dashboardId);
 			dasboardToAddWidget.Widgets.Add(widget);
@@ -141,7 +141,7 @@ namespace BAR.DAL
 		/// Updates a specific widget.
 		/// Returns -1 if SaveChanges() is delayed by unit of work.
 		/// </summary>
-		public int UpdateWidget(Widget widget)
+		public int UpdateWidget(UserWidget widget)
 		{
 			ctx.Entry(widget).State = EntityState.Modified;
 			return ctx.SaveChanges();
@@ -151,9 +151,9 @@ namespace BAR.DAL
 		/// Updates a list of widgets.
 		/// Returns -1 if SaveChanges() is delayed by unit of work.
 		/// </summary>
-		public int UpdateWidgets(IEnumerable<Widget> widgets)
+		public int UpdateWidgets(IEnumerable<UserWidget> widgets)
 		{
-			foreach (Widget widget in widgets) ctx.Entry(widget).State = EntityState.Modified;
+			foreach (UserWidget widget in widgets) ctx.Entry(widget).State = EntityState.Modified;
 			return ctx.SaveChanges();
 		}
 
@@ -192,7 +192,7 @@ namespace BAR.DAL
 		/// Updates a specific widget.
 		/// Returns -1 if SaveChanges() is delayed by unit of work.
 		/// </summary>
-		public int DeleteWidget(Widget widget)
+		public int DeleteWidget(UserWidget widget)
 		{
 			ctx.Widgets.Remove(widget);
 			return ctx.SaveChanges();
@@ -202,9 +202,9 @@ namespace BAR.DAL
 		/// Deletes a list of widgets.
 		/// Returns -1 if SaveChanges() is delayed by unit of work.
 		/// </summary>
-		public int DeleteWidgets(IEnumerable<Widget> widgets)
+		public int DeleteWidgets(IEnumerable<UserWidget> widgets)
 		{
-			foreach (Widget widget in widgets) ctx.Widgets.Remove(widget);
+			foreach (UserWidget widget in widgets) ctx.Widgets.Remove(widget);
 			return ctx.SaveChanges();
 		}		
 	}

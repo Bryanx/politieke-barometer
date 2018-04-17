@@ -45,7 +45,7 @@ namespace BAR.DAL.EF
 
 		//Widget package
 		public DbSet<Dashboard> Dashboards { get; set; }
-		public DbSet<Widget> Widgets { get; set; }
+		public DbSet<UserWidget> Widgets { get; set; }
 
 		//Static method for creating and returning a BarometerDbContext (used as in Singleton pattern)
 		public static BarometerDbContext Create()
