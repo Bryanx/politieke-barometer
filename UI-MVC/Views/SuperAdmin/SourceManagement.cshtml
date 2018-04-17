@@ -1,3 +1,54 @@
 ﻿@model BAR.UI.MVC.Models.BaseViewModel
 
 <h1>title</h1>
+
+<form method="get" action="/api/Data/Synchronize" id="synchronizeForm" class="form-horizontal">
+    <div class="form-group">
+        <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+            Synchroniseer met externe databank vanaf laatste synchronisatie.
+            Wacht na opslaan tot melding.
+            <br />
+            <br />
+            <button type="submit" class="btn btn-dark">Synchroniseer</button>
+            <div id="synchronizeMessage" style="display: none"></div>
+        </div>
+    </div>
+</form>
+
+@section CustomJS{
+    <script type="text/javascript">
+        //When the user settings form is submitted: post request to webapi
+        $("#synchronizeForm").on("submit", function (event) {
+            submitForm($(this), event, $("#synchronizeMessage"));
+        });
+
+        //Ajax call in generic function so every form can use the same code.
+        function submitForm($this, event, message) {
+            $.ajax({
+                type: $this.attr('method'),
+                url: $this.attr('action'),
+                data: $this.serialize(),
+                succes: message
+                    .addClass('green')
+                    .html("Opgeslagen")
+                    .fadeOut(2000,
+                    function () {
+                        $(this)
+                            .removeClass()
+                            .html("")
+                            .css("display", "inline");
+                    })
+            }).fail(() => message
+                .addClass('red')
+                .html("Mislukt")
+                .fadeOut(2000,
+                function () {
+                    $(this)
+                        .removeClass()
+                        .html("")
+                        .css("display", "inline");
+                }));
+            event.preventDefault();
+        }
+    </script>
+}

@@ -116,8 +116,31 @@ namespace BAR.UI.MVC.Controllers
 				return RedirectToAction("Index", "User");
 			}
 
-			SignInManager signInManager = HttpContext.GetOwinContext().Get<SignInManager>();
-			IdentityUserManager userManager = HttpContext.GetOwinContext().GetUserManager<IdentityUserManager>();
+      if (ModelState.IsValid)
+      {
+        var user = new User
+        {
+          UserName = model.Email,
+          Email = model.Email,
+          FirstName = model.Firstname,
+          LastName = model.Lastname,
+          Gender = model.Gender,
+          DateOfBirth = model.DateOfBirth,
+          AlertsViaWebsite = true
+        };
+        var result = await userManager.CreateAsync(user, model.Password);
+        if (result.Succeeded)
+        {
+          //Send an email with this link
+          string code = await userManager.GenerateEmailConfirmationTokenAsync(user.Id);
+          var callbackUrl = Url.Action("ConfirmEmail", "User", new { userId = user.Id, code = code },
+              protocol: Request.Url.Scheme);
+          await userManager.SendEmailAsync(user.Id, "Bevestig je registratie",
+              "Bevestig je registratie door <a href=\"" + callbackUrl + "\">hier</a> te klikken.");
+          //Assign Role to user    
+          await userManager.AddToRoleAsync(user.Id, "SuperAdmin");
+          //Login
+          await signInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
 
 			if (ModelState.IsValid)
 			{
@@ -306,6 +329,31 @@ namespace BAR.UI.MVC.Controllers
 			var firstname = loginInfo.ExternalIdentity.Claims.First(c => c.Type == "urn:facebook:first_name").Value;
 			var lastname = loginInfo.ExternalIdentity.Claims.First(c => c.Type == "urn:facebook:last_name").Value;
 			var id = loginInfo.ExternalIdentity.Claims.First(c => c.Type == "urn:facebook:id").Value;
+      // Sign in the user with this external login provider if the user already has a login
+      var result = await signInManager.ExternalSignInAsync(loginInfo, isPersistent: false);
+      switch (result)
+      {
+        case SignInStatus.Success:
+          return RedirectToLocal(returnUrl);
+        case SignInStatus.LockedOut:
+          return View("Lockout");
+        case SignInStatus.RequiresVerification:
+          return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = false });
+        case SignInStatus.Failure:
+        default:
+          // If the user does not have an account, then prompt the user to create an account
+          ViewBag.ReturnUrl = returnUrl;
+          ViewBag.LoginProvider = loginInfo.Login.LoginProvider;
+          return View("ExternalLoginConfirmation",
+              new ExternalLoginConfirmationViewModel
+              {
+                Email = loginInfo.Email,
+                Firstname = firstname,
+                Lastname = lastname,
+                DateOfBirth = DateTime.Now
+              });
+      }
+    }
 
 			//Get profile picure as byte array
 			var webClient = new WebClient();
@@ -365,6 +413,8 @@ namespace BAR.UI.MVC.Controllers
 					return View("ExternalLoginFailure");
 				}
 
+          //Assign Role to user Here      
+          await userManager.AddToRoleAsync(user.Id, "SuperAdmin");
 				var user = new User
 				{
 					UserName = model.Email,
