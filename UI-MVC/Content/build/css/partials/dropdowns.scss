@@ -1,5 +1,8 @@
 
 .dropdown-menu {
+  a {
+    cursor: pointer;
+  }
   &.msg_list span {
     white-space: normal;
     user-select: none;
@@ -36,14 +39,10 @@
       background-color: #f5f5f5;
       > i {
         display: inline-block;
-        @include animation(0, .2s, ease-in-out, fadeLeft);
+        @include animation(0, .2s, ease-in-out, pop);
       }
     }
   }
-}
-
-.dropdown-menu a {
-  cursor: pointer;
 }
 
 //Animation:

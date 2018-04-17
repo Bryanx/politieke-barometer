@@ -89,6 +89,34 @@ Preset animations
   100% {
     opacity: 1;
     transform: translateY(0px); } }
+@-webkit-keyframes pop {
+  0% {
+    opacity: 1;
+    transform: scale(1.5); }
+  100% {
+    opacity: 1;
+    transform: scale(1); } }
+@-moz-keyframes pop {
+  0% {
+    opacity: 1;
+    transform: scale(1.5); }
+  100% {
+    opacity: 1;
+    transform: scale(1); } }
+@-o-keyframes pop {
+  0% {
+    opacity: 1;
+    transform: scale(1.5); }
+  100% {
+    opacity: 1;
+    transform: scale(1); } }
+@keyframes pop {
+  0% {
+    opacity: 1;
+    transform: scale(1.5); }
+  100% {
+    opacity: 1;
+    transform: scale(1); } }
 html {
   --primary-color: #0f8ec4;
   --primary-darker: #0e85b8;
@@ -1832,6 +1860,8 @@ span.right {
 .form_wizard .loader, .form_wizard .msgBox {
   display: none; }
 
+.dropdown-menu a {
+  cursor: pointer; }
 .dropdown-menu.msg_list span {
   white-space: normal;
   user-select: none; }
@@ -1875,27 +1905,24 @@ span.right {
       display: inline-block;
       -webkit-animation-delay: 0;
       -webkit-animation-duration: 0.2s;
-      -webkit-animation-name: fadeLeft;
+      -webkit-animation-name: pop;
       -webkit-animation-timing-function: ease-in-out;
       -webkit-animation-fill-mode: forwards;
       -moz-animation-delay: 0;
       -moz-animation-duration: 0.2s;
-      -moz-animation-name: fadeLeft;
+      -moz-animation-name: pop;
       -moz-animation-timing-function: ease-in-out;
       -moz-animation-fill-mode: forwards;
       -o-animation-delay: 0;
       -o-animation-duration: 0.2s;
-      -o-animation-name: fadeLeft;
+      -o-animation-name: pop;
       -o-animation-timing-function: ease-in-out;
       -o-animation-fill-mode: forwards;
       animation-delay: 0;
       animation-duration: 0.2s;
-      animation-name: fadeLeft;
+      animation-name: pop;
       animation-timing-function: ease-in-out;
       animation-fill-mode: forwards; }
-
-.dropdown-menu a {
-  cursor: pointer; }
 
 .open > .dropdown-menu {
   -webkit-animation-delay: 0;

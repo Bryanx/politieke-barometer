@@ -42,10 +42,10 @@
   animation-fill-mode: $fill;
 }
 
+
 /*
 Preset animations
  */
-
 @include keyframe(fadeLeft) {
   0% {
     opacity: 0;
@@ -78,5 +78,16 @@ Preset animations
   100% {
     opacity: 1;
     transform: translateY(0px);
+  }
+}
+
+@include keyframe(pop) {
+  0% {
+    opacity: 1;
+    transform: scale(1.5);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
   }
 }
