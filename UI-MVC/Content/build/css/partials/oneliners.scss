@@ -1,0 +1,130 @@
+
+.right_col {
+  background: var(--bg-color);
+}
+
+.left_col {
+  background: var(--secondary-color);
+}
+
+.c-primary {
+  color: var(--primary-color);
+}
+
+.c-secondary {
+  color: var(--secondary-color);
+}
+
+.font_11 {
+  font-size: 11px !important;
+}
+
+.font_16 {
+  font-size: 16px !important;
+}
+
+.font_18 {
+  font-size: 18px !important;
+}
+
+.font_22 {
+  font-size: 22px !important;
+}
+
+.margin_bottom_20 {
+  margin-bottom: 20px;
+}
+
+.w-100 {
+  width: 100% !important;
+}
+
+.w-100px {
+  width: 100px !important;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.full-height {
+  height: 100%;
+}
+
+.left {
+  float: left;
+}
+
+.alignleft {
+  float: left;
+  margin-right: 15px;
+}
+
+.alignright {
+  float: right;
+  margin-left: 15px;
+}
+
+.no-scrollbar {
+  overflow-y: hidden !important;
+}
+
+.zero-margin {
+  margin: 0 !important;
+}
+
+.margin-left-100 {
+  margin-left: 100px !important;
+}
+
+.margin-left-0 {
+  margin-left: 0px !important;
+}
+
+.fixed_height_670 {
+  height: 670px;
+}
+
+.fixed_height_320 {
+  height: 320px;
+}
+
+.fixed_height_390 {
+  height: 390px;
+}
+
+.fixed_height_200 {
+  height: 200px;
+}
+
+.overflow_hidden {
+  overflow: hidden;
+}
+
+.progress-bar-dark {
+  background-color: var(--secondary-color) !important;
+}
+
+.progress-bar-gray {
+  background-color: #BDC3C7 !important;
+}
+
+.clear {
+  clear: both;
+}
+
+.w_20 {
+  width: 20%;
+}
+
+.w_25 {
+  width: 25%;
+}
+
+.w_55 {
+  width: 55%;
+}
+
+.btn-round {
+  @include border-radius(30px);
+}

@@ -127,6 +127,10 @@ div {
   }
 }
 
+#alertDropdown {
+  padding: 17px 17px 16px;
+}
+
 @media (min-width: 900px) {
   .navbar-nav .open .dropdown-menu.msg_list {
     width: 400px;

@@ -262,10 +262,16 @@
     <Content Include="Content\build\css\modules\colors.scss" />
     <Content Include="Content\build\css\modules\mediaqueries.scss" />
     <Content Include="Content\build\css\partials\alerts.scss" />
+    <Content Include="Content\build\css\partials\breadcrumbs.scss" />
     <Content Include="Content\build\css\partials\buttons.scss" />
+    <Content Include="Content\build\css\partials\checkbox.scss" />
     <Content Include="Content\build\css\partials\colors.scss" />
     <Content Include="Content\build\css\partials\footer.scss" />
     <Content Include="Content\build\css\partials\images.scss" />
+    <Content Include="Content\build\css\partials\navbar.scss" />
+    <Content Include="Content\build\css\partials\oneliners.scss" />
+    <Content Include="Content\build\css\partials\profile.scss" />
+    <Content Include="Content\build\css\partials\searchbar.scss" />
     <Content Include="Content\build\css\partials\tables.scss" />
     <Content Include="Content\build\css\partials\tiles.scss" />
     <Content Include="Content\build\css\vendor\bootstrap-progressbar-3.3.4.css" />

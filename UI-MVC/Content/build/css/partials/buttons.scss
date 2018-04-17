@@ -1,26 +1,3 @@
-.btn {
-  @include border-radius(3px);
-}
-
-.btn-success {
-  background: var(--primary-darker);
-  border: 1px solid var(--primary-darker);
-  &:hover, &:focus, &:active, &.active {
-    background: var(--primary-darkest) !important;
-  }
-}
-
-.btn-dark {
-  color: #E9EDEF;
-  background-color: #4B5F71;
-  border-color: #364B5F;
-  &:hover, &:focus, &:active, &.active {
-    color: var(--white);
-    background-color: #394D5F;
-    border-color: #394D5F;
-  }
-}
-
 a {
   &.btn-success, &.btn-primary, &.btn-warning, &.btn-danger {
     color: var(--white);
@@ -77,4 +54,49 @@ a {
 
 .input-group-btn .btn {
   margin-bottom: 0;
+}
+
+.btn {
+  @include border-radius(3px);
+  &:focus, &:active:focus, &.active:focus, &.focus, &:active.focus, &.active.focus {
+    outline: 0;
+  }
+}
+
+.btn-success {
+  background: var(--primary-darker);
+  border: 1px solid var(--primary-darker);
+  &:hover, &:focus, &:active, &.active {
+    background: var(--primary-darkest) !important;
+  }
+}
+
+.btn-dark {
+  color: #E9EDEF;
+  background-color: #4B5F71;
+  border-color: #364B5F;
+  &:hover, &:focus, &:active, &.active {
+    color: var(--white);
+    background-color: #394D5F;
+    border-color: #394D5F;
+  }
+}
+
+.btn-primary, btn-primary:visited {
+  color: var(--white);
+  background-color: var(--primary-color) !important;
+  border-color: var(--primary-darker);
+}
+
+.btn-primary {
+  &:hover {
+    color: var(--white);
+    background-color: var(--primary-darker);
+    border-color: var(--primary-darkest);
+  }
+  &:active, &:focus {
+    color: var(--white);
+    background-color: var(--primary-darkest) !important;
+    border-color: var(--primary-darkest) !important;
+  }
 }
