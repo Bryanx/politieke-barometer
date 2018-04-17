@@ -12,7 +12,7 @@ using System.Text;
 
 namespace BAR.DAL.EF
 {
-  internal class BarometerInitializer : DropCreateDatabaseIfModelChanges<BarometerDbContext>
+  internal class BarometerInitializer : DropCreateDatabaseAlways<BarometerDbContext>
   {
     /// <summary>
     /// Dummy data from the json file will be generated
@@ -20,11 +20,31 @@ namespace BAR.DAL.EF
     /// </summary>
     protected override void Seed(BarometerDbContext ctx)
     {
+      GenerateSubPlatforms(ctx);
       GenerateSources(ctx);
       GenerateProperties(ctx);
       GenerateInformations(ctx);
       GenerateAreas(ctx);
-      GenerateSubPlatforms(ctx);
+      GenerateK3(ctx);
+    }
+
+    /// <summary>
+    /// Generates test data for K3 subplatform
+    /// </summary>
+    /// <param name="ctx"></param>
+    private void GenerateK3(BarometerDbContext ctx)
+    {
+      Person Marthe = new Person()
+      {
+        Name = "Marthe De Pillecyn",
+        CreationDate = DateTime.Now,
+        Baseline = 0,
+        TrendingPercentage = 0,
+        SubPlatform = ctx.SubPlatforms.Where(sp => sp.Name.Equals("K3")).SingleOrDefault()
+
+      };
+
+      ctx.Items.Add(Marthe);
     }
 
     /// <summary>
@@ -33,12 +53,20 @@ namespace BAR.DAL.EF
     /// <param name="ctx"></param>
     private void GenerateSubPlatforms(BarometerDbContext ctx)
     {
-      SubPlatform subPlatform = new SubPlatform
+      SubPlatform subPlatform1 = new SubPlatform
       {
-        Name = "K3ZoektK3",
+        Name = "K3",
         CreationDate = DateTime.Now
       };
-      ctx.SubPlatforms.Add(subPlatform);
+      ctx.SubPlatforms.Add(subPlatform1);
+
+      SubPlatform subPlatform2 = new SubPlatform
+      {
+        Name = "politiek",
+        CreationDate = DateTime.Now
+      };
+      ctx.SubPlatforms.Add(subPlatform2);
+
       ctx.SaveChanges();
     }
 
