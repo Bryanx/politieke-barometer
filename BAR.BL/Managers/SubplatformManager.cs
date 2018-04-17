@@ -16,13 +16,6 @@ namespace BAR.BL.Managers
 		private ISubplatformRepository platformRepo;
 		private UnitOfWorkManager uowManager;
 
-		public SubPlatform GetSubPlatform(string subplatformName)
-		{
-      InitRepo();
-			SubPlatform subPlatform = platformRepo.ReadSubPlatform(subplatformName);
-			return subPlatform;
-		}
-
 		/// <summary>
 		/// When unit of work is present, it will effect
 		/// initRepo-method. (see documentation of initRepo)
@@ -32,14 +25,34 @@ namespace BAR.BL.Managers
 			this.uowManager = uowManager;
 		}
 
-    /// <summary>
+		/// <summary>
+		/// Returns a speicif subplatform
+		/// </summary>
+		public SubPlatform GetSubPlatform(string subplatformName)
+		{
+			InitRepo();
+			return platformRepo.ReadSubPlatform(subplatformName);
+		}
+
+		/// <summary>
+		/// Returns all subplatforms
+		/// </summary>
+		public IEnumerable<SubPlatform> GetSubplatforms()
+		{
+			InitRepo();
+			return platformRepo.ReadSubPlatforms().AsEnumerable();
+		}
+
+		/// <summary>
 		/// Determines if the repo needs a unit of work
 		/// if the unitOfWorkManager is present
 		/// </summary>
 		private void InitRepo()
-    {
-      if (uowManager == null) platformRepo = new SubplatformRepository();
-      else platformRepo = new SubplatformRepository(uowManager.UnitOfWork);
-    }
-  }
+		{
+			if (uowManager == null) platformRepo = new SubplatformRepository();
+			else platformRepo = new SubplatformRepository(uowManager.UnitOfWork);
+		}
+
+		
+	}
 }

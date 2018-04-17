@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace BAR.BL.Managers
 {
-  public interface ISubplatformManager
-  {
-    //Read
-    SubPlatform GetSubPlatform(string subplatformName);
-  }
+	public interface ISubplatformManager
+	{
+		SubPlatform GetSubPlatform(string subplatformName);
+		IEnumerable<SubPlatform> GetSubplatforms();
+	}
 }
