@@ -32,92 +32,86 @@
 </head>
 
 <body class="nav-sm">
-    <div class="container body">
-        <div class="main_container">
+<div class="container body">
+    <div class="main_container">
 
-            <!-- top navigation -->
-            <div class="top_nav">
-                <div class="nav_menu">
-                    <div class="navbar" style="border: 0;">
-                        <a href='@Url.RootUrl()'>
-                            <i class="small-logo colored"></i>
-                        </a>
-                    </div>
-
-                    <!-- login -->
-                    @Html.ShowNavLogin(Model)
-                    <!-- search -->
-                    @Html.Partial("Partials/_SearchBar")
-                </div>
-            </div>
-            <!-- /top navigation -->
-            <!-- breadcrumbs -->
-            @Html.MvcSiteMap().SiteMapPath("BootstrapSiteMapPathHelperModel")
-
-            <!-- page content -->
-            @if (IsSectionDefined("Homepage"))
-            {
-                @RenderSection("Homepage")
-            }
-
-            <div class="right_col" role="main">
-                @RenderBody()
-            </div>
-            <!-- /page content -->
-            <!-- navbar left -->
-            <div class="col-md-3 left_col">
-                <div class="left_col scroll-view">
-                    <div class="navbar" style="border: 0;">
-                        <a href='@Url.RootUrl()'>
-                            <i class="small-logo"></i>
-                        </a>
-                    </div>
-                    <div class="clearfix"></div>
-
-                    <!-- sidebar menu -->
-                    <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
-                        <div class="menu_section">
-                            <ul class="nav side-menu">
-                                @Html.LeftNavBarHelper(Model)
-                            </ul>
-                        </div>
-                    </div>
-                    <!-- /sidebar menu -->
-
-                </div>
-                <div class="hover-nav">
-                    <a id="menu_toggle">
-                        <div class="nav toggle">
-                            <i class="fa fa-arrow-left"></i>
-                        </div>
+        <!-- top navigation -->
+        <div class="top_nav">
+            <div class="nav_menu">
+                <div class="navbar" style="border: 0;">
+                    <a href='@Url.RootUrl()'>
+                        <i class="small-logo colored"></i>
                     </a>
                 </div>
+
+                <!-- login -->
+                @Html.ShowNavLogin(Model)
+                <!-- search -->
+                @Html.Partial("Partials/_SearchBar")
             </div>
-            <!-- /navbar left -->
-            <!-- footer content -->
-            @Html.Partial("Partials/_Footer")
-            <!-- /footer content -->
         </div>
+        <!-- /top navigation -->
+
+        <!-- breadcrumbs -->
+        @Html.MvcSiteMap().SiteMapPath("BootstrapSiteMapPathHelperModel")
+        
+        <!-- page content -->
+        @if (IsSectionDefined("Homepage")) {
+            @RenderSection("Homepage")
+        }
+        
+        <div class="right_col" role="main">
+            @RenderBody()
+        </div>
+        <!-- /page content -->
+
+        <!-- navbar left -->
+        <div class="col-md-3 left_col">
+            <div class="left_col scroll-view">
+                <div class="navbar" style="border: 0;">
+                    <a href='@Url.RootUrl()'>
+                        <i class="small-logo"></i>
+                    </a>
+                </div>
+                <div class="clearfix"></div>
+                
+                <!-- sidebar menu -->
+                <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
+                    <div class="menu_section">
+                        <ul class="nav side-menu">
+                            @Html.LeftNavBarHelper(Model)
+                        </ul>
+                    </div>
+                </div>
+                <!-- /sidebar menu -->
+                
+            </div>
+            <div class="hover-nav">
+                <a id="menu_toggle">
+                    <div class="nav toggle">
+                        <i class="fa fa-arrow-left"></i>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <!-- /navbar left -->
+        
+        <!-- footer content -->
+        @Html.Partial("Partials/_Footer")
+        <!-- /footer content -->
     </div>
+</div>
 
-    <!-- Scripts -->
-    <script src="/Home/GetResources"></script>
-    @Scripts.Render("~/bundles/jquery", "~/bundles/bootstrap", "~/bundles/dates", "~/bundles/timeago", "~/Scripts/vue.min.js")
-    @Scripts.Render("~/Content/build/js/alerts.js")
+<!-- Scripts -->
+@Scripts.Render("~/bundles/jquery", "~/bundles/bootstrap", "~/bundles/dates", "~/bundles/timeago", "~/Scripts/vue.min.js")
+@Scripts.Render("~/Content/build/js/alerts.js")
 
-    @if (IsSectionDefined("CustomJS"))
-    {
-        @RenderSection("CustomJS")
-    }
-    <!-- Custom Theme Scripts -->
-    @Scripts.Render("~/bundles/custom")
-    <script defer>
-        (() => {
-            $(".culture", ".left_col").click(function () {
-                $(this).parents("form").submit(); // post form
-            });
-        })($)
-    </script>
+@if (IsSectionDefined("CustomJS")) {
+    @RenderSection("CustomJS")
+}
+
+<!-- Custom Theme Scripts -->
+@Scripts.Render("~/bundles/custom")
 
 </body>
 </html>

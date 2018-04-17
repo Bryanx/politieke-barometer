@@ -10,12 +10,12 @@ namespace BAR.DAL.EF
 {
 	public class BarometerDbContext : IdentityDbContext<User>
 	{
-		/// <summary>
-		/// DelaySave makes sure that the SaveChanges method will not be executed
-		/// if this boolean is true.
-		/// Will be used with the UnitOfWork pattern.
-		/// </summary>
-		private readonly bool delaySave;
+        /// <summary>
+        /// DelaySave makes sure that the SaveChanges method will not be executed
+        /// if this boolean is true.
+        /// Will be used with the UnitOfWork pattern.
+        /// </summary>
+        private readonly bool delaySave;
 
 		/// <summary>
 		/// Constructor of PizzaDbContext, loads the connectionstring based on de
@@ -41,8 +41,8 @@ namespace BAR.DAL.EF
     public DbSet<Subscription> Subscriptions { get; set; }
     public DbSet<Area> Areas { get; set; }
 
-		//Item package
-		public DbSet<Item> Items { get; set; }
+    //Item package
+    public DbSet<Item> Items { get; set; }
 
 		//Widget package
 		public DbSet<Dashboard> Dashboards { get; set; }
@@ -78,12 +78,12 @@ namespace BAR.DAL.EF
 			return base.SaveChanges();
 		}
 
-		/// <summary>
-		/// This method is used to save changes. It will save all changes to the database if DelaySave is true.
-		/// effectief op true staat.
-		/// If DelaySave is false, there will be an exception.
-		/// </summary>
-		internal int CommitChanges()
+        /// <summary>
+        /// This method is used to save changes. It will save all changes to the database if DelaySave is true.
+        /// effectief op true staat.
+        /// If DelaySave is false, there will be an exception.
+        /// </summary>
+        internal int CommitChanges()
 		{
 			if (delaySave)
 			{

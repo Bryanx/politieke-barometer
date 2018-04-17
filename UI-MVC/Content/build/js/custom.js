@@ -36,6 +36,11 @@
 	};
 
 })(jQuery, 'smartresize');
+/**
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 
 var CURRENT_URL = window.location.href.split('#')[0].split('?')[0],
 	$BODY = $('body'),
@@ -51,6 +56,7 @@ var CURRENT_URL = window.location.href.split('#')[0].split('?')[0],
 	primary_darkest = window.getComputedStyle(document.documentElement).getPropertyValue('--primary-darkest').split(' ').join(''),
 	secondary_color = window.getComputedStyle(document.documentElement).getPropertyValue('--secondary-color').split(' ').join('');
 	tertiary_color = window.getComputedStyle(document.documentElement).getPropertyValue('--tertiary-color').split(' ').join('');
+
 
 // Sidebar
 function init_sidebar() {
@@ -5221,27 +5227,6 @@ function submitForm($this, event, message=null) {
                     .css("display", "inline");
             }));
     event.preventDefault();
-}
-
-//Generic ajax toggle button
-var wto;
-function ajaxToggleSubscribe($this) {
-	clearTimeout(wto);
-	var id = $this.data('item-id');
-	var text = $this.html();
-	$this.html("<i class='fa fa-circle-o-notch fa-spin'></i>");
-	wto = setTimeout(function() {
-			$.ajax({
-				type: 'POST',
-				url: '/api/ToggleSubscribe/' + id
-			}).fail(() => { /* ok */ })
-				.done(function() {
-					if (text === Resources.Subscribe) $this.html(Resources.Unsubscribe);
-					else $this.html(Resources.Subscribe);
-					$this.toggleClass("btn-danger btn-success");
-				});
-		},
-		500);
 }
 
 $.fn.toggleText = function(t1, t2){

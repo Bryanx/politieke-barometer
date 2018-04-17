@@ -2,7 +2,7 @@
 @model BAR.UI.MVC.Models.LoginViewModel
 
 @{
-  ViewBag.Title = Resources.Login;
+  ViewBag.Title = "Inloggen";
 }
 
 @using (Html.BeginForm("Login", "User", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
@@ -10,7 +10,7 @@
 @Html.AntiForgeryToken()
 <div class="form-group">
     <div class="col-md-offset-2 col-md-10">
-        <h4>@Resources.LoginWithAccount</h4>
+        <h4>Login met een barometer account</h4>
         </div>
     </div>
         <hr />
@@ -46,10 +46,10 @@
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <p>
-                    @Html.ActionLink(Resources.SignupAsNewUser, "Register")
+                    @Html.ActionLink("Registreer je als nieuwe gebruiker", "Register")
                 </p>
                 <p>
-                    @Html.ActionLink(Resources.ForgotPasswordQuestion, "ForgotPassword")
+                    @Html.ActionLink("Wachtwoord vergeten?", "ForgotPassword")
                 </p>
             </div>
         </div>

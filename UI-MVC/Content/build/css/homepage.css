@@ -12,7 +12,7 @@ h1 {
 
 .left_col {
   left: -100px;
-  transition: .2s;
+  transition: .5s;
   position: fixed;
   width: 100px; }
 

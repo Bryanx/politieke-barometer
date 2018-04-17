@@ -1,18 +1,16 @@
 ﻿@using System.Web.Optimization
-@using BAR.UI.MVC.App_GlobalResources
 @model BAR.UI.MVC.Models.ItemViewModels.ItemViewModel
 @{
     ViewBag.Title = Model.PageTitle;
 }
 
 @section CustomCSS{
-    <link rel="stylesheet" href="https://unpkg.com/vue-form-wizard/dist/vue-form-wizard.min.css">
-    <link rel="stylesheet" href="../../Content/build/css/gridstack.css" />
+    <link rel="stylesheet" href="../../Content/build/css/gridstack.css"/>
 }
 
 <section>
     <h1>@Model.PageTitle</h1>
-    <hr />
+    <hr/>
     <div>
         <button id="btnAddLine" class="btn btn-primary">Add line chart</button>
         <button id="btnAddPie" class="btn btn-primary">Add donut chart</button>
@@ -22,171 +20,62 @@
     <br>
     <!-- Widgets -->
     <div class="grid-stack" id="grid">
-    </div>
 
+    </div>
 </section>
 
 <div style="visibility: hidden">space</div>
 
-<div class="no-widgets text-center">
-    <i class=""></i>
-    <h1>@Resources.NoChartsYet</h1>
-    <a id="makeModal" class="font_22" data-toggle="modal" data-target=".makeGraphModal"><i class="fa fa-plus-circle"></i> @Resources.AddAChart</a>
-</div>
-
-<!-- Make graph modal -->
-@Html.Partial("Partials/_GraphWizard")
-
-<div style="visibility: hidden">space</div>
-
 <!-- Subscriptions -->
-@if (Model.Items.Any())
-{
-    <section class="subscriptions">
-        <br />
-        <h1>@Resources.Subscriptions</h1>
-        <hr />
-        <section class="shadowed">
-            @Html.Partial("Partials/_PersonTable", Model)
-        </section>
+@if (Model.Items.Any()) {
+    <section>
+        <br/>
+        <h1>Abonnementen</h1>
+        <hr/>
+        @Html.Partial("Partials/_Subscriptions", Model)
     </section>
 }
 
 <div style="visibility: hidden">space</div>
 
 @section CustomJS{
-    <script src="https://unpkg.com/vue-form-wizard/dist/vue-form-wizard.js"></script>
-    <script src="https://rawgit.com/icebob/vue-form-generator/master/dist/vfg.js"></script>
     @Scripts.Render("~/bundles/gridstack", "~/bundles/morrisCharts")
     <script type="text/javascript">
-
-        Vue.use(VueFormWizard);
-        Vue.use(VueFormGenerator);
-        new Vue({
-            el: '#app',
-            data: {
-                model: {
-                    baseGraph: '',
-                    intersectValueBase: '',
-                    compareGraph: '',
-                    intersectValueCompare: '',
-                    graphType: '',
-                    extraInfo: ''
-                },
-                formOptions: {
-                    validationErrorClass: "has-error",
-                    validationSuccessClass: "has-success",
-                    validateAfterChanged: true
-                },
-                firstTabSchema: {
-                    fields: [
-                        {
-                            type: "input",
-                            inputType: "text",
-                            label: "Basis grafiek*",
-                            model: "baseGraph",
-                            placeholder: "Kies een politicus partij of thema",
-                            required: true,
-                            validator: VueFormGenerator.validators.string,
-                            styleClasses: 'col-xs-12'
-                        },
-                        {
-                            type: "select",
-                            label: "Kruising waarde*",
-                            model: "intersectValueBase",
-                            required: true,
-                            validator: VueFormGenerator.validators.string,
-                            values: ['United Kingdom', 'Romania', 'Germany'],
-                            styleClasses: 'col-xs-12'
-                        },
-                        {
-                            type: "input",
-                            inputType: "text",
-                            label: "Vergelijkende grafiek (optioneel)",
-                            model: "compareGraph",
-                            placeholder: "Kies een politicus partij of thema",
-                            required: false,
-                            validator: VueFormGenerator.validators.email,
-                            styleClasses: 'col-xs-12'
-                        },
-                        {
-                            type: "select",
-                            label: "Kruising waarde",
-                            model: "intersectValueCompare",
-                            required: false,
-                            validator: VueFormGenerator.validators.string,
-                            values: ['United Kingdom', 'Romania', 'Germany'],
-                            styleClasses: 'col-xs-12'
-                        }
-                    ]
-                },
-                secondTabSchema: {
-                    fields: [
-                        {
-                            type: "select",
-                            inputType: "text",
-                            label: "Grafiek type*",
-                            model: "graphType",
-                            required: true,
-                            validator: VueFormGenerator.validators.string,
-                            values: ['United Kingdom', 'Romania', 'Germany'],
-                            styleClasses: 'col-xs-12'
-                        },
-                        {
-                            type: "select",
-                            inputType: "text",
-                            label: "Extra informatie",
-                            model: "extraInfo",
-                            required: false,
-                            validator: VueFormGenerator.validators.string,
-                            values: ['United Kingdom', 'Romania', 'Germany'],
-                            styleClasses: 'col-xs-12'
-                        }
-                    ]
-                }
-            },
-            methods: {
-                onComplete: function () {
-                    alert('Yay. Done!');
-                },
-                validateFirstTab: function () {
-                    return this.$refs.firstTabForm.validate();
-                },
-                validateSecondTab: function () {
-                    return this.$refs.secondTabForm.validate();
-                },
-                prettyJSON: function (json) {
-                    if (json) {
-                        json = JSON.stringify(json, undefined, 4);
-                        json = json.replace(/&/g, '&').replace(/</g, '<').replace(/>/g, '>');
-                        return json.replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g, function (match) {
-                            var cls = 'number';
-                            if (/^"/.test(match)) {
-                                if (/:$/.test(match)) {
-                                    cls = 'key';
-                                } else {
-                                    cls = 'string';
-                                }
-                            } else if (/true|false/.test(match)) {
-                                cls = 'boolean';
-                            } else if (/null/.test(match)) {
-                                cls = 'null';
-                            }
-                            return '<span class="' + cls + '">' + match + '</span>';
-                        });
+        //Subscriptions:
+        function personUnsubscribe(itemId) {
+            $('.subscription').click(function() {
+                var id = $(this).attr('data-id');
+                if (id === itemId.toString()) {
+                    if (res.subscriptionAmount === 1) {
+                        $('#peopleSubscriptions').empty();
+                        res.alertcount = 0;
+                        updateAlertCount();
+                    } else {
+                        $(this).empty();
                     }
                 }
-            }
-        });
+            });
+            $.ajax(`/api/User/Subscription/${itemId}/Delete`,
+                    {
+                        type: 'DELETE',
+                        dataType: 'json'
+                    })
+                .done(() => {
+                    loadAlerts();
+                    res.subscriptionAmount--;
+                })
+                //TODO: if FAIL proper error handling
+                .fail(() => alert('Subscriptions could not be loaded.'));
+        }
 
         //Widgets:
         //GET Request for widgets
         function loadWidgets() {
             $.ajax('/api/Widget',
-                {
-                    type: 'GET',
-                    dataType: 'json'
-                })
+                    {
+                        type: 'GET',
+                        dataType: 'json'
+                    })
                 //if GET request is succesfull: call loadGrid() in widgets.js -> loads all widgets
                 .done(data => loadGrid(data))
                 //TODO: if FAIL proper error handling
@@ -196,31 +85,6 @@
         (() => {
             $('#saveWidgets').on('click', saveGrid);
             loadWidgets();
-
-            var wto;
-            $('.subscribeItem').click(function () {
-                clearTimeout(wto);
-                var $this = $(this);
-                var id = $this.data('item-id');
-                if (res.subscriptionAmount === 1) {
-                    $('.subscriptions').empty();
-                    res.alertcount = 0;
-                    updateAlertCount();
-                } else {
-                    $this.parent().parent().empty();
-                }
-                wto = setTimeout(function () {
-                    $.ajax({
-                        type: 'POST',
-                        url: '/api/ToggleSubscribe/' + id
-                    }).fail(() => { /* ok */ })
-                        .done(function () {
-                            loadAlerts();
-                            res.subscriptionAmount--;
-                        });
-                },
-                    500);
-            });
         })($);
     </script>
 }

@@ -7,8 +7,6 @@ namespace BAR.UI.MVC.Models {
         }
         public class PersonViewModel : BaseViewModel {
             public ItemDTO Person { get; set; }
-            public bool Subscribed { get; set; }
-            
         }
     }
 }

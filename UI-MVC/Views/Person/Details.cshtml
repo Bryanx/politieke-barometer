@@ -7,7 +7,7 @@
 
 <div class="page-title">
     <div class="title_left">
-        <h3>@Resources.Politician - @Html.DisplayFor(model => model.Person.Name)</h3>
+        <h3>Persoon - @Html.DisplayFor(model => model.Person.Name)</h3>
     </div>
 
     <div class="title_right">
@@ -82,11 +82,10 @@
     </ul>
 
     @if (User.Identity.IsAuthenticated) {
-        if (Model.Subscribed != true) {
-            <a class="w-100px subscribeItem btn btn-success" data-item-id="@Model.Person.ItemId" title="Deze persoon volgen">@Resources.Subscribe</a>
-        } else {
-            <a class="w-100px subscribeItem btn btn-danger" data-item-id="@Model.Person.ItemId" title="Uitschrijven">@Resources.Unsubscribe</a>
-        }
+        <form method="post" action="/api/Subscribe/@Model.Person.ItemId" id="subscribeForm">
+            <button type="submit" class="btn btn-success">Abonneer</button>
+            <div id="subscribeMessage" style="display: inline"></div>
+        </form>
     }
     <br/>
 
@@ -303,10 +302,10 @@
 
 @section CustomJS{
     @Scripts.Render("~/bundles/morrisCharts")
-    <script type="text/javascript" defer>
-        $('.subscribeItem').click(function() {
-            ajaxToggleSubscribe($(this));
-        });
-
+    <script type="text/javascript">
+        $("#subscribeForm").on("submit",
+            function(event) {
+                submitForm($(this), event, $("#subscribeMessage"));
+            });
     </script>
 }

@@ -5,38 +5,34 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
- using BAR.UI.MVC.App_GlobalResources;
 
 namespace BAR.UI.MVC.Models
 {
   public class ExternalLoginConfirmationViewModel : BaseViewModel
   {
     [Required]
-    [Display(Name = "Email", ResourceType = typeof(Resources))]
+    [Display(Name = "Email")]
     public string Email { get; set; }
 
     [Required]
     [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 2)]
-    [Display(Name = "Firstname", ResourceType = typeof(Resources))]
+    [Display(Name = "Voornaam")]
     public string Firstname { get; set; }
 
     [Required]
     [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 2)]
-    [Display(Name = "Lastname", ResourceType = typeof(Resources))]
+    [Display(Name = "Achternaam")]
     public string Lastname { get; set; }
 
     [Required]
-    [Display(Name = "Gender", ResourceType = typeof(Resources))]
+    [Display(Name = "Geslacht")]
     public Gender Gender { get; set; }
 
     [Required]
-    [Display(Name = "DateOfBirth", ResourceType = typeof(Resources))]
+    [Display(Name = "Geboortedatum")]
     [DataType(DataType.Date)]
     [DisplayFormat(DataFormatString = "{0:yyyy/MM/dd}", ApplyFormatInEditMode = true)]
     public DateTime DateOfBirth { get; set; }
-
-    [Display(Name = "ProfilePicture", ResourceType = typeof(Resources))]
-    public byte[] ImageData { get; set; }
 
   }
 
@@ -55,16 +51,16 @@ namespace BAR.UI.MVC.Models
   public class LoginViewModel : BaseViewModel
   {
     [Required]
-    [Display(Name = "Email", ResourceType = typeof(Resources))]
+    [Display(Name = "Email")]
     [EmailAddress]
     public string Email { get; set; }
 
     [Required]
     [DataType(DataType.Password)]
-    [Display(Name = "Password", ResourceType = typeof(Resources))]
+    [Display(Name = "Wachtwoord")]
     public string Password { get; set; }
 
-    [Display(Name = "RememberMeQuestion", ResourceType = typeof(Resources))]
+    [Display(Name = "Onthouden?")]
     public bool RememberMe { get; set; }
   }
 
@@ -72,22 +68,22 @@ namespace BAR.UI.MVC.Models
   {
     [Required]
     [EmailAddress]
-    [Display(Name = "Email", ResourceType = typeof(Resources))]
+    [Display(Name = "Email*")]
     public string Email { get; set; }
     
     [Required]
     [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 2)]
-    [Display(Name = "Firstname", ResourceType = typeof(Resources))]
+    [Display(Name = "Voornaam")]
     public string Firstname { get; set; }
 
     [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 2)]
-    [Display(Name = "Lastname", ResourceType = typeof(Resources))]
+    [Display(Name = "Achternaam")]
     public string Lastname { get; set; }
 
-    [Display(Name = "Gender", ResourceType = typeof(Resources))]
+    [Display(Name = "Geslacht")]
     public Gender Gender { get; set; }
 
-    [Display(Name = "DateOfBirth", ResourceType = typeof(Resources))]
+    [Display(Name = "Geboortedatum")]
     [DataType(DataType.Date)]
     [DisplayFormat(DataFormatString = "{0:yyyy/MM/dd}", ApplyFormatInEditMode = true)]
     public DateTime? DateOfBirth { get; set; }
@@ -95,7 +91,7 @@ namespace BAR.UI.MVC.Models
     [Required]
     [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
     [DataType(DataType.Password)]
-    [Display(Name = "Password", ResourceType = typeof(Resources))]
+    [Display(Name = "Wachtwoord*")]
     public string Password { get; set; }
   }
 
@@ -103,19 +99,18 @@ namespace BAR.UI.MVC.Models
   {
     [Required]
     [EmailAddress]
-    [Display(Name = "Email", ResourceType = typeof(Resources))]
+    [Display(Name = "Email")]
     public string Email { get; set; }
 
     [Required]
     [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
     [DataType(DataType.Password)]
-    [Display(Name = "Password", ResourceType = typeof(Resources))]
+    [Display(Name = "Wachtwoord")]
     public string Password { get; set; }
 
     [DataType(DataType.Password)]
-    [Display(Name = "ConfirmPassword", ResourceType = typeof(Resources))]
-    [System.ComponentModel.DataAnnotations.Compare("Password", ErrorMessageResourceType = typeof(Resources),
-      ErrorMessageResourceName = "PasswordNotMatch")]
+    [Display(Name = "Wachtwoord bevestigen")]
+    [System.ComponentModel.DataAnnotations.Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
     public string ConfirmPassword { get; set; }
 
     public string Code { get; set; }
@@ -125,7 +120,7 @@ namespace BAR.UI.MVC.Models
   {
     [Required]
     [EmailAddress]
-    [Display(Name = "Email", ResourceType = typeof(Resources))]
+    [Display(Name = "Email")]
     public string Email { get; set; }
   }
 
@@ -133,51 +128,49 @@ namespace BAR.UI.MVC.Models
   {
     [Required]
     [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 2)]
-    [Display(Name = "Firstname", ResourceType = typeof(Resources))]
+    [Display(Name = "Voornaam")]
     public string Firstname { get; set; }
 
+    [Required]
     [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 2)]
-    [Display(Name = "Lastname", ResourceType = typeof(Resources))]
+    [Display(Name = "Achternaam")]
     public string Lastname { get; set; }
 
     [Required]
-    [Display(Name = "AlertsViaEmail", ResourceType = typeof(Resources))]
+    [Display(Name = "Meldingen via email")]
     public bool AlertsViaEmail { get; set; }
 
     [Required]
-    [Display(Name = "AlertsViaWebsite", ResourceType = typeof(Resources))]
+    [Display(Name = "Meldingen via website")]
     public bool AlertsViaWebsite { get; set; }
 
     [Required]
-    [Display(Name = "WeeklyReviewViaEmail", ResourceType = typeof(Resources))]
+    [Display(Name = "Weekly review via email")]
     public bool WeeklyReviewViaEmail { get; set; }
 
     [Required]
-    [Display(Name = "Gender", ResourceType = typeof(Resources))]
+    [Display(Name = "Geslacht")]
     public Gender Gender { get; set; }
 
-    [Display(Name = "DateOfBirth", ResourceType = typeof(Resources))]
+    [Display(Name = "Geboortedatum")]
     [DataType(DataType.Date)]
     [DisplayFormat(DataFormatString = "{0:yyyy/MM/dd}", ApplyFormatInEditMode = true)]
     public DateTime DateOfBirth { get; set; }
 
-    [Display(Name = "City", ResourceType = typeof(Resources))]
+    [Display(Name = "Woonplaats")]
     public int SelectedAreaId { get; set; }
     public IEnumerable<SelectListItem> Areas { get; set; }
 
     [Required]
     [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
     [DataType(DataType.Password)]
-    [Display(Name = "CurrentPassword", ResourceType = typeof(Resources))]
+    [Display(Name = "Huidig achtwoord")]
     public string Password { get; set; }
 
     [Required]
     [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
     [DataType(DataType.Password)]
-    [Display(Name = "NewPassword", ResourceType = typeof(Resources))]
+    [Display(Name = "Nieuw wachtwoord")]
     public string PasswordNew { get; set; }
-
-    [Display(Name = "ProfilePicture", ResourceType = typeof(Resources))]
-    public byte[] ProfilePicture { get; set; }
   }
 }

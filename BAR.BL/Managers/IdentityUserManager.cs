@@ -13,22 +13,22 @@ using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace BAR.BL.Managers
 {
-  /// <summary>
-  /// Class which will handle all configuration related to Identity.
-  /// </summary>
-  public class IdentityUserManager : UserManager<User>
+	/// <summary>
+	/// TODO
+	/// </summary>
+	public class IdentityUserManager : UserManager<User>
 	{
 		/// <summary>
-		/// Repository is given to base class (UserManager - Identity).
+		/// TODO
 		/// </summary>
-		public IdentityUserManager(UserIdentityRepository userIdentityRepository) : base(userIdentityRepository) { }
+		public IdentityUserManager(UserRepository userRepository) : base(userRepository) { }
 
 		/// <summary>
 		/// Creates an instance of UserManager and returns it as a callback function to Owin.
 		/// </summary>
 		public static IdentityUserManager Create(IdentityFactoryOptions<IdentityUserManager> options, IOwinContext context)
 		{
-			var manager = new IdentityUserManager(new UserIdentityRepository(context.Get<BarometerDbContext>()));
+			var manager = new IdentityUserManager(new UserRepository(context.Get<BarometerDbContext>()));
 			var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(context.Get<BarometerDbContext>()));
 			//Configure validation logic for usernames
 			manager.UserValidator = new UserValidator<User>(manager)
@@ -72,7 +72,7 @@ namespace BAR.BL.Managers
 		}
 
 		/// <summary>
-		/// Checks if all roles are avaiable in database, otherwise add them.
+		/// TODO
 		/// </summary>
 		private static void AddRoles(RoleManager<IdentityRole> roleManager)
 		{

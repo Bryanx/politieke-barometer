@@ -10,12 +10,11 @@ using System.Data.Entity;
 namespace BAR.DAL
 {
 	/// <summary>
-	/// This class is used for the persistance of
-	/// subscriptions and their alerts.
-	/// </summary>
+	/// At this moment the repository works HC.
+	/// </summary
 	public class SubscriptionRepository : ISubscriptionRepository
 	{
-		private readonly BarometerDbContext ctx;
+		private BarometerDbContext ctx;
 
 		/// <summary>
 		/// If uow is present then the constructor

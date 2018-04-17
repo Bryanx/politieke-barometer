@@ -3,24 +3,24 @@
             xmlns="http://mvcsitemap.codeplex.com/schemas/MvcSiteMap-File-4.0"
             xsi:schemaLocation="http://mvcsitemap.codeplex.com/schemas/MvcSiteMap-File-4.0 MvcSiteMapSchema.xsd">
 
-  <mvcSiteMapNode title="$resources:Resources,Home" controller="Home" action="Index">
-    <mvcSiteMapNode title="$resources:Resources,Privacy" controller="Home" action="Privacy"/>
-    <mvcSiteMapNode title="$resources:Resources,ForgotPassword" controller="User" action="ForgotPassword"/>
-    <mvcSiteMapNode title="$resources:Resources,QuestionAndAnswer" controller="Home" action="Faq"/>
-    <mvcSiteMapNode title="$resources:Resources,Dashboard" controller="User" action="Index">
-        <mvcSiteMapNode title="$resources:Resources,Settings" controller="User" action="Settings"/>
+  <mvcSiteMapNode title="Home" controller="Home" action="Index">
+    <mvcSiteMapNode title="Privacy" controller="Home" action="Privacy"/>
+    <mvcSiteMapNode title="Wachtwoord vergeten" controller="User" action="ForgotPassword"/>
+    <mvcSiteMapNode title="Vraag en Antwoord" controller="Home" action="Faq"/>
+    <mvcSiteMapNode title="Dashboard" controller="User" action="Index">
+        <mvcSiteMapNode title="Instellingen" controller="User" action="Settings"/>
     </mvcSiteMapNode>
-    <mvcSiteMapNode title="$resources:Resources,AllPoliticians" controller="Person" action="Index">
+    <mvcSiteMapNode title="Politici-overzicht" controller="Person" action="Index">
         <mvcSiteMapNode title="Person" action="Details" dynamicNodeProvider="BAR.UI.MVC.PersonDynamicNodeProvider, BAR.UI.MVC" />
     </mvcSiteMapNode>
-    <mvcSiteMapNode title="$resources:Resources,AllParties" controller="Organisation" action="Index"/>
-    <mvcSiteMapNode title="$resources:Resources,AdminDashboard" controller="Admin" action="Index">
-        <mvcSiteMapNode title="$resources:Resources,PageManagement" controller="Admin" action="PageManagement"/>
-        <mvcSiteMapNode title="$resources:Resources,ItemManagement" controller="Admin" action="ItemManagement"/>
-        <mvcSiteMapNode title="$resources:Resources,UserManagement" controller="Admin" action="UserManagement"/>
+    <mvcSiteMapNode title="Partij-overzicht" controller="Organisation" action="Index"/>
+    <mvcSiteMapNode title="Admin dashboard" controller="Admin" action="Index">
+        <mvcSiteMapNode title="Pagina's beheren" controller="Admin" action="PageManagement"/>
+        <mvcSiteMapNode title="Items beheren" controller="Admin" action="ItemManagement"/>
+        <mvcSiteMapNode title="Gebruikers beheren" controller="Admin" action="UserManagement"/>
     </mvcSiteMapNode>
-    <mvcSiteMapNode title="$resources:Resources,SourceManagement" controller="SuperAdmin" action="SourceManagement"/>
-    <mvcSiteMapNode title="$resources:Resources,AdminManagement" controller="SuperAdmin" action="AdminManagement"/>
-    <mvcSiteMapNode title="$resources:Resources,SubPlatformManagement" controller="SuperAdmin" action="PlatformManagement"/>
+    <mvcSiteMapNode title="Bronnen beheren" controller="SuperAdmin" action="SourceManagement"/>
+    <mvcSiteMapNode title="Admins beheren" controller="SuperAdmin" action="AdminManagement"/>
+    <mvcSiteMapNode title="Deelplatformen beheren" controller="SuperAdmin" action="PlatformManagement"/>
   </mvcSiteMapNode>
 </mvcSiteMap>
