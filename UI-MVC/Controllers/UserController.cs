@@ -298,8 +298,14 @@ namespace BAR.UI.MVC.Controllers
 			var firstname = loginInfo.ExternalIdentity.Claims.First(c => c.Type == "urn:facebook:first_name").Value;
 			var lastname = loginInfo.ExternalIdentity.Claims.First(c => c.Type == "urn:facebook:last_name").Value;
 			var id = loginInfo.ExternalIdentity.Claims.First(c => c.Type == "urn:facebook:id").Value;
-			// Sign in the user with this external login provider if the user already has a login
-			var result = await signInManager.ExternalSignInAsync(loginInfo, isPersistent: false);
+
+      //Get profile picure as byte array
+      var webClient = new WebClient();
+      var photoUrl = String.Format("https://graph.facebook.com/{0}/picture?type=large", id);
+      byte[] imageData = webClient.DownloadData(photoUrl);
+
+      // Sign in the user with this external login provider if the user already has a login
+      var result = await signInManager.ExternalSignInAsync(loginInfo, isPersistent: false);
 			switch (result) {
 				case SignInStatus.Success:
 					return RedirectToLocal(returnUrl);
@@ -317,8 +323,9 @@ namespace BAR.UI.MVC.Controllers
 							Email = loginInfo.Email,
 							Firstname = firstname,
 							Lastname = lastname,
-							DateOfBirth = DateTime.Now
-						});
+							DateOfBirth = DateTime.Now,
+              ImageData = imageData
+            });
 			}
 		}
 
@@ -356,18 +363,17 @@ namespace BAR.UI.MVC.Controllers
 					DateOfBirth = model.DateOfBirth,
 					ProfilePicture = model.ImageData
 				};
-          //Assign Role to user Here      
-          await userManager.AddToRoleAsync(user.Id, "SuperAdmin");
+          
 				var result = await userManager.CreateAsync(user);
 
 				if (result.Succeeded)
 				{
 					result = await userManager.AddLoginAsync(user.Id, info.Login);
+    
+          //Assign Role to user Here      
+          await userManager.AddToRoleAsync(user.Id, "SuperAdmin");
 
-					//Assign Role to user Here      
-					await userManager.AddToRoleAsync(user.Id, "User");
-
-					if (result.Succeeded)
+          if (result.Succeeded)
 					{
 						await signInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
 						return RedirectToLocal(returnUrl);
