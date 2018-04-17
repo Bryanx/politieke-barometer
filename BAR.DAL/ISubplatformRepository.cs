@@ -17,7 +17,8 @@ namespace BAR.DAL
 		int CreateSubplatform(SubPlatform subPlatform);
 
 		//Update
-		//...
+		int UpdateSubplatform(SubPlatform subPlatform);
+		int UpdateSubplatforms(IEnumerable<SubPlatform> subPlatforms);
 
 		//Delete
 		//...

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Data.Entity;
 using System.Text;
 using System.Threading.Tasks;
 using BAR.BL.Domain;
@@ -49,6 +50,26 @@ namespace BAR.DAL
 		public IEnumerable<SubPlatform> ReadSubPlatform()
 		{
 			return ctx.SubPlatforms.AsEnumerable();
+		}
+
+		/// <summary>
+		/// Updates a single subplatform.
+		/// </summary>
+		public int UpdateSubplatform(SubPlatform subPlatform)
+		{
+			ctx.Entry(subPlatform).State = EntityState.Modified;
+			return ctx.SaveChanges();
+
+
+		}
+
+		/// <summary>
+		/// Updates a given list of subplatforms
+		/// </summary>
+		public int UpdateSubplatforms(IEnumerable<SubPlatform> subPlatforms)
+		{
+			foreach (SubPlatform platform in subPlatforms) ctx.Entry(platform).State = EntityState.Modified;
+			return ctx.SaveChanges();
 		}
 	}
 }
