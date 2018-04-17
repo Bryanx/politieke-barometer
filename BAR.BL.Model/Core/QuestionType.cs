@@ -6,11 +6,10 @@ using System.Threading.Tasks;
 
 namespace BAR.BL.Domain.Users
 {
-  public enum QuestionType
-  {
-      GENERAL = 1,
-      PLATFORM,
-      SUBPLATFORM,
-      QUESTIONABOUTLIFE
-  }
+	public enum QuestionType
+	{
+		General = 1,
+		Platform,
+		Subplatform,
+	}
 }
