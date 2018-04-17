@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using BAR.BL.Domain;
 using BAR.DAL.EF;
+using BAR.BL.Domain.Core;
 
 namespace BAR.DAL
 {
@@ -53,6 +54,16 @@ namespace BAR.DAL
 		}
 
 		/// <summary>
+		/// Gives back the configuration of a specific subplatform
+		/// </summary>
+		public Customization ReadCustomization(string subplatformName)
+		{
+			SubPlatform subPlatform = ctx.SubPlatforms.Include(platform => platform.Customization)
+									.Where(platform => platform.Name.ToLower().Equals(subplatformName.ToLower())).SingleOrDefault();
+			return subPlatform.Customization;
+		}
+
+		/// <summary>;;
 		/// Reads a subplatform based on name of the subplatform.
 		/// </summary>
 		public SubPlatform ReadSubPlatform(string subplatformName)
