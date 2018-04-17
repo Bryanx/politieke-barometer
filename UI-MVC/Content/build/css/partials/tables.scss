@@ -71,3 +71,188 @@
   @include border-radius(5px);
   margin: 20px 0px !important;
 }
+
+
+table.jambo_table {
+  border: 1px solid rgba(221, 221, 221, 0.78);
+  thead {
+    background: rgba(52, 73, 94, 0.94);
+    color: #ECF0F1;
+  }
+  tbody tr {
+    &:hover td {
+      background: rgba(38, 185, 154, 0.07);
+      border-top: 1px solid rgba(38, 185, 154, 0.11);
+      border-bottom: 1px solid rgba(38, 185, 154, 0.11);
+    }
+    &.selected {
+      background: rgba(38, 185, 154, 0.16);
+      td {
+        border-top: 1px solid rgba(38, 185, 154, 0.4);
+        border-bottom: 1px solid rgba(38, 185, 154, 0.4);
+      }
+    }
+  }
+}
+
+.dataTables_paginate a {
+  background: #ff0000;
+}
+
+.dataTables_wrapper {
+  position: relative;
+  clear: both;
+  zoom: 1;
+}
+
+.dataTables_processing {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 250px;
+  height: 30px;
+  margin-left: -125px;
+  margin-top: -15px;
+  padding: 14px 0 2px 0;
+  border: 1px solid #ddd;
+  text-align: center;
+  color: #999;
+  font-size: 14px;
+  background-color: var(--white);
+}
+
+.dataTables_length {
+  width: 40%;
+  float: left;
+}
+
+.dataTables_filter {
+  float: right;
+  text-align: right;
+}
+
+.dataTables_info {
+  width: 60%;
+  float: left;
+}
+
+.dataTables_paginate {
+  float: right;
+  text-align: right;
+}
+
+table {
+  &.dataTable {
+    th.focus, td.focus {
+      outline: 2px solid var(--primary-color) !important;
+      outline-offset: -1px;
+    }
+  }
+  &.display {
+    margin: 0 auto;
+    clear: both;
+    width: 100%;
+    thead th {
+      padding: 8px 18px 8px 10px;
+      border-bottom: 1px solid black;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    tfoot th {
+      padding: 3px 18px 3px 10px;
+      border-top: 1px solid black;
+      font-weight: bold;
+    }
+    tr.heading2 td {
+      border-bottom: 1px solid #aaa;
+    }
+    td {
+      padding: 3px 10px;
+      &.center {
+        text-align: center;
+      }
+    }
+    thead {
+      th:active, td:active {
+        outline: none;
+      }
+    }
+  }
+}
+
+.dataTables_scroll {
+  clear: both;
+}
+
+.dataTables_scrollBody {
+  *margin-top: -1px;
+  -webkit-overflow-scrolling: touch;
+}
+
+.top .dataTables_info {
+  float: none;
+}
+.dataTables_empty {
+  text-align: center;
+}
+
+
+
+table {
+  &.tile {
+    h3, h4, span {
+      font-weight: bold;
+      vertical-align: middle !important;
+    }
+    th, td {
+      text-align: center;
+    }
+    th {
+      border-bottom: 1px solid #E6ECEE;
+    }
+    td {
+      padding: 5px 0;
+      ul {
+        text-align: left;
+        padding-left: 0;
+        li {
+          list-style: none;
+          width: 100%;
+          a {
+            width: 100%;
+            big {
+              right: 0;
+              float: right;
+              margin-right: 13px;
+            }
+          }
+        }
+      }
+    }
+  }
+  &.tile_info {
+    width: 100%;
+    td {
+      text-align: left;
+      padding: 1px;
+      font-size: 15px;
+      p {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        margin: 0;
+        line-height: 28px;
+      }
+      i {
+        margin-right: 8px;
+        font-size: 17px;
+        float: left;
+        width: 18px;
+        line-height: 28px;
+      }
+      &:first-child {
+        width: 83%;
+      }
+    }
+  }
+}

@@ -21,6 +21,12 @@
   }
 }
 
+a {
+  &.btn-success, &.btn-primary, &.btn-warning, &.btn-danger {
+    color: var(--white);
+  }
+}
+
 .Google-btn {
   background-color: #3484EF;
   background-image: url(../../images/google-icon-white.svg);
