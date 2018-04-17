@@ -87,9 +87,17 @@ namespace BAR.DAL
 		/// </summary>
 		public IEnumerable<UserWidget> ReadWidgetsForDashboard(int dashboardId)
 		{
-			return ctx.Widgets.Where(wid => wid.Dashboard.DashboardId == dashboardId).AsEnumerable();
-		}
+			//Get UserWidgete
+			List<UserWidget> widgets = new List<UserWidget>();
+			foreach (Widget widget in ctx.Widgets.AsEnumerable())
+			{
+				if (widget is UserWidget) widgets.Add((UserWidget) widget);
+			}
 
+			//Return result
+			return widgets.AsEnumerable().Where(wid => wid.Dashboard.DashboardId == dashboardId);
+		}
+		
 		/// <summary>
 		/// Creates a new dashboard and persist that
 		/// to the database.
@@ -113,8 +121,8 @@ namespace BAR.DAL
 		public int CreateWidget(Widget widget, int dashboardId)
 		{
 			Dashboard dasboardToAddWidget = ReadDashboardWithWidgets(dashboardId);
+			//Add reference if userwidget
 			if (widget is UserWidget) dasboardToAddWidget.Widgets.Add((UserWidget) widget);
-			else dasboardToAddWidget.Widgets.Add((UserWidget)widget);
 			return UpdateDashboard(dasboardToAddWidget);
 		}
 
@@ -142,7 +150,7 @@ namespace BAR.DAL
 		/// Updates a specific widget.
 		/// Returns -1 if SaveChanges() is delayed by unit of work.
 		/// </summary>
-		public int UpdateWidget(UserWidget widget)
+		public int UpdateWidget(Widget widget)
 		{
 			ctx.Entry(widget).State = EntityState.Modified;
 			return ctx.SaveChanges();
@@ -152,9 +160,9 @@ namespace BAR.DAL
 		/// Updates a list of widgets.
 		/// Returns -1 if SaveChanges() is delayed by unit of work.
 		/// </summary>
-		public int UpdateWidgets(IEnumerable<UserWidget> widgets)
+		public int UpdateWidgets(IEnumerable<Widget> widgets)
 		{
-			foreach (UserWidget widget in widgets) ctx.Entry(widget).State = EntityState.Modified;
+			foreach (Widget widget in widgets) ctx.Entry(widget).State = EntityState.Modified;
 			return ctx.SaveChanges();
 		}
 
@@ -193,7 +201,7 @@ namespace BAR.DAL
 		/// Updates a specific widget.
 		/// Returns -1 if SaveChanges() is delayed by unit of work.
 		/// </summary>
-		public int DeleteWidget(UserWidget widget)
+		public int DeleteWidget(Widget widget)
 		{
 			ctx.Widgets.Remove(widget);
 			return ctx.SaveChanges();
@@ -203,7 +211,7 @@ namespace BAR.DAL
 		/// Deletes a list of widgets.
 		/// Returns -1 if SaveChanges() is delayed by unit of work.
 		/// </summary>
-		public int DeleteWidgets(IEnumerable<UserWidget> widgets)
+		public int DeleteWidgets(IEnumerable<Widget> widgets)
 		{
 			foreach (UserWidget widget in widgets) ctx.Widgets.Remove(widget);
 			return ctx.SaveChanges();
