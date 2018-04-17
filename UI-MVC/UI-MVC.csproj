@@ -402,6 +402,7 @@
     <Content Include="Scripts\jquery\jquery-ui-1.11.0.js" />
     <Content Include="Scripts\jquery\jquery-ui-1.11.0.min.js" />
     <Content Include="Scripts\jquery\jquery-ui.js" />
+    <Content Include="Scripts\jquery\jquery.autocomplete.min.js" />
     <Content Include="Scripts\jquery\jquery.timeago.js" />
     <Content Include="Scripts\bootstrap-progressbar.js" />
     <Content Include="Scripts\bootstrap-progressbar.min.js" />

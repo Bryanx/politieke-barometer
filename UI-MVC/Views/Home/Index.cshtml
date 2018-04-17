@@ -2,6 +2,7 @@
 @using BAR.BL.Domain.Items
 @using BAR.UI.MVC
 @using BAR.UI.MVC.App_GlobalResources
+@using BAR.UI.MVC.Models
 @model BAR.UI.MVC.Models.ItemViewModels.ItemViewModel
 
 @section CustomCSS{
@@ -479,6 +480,16 @@
                 $('.left_col').css('left', '0');
             } else {
                 $('.left_col').css('left', '-100px');
+            }
+        });
+        var countries = [];
+        @foreach (ItemDTO item in Model.Items) {
+            @:countries.push({ value: '@item.Name', data: '@item.ItemId' });
+        };
+        $('.search-field').autocomplete({
+            lookup: countries,
+            onSelect: function(suggestion) {
+                window.location.href = "/Person/Details/"+suggestion.data;
             }
         });
 
