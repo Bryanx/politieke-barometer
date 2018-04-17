@@ -62,7 +62,8 @@ namespace BAR.DAL
 		/// <returns></returns>
 		public IEnumerable<Item> ReadAllItems()
 		{
-			return ctx.Items.AsEnumerable();
+      return ctx.Items.Include(item => item.SubPlatform).AsEnumerable();
+			//return ctx.Items.AsEnumerable();
 		}
 
 		/// <summary>

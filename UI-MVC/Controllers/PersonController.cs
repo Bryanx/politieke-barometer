@@ -13,6 +13,7 @@ using Microsoft.AspNet.Identity;
 using WebGrease.Css.Extensions;
 using static BAR.UI.MVC.Models.ItemViewModels;
 using BAR.UI.MVC.Attributes;
+using BAR.BL.Domain;
 
 namespace BAR.UI.MVC.Controllers
 {
@@ -24,7 +25,7 @@ namespace BAR.UI.MVC.Controllers
 		private IItemManager itemManager;
 		private IUserManager userManager;
 		private ISubscriptionManager subManager;
-    private ISubplatformManager platformManager;
+		private ISubplatformManager subplatformManager;
 
 		/// <summary>
 		/// Item page for logged-in and non-logged-in users.
@@ -33,15 +34,29 @@ namespace BAR.UI.MVC.Controllers
 		[SubPlatformCheck]
 		public ActionResult Index()
 		{
-			string subPlatform = (string) RouteData.Values["SubPlatform"];
+			//Assign the right subplatform
+			string subPlatformName = (string) RouteData.Values["SubPlatform"];
+			subplatformManager = new SubplatformManager();
+			SubPlatform subplatform = subplatformManager.GetSubPlatform(subPlatformName);
 
-
-      //platformManager = new PlatformManager();
 			itemManager = new ItemManager();
 			userManager = new UserManager();
 			subManager = new SubscriptionManager();
 
-			IList<ItemDTO> people = Mapper.Map(itemManager.GetAllPersons(), new List<ItemDTO>());
+      IList<ItemDTO> people = null;
+
+      if (subplatform == null)
+			{
+				//Do generic version for no specific subplatform
+				people = Mapper.Map(itemManager.GetAllPersons(), new List<ItemDTO>());
+				
+			} else
+			{
+        //Return platformspecific data
+        List<Item> peopleList = itemManager.GetAllPersonsForSubplatform(subPlatformName).ToList();
+				people = Mapper.Map(itemManager.GetAllPersonsForSubplatform(subplatform.Name), new List<ItemDTO>());
+
+			}
 			IEnumerable<Subscription> subs = subManager.GetSubscriptionsWithItemsForUser(User.Identity.GetUserId());
 			foreach (ItemDTO item in people)
 			{
@@ -59,6 +74,7 @@ namespace BAR.UI.MVC.Controllers
 					User = User.Identity.IsAuthenticated ? userManager.GetUser(User.Identity.GetUserId()) : null,
 					Items = people
 				});
+
 		}
 
 		/// <summary>
