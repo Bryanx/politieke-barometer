@@ -32,5 +32,8 @@ namespace BAR.DAL
 
 		//Delete
 		int DeleteSubplatform(SubPlatform subPlatform);
+		int DeleteQuestion(Question question);
+		int DeleteQuestions(IEnumerable<Question> questions);
+
 	}
 }

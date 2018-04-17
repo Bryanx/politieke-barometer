@@ -46,22 +46,6 @@ namespace BAR.DAL
 		}
 
 		/// <summary>
-		/// Deletes a subplatform.
-		/// 
-		/// NOTE
-		/// When you delete a subplatform, all other information of
-		/// that subplatform will also be deleted.
-		/// </summary>
-		public int DeleteSubplatform(SubPlatform subPlatform)
-		{
-			//*** WARNING ***//
-			//This method does yet delete the whole platform.
-			//It just deletes the instance of the subplatform
-			ctx.SubPlatforms.Remove(subPlatform);
-			return ctx.SaveChanges();
-		}
-
-		/// <summary>
 		/// Reads a specific question.
 		/// </summary>
 		public Question ReadQuestion(int questionId)
@@ -152,6 +136,40 @@ namespace BAR.DAL
 		public int UpdateQuestions(IEnumerable<Question> questions)
 		{
 			foreach (Question question in questions) ctx.Entry(question).State = EntityState.Modified;
+			return ctx.SaveChanges();
+		}
+
+		/// <summary>
+		/// Deletes a subplatform.
+		/// 
+		/// NOTE
+		/// When you delete a subplatform, all other information of
+		/// that subplatform will also be deleted.
+		/// </summary>
+		public int DeleteSubplatform(SubPlatform subPlatform)
+		{
+			//*** WARNING ***//
+			//This method does yet delete the whole platform.
+			//It just deletes the instance of the subplatform
+			ctx.SubPlatforms.Remove(subPlatform);
+			return ctx.SaveChanges();
+		}
+
+		/// <summary>
+		/// Deletes a specific question in the database
+		/// </summary>
+		public int DeleteQuestion(Question question)
+		{
+			ctx.Questions.Remove(question);
+			return ctx.SaveChanges();
+		}
+
+		/// <summary>
+		/// Deletes a given list of questions
+		/// </summary>
+		public int DeleteQuestions(IEnumerable<Question> questions)
+		{
+			foreach (Question question in questions) ctx.Questions.Remove(question);
 			return ctx.SaveChanges();
 		}
 	}
