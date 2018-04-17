@@ -63,13 +63,11 @@ namespace BAR.DAL
 		/// <summary>
 		/// Gives back the general dashboard.
 		/// 
-		/// WARING
-		/// We need the general-dashboard-id before we can return
-		/// the general dashboard.
 		/// </summary>
 		public Dashboard ReadGeneralDashboard()
 		{
-			throw new NotImplementedException();
+			return ctx.Dashboards.Include(dash => dash.Widgets)
+				.Where(dash => dash.DashboardType == DashboardType.General).FirstOrDefault();
 		}
 
 		/// <summary>

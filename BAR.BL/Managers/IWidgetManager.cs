@@ -26,7 +26,7 @@ namespace BAR.BL.Managers
 		//dashboards
 		Dashboard GetDashboard(int dashboardId);
 
-		Dashboard CreateDashboard(string userId, DashboardType dashType);
+		Dashboard CreateDashboard(string userId, DashboardType dashType = DashboardType.Public);
 
 		void RemoveDashboard(int dashboardId);
 	}
