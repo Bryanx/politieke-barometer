@@ -28,7 +28,8 @@ h1 {
   z-index: 2;
   border: 2px solid white;
   top: 58px;
-  border-radius: 5px; }
+  border-radius: 5px;
+  }
   .nav.navbar-nav > li > a.signup:hover {
     background-color: white;
     color: var(--primary-color) !important; }

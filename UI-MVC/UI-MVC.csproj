@@ -263,6 +263,9 @@
     <Content Include="Content\build\css\modules\mediaqueries.scss" />
     <Content Include="Content\build\css\partials\alerts.scss" />
     <Content Include="Content\build\css\partials\buttons.scss" />
+    <Content Include="Content\build\css\partials\colors.scss" />
+    <Content Include="Content\build\css\partials\footer.scss" />
+    <Content Include="Content\build\css\partials\images.scss" />
     <Content Include="Content\build\css\partials\tables.scss" />
     <Content Include="Content\build\css\vendor\bootstrap-progressbar-3.3.4.css" />
     <Content Include="Content\build\css\vendor\bootstrap-progressbar-3.3.4.min.css" />
