@@ -306,9 +306,38 @@ namespace BAR.BL.Managers
 			return platformRepo.ReadQuestionsForType(type).AsEnumerable();
 		}
 
-		public Question CreateQuestion(QuestionType type, string title, string anwser)
+		/// <summary>
+		/// Creates a question in the database
+		/// 
+		/// WARNING
+		/// THIS METHOD USES UNIT OF WORK
+		/// 
+		/// NOTE
+		/// Unit of work is not realy needed because we work with one context
+		/// Its added just for safety.
+		/// </summary>
+		public Question CreateQuestion(string platformName, QuestionType type, string title, string anwser)
 		{
-			throw new NotImplementedException();
+			uowManager = new UnitOfWorkManager();
+			InitRepo();
+
+			//Get Subplatform
+			SubPlatform platform = GetSubPlatform(platformName);
+			if (platform == null) return null;
+
+			//Create question
+			Question question = new Question()
+			{
+				QuestionType = type,
+				Title = title,
+				Answer = anwser,
+				SubPlatform = platform
+			};
+
+			//Create question in database
+			platformRepo.CreateQuestion(question);
+
+			return question;
 		}
 
 		/// <summary>

@@ -31,6 +31,6 @@ namespace BAR.BL.Managers
 		IEnumerable<Question> GetQuestions(string subplatformName);
 		IEnumerable<Question> GetQuestionsForType(QuestionType type);
 
-		Question CreateQuestion(QuestionType type, string title, string anwser);
+		Question CreateQuestion(string platformName, QuestionType type, string title, string anwser);
 	}
 }
