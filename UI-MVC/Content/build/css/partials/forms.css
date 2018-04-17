@@ -1,0 +1,9 @@
+textarea {
+  padding: 10px;
+  vertical-align: top;
+  width: 200px; }
+  textarea:focus {
+    outline-style: solid;
+    outline-width: 2px; }
+
+/*# sourceMappingURL=forms.css.map */

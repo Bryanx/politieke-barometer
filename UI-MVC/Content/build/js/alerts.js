@@ -123,7 +123,6 @@ function loadAlerts() {
         type: 'GET',
         url: '/api/User/GetAlerts',
         dataType: 'json',
-        beforeSend: () => $("#alertMenu").append(res.alertLoader),
         error: function(xhr, status, error) {
             var err = eval("(" + xhr.responseText + ")");
             alert(err.Message);

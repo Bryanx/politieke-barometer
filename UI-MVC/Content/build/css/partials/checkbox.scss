@@ -1,0 +1,31 @@
+.checkbox-label {
+  padding-left: 7px;
+}
+
+.checkbox {
+  margin-bottom: 20px;
+  position: relative;
+  user-select: none;
+  &.showchbox:before {
+    content: '\f00c';
+    color: var(--primary-color);
+    font-size: 17px;
+    margin: 1px 0 0 4px;
+    position: absolute;
+    pointer-events: none;
+    font-family: 'FontAwesome';
+  }
+  > input {
+    margin-left: 0 !important;
+  }
+}
+
+.character-checkbox {
+  width: 25px;
+  height: 25px;
+  cursor: pointer;
+  @include border-radius(3px);
+  border: 1px solid #ccc;
+  vertical-align: middle;
+  display: inline-block;
+}

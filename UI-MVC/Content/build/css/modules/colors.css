@@ -1,0 +1,15 @@
+html {
+  --primary-color: #0f8ec4;
+  --primary-darker: #0e85b8;
+  --primary-darkest: #0d77a4;
+  --secondary-lighter: #3c3c3c;
+  --secondary-color: #303E4D;
+  --secondary-darker: #2a3744;
+  --secondary-darkest: #1f2e3f;
+  --tertiary-color: #278e87;
+  --white: #fff;
+  --bg-color: #f7f7f7;
+  --font-color: #73879C;
+  --link-color: #5A738E; }
+
+/*# sourceMappingURL=colors.css.map */
