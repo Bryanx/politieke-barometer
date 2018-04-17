@@ -35,14 +35,9 @@ namespace BAR.BL.Managers
 			Widget widget;
 
 			//Checks if a userwidget or an itemWidget needs to be created
-			if (dashboardId == -1)
-			{
-				widget = new ItemWidget();
-			}
-			else
-			{
-				widget = new UserWidget();
-			}
+			if (dashboardId == -1) widget = new ItemWidget();
+			else widget = new UserWidget();
+			
 			widget.WidgetType = widgetType,
 			widget.Title = title,
 			widget.RowNumber = rowNbr,
