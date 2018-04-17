@@ -1753,52 +1753,8 @@ table.display {
 .dataTables_empty {
   text-align: center; }
 
-tfoot input {
-  margin: 0.5em 0;
-  width: 100%;
-  color: #444; }
-  tfoot input.search_init {
-    color: #999; }
-
-td.group {
-  background-color: #d1cfd0;
-  border-bottom: 2px solid #A19B9E;
-  border-top: 2px solid #A19B9E; }
-td.details {
-  background-color: #d1cfd0;
-  border: 2px solid #A19B9E; }
-
 .example_alt_pagination div.dataTables_info {
   width: 40%; }
-
-.paging_full_numbers {
-  width: 400px;
-  height: 22px;
-  line-height: 22px; }
-  .paging_full_numbers a:active {
-    outline: none; }
-  .paging_full_numbers a:hover {
-    text-decoration: none; }
-  .paging_full_numbers a.paginate_button, .paging_full_numbers a.paginate_active {
-    border: 1px solid #aaa;
-    -webkit-border-radius: 5px;
-    -moz-border-radius: 5px;
-    border-radius: 5px;
-    padding: 2px 5px;
-    margin: 0 3px;
-    cursor: pointer; }
-  .paging_full_numbers a.paginate_button {
-    background-color: #ddd; }
-    .paging_full_numbers a.paginate_button:hover {
-      background-color: #ccc;
-      text-decoration: none !important; }
-  .paging_full_numbers a.paginate_active {
-    background-color: #99B3FF; }
-
-table.display tr.even.row_selected td {
-  background-color: #B0BED9; }
-table.display tr.odd.row_selected td {
-  background-color: #9FAFD1; }
 
 div.box {
   height: 100px;
@@ -1806,60 +1762,6 @@ div.box {
   overflow: auto;
   border: 1px solid #8080FF;
   background-color: #E5E5FF; }
-
-ul.msg_list li {
-  background: var(--bg-color);
-  border-top: 1px solid #d9dee4;
-  padding: 15px 25px 15px 10px;
-  display: -ms-flexbox;
-  display: flex; }
-ul.msg_headers li {
-  border: none; }
-ul.msg_list li#seeAllAlerts {
-  background: var(--white);
-  padding: 10px;
-  border-top: 1px solid #d9dee4; }
-ul.msg_headers li:nth-child(2), ul.msg_headers li.alertMenuHeader {
-  color: var(--font-color);
-  padding: 0 10px;
-  font-size: 11px;
-  background: transparent;
-  text-align: right;
-  width: 100%; }
-ul.msg_headers li:nth-child(2) a {
-  width: auto;
-  float: right; }
-  ul.msg_headers li:nth-child(2) a:hover {
-    background: transparent; }
-ul.msg_headers li.alertMenuHeader {
-  text-align: left;
-  padding: 2px 15px !important;
-  position: absolute;
-  background: transparent; }
-ul.msg_list > li > a {
-  display: block;
-  clear: both;
-  font-weight: 400;
-  line-height: 1.42857143;
-  white-space: nowrap; }
-ul.msg_list li:last-child a:hover {
-  text-decoration: underline; }
-ul.msg_headers li:nth-child(2) a:hover {
-  text-decoration: underline; }
-ul.msg_list li a {
-  padding: 3px 5px !important;
-  width: auto;
-  text-decoration: none; }
-  ul.msg_list li a .time {
-    font-size: 11px;
-    font-style: italic;
-    font-weight: bold;
-    position: absolute;
-    right: 35px; }
-  ul.msg_list li a .alertTime {
-    display: block !important;
-    font-size: 11px;
-    color: #a5a5a5; }
 
 .dropdown-menu.msg_list span {
   white-space: normal;

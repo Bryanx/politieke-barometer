@@ -1933,69 +1933,8 @@ table {
   text-align: center;
 }
 
-tfoot input {
-  margin: 0.5em 0;
-  width: 100%;
-  color: #444;
-  &.search_init {
-    color: #999;
-  }
-}
-
-td {
-  &.group {
-    background-color: #d1cfd0;
-    border-bottom: 2px solid #A19B9E;
-    border-top: 2px solid #A19B9E;
-  }
-  &.details {
-    background-color: #d1cfd0;
-    border: 2px solid #A19B9E;
-  }
-}
-
 .example_alt_pagination div.dataTables_info {
   width: 40%;
-}
-
-.paging_full_numbers {
-  width: 400px;
-  height: 22px;
-  line-height: 22px;
-  a {
-    &:active {
-      outline: none;
-    }
-    &:hover {
-      text-decoration: none;
-    }
-    &.paginate_button, &.paginate_active {
-      border: 1px solid #aaa;
-      @include border-radius;
-      padding: 2px 5px;
-      margin: 0 3px;
-      cursor: pointer;
-    }
-    &.paginate_button {
-      background-color: #ddd;
-      &:hover {
-        background-color: #ccc;
-        text-decoration: none !important;
-      }
-    }
-    &.paginate_active {
-      background-color: #99B3FF;
-    }
-  }
-}
-
-table.display tr {
-  &.even.row_selected td {
-    background-color: #B0BED9;
-  }
-  &.odd.row_selected td {
-    background-color: #9FAFD1;
-  }
 }
 
 div.box {
