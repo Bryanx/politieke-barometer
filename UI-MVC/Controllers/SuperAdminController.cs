@@ -1,101 +1,50 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-using BAR.BL.Domain.Users;
+﻿using System.Web.Mvc;
 using BAR.BL.Managers;
-using BAR.UI.MVC.App_GlobalResources;
 using BAR.UI.MVC.Models;
 using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.Owin;
+using System.Net.Http;
+using System.Threading.Tasks;
+using System.Collections.Generic;
+using System.Text;
+using System;
 
 namespace BAR.UI.MVC.Controllers
 {
-	/// <summary>
-	/// This controller is used for managing the functionality
-	/// of the superadmins
-	/// </summary>
-	[Authorize(Roles = "SuperAdmin")]
-	public class SuperAdminController : LanguageController
-	{
-		private IUserManager userManager;
 
-		/// <summary>
-		/// Sourcemanagement page of the SuperAdmin.
-		/// </summary>
-		public ActionResult SourceManagement()
-		{
-			userManager = new UserManager();
+  [Authorize(Roles = "SuperAdmin")]
+  public class SuperAdminController : Controller
+  {
 
-			//Assembling the view
-			return View(new BaseViewModel
-			{
-				PageTitle = Resources.SourceManagement,
-				User = userManager.GetUser(User.Identity.GetUserId())
-			});
-		}
+    IUserManager userManager = new UserManager();
 
-		/// <summary>
-		/// Platformmanagement page of the SuperAdmin.
-		/// </summary>
-		public ActionResult PlatformManagement()
-		{
-			userManager = new UserManager();
+    public ActionResult SourceManagement()
+    {
+      const string PAGE_TITLE = "Bronnen beheren";
+      return View(new BaseViewModel
+      {
+        PageTitle = PAGE_TITLE,
+        User = userManager.GetUser(User.Identity.GetUserId())
+      });
+    }
 
-			//Assembling the view
-			return View(new BaseViewModel
-			{
-				PageTitle = Resources.SubPlatformManagement,
-				User = userManager.GetUser(User.Identity.GetUserId())
-			});
-		}
+    public ActionResult AdminManagement()
+    {
+      const string PAGE_TITLE = "Admins beheren";
+      return View(new BaseViewModel
+      {
+        PageTitle = PAGE_TITLE,
+        User = userManager.GetUser(User.Identity.GetUserId())
+      });
+    }
 
-		/// <summary>
-		/// Adminmanagement page of the SuperAdmin.
-		/// </summary>
-		public ActionResult AdminManagement()
-		{
-			IdentityUserManager identityUserManager = HttpContext.GetOwinContext().GetUserManager<IdentityUserManager>();
-			userManager = new UserManager();
-
-			IEnumerable<User> users = userManager.GetAllUsers();
-			List<string> currentRoles = new List<string>();
-			for (int i = 0; i < users.Count(); i++)
-			{
-				currentRoles.Add(identityUserManager.GetRoles(users.ElementAt(i).Id).FirstOrDefault());
-			}
-
-			//Assembling the view
-			ViewBag.CurrentRoles = currentRoles;
-			EditUserViewModel vm = new EditUserViewModel()
-			{
-				User = userManager.GetUser(User.Identity.GetUserId()),
-				PageTitle = Resources.AdminManagement,
-				Users = users,
-			};
-			FillViewModels(vm);
-			return View(vm);
-		}
-
-		/// <summary>
-		/// Fills a viewmodel with selectionlists. the selectionlist will
-		/// be shown in a dropdownmenu.
-		/// </summary>
-		private void FillViewModels(EditUserViewModel vm)
-		{
-			userManager = new UserManager();
-
-			vm.AdminRoles = userManager.GetAllRoles().Select(x => new SelectListItem
-			{
-				Value = x.Id,
-				Text = x.Name,
-			}).OrderBy(x => x.Text);
-			vm.UserRoles = userManager.GetAllRoles().Where(r => r.Name == "Admin" || r.Name == "User")
-				.Select(x => new SelectListItem
-				{
-					Value = x.Id,
-					Text = x.Name,
-				}).OrderBy(x => x.Text);
-		}
-	}
+    public ActionResult PlatformManagement()
+    {
+      const string PAGE_TITLE = "Deelplatformen beheren";
+      return View(new BaseViewModel
+      {
+        PageTitle = PAGE_TITLE,
+        User = userManager.GetUser(User.Identity.GetUserId())
+      });
+    }
+  }
 }

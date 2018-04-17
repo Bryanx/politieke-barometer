@@ -11,14 +11,10 @@ namespace BAR.BL.Managers
 	{	
 		Item GetItem(int itemId);
 		IEnumerable<Item> GetAllItems();
-		IEnumerable<Item> GetAllPersons();
+		IEnumerable<Item> GetAllPeople();
 		IEnumerable<Item> GetAllOrganisations();
 		IEnumerable<Item> GetItemsForType(ItemType type);
-		IEnumerable<Item> GetMostTrendingItems(int numberOfItems = 5);
-		IEnumerable<Item> GetMostTrendingItemsForType(ItemType type, int numberOfItems = 5);
-		IEnumerable<Item> GetMostTredningItemsForUser(string userId, int numberOfItems = 5);
-		IEnumerable<Item> GetMostTredningItemsForUserAndItemType(string userId, ItemType type, int numberOfItems = 5);
-
+    Item GetPerson(string personName);
 
 		Item CreateItem(ItemType itemType, string name, string description = "", string function = "", Category category = null);
 

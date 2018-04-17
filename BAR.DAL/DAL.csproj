@@ -63,14 +63,14 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="WidgetRepository.cs" />
+    <Compile Include="DashboardRepository.cs" />
     <Compile Include="EF\BarometerDbConfiguration.cs" />
     <Compile Include="EF\BarometerDbContext.cs" />
     <Compile Include="EF\BarometerInitializer.cs" />
-    <Compile Include="IWidgetRepository.cs" />
-    <Compile Include="IInformationRepository.cs" />
+    <Compile Include="IDashboardRepository.cs" />
+    <Compile Include="IDataRepository.cs" />
     <Compile Include="IItemRepository.cs" />
-    <Compile Include="InformationRepository.cs" />
+    <Compile Include="DataRepository.cs" />
     <Compile Include="ISubscriptionRepository.cs" />
     <Compile Include="ItemRepository.cs" />
     <Compile Include="IUserRepository.cs" />

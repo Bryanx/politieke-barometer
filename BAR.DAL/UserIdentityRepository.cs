@@ -10,12 +10,12 @@ using System.Threading.Tasks;
 namespace BAR.DAL
 {
 	/// <summary>
-	/// Class which will handle all CRUD related to Identity.
+	/// TODO
 	/// </summary>
 	public class UserIdentityRepository : UserStore<User>
 	{
 		/// <summary>
-		/// Context is given to base class (UserStore).
+		/// TODO
 		/// </summary>
 		public UserIdentityRepository(BarometerDbContext ctx) : base(ctx) { }
 	}

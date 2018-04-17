@@ -1,11 +1,11 @@
 ﻿@{
-  ViewBag.Title = Resources.ConfirmYourEmail;
+  ViewBag.Title = "Bevestig je mail";
 }
 
 <h2>@ViewBag.Title.</h2>
 <div>
     <p>
-        @Resources.ThanksEmailConfirm @Resources.NowYouCan @Html.ActionLink(Resources.Login.ToLower(), "Login", "User", routeValues: null, htmlAttributes: new { id = "loginLink" })
+        Bedankt voor je mail adres te bevestigen. Ja kan nu @Html.ActionLink("inloggen", "Login", "User", routeValues: null, htmlAttributes: new { id = "loginLink" })
         .
     </p>
 </div>

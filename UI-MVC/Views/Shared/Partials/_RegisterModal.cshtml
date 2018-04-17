@@ -1,19 +1,21 @@
 ﻿@using BAR.UI.MVC.Models
 @model BAR.UI.MVC.Models.RegisterViewModel
 
+@Html.Partial("Partials/_ExternalLoginsListPartial", new ExternalLoginListViewModel {ReturnUrl = ViewBag.ReturnUrl})
+
 @using (Html.BeginForm("Register", "User", FormMethod.Post)) {
     @Html.AntiForgeryToken()
     <div class="form-group">
         @Html.ValidationSummary("", new { @class = "text-danger" })
-        @Html.TextBoxFor(m => m.Firstname, new {@class = "form-control login-input", @placeholder = Resources.Firstname})
-        @Html.TextBoxFor(m => m.Email, new {@class = "form-control login-input", @placeholder = Resources.Email})
-        @Html.PasswordFor(m => m.Password, new {@class = "form-control login-input", @placeholder = Resources.Password})
+        @Html.TextBoxFor(m => m.Firstname, new {@class = "form-control login-input", @placeholder = "Voornaam"})
+        @Html.TextBoxFor(m => m.Email, new {@class = "form-control login-input", @placeholder = "E-mailadres"})
+        @Html.PasswordFor(m => m.Password, new {@class = "form-control login-input", @placeholder = "Wachtwoord"})
         <div class="form-check login-input">
             <div class="checkbox">
                 <span class="character-checkbox" id="chbox" onclick="check()"></span>
-                <span class="checkbox-label c-secondary">@Resources.IAgreeWithTheTermsAndCondition</span>
+                <span class="checkbox-label c-secondary">Ik ga akkoord met de voorwaarden</span>
             </div>
-            <button type="submit" class="btn btn-primary login-input w-100 h-40">@Resources.Signup</button>
+            <button type="submit" class="btn btn-primary login-input w-100 h-40">Register</button>
         </div>
     </div>
 }

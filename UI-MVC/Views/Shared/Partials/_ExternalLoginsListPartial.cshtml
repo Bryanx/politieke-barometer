@@ -2,7 +2,7 @@
 @using Microsoft.Owin.Security
 
 @{
-    ViewBag.Title = Resources.ExternalLogin;
+    ViewBag.Title = "ExternalLoginsListPartial";
 }
 
 @{
@@ -15,7 +15,7 @@
         <p>
             @foreach (AuthenticationDescription p in loginProviders)
             {
-            <button type="submit" class="btn @p.AuthenticationType-btn login-input w-100" id="@p.AuthenticationType" name="provider" value="@p.AuthenticationType" title="@Resources.LoginUsingYour @p.Caption @Resources.Account.ToLower()">@Resources.LoginWith @p.AuthenticationType</button>
+            <button type="submit" class="btn @p.AuthenticationType-btn login-input w-100" id="@p.AuthenticationType" name="provider" value="@p.AuthenticationType" title="Log in using your @p.Caption account">Sign in with @p.AuthenticationType</button>
             }
         </p>
     </div>

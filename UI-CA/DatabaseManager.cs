@@ -4,10 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BAR.BL.Domain.Widgets
+namespace BAR.UI.CA
 {
-	public class UserWidget : Widget
-	{
-		public Dashboard Dashboard { get; set; }
-	}
+  public class DatabaseManager
+  {
+    static void Main(string[] args)
+    {
+
+    }
+  }
 }
