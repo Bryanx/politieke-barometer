@@ -102,7 +102,8 @@
 
     <!-- Scripts -->
     <script src="/Home/GetResources"></script>
-    @Scripts.Render("~/bundles/jquery", "~/bundles/bootstrap", "~/bundles/dates", "~/bundles/timeago", "~/Scripts/vue.min.js")
+    <script src="~/Scripts/jquery/jquery-3.3.1.min.js"></script>
+    @Scripts.Render("~/bundles/bootstrap", "~/bundles/dates", "~/bundles/timeago", "~/Scripts/vue.min.js")
     @Scripts.Render("~/Content/build/js/alerts.js")
 
     @if (IsSectionDefined("CustomJS"))
