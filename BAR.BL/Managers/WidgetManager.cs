@@ -13,7 +13,7 @@ namespace BAR.BL.Managers
 	/// </summary>
 	public class WidgetManager : IWidgetManager
 	{
-		private IWidgetRepository dashboardRepo;
+		private IWidgetRepository widgetRepo;
 		private UnitOfWorkManager uowManager;
 
 		/// <summary>
@@ -29,7 +29,7 @@ namespace BAR.BL.Managers
 		/// Creates a widget based on the parameters
 		/// and links that widget to a dasboard.
 		/// </summary>
-		public Widget CreateWidget (WidgetType widgetType, string title, int rowNbr, int colNbr, int rowspan = 1, int colspan = 1, int dashboardId = -1)
+		public Widget CreateWidget(WidgetType widgetType, string title, int rowNbr, int colNbr, int rowspan = 1, int colspan = 1, int dashboardId = -1)
 		{
 			InitRepo();
 			Widget widget;
@@ -47,7 +47,8 @@ namespace BAR.BL.Managers
 					ColumnSpan = colspan,
 					Items = new List<Item>()
 				};
-			} else
+			}
+			else
 			{
 				widget = new UserWidget()
 				{
@@ -60,10 +61,61 @@ namespace BAR.BL.Managers
 					Items = new List<Item>()
 				};
 			}
-			
+
 			//repo autmaticly links widget to dashboard
-			dashboardRepo.CreateWidget(widget, dashboardId);
+			widgetRepo.CreateWidget(widget, dashboardId);
 			return widget;
+		}
+
+		/// <summary>
+		/// Adds an item to a widget.
+		/// 
+		/// WARNING
+		/// THIS METHOD USES UNIT OF WORK
+		/// </summary>
+		public Widget AddItemToWidget(int widgetId, int itemId)
+		{
+			uowManager = new UnitOfWorkManager();
+			InitRepo();
+
+			//Get Item
+			ItemManager itemManager = new ItemManager(uowManager);
+			Item itemToAdd = itemManager.GetItem(itemId);
+
+			//Add item to widget
+			Widget widgetToUpdate = GetWidget(widgetId);
+			widgetToUpdate.Items.Add(itemToAdd);
+
+			//Update database
+			widgetRepo.UpdateWidget(widgetToUpdate);
+
+			return widgetToUpdate;
+		}
+
+		/// <summary>
+		/// Adds multiple items to a single widget.
+		/// 
+		/// WARNING
+		/// THIS METHOD USES UNIT OF WORK
+		/// </summary>
+		public Widget AddItemsToWidget(int widgetId, IEnumerable<int> itemIds)
+		{
+			uowManager = new UnitOfWorkManager();
+			InitRepo();
+
+			//Get Items
+			ItemManager itemManager = new ItemManager(uowManager);
+			List<Item> items = new List<Item>();
+			foreach (int id in itemIds) items.Add(itemManager.GetItem(id));
+
+			//Add items to widget
+			Widget widgetToUpdate = GetWidget(widgetId);
+			foreach (Item item in items) widgetToUpdate.Items.Add(item);
+
+			//Update database
+			widgetRepo.UpdateWidget(widgetToUpdate);
+
+			return widgetToUpdate;
 		}
 
 		/// <summary>
@@ -72,39 +124,39 @@ namespace BAR.BL.Managers
 		public void RemoveWidget(int widgetId)
 		{
 			InitRepo();
-			UserWidget widgetToRemove = GetWidget(widgetId);
-			if (widgetToRemove != null) dashboardRepo.DeleteWidget(widgetToRemove);
+			Widget widgetToRemove = GetWidget(widgetId);
+			if (widgetToRemove != null) widgetRepo.DeleteWidget(widgetToRemove);
 		}
 
 		/// <summary>
 		/// Gives back a widget for a
 		/// specific widgetId.
 		/// </summary>
-		public UserWidget GetWidget(int widgetId)
+		public Widget GetWidget(int widgetId)
 		{
 			InitRepo();
-			return dashboardRepo.ReadWidget(widgetId);
+			return widgetRepo.ReadWidget(widgetId);
 		}
 
 		/// <summary>
 		/// Gives back a list of widgets
 		/// for a specific dashboard.
 		/// </summary>
-		public IEnumerable<UserWidget> GetWidgets(int dashboardId)
+		public IEnumerable<UserWidget> GetWidgetsForDashboard(int dashboardId)
 		{
 			InitRepo();
-			return dashboardRepo.ReadWidgetsForDashboard(dashboardId);
+			return widgetRepo.ReadWidgetsForDashboard(dashboardId);
 		}
 
 		/// <summary>
 		/// Updates the position of the widget.
 		/// </summary>
-		public UserWidget ChangeWidgetPos(int widgetId, int rowNbr, int colNbr, int rowspan = 1, int colspan = 1)
+		public Widget ChangeWidgetPos(int widgetId, int rowNbr, int colNbr, int rowspan = 1, int colspan = 1)
 		{
 			InitRepo();
 
 			//get widget
-			UserWidget widgetToUpdate = GetWidget(widgetId);
+			Widget widgetToUpdate = GetWidget(widgetId);
 			if (widgetToUpdate == null) return null;
 
 			//update widget
@@ -114,7 +166,7 @@ namespace BAR.BL.Managers
 			widgetToUpdate.ColumnSpan = colspan;
 
 			//update database
-			dashboardRepo.UpdateWidget(widgetToUpdate);
+			widgetRepo.UpdateWidget(widgetToUpdate);
 
 			return widgetToUpdate;
 		}
@@ -122,19 +174,19 @@ namespace BAR.BL.Managers
 		/// <summary>
 		/// Updates the position of the widget.
 		/// </summary>
-		public UserWidget ChangeWidgetTitle(int widgetId, string title)
+		public Widget ChangeWidgetTitle(int widgetId, string title)
 		{
 			InitRepo();
 
 			//get widget
-			UserWidget widgetToUpdate = GetWidget(widgetId);
+			Widget widgetToUpdate = GetWidget(widgetId);
 			if (widgetToUpdate == null) return null;
 
 			//update widget
 			widgetToUpdate.Title = title;
 
 			//update database
-			dashboardRepo.UpdateWidget(widgetToUpdate);
+			widgetRepo.UpdateWidget(widgetToUpdate);
 
 			return widgetToUpdate;
 		}
@@ -145,7 +197,7 @@ namespace BAR.BL.Managers
 		public Dashboard GetDashboard(int dashboardId)
 		{
 			InitRepo();
-			return dashboardRepo.ReadDashboardWithWidgets(dashboardId);
+			return widgetRepo.ReadDashboardWithWidgets(dashboardId);
 		}
 
 		/// <summary>
@@ -172,9 +224,9 @@ namespace BAR.BL.Managers
 				Widgets = new List<UserWidget>(),
 				Activities = new List<Activity>()
 			};
-			
+
 			//Update database
-			dashboardRepo.UpdateDashboard(dashboard);
+			widgetRepo.UpdateDashboard(dashboard);
 			uowManager.Save();
 
 			return dashboard;
@@ -186,7 +238,7 @@ namespace BAR.BL.Managers
 		public void RemoveDashboard(int dashboardId)
 		{
 			InitRepo();
-			dashboardRepo.DeleteDashboard(dashboardId);
+			widgetRepo.DeleteDashboard(dashboardId);
 		}
 
 		/// <summary>
@@ -195,8 +247,8 @@ namespace BAR.BL.Managers
 		/// </summary>
 		private void InitRepo()
 		{
-			if (uowManager == null) dashboardRepo = new WidgetRepository();
-			else dashboardRepo = new WidgetRepository(uowManager.UnitOfWork);
-		}	
+			if (uowManager == null) widgetRepo = new WidgetRepository();
+			else widgetRepo = new WidgetRepository(uowManager.UnitOfWork);
+		}
 	}
 }
