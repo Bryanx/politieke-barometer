@@ -333,7 +333,6 @@
     <Content Include="Content\build\images\user.png" />
     <Content Include="Content\build\js\alerts.js" />
     <Content Include="Content\build\js\custom.js" />
-    <Content Include="Content\build\js\custom.min.js" />
     <Content Include="Content\build\js\searchbar.js" />
     <Content Include="Content\build\js\widgets.js" />
     <Content Include="Content\themes\base\accordion.css" />
@@ -370,6 +369,8 @@
     <Content Include="Content\themes\base\tabs.css" />
     <Content Include="Content\themes\base\theme.css" />
     <Content Include="Content\themes\base\tooltip.css" />
+    <Content Include="fonts\fontawesome-webfont.svg" />
+    <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -377,6 +378,32 @@
     <Content Include="data.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="images\american-express.png" />
+    <Content Include="images\back_disabled.png" />
+    <Content Include="images\back_enabled.png" />
+    <Content Include="images\back_enabled_hover.png" />
+    <Content Include="images\facebook-app-logo-white.svg" />
+    <Content Include="images\facebook-app-logo.svg" />
+    <Content Include="images\forward_disabled.png" />
+    <Content Include="images\forward_enabled.png" />
+    <Content Include="images\forward_enabled_hover.png" />
+    <Content Include="images\google-icon-white.svg" />
+    <Content Include="images\google-icon.svg" />
+    <Content Include="images\google_normal.png" />
+    <Content Include="images\government.jpg" />
+    <Content Include="images\government2.jpg" />
+    <Content Include="images\loading.gif" />
+    <Content Include="images\logo-all-white-smaller.png" />
+    <Content Include="images\logo-all-white.png" />
+    <Content Include="images\logo-colored-smaller.png" />
+    <Content Include="images\logo-white-img.png" />
+    <Content Include="images\logo-white.png" />
+    <Content Include="images\mastercard.png" />
+    <Content Include="images\parlement-smaller.jpg" />
+    <Content Include="images\paypal.png" />
+    <Content Include="images\picture.jpg" />
+    <Content Include="images\rolling.svg" />
+    <Content Include="images\user.png" />
     <Content Include="Scripts\bootstrap-wysiwyg\bootstrap-wysiwyg.min.js" />
     <Content Include="Scripts\datatables\datatables.net-buttons-bs\css\buttons.bootstrap.css" />
     <Content Include="Scripts\datatables\datatables.net-buttons-bs\css\buttons.bootstrap.min.css" />
@@ -452,7 +479,6 @@
     <Content Include="Scripts\nprogress.js" />
     <Content Include="Scripts\site.js" />
     <Content Include="Scripts\underscore.min.js" />
-    <Content Include="test.json" />
     <Content Include="Views\Admin\Index.cshtml" />
     <Content Include="Views\Admin\ItemManagement.cshtml" />
     <Content Include="Views\Admin\PageManagement.cshtml" />
@@ -510,6 +536,15 @@
     <Content Include="Views\Lockout.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="fonts\fontawesome-webfont.eot" />
+    <Content Include="fonts\fontawesome-webfont.ttf" />
+    <Content Include="fonts\fontawesome-webfont.woff" />
+    <Content Include="fonts\fontawesome-webfont.woff2" />
+    <Content Include="fonts\FontAwesome.otf" />
+    <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff2" />
     <None Include="Mvc.sitemap" />
     <None Include="MvcSiteMapSchema.xsd" />
     <None Include="packages.config" />
