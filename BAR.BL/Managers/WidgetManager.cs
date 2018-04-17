@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using BAR.BL.Domain.Widgets;
 using BAR.DAL;
 using BAR.BL.Domain.Users;
+using BAR.BL.Domain.Items;
 
 namespace BAR.BL.Managers
 {
@@ -10,16 +11,16 @@ namespace BAR.BL.Managers
 	/// Responsable for managing widgets
 	/// and their dashboards 
 	/// </summary>
-	public class DashboardManager : IDashboardManager
+	public class WidgetManager : IWidgetManager
 	{
-		private IDashboardRepository dashboardRepo;
+		private IWidgetRepository widgetRepo;
 		private UnitOfWorkManager uowManager;
 
 		/// <summary>
 		/// When unit of work is present, it will effect
 		/// initRepo-method. (see documentation of initRepo)
 		/// </summary>
-		public DashboardManager(UnitOfWorkManager uowManager = null)
+		public WidgetManager(UnitOfWorkManager uowManager = null)
 		{
 			this.uowManager = uowManager;
 		}
@@ -28,23 +29,77 @@ namespace BAR.BL.Managers
 		/// Creates a widget based on the parameters
 		/// and links that widget to a dasboard.
 		/// </summary>
-		public Widget CreateWidget(int dashboardId, WidgetType widgetType, string title, int rowNbr, int colNbr, int rowspan = 1, int colspan = 1)
+		public Widget CreateWidget(WidgetType widgetType, string title, int rowNbr, int colNbr, int rowspan = 1, int colspan = 1, int dashboardId = -1)
 		{
 			InitRepo();
+			Widget widget;
 
-			Widget widget = new Widget()
-			{
-				WidgetType = widgetType,
-				Title = title,
-				RowNumber = rowNbr,
-				ColumnNumber = colNbr,
-				RowSpan = rowspan,
-				ColumnSpan = colspan,
-			};
+			//Checks if a userwidget or an itemWidget needs to be created
+			if (dashboardId == -1) widget = new ItemWidget();
+			else widget = new UserWidget();
+			
+			widget.WidgetType = widgetType,
+			widget.Title = title,
+			widget.RowNumber = rowNbr,
+			widget.ColumnNumber = colNbr,
+			widget.RowSpan = rowspan,
+			widget.ColumnSpan = colspan,
+			widget.Items = new List<Item>()
+
 			//repo autmaticly links widget to dashboard
-			dashboardRepo.CreateWidget(widget, dashboardId);
-
+			widgetRepo.CreateWidget(widget, dashboardId);
 			return widget;
+		}
+
+		/// <summary>
+		/// Adds an item to a widget.
+		/// 
+		/// WARNING
+		/// THIS METHOD USES UNIT OF WORK
+		/// </summary>
+		public Widget AddItemToWidget(int widgetId, int itemId)
+		{
+			uowManager = new UnitOfWorkManager();
+			InitRepo();
+
+			//Get Item
+			ItemManager itemManager = new ItemManager(uowManager);
+			Item itemToAdd = itemManager.GetItem(itemId);
+
+			//Add item to widget
+			Widget widgetToUpdate = GetWidget(widgetId);
+			widgetToUpdate.Items.Add(itemToAdd);
+
+			//Update database
+			widgetRepo.UpdateWidget(widgetToUpdate);
+
+			return widgetToUpdate;
+		}
+
+		/// <summary>
+		/// Adds multiple items to a single widget.
+		/// 
+		/// WARNING
+		/// THIS METHOD USES UNIT OF WORK
+		/// </summary>
+		public Widget AddItemsToWidget(int widgetId, IEnumerable<int> itemIds)
+		{
+			uowManager = new UnitOfWorkManager();
+			InitRepo();
+
+			//Get Items
+			ItemManager itemManager = new ItemManager(uowManager);
+			List<Item> items = new List<Item>();
+			foreach (int id in itemIds) items.Add(itemManager.GetItem(id));
+
+			//Add items to widget
+			Widget widgetToUpdate = GetWidget(widgetId);
+			foreach (Item item in items) widgetToUpdate.Items.Add(item);
+
+			//Update database
+			widgetRepo.UpdateWidget(widgetToUpdate);
+
+			return widgetToUpdate;
 		}
 
 		/// <summary>
@@ -54,7 +109,7 @@ namespace BAR.BL.Managers
 		{
 			InitRepo();
 			Widget widgetToRemove = GetWidget(widgetId);
-			if (widgetToRemove != null) dashboardRepo.DeleteWidget(widgetToRemove);
+			if (widgetToRemove != null) widgetRepo.DeleteWidget(widgetToRemove);
 		}
 
 		/// <summary>
@@ -64,17 +119,17 @@ namespace BAR.BL.Managers
 		public Widget GetWidget(int widgetId)
 		{
 			InitRepo();
-			return dashboardRepo.ReadWidget(widgetId);
+			return widgetRepo.ReadWidget(widgetId);
 		}
 
 		/// <summary>
 		/// Gives back a list of widgets
 		/// for a specific dashboard.
 		/// </summary>
-		public IEnumerable<Widget> GetWidgets(int dashboardId)
+		public IEnumerable<UserWidget> GetWidgetsForDashboard(int dashboardId)
 		{
 			InitRepo();
-			return dashboardRepo.ReadWidgetsForDashboard(dashboardId);
+			return widgetRepo.ReadWidgetsForDashboard(dashboardId);
 		}
 
 		/// <summary>
@@ -95,7 +150,7 @@ namespace BAR.BL.Managers
 			widgetToUpdate.ColumnSpan = colspan;
 
 			//update database
-			dashboardRepo.UpdateWidget(widgetToUpdate);
+			widgetRepo.UpdateWidget(widgetToUpdate);
 
 			return widgetToUpdate;
 		}
@@ -115,7 +170,7 @@ namespace BAR.BL.Managers
 			widgetToUpdate.Title = title;
 
 			//update database
-			dashboardRepo.UpdateWidget(widgetToUpdate);
+			widgetRepo.UpdateWidget(widgetToUpdate);
 
 			return widgetToUpdate;
 		}
@@ -126,7 +181,7 @@ namespace BAR.BL.Managers
 		public Dashboard GetDashboard(int dashboardId)
 		{
 			InitRepo();
-			return dashboardRepo.ReadDashboardWithWidgets(dashboardId);
+			return widgetRepo.ReadDashboardWithWidgets(dashboardId);
 		}
 
 		/// <summary>
@@ -150,12 +205,12 @@ namespace BAR.BL.Managers
 			{
 				DashboardType = dashType,
 				User = user,
-				Widgets = new List<Widget>(),
+				Widgets = new List<UserWidget>(),
 				Activities = new List<Activity>()
 			};
-			
+
 			//Update database
-			dashboardRepo.UpdateDashboard(dashboard);
+			widgetRepo.UpdateDashboard(dashboard);
 			uowManager.Save();
 
 			return dashboard;
@@ -167,7 +222,7 @@ namespace BAR.BL.Managers
 		public void RemoveDashboard(int dashboardId)
 		{
 			InitRepo();
-			dashboardRepo.DeleteDashboard(dashboardId);
+			widgetRepo.DeleteDashboard(dashboardId);
 		}
 
 		/// <summary>
@@ -176,8 +231,8 @@ namespace BAR.BL.Managers
 		/// </summary>
 		private void InitRepo()
 		{
-			if (uowManager == null) dashboardRepo = new DashboardRepository();
-			else dashboardRepo = new DashboardRepository(uowManager.UnitOfWork);
-		}	
+			if (uowManager == null) widgetRepo = new WidgetRepository();
+			else widgetRepo = new WidgetRepository(uowManager.UnitOfWork);
+		}
 	}
 }

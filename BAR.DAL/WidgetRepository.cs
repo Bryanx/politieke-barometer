@@ -11,7 +11,7 @@ namespace BAR.DAL
 	/// This class is used for the persistance of
 	/// widgets and dashboards
 	/// </summary>
-	public class DashboardRepository : IDashboardRepository
+	public class WidgetRepository : IWidgetRepository
 	{
 		private readonly BarometerDbContext ctx;
 
@@ -19,7 +19,7 @@ namespace BAR.DAL
 		/// If uow is present, the constructor
 		/// will get the context from uow.
 		/// </summary>
-		public DashboardRepository(UnitOfWork uow = null)
+		public WidgetRepository(UnitOfWork uow = null)
 		{
 			if (uow == null) ctx = new BarometerDbContext();
 			else ctx = uow.Context;
@@ -85,11 +85,19 @@ namespace BAR.DAL
 		/// Gives back a list of widgets for a
 		/// specific dashboard id.
 		/// </summary>
-		public IEnumerable<Widget> ReadWidgetsForDashboard(int dashboardId)
+		public IEnumerable<UserWidget> ReadWidgetsForDashboard(int dashboardId)
 		{
-			return ctx.Widgets.Where(wid => wid.Dashboard.DashboardId == dashboardId).AsEnumerable();
-		}
+			//Get UserWidgete
+			List<UserWidget> widgets = new List<UserWidget>();
+			foreach (Widget widget in ctx.Widgets.AsEnumerable())
+			{
+				if (widget is UserWidget) widgets.Add((UserWidget) widget);
+			}
 
+			//Return result
+			return widgets.AsEnumerable().Where(wid => wid.Dashboard.DashboardId == dashboardId);
+		}
+		
 		/// <summary>
 		/// Creates a new dashboard and persist that
 		/// to the database.
@@ -112,9 +120,17 @@ namespace BAR.DAL
 		/// </summary>
 		public int CreateWidget(Widget widget, int dashboardId)
 		{
-			Dashboard dasboardToAddWidget = ReadDashboardWithWidgets(dashboardId);
-			dasboardToAddWidget.Widgets.Add(widget);
-			return UpdateDashboard(dasboardToAddWidget);
+			if (widget is UserWidget)		
+			{
+				//Add reference if userwidget
+				Dashboard dasboardToAddWidget = ReadDashboardWithWidgets(dashboardId);
+				dasboardToAddWidget.Widgets.Add((UserWidget)widget);
+				return UpdateDashboard(dasboardToAddWidget);
+			} else
+			{
+				ctx.Widgets.Add(widget);
+				return ctx.SaveChanges();
+			}		
 		}
 
 		/// <summary>
@@ -204,7 +220,7 @@ namespace BAR.DAL
 		/// </summary>
 		public int DeleteWidgets(IEnumerable<Widget> widgets)
 		{
-			foreach (Widget widget in widgets) ctx.Widgets.Remove(widget);
+			foreach (UserWidget widget in widgets) ctx.Widgets.Remove(widget);
 			return ctx.SaveChanges();
 		}		
 	}

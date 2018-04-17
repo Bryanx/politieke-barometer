@@ -106,9 +106,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\SysController.cs" />
-    <Compile Include="Managers\DashboardManager.cs" />
+    <Compile Include="Managers\WidgetManager.cs" />
     <Compile Include="Managers\DataManager.cs" />
-    <Compile Include="Managers\IDashboardManager.cs" />
+    <Compile Include="Managers\IWidgetManager.cs" />
     <Compile Include="Managers\IDataManager.cs" />
     <Compile Include="Managers\IdentityUserManager.cs" />
     <Compile Include="Managers\IItemManager.cs" />

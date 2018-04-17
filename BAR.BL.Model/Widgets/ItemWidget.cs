@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BAR.BL.Domain.Items;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,9 +7,7 @@ using System.Threading.Tasks;
 
 namespace BAR.BL.Domain.Widgets
 {
-	public class WidgetType
+	public class ItemWidget : Widget
 	{
-		public int WidgetTypeId { get; set; }
-		public int SubTypeId { get; set; }
 	}
 }

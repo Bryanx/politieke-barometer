@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BAR.DAL
 {
-	public interface IDashboardRepository
+	public interface IWidgetRepository
 	{
 		//Read
 		Dashboard ReadDashboard(int dashboardId);
@@ -16,7 +16,7 @@ namespace BAR.DAL
 		IEnumerable<Dashboard> ReadAllDashboards();
 		Widget ReadWidget(int widgetId);
 		IEnumerable<Widget> ReadAllWidgets();
-		IEnumerable<Widget> ReadWidgetsForDashboard(int dashboardId);
+		IEnumerable<UserWidget> ReadWidgetsForDashboard(int dashboardId);
 
 		//Create
 		int CreateDashboard(Dashboard dashboard);
