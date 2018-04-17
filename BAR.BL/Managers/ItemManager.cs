@@ -37,14 +37,15 @@ namespace BAR.BL.Managers
 			InitRepo();
 
 			DataManager dataManager = new DataManager();
-			IEnumerable<Information> allInfoForId = dataManager.GetAllInformationForId(itemId);
+			IEnumerable<Information> allInfoForId = dataManager.getAllInformationForId(itemId);
 
-			DateTime earliestInfoDate = allInfoForId.Min(item => item.CreationDate).Value;
-			DateTime lastInfoDate = allInfoForId.Max(item => item.CreationDate).Value;
+			DateTime earliestInfoDate = allInfoForId.Min(item => item.CreatetionDate).Value;
+			DateTime lastInfoDate = allInfoForId.Max(item => item.CreatetionDate).Value;
 
 			int period = (lastInfoDate - earliestInfoDate).Days;
 
-      if (period == 0) period = 1;
+			Console.WriteLine(earliestInfoDate);
+			Console.WriteLine(lastInfoDate);
 
 			int aantalBaseline = dataManager.GetNumberInfo(itemId, earliestInfoDate);
 			int aantalTrending = dataManager.GetNumberInfo(itemId, lastInfoDate.AddDays(-1));
@@ -201,7 +202,7 @@ namespace BAR.BL.Managers
 		/// </summary>
 		public IEnumerable<Item> GetAllPersons() 
 		{
-			return GetAllItems().Where(item => item is Person).Where(item => item.Deleted == false).ToList();
+			return GetAllItems().Where(item => item is Person).Where(item => item.Deleted == false);
 		}
 
 		/// <summary>
@@ -365,12 +366,6 @@ namespace BAR.BL.Managers
 		{
 			if (uowManager == null) itemRepo = new ItemRepository();
 			else itemRepo = new ItemRepository(uowManager.UnitOfWork);
-		}
-
-    public Item GetPerson(string personName)
-    {
-      InitRepo();
-      return itemRepo.ReadPerson(personName);
-    }
-  }
+		}		
+	}
 }

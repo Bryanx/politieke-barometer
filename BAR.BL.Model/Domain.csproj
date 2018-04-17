@@ -57,7 +57,6 @@
     <Compile Include="Data\Property.cs" />
     <Compile Include="Data\PropertyValue.cs" />
     <Compile Include="Data\Source.cs" />
-    <Compile Include="Data\SynchronizeAudit.cs" />
     <Compile Include="Items\Category.cs" />
     <Compile Include="Items\Item.cs" />
     <Compile Include="Items\ItemType.cs" />

@@ -35,11 +35,10 @@ namespace BAR.DAL.EF
 		public DbSet<Source> Sources { get; set; }
 		public DbSet<Information> Informations { get; set; }
 		public DbSet<Property> Properties { get; set; }
-    public DbSet<SynchronizeAudit> SynchronizeAudits { get; set; }
 
-    //User package
-    public DbSet<Subscription> Subscriptions { get; set; }
-    public DbSet<Area> Areas { get; set; }
+		//User package
+		public DbSet<Subscription> Subscriptions { get; set; }
+		public DbSet<Area> Areas { get; set; }
 
 		//Item package
 		public DbSet<Item> Items { get; set; }

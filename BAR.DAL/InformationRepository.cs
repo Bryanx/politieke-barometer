@@ -16,7 +16,7 @@ namespace BAR.DAL
 	/// - A facebook post
 	/// - etc.
 	/// </summary>
-	public class DataRepository : IDataRepository
+	public class InformationRepository : IInformationRepository
 	{
 		private readonly BarometerDbContext ctx;
 
@@ -24,7 +24,7 @@ namespace BAR.DAL
 		/// If uow is present then the constructor
 		/// will get the context from uow.
 		/// </summary>
-		public DataRepository(UnitOfWork uow = null)
+		public InformationRepository(UnitOfWork uow = null)
 		{
 			if (uow == null) ctx = new BarometerDbContext();
 			else ctx = uow.Context;
@@ -35,9 +35,9 @@ namespace BAR.DAL
 		/// persists it to the database.
 		/// Returns -1 if SaveChanges() is delayed by unit of work.
 		/// </summary>
-		public int CreateInformations(List<Information> infos)
+		public int CreateInformation(Information info)
 		{
-			ctx.Informations.AddRange(infos);
+			ctx.Informations.Add(info);
 			return ctx.SaveChanges();
 		}
 
@@ -84,8 +84,7 @@ namespace BAR.DAL
 		/// </summary>
 		public IEnumerable<Information> ReadAllInfoForId(int itemId)
 		{
-      return ctx.Informations.Include(x => x.Items)
-              .Where(info => info.Items.Any(item => item.ItemId == itemId)).AsEnumerable();
+			return ctx.Informations.Where(info => info.Item.ItemId == itemId).AsEnumerable();
 		}
 
 		/// <summary>
@@ -122,8 +121,8 @@ namespace BAR.DAL
 		public IEnumerable<Information> ReadInformationsForDate(int itemId, DateTime since)
 		{
 			return ctx.Informations
-				.Where(info => info.Items.Any(item => item.ItemId == itemId))
-				.Where(info => info.CreationDate >= since).AsEnumerable();
+					.Where(info => info.Item.ItemId == itemId)
+					.Where(info => info.CreatetionDate >= since).AsEnumerable();
 		}
 
 		/// <summary>
@@ -132,9 +131,8 @@ namespace BAR.DAL
 		/// </summary
 		public int ReadNumberInfo(int itemId, DateTime since)
 		{
-			return ctx.Informations
-				.Where(info => info.Items.Any(item => item.ItemId == itemId))
-				.Where(info => info.CreationDate >= since).Count();
+			return ctx.Informations.Where(info => info.Item.ItemId == itemId)
+				.Where(info => info.CreatetionDate >= since).Count();
 		}
 
 		/// <summary>
@@ -156,39 +154,7 @@ namespace BAR.DAL
 			foreach (Information info in infos) ctx.Entry(info).State = EntityState.Modified;
 			return ctx.SaveChanges();
 		}
-
-		public Property ReadProperty(string propertyName)
-		{
-			return ctx.Properties.Where(x => x.Name.Equals(propertyName)).SingleOrDefault();
-		}
-
-		public Source ReadSource(string sourceName)
-		{
-			return ctx.Sources.Where(x => x.Name.Equals(sourceName)).SingleOrDefault();
-		}
-
-    public SynchronizeAudit ReadLastAudit()
-    {
-      return ctx.SynchronizeAudits.Where(x => x.Succes).OrderByDescending(x => x.TimeStamp).FirstOrDefault();
-    }
-
-    public int CreateAudit(SynchronizeAudit synchronizeAudit)
-    {
-      ctx.SynchronizeAudits.Add(synchronizeAudit);
-      return ctx.SaveChanges();
-    }
-
-    public SynchronizeAudit ReadAudit(int synchronizeAuditId)
-    {
-      return ctx.SynchronizeAudits.Where(x => x.SynchronizeAuditId == synchronizeAuditId).SingleOrDefault();
-    }
-
-    public int UpdateAudit(SynchronizeAudit synchronizeAudit)
-    {
-      ctx.Entry(synchronizeAudit).State = EntityState.Modified;
-      return ctx.SaveChanges();
-    }
-  }
+	}
 }
 
 

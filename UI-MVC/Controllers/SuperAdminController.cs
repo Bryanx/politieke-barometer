@@ -7,10 +7,6 @@ using BAR.BL.Managers;
 using BAR.UI.MVC.App_GlobalResources;
 using BAR.UI.MVC.Models;
 using Microsoft.AspNet.Identity;
-using System.Net.Http;
-using System.Threading.Tasks;
-using System.Text;
-using System;
 using Microsoft.AspNet.Identity.Owin;
 
 namespace BAR.UI.MVC.Controllers
