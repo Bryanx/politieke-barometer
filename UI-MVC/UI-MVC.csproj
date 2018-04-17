@@ -266,6 +266,7 @@
     <Content Include="Content\build\css\partials\buttons.scss" />
     <Content Include="Content\build\css\partials\checkbox.scss" />
     <Content Include="Content\build\css\partials\colors.scss" />
+    <Content Include="Content\build\css\partials\dropdowns.scss" />
     <Content Include="Content\build\css\partials\footer.scss" />
     <Content Include="Content\build\css\partials\forms.scss" />
     <Content Include="Content\build\css\partials\images.scss" />
@@ -276,6 +277,7 @@
     <Content Include="Content\build\css\partials\profile.scss" />
     <Content Include="Content\build\css\partials\searchbar.scss" />
     <Content Include="Content\build\css\partials\tables.scss" />
+    <Content Include="Content\build\css\partials\texteditor.scss" />
     <Content Include="Content\build\css\partials\tiles.scss" />
     <Content Include="Content\build\css\vendor\bootstrap-progressbar-3.3.4.css" />
     <Content Include="Content\build\css\vendor\bootstrap-progressbar-3.3.4.min.css" />

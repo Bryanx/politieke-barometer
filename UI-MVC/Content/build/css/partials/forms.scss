@@ -1,3 +1,4 @@
+@import "texteditor";
 
 textarea {
   padding: 10px;
@@ -6,5 +7,67 @@ textarea {
   &:focus {
     outline-style: solid;
     outline-width: 2px;
+  }
+}
+
+div[data-role="editor-toolbar"] {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+
+.form-group {
+  margin-bottom: 10px;
+}
+
+
+.form-control {
+  width: 100%;
+  height: 40px;
+  box-shadow: none;
+}
+
+.input-sm {
+  height: 30px;
+}
+
+.form-horizontal .control-label {
+  padding-top: 8px;
+}
+
+.form-control:focus {
+  border: 1px solid var(--primary-color);
+  box-shadow: none !important;
+}
+
+.form-horizontal .form-group {
+  margin-right: 0;
+  margin-left: 0;
+}
+
+.form-control-feedback {
+  margin-top: 8px;
+  height: 23px;
+  color: #bbb;
+  line-height: 24px;
+  font-size: 15px;
+  &.left {
+    border-right: 1px solid #ccc;
+    left: 13px;
+  }
+  &.right {
+    border-left: 1px solid #ccc;
+    right: 13px;
+  }
+}
+
+.form-control {
+  &.has-feedback-left {
+    padding-left: 45px;
+  }
+  &.has-feedback-right {
+    padding-right: 45px;
   }
 }
