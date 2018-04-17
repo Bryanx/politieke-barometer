@@ -57,8 +57,8 @@ namespace BAR.UI.MVC
         AppId = ConfigurationManager.AppSettings["FacebookAppId"],
         AppSecret = ConfigurationManager.AppSettings["FacebookAppSecret"],
         BackchannelHttpHandler = new HttpClientHandler(),
-        UserInformationEndpoint = "https://graph.facebook.com/v2.8/me?fields=id,name,email,first_name,last_name,picture",
-        Scope = { "public_profile" },
+        UserInformationEndpoint = "https://graph.facebook.com/v2.8/me?fields=id,name,email,first_name,last_name",
+        Scope = { "email" },
         Provider = new FacebookAuthenticationProvider()
         {
           OnAuthenticated = async context =>

@@ -23,7 +23,6 @@ namespace BAR.BL.Domain.Users
 		public Area Area { get; set; }
 		public ICollection<Activity> Activities { get; set; }
 		public bool Deleted { get; set; }
-    public byte[] ProfilePicture { get; set; }
 
     //Method for cookie verification (maybe removed later from domain)
     public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<User> manager)

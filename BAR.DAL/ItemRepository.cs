@@ -10,15 +10,11 @@ using BAR.BL.Domain.Data;
 namespace BAR.DAL
 {
 	/// <summary>
-	/// This class is used for the persistance of
-	/// items. An item object could be:
-	/// - A person
-	/// - An organisation
-	/// - A theme
+	/// At this moment the repository works HC.
 	/// </summary>
 	public class ItemRepository : IItemRepository
 	{
-		private readonly BarometerDbContext ctx;
+		private BarometerDbContext ctx;
 
 		/// <summary>
 		/// If uow is present then the constructor

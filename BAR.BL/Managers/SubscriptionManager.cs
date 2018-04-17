@@ -110,7 +110,7 @@ namespace BAR.BL.Managers
 		public IEnumerable<Alert> GetAllAlerts(string userId)
 		{
 			InitRepo();
-			return subRepo.ReadAlerts(userId, true).AsEnumerable();
+			return subRepo.ReadAlerts(userId, true);
 		}
 
 		/// <summary>
@@ -167,7 +167,7 @@ namespace BAR.BL.Managers
 		public IEnumerable<Subscription> GetSubscriptionsWithAlertsForUser(string userId) 
 		{
 			InitRepo();
-			return subRepo.ReadSubscriptionsWithAlertsForUser(userId).AsEnumerable();
+			return subRepo.ReadSubscriptionsWithAlertsForUser(userId);
 		}
 
 		/// <summary>
@@ -176,15 +176,7 @@ namespace BAR.BL.Managers
 		public IEnumerable<Subscription> GetSubscriptionsWithItemsForUser(string userId) 
 		{
 			InitRepo();
-			return subRepo.ReadSubscriptionsWithItemsForUser(userId).AsEnumerable();
-		}
-		
-		/// <summary>
-		/// Gets the subscribed items for a specific user.
-		/// </summary>
-		public IEnumerable<Item> GetSubscribedItemsForUser(string userId) {
-			InitRepo();
-			return GetSubscriptionsWithItemsForUser(userId).Select(s => s.SubscribedItem).AsEnumerable();
+			return subRepo.ReadSubscriptionsWithItemsForUser(userId);
 		}
 
 		/// <summary>
@@ -197,29 +189,14 @@ namespace BAR.BL.Managers
 		}
 
 		/// <summary>
-		/// Toggles a subscription on wether the subscription exists or not.
-		/// </summary>
-		public void ToggleSubscription(string userId, int itemId) {
-			IEnumerable<Subscription> subs = GetSubscriptionsWithItemsForUser(userId);
-			if (subs.Select(s => s.SubscribedItem.ItemId).Contains(itemId)) {
-				RemoveSubscription(subs.First(s => s.SubscribedItem.ItemId == itemId).SubscriptionId);
-			} else {
-				CreateSubscription(userId, itemId);
-			}
-		}
-
-		/// <summary>
 		/// Removes a subscription by Subscription id.
 		/// </summary>
 		public void RemoveSubscription(int subId)
 		{
 			InitRepo();
-
-			//Get sub
 			Subscription subscriptionToRemove = subRepo.ReadEditableSubscription(subId);
 			if (subscriptionToRemove == null) return;
 
-			//Remove sub
 			subscriptionToRemove.SubscribedItem.NumberOfFollowers--;
 			//id parameter is needed to delete alers with subscription in repo
 			subRepo.DeleteSubscription(subId);

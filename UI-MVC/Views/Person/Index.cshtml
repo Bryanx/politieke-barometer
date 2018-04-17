@@ -7,27 +7,36 @@
 
 <h1>@Model.PageTitle</h1>
 <hr/>
-<section class="shadowed">
 @Html.Partial("Partials/_PersonTable", Model)
-</section>
 <div style="visibility: hidden">space</div>
 
 @section CustomJS{
     @Scripts.Render("~/bundles/datatables")
     <script type="text/javascript">
+        function personSubscribe(id) {
+            $.ajax({
+                type: 'POST',
+                url: '/api/Subscribe/'+id
+            }).fail(() => {/* ok */});
+            event.preventDefault();
+        }
+        function personUnsubscribe(id) {
+            $.ajax({
+                type: 'POST',
+                url: `/api/User/Subscription/${id}/Delete`
+            }).fail(() => {/* ok */});
+            event.preventDefault();
+        }
+
         (() => {
-            $('#datatable-infinite').dataTable({
-                "searching": false,
+            $('#datatable-infinite').dataTable( {
+                "searching":false,
                 "bScrollInfinite": true,
                 "bScrollCollapse": true,
                 "sScrollY": "1000px",
                 "paging": false,
                 "bProcessing": true,
                 "info": false
-            });
-
-            $('.subscribeItem').click(function() {
-                ajaxToggleSubscribe($(this));
             });
         })($);
     </script>

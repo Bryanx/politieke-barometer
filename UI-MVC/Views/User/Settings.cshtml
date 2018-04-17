@@ -5,10 +5,10 @@
 
 <!-- User Settings -->
 <div class="row">
-    <div class="col-md-8 col-xs-12">
+    <div class="col-md-12 col-sm-12 col-xs-12">
         <div class="x_panel">
             <div class="x_title">
-                <h2>@Resources.User @Resources.Settings.ToLower()</h2>
+                <h2>Gebruiker instellingen</h2>
                 <div class="clearfix"></div>
             </div>
             <div class="x_content">
@@ -16,37 +16,37 @@
                 <form method="post" action="/api/User/UpdateProfile" id="userSettingsForm" class="form-horizontal">
                     <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">
-                            @Html.DisplayNameFor(m => m.Firstname) <span class="required">*</span>
+                            Voornaam <span class="required">*</span>
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                            @Html.TextBoxFor(model => model.Firstname, "", new {@class = "form-control col-md-7 col-xs-12", placeholder=@Html.DisplayNameFor(m => m.Firstname)})
+                            @Html.TextBoxFor(model => model.Firstname, "", new {@class = "form-control col-md-7 col-xs-12"})
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">
-                            @Html.DisplayNameFor(m => m.Lastname)
+                            Achternaam <span class="required">*</span>
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                            @Html.TextBoxFor(model => model.Lastname, "", new {@class = "form-control col-md-7 col-xs-12", placeholder = @Html.DisplayNameFor(m => m.Lastname) })
+                            @Html.TextBoxFor(model => model.Lastname, "", new {@class = "form-control col-md-7 col-xs-12"})
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12">@Html.DisplayNameFor(m => m.Gender)</label>
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Geslacht</label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
                             <div id="gender" class="btn-group" data-toggle="buttons">
                                 @if (Model.Gender == Gender.MAN) {
                                     <label class="btn btn-default active">
-                                        @Html.RadioButtonFor(model => model.Gender, Gender.MAN) @Resources.Man
+                                        @Html.RadioButtonFor(model => model.Gender, Gender.MAN) Man
                                     </label>
                                     <label class="btn btn-default">
-                                        @Html.RadioButtonFor(model => model.Gender, Gender.WOMAN) @Resources.Woman
+                                        @Html.RadioButtonFor(model => model.Gender, Gender.WOMAN) Vrouw
                                     </label>
                                 } else {
                                     <label class="btn btn-default">
-                                        @Html.RadioButtonFor(model => model.Gender, Gender.MAN) @Resources.Man
+                                        @Html.RadioButtonFor(model => model.Gender, Gender.MAN) Man
                                     </label>
                                     <label class="btn btn-default active">
-                                        @Html.RadioButtonFor(model => model.Gender, Gender.WOMAN) @Resources.Woman
+                                        @Html.RadioButtonFor(model => model.Gender, Gender.WOMAN) Vrouw
                                     </label>
                                 }
                             </div>
@@ -54,61 +54,28 @@
                     </div>
                     <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">
-                            @Html.DisplayNameFor(m => m.DateOfBirth)
+                            Geboortedatum
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                            @Html.EditorFor(model => model.DateOfBirth, new {htmlAttributes = new {@class = "form-control col-md-7 col-xs-12"}})
+                            @Html.EditorFor(model => model.DateOfBirth, new {@class = "form-control col-md-7 col-xs-12"})
                             @Html.ValidationMessageFor(model => model.DateOfBirth, "", new {@class = "text-danger"})
                         </div>
                     </div>
-                    <div class="form-group">
+                        <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">
-                            @Html.DisplayNameFor(m => m.SelectedAreaId)
+                            Woonplaats
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                            @Html.DropDownListFor(model => model.SelectedAreaId, Model.Areas, @Resources.SelectYourCity, new {@class = "form-control col-md-7 col-xs-12"})
+                            @Html.DropDownListFor(model => model.SelectedAreaId, Model.Areas, "Selecteer je woonplaats", new {@class = "form-control col-md-7 col-xs-12"})
                         </div>
                     </div>
                     <div class="form-group">
                         <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
-                            <button type="submit" class="btn btn-dark">@Resources.Save</button>
+                            <button type="submit" class="btn btn-dark">Opslaan</button>
                             <div id="messageSettings" style="display: inline"></div>
                         </div>
                     </div>
                 </form>
-            </div>
-        </div>
-    </div>
-
-<!-- Profile picture -->
-    <div class="col-md-4 col-xs-12">
-        <div class="x_panel">
-            <div class="x_title">
-                <h2>@Resources.ProfilePicture</h2>
-                <div class="clearfix"></div>
-            </div>
-            <div class="x_content">
-                <br />
-                @using (Html.BeginForm("Settings", "User", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
-                {
-                @Html.AntiForgeryToken()
-                    <div class="form-group">     
-                        <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
-                            <img src="@Url.Action("ProfilePicture", "User" )" style="width:160px;height:160px;" />
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
-                            <input type="file" name="ProfilePicture" id="fileUpload" accept=".png,.jpg,.jpeg,.gif,.tif" />
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
-                            <button type="submit" class="btn btn-dark">@Resources.Save</button>
-                            <div style="display: inline"></div>
-                        </div>
-                    </div>
-                }
             </div>
         </div>
     </div>
@@ -119,82 +86,82 @@
     <div class="col-md-6 col-xs-12">
         <div class="x_panel">
             <div class="x_title">
-                <h2>Alert @Resources.Settings.ToLower()</h2>
+                <h2>Alert instellingen</h2>
                 <div class="clearfix"></div>
             </div>
             <div class="x_content">
                 <br/>
                 <form method="post" action="/api/User/UpdateAlerts" id="alertSettingsForm" class="form-horizontal">
                     <div class="form-group">
-                        @Html.LabelFor(model => model.AlertsViaWebsite, htmlAttributes: new { @class = "control-label col-md-6 col-sm-6 col-xs-12" })
+                        @Html.LabelFor(model => model.AlertsViaWebsite,"Alerts ontvangen op deze website", htmlAttributes: new { @class = "control-label col-md-6 col-sm-6 col-xs-12" })
                         <div class="col-md-3 col-sm-3 col-xs-12">
                             <div id="alertsviawebsite" class="btn-group" data-toggle="buttons">
                                 @if (Model.AlertsViaWebsite == true)
                                 {
                                 <label class="btn btn-default active">
-                                    @Html.RadioButtonFor(model => model.AlertsViaWebsite, true) @Resources.Yes
+                                    @Html.RadioButtonFor(model => model.AlertsViaWebsite, true) Ja
                                 </label>
                                 <label class="btn btn-default">
-                                    @Html.RadioButtonFor(model => model.AlertsViaWebsite, false) @Resources.No
+                                    @Html.RadioButtonFor(model => model.AlertsViaWebsite, false) Nee
                                 </label>
                                 }
                                 else
                                 {
                                 <label class="btn btn-default">
-                                    @Html.RadioButtonFor(model => model.AlertsViaWebsite, true) @Resources.Yes
+                                    @Html.RadioButtonFor(model => model.AlertsViaWebsite, true) Ja
                                 </label>
                                 <label class="btn btn-default active">
-                                    @Html.RadioButtonFor(model => model.AlertsViaWebsite, false) @Resources.No
+                                    @Html.RadioButtonFor(model => model.AlertsViaWebsite, false) Nee
                                 </label>
                                 }
                                 </div>
                             </div>
                     </div>
                     <div class="form-group">
-                        @Html.LabelFor(model => model.AlertsViaEmail, htmlAttributes: new { @class = "control-label col-md-6 col-sm-6 col-xs-12" })
+                        @Html.LabelFor(model => model.AlertsViaEmail,"Alerts ontvangen per email", htmlAttributes: new { @class = "control-label col-md-6 col-sm-6 col-xs-12" })
                         <div class="col-md-3 col-sm-3 col-xs-12">
                             <div id="alertsviamail" class="btn-group" data-toggle="buttons">
-                                @if (Model.AlertsViaEmail)
+                                @if (Model.AlertsViaEmail == true)
                                 {
                                 <label class="btn btn-default active">
-                                    @Html.RadioButtonFor(model => model.AlertsViaEmail, true) @Resources.Yes
+                                    @Html.RadioButtonFor(model => model.AlertsViaEmail, true) Ja
                                 </label>
                                 <label class="btn btn-default">
-                                    @Html.RadioButtonFor(model => model.AlertsViaEmail, false) @Resources.No
+                                    @Html.RadioButtonFor(model => model.AlertsViaEmail, false) Nee
                                 </label>
                                 }
                                 else
                                 {
                                 <label class="btn btn-default">
-                                    @Html.RadioButtonFor(model => model.AlertsViaEmail, true) @Resources.Yes
+                                    @Html.RadioButtonFor(model => model.AlertsViaEmail, true) Ja
                                 </label>
                                 <label class="btn btn-default active">
-                                    @Html.RadioButtonFor(model => model.AlertsViaEmail, false) @Resources.No
+                                    @Html.RadioButtonFor(model => model.AlertsViaEmail, false) Nee
                                 </label>
                                 }
                             </div>
                         </div>
                     </div>
                     <div class="form-group">
-                        @Html.LabelFor(model => model.WeeklyReviewViaEmail, htmlAttributes: new { @class = "control-label col-md-6 col-sm-6 col-xs-12" })
+                        @Html.LabelFor(model => model.WeeklyReviewViaEmail,"Weekly review ontvangen per email", htmlAttributes: new { @class = "control-label col-md-6 col-sm-6 col-xs-12" })
                         <div class="col-md-3 col-sm-3 col-xs-12">
                             <div id="weeklyreviewviamail" class="btn-group" data-toggle="buttons">
-                                @if (Model.WeeklyReviewViaEmail)
+                                @if (Model.WeeklyReviewViaEmail == true)
                                 {
                                 <label class="btn btn-default active">
-                                    @Html.RadioButtonFor(model => model.WeeklyReviewViaEmail, true) @Resources.Yes
+                                    @Html.RadioButtonFor(model => model.WeeklyReviewViaEmail, true) Ja
                                 </label>
                                 <label class="btn btn-default">
-                                    @Html.RadioButtonFor(model => model.WeeklyReviewViaEmail, false) @Resources.No
+                                    @Html.RadioButtonFor(model => model.WeeklyReviewViaEmail, false) Nee
                                 </label>
                                 }
                                 else
                                 {
                                 <label class="btn btn-default">
-                                    @Html.RadioButtonFor(model => model.WeeklyReviewViaEmail, true) @Resources.Yes
+                                    @Html.RadioButtonFor(model => model.WeeklyReviewViaEmail, true) Ja
                                 </label>
                                 <label class="btn btn-default active">
-                                    @Html.RadioButtonFor(model => model.WeeklyReviewViaEmail, false) @Resources.No
+                                    @Html.RadioButtonFor(model => model.WeeklyReviewViaEmail, false) Nee
                                 </label>
                                 }
                             </div>
@@ -202,7 +169,7 @@
                     </div>
                     <div class="form-group">
                         <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-6">
-                            <button type="submit" class="btn btn-dark">@Resources.Save</button>
+                            <button type="submit" class="btn btn-dark">Opslaan</button>
                             <div id="alertSettingsMessage" style="display: inline"></div>
                         </div>
                     </div>
@@ -215,7 +182,7 @@
     <div class="col-md-6 col-xs-12">
         <div class="x_panel">
             <div class="x_title">
-                <h2>@Resources.Account @Resources.Settings.ToLower()</h2>
+                <h2>Account instellingen</h2>
                 <div class="clearfix"></div>
             </div>
             <div class="x_content">
@@ -223,7 +190,7 @@
                 <form method="post" action="/api/User/UpdateAccount" id="accountSettingsForm" class="form-horizontal">
                     <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="password">
-                            @Html.DisplayNameFor(m => m.Password) <span class="required">*</span>
+                           Huidig Wachtwoord <span class="required">*</span>
                         </label>
                         <div class="col-md-9 col-sm-9 col-xs-12">
                             @Html.PasswordFor(model => model.Password, new {type = "password", @class = "form-control col-md-7 col-xs-12"})
@@ -232,7 +199,7 @@
                     </div>
                     <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="passwordnew">
-                            @Html.DisplayNameFor(m => m.PasswordNew) <span class="required">*</span>
+                            Nieuw wachtwoord <span class="required">*</span>
                         </label>
                         <div class="col-md-9 col-sm-9 col-xs-12">
                             @Html.PasswordFor(model => model.PasswordNew, new { type = "password", @class = "form-control col-md-7 col-xs-12" })
@@ -241,7 +208,7 @@
                     </div>
                     <div class="form-group">
                         <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
-                            <button type="submit" class="btn btn-dark">@Resources.Save</button>
+                            <button type="submit" class="btn btn-dark">Opslaan</button>
                             <div id="accountSettingsMessage" style="display: inline"></div>
                         </div>
                     </div>
@@ -256,7 +223,7 @@
 <div class="col-md-6 col-xs-12">
     <div class="x_panel">
         <div class="x_title">
-            <h2>@Resources.DeleteAccount</h2>
+            <h2>Account deactiveren</h2>
             <div class="clearfix"></div>
         </div>
         <div class="x_content">
@@ -264,10 +231,10 @@
             <form method="post" action="/api/User" id="removeAccountForm" class="form-horizontal">
                 <div class="form-group">
                     <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
-                        @Resources.DeleteAccountWarning
+                        Let op. Bij het verwijderen van uw account worden al uw instellingen, grafieken en widgets verwijderd.
                         <br/>
                         <br/>
-                        <button type="submit" class="btn btn-danger">@Resources.DeleteAccount</button>
+                        <button type="submit" class="btn btn-danger">Account verwijderen</button>
                         <div id="removeAccountMessage" style="display: inline"></div>
                     </div>
                 </div>
@@ -298,7 +265,7 @@
                     data: $this.serialize(),
                     succes: message
                         .addClass('green')
-                        .html("@Resources.Saved")
+                        .html("Saved.")
                         .fadeOut(1000,
                             function() {
                                 $(this)
@@ -308,7 +275,7 @@
                             })
                 }).fail(() => message
                     .addClass('red')
-                    .html("@Resources.Failed")
+                    .html("Mislukt.")
                     .fadeOut(1000,
                         function() {
                             $(this)

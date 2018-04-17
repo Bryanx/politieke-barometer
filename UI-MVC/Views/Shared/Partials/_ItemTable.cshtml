@@ -17,25 +17,25 @@
     <thead>
     <tr>
         <th>
-            @Resources.Name
+            Naam
         </th>
         <th>
-            @Resources.Category
+            Categorie
         </th>
         <th>
-            @Resources.Mentions
+            Vermeldingen
         </th>
         <th>
-            @Resources.Positive
+            Positief
         </th>
         <th>
-            @Resources.Negative
+            Negatief
         </th>
-        <th title=@Resources.CalculatedByAmountOfTweets>
-            @Resources.Trending
+        <th title="Berekend op basis van het aantal tweets">
+            Trending
         </th>
         <th>
-            @Resources.CreationDate
+            Aanmaak datum
         </th>
         @if (User.Identity.IsAuthenticated) {
             <th>
@@ -71,9 +71,9 @@
             </td>
             <td>
                 @if (item.Deleted) {
-                    <a class="removeItem btn btn-dark btn-xs" data-item-id="@item.ItemId" title=@Resources.RecoverItem>@Resources.Recover</a>
+                    <a class="removeItem btn btn-dark btn-xs" data-item-id="@item.ItemId" title="Item herstellen">Herstellen</a>
                 } else {
-                    <a class="removeItem btn btn-danger btn-xs" data-item-id="@item.ItemId" title=@Resources.RemoveItem>@Resources.Remove</a>
+                    <a class="removeItem btn btn-danger btn-xs" data-item-id="@item.ItemId" title="Item verwijderen">Verwijderen</a>
                 }
             </td>
         </tr>

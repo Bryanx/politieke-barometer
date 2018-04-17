@@ -54,13 +54,6 @@ namespace BAR.UI.MVC.Helpers {
                 controller = "User",
                 action = nameof(UserController.ForgotPassword)
             });
-        }        
-        
-        public static string ProfilePictureUrl(this UrlHelper helper) {
-            return helper.RouteUrl("Default", new {
-                controller = "User",
-                action = nameof(UserController.ProfilePicture)
-            });
         }
         
         #endregion

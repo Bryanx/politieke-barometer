@@ -1,18 +1,12 @@
 ﻿@model BAR.UI.MVC.Models.ExternalLoginConfirmationViewModel
 
 @{
-  ViewBag.Title = Resources.Signup;
+  ViewBag.Title = "Registreer";
 }
-
-@{
-  var base64 = Convert.ToBase64String(Model.ImageData);
-  var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
-}
-
 <h2>@ViewBag.Title.</h2>
 <div class="form-group">
     <div class="col-md-offset-2 col-md-10">
-        <h3>@Resources.ConnectYour @ViewBag.LoginProvider @Resources.Account.ToLower()</h3>
+        <h3>Koppel je @ViewBag.LoginProvider account</h3>
     </div>
 </div>
 @using (Html.BeginForm("ExternalLoginConfirmation", "User", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
@@ -24,8 +18,8 @@
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <p class="text-info">
-            @Resources.SuccesfullyLoggedInWith <strong>@ViewBag.LoginProvider</strong>.
-            @Resources.FillTheRemainingFields
+            Je bent succelvol ingelogd met <strong>@ViewBag.LoginProvider</strong>.
+            Vul de overige registratievelden in en klik op registreer.
         </p>
     </div>
 </div>
@@ -53,7 +47,7 @@
         <div class="form-group">
             @Html.LabelFor(m => m.Gender, new { @class = "col-md-2 control-label" })
             <div class="col-md-4">
-                @Html.EnumDropDownListFor(m => m.Gender, Resources.SelectYourGender, new { @class = "form-control" })
+                @Html.EnumDropDownListFor(m => m.Gender, "Select your gender", new { @class = "form-control" })
             </div>
         </div>
         <div class="form-group">
@@ -63,15 +57,10 @@
                 @Html.ValidationMessageFor(model => model.DateOfBirth, "", new { @class = "text-danger" })
             </div>
         </div>
-        <div class="form-group">
-            <div class="col-md-4">
-                <img src="@imgSrc" />
-                @Html.HiddenFor(model => model.ImageData)
-            </div>
-        </div>
+
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" class="btn btn-default" value="@Resources.Signup" />
+                <input type="submit" class="btn btn-default" value="Registreren" />
             </div>
         </div>
 }

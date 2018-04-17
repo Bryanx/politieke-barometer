@@ -10,9 +10,6 @@ using System.Threading.Tasks;
 
 namespace BAR.BL.Managers
 {
-  /// <summary>
-  /// Class that will make it possible for users to login and off.
-  /// </summary>
   public class SignInManager : SignInManager<User, string>
   {
     public SignInManager(IdentityUserManager userManager, IAuthenticationManager authenticationManager)
@@ -23,6 +20,9 @@ namespace BAR.BL.Managers
     /// <summary>
     /// Creates an instance of SignInManager and returns it as a callback function to Owin.
     /// </summary>
+    /// <param name="options"></param>
+    /// <param name="context"></param>
+    /// <returns></returns>
     public static SignInManager Create(IdentityFactoryOptions<SignInManager> options, IOwinContext context)
     {
       return new SignInManager(context.GetUserManager<IdentityUserManager>(), context.Authentication);
