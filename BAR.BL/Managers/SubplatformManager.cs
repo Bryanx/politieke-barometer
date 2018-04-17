@@ -162,7 +162,7 @@ namespace BAR.BL.Managers
 			InitRepo();
 
 			//Get platform
-			SubPlatform platform = platformRepo.ReadSubPlatform(platformName);
+			SubPlatform platform = GetSubPlatform(platformName);
 			if (platform == null) return null;
 
 			//Change platform
@@ -197,6 +197,9 @@ namespace BAR.BL.Managers
 			return platform;
 		}
 
+		/// <summary>
+		/// Gives back a default customization for a platform.
+		/// </summary>
 		private Customization CreateDefaultCustomization()
 		{
 			Customization custom = new Customization()
@@ -253,6 +256,21 @@ namespace BAR.BL.Managers
 		}
 
 		/// <summary>
+		/// Deletes a platform from the database
+		/// </summary>
+		public void RemoveSubplatform(string platformName)
+		{
+			InitRepo();
+
+			//Get platform
+			SubPlatform platform = GetSubPlatform(platformName);
+			if (platform == null) return;
+
+			//Delete platform
+			platformRepo.DeleteSubplatform(platform);
+		}
+
+		/// <summary>
 		/// Determines if the repo needs a unit of work
 		/// if the unitOfWorkManager is present
 		/// </summary>
@@ -260,8 +278,6 @@ namespace BAR.BL.Managers
 		{
 			if (uowManager == null) platformRepo = new SubplatformRepository();
 			else platformRepo = new SubplatformRepository(uowManager.UnitOfWork);
-		}
-
-
+		}	
 	}
 }

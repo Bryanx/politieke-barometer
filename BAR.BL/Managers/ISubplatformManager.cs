@@ -23,6 +23,8 @@ namespace BAR.BL.Managers
 		Customization ChangeFAQTitle(string platformName, string title);
 		Customization ChangeContactProperties(string platformName, string streetAndHousenumber, string zipcode, string city, string country, string email);
 
+		void RemoveSubplatform(string platformName);
+
 		//Questions
 	}
 }
