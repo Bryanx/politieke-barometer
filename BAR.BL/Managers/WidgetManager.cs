@@ -37,30 +37,19 @@ namespace BAR.BL.Managers
 			//Checks if a userwidget or an itemWidget needs to be created
 			if (dashboardId == -1)
 			{
-				widget = new ItemWidget()
-				{
-					WidgetType = widgetType,
-					Title = title,
-					RowNumber = rowNbr,
-					ColumnNumber = colNbr,
-					RowSpan = rowspan,
-					ColumnSpan = colspan,
-					Items = new List<Item>()
-				};
+				widget = new ItemWidget();
 			}
 			else
 			{
-				widget = new UserWidget()
-				{
-					WidgetType = widgetType,
-					Title = title,
-					RowNumber = rowNbr,
-					ColumnNumber = colNbr,
-					RowSpan = rowspan,
-					ColumnSpan = colspan,
-					Items = new List<Item>()
-				};
+				widget = new UserWidget();
 			}
+			widget.WidgetType = widgetType,
+			widget.Title = title,
+			widget.RowNumber = rowNbr,
+			widget.ColumnNumber = colNbr,
+			widget.RowSpan = rowspan,
+			widget.ColumnSpan = colspan,
+			widget.Items = new List<Item>()
 
 			//repo autmaticly links widget to dashboard
 			widgetRepo.CreateWidget(widget, dashboardId);
