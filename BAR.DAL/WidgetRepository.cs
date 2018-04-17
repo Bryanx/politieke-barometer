@@ -11,7 +11,7 @@ namespace BAR.DAL
 	/// This class is used for the persistance of
 	/// widgets and dashboards
 	/// </summary>
-	public class DashboardRepository : IDashboardRepository
+	public class WidgetRepository : IWidgetRepository
 	{
 		private readonly BarometerDbContext ctx;
 
@@ -19,7 +19,7 @@ namespace BAR.DAL
 		/// If uow is present, the constructor
 		/// will get the context from uow.
 		/// </summary>
-		public DashboardRepository(UnitOfWork uow = null)
+		public WidgetRepository(UnitOfWork uow = null)
 		{
 			if (uow == null) ctx = new BarometerDbContext();
 			else ctx = uow.Context;

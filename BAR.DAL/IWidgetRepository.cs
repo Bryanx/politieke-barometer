@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BAR.DAL
 {
-	public interface IDashboardRepository
+	public interface IWidgetRepository
 	{
 		//Read
 		Dashboard ReadDashboard(int dashboardId);

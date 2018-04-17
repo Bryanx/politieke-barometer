@@ -12,7 +12,7 @@ namespace BAR.BL.Managers
 	/// </summary>
 	public class DashboardManager : IDashboardManager
 	{
-		private IDashboardRepository dashboardRepo;
+		private IWidgetRepository dashboardRepo;
 		private UnitOfWorkManager uowManager;
 
 		/// <summary>
@@ -176,8 +176,8 @@ namespace BAR.BL.Managers
 		/// </summary>
 		private void InitRepo()
 		{
-			if (uowManager == null) dashboardRepo = new DashboardRepository();
-			else dashboardRepo = new DashboardRepository(uowManager.UnitOfWork);
+			if (uowManager == null) dashboardRepo = new WidgetRepository();
+			else dashboardRepo = new WidgetRepository(uowManager.UnitOfWork);
 		}	
 	}
 }
