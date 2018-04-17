@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BAR.BL.Domain.Core
+namespace BAR.BL.Domain.Users
 {
 	public enum QuestionType
 	{
