@@ -67,7 +67,7 @@ namespace BAR.BL.Managers
 			uowManager = new UnitOfWorkManager();
 			InitRepo();
 			IItemManager itemManager = new ItemManager(uowManager);
-      IEnumerable<Item> items = itemManager.GetAllPeople();
+      IEnumerable<Item> items = itemManager.GetAllPersons();
 			dynamic deserializedJson = JsonConvert.DeserializeObject(json);
 			List<Information> informationList = new List<Information>();
 			for (int i = 0; i < deserializedJson.Count; i++)
@@ -238,7 +238,7 @@ namespace BAR.BL.Managers
 					}
 				}
 			}
-      return itemManager.GetAllPeople();
+      return itemManager.GetAllPersons();
 		}
 
 		public SynchronizeAudit GetLastAudit()
