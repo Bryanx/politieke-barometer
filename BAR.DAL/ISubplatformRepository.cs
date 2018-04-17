@@ -7,8 +7,19 @@ using System.Threading.Tasks;
 
 namespace BAR.DAL
 {
-  public interface ISubplatformRepository
-  {
-    SubPlatform ReadSubPlatform(string subplatformName);
-  }
+	public interface ISubplatformRepository
+	{
+		//Read
+		SubPlatform ReadSubPlatform(string subplatformName);
+		IEnumerable<SubPlatform> ReadSubPlatform();
+
+		//Create
+		//...
+
+		//Update
+		//...
+
+		//Delete
+		//...
+	}
 }

@@ -17,16 +17,6 @@ namespace BAR.DAL
 		private readonly BarometerDbContext ctx;
 
 		/// <summary>
-		/// Reads a subplatform based on name of the subplatform
-		/// </summary>
-		/// <param name="subplatformName"></param>
-		/// <returns></returns>
-		public SubPlatform ReadSubPlatform(string subplatformName)
-		{
-			return ctx.SubPlatforms.Where(sp => sp.Name.Equals(subplatformName)).SingleOrDefault();
-		}
-
-		/// <summary>
 		/// If uow is present then the constructor
 		/// will get the context from uow.
 		/// </summary>
@@ -36,5 +26,20 @@ namespace BAR.DAL
 			else ctx = uow.Context;
 		}
 
+		/// <summary>
+		/// Reads a subplatform based on name of the subplatform.
+		/// </summary>
+		public SubPlatform ReadSubPlatform(string subplatformName)
+		{
+			return ctx.SubPlatforms.Where(sp => sp.Name.Equals(subplatformName)).SingleOrDefault();
+		}
+
+		/// <summary>
+		/// Gives back all the subplatforms that are on the system
+		/// </summary>
+		public IEnumerable<SubPlatform> ReadSubPlatform()
+		{
+			return ctx.SubPlatforms.AsEnumerable();
+		}
 	}
 }
