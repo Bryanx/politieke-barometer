@@ -5187,10 +5187,6 @@ function init_DataTables() {
 			scrollCollapse: !0,
 			scroller: !0
 		}), $("#datatable-fixed-header").DataTable({fixedHeader: !0});
-		var b = $("#datatable-checkbox");
-		b.dataTable({order: [[1, "asc"]], columnDefs: [{orderable: !1, targets: [0]}]}), b.on("draw.dt", function () {
-			$("checkbox input").iCheck({checkboxClass: "icheckbox_flat-green"})
-		}), TableManageButtons.init()
 	}
 }
 
