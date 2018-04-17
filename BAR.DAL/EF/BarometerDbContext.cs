@@ -1,4 +1,5 @@
 ﻿using BAR.BL.Domain;
+using BAR.BL.Domain.Core;
 using BAR.BL.Domain.Data;
 using BAR.BL.Domain.Items;
 using BAR.BL.Domain.Users;
@@ -48,9 +49,9 @@ namespace BAR.DAL.EF
 		public DbSet<Dashboard> Dashboards { get; set; }
 		public DbSet<Widget> Widgets { get; set; }
 
-
-		//SubPlatforms
+		//Core
 		public DbSet<SubPlatform> SubPlatforms { get; set; }
+		public DbSet<Question> Questions { get; set; }
 
 
 		//Static method for creating and returning a BarometerDbContext (used as in Singleton pattern)
