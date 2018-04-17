@@ -26,5 +26,9 @@ namespace BAR.BL.Managers
 		void RemoveSubplatform(string platformName);
 
 		//Questions
+		Question GetQuestion(int questionId);
+		IEnumerable<Question> GetAllQuestions();
+		IEnumerable<Question> GetQuestions(string subplatformName);
+		IEnumerable<Question> GetQuestionsForType(QuestionType type);
 	}
 }

@@ -271,6 +271,42 @@ namespace BAR.BL.Managers
 		}
 
 		/// <summary>
+		/// Gives back a question based the questionId
+		/// </summary>
+		public Question GetQuestion(int questionId)
+		{
+			InitRepo();
+			return platformRepo.ReadQuestion(questionId);
+		}
+
+		/// <summary>
+		/// Gives back all the questions
+		/// </summary>
+		public IEnumerable<Question> GetAllQuestions()
+		{
+			InitRepo();
+			return platformRepo.ReadAllQuestions().AsEnumerable();
+		}
+
+		/// <summary>
+		/// Gives back all the questions for a specific subplatform
+		/// </summary>
+		public IEnumerable<Question> GetQuestions(string subplatformName)
+		{
+			InitRepo();
+			return platformRepo.ReadQuestions(subplatformName).AsEnumerable();
+		}
+
+		/// <summary>
+		/// Gives back all the questions for a specific questionstypeµ
+		/// </summary>
+		public IEnumerable<Question> GetQuestionsForType(QuestionType type)
+		{
+			InitRepo();
+			return platformRepo.ReadQuestionsForType(type).AsEnumerable();
+		}
+
+		/// <summary>
 		/// Determines if the repo needs a unit of work
 		/// if the unitOfWorkManager is present
 		/// </summary>
@@ -278,6 +314,6 @@ namespace BAR.BL.Managers
 		{
 			if (uowManager == null) platformRepo = new SubplatformRepository();
 			else platformRepo = new SubplatformRepository(uowManager.UnitOfWork);
-		}	
+		}
 	}
 }
