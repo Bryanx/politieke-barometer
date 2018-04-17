@@ -12,9 +12,12 @@
   }
 }
 
-
 .grid-stack {
   position: relative;
   margin-left: -10px !important;
   margin-right: -10px !important;
+}
+
+.subscription > td > a:hover {
+  text-decoration: none;
 }

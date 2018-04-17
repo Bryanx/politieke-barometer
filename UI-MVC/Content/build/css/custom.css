@@ -149,6 +149,22 @@ hr {
   border-top: 1px solid white;
   border-bottom: 1px solid #d0d0d0; }
 
+.main_container {
+  position: relative; }
+  .main_container .top_nav {
+    display: block;
+    margin-left: 230px; }
+
+.main_content {
+  padding: 10px 20px; }
+
+.col-md-55, .col-xs-1, .col-sm-1, .col-md-1, .col-lg-1, .col-xs-2, .col-sm-2, .col-md-2, .col-lg-2, .col-xs-3, .col-sm-3, .col-md-3, .col-lg-3, .col-xs-4, .col-sm-4, .col-md-4, .col-lg-4, .col-xs-5, .col-sm-5, .col-md-5, .col-lg-5, .col-xs-6, .col-sm-6, .col-md-6, .col-lg-6, .col-xs-7, .col-sm-7, .col-md-7, .col-lg-7, .col-xs-8, .col-sm-8, .col-md-8, .col-lg-8, .col-xs-9, .col-sm-9, .col-md-9, .col-lg-9, .col-xs-10, .col-sm-10, .col-md-10, .col-lg-10, .col-xs-11, .col-sm-11, .col-md-11, .col-lg-11, .col-xs-12, .col-sm-12, .col-md-12, .col-lg-12 {
+  position: relative;
+  min-height: 1px;
+  float: left;
+  padding-right: 10px;
+  padding-left: 10px; }
+
 .right_col {
   background: var(--bg-color); }
 
@@ -1577,6 +1593,10 @@ li.user-profile {
   width: 100%;
   display: block; }
 
+.row {
+  margin-right: -10px;
+  margin-left: -10px; }
+
 .x_panel {
   position: relative;
   width: 100%;
@@ -1909,6 +1929,27 @@ div[data-role="editor-toolbar"] {
   margin-left: -10px !important;
   margin-right: -10px !important; }
 
+.subscription > td > a:hover {
+  text-decoration: none; }
+
+.morris-hover {
+  position: absolute;
+  z-index: 1000; }
+  .morris-hover.morris-default-style {
+    padding: 6px;
+    color: #666;
+    background: rgba(243, 242, 243, 0.8);
+    border: solid 2px rgba(195, 194, 196, 0.8);
+    font-family: sans-serif;
+    font-size: 12px;
+    text-align: center; }
+    .morris-hover.morris-default-style .morris-hover-row-label {
+      font-weight: bold;
+      margin: 0.25em 0; }
+    .morris-hover.morris-default-style .morris-hover-point {
+      white-space: nowrap;
+      margin: 0.1em 0; }
+
 /*
 =========================================================
 ======================== GENERAL ========================
@@ -1932,45 +1973,6 @@ Login
 ========================= CUSTOM ========================
 =========================================================
  */
-.main_container {
-  position: relative; }
-  .main_container .top_nav {
-    display: block;
-    margin-left: 230px; }
-
-.main_content {
-  padding: 10px 20px; }
-
-.col-md-55 {
-  width: 50%;
-  margin-bottom: 10px; }
-
-@media (min-width: 768px) {
-  .col-md-55 {
-    width: 20%; } }
-@media (min-width: 992px) {
-  .col-md-55 {
-    width: 20%; } }
-@media (min-width: 1200px) {
-  .col-md-55 {
-    width: 20%; } }
-.col-md-55, .col-xs-1, .col-sm-1, .col-md-1, .col-lg-1, .col-xs-2, .col-sm-2, .col-md-2, .col-lg-2, .col-xs-3, .col-sm-3, .col-md-3, .col-lg-3, .col-xs-4, .col-sm-4, .col-md-4, .col-lg-4, .col-xs-5, .col-sm-5, .col-md-5, .col-lg-5, .col-xs-6, .col-sm-6, .col-md-6, .col-lg-6, .col-xs-7, .col-sm-7, .col-md-7, .col-lg-7, .col-xs-8, .col-sm-8, .col-md-8, .col-lg-8, .col-xs-9, .col-sm-9, .col-md-9, .col-lg-9, .col-xs-10, .col-sm-10, .col-md-10, .col-lg-10, .col-xs-11, .col-sm-11, .col-md-11, .col-lg-11, .col-xs-12, .col-sm-12, .col-md-12, .col-lg-12 {
-  position: relative;
-  min-height: 1px;
-  float: left;
-  padding-right: 10px;
-  padding-left: 10px; }
-
-.row {
-  margin-right: -10px;
-  margin-left: -10px; }
-
-.grid_slider .col-md-6 {
-  padding: 0 40px; }
-
-.subscription > td > a:hover {
-  text-decoration: none; }
-
 .sidebar-header {
   border-bottom: 0;
   margin-top: 46px; }
@@ -2016,24 +2018,6 @@ span.section {
 
 .widget .verticle_bars li .progress.vertical.progress_wide {
   width: 65%; }
-
-.morris-hover {
-  position: absolute;
-  z-index: 1000; }
-  .morris-hover.morris-default-style {
-    padding: 6px;
-    color: #666;
-    background: rgba(243, 242, 243, 0.8);
-    border: solid 2px rgba(195, 194, 196, 0.8);
-    font-family: sans-serif;
-    font-size: 12px;
-    text-align: center; }
-    .morris-hover.morris-default-style .morris-hover-row-label {
-      font-weight: bold;
-      margin: 0.25em 0; }
-    .morris-hover.morris-default-style .morris-hover-point {
-      white-space: nowrap;
-      margin: 0.1em 0; }
 
 .animate {
   -webkit-animation-delay: 0;
