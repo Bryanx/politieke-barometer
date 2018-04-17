@@ -306,6 +306,11 @@ namespace BAR.BL.Managers
 			return platformRepo.ReadQuestionsForType(type).AsEnumerable();
 		}
 
+		public Question CreateQuestion(QuestionType type, string title, string anwser)
+		{
+			throw new NotImplementedException();
+		}
+
 		/// <summary>
 		/// Determines if the repo needs a unit of work
 		/// if the unitOfWorkManager is present
