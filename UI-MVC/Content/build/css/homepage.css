@@ -28,8 +28,7 @@ h1 {
   z-index: 2;
   border: 2px solid white;
   top: 58px;
-  border-radius: 5px;
-  }
+  border-radius: 5px; }
   .nav.navbar-nav > li > a.signup:hover {
     background-color: white;
     color: var(--primary-color) !important; }
@@ -93,11 +92,6 @@ nav_menu {
   font-weight: 600;
   color: white;
   text-shadow: 0 0 10px var(--primary-color); }
-
-.main-header-container-parent {
-  background-image: url("../images/bg-repeat.jpg");
-  background-repeat: repeat-x;
-  background-size: contain; }
 
 .main-header-container {
   background-image: url("../images/government2.jpg");
