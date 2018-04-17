@@ -32,5 +32,7 @@ namespace BAR.BL.Managers
 		IEnumerable<Question> GetQuestionsForType(QuestionType type);
 
 		Question CreateQuestion(string platformName, QuestionType type, string title, string anwser);
+
+		Question ChangeQuestion(int questionid, QuestionType type, string title, string anwser);
 	}
 }

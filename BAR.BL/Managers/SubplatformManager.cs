@@ -336,8 +336,32 @@ namespace BAR.BL.Managers
 
 			//Create question in database
 			platformRepo.CreateQuestion(question);
+			uowManager.Save();
+			uowManager = null;
 
 			return question;
+		}
+
+		/// <summary>
+		/// Changes a question and persist that question to the database
+		/// </summary>
+		public Question ChangeQuestion(int questionId, QuestionType type, string title, string anwser)
+		{
+			InitRepo();
+
+			//Get question
+			Question questionToUpdate = GetQuestion(questionId);
+			if (questionToUpdate == null) return null;
+
+			//Change question
+			questionToUpdate.QuestionType = type;
+			questionToUpdate.Title = title;
+			questionToUpdate.Answer = anwser;
+
+			//Update database
+			platformRepo.UpdateQuestion(questionToUpdate);
+
+			return questionToUpdate;
 		}
 
 		/// <summary>
@@ -348,6 +372,6 @@ namespace BAR.BL.Managers
 		{
 			if (uowManager == null) platformRepo = new SubplatformRepository();
 			else platformRepo = new SubplatformRepository(uowManager.UnitOfWork);
-		}
+		}	
 	}
 }
