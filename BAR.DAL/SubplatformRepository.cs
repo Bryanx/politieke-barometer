@@ -37,6 +37,22 @@ namespace BAR.DAL
 		}
 
 		/// <summary>
+		/// Deletes a subplatform.
+		/// 
+		/// NOTE
+		/// When you delete a subplatform, all other information of
+		/// that subplatform will also be deleted.
+		/// </summary>
+		public int DeleteSubplatform(SubPlatform subPlatform)
+		{
+			//*** WARNING ***//
+			//This method does yet delete the whole platform.
+			//It just deletes the instance of the subplatform
+			ctx.SubPlatforms.Remove(subPlatform);
+			return ctx.SaveChanges();
+		}
+
+		/// <summary>
 		/// Reads a subplatform based on name of the subplatform.
 		/// </summary>
 		public SubPlatform ReadSubPlatform(string subplatformName)
@@ -59,8 +75,6 @@ namespace BAR.DAL
 		{
 			ctx.Entry(subPlatform).State = EntityState.Modified;
 			return ctx.SaveChanges();
-
-
 		}
 
 		/// <summary>
