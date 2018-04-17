@@ -37,14 +37,14 @@ namespace BAR.BL.Managers
 			//Checks if a userwidget or an itemWidget needs to be created
 			if (dashboardId == -1) widget = new ItemWidget();
 			else widget = new UserWidget();
-			
-			widget.WidgetType = widgetType,
-			widget.Title = title,
-			widget.RowNumber = rowNbr,
-			widget.ColumnNumber = colNbr,
-			widget.RowSpan = rowspan,
-			widget.ColumnSpan = colspan,
-			widget.Items = new List<Item>()
+
+			widget.WidgetType = widgetType;
+			widget.Title = title;
+			widget.RowNumber = rowNbr;
+			widget.ColumnNumber = colNbr;
+			widget.RowSpan = rowspan;
+			widget.ColumnSpan = colspan;
+			widget.Items = new List<Item>();
 
 			//repo autmaticly links widget to dashboard
 			widgetRepo.CreateWidget(widget, dashboardId);
@@ -190,25 +190,29 @@ namespace BAR.BL.Managers
 		/// NOTE
 		/// THIS METHOD USES UNIT OF WORK
 		/// </summary>
-		public Dashboard CreateDashboard(string userId, DashboardType dashType)
+		public Dashboard CreateDashboard(string userId = "-1", DashboardType dashType = DashboardType.Public)
 		{
 			uowManager = new UnitOfWorkManager();
 			InitRepo();
-
-			//Get user
-			UserManager userManager = new UserManager(uowManager);
-			User user = userManager.GetUser(userId);
-			if (user == null) return null;
 
 			//Create dashboard
 			Dashboard dashboard = new Dashboard()
 			{
 				DashboardType = dashType,
-				User = user,
 				Widgets = new List<UserWidget>(),
 				Activities = new List<Activity>()
 			};
 
+			//Get user if not general dashboard
+			if (userId.Equals("-1"))
+			{
+				UserManager userManager = new UserManager(uowManager);
+				User user = userManager.GetUser(userId);
+
+				if (user == null) return null;
+				else dashboard.User = user;
+			}
+			
 			//Update database
 			widgetRepo.UpdateDashboard(dashboard);
 			uowManager.Save();
