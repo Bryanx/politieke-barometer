@@ -2,8 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Data.Entity;
-using System.Text;
-using System.Threading.Tasks;
+using System.Linq;
 using BAR.BL.Domain;
 using BAR.DAL.EF;
 using BAR.BL.Domain.Core;
@@ -54,6 +53,39 @@ namespace BAR.DAL
 		}
 
 		/// <summary>
+		/// Reads a specific question.
+		/// </summary>
+		public Question ReadQuestion(int questionId)
+		{
+			return ctx.Questions.Find(questionId);
+		}
+
+		/// <summary>
+		/// Reads all the questions
+		/// </summary>
+		public IEnumerable<Question> ReadAllQuestions()
+		{
+			return ctx.Questions.AsEnumerable();
+		}
+
+		/// <summary>
+		/// Reads all the questions from a specific subplatform.
+		/// </summary>
+		public IEnumerable<Question> ReadQuestions(string subplatformName)
+		{
+			return ctx.Questions
+				.Where(question => question.SubPlatform.Name.ToLower().Equals(subplatformName.ToLower())).AsEnumerable();
+		}
+
+		/// <summary>
+		/// Reads all the questions form a specific type
+		/// </summary>
+		public IEnumerable<Question> ReadQuestionsForType(QuestionType type)
+		{
+			return ctx.Questions.Where(question => question.QuestionType == type).AsEnumerable();
+		}
+
+		/// <summary>
 		/// Gives back the configuration of a specific subplatform
 		/// </summary>
 		public SubPlatform ReadSubplatformWithCustomization(string subplatformName)
@@ -95,5 +127,7 @@ namespace BAR.DAL
 			foreach (SubPlatform platform in subPlatforms) ctx.Entry(platform).State = EntityState.Modified;
 			return ctx.SaveChanges();
 		}
+
+		
 	}
 }
