@@ -22,6 +22,7 @@ namespace BAR.DAL
 	
 		//Create
 		int CreateSubplatform(SubPlatform subPlatform);
+		int CreateQuestion(Question question);
 
 		//Update
 		int UpdateSubplatform(SubPlatform subPlatform);

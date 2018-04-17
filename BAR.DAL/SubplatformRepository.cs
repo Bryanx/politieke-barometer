@@ -37,6 +37,15 @@ namespace BAR.DAL
 		}
 
 		/// <summary>
+		/// Creates an instance of a question
+		/// </summary>
+		public int CreateQuestion(Question question)
+		{
+			ctx.Questions.Add(question);
+			return ctx.SaveChanges();
+		}
+
+		/// <summary>
 		/// Deletes a subplatform.
 		/// 
 		/// NOTE
@@ -127,7 +136,5 @@ namespace BAR.DAL
 			foreach (SubPlatform platform in subPlatforms) ctx.Entry(platform).State = EntityState.Modified;
 			return ctx.SaveChanges();
 		}
-
-		
 	}
 }
