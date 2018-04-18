@@ -13,10 +13,6 @@ namespace BAR.UI.MVC {
         private static readonly string Modernizr ="~/Scripts/modernizr-*";
         private static readonly string[] Bootstrap = {
             "~/Scripts/bootstrap.js",
-            "~/Scripts/respond.js",
-            "~/Scripts/bootstrap-progressbar.min.js",
-            "~/Scripts/nprogress.js",
-            "~/Scripts/fastclick.js"
         };
         private static readonly string[] Gridstack = {
             "~/Scripts/jquery/jquery-ui.js",

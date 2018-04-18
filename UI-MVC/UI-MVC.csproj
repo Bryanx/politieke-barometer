@@ -263,6 +263,7 @@
     <Content Include="Content\build\css\modules\colors.scss" />
     <Content Include="Content\build\css\modules\mediaqueries.scss" />
     <Content Include="Content\build\css\partials\alerts.scss" />
+    <Content Include="Content\build\css\partials\search-autocomplete.scss" />
     <Content Include="Content\build\css\partials\breadcrumbs.scss" />
     <Content Include="Content\build\css\partials\buttons.scss" />
     <Content Include="Content\build\css\partials\checkbox.scss" />

@@ -1,13 +1,29 @@
-$(document).ready(init);
+searchlist = [];
 
-function init() {
-    $(function(){
-        $(".input-group-btn .dropdown-menu li a").click(function(){
-            var selText = $(this).html();
-            //working version - for single button //
-            //$('.btn:first-child').html(selText+'<span class="caret"></span>');  
-            //working version - for multiple buttons //
-            $(this).parents('.input-group-btn').find('.btn-search').html(selText);
-        });
+function loadSuggestions() {
+    $('.search-field').devbridgeAutocomplete({
+        width: $('.searchbar').width()-2,
+        lookup: searchlist,
+        triggerSelectOnValidInput: false,
+        onSelect: function (suggestion) {
+            window.location.href = "/Person/Details/" + suggestion.data;
+        }
     });
 }
+
+$(window).on("resize", function () {
+    $('.autocomplete-suggestions').css("width", $('.searchbar').width()-2);
+});
+
+(() => {
+
+    $.ajax({
+        method: "GET",
+        url: "/api/GetSearchItems",
+        dataType: 'json'
+    }).done(data => {
+        searchlist = data;
+        loadSuggestions(data)
+    });
+})(jQuery);
+
