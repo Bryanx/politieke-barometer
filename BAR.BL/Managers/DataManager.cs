@@ -76,7 +76,6 @@ namespace BAR.BL.Managers
         {
           BatchUpdate(json, i, informationCount);
         }
-
       }
       return true;
     }
