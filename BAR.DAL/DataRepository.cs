@@ -42,24 +42,6 @@ namespace BAR.DAL
       return ctx.SaveChanges();
     }
 
-    private BarometerDbContext AddToContext(BarometerDbContext ctx, Information info, int count, int commitCount, bool recreateContext)
-    {
-      ctx.Set<Information>().Add(info);
-
-      if (count % commitCount == 0)
-      {
-        ctx.SaveChanges();
-        if (recreateContext)
-        {
-          ctx.Dispose();
-          ctx = new BarometerDbContext();
-          ctx.Configuration.AutoDetectChangesEnabled = false;
-        }
-      }
-
-      return ctx;
-    }
-
     /// <summary>
     /// Deletes a specific information object
     /// Returns -1 if SaveChanges() is delayed by unit of work.
