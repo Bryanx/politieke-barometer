@@ -20,6 +20,8 @@ namespace BAR.DAL
     Source ReadSource(string sourceName);
     SynchronizeAudit ReadLastAudit();
     SynchronizeAudit ReadAudit(int synchronizeAuditId);
+    IEnumerable<Property> ReadAllProperties();
+    IEnumerable<Source> ReadAllSources();
 
 		//Create
 		int CreateInformations(List<Information> infos);

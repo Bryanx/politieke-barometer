@@ -18,7 +18,7 @@ namespace BAR.DAL
 	/// </summary>
 	public class DataRepository : IDataRepository
 	{
-		private readonly BarometerDbContext ctx;
+		private BarometerDbContext ctx;
 
 		/// <summary>
 		/// If uow is present then the constructor
@@ -37,21 +37,40 @@ namespace BAR.DAL
 		/// </summary>
 		public int CreateInformations(List<Information> infos)
 		{
-			ctx.Informations.AddRange(infos);
-			return ctx.SaveChanges();
-		}
+      ctx.Configuration.AutoDetectChangesEnabled = false;
+      ctx.Informations.AddRange(infos);
+      return ctx.SaveChanges();
+    }
 
-		/// <summary>
-		/// Deletes a specific information object
-		/// Returns -1 if SaveChanges() is delayed by unit of work.
-		/// 
-		/// WARNING
-		/// All of the the propertyvalues of the information also need to be deleted.
-		/// 
-		/// NOTE
-		/// Normally we don't delete informations.
-		/// </summary>
-		public int DeleteInformation(int infoId)
+    private BarometerDbContext AddToContext(BarometerDbContext ctx, Information info, int count, int commitCount, bool recreateContext)
+    {
+      ctx.Set<Information>().Add(info);
+
+      if (count % commitCount == 0)
+      {
+        ctx.SaveChanges();
+        if (recreateContext)
+        {
+          ctx.Dispose();
+          ctx = new BarometerDbContext();
+          ctx.Configuration.AutoDetectChangesEnabled = false;
+        }
+      }
+
+      return ctx;
+    }
+
+    /// <summary>
+    /// Deletes a specific information object
+    /// Returns -1 if SaveChanges() is delayed by unit of work.
+    /// 
+    /// WARNING
+    /// All of the the propertyvalues of the information also need to be deleted.
+    /// 
+    /// NOTE
+    /// Normally we don't delete informations.
+    /// </summary>
+    public int DeleteInformation(int infoId)
 		{
 			Information infoToDelete = ReadInformationWithPropValues(infoId);
 			ctx.Informations.Remove(infoToDelete);
@@ -187,6 +206,16 @@ namespace BAR.DAL
     {
       ctx.Entry(synchronizeAudit).State = EntityState.Modified;
       return ctx.SaveChanges();
+    }
+
+    public IEnumerable<Property> ReadAllProperties()
+    {
+      return ctx.Properties.ToList();
+    }
+
+    public IEnumerable<Source> ReadAllSources()
+    {
+      return ctx.Sources.ToList();
     }
   }
 }
