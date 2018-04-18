@@ -263,6 +263,7 @@
     <Content Include="Content\build\css\modules\colors.scss" />
     <Content Include="Content\build\css\modules\mediaqueries.scss" />
     <Content Include="Content\build\css\partials\alerts.scss" />
+    <Content Include="Content\build\css\partials\search-autocomplete.scss" />
     <Content Include="Content\build\css\partials\breadcrumbs.scss" />
     <Content Include="Content\build\css\partials\buttons.scss" />
     <Content Include="Content\build\css\partials\checkbox.scss" />
@@ -402,6 +403,7 @@
     <Content Include="Scripts\jquery\jquery-ui-1.11.0.js" />
     <Content Include="Scripts\jquery\jquery-ui-1.11.0.min.js" />
     <Content Include="Scripts\jquery\jquery-ui.js" />
+    <Content Include="Scripts\jquery\jquery.autocomplete.min.js" />
     <Content Include="Scripts\jquery\jquery.timeago.js" />
     <Content Include="Scripts\bootstrap-progressbar.js" />
     <Content Include="Scripts\bootstrap-progressbar.min.js" />

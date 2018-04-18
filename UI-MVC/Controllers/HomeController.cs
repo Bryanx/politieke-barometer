@@ -103,6 +103,5 @@ namespace BAR.UI.MVC.Controllers
             Response.ContentType = "text/javascript";
             return View();
         }
-
     }
 }

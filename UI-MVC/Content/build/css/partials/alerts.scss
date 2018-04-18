@@ -78,9 +78,10 @@ ul.msg_list li.noAlertsAvailable {
   border-top: 1px solid #D9DEE4;
   color: var(--font-color);
   text-align: center;
-  padding: 50px 0 65px 0px;
+  padding: 60px 30px 75px 30px;
   margin-bottom: -5px;
   background: var(--white);
+  overflow: hidden;
   i {
     font-size: 70px;
     padding-bottom: 10px;

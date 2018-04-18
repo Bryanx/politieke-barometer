@@ -4,16 +4,15 @@ namespace BAR.UI.MVC {
     public class BundleConfig {
 
         /// Script fields
-        private static readonly string Jquery ="~/Scripts/jquery/jquery-3.3.1.min.js";
+        private static readonly string[] Jquery = {
+            "~/Scripts/jquery/jquery-3.3.1.min.js",
+            "~/Scripts/jquery/jquery.autocomplete.min.js"
+        };
         private static readonly string JqueryValidate ="~/Scripts/jquery/jquery.validate*";
         private static readonly string Timeago ="~/Scripts/jquery/jquery.timeago.js";
         private static readonly string Modernizr ="~/Scripts/modernizr-*";
         private static readonly string[] Bootstrap = {
             "~/Scripts/bootstrap.js",
-            "~/Scripts/respond.js",
-            "~/Scripts/bootstrap-progressbar.min.js",
-            "~/Scripts/nprogress.js",
-            "~/Scripts/fastclick.js"
         };
         private static readonly string[] Gridstack = {
             "~/Scripts/jquery/jquery-ui.js",

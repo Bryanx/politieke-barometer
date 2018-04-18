@@ -197,14 +197,6 @@ $(document).ready(function () {
 		container: 'body'
 	});
 });
-// /Tooltip
-
-// Progressbar
-if ($(".progress .progress-bar")[0]) {
-	$('.progress .progress-bar').progressbar();
-}
-// /Progressbar
-
 // Switchery
 $(document).ready(function () {
 	if ($(".js-switch")[0]) {
