@@ -14,7 +14,7 @@ namespace BAR.UI.MVC.Controllers.api
 		private IItemManager itemManager;
 		
 		/// <summary>
-		/// Returns all items meant for searchresults.
+		/// Returns all items for search suggestions.
 		/// </summary>
 		[HttpGet]
 		[Route("api/GetSearchItems")]
