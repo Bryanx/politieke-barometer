@@ -13,13 +13,32 @@ namespace BAR.UI.MVC.Controllers.api
     {
 		private ISubplatformManager platformManager;
 
-		public IHttpActionResult Get()
+		public IHttpActionResult Get(string platformName)
 		{
 			platformManager = new SubplatformManager();
-			Customization custom = platformManager.GetCustomization("politiek");
+			Customization custom = platformManager.GetCustomization(platformName);
 
-			if (custom == null) return StatusCode(HttpStatusCode.NoContent);
+			if (custom == null)
+				return StatusCode(HttpStatusCode.NoContent);
+
 			return Ok(custom);
 		}
-    }
+
+
+		public IHttpActionResult PutColor(string platformName, [FromBody] Customization custom)
+		{
+			platformManager = new SubplatformManager();
+
+			if (custom == null)
+				return BadRequest("No customization given");
+			if (!ModelState.IsValid)
+				return BadRequest(ModelState);
+
+			platformManager.ChangePageColors
+				(platformName, custom.PrimaryColor, custom.SecondairyColor, custom.TertiaryColor, custom.BackgroundColor, custom.TextColor);
+
+			return StatusCode(HttpStatusCode.NoContent);
+		}
+
+	}
 }
