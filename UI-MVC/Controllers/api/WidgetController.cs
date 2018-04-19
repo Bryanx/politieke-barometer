@@ -22,8 +22,7 @@ namespace BAR.UI.MVC.Controllers
 			widgetManager = new WidgetManager();
 
 			var responses = widgetManager.Read();
-			if (responses == null || responses.Count() == 0)
-				return StatusCode(HttpStatusCode.NoContent);
+			if (responses == null || responses.Count() == 0) return StatusCode(HttpStatusCode.NoContent);
 			return Ok(responses);
 		}
 

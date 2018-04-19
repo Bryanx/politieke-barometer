@@ -5,6 +5,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using BAR.BL.Managers;
+using BAR.BL.Domain.Core;
 
 namespace BAR.UI.MVC.Controllers.api
 {
@@ -15,7 +16,10 @@ namespace BAR.UI.MVC.Controllers.api
 		public IHttpActionResult Get()
 		{
 			platformManager = new SubplatformManager();
-			return Ok();
+			Customization custom = platformManager.GetCustomization("politiek");
+
+			if (custom == null) return StatusCode(HttpStatusCode.NoContent);
+			return Ok(custom);
 		}
     }
 }
