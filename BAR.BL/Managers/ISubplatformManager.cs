@@ -13,6 +13,7 @@ namespace BAR.BL.Managers
 		//Subplatsorms
 		SubPlatform GetSubPlatform(string subplatformName);
 		IEnumerable<SubPlatform> GetSubplatforms();
+		Customization GetCustomization(string subPlatformName);
 
 		SubPlatform AddSubplatform(string name);
 
