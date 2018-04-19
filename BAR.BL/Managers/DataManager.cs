@@ -291,6 +291,18 @@ namespace BAR.BL.Managers
       dataRepo.UpdateAudit(synchronizeAudit);
       return synchronizeAudit;
     }
+
+    public bool IsJsonEmpty(string json)
+    {
+      dynamic deserializedJson = JsonConvert.DeserializeObject(json);
+      int informationCount = deserializedJson.Count;
+
+      if (informationCount == 0)
+      {
+        return true;
+      }
+      return false;
+    }
   }
 }
 
