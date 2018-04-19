@@ -223,7 +223,7 @@ namespace BAR.BL.Managers
 		/// NOTE
 		/// THIS METHOD USES UNIT OF WORK
 		/// </summary>
-		public Dashboard CreateDashboard(string userId = "-1", DashboardType dashType = DashboardType.Public)
+		public Dashboard CreateDashboard(string userId = "-1", DashboardType dashType = DashboardType.Private)
 		{
 			uowManager = new UnitOfWorkManager();
 			InitRepo();
@@ -237,7 +237,7 @@ namespace BAR.BL.Managers
 			};
 
 			//Get user if not general dashboard
-			if (userId.Equals("-1"))
+			if (!userId.Equals("-1"))
 			{
 				UserManager userManager = new UserManager(uowManager);
 				User user = userManager.GetUser(userId);
@@ -246,8 +246,8 @@ namespace BAR.BL.Managers
 				else dashboard.User = user;
 			}
 			
-			//Update database
-			widgetRepo.UpdateDashboard(dashboard);
+			//Create database
+			widgetRepo.CreateDashboard(dashboard);
 			uowManager.Save();
 
 			return dashboard;

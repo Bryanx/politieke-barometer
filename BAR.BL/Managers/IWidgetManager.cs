@@ -29,7 +29,7 @@ namespace BAR.BL.Managers
 		Dashboard GetDashboard(int dashboardId);
 		Dashboard GetDashboard(string userId);
 
-		Dashboard CreateDashboard(string userId, DashboardType dashType = DashboardType.Public);
+		Dashboard CreateDashboard(string userId, DashboardType dashType = DashboardType.Private);
 
 		void RemoveDashboard(int dashboardId);
 	}

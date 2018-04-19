@@ -128,6 +128,7 @@ namespace BAR.UI.MVC.Controllers
 					AlertsViaWebsite = true
 				};
 				var result = await userManager.CreateAsync(user, model.Password);
+
 				if (result.Succeeded) {
 					//Send an email with this link
 					string code = await userManager.GenerateEmailConfirmationTokenAsync(user.Id);
