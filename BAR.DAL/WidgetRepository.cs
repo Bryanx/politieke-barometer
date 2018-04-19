@@ -65,7 +65,8 @@ namespace BAR.DAL
 		/// for a specific user id.
 		/// </summary>
 		public Dashboard ReadDashboardWithWidgets(string userId) {
-			return ctx.Dashboards.FirstOrDefault(dash => dash.User.Id == userId);
+			return ctx.Dashboards.Include(dash => dash.Widgets)
+				.Where(dash => dash.User.Id == userId).FirstOrDefault();
 		}
 
 		/// <summary>
