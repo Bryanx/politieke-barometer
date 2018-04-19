@@ -91,10 +91,11 @@ namespace BAR.DAL
 		/// <summary>
 		/// Gives back the configuration of a specific subplatform
 		/// </summary>
-		public SubPlatform ReadSubplatformWithCustomization(string subplatformName)
+		public Customization ReadCustomization(string subplatformName)
 		{
-			return ctx.SubPlatforms.Include(platform => platform.Customization)
+			SubPlatform subPlatform = ctx.SubPlatforms.Include(platform => platform.Customization)
 									.Where(platform => platform.Name.ToLower().Equals(subplatformName.ToLower())).SingleOrDefault();
+			return subPlatform.Customization;
 		}
 
 		/// <summary>;;
