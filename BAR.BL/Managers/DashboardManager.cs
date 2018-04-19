@@ -157,6 +157,7 @@ namespace BAR.BL.Managers
 			//Update database
 			dashboardRepo.UpdateDashboard(dashboard);
 			uowManager.Save();
+			uowManager = null;
 
 			return dashboard;
 		}

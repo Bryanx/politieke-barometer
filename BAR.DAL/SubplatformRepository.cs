@@ -54,6 +54,16 @@ namespace BAR.DAL
 		}
 
 		/// <summary>
+		/// Gives back a subplatform with all the questions and then customization.
+		/// </summary>
+		public SubPlatform GetSubplatformWithAllinfo(string subplatformName)
+		{
+			return ctx.SubPlatforms.Include(platform => platform.Questions)
+								   .Include(platform => platform.Customization)
+								   .Where(platform => platform.Name.ToLower().Equals(subplatformName.ToLower())).SingleOrDefault();
+		}
+
+		/// <summary>
 		/// Reads all the questions
 		/// </summary>
 		public IEnumerable<Question> ReadAllQuestions()
@@ -98,7 +108,7 @@ namespace BAR.DAL
 		/// <summary>
 		/// Gives back all the subplatforms that are on the system
 		/// </summary>
-		public IEnumerable<SubPlatform> ReadSubPlatform()
+		public IEnumerable<SubPlatform> ReadSubPlatforms()
 		{
 			return ctx.SubPlatforms.AsEnumerable();
 		}
