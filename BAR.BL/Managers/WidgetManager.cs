@@ -50,6 +50,19 @@ namespace BAR.BL.Managers
 			widgetRepo.CreateWidget(widget, dashboardId);
 			return widget;
 		}
+		
+		/// <summary>
+		/// Creates a userwidget based on a model
+		/// and links that widget to a dasboard.
+		/// </summary>
+		public Widget CreateUserWidget(Widget widget, int dashboardId)
+		{
+			InitRepo();
+
+			//repo autmaticly links widget to dashboard
+			widgetRepo.CreateWidget(widget, dashboardId);
+			return widget;
+		}
 
 		/// <summary>
 		/// Adds an item to a widget.
@@ -176,12 +189,32 @@ namespace BAR.BL.Managers
 		}
 
 		/// <summary>
+		/// Updates a widget.
+		/// </summary>
+		public Widget ChangeWidget(Widget widget) {
+			InitRepo();
+			widgetRepo.UpdateWidget(widget);
+			return widget;
+		}
+
+		/// <summary>
 		/// Gives back a dashboard with their widgets.
 		/// </summary>
 		public Dashboard GetDashboard(int dashboardId)
 		{
 			InitRepo();
 			return widgetRepo.ReadDashboardWithWidgets(dashboardId);
+		}
+		
+		/// <summary>
+		/// Gives back a dashboard with their widgets.
+		/// </summary>
+		public Dashboard GetDashboard(string userId)
+		{
+			InitRepo();
+			Dashboard dash = widgetRepo.ReadDashboardWithWidgets(userId);
+			if (dash == null) return CreateDashboard(userId);
+			return dash;
 		}
 
 		/// <summary>

@@ -59,6 +59,14 @@ namespace BAR.DAL
 			return ctx.Dashboards.Include(dash => dash.Widgets)
 				.Where(dash => dash.DashboardId == dashboardId).SingleOrDefault();
 		}
+		
+		/// <summary>
+		/// Gives back a dashboard object with all the widgets
+		/// for a specific user id.
+		/// </summary>
+		public Dashboard ReadDashboardWithWidgets(string userId) {
+			return ctx.Dashboards.FirstOrDefault(dash => dash.User.Id == userId);
+		}
 
 		/// <summary>
 		/// Gives back the general dashboard.

@@ -16,7 +16,7 @@ using static BAR.UI.MVC.Models.ItemViewModels;
 namespace BAR.UI.MVC.Controllers
 {
 	/// <summary>
-	/// This controller is used for managing the person-page.
+	/// This controller is used for managing the person-pages.
 	/// </summary>
 	public class PersonController : LanguageController
 	{
@@ -36,13 +36,7 @@ namespace BAR.UI.MVC.Controllers
 
 			IList<ItemDTO> people = Mapper.Map(itemManager.GetAllPersons(), new List<ItemDTO>());
 			IEnumerable<Subscription> subs = subManager.GetSubscriptionsWithItemsForUser(User.Identity.GetUserId());
-			foreach (ItemDTO item in people)
-			{
-				foreach (var sub in subs)
-				{
-					if (sub.SubscribedItem.ItemId == item.ItemId) item.Subscribed = true;
-				}
-			}
+			people.Where(p => subs.Any(s => s.SubscribedItem.ItemId == p.ItemId)).ForEach(dto => dto.Subscribed = true);
 
 			//Assembling the view
 			return View("Index",

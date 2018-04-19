@@ -1,11 +1,11 @@
-using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Web.Http;
-using BAR.UI.MVC.DAL;
-using BAR.UI.MVC.Models;
+using BAR.BL.Domain.Widgets;
+using BAR.BL.Managers;
+using Microsoft.AspNet.Identity;
 
-namespace BAR.UI.MVC.Controllers
+namespace BAR.UI.MVC.Controllers.api
 {
 	/// <summary>
 	/// This class is used to transfer all widget information from UI to the managers.
@@ -14,16 +14,20 @@ namespace BAR.UI.MVC.Controllers
 
 	public class WidgetController : ApiController
 	{
-		private WidgetManager widgetManager;
-
+		private IWidgetManager widgetManager;
+		
+		/// <summary>
 		///Reads all widgets and returns them (possibly in json)
+		/// </summary>
 		public IHttpActionResult Get()
 		{
 			widgetManager = new WidgetManager();
 
-			var responses = widgetManager.Read();
-			if (responses == null || responses.Count() == 0)
-				return StatusCode(HttpStatusCode.NoContent);
+			Dashboard dash = widgetManager.GetDashboard(User.Identity.GetUserId());
+			var responses = widgetManager.GetWidgetsForDashboard(dash.DashboardId);
+			
+			if (responses == null || responses.Count() == 0) return StatusCode(HttpStatusCode.NoContent);
+			
 			return Ok(responses);
 		}
 
@@ -37,11 +41,13 @@ namespace BAR.UI.MVC.Controllers
 		{
 			widgetManager = new WidgetManager();
 
+			Dashboard dash = widgetManager.GetDashboard(User.Identity.GetUserId());
+
 			if (!ModelState.IsValid) return BadRequest(ModelState);
-			if (widgetManager.Exists(widget.Id)) return StatusCode(HttpStatusCode.Conflict);
-			widgetManager.Insert(widget);
+			if (widgetManager.GetWidget(widget.WidgetId) != null) return StatusCode(HttpStatusCode.Conflict);
+			widgetManager.CreateUserWidget(widget, dash.DashboardId);
 			return CreatedAtRoute("DefaultApi"
-				, new { controller = "Widget", id = widget.Id }
+				, new { controller = "Widget", id = widget.WidgetId }
 				, widget);
 		}
 
@@ -55,15 +61,12 @@ namespace BAR.UI.MVC.Controllers
 		{
 			widgetManager = new WidgetManager();
 
-			if (widget == null)
-				return BadRequest("No widget given");
-			if (!ModelState.IsValid)
-				return BadRequest(ModelState);
-			if (id != widget.Id)
-				return BadRequest("Id doesn't match");
-			if (!widgetManager.Exists(widget.Id))
-				return NotFound();
-			widgetManager.Update(widget);
+			if (widget == null) return BadRequest("No widget given");
+			if (!ModelState.IsValid) return BadRequest(ModelState);
+			if (id != widget.WidgetId) return BadRequest("Id doesn't match");
+			if (widgetManager.GetWidget(widget.WidgetId) == null) return NotFound();
+			
+			widgetManager.ChangeWidget(widget);
 			return StatusCode(HttpStatusCode.NoContent);
 		}
 
@@ -73,11 +76,10 @@ namespace BAR.UI.MVC.Controllers
 		{
 			widgetManager = new WidgetManager();
 
-			if (!widgetManager.Exists(id))
-			{
-				return NotFound();
-			}
-			widgetManager.Update(id, newTitle);
+			if (widgetManager.GetWidget(id) == null) return NotFound();
+			if (!ModelState.IsValid) return BadRequest(ModelState);
+			
+			widgetManager.ChangeWidgetTitle(id, newTitle);
 			return StatusCode(HttpStatusCode.NoContent);
 		}
 
@@ -86,11 +88,8 @@ namespace BAR.UI.MVC.Controllers
 		{
 			widgetManager = new WidgetManager();
 
-			if (!widgetManager.Exists(id))
-			{
-				return NotFound();
-			}
-			widgetManager.Delete(id);
+			if (widgetManager.GetWidget(id) == null) return NotFound();
+			widgetManager.RemoveWidget(id);
 			return StatusCode(HttpStatusCode.NoContent);
 		}
 	}
