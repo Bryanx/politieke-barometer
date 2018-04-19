@@ -135,7 +135,7 @@ namespace BAR.BL.Managers
 		{
 			InitRepo();
 
-			//Get Customization of platform
+			//Get Customization
 			SubPlatform platform = platformRepo.ReadSubplatformWithCustomization(platformName);
 			if (platform == null || platform.Customization == null) return null;
 
@@ -379,6 +379,15 @@ namespace BAR.BL.Managers
 		}
 
 		/// <summary>
+		/// Gives back the customization for a specific subplatform.
+		/// </summary>
+		public Customization GetCustomization(string subPlatformName)
+		{
+			InitRepo();
+			return platformRepo.ReadSubplatformWithCustomization(subPlatformName).Customization;
+		}
+
+		/// <summary>
 		/// Determines if the repo needs a unit of work
 		/// if the unitOfWorkManager is present
 		/// </summary>
@@ -386,6 +395,6 @@ namespace BAR.BL.Managers
 		{
 			if (uowManager == null) platformRepo = new SubplatformRepository();
 			else platformRepo = new SubplatformRepository(uowManager.UnitOfWork);
-		}	
+		}		
 	}
 }
