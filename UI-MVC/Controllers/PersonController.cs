@@ -64,15 +64,12 @@ namespace BAR.UI.MVC.Controllers
 			Item item = itemManager.GetItem(id);
 			Item subbedItem = subs.FirstOrDefault(i => i.ItemId == item.ItemId);
 
-			List<BAR.BL.Domain.Widgets.Widget> widgets = new List<BAR.BL.Domain.Widgets.Widget>();
-			widgets.Add(widgetManager.CreateWidget(WidgetType.GraphType, "Person graph", 6, 6));
 			PersonViewModel personViewModel =
 				new PersonViewModel() {
 					PageTitle = item.Name,
 					User = User.Identity.IsAuthenticated ? userManager.GetUser(User.Identity.GetUserId()) : null,
 					Person = Mapper.Map(item, new ItemDTO()),
 					Subscribed = subbedItem != null,
-					Widgets = widgets
 				};
 			//Assembling the view
 			return View("Details", personViewModel);

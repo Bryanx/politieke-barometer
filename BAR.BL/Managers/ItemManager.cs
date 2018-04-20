@@ -168,6 +168,15 @@ namespace BAR.BL.Managers
 		{
 			InitRepo();
 			return itemRepo.ReadItem(itemId);
+		}		
+		
+		/// <summary>
+		/// Returns an item with widgets.
+		/// </summary>
+		public Item GetItemWithWidgets(int itemId)
+		{
+			InitRepo();
+			return itemRepo.ReadItemWithWidgets(itemId);
 		}
 
 		/// <summary>
@@ -266,7 +275,7 @@ namespace BAR.BL.Managers
 		public List<ItemWidget> GenerateDefaultItemWidgets() {
 			List<ItemWidget> lijst = new List<ItemWidget>();
 			WidgetManager widgetManager = new WidgetManager();
-			ItemWidget widget = (ItemWidget) widgetManager.CreateWidget(WidgetType.GraphType, "Widget title", 1, 1);
+			ItemWidget widget = (ItemWidget) widgetManager.CreateWidget(WidgetType.GraphType, "Widget title", 1, 1, 12, 6);
 			lijst.Add(widget);
 			return lijst;
 		}

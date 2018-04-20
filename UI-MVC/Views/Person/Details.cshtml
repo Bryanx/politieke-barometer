@@ -86,31 +86,14 @@
     </div>
 </div>
 <!-- Widgets -->
-<div class="grid-stack" id="grid">
-</div>
-@foreach (var widget in Model.Widgets) {
-    <div class="row">
-        <div class="col-md-12 col-sm-12 col-xs-12">
-            <div class="x_panel grid-stack-item-content bg-white no-scrollbar">
-                <div class="x_title">
-                    <h2 class="graphTitle"> @widget.Title </h2>
-                    <div class="pull-right">
-                        <button data-widget-id="@widget.WidgetId" class="widgets btn btn-dark btn-xs">Add to dashboard</button>
-                    </div>
-                    <div class="clearfix"></div>
-                </div>
-                <div id="graphPart"></div>
-            </div>
-        </div>
-    </div>
-}
+<div class="grid-stack" id="grid"></div>
 
 @section CustomJS{
     @Scripts.Render("~/bundles/gridstack", "~/bundles/morrisCharts")
     <script type="text/javascript" defer>
         
         function loadWidgets() {
-            $.ajax('/api/Widget/'+@Model.,
+            $.ajax('/api/GetWidgets/'+@Model.Person.ItemId,
                     {
                         type: 'GET',
                         dataType: 'json'
@@ -124,6 +107,10 @@
         $('.subscribeItem').click(function() {
             ajaxToggleSubscribe($(this));
         });
+
+        (() => {
+            loadWidgets();
+        })(jQuery);
 
     </script>
 }

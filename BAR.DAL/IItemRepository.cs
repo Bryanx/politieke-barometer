@@ -16,6 +16,7 @@ namespace BAR.DAL
 		IEnumerable<Item> ReadAllItems();
 		IEnumerable<Item> ReadItemsForType(ItemType type);
 		IEnumerable<Item> ReadAllItemsForUpdatedSince(DateTime since);
+		Item ReadItemWithWidgets(int itemId);
 
 		//Create
 		int CreateItem(Item item);

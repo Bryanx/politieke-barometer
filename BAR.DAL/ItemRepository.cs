@@ -36,6 +36,15 @@ namespace BAR.DAL
 		public Item ReadItem(int itemId)
 		{
 			return ctx.Items.Find(itemId);
+		}		
+		
+		/// <summary>
+		/// Returns the item that matches the itemId.
+		/// </summary>       
+		public Item ReadItemWithWidgets(int itemId)
+		{
+			return ctx.Items.Include(item => item.ItemWidgets)
+				.Where(item => item.ItemId == itemId).SingleOrDefault();
 		}
 
 		/// <summary>

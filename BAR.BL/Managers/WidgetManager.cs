@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Linq;
 using BAR.BL.Domain.Widgets;
 using BAR.DAL;
 using BAR.BL.Domain.Users;
@@ -144,6 +145,18 @@ namespace BAR.BL.Managers
 		{
 			InitRepo();
 			return widgetRepo.ReadWidgetsForDashboard(dashboardId);
+		}
+		
+		/// <summary>
+		/// Gives back a list of widgets
+		/// for a specific item.
+		/// </summary>
+		/// 
+
+		public IEnumerable<ItemWidget> GetWidgetsForItem(int itemId) {
+			InitRepo();
+			ItemManager itemManager = new ItemManager();
+			return itemManager.GetItemWithWidgets(itemId).ItemWidgets.AsEnumerable();
 		}
 
 		/// <summary>

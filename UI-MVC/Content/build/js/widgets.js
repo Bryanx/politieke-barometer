@@ -147,6 +147,21 @@ function createWidget(id, title) {
         '        </div>'
 }
 
+function createItemWidget(id, title) {
+    return '<div class="chart-container">' +
+        '            <div class="x_panel grid-stack-item-content bg-white no-scrollbar">' +
+        '                <div class="x_title">' +
+        '                    <h2 class="graphTitle">' + title + '</h2>' +
+        '                    <div class="pull-right">' +
+        '                       <button class="widgets btn btn-dark btn-xs">Add to dashboard</button>' +
+        '                   </div>'+
+        '                    <div class="clearfix"></div>' +
+        '                </div>' +
+        '                <div id="' + id + '"></div>' +
+        '            </div>' +
+        '        </div>'
+}
+
 var gridselector = $('#grid');
 gridselector.gridstack({
     resizable: {
@@ -158,9 +173,15 @@ var grid = gridselector.data('gridstack');
 
 
 function loadGrid(data) {
+    console.log(data);
     for (var i = 0; i < data.length; i++) {
-        grid.addWidget(createWidget('grafiek' + counter, data[i].Title),
-            data.RowNumber, data[i].ColumnNumber, data[i].RowSpan, data[i].ColumnSpan, true, 4, 12, 4);
+        if (data.dashboardId !== undefined) {
+            grid.addWidget(createWidget('grafiek' + counter, data[i].Title),
+                data.RowNumber, data[i].ColumnNumber, data[i].RowSpan, data[i].ColumnSpan, true, 4, 12, 4);
+        } else {
+            grid.addWidget(createItemWidget('grafiek' + counter, data[i].Title),
+                data.RowNumber, data[i].ColumnNumber, data[i].RowSpan, data[i].ColumnSpan, true, 4, 12, 4);
+        }
         if (data[i].Graph != null) {
             switch (data[i].Graph.Type) {
                 case "donut" :

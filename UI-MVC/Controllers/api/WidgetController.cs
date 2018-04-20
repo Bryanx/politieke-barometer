@@ -17,7 +17,7 @@ namespace BAR.UI.MVC.Controllers.api
 		private IWidgetManager widgetManager;
 		
 		/// <summary>
-		///Reads all widgets and returns them (possibly in json)
+		///Reads all widgets for a user dashboard and returns them (possibly in json)
 		/// </summary>
 		public IHttpActionResult Get()
 		{
@@ -29,6 +29,22 @@ namespace BAR.UI.MVC.Controllers.api
 			if (responses == null || responses.Count() == 0) return StatusCode(HttpStatusCode.NoContent);
 			
 			return Ok(responses);
+		}
+		
+		/// <summary>
+		///Reads all widget for an item
+		/// </summary>
+		[HttpGet]
+		[Route("api/GetWidgets/{itemId}")]
+		public IHttpActionResult GetWidgets(int itemId)
+		{
+			widgetManager = new WidgetManager();
+
+			var widgets = widgetManager.GetWidgetsForItem(itemId);
+			
+			if (widgets == null || widgets.Count() == 0) return StatusCode(HttpStatusCode.NoContent);
+			
+			return Ok(widgets);
 		}
 
 		/// <summary>

@@ -13,6 +13,7 @@ namespace BAR.BL.Managers
 		//widgets
 		Widget GetWidget(int widgetId);
 		IEnumerable<UserWidget> GetWidgetsForDashboard(int dashboardId);
+		IEnumerable<ItemWidget> GetWidgetsForItem(int itemId);
 
 		Widget CreateWidget(WidgetType widgetType, string title, int rowNbr, int colNbr, int rowspan = 1, int colspan = 1,
 			int dashboardId = -1);
