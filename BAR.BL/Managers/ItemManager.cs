@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using BAR.BL.Domain.Data;
 using System.Linq;
 using BAR.BL.Domain.Users;
+using BAR.BL.Domain.Core;
 
 namespace BAR.BL.Managers
 {
@@ -254,8 +255,10 @@ namespace BAR.BL.Managers
 		{
 			InitRepo();
 
-			//the switch statement will determine if we need to make a
-			//Organisation, person or theme.
+      //the switch statement will determine if we need to make a
+      //Organisation, person or theme.
+      ISubplatformManager subplatformManager = new SubplatformManager();
+      SubPlatform subPlatform = subplatformManager.GetSubPlatform(1);
 			Item item;
 			switch (itemType)
 			{
@@ -273,8 +276,9 @@ namespace BAR.BL.Managers
 						Baseline = 0.0,
 						Informations = new List<Information>(),
 						SocialMediaUrls = new List<SocialMediaUrl>(),
-						Function = function
-					};
+						Function = function,
+            SubPlatform = subPlatform
+          };
 					break;
 				case ItemType.Organisation:
 					item = new Organisation()
@@ -289,8 +293,9 @@ namespace BAR.BL.Managers
 						TrendingPercentage = 0.0,
 						Baseline = 0.0,
 						Informations = new List<Information>(),
-						SocialMediaUrls = new List<SocialMediaUrl>()
-					};
+						SocialMediaUrls = new List<SocialMediaUrl>(),
+            SubPlatform = subPlatform
+          };
 					break;
 				case ItemType.Theme:
 					item = new Theme()
@@ -305,8 +310,9 @@ namespace BAR.BL.Managers
 						TrendingPercentage = 0.0,
 						Baseline = 0.0,
 						Informations = new List<Information>(),
-						Category = category
-					};
+						Category = category,
+            SubPlatform = subPlatform
+          };
 					break;
 				default:
 					item = null;
