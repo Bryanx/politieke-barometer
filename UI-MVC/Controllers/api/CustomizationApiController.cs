@@ -19,10 +19,10 @@ namespace BAR.UI.MVC.Controllers.api
 		/// <summary>
 		/// Gives back the customization of a specific subplatform
 		/// </summary>
-		public IHttpActionResult Get(string platformName)
+		public IHttpActionResult Get(int platformId)
 		{
 			platformManager = new SubplatformManager();
-			Customization custom = platformManager.GetCustomization(platformName);
+			Customization custom = platformManager.GetCustomization(platformId);
 
 			if (custom == null)
 				return StatusCode(HttpStatusCode.NoContent);
@@ -33,7 +33,7 @@ namespace BAR.UI.MVC.Controllers.api
 		/// <summary>
 		/// Changes the webpage colors of a specific subplatform
 		/// </summary>
-		public IHttpActionResult PutColor(string platformName, [FromBody] Customization custom)
+		public IHttpActionResult PutColor(int platformId, [FromBody] Customization custom)
 		{
 			platformManager = new SubplatformManager();
 
@@ -43,7 +43,7 @@ namespace BAR.UI.MVC.Controllers.api
 				return BadRequest(ModelState);
 
 			platformManager.ChangePageColors
-				(platformName, custom.PrimaryColor, custom.SecondairyColor, custom.TertiaryColor, custom.BackgroundColor, custom.TextColor);
+				(platformId, custom.PrimaryColor, custom.SecondairyColor, custom.TertiaryColor, custom.BackgroundColor, custom.TextColor);
 
 			return StatusCode(HttpStatusCode.NoContent);
 		}
@@ -51,7 +51,7 @@ namespace BAR.UI.MVC.Controllers.api
 		/// <summary>
 		/// Changes the page alias of a specific subplatform
 		/// </summary>
-		public IHttpActionResult PutAlias(string platformName, [FromBody] Customization custom)
+		public IHttpActionResult PutAlias(int platformId, [FromBody] Customization custom)
 		{
 			platformManager = new SubplatformManager();
 
@@ -61,7 +61,7 @@ namespace BAR.UI.MVC.Controllers.api
 				return BadRequest(ModelState);
 
 			platformManager.ChangePageText
-				(platformName, custom.PersonAlias, custom.PersonsAlias, custom.OrganisationAlias, custom.OrganisationsAlias, custom.ThemeAlias, custom.ThemesAlias);
+				(platformId, custom.PersonAlias, custom.PersonsAlias, custom.OrganisationAlias, custom.OrganisationsAlias, custom.ThemeAlias, custom.ThemesAlias);
 
 			return StatusCode(HttpStatusCode.NoContent);
 		}
@@ -69,7 +69,7 @@ namespace BAR.UI.MVC.Controllers.api
 		/// <summary>
 		/// Changes the privacy of a specific subplatform
 		/// </summary>
-		public IHttpActionResult PutPrivacy(string platformName, [FromBody] Customization custom)
+		public IHttpActionResult PutPrivacy(int platformId, [FromBody] Customization custom)
 		{
 			platformManager = new SubplatformManager();
 
@@ -78,7 +78,7 @@ namespace BAR.UI.MVC.Controllers.api
 			if (!ModelState.IsValid)
 				return BadRequest(ModelState);
 
-			platformManager.ChangePrivacyText(platformName, custom.PrivacyText, custom.PrivacyTitle);
+			platformManager.ChangePrivacyText(platformId, custom.PrivacyText, custom.PrivacyTitle);
 
 			return StatusCode(HttpStatusCode.NoContent);
 		}
@@ -86,7 +86,7 @@ namespace BAR.UI.MVC.Controllers.api
 		/// <summary>
 		/// Changes the FAQ of a specific subplatform
 		/// </summary>
-		public IHttpActionResult PutFAQ(string platformName, [FromBody] Customization custom)
+		public IHttpActionResult PutFAQ(int platformId, [FromBody] Customization custom)
 		{
 			platformManager = new SubplatformManager();
 
@@ -95,7 +95,7 @@ namespace BAR.UI.MVC.Controllers.api
 			if (!ModelState.IsValid)
 				return BadRequest(ModelState);
 
-			platformManager.ChangeFAQTitle(platformName, custom.FAQTitle);
+			platformManager.ChangeFAQTitle(platformId, custom.FAQTitle);
 
 			return StatusCode(HttpStatusCode.NoContent);
 		}
@@ -103,7 +103,7 @@ namespace BAR.UI.MVC.Controllers.api
 		/// <summary>
 		/// Changes the address of a specific subplatform
 		/// </summary>
-		public IHttpActionResult PutAddress(string platformName, [FromBody] Customization custom)
+		public IHttpActionResult PutAddress(int platformId, [FromBody] Customization custom)
 		{
 			platformManager = new SubplatformManager();
 
@@ -112,7 +112,7 @@ namespace BAR.UI.MVC.Controllers.api
 			if (!ModelState.IsValid)
 				return BadRequest(ModelState);
 
-			platformManager.ChangeAddress(platformName, custom.StreetAndHousenumber, custom.Zipcode, custom.City, custom.Country, custom.Email);
+			platformManager.ChangeAddress(platformId, custom.StreetAndHousenumber, custom.Zipcode, custom.City, custom.Country, custom.Email);
 
 			return StatusCode(HttpStatusCode.NoContent);
 		}
