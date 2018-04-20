@@ -128,5 +128,42 @@ namespace BAR.UI.MVC.Controllers.api
 
 			return StatusCode(HttpStatusCode.NoContent);
 		}
+
+		/// <summary>
+		/// Gives back all the questions
+		/// </summary>
+		[HttpGet]
+		[Route("api/Customization/GetQuestions")]
+		public IHttpActionResult GetQuestions()
+		{
+			platformManager = new SubplatformManager();
+			IEnumerable<Question> requestedQuestions = platformManager.GetAllQuestions();
+
+			if (requestedQuestions == null)
+				return StatusCode(HttpStatusCode.NoContent);
+
+			return Ok(requestedQuestions);
+		}
+
+		/// <summary>
+		/// Changes a specific question
+		/// </summary>
+		[HttpPut]
+		[Route("api/Customization/PutAddress/{questionId}")]
+		public IHttpActionResult PutQuestion(int questionId, [FromBody] Question question)
+		{
+			platformManager = new SubplatformManager();
+
+			if (question == null)
+				return BadRequest("No question given");
+			if (!ModelState.IsValid)
+				return BadRequest(ModelState);
+			if (questionId == question.QuestionId)
+				return BadRequest("Id doesn't match");
+
+			platformManager.ChangeQuestion(questionId, question.QuestionType, question.Title, question.Answer);
+
+			return StatusCode(HttpStatusCode.NoContent);
+		}
 	}
 }
