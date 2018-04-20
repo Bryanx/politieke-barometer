@@ -1,0 +1,23 @@
+
+.no-widgets {
+  margin: 100px 0;
+  > h1 {
+    margin-bottom: 20px !important;
+  }
+  > a {
+    cursor: pointer;
+    &:hover {
+      text-decoration: none;
+    }
+  }
+}
+
+.grid-stack {
+  position: relative;
+  margin-left: -10px !important;
+  margin-right: -10px !important;
+}
+
+.subscription > td > a:hover {
+  text-decoration: none;
+}

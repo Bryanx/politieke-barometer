@@ -1,0 +1,72 @@
+/*
+    The urls may give an error (when compiled the urls are correct)
+ */
+
+.person-image, .person-image-top {
+  background-image: url("../images/user.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  width: 35px;
+  height: 35px;
+  display: inline-block;
+  margin-top: -20px;
+  margin-bottom: -20px;
+  margin-right: 5px;
+}
+
+.small-logo {
+  background-image: url("../images/logo-all-white-smaller.png");
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center center;
+  height: 60px;
+  display: block;
+  margin: 10px 10px;
+  border-bottom: 1px solid #a5a9ac;
+}
+
+.small-logo.colored {
+  background-image: url("../images/logo-colored-smaller.png");
+  border: none;
+  height: 50px;
+  position: relative;
+  margin-right: 0px;
+}
+
+.loadingAlerts {
+  background-image: url("../images/loading.gif");
+  background-repeat: no-repeat;
+  background-size: cover;
+  width: 50px;
+  height: 50px;
+  margin: 30px auto 30px auto;
+}
+
+.loadMessage {
+  position: absolute;
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  background-image: url("../images/rolling.svg");
+  background-position: center;
+  background-size: cover;
+  margin-top: 8px;
+  margin-left: 5px;
+}
+
+.profile_pic {
+  width: 35%;
+  float: left;
+}
+
+.img-circle.profile_img {
+  width: 70%;
+  background: var(--white);
+  margin-left: 15%;
+  z-index: 1000;
+  position: inherit;
+  margin-top: 10px;
+  border: 1px solid rgba(52, 73, 94, 0.44);
+  padding: 4px;
+}

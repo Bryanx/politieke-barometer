@@ -4,16 +4,15 @@ namespace BAR.UI.MVC {
     public class BundleConfig {
 
         /// Script fields
-        private static readonly string Jquery ="~/Scripts/jquery/jquery-3.3.1.min.js";
+        private static readonly string[] Jquery = {
+            "~/Scripts/jquery/jquery-3.3.1.min.js",
+            "~/Scripts/jquery/jquery.autocomplete.min.js"
+        };
         private static readonly string JqueryValidate ="~/Scripts/jquery/jquery.validate*";
         private static readonly string Timeago ="~/Scripts/jquery/jquery.timeago.js";
         private static readonly string Modernizr ="~/Scripts/modernizr-*";
         private static readonly string[] Bootstrap = {
             "~/Scripts/bootstrap.js",
-            "~/Scripts/respond.js",
-            "~/Scripts/bootstrap-progressbar.min.js",
-            "~/Scripts/nprogress.js",
-            "~/Scripts/fastclick.js"
         };
         private static readonly string[] Gridstack = {
             "~/Scripts/jquery/jquery-ui.js",
@@ -58,15 +57,15 @@ namespace BAR.UI.MVC {
         
         /// Style fields
         private static readonly string[] DefaultCss = {
-            "~/Content/build/css/bootstrap.min.css",
-            "~/Content/build/css/font-awesome.min.css",
-            "~/Content/build/css/nprogress.css",
-            "~/Content/build/css/bootstrap-progressbar-3.3.4.min.css",
-            "~/Content/build/css/pnotify.css",
-            "~/Content/build/css/pnotify.buttons.css",
-            "~/Content/build/css/pnotify.nonblock.css",
-            "~/Content/build/css/jqvmap.min.css",
-            "~/Content/build/css/daterangepicker.css"
+            "~/Content/build/css/vendor/bootstrap.min.css",
+            "~/Content/build/css/vendor/font-awesome.min.css",
+            "~/Content/build/css/vendor/nprogress.css",
+            "~/Content/build/css/vendor/bootstrap-progressbar-3.3.4.min.css",
+            "~/Content/build/css/vendor/pnotify.css",
+            "~/Content/build/css/vendor/pnotify.buttons.css",
+            "~/Content/build/css/vendor/pnotify.nonblock.css",
+            "~/Content/build/css/vendor/jqvmap.min.css",
+            "~/Content/build/css/vendor/daterangepicker.css"
         };
         private static readonly string[] DatatablesCss = {
             "~/Scripts/datatables/datatables.net-bs/css/dataTables.bootstrap.min.css",

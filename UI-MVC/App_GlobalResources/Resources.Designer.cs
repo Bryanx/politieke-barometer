@@ -1258,7 +1258,7 @@ namespace BAR.UI.MVC.App_GlobalResources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Ongeldige inlogpoging..
+        ///   Looks up a localized string similar to Incorrect username or password..
         /// </summary>
         public static string UserController_Login_Ongeldige_inlogpoging_ {
             get {

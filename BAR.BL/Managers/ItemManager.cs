@@ -4,6 +4,7 @@ using BAR.BL.Domain.Items;
 using System.Collections.Generic;
 using BAR.BL.Domain.Data;
 using System.Linq;
+using BAR.BL.Domain.Users;
 
 namespace BAR.BL.Managers
 {
@@ -33,30 +34,130 @@ namespace BAR.BL.Managers
 		/// </summary>
 		public void DetermineTrending(int itemId)
 		{
-			//InitRepo();
+			/*InitRepo();
 
-			//DataManager dataManager = new DataManager();
-			//IEnumerable<Information> allInfoForId = dataManager.getAllInformationForId(itemId);
+			DataManager dataManager = new DataManager();
+			IEnumerable<Information> allInfoForId = dataManager.GetAllInformationForId(itemId);
 
-			//DateTime earliestInfoDate = allInfoForId.Min(item => item.CreatetionDate).Value;
-			//DateTime lastInfoDate = allInfoForId.Max(item => item.CreatetionDate).Value;
+			DateTime earliestInfoDate = allInfoForId.Min(item => item.CreationDate).Value;
+			DateTime lastInfoDate = allInfoForId.Max(item => item.CreationDate).Value;
 
-			//int period = (lastInfoDate - earliestInfoDate).Days;
+			int period = (lastInfoDate - earliestInfoDate).Days;
 
-			//Console.WriteLine(earliestInfoDate);
-			//Console.WriteLine(lastInfoDate);
+			if (period == 0) period = 1;
 
-			//int aantalBaseline = dataManager.GetNumberInfo(itemId, earliestInfoDate);
-			//int aantalTrending = dataManager.GetNumberInfo(itemId, lastInfoDate.AddDays(-1));
+			int aantalBaseline = dataManager.GetNumberInfo(itemId, earliestInfoDate);
+			int aantalTrending = dataManager.GetNumberInfo(itemId, lastInfoDate.AddDays(-1));
 
-			//// Calculate the baseline = number of information / number of days from the last update until now
-			//double baseline = Convert.ToDouble(aantalBaseline) / Convert.ToDouble(period);
+			// Calculate the baseline = number of information / number of days from the last update until now
+			double baseline = Convert.ToDouble(aantalBaseline) / Convert.ToDouble(period);
 
-			//// Calculate the trendingpercentage = baseline / number of days from the last update until now.
-			//double trendingPer = Convert.ToDouble(aantalTrending) / baseline;
+			// Calculate the trendingpercentage = baseline / number of days from the last update until now.
+			double trendingPer = Convert.ToDouble(aantalTrending) / baseline;
 
-			//itemRepo.UpdateItemTrending(itemId, baseline, trendingPer);
-			//itemRepo.UpdateLastUpdated(itemId, DateTime.Now);
+			itemRepo.UpdateItemTrending(itemId, baseline, trendingPer);
+			itemRepo.UpdateLastUpdated(itemId, DateTime.Now);*/
+		}
+
+		/// <summary>
+		/// Gives back te most trending items
+		/// the number of trending items depends on the
+		/// number that you give via the parameter
+		/// </summary>
+		public IEnumerable<Item> GetMostTrendingItems(int numberOfItems = 5)
+		{
+			//Order the items by populairity
+			IEnumerable<Item> itemsOrderd = GetAllItems()
+				.OrderBy(item => item.TrendingPercentage).AsEnumerable();
+
+			//Get the first items out of the list
+			List<Item> itemsOrderdMostPopulair = new List<Item>();
+			for (int i = 0; i < numberOfItems; i++)
+			{
+				if (i <= itemsOrderd.Count()) itemsOrderdMostPopulair.Add(itemsOrderd.ElementAt(i));
+			}
+
+			return itemsOrderdMostPopulair.AsEnumerable();
+		}
+
+		/// <summary>
+		/// Gives back a list of the most trending items
+		/// for a specific type
+		/// the number of items depends on the parameter "numberOfItems"
+		/// </summary>
+		public IEnumerable<Item> GetMostTrendingItemsForType(ItemType type, int numberOfItems = 5)
+		{
+			//order the items by populairity
+			IEnumerable<Item> itemsOrderd = GetAllItems().Where(item => item.ItemType == type)
+				.OrderBy(item => item.TrendingPercentage).AsEnumerable();
+
+			//Get the first items out of the list
+			List<Item> itemsOrderdMostPopulair = new List<Item>();
+			for (int i = 0; i < numberOfItems; i++)
+			{
+				if (i <= itemsOrderd.Count()) itemsOrderdMostPopulair.Add(itemsOrderd.ElementAt(i));
+			}
+
+			return itemsOrderdMostPopulair.AsEnumerable();
+		}
+
+		/// <summary>
+		/// Gives back a list of the most trending items
+		/// based on the userId.
+		/// </summary>
+		public IEnumerable<Item> GetMostTredningItemsForUser(string userId, int numberOfItems = 5)
+		{
+			//Get items for userId and order items from user
+			//We need to get every item of the subscription of a specefic user
+			SubscriptionManager subManager = new SubscriptionManager();
+			List<Item> itemsFromUser = new List<Item>();
+			foreach (Subscription sub in subManager.GetSubscriptionsWithItemsForUser(userId))
+			{
+				itemsFromUser.Add(sub.SubscribedItem);
+			}
+
+			//Order items
+			IEnumerable<Item> itemsOrderd = itemsFromUser
+				.OrderBy(item => item.TrendingPercentage).AsEnumerable();
+
+			//Get the first items out of the list
+			List<Item> itemsOrderdMostPopulair = new List<Item>();
+			for (int i = 0; i < numberOfItems; i++)
+			{
+				if (i <= itemsOrderd.Count()) itemsOrderdMostPopulair.Add(itemsOrderd.ElementAt(i));
+			}
+
+			return itemsOrderd;
+		}
+
+		/// <summary>
+		/// Gives back a list of the most trending items
+		/// for a specific type and user
+		/// the number of items depends on the parameter "numberOfItems"
+		/// </summary>
+		public IEnumerable<Item> GetMostTredningItemsForUserAndItemType(string userId, ItemType type, int numberOfItems = 5)
+		{
+			//Get items for userId and order items from user
+			//We need to get every item of the subscription of a specefic user
+			SubscriptionManager subManager = new SubscriptionManager();
+			List<Item> itemsFromUser = new List<Item>();
+			foreach (Subscription sub in subManager.GetSubscriptionsWithItemsForUser(userId))
+			{
+				itemsFromUser.Add(sub.SubscribedItem);
+			}
+
+			//Order items
+			IEnumerable<Item> itemsOrderd = itemsFromUser.Where(item => item.ItemType == type)
+				.OrderBy(item => item.TrendingPercentage).AsEnumerable();
+
+			//Get the first items out of the list
+			List<Item> itemsOrderdMostPopulair = new List<Item>();
+			for (int i = 0; i < numberOfItems; i++)
+			{
+				if (i <= itemsOrderd.Count()) itemsOrderdMostPopulair.Add(itemsOrderd.ElementAt(i));
+			}
+
+			return itemsOrderd;
 		}
 
 		/// <summary>
@@ -68,21 +169,21 @@ namespace BAR.BL.Managers
 			return itemRepo.ReadItem(itemId);
 		}
 
-    /// <summary>
-    /// Returns an item for a specifig itemId including the attached subplatform.
-    /// </summary>
-    /// <param name="itemId"></param>
-    /// <returns></returns>
-    public Item GetItemWithSubPlatform(int itemId)
-    {
-      InitRepo();
-      return itemRepo.ReadItemWithSubPlatform(itemId);
-    }
-
-    /// <summary>
-    /// Gives back all the items of a specific type
-    /// </summary>
-    public IEnumerable<Item> GetItemsForType(ItemType type)
+        /// <summary>
+        /// Returns an item for a specifig itemId including the attached subplatform.
+        /// </summary>
+        /// <param name="itemId"></param>
+        /// <returns></returns>
+        public Item GetItemWithSubPlatform(int itemId)
+        {
+          InitRepo();
+          return itemRepo.ReadItemWithSubPlatform(itemId);
+        }
+    
+        /// <summary>
+        /// Gives back all the items of a specific type
+        /// </summary>
+        public IEnumerable<Item> GetItemsForType(ItemType type)
 		{
 			IEnumerable<Item> items = GetAllItems();
 			return items.Where(item => item.ItemType == type).AsEnumerable();
@@ -299,5 +400,11 @@ namespace BAR.BL.Managers
 			if (uowManager == null) itemRepo = new ItemRepository();
 			else itemRepo = new ItemRepository(uowManager.UnitOfWork);
 		}
+
+        public Item GetPerson(string personName)
+        {
+          InitRepo();
+          return itemRepo.ReadPerson(personName);
+        }
   }
 }

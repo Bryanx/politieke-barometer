@@ -12,7 +12,6 @@ using BAR.UI.MVC.Helpers;
 using BAR.UI.MVC.Models;
 using Microsoft.AspNet.Identity;
 using static BAR.UI.MVC.Models.ItemViewModels;
-using BAR.BL.Domain.Core;
 
 namespace BAR.UI.MVC.Controllers
 {

@@ -1,0 +1,112 @@
+ul.msg_list li {
+  background: var(--bg-color);
+  border-top: 1px solid #d9dee4;
+  padding: 15px 25px 15px 10px;
+  display: -ms-flexbox;
+  display: flex; }
+ul.msg_headers li {
+  border: none; }
+ul.msg_list li#seeAllAlerts {
+  background: var(--white);
+  padding: 10px;
+  border-top: 1px solid #d9dee4; }
+ul.msg_headers li:nth-child(2), ul.msg_headers li.alertMenuHeader {
+  color: var(--font-color);
+  padding: 0 10px;
+  font-size: 11px;
+  background: transparent;
+  text-align: right;
+  width: 100%; }
+ul.msg_headers li:nth-child(2) a {
+  width: auto;
+  float: right; }
+  ul.msg_headers li:nth-child(2) a:hover {
+    background: transparent; }
+ul.msg_headers li.alertMenuHeader {
+  text-align: left;
+  padding: 2px 15px !important;
+  position: absolute;
+  background: transparent; }
+ul.msg_list > li > a {
+  display: block;
+  clear: both;
+  font-weight: 400;
+  line-height: 1.42857143;
+  white-space: nowrap; }
+ul.msg_list li:last-child a:hover {
+  text-decoration: underline; }
+ul.msg_headers li:nth-child(2) a:hover {
+  text-decoration: underline; }
+ul.msg_list li a {
+  padding: 3px 5px !important;
+  width: auto;
+  text-decoration: none; }
+  ul.msg_list li a .time {
+    font-size: 11px;
+    font-style: italic;
+    font-weight: bold;
+    position: absolute;
+    right: 35px; }
+  ul.msg_list li a .alertTime {
+    display: block !important;
+    font-size: 11px;
+    color: #a5a5a5; }
+
+ul.msg_list li.noAlertsAvailable {
+  border-top: 1px solid #D9DEE4;
+  color: var(--font-color);
+  text-align: center;
+  padding: 50px 0 65px 0px;
+  margin-bottom: -5px;
+  background: var(--white); }
+  ul.msg_list li.noAlertsAvailable i {
+    font-size: 70px;
+    padding-bottom: 10px;
+    color: var(--font-color);
+    text-align: center; }
+
+div.alertIcon {
+  display: block;
+  float: left;
+  padding-right: 10px; }
+  div.alertIcon > i {
+    font-size: 35px; }
+div.alertClose {
+  display: block;
+  position: absolute;
+  right: 0;
+  padding: 0 10px 0 0; }
+  div.alertClose > a > i {
+    display: block;
+    font-size: 11px;
+    color: #d9dee4; }
+    div.alertClose > a > i:hover {
+      color: var(--font-color); }
+
+.navbar-nav .open .dropdown-menu.msg_list {
+  width: 300px;
+  max-height: 400px;
+  overflow-y: scroll;
+  overflow-x: hidden; }
+  .navbar-nav .open .dropdown-menu.msg_list .alertRead {
+    background-color: var(--white);
+    border-top: 1px solid #d9dee4;
+    color: var(--font-color); }
+
+#alertDropdown {
+  padding: 17px 17px 16px; }
+
+.info-number .badge {
+  font-size: 10px;
+  font-weight: normal;
+  line-height: 13px;
+  padding: 2px 6px;
+  position: absolute;
+  right: 5px;
+  top: 15px; }
+
+@media (min-width: 900px) {
+  .navbar-nav .open .dropdown-menu.msg_list {
+    width: 400px; } }
+
+/*# sourceMappingURL=dashboard.css.map */

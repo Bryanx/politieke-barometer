@@ -1,0 +1,23 @@
+.editor-wrapper {
+  min-height: 250px;
+  background-color: var(--white);
+  border-collapse: separate;
+  border: 1px solid #ccc;
+  padding: 4px;
+  box-sizing: content-box;
+  @include box-shadow(rgba(0, 0, 0, 0.07451) 0px 1px 1px 0px inset);
+  border-top-right-radius: 3px;
+  border-bottom-right-radius: 3px;
+  border-bottom-left-radius: 3px;
+  border-top-left-radius: 3px;
+  outline: none;
+}
+
+.editor.btn-toolbar {
+  zoom: 1;
+  background: var(--bg-color);
+  margin: 0;
+  padding: 3px 0;
+  border: 1px solid #EFEFEF;
+  @include border-radius;
+}

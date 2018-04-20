@@ -123,7 +123,6 @@ function loadAlerts() {
         type: 'GET',
         url: '/api/User/GetAlerts',
         dataType: 'json',
-        beforeSend: () => $("#alertMenu").append(res.alertLoader),
         error: function(xhr, status, error) {
             var err = eval("(" + xhr.responseText + ")");
             alert(err.Message);
@@ -143,7 +142,7 @@ function loadAlerts() {
                 $('#alertMenu').empty();
                 $('#alertMenu').append("<li class=\"noAlertsAvailable\"><i class=\"fa fa-bell\"></i></br>" +
                     `<strong>${Resources.YouHaveNoAlerts}</strong></br>` +
-                    `${NoAlertsMessage}</li>`);
+                    `${Resources.NoAlertsMessage}</li>`);
             }
         });
 }

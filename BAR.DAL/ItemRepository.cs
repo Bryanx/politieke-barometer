@@ -29,7 +29,7 @@ namespace BAR.DAL
 			if (uow == null) ctx = new BarometerDbContext();
 			else ctx = uow.Context;
 		}
-
+		
 		/// <summary>
 		/// Returns the item that matches the itemId.
 		/// </summary>       
@@ -158,7 +158,7 @@ namespace BAR.DAL
 		/// </summary>
 		public int UpdateItems(IEnumerable<Item> items)
 		{
-			foreach (Item item in items) ctx.Entry(item).State = EntityState.Modified;
+			foreach (Item item in items) ctx.Entry(item).State = EntityState.Modified;	
 			return ctx.SaveChanges();
 		}
 
@@ -181,5 +181,10 @@ namespace BAR.DAL
 			foreach (Item item in items) ctx.Items.Remove(item);
 			return ctx.SaveChanges();
 		}
-	}
+
+        public Item ReadPerson(string personName)
+        {
+          return ctx.Items.Where(i => i.Name.Equals(personName)).SingleOrDefault();
+        }
+  }
 }

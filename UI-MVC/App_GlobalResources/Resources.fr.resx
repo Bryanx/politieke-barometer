@@ -118,432 +118,432 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="AboutOneHour" xml:space="preserve">
-    <value />
+    <value>Environ une heure</value>
   </data>
   <data name="AboutOneMinute" xml:space="preserve">
-    <value />
+    <value>Environ une minute</value>
   </data>
   <data name="AboutOneMonth" xml:space="preserve">
-    <value />
+    <value>Environ un mois</value>
   </data>
   <data name="AboutOneYear" xml:space="preserve">
-    <value />
+    <value>Environ un an</value>
   </data>
   <data name="About_Time" xml:space="preserve">
-    <value />
+    <value>Environ</value>
   </data>
   <data name="Account" xml:space="preserve">
-    <value />
+    <value>Compte</value>
   </data>
   <data name="Aday" xml:space="preserve">
-    <value />
+    <value>Un jour</value>
   </data>
   <data name="AddAChart" xml:space="preserve">
-    <value />
+    <value>Ajouter un graphique</value>
   </data>
   <data name="Admin" xml:space="preserve">
-    <value />
+    <value>Administrateur</value>
   </data>
   <data name="AdminDashboard" xml:space="preserve">
-    <value />
+    <value>Tableau de bord administrateur</value>
   </data>
   <data name="AdminManagement" xml:space="preserve">
-    <value />
+    <value>Gérer administrateurs</value>
   </data>
   <data name="Ago" xml:space="preserve">
-    <value />
+    <value>Il y a </value>
   </data>
   <data name="Alerts" xml:space="preserve">
-    <value />
+    <value>Notifications</value>
   </data>
   <data name="AlertsViaEmail" xml:space="preserve">
-    <value />
+    <value>Notifications via e-mail </value>
   </data>
   <data name="AlertsViaWebsite" xml:space="preserve">
-    <value />
+    <value>Notifications sur le site internet</value>
   </data>
   <data name="AllParties" xml:space="preserve">
-    <value />
+    <value>Aperçu des partis</value>
   </data>
   <data name="AllPoliticians" xml:space="preserve">
-    <value />
+    <value>Aperçu des politiciens</value>
   </data>
   <data name="CalculatedByAmountOfTweets" xml:space="preserve">
-    <value />
+    <value>Calculé par nombre des tweets</value>
   </data>
   <data name="CannotRemoveItem" xml:space="preserve">
-    <value />
+    <value>Ne peut effacer pas l'élément</value>
   </data>
   <data name="Category" xml:space="preserve">
-    <value />
+    <value>Catégory</value>
   </data>
   <data name="ChangeRole" xml:space="preserve">
-    <value />
+    <value>Changer de rôle</value>
   </data>
   <data name="City" xml:space="preserve">
-    <value />
+    <value>Résidence</value>
   </data>
   <data name="ConfirmAccount" xml:space="preserve">
-    <value />
+    <value>Confirmer votre compte</value>
   </data>
   <data name="ConfirmAccountClickingHere" xml:space="preserve">
-    <value />
+    <value>Confirmer votre compte par cliquez ici</value>
   </data>
   <data name="ConfirmForgotPassword" xml:space="preserve">
-    <value />
+    <value>Confirmer de oublié le mot de passe</value>
   </data>
   <data name="ConfirmPassword" xml:space="preserve">
-    <value />
+    <value>Confirmer votre mot de passe</value>
   </data>
   <data name="ConfirmResetPassword" xml:space="preserve">
-    <value />
+    <value>Confirmer le reset du mot de passe</value>
   </data>
   <data name="ConfirmYourEmail" xml:space="preserve">
-    <value />
+    <value>Confirmer votre e-mail</value>
   </data>
   <data name="ConnectYour" xml:space="preserve">
-    <value />
+    <value>Connectez votre</value>
   </data>
   <data name="Contact" xml:space="preserve">
-    <value />
+    <value>Contact</value>
   </data>
   <data name="CreationDate" xml:space="preserve">
-    <value />
+    <value>Date de création</value>
   </data>
   <data name="CurrentPassword" xml:space="preserve">
-    <value />
+    <value>Mot de passe actuel</value>
   </data>
   <data name="Dashboard" xml:space="preserve">
-    <value />
+    <value>Tableau de bord</value>
   </data>
   <data name="DateOfBirth" xml:space="preserve">
-    <value />
+    <value>Date de naissance</value>
   </data>
   <data name="Days" xml:space="preserve">
-    <value />
+    <value>Jours</value>
   </data>
   <data name="Delete" xml:space="preserve">
-    <value />
+    <value>Enlever</value>
   </data>
   <data name="DeleteAccount" xml:space="preserve">
-    <value />
+    <value>Effacez mon profil</value>
   </data>
   <data name="DeleteAccountWarning" xml:space="preserve">
-    <value />
+    <value>Attention! à enlevez votre account toutes les institutions, graphiques et préférences doivent effacer.</value>
   </data>
   <data name="DeleteUser" xml:space="preserve">
-    <value />
+    <value>Enlever utilisateur</value>
   </data>
   <data name="Email" xml:space="preserve">
-    <value />
+    <value>e-mail</value>
   </data>
   <data name="EmailRequired" xml:space="preserve">
-    <value />
+    <value>e-mail obligatoire</value>
   </data>
   <data name="EmailSentPasswordReset" xml:space="preserve">
-    <value />
+    <value>Un e-mail est envoyé pour réinitialiser votre mot de passe</value>
   </data>
   <data name="EmailUs" xml:space="preserve">
-    <value />
+    <value>Envoyez un courriel</value>
   </data>
   <data name="EnterEmail" xml:space="preserve">
-    <value />
+    <value>Indiquez votre e-mail</value>
   </data>
   <data name="ExternalLogin" xml:space="preserve">
-    <value />
+    <value>Connexion extérieure</value>
   </data>
   <data name="Failed" xml:space="preserve">
-    <value />
+    <value>échoué</value>
   </data>
   <data name="FillTheRemainingFields" xml:space="preserve">
-    <value />
+    <value>Indiquer les autres champs relatifs</value>
   </data>
   <data name="Firstname" xml:space="preserve">
-    <value />
+    <value>Prénom</value>
   </data>
   <data name="FollowThisPerson" xml:space="preserve">
-    <value />
+    <value>Suivez cette personne</value>
   </data>
   <data name="ForgotPassword" xml:space="preserve">
-    <value />
+    <value>Oublié votre mot de passe</value>
   </data>
   <data name="ForgotPasswordQuestion" xml:space="preserve">
-    <value />
+    <value>Oublié votre mot de passe?</value>
   </data>
   <data name="Gender" xml:space="preserve">
-    <value />
+    <value>Genre</value>
   </data>
   <data name="Home" xml:space="preserve">
-    <value />
+    <value>Page d'acceuil</value>
   </data>
   <data name="HomepageHeaderTitle" xml:space="preserve">
-    <value />
+    <value>Regardez quel politiciens sont tendence</value>
   </data>
   <data name="Hours" xml:space="preserve">
-    <value />
+    <value>Heures</value>
   </data>
   <data name="IAgreeWithTheTermsAndCondition" xml:space="preserve">
-    <value />
+    <value>J'ai lu et accepté les modalités et conditions</value>
   </data>
   <data name="ImportContent" xml:space="preserve">
-    <value />
+    <value>Importer contenu</value>
   </data>
   <data name="In_Time" xml:space="preserve">
-    <value />
+    <value>à</value>
   </data>
   <data name="IsNowTrending" xml:space="preserve">
-    <value />
+    <value>Est tendance</value>
   </data>
   <data name="ItemManagement" xml:space="preserve">
-    <value />
+    <value>Gérer des éléments</value>
   </data>
   <data name="Lastname" xml:space="preserve">
-    <value />
+    <value>Nom de famille</value>
   </data>
   <data name="LessThenOneMinute" xml:space="preserve">
-    <value />
+    <value>Moins d'une minute</value>
   </data>
   <data name="Link" xml:space="preserve">
-    <value />
+    <value>lien</value>
   </data>
   <data name="Links" xml:space="preserve">
-    <value />
+    <value>liens</value>
   </data>
   <data name="Login" xml:space="preserve">
-    <value />
+    <value>Se connecter</value>
   </data>
   <data name="LoginFailed" xml:space="preserve">
-    <value />
+    <value>Authentification a échoué</value>
   </data>
   <data name="LoginUsingYour" xml:space="preserve">
-    <value />
+    <value>Se connecter avec votre</value>
   </data>
   <data name="LoginWith" xml:space="preserve">
-    <value />
+    <value>Se connecter avec</value>
   </data>
   <data name="LoginWithAccount" xml:space="preserve">
-    <value />
+    <value>Se connecter avec votre compte</value>
   </data>
   <data name="Logout" xml:space="preserve">
-    <value />
+    <value>Déconnecter</value>
   </data>
   <data name="Man" xml:space="preserve">
-    <value />
+    <value>Homme</value>
   </data>
   <data name="Mentions" xml:space="preserve">
-    <value />
+    <value>Mentions</value>
   </data>
   <data name="Minutes" xml:space="preserve">
-    <value />
+    <value>Minutes</value>
   </data>
   <data name="Months" xml:space="preserve">
-    <value />
+    <value>Mois</value>
   </data>
   <data name="MoreInfo" xml:space="preserve">
-    <value />
+    <value>Plus d'informations</value>
   </data>
   <data name="NA" xml:space="preserve">
-    <value />
+    <value>NA</value>
   </data>
   <data name="Name" xml:space="preserve">
-    <value />
+    <value>Nom</value>
   </data>
   <data name="Negative" xml:space="preserve">
-    <value />
+    <value>Négatif</value>
   </data>
   <data name="NewPassword" xml:space="preserve">
-    <value />
+    <value>Nouveau mot de passe</value>
   </data>
   <data name="No" xml:space="preserve">
-    <value />
+    <value>Non</value>
   </data>
   <data name="NoAlertsMessage" xml:space="preserve">
-    <value />
+    <value>Aucune notification</value>
   </data>
   <data name="NoChartsYet" xml:space="preserve">
-    <value />
+    <value>Aucune graphique</value>
   </data>
   <data name="NowYouCan" xml:space="preserve">
-    <value />
+    <value>Maintenant vous pouvez</value>
   </data>
   <data name="NumberOfFollowers" xml:space="preserve">
-    <value />
+    <value>Nombre d'abonnés</value>
   </data>
   <data name="NumberOfMentions" xml:space="preserve">
-    <value />
+    <value>Nombre de mentions</value>
   </data>
   <data name="OnSocialMedia" xml:space="preserve">
-    <value />
+    <value>Sur les résaux sociaux</value>
   </data>
   <data name="Or" xml:space="preserve">
-    <value />
+    <value>Ou</value>
   </data>
   <data name="PageManagement" xml:space="preserve">
-    <value />
+    <value>Gérer des pages</value>
   </data>
   <data name="Parties" xml:space="preserve">
-    <value />
+    <value>Parties</value>
   </data>
   <data name="Password" xml:space="preserve">
-    <value />
+    <value>Mot de passe</value>
   </data>
   <data name="PasswordNotMatch" xml:space="preserve">
-    <value />
+    <value>Les mots de passe ne corresponds pas</value>
   </data>
   <data name="Photo" xml:space="preserve">
-    <value />
+    <value>Photo</value>
   </data>
   <data name="Politician" xml:space="preserve">
-    <value />
+    <value>Politicien</value>
   </data>
   <data name="Politicians" xml:space="preserve">
-    <value />
+    <value>Politiciens</value>
   </data>
   <data name="Positive" xml:space="preserve">
-    <value />
+    <value>Positif</value>
   </data>
   <data name="Privacy" xml:space="preserve">
-    <value />
+    <value>Confidentialité</value>
   </data>
   <data name="PrivacyAndSafety" xml:space="preserve">
-    <value />
+    <value>Confidentialité et sécurité</value>
   </data>
   <data name="ProfilePicture" xml:space="preserve">
-    <value />
+    <value>Photo de profil</value>
   </data>
   <data name="QuestionAndAnswer" xml:space="preserve">
-    <value />
+    <value>Questions et réponses</value>
   </data>
   <data name="Recover" xml:space="preserve">
-    <value />
+    <value>Récupérer</value>
   </data>
   <data name="RecoverDeletedUser" xml:space="preserve">
-    <value />
+    <value>Récupérer un utilisateur enlevé</value>
   </data>
   <data name="RecoverItem" xml:space="preserve">
-    <value />
+    <value>Récupérer un élément</value>
   </data>
   <data name="RememberMeQuestion" xml:space="preserve">
-    <value />
+    <value>Retenir moi</value>
   </data>
   <data name="Remove" xml:space="preserve">
-    <value />
+    <value>Enlever</value>
   </data>
   <data name="RemoveAlert" xml:space="preserve">
-    <value />
+    <value>Enlever un notification</value>
   </data>
   <data name="RemoveItem" xml:space="preserve">
-    <value />
+    <value>Enlever un élément</value>
   </data>
   <data name="Reset" xml:space="preserve">
-    <value />
+    <value>Réinitialiser</value>
   </data>
   <data name="ResetPassword" xml:space="preserve">
-    <value />
+    <value>Réinitialiser votre mot de passe</value>
   </data>
   <data name="ResetPasswordByClickingHere" xml:space="preserve">
-    <value />
+    <value>Réinitialiser votre mot de passe par cliquer ici</value>
   </data>
   <data name="Role" xml:space="preserve">
-    <value />
+    <value>Rôle</value>
   </data>
   <data name="Save" xml:space="preserve">
-    <value />
+    <value>Sauvegarder</value>
   </data>
   <data name="Saved" xml:space="preserve">
-    <value />
+    <value>Sauvegardé</value>
   </data>
   <data name="SearchbarPlaceholder" xml:space="preserve">
-    <value />
+    <value>Chechez des Politiciens, des Parties ou des sujets</value>
   </data>
   <data name="SelectYourCity" xml:space="preserve">
-    <value />
+    <value>Choisissez votre ville</value>
   </data>
   <data name="SelectYourGender" xml:space="preserve">
-    <value />
+    <value>Choisisser votre genre</value>
   </data>
   <data name="Settings" xml:space="preserve">
-    <value />
+    <value>Préférences</value>
   </data>
   <data name="ShowAllAlerts" xml:space="preserve">
-    <value />
+    <value>Montrez toutes les notifications</value>
   </data>
   <data name="Signup" xml:space="preserve">
-    <value />
+    <value>Inscrire</value>
   </data>
   <data name="SignupAsNewUser" xml:space="preserve">
-    <value />
+    <value>Inscrire comme nouveau utilisateur</value>
   </data>
   <data name="SignupForNewAccount" xml:space="preserve">
-    <value />
+    <value>Inscrire avec nouveau compte</value>
   </data>
   <data name="SignupToFollow" xml:space="preserve">
-    <value />
+    <value>Inscrire pour suivre</value>
   </data>
   <data name="SourceManagement" xml:space="preserve">
-    <value />
+    <value>Gérer des sources</value>
   </data>
   <data name="StayUpToDate" xml:space="preserve">
-    <value />
+    <value>Restez à jour</value>
   </data>
   <data name="SubPlatformManagement" xml:space="preserve">
-    <value />
+    <value>Gérer sub-plateforme</value>
   </data>
   <data name="Subscribe" xml:space="preserve">
-    <value />
+    <value>Abonner</value>
   </data>
   <data name="Subscriptions" xml:space="preserve">
-    <value />
+    <value>Abonnements</value>
   </data>
   <data name="SuccesfullyLoggedInWith" xml:space="preserve">
-    <value />
+    <value>Connecté en tant que </value>
   </data>
   <data name="ThanksEmailConfirm" xml:space="preserve">
-    <value />
+    <value>Merci pour confirmer votre e-mail.</value>
   </data>
   <data name="Topics" xml:space="preserve">
-    <value />
+    <value>Sujets</value>
   </data>
   <data name="Trending" xml:space="preserve">
-    <value />
+    <value>Tendance</value>
   </data>
   <data name="Unknown" xml:space="preserve">
-    <value />
+    <value>Inconnu</value>
   </data>
   <data name="Unsubscribe" xml:space="preserve">
-    <value />
+    <value>Désabonner</value>
   </data>
   <data name="User" xml:space="preserve">
-    <value />
+    <value>Utilisateur</value>
   </data>
   <data name="UserController_Login_Ongeldige_inlogpoging_" xml:space="preserve">
-    <value />
+    <value>Nom ou mot de passe invalide</value>
   </data>
   <data name="UserManagement" xml:space="preserve">
-    <value />
+    <value>Gérer d'utilisateurs</value>
   </data>
   <data name="WeeklyReview" xml:space="preserve">
-    <value />
+    <value>Revue hebdomadaire</value>
   </data>
   <data name="WeeklyReviewViaEmail" xml:space="preserve">
-    <value />
+    <value>Revue hebdomadaire via e-mail.</value>
   </data>
   <data name="Woman" xml:space="preserve">
-    <value />
+    <value>Femme</value>
   </data>
   <data name="Year" xml:space="preserve">
-    <value />
+    <value>An</value>
   </data>
   <data name="Yes" xml:space="preserve">
-    <value />
+    <value>Oui</value>
   </data>
   <data name="YouHaveNoAlerts" xml:space="preserve">
-    <value />
+    <value>Vous n'avez pas de notifications.</value>
   </data>
   <data name="Your" xml:space="preserve">
-    <value />
+    <value>Votre</value>
   </data>
   <data name="YourPasswordHasBeenReset" xml:space="preserve">
-    <value />
+    <value>Votre mot de passe est réinitialisé</value>
   </data>
 </root>

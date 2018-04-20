@@ -1,0 +1,29 @@
+$font-default: Roboto, Helvetica, Arial, sans-serif;
+
+@mixin diagonal-gradient($color1, $color2) {
+  background-image: -webkit-gradient(linear, 0% 0%, 100% 100%, color-stop(0, $color1), $color2);
+  background-image: -webkit-repeating-linear-gradient(top left, $color1 0%, $color2 100%);
+  background-image: repeating-linear-gradient(to bottom right, $color1 0%, $color2 100%);
+  background-image: -ms-repeating-linear-gradient(top left, $color1 0%, $color2 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#{$color1}', endColorstr='#{$color2}');
+}
+
+@mixin border-radius($radius: 5px) {
+  -webkit-border-radius: $radius;
+  -moz-border-radius: $radius;
+  border-radius: $radius;
+}
+
+@mixin box-shadow($val) {
+  -webkit-box-shadow: $val;
+  -moz-box-shadow: $val;
+  -o-box-shadow: $val;
+  box-shadow: $val;
+}
+
+@mixin transition($val) {
+  -webkit-transition: $val;
+  -moz-transition: $val;
+  -o-transition: $val;
+  transition: $val;
+}
