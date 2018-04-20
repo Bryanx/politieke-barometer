@@ -19,6 +19,7 @@ namespace BAR.DAL
 
 		//Create
 		int CreateItem(Item item);
+    int CreateItems(ICollection<Item> items);
 
 		//Update
 		int UpdateItem(Item item);

@@ -22,8 +22,11 @@ namespace BAR.BL.Managers
 
 
 		Item CreateItem(ItemType itemType, string name, string description = "", string function = "", Category category = null);
+    IEnumerable<Item> ImportPersonCsv(string csv);
+    IEnumerable<Item> ImportPersonJson(string json);
 
-		Item ChangeItemName(int itemId, string name);
+
+    Item ChangeItemName(int itemId, string name);
 		Item ChangeItemDescription(int itemId, string description);
 		Item ChangeItemActivity(int itemId);
 

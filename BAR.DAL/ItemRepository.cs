@@ -151,5 +151,11 @@ namespace BAR.DAL
     {
       return ctx.Items.Where(i => i.Name.Equals(personName)).SingleOrDefault();
     }
+
+    public int CreateItems(ICollection<Item> items)
+    {
+      ctx.Items.AddRange(items);
+      return ctx.SaveChanges();
+    }
   }
 }

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using BAR.BL.Domain.Data;
 using System.Linq;
 using BAR.BL.Domain.Users;
+using Newtonsoft.Json;
 
 namespace BAR.BL.Managers
 {
@@ -371,6 +372,71 @@ namespace BAR.BL.Managers
     {
       InitRepo();
       return itemRepo.ReadPerson(personName);
+    }
+
+    public IEnumerable<Item> ImportPersonCsv(string csv)
+    {
+      InitRepo();
+
+      string[] csvRows = csv.Split('\n');
+      List<Item> persons = new List<Item>();
+
+      foreach (var row in csvRows)
+      {
+        if (!string.IsNullOrEmpty(row))
+        {
+          var record = row.Split(',');
+          Person person = new Person()
+          {
+            ItemType = ItemType.Person,
+            Name = record[0],
+            CreationDate = DateTime.Now,
+            LastUpdatedInfo = DateTime.Now,
+            LastUpdated = DateTime.Now,
+            Description = "",
+            NumberOfFollowers = 0,
+            TrendingPercentage = 0.0,
+            Baseline = 0.0,
+            Informations = new List<Information>(),
+            SocialMediaUrls = new List<SocialMediaUrl>(),
+            Function = ""
+          };
+
+          persons.Add(person);
+        }
+      }
+      itemRepo.CreateItems(persons);
+      return persons;
+    }
+
+    public IEnumerable<Item> ImportPersonJson(string json)
+    {
+      dynamic deserializedJson = JsonConvert.DeserializeObject(json);
+
+      IItemManager itemManager = new ItemManager();
+      List<Item> persons = new List<Item>();
+
+      for (int i = 0; i < deserializedJson.Count; i++)
+      {
+        Person person = new Person()
+          {
+            ItemType = ItemType.Person,
+            Name = deserializedJson[i],
+            CreationDate = DateTime.Now,
+            LastUpdatedInfo = DateTime.Now,
+            LastUpdated = DateTime.Now,
+            Description = "",
+            NumberOfFollowers = 0,
+            TrendingPercentage = 0.0,
+            Baseline = 0.0,
+            Informations = new List<Information>(),
+            SocialMediaUrls = new List<SocialMediaUrl>(),
+            Function = ""
+          };
+        persons.Add(person);
+      }
+      itemRepo.CreateItems(persons);
+      return persons;
     }
   }
 }
