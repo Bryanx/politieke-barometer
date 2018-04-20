@@ -20,7 +20,7 @@
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
     <Use64BitIISExpress />
-    <IISExpressSSLPort>44398</IISExpressSSLPort>
+    <IISExpressSSLPort>44317</IISExpressSSLPort>
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
@@ -234,6 +234,7 @@
     <Compile Include="Controllers\LanguageController.cs" />
     <Compile Include="Controllers\OrganisationController.cs" />
     <Compile Include="Controllers\PersonController.cs" />
+    <Compile Include="Controllers\SubPlatformController.cs" />
     <Compile Include="Controllers\SuperAdminController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="DAL\WidgetManager.cs" />
@@ -535,6 +536,7 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Views\Shared\Partials\_UserTable.cshtml" />
+    <Content Include="Views\Shared\Partials\_SubPlatformOverview.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BAR.BL.Model\Domain.csproj">
@@ -566,6 +568,9 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Views\SubPlatform\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

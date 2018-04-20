@@ -1,4 +1,6 @@
-﻿using System;
+﻿using BAR.BL.Domain.Core;
+using BAR.BL.Managers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -10,12 +12,12 @@ namespace BAR.UI.MVC.Attributes
   {
     public override void OnActionExecuting(ActionExecutingContext filterContext)
     {
-      string subdomain = GetSubDomain(HttpContext.Current.Request.Url);
-      filterContext.RouteData.Values.Add("SubPlatform", subdomain);
+      int subdomainID = GetSubDomain(HttpContext.Current.Request.Url);
+      filterContext.RouteData.Values.Add("SubPlatformID", subdomainID);
       base.OnActionExecuting(filterContext);
     }
 
-    private static string GetSubDomain(Uri url)
+    private static int GetSubDomain(Uri url)
     {
       string host = url.Host;
       if (host.Split('.').Length > 1)
@@ -24,10 +26,12 @@ namespace BAR.UI.MVC.Attributes
         string subdomain = host.Substring(0, index);
         if (subdomain != "www")
         {
-          return subdomain;
+          ISubplatformManager subplatformManager = new SubplatformManager();
+          SubPlatform subplatform = subplatformManager.GetSubPlatform(subdomain);
+          return subplatform.SubPlatformId;
         }
       }
-      return null;
+      return -1;
     }
   }
 }

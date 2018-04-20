@@ -117,11 +117,11 @@ namespace BAR.BL.Managers
 		/// </summary>
 		/// <param name="subPlatformName"></param>
 		/// <returns></returns>
-		public IEnumerable<Item> GetAllPersonsForSubplatform(string subPlatformName)
+		public IEnumerable<Item> GetAllPersonsForSubplatform(int subPlatformID)
 		{
 			return GetAllItems().Where(item => item is Person)
         .Where(item => item.Deleted == false)
-        .Where(item => item.SubPlatform.Name.Equals(subPlatformName));
+        .Where(item => item.SubPlatform.SubPlatformId.Equals(subPlatformID));
 		}
 
 		/// <summary>

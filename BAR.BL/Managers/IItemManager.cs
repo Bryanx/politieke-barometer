@@ -15,7 +15,7 @@ namespace BAR.BL.Managers
 		IEnumerable<Item> GetAllPersons();
 		IEnumerable<Item> GetAllOrganisations();
 		IEnumerable<Item> GetItemsForType(ItemType type);
-		IEnumerable<Item> GetAllPersonsForSubplatform(string subPlatformName);
+		IEnumerable<Item> GetAllPersonsForSubplatform(int subPlatformID);
 
 
 		Item CreateItem(ItemType itemType, string name, string description = "", string function = "", Category category = null);
