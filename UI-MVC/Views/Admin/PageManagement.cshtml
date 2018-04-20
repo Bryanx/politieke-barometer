@@ -432,7 +432,7 @@
 
         //Functions for ajax calls
         //Customization
-        function putColor() {
+        function putColor(event) {
             var id = getSubplatformId();
             $.ajax({
                 type: "POST",
@@ -444,7 +444,7 @@
                 .done(() => {/* ok */ })
             event.preventDefault();
         }
-        function putAlias() {
+        function putAlias(event) {
             var id = getSubplatformId();
             $.ajax({
                 type: "POST",
@@ -456,7 +456,7 @@
                 .done(() => {/* ok */ })
             event.preventDefault();
         }
-        function putPrivacy() {
+        function putPrivacy(event) {
             var id = getSubplatformId();
             $.ajax({
                 type: "POST",
@@ -468,7 +468,7 @@
                 .done(() => {/* ok */ })
             event.preventDefault();
         }
-        function putFAQ() {
+        function putFAQ(event) {
             var id = getSubplatformId();
             $.ajax({
                 type: "POST",
@@ -480,7 +480,7 @@
                 .done(() => {/* ok */ })
             event.preventDefault();
         }
-        function putContact() {
+        function putContact(event) {
             var id = getSubplatformId();
             $.ajax({
                 type: "POST",
@@ -495,7 +495,7 @@
 
         //Questions
         //TODO: write an to create a question
-        function putQuestion() {
+        function putQuestion(event) {
             var id = getSubplatformId();
             $.ajax({
                 type: "POST",
@@ -507,7 +507,7 @@
                 .done(() => {/* ok */ })
             event.preventDefault();
         }
-        function deleteQuestion() {
+        function deleteQuestion(event) {
             var id = getSubplatformId();
             $.ajax({
                 type: "POST",
@@ -522,15 +522,15 @@
 
         //Eventlistners for ajax-calls
         //Customization
-        $("#form_page_color").submit(putColor());
-        $("#form_page_text").submit(putAlias());
-        $("#form_page_privacy").submit(putPrivacy());
-        $("#form_page_faq").submit(putFAQ());
-        $("#form_page_contact").submit(putContact());
+        $("#form_page_color").submit(function (event) { putColor(event) });
+        $("#form_page_text").submit(function (event) { putAlias(event) });
+        $("#form_page_privacy").submit(function (event) { putPrivacy(event) });
+        $("#form_page_faq").submit(function (event) { putFAQ(event) });
+        $("#form_page_contact").submit(function (event) { putContact(event) });
 
         //Questions
         //TODO: write a listner to create a question
-        $("#form_page_faq").submit(putQuestion());
-        $("#form_page_faq").submit(deleteQuestion());
+        $("#form_page_faq").submit(function (event) { putQuestion(event) });
+        $("#form_page_faq").submit(function (event) { deleteQuestion(event) });
     </script>
 }
