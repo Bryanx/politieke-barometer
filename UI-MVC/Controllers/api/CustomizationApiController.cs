@@ -17,6 +17,20 @@ namespace BAR.UI.MVC.Controllers.api
 		private ISubplatformManager platformManager;
 
 		/// <summary>
+		/// Gives back the id of the subdomain related to 
+		/// </summary>
+		[HttpGet]
+		[Route("api/Customization/GetPlatformId/{platformName}")]
+		public int GetPlatformId(string platformName)
+		{
+			platformManager = new SubplatformManager();
+			SubPlatform platform = platformManager.GetSubPlatform(platformName);
+
+			if (platform == null) return -1;
+			else return platform.SubPlatformId;
+		}
+
+		/// <summary>
 		/// Changes the webpage colors of a specific subplatform
 		/// </summary>
 		[HttpPost]

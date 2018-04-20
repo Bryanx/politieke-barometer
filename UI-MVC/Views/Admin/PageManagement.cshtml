@@ -413,33 +413,39 @@
         })($);
 
 
-        //Eventlistners for ajax-calls
-        //Customization
-        $("#form_page_color").submit(putColor(id));
-        $("#form_page_text").submit(putAlias(id));
-        $("#form_page_privacy").submit(putPrivacy(id));
-        $("#form_page_faq").submit(putFAQ(id));
-        $("#form_page_contact").submit(putContact(id));
+        //Get subplatformId
+        function getSubplatformId() {
+            //Get subdomain
+            var full  = window.location.host;
+            var subdomain = full.split('.')[0];
 
-        //Questions
-        //TODO: write a listner to create a question
-        $("#form_page_faq").submit(putQuestion(id));
-        $("#form_page_faq").submit(deleteQuestion(id));
+            //Do ajax call
+            $.ajax({
+                type: "GET",
+                url: "api/Customization/GetPlatformId/" + subdomain,
+                contentType: 'application/json; charset=utf-8',
+                dataType: "json"
+            }).fail(() => {/* ok */ })
+                .done(data => console.log(data))
+            event.preventDefault();
+        }
 
         //Functions for ajax calls
         //Customization
-        function putColor(id) {
+        function putColor() {
+            var id = getSubplatformId();
             $.ajax({
                 type: "POST",
                 url: "api/Customization/PutColor/" + id,
-                data: $this.serialize(),
+                data: $("#form_page_color").serialize(),
                 contentType: 'application/json; charset=utf-8',
                 dataType: "json"
             }).fail(() => {/* ok */ })
                 .done(() => {/* ok */ })
             event.preventDefault();
         }
-        function putAlias(id) {
+        function putAlias() {
+            var id = getSubplatformId();
             $.ajax({
                 type: "POST",
                 url: "api/Customization/PutAlias/" + id,
@@ -450,7 +456,8 @@
                 .done(() => {/* ok */ })
             event.preventDefault();
         }
-        function putPrivacy(id) {
+        function putPrivacy() {
+            var id = getSubplatformId();
             $.ajax({
                 type: "POST",
                 url: "api/Customization/PutPrivacy/" + id,
@@ -461,7 +468,8 @@
                 .done(() => {/* ok */ })
             event.preventDefault();
         }
-        function putFAQ(id) {
+        function putFAQ() {
+            var id = getSubplatformId();
             $.ajax({
                 type: "POST",
                 url: "api/Customization/PutFAQ/" + id,
@@ -472,7 +480,8 @@
                 .done(() => {/* ok */ })
             event.preventDefault();
         }
-        function putContact(id) {
+        function putContact() {
+            var id = getSubplatformId();
             $.ajax({
                 type: "POST",
                 url: "api/Customization/PutContact/" + id,
@@ -486,7 +495,8 @@
 
         //Questions
         //TODO: write an to create a question
-        function putQuestion(id) {
+        function putQuestion() {
+            var id = getSubplatformId();
             $.ajax({
                 type: "POST",
                 url: "api/Customization/PutQuestion/" + id,
@@ -497,7 +507,8 @@
                 .done(() => {/* ok */ })
             event.preventDefault();
         }
-        function deleteQuestion(id) {
+        function deleteQuestion() {
+            var id = getSubplatformId();
             $.ajax({
                 type: "POST",
                 url: "api/Customization/DeleteQuestion/" + id,
@@ -508,5 +519,18 @@
                 .done(() => {/* ok */ })
             event.preventDefault();
         }
+
+        //Eventlistners for ajax-calls
+        //Customization
+        $("#form_page_color").submit(putColor());
+        $("#form_page_text").submit(putAlias());
+        $("#form_page_privacy").submit(putPrivacy());
+        $("#form_page_faq").submit(putFAQ());
+        $("#form_page_contact").submit(putContact());
+
+        //Questions
+        //TODO: write a listner to create a question
+        $("#form_page_faq").submit(putQuestion());
+        $("#form_page_faq").submit(deleteQuestion());
     </script>
 }
