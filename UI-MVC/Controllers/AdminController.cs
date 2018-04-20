@@ -9,6 +9,7 @@ using Microsoft.AspNet.Identity.Owin;
 using System.Linq;
 using AutoMapper;
 using BAR.UI.MVC.App_GlobalResources;
+using BAR.BL.Domain.Core;
 
 namespace BAR.UI.MVC.Controllers
 {
@@ -20,6 +21,7 @@ namespace BAR.UI.MVC.Controllers
 	{
 		private IUserManager userManager;
 		private IItemManager itemManager;
+		private ISubplatformManager platformManager;
 
 		/// <summary>
 		/// Dashboard page of admin.
@@ -35,13 +37,17 @@ namespace BAR.UI.MVC.Controllers
 		public ActionResult PageManagement()
 		{
 			userManager = new UserManager();
+			platformManager = new SubplatformManager();
+
+			//Map viewmodel
+			Customization platform = platformManager.GetCustomization(2);
+
+			CustomizationViewModel vm = Mapper.Map(platform, new CustomizationViewModel());
+			vm.User = userManager.GetUser(User.Identity.GetUserId());
+			vm.PageTitle = Resources.PageManagement;
 
 			//Assembling the view
-			return View(new BaseViewModel()
-			{
-				User = userManager.GetUser(User.Identity.GetUserId()),
-				PageTitle = Resources.PageManagement
-			});
+			return View(vm);
 		}
 
 		/// <summary>

@@ -1,25 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Web;
 
-namespace BAR.BL.Domain.Core
+namespace BAR.UI.MVC.Models
 {
-	/// <summary>
-	/// NOTE
-	/// All colors are hex-values
-	/// </summary>
-	public class Customization
+	public class CustomizationViewModel : BaseViewModel
 	{
 		public int CustomizationId { get; set; }
 
 		//Colors
+		[RegularExpression("^#([0-9]|[a-f]|[A-F]){6}$")]
 		public string PrimaryColor { get; set; }
+		[RegularExpression("^#([0-9]|[a-f]|[A-F]){6}$")]
 		public string SecondairyColor { get; set; }
+		[RegularExpression("^#([0-9]|[a-f]|[A-F]){6}$")]
 		public string TertiaryColor { get; set; }
+		[RegularExpression("^#([0-9]|[a-f]|[A-F]){6}$")]
 		public string BackgroundColor { get; set; }
+		[RegularExpression("^#([0-9]|[a-f]|[A-F]){6}$")]
 		public string TextColor { get; set; }
 
 		//Navbar and title text

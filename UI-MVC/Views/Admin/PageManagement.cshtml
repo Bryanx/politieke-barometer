@@ -1,5 +1,6 @@
 ﻿@using System.Web.Optimization
-@model BAR.UI.MVC.Models.BaseViewModel
+@model BAR.UI.MVC.Models.CustomizationViewModel
+
 
 @section CustomCSS{
     <link href="../../Scripts/mjolnic-bootstrap-colorpicker/dist/css/bootstrap-colorpicker.min.css" rel="stylesheet">
@@ -18,7 +19,7 @@
                     <form id="form_page_color" class="form-horizontal form-label-left">
                         <label class="control-label">Primaire kleur</label>
                         <div id="cp-primary" class="input-group">
-                            <input id="ip-primary" type="text" class="form-control" />
+                            @Html.TextBoxFor(model => model.PrimaryColor, "", new { @class = "form-control", id= "ip-primary", placeholder = @Model.PrimaryColor })
                             <span class="input-group-addon">
                                 <i></i>
                             </span>

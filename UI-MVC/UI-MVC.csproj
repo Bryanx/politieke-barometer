@@ -248,6 +248,7 @@
     <Compile Include="Models\AlertDTO.cs" />
     <Compile Include="Models\BaseViewModel.cs" />
     <Compile Include="Models\AdminViewModels.cs" />
+    <Compile Include="Models\CustomizationViewModel.cs" />
     <Compile Include="Models\Graph.cs" />
     <Compile Include="Models\ItemDTO.cs" />
     <Compile Include="Models\ItemViewModels.cs" />
