@@ -250,7 +250,7 @@
     <Compile Include="Models\ItemDTO.cs" />
     <Compile Include="Models\ItemViewModels.cs" />
     <Compile Include="Models\UserViewModels.cs" />
-    <Compile Include="Models\Widget.cs" />
+    <Compile Include="Models\Widgettt.cs" />
     <Compile Include="PersonDynamicNodeProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />

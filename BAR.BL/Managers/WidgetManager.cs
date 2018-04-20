@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using BAR.BL.Domain.Widgets;
 using BAR.DAL;
 using BAR.BL.Domain.Users;

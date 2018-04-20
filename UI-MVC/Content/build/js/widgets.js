@@ -160,7 +160,7 @@ var grid = gridselector.data('gridstack');
 function loadGrid(data) {
     for (var i = 0; i < data.length; i++) {
         grid.addWidget(createWidget('grafiek' + counter, data[i].Title),
-            data.x, data[i].y, data[i].width, data[i].height, true, 4, 12, 4);
+            data.RowNumber, data[i].ColumnNumber, data[i].RowSpan, data[i].ColumnSpan, true, 4, 12, 4);
         if (data[i].Graph != null) {
             switch (data[i].Graph.Type) {
                 case "donut" :

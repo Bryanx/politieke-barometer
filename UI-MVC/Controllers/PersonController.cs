@@ -6,6 +6,7 @@ using AutoMapper;
 using BAR.BL;
 using BAR.BL.Domain.Items;
 using BAR.BL.Domain.Users;
+using BAR.BL.Domain.Widgets;
 using BAR.BL.Managers;
 using BAR.UI.MVC.App_GlobalResources;
 using BAR.UI.MVC.Models;
@@ -23,6 +24,7 @@ namespace BAR.UI.MVC.Controllers
 		private IItemManager itemManager;
 		private IUserManager userManager;
 		private ISubscriptionManager subManager;
+		private IWidgetManager widgetManager;
 
 		/// <summary>
 		/// Item page for logged-in and non-logged-in users.
@@ -56,20 +58,24 @@ namespace BAR.UI.MVC.Controllers
 			itemManager = new ItemManager();
 			userManager = new UserManager();
 			subManager = new SubscriptionManager();
+			widgetManager = new WidgetManager();
 
 			IEnumerable<Item> subs = subManager.GetSubscribedItemsForUser(User.Identity.GetUserId());
 			Item item = itemManager.GetItem(id);
 			Item subbedItem = subs.FirstOrDefault(i => i.ItemId == item.ItemId);
 
-			//Assembling the view
-			return View("Details",
-				new PersonViewModel()
-				{
+			List<BAR.BL.Domain.Widgets.Widget> widgets = new List<BAR.BL.Domain.Widgets.Widget>();
+			widgets.Add(widgetManager.CreateWidget(WidgetType.GraphType, "Person graph", 6, 6));
+			PersonViewModel personViewModel =
+				new PersonViewModel() {
 					PageTitle = item.Name,
 					User = User.Identity.IsAuthenticated ? userManager.GetUser(User.Identity.GetUserId()) : null,
 					Person = Mapper.Map(item, new ItemDTO()),
-					Subscribed = subbedItem != null
-				});
+					Subscribed = subbedItem != null,
+					Widgets = widgets
+				};
+			//Assembling the view
+			return View("Details", personViewModel);
 		}
 	}
 }

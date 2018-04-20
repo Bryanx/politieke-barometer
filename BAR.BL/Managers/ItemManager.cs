@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using BAR.BL.Domain.Data;
 using System.Linq;
 using BAR.BL.Domain.Users;
+using BAR.BL.Domain.Widgets;
 
 namespace BAR.BL.Managers
 {
@@ -218,74 +219,56 @@ namespace BAR.BL.Managers
 		/// </summary>
 		public Item CreateItem(ItemType itemType, string name, string description = "", string function = "", Category category = null)
 		{
-			InitRepo();
+				InitRepo();
 
-			//the switch statement will determine if we need to make a
-			//Organisation, person or theme.
-			Item item;
-			switch (itemType)
-			{
-				case ItemType.Person:
-					item = new Person()
-					{
-						ItemType = itemType,
-						Name = name,
-						CreationDate = DateTime.Now,
-						LastUpdatedInfo = DateTime.Now,
-						LastUpdated = DateTime.Now,
-						Description = description,
-						NumberOfFollowers = 0,
-						TrendingPercentage = 0.0,
-						Baseline = 0.0,
-						Informations = new List<Information>(),
-						SocialMediaUrls = new List<SocialMediaUrl>(),
-						Function = function
-					};
-					break;
-				case ItemType.Organisation:
-					item = new Organisation()
-					{
-						ItemType = itemType,
-						Name = name,
-						CreationDate = DateTime.Now,
-						LastUpdatedInfo = DateTime.Now,
-						LastUpdated = DateTime.Now,
-						Description = description,
-						NumberOfFollowers = 0,
-						TrendingPercentage = 0.0,
-						Baseline = 0.0,
-						Informations = new List<Information>(),
-						SocialMediaUrls = new List<SocialMediaUrl>()
-					};
-					break;
-				case ItemType.Theme:
-					item = new Theme()
-					{
-						ItemType = itemType,
-						Name = name,
-						CreationDate = DateTime.Now,
-						LastUpdatedInfo = DateTime.Now,
-						LastUpdated = DateTime.Now,
-						Description = description,
-						NumberOfFollowers = 0,
-						TrendingPercentage = 0.0,
-						Baseline = 0.0,
-						Informations = new List<Information>(),
-						Category = category
-					};
-					break;
-				default:
-					item = null;
-					break;
-			}
+				//the switch statement will determine if we need to make a
+				//Organisation, person or theme.
+				Item item;
+				switch (itemType) {
+					case ItemType.Person:
+						item = new Person() {
+							SocialMediaUrls = new List<SocialMediaUrl>(),
+							Function = function
+						};
+						break;
+					case ItemType.Organisation:
+						item = new Organisation() {
+							SocialMediaUrls = new List<SocialMediaUrl>()
+						};
+						break;
+					case ItemType.Theme:
+						item = new Theme() {
+							Category = category
+						};
+						break;
+					default:
+						item = null;
+						break;
+				}
 
-			if (item == null) return item;
-			else
-			{
+				if (item == null) return null;
+				item.ItemType = itemType;
+				item.Name = name;
+				item.CreationDate = DateTime.Now;
+				item.LastUpdatedInfo = DateTime.Now;
+				item.LastUpdated = DateTime.Now;
+				item.Description = description;
+				item.NumberOfFollowers = 0;
+				item.TrendingPercentage = 0.0;
+				item.Baseline = 0.0;
+				item.Informations = new List<Information>();
+				item.ItemWidgets = GenerateDefaultItemWidgets();
+
 				itemRepo.CreateItem(item);
 				return item;
-			}
+		}
 
+		public List<ItemWidget> GenerateDefaultItemWidgets() {
+			List<ItemWidget> lijst = new List<ItemWidget>();
+			WidgetManager widgetManager = new WidgetManager();
+			ItemWidget widget = (ItemWidget) widgetManager.CreateWidget(WidgetType.GraphType, "Widget title", 1, 1);
+			lijst.Add(widget);
+			return lijst;
 		}
 
 		/// <summary>

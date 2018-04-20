@@ -5,6 +5,9 @@
     ViewBag.Title = Model.PageTitle;
 }
 
+@section CustomCSS{
+    <link rel="stylesheet" href="../../Content/build/css/vendor/gridstack.css"/>
+}
 
 <div class="clearfix"></div>
 
@@ -37,7 +40,9 @@
                     <hr/>
                 </div>
                 <div class="col-md-3 col-sm-3 col-xs-12">
-                    <h4><strong>@Resources.Politician details</strong></h4>
+                    <h4>
+                        <strong>@Resources.Politician details</strong>
+                    </h4>
                     <ul class="list-unstyled user_data">
                         <li>
                             <i class="fa fa-map-marker user-profile-icon"></i> Locatie
@@ -52,7 +57,9 @@
                     </ul>
                 </div>
                 <div class="col-md-3 col-sm-3 col-xs-12">
-                    <h4><strong>Laatste verhalen</strong></h4>
+                    <h4>
+                        <strong>Laatste verhalen</strong>
+                    </h4>
                     <ul class="list-unstyled person-data">
                         <li>
                             <i class="fa fa-map-marker user-profile-icon"></i> Locatie
@@ -67,20 +74,57 @@
                     </ul>
                 </div>
                 <div class="col-md-3 col-sm-3 col-xs-12">
-                    <h4><strong>Totale vermeldingen</strong></h4>
-                    <h1><strong>232</strong></h1>
+                    <h4>
+                        <strong>Totale vermeldingen</strong>
+                    </h4>
+                    <h1>
+                        <strong>232</strong>
+                    </h1>
                 </div>
             </div>
         </div>
     </div>
 </div>
+<!-- Widgets -->
+<div class="grid-stack" id="grid">
+</div>
+@foreach (var widget in Model.Widgets) {
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel grid-stack-item-content bg-white no-scrollbar">
+                <div class="x_title">
+                    <h2 class="graphTitle"> @widget.Title </h2>
+                    <div class="pull-right">
+                        <button data-widget-id="@widget.WidgetId" class="widgets btn btn-dark btn-xs">Add to dashboard</button>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+                <div id="graphPart"></div>
+            </div>
+        </div>
+    </div>
+}
 
 @section CustomJS{
-    @Scripts.Render("~/bundles/morrisCharts")
+    @Scripts.Render("~/bundles/gridstack", "~/bundles/morrisCharts")
     <script type="text/javascript" defer>
+        
+        function loadWidgets() {
+            $.ajax('/api/Widget/'+@Model.,
+                    {
+                        type: 'GET',
+                        dataType: 'json'
+                    })
+                //if GET request is succesfull: call loadGrid() in widgets.js -> loads all widgets
+                .done(data => loadGrid(data))
+                //TODO: if FAIL proper error handling
+                .fail(() => alert('Widgets could not be loaded.'));
+        }
+        
         $('.subscribeItem').click(function() {
             ajaxToggleSubscribe($(this));
         });
 
     </script>
 }
+
