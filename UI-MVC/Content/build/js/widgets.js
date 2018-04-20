@@ -148,12 +148,12 @@ function createWidget(id, title) {
 }
 
 function createItemWidget(id, title) {
-    return '<div class="chart-container">' +
+    return '<div  data-widget-id='+id+' class="chart-container">' +
         '            <div class="x_panel grid-stack-item-content bg-white no-scrollbar">' +
         '                <div class="x_title">' +
         '                    <h2 class="graphTitle">' + title + '</h2>' +
         '                    <div class="pull-right">' +
-        '                       <button class="widgets btn btn-dark btn-xs">Add to dashboard</button>' +
+        '                       <button class="addToDashboard btn btn-dark btn-xs">Add to dashboard</button>' +
         '                   </div>'+
         '                    <div class="clearfix"></div>' +
         '                </div>' +
@@ -223,13 +223,6 @@ function saveGrid() {
 }
 
 function init() {
-    //close widget
-    $(document).on('click', '#close-widget', function (e) {
-        e.preventDefault();
-        let el = $(this).closest('.grid-stack-item');
-        $('#grid').data('gridstack').removeWidget(el);
-    });
-
     //add widget with graph
     this.btnAddLineChart = function () {
         grid.addWidget(createWidget('grafiek' + counter), 0, 0, 4, 4, true, 4, 12, 4);
@@ -249,26 +242,21 @@ function init() {
         counter++;
         return false;
     }.bind(this);
+    this.closeWidget = function (e) {
+        e.preventDefault();
+        let el = $(this).closest('.grid-stack-item');
+        $('#grid').data('gridstack').removeWidget(el);
+    };
+    this.addToDashBoard = function ($this) {
+        let widgetId = ('.addToDashboard').parents(".chart-container").data("widget-id");
+    };
 
+//data-gs-y="0" data-gs-width="12" data-gs-height="6" data-gs-auto-position="yes" data-gs-min-width="4" data-gs-max-width="12" data-gs-min-height="4" data-gs-x="0"
     //handlers
     $('#btnAddLine').click(this.btnAddLineChart);
     $('#btnAddPie').click(this.btnAddPieChart);
     $('#btnAddBar').click(this.btnAddBarChart);
+    $(document).on('click', '#close-widget', e => this.closeWidget(e));
+    $(document).on('click', '.addToDashboard', () => this.addToDashBoard($(this)));
 }
-
-//TODO: Add persistence and import functionality
-// $(function () {
-//         this.clearGrid = function () {
-//             this.grid.removeAll();
-//             return false;
-//         }.bind(this);
-//
-//         $('#save-grid').click(this.saveGrid);
-//         $('#load-grid').click(this.loadGrid);
-//         $('#clear-grid').click(this.clearGrid);
-//
-//         this.loadGrid();
-//     };
-// });
-    
 
