@@ -96,20 +96,31 @@ namespace BAR.BL.Managers
 		}
 
 		/// <summary>
-		/// Returns all (undeleted) people
+		/// Returns all (undeleted) people of the whole system
 		/// </summary>
 		public IEnumerable<Item> GetAllPersons() 
 		{
-			return GetAllItems().Where(item => item is Person).Where(item => item.Deleted == false);
+			InitRepo();
+			return itemRepo.ReadAllPersons().AsEnumerable();
 		}
 
 		/// <summary>
-		/// Returns all (undeleted) organisations
+		/// Returns all (undeleted) organisations of the whole system
 		/// </summary>
 		public IEnumerable<Item> GetAllOrganisations() 
 		{
-			return GetAllItems().Where(item => item is Organisation).Where(item => item.Deleted == false);
+			InitRepo();
+			return itemRepo.ReadAllOraginsations().AsEnumerable();
 
+		}
+
+		/// <summary>
+		/// Returns all (undeleted) themes of the whole system
+		/// </summary>
+		public IEnumerable<Item> GetAllThemes()
+		{
+			InitRepo();
+			return itemRepo.ReadAllThemes().AsEnumerable();
 		}
 
 		/// <summary>
@@ -119,9 +130,9 @@ namespace BAR.BL.Managers
 		/// <returns></returns>
 		public IEnumerable<Item> GetAllPersonsForSubplatform(int subPlatformID)
 		{
-			return GetAllItems().Where(item => item is Person)
-        .Where(item => item.Deleted == false)
-        .Where(item => item.SubPlatform.SubPlatformId.Equals(subPlatformID));
+			return GetAllPersons()
+				.Where(item => item.Deleted == false)
+				.Where(item => item.SubPlatform.SubPlatformId.Equals(subPlatformID));
 		}
 
 		/// <summary>

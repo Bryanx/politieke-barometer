@@ -56,11 +56,11 @@ namespace BAR.DAL
 		/// <summary>
 		/// Gives back a subplatform with all the questions and then customization.
 		/// </summary>
-		public SubPlatform GetSubplatformWithAllinfo(string subplatformName)
+		public SubPlatform GetSubplatformWithAllinfo(int platformId)
 		{
 			return ctx.SubPlatforms.Include(platform => platform.Questions)
 								   .Include(platform => platform.Customization)
-								   .Where(platform => platform.Name.ToLower().Equals(subplatformName.ToLower())).SingleOrDefault();
+								   .Where(platform => platform.SubPlatformId == platformId).SingleOrDefault();
 		}
 
 		/// <summary>
@@ -74,10 +74,9 @@ namespace BAR.DAL
 		/// <summary>
 		/// Reads all the questions from a specific subplatform.
 		/// </summary>
-		public IEnumerable<Question> ReadQuestions(string subplatformName)
+		public IEnumerable<Question> ReadQuestions(int platformId)
 		{
-			return ctx.Questions
-				.Where(question => question.SubPlatform.Name.ToLower().Equals(subplatformName.ToLower())).AsEnumerable();
+			return ctx.Questions.Where(question => question.SubPlatform.SubPlatformId == platformId).AsEnumerable();
 		}
 
 		/// <summary>
@@ -91,24 +90,32 @@ namespace BAR.DAL
 		/// <summary>
 		/// Gives back the configuration of a specific subplatform
 		/// </summary>
-		public SubPlatform ReadSubplatformWithCustomization(string subplatformName)
+		public SubPlatform ReadSubplatformWithCustomization(int platformId)
 		{
 			return ctx.SubPlatforms.Include(platform => platform.Customization)
-									.Where(platform => platform.Name.ToLower().Equals(subplatformName.ToLower())).SingleOrDefault();
+									.Where(platform => platform.SubPlatformId == platformId).SingleOrDefault();
 		}
 
 		/// <summary>;;
-		/// Reads a subplatform based on name of the subplatform.
+		/// Reads a subplatform based on id of the subplatform.
 		/// </summary>
-		public SubPlatform ReadSubPlatform(string subplatformName)
+		public SubPlatform ReadSubPlatform(int platformId)
 		{
-			return ctx.SubPlatforms.Where(sp => sp.Name.Equals(subplatformName)).SingleOrDefault();
+      return ctx.SubPlatforms.Find(platformId);
 		}
 
-		/// <summary>
-		/// Gives back all the subplatforms that are on the system
+    /// <summary>;;
+		/// Reads a subplatform based on name of the subplatform.
 		/// </summary>
-		public IEnumerable<SubPlatform> ReadSubPlatforms()
+    public SubPlatform ReadSubPlatform(string platformName)
+    {
+      return ctx.SubPlatforms.Where(platform => platform.Name.ToLower().Equals(platformName.ToLower())).SingleOrDefault();
+    }
+
+    /// <summary>
+    /// Gives back all the subplatforms that are on the system
+    /// </summary>
+    public IEnumerable<SubPlatform> ReadSubPlatforms()
 		{
 			return ctx.SubPlatforms.AsEnumerable();
 		}
@@ -182,5 +189,5 @@ namespace BAR.DAL
 			foreach (Question question in questions) ctx.Questions.Remove(question);
 			return ctx.SaveChanges();
 		}
-	}
+  }
 }

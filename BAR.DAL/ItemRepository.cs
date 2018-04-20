@@ -29,7 +29,7 @@ namespace BAR.DAL
 			if (uow == null) ctx = new BarometerDbContext();
 			else ctx = uow.Context;
 		}
-		
+
 		/// <summary>
 		/// Returns the item that matches the itemId.
 		/// </summary>       
@@ -62,8 +62,31 @@ namespace BAR.DAL
 		/// <returns></returns>
 		public IEnumerable<Item> ReadAllItems()
 		{
-      return ctx.Items.Include(item => item.SubPlatform).AsEnumerable();
-			//return ctx.Items.AsEnumerable();
+			return ctx.Items.Include(item => item.SubPlatform).AsEnumerable();
+		}
+
+		/// <summary>
+		/// Gives back a list of all the persons
+		/// </summary>
+		public IEnumerable<Person> ReadAllPersons()
+		{
+			return ReadAllItems().OfType<Person>().AsEnumerable();
+		}
+
+		/// <summary>
+		/// Gives back a list of all the organisations
+		/// </summary>
+		public IEnumerable<Organisation> ReadAllOraginsations()
+		{
+			return ReadAllItems().OfType<Organisation>().AsEnumerable();
+		}
+
+		/// <summary>
+		/// Gives back a list of all the thetms
+		/// </summary>
+		public IEnumerable<Theme> ReadAllThemes()
+		{
+			return ReadAllItems().OfType<Theme>().AsEnumerable();
 		}
 
 		/// <summary>
@@ -124,7 +147,7 @@ namespace BAR.DAL
 		/// </summary>
 		public int UpdateItems(IEnumerable<Item> items)
 		{
-			foreach (Item item in items) ctx.Entry(item).State = EntityState.Modified;	
+			foreach (Item item in items) ctx.Entry(item).State = EntityState.Modified;
 			return ctx.SaveChanges();
 		}
 
@@ -146,6 +169,6 @@ namespace BAR.DAL
 		{
 			foreach (Item item in items) ctx.Items.Remove(item);
 			return ctx.SaveChanges();
-		}		
+		}
 	}
 }

@@ -37,6 +37,7 @@ namespace BAR.UI.MVC.Controllers
 			//Get hold of subplatformID we received
 			int subPlatformID = (int) RouteData.Values["SubPlatformID"];
 
+
 			itemManager = new ItemManager();
 			userManager = new UserManager();
 			subManager = new SubscriptionManager();
@@ -47,8 +48,9 @@ namespace BAR.UI.MVC.Controllers
 			{
 				//Do generic version for no specific subplatform
 				people = Mapper.Map(itemManager.GetAllPersons(), new List<ItemDTO>());
-				
-			} else
+
+			}
+			else
 			{
 				//Return platformspecific data
 				List<Item> peopleList = itemManager.GetAllPersonsForSubplatform(subPlatformID).ToList();
