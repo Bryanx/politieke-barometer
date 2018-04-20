@@ -12,27 +12,29 @@ namespace BAR.UI.MVC.Controllers.api
 	/// <summary>
 	/// This API-controller is used for the customization of the subplatforms.
 	/// </summary>
-    public class CustomizationApiController : ApiController
-    {
+	public class CustomizationApiController : ApiController
+	{
 		private ISubplatformManager platformManager;
 
 		/// <summary>
-		/// Gives back the customization of a specific subplatform
+		/// Gives back the id of the subdomain related to 
 		/// </summary>
-		public IHttpActionResult Get(int platformId)
+		[HttpGet]
+		[Route("api/Customization/GetPlatformId/{platformName}")]
+		public int GetPlatformId(string platformName)
 		{
 			platformManager = new SubplatformManager();
-			Customization custom = platformManager.GetCustomization(platformId);
+			SubPlatform platform = platformManager.GetSubPlatform(platformName);
 
-			if (custom == null)
-				return StatusCode(HttpStatusCode.NoContent);
-
-			return Ok(custom);
+			if (platform == null) return -1;
+			else return platform.SubPlatformId;
 		}
 
 		/// <summary>
 		/// Changes the webpage colors of a specific subplatform
 		/// </summary>
+		[HttpPost]
+		[Route("api/Customization/PutColor/{platformId}")]
 		public IHttpActionResult PutColor(int platformId, [FromBody] Customization custom)
 		{
 			platformManager = new SubplatformManager();
@@ -51,6 +53,8 @@ namespace BAR.UI.MVC.Controllers.api
 		/// <summary>
 		/// Changes the page alias of a specific subplatform
 		/// </summary>
+		[HttpPost]
+		[Route("api/Customization/PutAlias/{platformId}")]
 		public IHttpActionResult PutAlias(int platformId, [FromBody] Customization custom)
 		{
 			platformManager = new SubplatformManager();
@@ -69,6 +73,8 @@ namespace BAR.UI.MVC.Controllers.api
 		/// <summary>
 		/// Changes the privacy of a specific subplatform
 		/// </summary>
+		[HttpPost]
+		[Route("api/Customization/PutPrivacy/{platformId}")]
 		public IHttpActionResult PutPrivacy(int platformId, [FromBody] Customization custom)
 		{
 			platformManager = new SubplatformManager();
@@ -86,6 +92,8 @@ namespace BAR.UI.MVC.Controllers.api
 		/// <summary>
 		/// Changes the FAQ of a specific subplatform
 		/// </summary>
+		[HttpPost]
+		[Route("api/Customization/PutFAQ/{platformId}")]
 		public IHttpActionResult PutFAQ(int platformId, [FromBody] Customization custom)
 		{
 			platformManager = new SubplatformManager();
@@ -103,7 +111,9 @@ namespace BAR.UI.MVC.Controllers.api
 		/// <summary>
 		/// Changes the address of a specific subplatform
 		/// </summary>
-		public IHttpActionResult PutAddress(int platformId, [FromBody] Customization custom)
+		[HttpPost]
+		[Route("api/Customization/PutContact/{platformId}")]
+		public IHttpActionResult PutContact(int platformId, [FromBody] Customization custom)
 		{
 			platformManager = new SubplatformManager();
 
@@ -116,5 +126,61 @@ namespace BAR.UI.MVC.Controllers.api
 
 			return StatusCode(HttpStatusCode.NoContent);
 		}
- 	}
+
+		/// <summary>
+		/// Creates a question for a specific subplatform
+		/// </summary>
+		[HttpPost]
+		[Route("api/Customization/PostQuestion/{platformId}")]
+		public IHttpActionResult PostQuestion(int platformId, [FromBody] Question question)
+		{
+			platformManager = new SubplatformManager();
+
+			if (question == null)
+				return BadRequest("No question given");
+			if (!ModelState.IsValid)
+				return BadRequest(ModelState);
+
+			platformManager.AddQuestion(platformId, question.QuestionType, question.Title, question.Answer);
+
+			return StatusCode(HttpStatusCode.NoContent);
+		}
+
+		/// <summary>
+		/// Changes a specific question
+		/// </summary>
+		[HttpPost]
+		[Route("api/Customization/PutQuestion/{questionId}")]
+		public IHttpActionResult PutQuestion(int questionId, [FromBody] Question question)
+		{
+			platformManager = new SubplatformManager();
+
+			if (question == null)
+				return BadRequest("No question given");
+			if (!ModelState.IsValid)
+				return BadRequest(ModelState);
+			if (questionId == question.QuestionId)
+				return BadRequest("Id doesn't match");
+
+			platformManager.ChangeQuestion(questionId, question.QuestionType, question.Title, question.Answer);
+
+			return StatusCode(HttpStatusCode.NoContent);
+		}
+
+		/// <summary>
+		/// Deletes a question
+		/// </summary>
+		[HttpPost]
+		[Route("api/Customization/DeleteQuestion/{platformId}")]
+		public IHttpActionResult DeleteQuestion(int questionId)
+		{
+			platformManager = new SubplatformManager();
+			if (!platformManager.Exists(questionId))
+				return NotFound();
+
+			platformManager.RemoveQuestion(questionId);
+
+			return StatusCode(HttpStatusCode.NoContent);
+		}
+	}
 }

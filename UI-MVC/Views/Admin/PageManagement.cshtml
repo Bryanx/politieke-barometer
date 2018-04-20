@@ -13,40 +13,40 @@
                 <div class="clearfix"></div>
             </div>
             <div class="x_content">
-                <br/>
+                <br />
                 <div class="col-sm-8 col-md-8 col-xs-12 center-margin">
-                    <form class="form-horizontal form-label-left">
+                    <form id="form_page_color" class="form-horizontal form-label-left">
                         <label class="control-label">Primaire kleur</label>
                         <div id="cp-primary" class="input-group">
-                            <input id="ip-primary" type="text" class="form-control"/>
+                            <input id="ip-primary" type="text" class="form-control" />
                             <span class="input-group-addon">
                                 <i></i>
                             </span>
                         </div>
                         <label class="control-label">Secundaire kleur</label>
                         <div id="cp-secondary" class="input-group">
-                            <input id="ip-secondary" type="text" class="form-control"/>
+                            <input id="ip-secondary" type="text" class="form-control" />
                             <span class="input-group-addon">
                                 <i></i>
                             </span>
                         </div>
                         <label class="control-label">Tertiaire kleur</label>
                         <div id="cp-tertiary" class="input-group">
-                            <input id="ip-tertiary" type="text" class="form-control"/>
+                            <input id="ip-tertiary" type="text" class="form-control" />
                             <span class="input-group-addon">
                                 <i></i>
                             </span>
                         </div>
                         <label class="control-label">Achtergrond kleur</label>
                         <div id="cp-bg" class="input-group">
-                            <input id="ip-bg" type="text" class="form-control"/>
+                            <input id="ip-bg" type="text" class="form-control" />
                             <span class="input-group-addon">
                                 <i></i>
                             </span>
                         </div>
                         <label class="control-label">Tekst kleur</label>
                         <div id="cp-font" class="input-group">
-                            <input id="ip-font" type="text" class="form-control"/>
+                            <input id="ip-font" type="text" class="form-control" />
                             <span class="input-group-addon">
                                 <i></i>
                             </span>
@@ -54,6 +54,7 @@
                         <button type="submit" class="btn btn-dark">Opslaan</button>
                         <div id="messageSettings" style="display: inline"></div>
                     </form>
+
                 </div>
             </div>
         </div>
@@ -65,9 +66,9 @@
                 <div class="clearfix"></div>
             </div>
             <div class="x_content">
-                <br/>
+                <br />
                 <div class="col-sm-8 col-md-8 col-xs-12 center-margin">
-                    <form class="form-horizontal form-label-left">
+                    <form id="form_page_text" class="form-horizontal form-label-left">
 
                         <div class="form-group">
                             <label class="control-label">Persoon alias (ev)</label>
@@ -112,8 +113,8 @@
                 <div class="clearfix"></div>
             </div>
             <div class="x_content">
-                <br/>
-                <form class="form-horizontal form-label-left">
+                <br />
+                <form id="form_page_privacy" class="form-horizontal form-label-left">
                     <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="privacy_title">
                             Titel
@@ -133,8 +134,7 @@
                                     <a class="btn dropdown-toggle" data-toggle="dropdown" title="Font">
                                         <i class="fa fa-font"></i><b class="caret"></b>
                                     </a>
-                                    <ul class="dropdown-menu">
-                                    </ul>
+                                    <ul class="dropdown-menu"></ul>
                                 </div>
 
                                 <div class="btn-group">
@@ -251,8 +251,8 @@
                 <div class="clearfix"></div>
             </div>
             <div class="x_content">
-                <br/>
-                <form class="form-horizontal form-label-left">
+                <br />
+                <form id="form_page_faq" class="form-horizontal form-label-left">
                     <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">
                             Titel
@@ -305,10 +305,9 @@
                 <div class="clearfix"></div>
             </div>
             <div class="x_content">
-                <br/>
+                <br />
                 <div class="col-sm-8 col-md-8 col-xs-12 center-margin">
-                    <form class="form-horizontal form-label-left">
-
+                    <form id="form_page_contact" class="form-horizontal form-label-left">
                         <div class="form-group">
                             <label class="control-label">Straat en huisnummer</label>
                             <input class="form-control" value="Nationalestraat 24">
@@ -349,7 +348,7 @@
          */
         var htmlselector = document.getElementsByTagName('html')[0];
         var primary_color = window.getComputedStyle(document.documentElement).getPropertyValue('--primary-color')
-                .split(' ').join(''),
+            .split(' ').join(''),
             secondary_color = window.getComputedStyle(document.documentElement).getPropertyValue('--secondary-color')
                 .split(' ').join('');
         var tertiary_color = window.getComputedStyle(document.documentElement).getPropertyValue('--tertiary-color')
@@ -400,5 +399,139 @@
             $('#ip-bg').val(bg_color).trigger('change');
             $('#ip-font').val(font_color).trigger('change');
         })($);
+
+
+        //Get subplatformId
+        function getSubplatformId() {
+            //Get subdomain
+            var full = window.location.host;
+            var subdomain = full.split('.')[0];
+
+            //Do ajax call
+            $.ajax({
+                type: "GET",
+                url: "api/Customization/GetPlatformId/" + subdomain,
+                contentType: 'application/json; charset=utf-8',
+                dataType: "json"
+            }).fail(() => {/* ok */ })
+                .done(data => console.log(data))
+        }
+
+        //Functions for ajax calls
+        //Customization
+        function putColor() {
+            var id = getSubplatformId();
+            $.ajax({
+                type: "POST",
+                url: "api/Customization/PutColor/" + id,
+                data: $("#form_page_color").serialize(),
+                contentType: 'application/json; charset=utf-8',
+                dataType: "json"
+            }).fail(() => {/* ok */ })
+                .done(() => {/* ok */ })
+        }
+        function putAlias() {
+            var id = getSubplatformId();
+            $.ajax({
+                type: "POST",
+                url: "api/Customization/PutAlias/" + id,
+                data: $this.serialize(),
+                contentType: 'application/json; charset=utf-8',
+                dataType: "json"
+            }).fail(() => {/* ok */ })
+                .done(() => {/* ok */ })
+        }
+        function putPrivacy() {
+            var id = getSubplatformId();
+            $.ajax({
+                type: "POST",
+                url: "api/Customization/PutPrivacy/" + id,
+                data: $this.serialize(),
+                contentType: 'application/json; charset=utf-8',
+                dataType: "json"
+            }).fail(() => {/* ok */ })
+                .done(() => {/* ok */ })
+        }
+        function putFAQ() {
+            var id = getSubplatformId();
+            $.ajax({
+                type: "POST",
+                url: "api/Customization/PutFAQ/" + id,
+                data: $this.serialize(),
+                contentType: 'application/json; charset=utf-8',
+                dataType: "json"
+            }).fail(() => {/* ok */ })
+                .done(() => {/* ok */ })
+        }
+        function putContact() {
+            var id = getSubplatformId();
+            $.ajax({
+                type: "POST",
+                url: "api/Customization/PutContact/" + id,
+                data: $this.serialize(),
+                contentType: 'application/json; charset=utf-8',
+                dataType: "json"
+            }).fail(() => {/* ok */ })
+                .done(() => {/* ok */ })
+        }
+
+        //Questions
+        //TODO: write an to create a question
+        function putQuestion() {
+            var id = getSubplatformId();
+            $.ajax({
+                type: "POST",
+                url: "api/Customization/PutQuestion/" + id,
+                data: $this.serialize(),
+                contentType: 'application/json; charset=utf-8',
+                dataType: "json"
+            }).fail(() => {/* ok */ })
+                .done(() => {/* ok */ })
+        }
+        function deleteQuestion() {
+            var id = getSubplatformId();
+            $.ajax({
+                type: "POST",
+                url: "api/Customization/DeleteQuestion/" + id,
+                data: $this.serialize(),
+                contentType: 'application/json; charset=utf-8',
+                dataType: "json"
+            }).fail(() => {/* ok */ })
+                .done(() => {/* ok */ })
+        }
+
+        //Eventlistners for ajax-calls
+        //Customization
+        $("#form_page_color").submit(function (event) {
+            event.preventDefault();
+            putColor();
+        });
+        $("#form_page_text").submit(function (event) {
+            event.preventDefault();
+            putAlias();
+        });
+        $("#form_page_privacy").submit(function (event) {
+            event.preventDefault();
+            putPrivacy();
+        });
+        $("#form_page_faq").submit(function (event) {
+            event.preventDefault();
+            putFAQ();
+        });
+        $("#form_page_contact").submit(function (event) {
+            event.preventDefault();
+            putContact();
+        });
+
+        //Questions
+        //TODO: write a listner to create a question
+        $("#form_page_faq").submit(function (event) {
+            event.preventDefault();
+            putQuestion();
+        });
+        $("#form_page_faq").submit(function (event) {
+            event.preventDefault();
+            deleteQuestion();
+        });
     </script>
 }
