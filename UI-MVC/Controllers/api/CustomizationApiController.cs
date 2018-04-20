@@ -9,10 +9,16 @@ using BAR.BL.Domain.Core;
 
 namespace BAR.UI.MVC.Controllers.api
 {
+	/// <summary>
+	/// This API-controller is used for the customization of the subplatforms.
+	/// </summary>
     public class CustomizationApiController : ApiController
     {
 		private ISubplatformManager platformManager;
 
+		/// <summary>
+		/// Gives back the customization of a specific subplatform
+		/// </summary>
 		public IHttpActionResult Get(string platformName)
 		{
 			platformManager = new SubplatformManager();
@@ -24,6 +30,9 @@ namespace BAR.UI.MVC.Controllers.api
 			return Ok(custom);
 		}
 
+		/// <summary>
+		/// Changes the webpage colors of a specific subplatform
+		/// </summary>
 		public IHttpActionResult PutColor(string platformName, [FromBody] Customization custom)
 		{
 			platformManager = new SubplatformManager();
@@ -39,6 +48,9 @@ namespace BAR.UI.MVC.Controllers.api
 			return StatusCode(HttpStatusCode.NoContent);
 		}
 
+		/// <summary>
+		/// Changes the page alias of a specific subplatform
+		/// </summary>
 		public IHttpActionResult PutAlias(string platformName, [FromBody] Customization custom)
 		{
 			platformManager = new SubplatformManager();
@@ -54,6 +66,9 @@ namespace BAR.UI.MVC.Controllers.api
 			return StatusCode(HttpStatusCode.NoContent);
 		}
 
+		/// <summary>
+		/// Changes the privacy of a specific subplatform
+		/// </summary>
 		public IHttpActionResult PutPrivacy(string platformName, [FromBody] Customization custom)
 		{
 			platformManager = new SubplatformManager();
@@ -68,6 +83,9 @@ namespace BAR.UI.MVC.Controllers.api
 			return StatusCode(HttpStatusCode.NoContent);
 		}
 
+		/// <summary>
+		/// Changes the FAQ of a specific subplatform
+		/// </summary>
 		public IHttpActionResult PutFAQ(string platformName, [FromBody] Customization custom)
 		{
 			platformManager = new SubplatformManager();
@@ -82,6 +100,9 @@ namespace BAR.UI.MVC.Controllers.api
 			return StatusCode(HttpStatusCode.NoContent);
 		}
 
+		/// <summary>
+		/// Changes the address of a specific subplatform
+		/// </summary>
 		public IHttpActionResult PutAddress(string platformName, [FromBody] Customization custom)
 		{
 			platformManager = new SubplatformManager();
