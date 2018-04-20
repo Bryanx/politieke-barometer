@@ -421,6 +421,7 @@
         //Customization
         function putColor() {
             var id = getSubplatformId();
+            console.log(id);
             $.ajax({
                 type: "POST",
                 url: "/api/Customization/PutColor/" + id,
