@@ -11,14 +11,14 @@ namespace BAR.DAL
 	public interface ISubplatformRepository
 	{
 		//Read
-		SubPlatform ReadSubPlatform(string subplatformName);
-		SubPlatform GetSubplatformWithAllinfo(string subplatformName);
-		SubPlatform ReadSubplatformWithCustomization(string subplatformName);
+		SubPlatform ReadSubPlatform(int platformId);
+		SubPlatform GetSubplatformWithAllinfo(int platformId);
+		SubPlatform ReadSubplatformWithCustomization(int platformId);
 		IEnumerable<SubPlatform> ReadSubPlatforms();
 		
 		Question ReadQuestion(int questionId);
 		IEnumerable<Question> ReadAllQuestions();
-		IEnumerable<Question> ReadQuestions(string subplatformName);
+		IEnumerable<Question> ReadQuestions(int platformId);
 		IEnumerable<Question> ReadQuestionsForType(QuestionType type);
 	
 		//Create
