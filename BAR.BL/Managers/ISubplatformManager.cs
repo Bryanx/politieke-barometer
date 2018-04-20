@@ -13,20 +13,22 @@ namespace BAR.BL.Managers
 		//Subplatsorms
 		SubPlatform GetSubPlatform(int subplatformId);
 		SubPlatform GetSubPlatform(string platformName);
-
 		IEnumerable<SubPlatform> GetSubplatforms();
-		Customization GetCustomization(int subplatfromId);
 
 		SubPlatform AddSubplatform(string name);
 
 		SubPlatform ChangePlatformName(int platformId, string name);
+		
+		void RemoveSubplatform(int platformId);
+
+		//Customizations
+		Customization GetCustomization(int subplatfromId);
+
 		Customization ChangePageColors(int platformId, string primaryColor, string secondairyColor, string tertiaryColor, string backgroundColor, string textColor);
 		Customization ChangePageText(int platformId, string personAlias, string personsAlias, string organisationAlias, string organisationsAlias, string themeAlias, string themesAlias);
 		Customization ChangePrivacyText(int platformId, string content, string title = "Privacy policy");
 		Customization ChangeFAQTitle(int platformId, string title);
 		Customization ChangeAddress(int platformId, string streetAndHousenumber, string zipcode, string city, string country, string email);
-
-		void RemoveSubplatform(int platformId);
 
 		//Questions
 		Question GetQuestion(int questionId);

@@ -237,28 +237,28 @@ namespace BAR.BL.Managers
 			return custom;
 		}
 
-    /// <summary>
-    /// Returns a specific subplatform
-    /// </summary>
-    public SubPlatform GetSubPlatform(int platformId)
+		/// <summary>
+		/// Returns a specific subplatform
+		/// </summary>
+		public SubPlatform GetSubPlatform(int platformId)
 		{
 			InitRepo();
 			return platformRepo.ReadSubPlatform(platformId);
 		}
 
-    /// <summary>
+		/// <summary>
 		/// Returns a specific subplatform
 		/// </summary>
 		public SubPlatform GetSubPlatform(string platformName)
-    {
-      InitRepo();
-      return platformRepo.ReadSubPlatform(platformName);
-    }
+		{
+			InitRepo();
+			return platformRepo.ReadSubPlatform(platformName);
+		}
 
-    /// <summary>
-    /// Returns all subplatforms
-    /// </summary>
-    public IEnumerable<SubPlatform> GetSubplatforms()
+		/// <summary>
+		/// Returns all subplatforms
+		/// </summary>
+		public IEnumerable<SubPlatform> GetSubplatforms()
 		{
 			InitRepo();
 			return platformRepo.ReadSubPlatforms().AsEnumerable();
