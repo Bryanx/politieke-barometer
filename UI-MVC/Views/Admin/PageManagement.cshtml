@@ -70,37 +70,39 @@
             <div class="x_content">
                 <br />
                 <div class="col-sm-8 col-md-8 col-xs-12 center-margin">
-                    <form class="form-horizontal form-label-left">
+                    @using (Html.BeginForm("Settings", "User", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
+                    {
+                        <form id="form_page_text" class="form-horizontal form-label-left">
 
-                        <div class="form-group">
-                            <label class="control-label">Persoon alias (ev)</label>
-                            <input class="form-control" value="Politicus">
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label">Personen alias (mv)</label>
-                            <input class="form-control" value="Politici">
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label">Organisatie alias (ev)</label>
-                            <input class="form-control" value="Partij">
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label">Organisaties alias (mv)</label>
-                            <input class="form-control" value="Partijen">
-                        </div>
-                        <div class="form-group">
-                            <label class="control-labe">Thema alias (ev)</label>
-                            <input class="form-control" value="Thema">
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label">Thema's alias (mv)</label>
-                            <input class="form-control" value="Thema's">
-                        </div>
-                        <div class="form-group">
-                            <button type="submit" class="btn btn-dark">Opslaan</button>
-                            <div id="messageSettings" style="display: inline"></div>
-                        </div>
-                    </form>
+                            <div class="form-group">
+                                <label class="control-label">Persoon alias (ev)</label>
+                                <input class="form-control" value="Politicus">
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">Personen alias (mv)</label>
+                                <input class="form-control" value="Politici">
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">Organisatie alias (ev)</label>
+                                <input class="form-control" value="Partij">
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">Organisaties alias (mv)</label>
+                                <input class="form-control" value="Partijen">
+                            </div>
+                            <div class="form-group">
+                                <label class="control-labe">Thema alias (ev)</label>
+                                <input class="form-control" value="Thema">
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">Thema's alias (mv)</label>
+                                <input class="form-control" value="Thema's">
+                            </div>
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-dark">Opslaan</button>
+                                <div id="messageSettings" style="display: inline"></div>
+                            </div>
+                        </form>}
                 </div>
             </div>
         </div>
@@ -116,130 +118,133 @@
             </div>
             <div class="x_content">
                 <br />
-                <form class="form-horizontal form-label-left">
-                    <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="privacy_title">
-                            Titel
-                        </label>
-                        <div class="col-md-6 col-sm-6 col-xs-12">
-                            <input class="form-control" value="Privacy policy">
-                        </div>
-                    </div>
-                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="privacy_title">
-                        Privacy content
-                    </label>
-                    <div class="col-sm-6 col-md-6 col-xs-12 center-margin">
+                @using (Html.BeginForm("Settings", "User", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
+                {
+                    <form id="form_page_privacy" class="form-horizontal form-label-left">
                         <div class="form-group">
-                            <div id="alerts"></div>
-                            <div class="btn-toolbar editor" data-role="editor-toolbar" data-target="#editor-one">
-                                <div class="btn-group">
-                                    <a class="btn dropdown-toggle" data-toggle="dropdown" title="Font">
-                                        <i class="fa fa-font"></i><b class="caret"></b>
-                                    </a>
-                                    <ul class="dropdown-menu"></ul>
-                                </div>
-
-                                <div class="btn-group">
-                                    <a class="btn dropdown-toggle" data-toggle="dropdown" title="Font Size"><i class="fa fa-text-height"></i>&nbsp;<b class="caret"></b></a>
-                                    <ul class="dropdown-menu">
-                                        <li>
-                                            <a data-edit="fontSize 5">
-                                                <p style="font-size: 17px">Huge</p>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a data-edit="fontSize 3">
-                                                <p style="font-size: 14px">Normal</p>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a data-edit="fontSize 1">
-                                                <p style="font-size: 11px">Small</p>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </div>
-
-                                <div class="btn-group">
-                                    <a class="btn" data-edit="bold" title="Bold (Ctrl/Cmd+B)">
-                                        <i class="fa fa-bold"></i>
-                                    </a>
-                                    <a class="btn" data-edit="italic" title="Italic (Ctrl/Cmd+I)">
-                                        <i class="fa fa-italic"></i>
-                                    </a>
-                                    <a class="btn" data-edit="strikethrough" title="Strikethrough">
-                                        <i class="fa fa-strikethrough"></i>
-                                    </a>
-                                    <a class="btn" data-edit="underline" title="Underline (Ctrl/Cmd+U)">
-                                        <i class="fa fa-underline"></i>
-                                    </a>
-                                </div>
-
-                                <div class="btn-group">
-                                    <a class="btn" data-edit="insertunorderedlist" title="Bullet list">
-                                        <i class="fa fa-list-ul"></i>
-                                    </a>
-                                    <a class="btn" data-edit="insertorderedlist" title="Number list">
-                                        <i class="fa fa-list-ol"></i>
-                                    </a>
-                                    <a class="btn" data-edit="outdent" title="Reduce indent (Shift+Tab)">
-                                        <i class="fa fa-dedent"></i>
-                                    </a>
-                                    <a class="btn" data-edit="indent" title="Indent (Tab)">
-                                        <i class="fa fa-indent"></i>
-                                    </a>
-                                </div>
-
-                                <div class="btn-group">
-                                    <a class="btn" data-edit="justifyleft" title="Align Left (Ctrl/Cmd+L)">
-                                        <i class="fa fa-align-left"></i>
-                                    </a>
-                                    <a class="btn" data-edit="justifycenter" title="Center (Ctrl/Cmd+E)">
-                                        <i class="fa fa-align-center"></i>
-                                    </a>
-                                    <a class="btn" data-edit="justifyright" title="Align Right (Ctrl/Cmd+R)">
-                                        <i class="fa fa-align-right"></i>
-                                    </a>
-                                    <a class="btn" data-edit="justifyfull" title="Justify (Ctrl/Cmd+J)">
-                                        <i class="fa fa-align-justify"></i>
-                                    </a>
-                                </div>
-
-                                <div class="btn-group">
-                                    <a class="btn dropdown-toggle" data-toggle="dropdown" title="Hyperlink">
-                                        <i class="fa fa-link"></i>
-                                    </a>
-                                    <div class="dropdown-menu input-append">
-                                        <input class="span2" placeholder="URL" type="text" data-edit="createLink">
-                                        <button class="btn" type="button">Add</button>
-                                    </div>
-                                    <a class="btn" data-edit="unlink" title="Remove Hyperlink">
-                                        <i class="fa fa-cut"></i>
-                                    </a>
-                                </div>
-
-                                <div class="btn-group">
-                                    <a class="btn" data-edit="undo" title="Undo (Ctrl/Cmd+Z)">
-                                        <i class="fa fa-undo"></i>
-                                    </a>
-                                    <a class="btn" data-edit="redo" title="Redo (Ctrl/Cmd+Y)">
-                                        <i class="fa fa-repeat"></i>
-                                    </a>
-                                </div>
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="privacy_title">
+                                Titel
+                            </label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input class="form-control" value="Privacy policy">
                             </div>
-
-                            <div id="editor-one" class="editor-wrapper placeholderText" contenteditable="true"></div>
-
-                            <textarea name="descr" id="descr" style="display: none;"></textarea>
                         </div>
-                    </div>
-                    <div class="col-sm-6 col-md-6 col-xs-12 center-margin">
-                        <div class="form-group">
-                            <button type="submit" class="btn btn-dark">Opslaan</button>
-                            <div id="messageSettings" style="display: inline"></div>
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="privacy_title">
+                            Privacy content
+                        </label>
+                        <div class="col-sm-6 col-md-6 col-xs-12 center-margin">
+                            <div class="form-group">
+                                <div id="alerts"></div>
+                                <div class="btn-toolbar editor" data-role="editor-toolbar" data-target="#editor-one">
+                                    <div class="btn-group">
+                                        <a class="btn dropdown-toggle" data-toggle="dropdown" title="Font">
+                                            <i class="fa fa-font"></i><b class="caret"></b>
+                                        </a>
+                                        <ul class="dropdown-menu"></ul>
+                                    </div>
+
+                                    <div class="btn-group">
+                                        <a class="btn dropdown-toggle" data-toggle="dropdown" title="Font Size"><i class="fa fa-text-height"></i>&nbsp;<b class="caret"></b></a>
+                                        <ul class="dropdown-menu">
+                                            <li>
+                                                <a data-edit="fontSize 5">
+                                                    <p style="font-size: 17px">Huge</p>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a data-edit="fontSize 3">
+                                                    <p style="font-size: 14px">Normal</p>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a data-edit="fontSize 1">
+                                                    <p style="font-size: 11px">Small</p>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+
+                                    <div class="btn-group">
+                                        <a class="btn" data-edit="bold" title="Bold (Ctrl/Cmd+B)">
+                                            <i class="fa fa-bold"></i>
+                                        </a>
+                                        <a class="btn" data-edit="italic" title="Italic (Ctrl/Cmd+I)">
+                                            <i class="fa fa-italic"></i>
+                                        </a>
+                                        <a class="btn" data-edit="strikethrough" title="Strikethrough">
+                                            <i class="fa fa-strikethrough"></i>
+                                        </a>
+                                        <a class="btn" data-edit="underline" title="Underline (Ctrl/Cmd+U)">
+                                            <i class="fa fa-underline"></i>
+                                        </a>
+                                    </div>
+
+                                    <div class="btn-group">
+                                        <a class="btn" data-edit="insertunorderedlist" title="Bullet list">
+                                            <i class="fa fa-list-ul"></i>
+                                        </a>
+                                        <a class="btn" data-edit="insertorderedlist" title="Number list">
+                                            <i class="fa fa-list-ol"></i>
+                                        </a>
+                                        <a class="btn" data-edit="outdent" title="Reduce indent (Shift+Tab)">
+                                            <i class="fa fa-dedent"></i>
+                                        </a>
+                                        <a class="btn" data-edit="indent" title="Indent (Tab)">
+                                            <i class="fa fa-indent"></i>
+                                        </a>
+                                    </div>
+
+                                    <div class="btn-group">
+                                        <a class="btn" data-edit="justifyleft" title="Align Left (Ctrl/Cmd+L)">
+                                            <i class="fa fa-align-left"></i>
+                                        </a>
+                                        <a class="btn" data-edit="justifycenter" title="Center (Ctrl/Cmd+E)">
+                                            <i class="fa fa-align-center"></i>
+                                        </a>
+                                        <a class="btn" data-edit="justifyright" title="Align Right (Ctrl/Cmd+R)">
+                                            <i class="fa fa-align-right"></i>
+                                        </a>
+                                        <a class="btn" data-edit="justifyfull" title="Justify (Ctrl/Cmd+J)">
+                                            <i class="fa fa-align-justify"></i>
+                                        </a>
+                                    </div>
+
+                                    <div class="btn-group">
+                                        <a class="btn dropdown-toggle" data-toggle="dropdown" title="Hyperlink">
+                                            <i class="fa fa-link"></i>
+                                        </a>
+                                        <div class="dropdown-menu input-append">
+                                            <input class="span2" placeholder="URL" type="text" data-edit="createLink">
+                                            <button class="btn" type="button">Add</button>
+                                        </div>
+                                        <a class="btn" data-edit="unlink" title="Remove Hyperlink">
+                                            <i class="fa fa-cut"></i>
+                                        </a>
+                                    </div>
+
+                                    <div class="btn-group">
+                                        <a class="btn" data-edit="undo" title="Undo (Ctrl/Cmd+Z)">
+                                            <i class="fa fa-undo"></i>
+                                        </a>
+                                        <a class="btn" data-edit="redo" title="Redo (Ctrl/Cmd+Y)">
+                                            <i class="fa fa-repeat"></i>
+                                        </a>
+                                    </div>
+                                </div>
+
+                                <div id="editor-one" class="editor-wrapper placeholderText" contenteditable="true"></div>
+
+                                <textarea name="descr" id="descr" style="display: none;"></textarea>
+                            </div>
                         </div>
-                    </div>
-                </form>
+                        <div class="col-sm-6 col-md-6 col-xs-12 center-margin">
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-dark">Opslaan</button>
+                                <div id="messageSettings" style="display: inline"></div>
+                            </div>
+                        </div>
+                    </form>}
+
             </div>
         </div>
     </div>
@@ -254,46 +259,48 @@
             </div>
             <div class="x_content">
                 <br />
-                <form class="form-horizontal form-label-left">
-                    <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12">
-                            Titel
-                        </label>
-                        <div class="col-md-6 col-sm-6 col-xs-12">
-                            <input class="form-control" value="Frequently Asked Questions (FAQ)">
-                        </div>
-                    </div>
-                    <div class="ln_solid"></div>
-                    <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="faq_question">
-                            Vraag 1
-                        </label>
-                        <div class="col-md-6 col-sm-6 col-xs-12">
-                            <input class="form-control" value="Waar komt de data vandaan?">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="faq_question">
-                            Categorie
-                        </label>
-                        <div class="col-md-6 col-sm-6 col-xs-12">
-                            <input class="form-control" value="Algemeen">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Antwoord</label>
-                        <div class="col-md-6 col-sm-6 col-xs-12">
-                            <textarea class="resizable_textarea form-control" placeholder="Momenteel wordt als input van alle grafieken Twitter gebruikt."></textarea>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-md-6 col-xs-12 center-margin">
+                @using (Html.BeginForm("Settings", "User", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
+                {
+                    <form id="form_page_faq" class="form-horizontal form-label-left">
                         <div class="form-group">
-                            <button type="submit" class="btn btn-dark">Opslaan</button>
-                            <button class="btn btn-danger">Verwijderen</button>
-                            <button class="btn btn-success">Vraag toevoegen</button>
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">
+                                Titel
+                            </label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input class="form-control" value="Frequently Asked Questions (FAQ)">
+                            </div>
                         </div>
-                    </div>
-                </form>
+                        <div class="ln_solid"></div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="faq_question">
+                                Vraag 1
+                            </label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input class="form-control" value="Waar komt de data vandaan?">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="faq_question">
+                                Categorie
+                            </label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input class="form-control" value="Algemeen">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Antwoord</label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <textarea class="resizable_textarea form-control" placeholder="Momenteel wordt als input van alle grafieken Twitter gebruikt."></textarea>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-md-6 col-xs-12 center-margin">
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-dark">Opslaan</button>
+                                <button class="btn btn-danger">Verwijderen</button>
+                                <button class="btn btn-success">Vraag toevoegen</button>
+                            </div>
+                        </div>
+                    </form>}
             </div>
         </div>
     </div>
@@ -309,33 +316,35 @@
             <div class="x_content">
                 <br />
                 <div class="col-sm-8 col-md-8 col-xs-12 center-margin">
-                    <form class="form-horizontal form-label-left">
+                    @using (Html.BeginForm("Settings", "User", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
+                    {
+                        <form id="form_page_contact" class="form-horizontal form-label-left">
+                            <div class="form-group">
+                                <label class="control-label">Straat en huisnummer</label>
+                                <input class="form-control" value="Nationalestraat 24">
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">Postcode</label>
+                                <input class="form-control" value="2060">
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">Stad</label>
+                                <input class="form-control" value="Antwerpen">
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">Land</label>
+                                <input class="form-control" value="Belgie">
+                            </div>
+                            <div class="form-group">
+                                <label class="control-labe">Email adres</label>
+                                <input class="form-control" value="contact@politiekebarometer.be">
+                            </div>
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-dark">Opslaan</button>
+                                <div id="messageSettings" style="display: inline"></div>
+                            </div>
+                        </form>}
 
-                        <div class="form-group">
-                            <label class="control-label">Straat en huisnummer</label>
-                            <input class="form-control" value="Nationalestraat 24">
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label">Postcode</label>
-                            <input class="form-control" value="2060">
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label">Stad</label>
-                            <input class="form-control" value="Antwerpen">
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label">Land</label>
-                            <input class="form-control" value="Belgie">
-                        </div>
-                        <div class="form-group">
-                            <label class="control-labe">Email adres</label>
-                            <input class="form-control" value="contact@politiekebarometer.be">
-                        </div>
-                        <div class="form-group">
-                            <button type="submit" class="btn btn-dark">Opslaan</button>
-                            <div id="messageSettings" style="display: inline"></div>
-                        </div>
-                    </form>
                 </div>
             </div>
         </div>
@@ -405,19 +414,74 @@
 
 
         //Eventlistners for ajax-calls
-        $("form_page_color").submit(getCustom(id));
+        //Customization
+        $("#form_page_color").submit(putColor(id));
+        $("#form_page_text").submit(putAlias(id));
+        $("#form_page_privacy").submit(putPrivacy(id));
+        $("#form_page_faq").submit(putFAQ(id));
+        $("#form_page_contact").submit(putContact(id));
+
+        //Questions
+        //TODO
 
         //Functions for ajax calls
-        function getCustom(id) {
+        //Customization
+        function putColor(id) {
             $.ajax({
                 type: "POST",
                 url: "api/Customization/PutColor/" + id,
                 data: $this.serialize(),
                 contentType: 'application/json; charset=utf-8',
                 dataType: "json"
-            }).fail(() => {/* ok */ };)
-              .done(() => {/* ok */ };)
+            }).fail(() => {/* ok */ })
+                .done(() => {/* ok */ })
             event.preventDefault();
         }
+        function putAlias(id) {
+            $.ajax({
+                type: "POST",
+                url: "api/Customization/PutAlias/" + id,
+                data: $this.serialize(),
+                contentType: 'application/json; charset=utf-8',
+                dataType: "json"
+            }).fail(() => {/* ok */ })
+                .done(() => {/* ok */ })
+            event.preventDefault();
+        }
+        function putPrivacy(id) {
+            $.ajax({
+                type: "POST",
+                url: "api/Customization/PutPrivacy/" + id,
+                data: $this.serialize(),
+                contentType: 'application/json; charset=utf-8',
+                dataType: "json"
+            }).fail(() => {/* ok */ })
+                .done(() => {/* ok */ })
+            event.preventDefault();
+        }
+        function putFAQ(id) {
+            $.ajax({
+                type: "POST",
+                url: "api/Customization/PutFAQ/" + id,
+                data: $this.serialize(),
+                contentType: 'application/json; charset=utf-8',
+                dataType: "json"
+            }).fail(() => {/* ok */ })
+                .done(() => {/* ok */ })
+            event.preventDefault();
+        }
+        function putContact(id) {
+            $.ajax({
+                type: "POST",
+                url: "api/Customization/PutContact/" + id,
+                data: $this.serialize(),
+                contentType: 'application/json; charset=utf-8',
+                dataType: "json"
+            }).fail(() => {/* ok */ })
+                .done(() => {/* ok */ })
+            event.preventDefault();}
+
+        //Questions
+        //TODO
     </script>
 }

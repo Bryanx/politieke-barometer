@@ -98,8 +98,8 @@ namespace BAR.UI.MVC.Controllers.api
 		/// Changes the address of a specific subplatform
 		/// </summary>
 		[HttpPost]
-		[Route("api/Customization/PutAddress/{platformId}")]
-		public IHttpActionResult PutAddress(int platformId, [FromBody] Customization custom)
+		[Route("api/Customization/PutContact/{platformId}")]
+		public IHttpActionResult PutContact(int platformId, [FromBody] Customization custom)
 		{
 			platformManager = new SubplatformManager();
 
@@ -111,38 +111,6 @@ namespace BAR.UI.MVC.Controllers.api
 			platformManager.ChangeAddress(platformId, custom.StreetAndHousenumber, custom.Zipcode, custom.City, custom.Country, custom.Email);
 
 			return StatusCode(HttpStatusCode.NoContent);
-		}
-
-		/// <summary>
-		/// Gives back all the questions
-		/// </summary>
-		[HttpGet]
-		[Route("api/Customization/GetQuestions")]
-		public IHttpActionResult GetQuestions()
-		{
-			platformManager = new SubplatformManager();
-			IEnumerable<Question> requestedQuestions = platformManager.GetAllQuestions();
-
-			if (requestedQuestions == null)
-				return StatusCode(HttpStatusCode.NoContent);
-
-			return Ok(requestedQuestions);
-		}
-
-		/// <summary>
-		/// Gives a specific question
-		/// </summary>
-		[HttpGet]
-		[Route("api/Customization/GetQuestions/{questionId}")]
-		public IHttpActionResult GetQuestion(int questionId)
-		{
-			platformManager = new SubplatformManager();
-			Question requestedQuestion = platformManager.GetQuestion(questionId);
-
-			if (requestedQuestion == null)
-				return StatusCode(HttpStatusCode.NoContent);
-
-			return Ok(requestedQuestion);
 		}
 
 		/// <summary>
