@@ -14,6 +14,7 @@ namespace BAR.BL.Managers
 		IEnumerable<Item> GetAllItems();
 		IEnumerable<Item> GetAllPersons();
 		IEnumerable<Item> GetAllOrganisations();
+		IEnumerable<Item> GetAllThemes();
 		IEnumerable<Item> GetItemsForType(ItemType type);
 		IEnumerable<Item> GetAllPersonsForSubplatform(string subPlatformName);
 
