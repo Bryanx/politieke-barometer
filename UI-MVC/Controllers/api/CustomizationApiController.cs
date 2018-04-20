@@ -53,5 +53,47 @@ namespace BAR.UI.MVC.Controllers.api
 
 			return StatusCode(HttpStatusCode.NoContent);
 		}
-	}
+
+		public IHttpActionResult PutPrivacy(string platformName, [FromBody] Customization custom)
+		{
+			platformManager = new SubplatformManager();
+
+			if (custom == null)
+				return BadRequest("No customization given");
+			if (!ModelState.IsValid)
+				return BadRequest(ModelState);
+
+			platformManager.ChangePrivacyText(platformName, custom.PrivacyText, custom.PrivacyTitle);
+
+			return StatusCode(HttpStatusCode.NoContent);
+		}
+
+		public IHttpActionResult PutFAQ(string platformName, [FromBody] Customization custom)
+		{
+			platformManager = new SubplatformManager();
+
+			if (custom == null)
+				return BadRequest("No customization given");
+			if (!ModelState.IsValid)
+				return BadRequest(ModelState);
+
+			platformManager.ChangeFAQTitle(platformName, custom.FAQTitle);
+
+			return StatusCode(HttpStatusCode.NoContent);
+		}
+
+		public IHttpActionResult PutAddress(string platformName, [FromBody] Customization custom)
+		{
+			platformManager = new SubplatformManager();
+
+			if (custom == null)
+				return BadRequest("No customization given");
+			if (!ModelState.IsValid)
+				return BadRequest(ModelState);
+
+			platformManager.ChangeAddress(platformName, custom.StreetAndHousenumber, custom.Zipcode, custom.City, custom.Country, custom.Email);
+
+			return StatusCode(HttpStatusCode.NoContent);
+		}
+ 	}
 }

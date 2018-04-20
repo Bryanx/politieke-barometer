@@ -30,7 +30,7 @@ namespace BAR.BL.Managers
 		/// Changes the contact properties of a specific platform
 		/// Updates the changes in database
 		/// </summary>
-		public Customization ChangeContactProperties(string platformName, string streetAndHousenumber, string zipcode, string city, string country, string email)
+		public Customization ChangeAddress(string platformName, string streetAndHousenumber, string zipcode, string city, string country, string email)
 		{
 			InitRepo();
 

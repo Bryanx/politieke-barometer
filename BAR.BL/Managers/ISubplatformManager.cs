@@ -22,7 +22,7 @@ namespace BAR.BL.Managers
 		Customization ChangePageText(string platformName, string personAlias, string personsAlias, string organisationAlias, string organisationsAlias, string themeAlias, string themesAlias);
 		Customization ChangePrivacyText(string platformName, string content, string title = "Privacy policy");
 		Customization ChangeFAQTitle(string platformName, string title);
-		Customization ChangeContactProperties(string platformName, string streetAndHousenumber, string zipcode, string city, string country, string email);
+		Customization ChangeAddress(string platformName, string streetAndHousenumber, string zipcode, string city, string country, string email);
 
 		void RemoveSubplatform(string platformName);
 
