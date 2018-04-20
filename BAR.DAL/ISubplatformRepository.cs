@@ -13,7 +13,6 @@ namespace BAR.DAL
 		//Read
 		SubPlatform ReadSubPlatform(int platformId);
 		SubPlatform ReadSubPlatform(string platformId);
-
 		SubPlatform GetSubplatformWithAllinfo(int platformId);
 		SubPlatform ReadSubplatformWithCustomization(int platformId);
 		IEnumerable<SubPlatform> ReadSubPlatforms();
@@ -37,6 +36,5 @@ namespace BAR.DAL
 		int DeleteSubplatform(SubPlatform subPlatform);
 		int DeleteQuestion(Question question);
 		int DeleteQuestions(IEnumerable<Question> questions);
-
 	}
 }

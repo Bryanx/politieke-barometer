@@ -101,21 +101,21 @@ namespace BAR.DAL
 		/// </summary>
 		public SubPlatform ReadSubPlatform(int platformId)
 		{
-      return ctx.SubPlatforms.Find(platformId);
+			return ctx.SubPlatforms.Find(platformId);
 		}
 
-    /// <summary>;;
+		/// <summary>
 		/// Reads a subplatform based on name of the subplatform.
 		/// </summary>
-    public SubPlatform ReadSubPlatform(string platformName)
-    {
-      return ctx.SubPlatforms.Where(platform => platform.Name.ToLower().Equals(platformName.ToLower())).SingleOrDefault();
-    }
+		public SubPlatform ReadSubPlatform(string platformName)
+		{
+			return ctx.SubPlatforms.Where(platform => platform.Name.ToLower().Equals(platformName.ToLower())).SingleOrDefault();
+		}
 
-    /// <summary>
-    /// Gives back all the subplatforms that are on the system
-    /// </summary>
-    public IEnumerable<SubPlatform> ReadSubPlatforms()
+		/// <summary>
+		/// Gives back all the subplatforms that are on the system
+		/// </summary>
+		public IEnumerable<SubPlatform> ReadSubPlatforms()
 		{
 			return ctx.SubPlatforms.AsEnumerable();
 		}
@@ -189,5 +189,5 @@ namespace BAR.DAL
 			foreach (Question question in questions) ctx.Questions.Remove(question);
 			return ctx.SaveChanges();
 		}
-  }
+	}
 }
