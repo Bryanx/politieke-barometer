@@ -12,6 +12,7 @@ using BAR.UI.MVC.Helpers;
 using BAR.UI.MVC.Models;
 using Microsoft.AspNet.Identity;
 using static BAR.UI.MVC.Models.ItemViewModels;
+using BAR.BL.Domain.Core;
 
 namespace BAR.UI.MVC.Controllers
 {
@@ -23,6 +24,7 @@ namespace BAR.UI.MVC.Controllers
 		private const string INDEX_PAGE_TITLE = "Politieke Barometer";
 		private IItemManager itemManager;
 		private IUserManager userManager;
+		private ISubplatformManager subplatformManager;
 
 		/// <summary>
 		/// Landing page for logged-in and non-logged-in users.
@@ -72,7 +74,7 @@ namespace BAR.UI.MVC.Controllers
 				User = User.Identity.IsAuthenticated ? userManager.GetUser(User.Identity.GetUserId()) : null
 			});
 		}
-		
+
 		/// <summary>
 		/// Saves the language preferences in a cookie.
 		/// </summary>
