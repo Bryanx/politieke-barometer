@@ -164,7 +164,7 @@ namespace BAR.UI.MVC.Controllers.api
 		/// <summary>
 		/// Creates a question for a specific subplatform
 		/// </summary>
-		[HttpGet]
+		[HttpPost]
 		[Route("api/Customization/PostQuestion/{platformId}")]
 		public IHttpActionResult PostQuestion(int platformId, [FromBody] Question question)
 		{
@@ -183,7 +183,7 @@ namespace BAR.UI.MVC.Controllers.api
 		/// <summary>
 		/// Changes a specific question
 		/// </summary>
-		[HttpPost]
+		[HttpPut]
 		[Route("api/Customization/PutQuestion/{questionId}")]
 		public IHttpActionResult PutQuestion(int questionId, [FromBody] Question question)
 		{
@@ -201,6 +201,14 @@ namespace BAR.UI.MVC.Controllers.api
 			return StatusCode(HttpStatusCode.NoContent);
 		}
 
-		
+		/// <summary>
+		/// Deletes a question
+		/// </summary>
+		[HttpDelete]
+		[Route("api/Customization/DeleteQuestion/{platformId}")]
+		public IHttpActionResult DeleteQuestion(int questionId)
+		{
+			return Ok();
+		}
 	}
 }

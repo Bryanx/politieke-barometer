@@ -397,6 +397,16 @@ namespace BAR.BL.Managers
 		}
 
 		/// <summary>
+		/// Returns true if the object exists in the database
+		/// Returns fasle otherwise.
+		/// </summary>
+		public bool Exists(int questionid)
+		{
+			if (GetQuestion(questionid) != null) return true;
+			else return false;
+		}
+
+		/// <summary>
 		/// Determines if the repo needs a unit of work
 		/// if the unitOfWorkManager is present
 		/// </summary>
@@ -404,6 +414,6 @@ namespace BAR.BL.Managers
 		{
 			if (uowManager == null) platformRepo = new SubplatformRepository();
 			else platformRepo = new SubplatformRepository(uowManager.UnitOfWork);
-		}		
+		}
 	}
 }

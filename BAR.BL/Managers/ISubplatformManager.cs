@@ -12,9 +12,9 @@ namespace BAR.BL.Managers
 	{
 		//Subplatsorms
 		SubPlatform GetSubPlatform(int subplatformId);
-    SubPlatform GetSubPlatform(string platformName);
+		SubPlatform GetSubPlatform(string platformName);
 
-    IEnumerable<SubPlatform> GetSubplatforms();
+		IEnumerable<SubPlatform> GetSubplatforms();
 		Customization GetCustomization(int subplatfromId);
 
 		SubPlatform AddSubplatform(string name);
@@ -39,5 +39,7 @@ namespace BAR.BL.Managers
 		Question ChangeQuestion(int questionId, QuestionType type, string title, string anwser);
 
 		void RemoveQuestion(int questionId);
+
+		bool Exists(int questionid);
 	}
 }
