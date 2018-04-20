@@ -14,6 +14,7 @@ using WebGrease.Css.Extensions;
 using static BAR.UI.MVC.Models.ItemViewModels;
 using BAR.UI.MVC.Attributes;
 using BAR.BL.Domain;
+using BAR.BL.Domain.Core;
 
 namespace BAR.UI.MVC.Controllers
 {
@@ -35,7 +36,7 @@ namespace BAR.UI.MVC.Controllers
 		public ActionResult Index()
 		{
 			//Assign the right subplatform
-			string subPlatformName = (string) RouteData.Values["SubPlatform"];
+			string subPlatformName = (string)RouteData.Values["SubPlatform"];
 			subplatformManager = new SubplatformManager();
 			SubPlatform subplatform = subplatformManager.GetSubPlatform(subPlatformName);
 
@@ -43,17 +44,18 @@ namespace BAR.UI.MVC.Controllers
 			userManager = new UserManager();
 			subManager = new SubscriptionManager();
 
-      IList<ItemDTO> people = null;
+			IList<ItemDTO> people = null;
 
-      if (subplatform == null)
+			if (subplatform == null)
 			{
 				//Do generic version for no specific subplatform
 				people = Mapper.Map(itemManager.GetAllPersons(), new List<ItemDTO>());
-				
-			} else
+
+			}
+			else
 			{
-        //Return platformspecific data
-        List<Item> peopleList = itemManager.GetAllPersonsForSubplatform(subPlatformName).ToList();
+				//Return platformspecific data
+				List<Item> peopleList = itemManager.GetAllPersonsForSubplatform(subPlatformName).ToList();
 				people = Mapper.Map(itemManager.GetAllPersonsForSubplatform(subplatform.Name), new List<ItemDTO>());
 
 			}

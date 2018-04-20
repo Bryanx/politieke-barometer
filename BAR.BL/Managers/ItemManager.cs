@@ -100,8 +100,8 @@ namespace BAR.BL.Managers
 		/// </summary>
 		public IEnumerable<Item> GetAllPersons() 
 		{
-			return GetAllItems().Where(item => item is Person)
-				.Where(item => item.Deleted == false);
+			InitRepo();
+			return itemRepo.ReadAllPersons().AsEnumerable();
 		}
 
 		/// <summary>
@@ -109,8 +109,8 @@ namespace BAR.BL.Managers
 		/// </summary>
 		public IEnumerable<Item> GetAllOrganisations() 
 		{
-			return GetAllItems().Where(item => item is Organisation)
-				.Where(item => item.Deleted == false);
+			InitRepo();
+			return itemRepo.ReadAllOraginsations().AsEnumerable();
 
 		}
 
@@ -119,15 +119,13 @@ namespace BAR.BL.Managers
 		/// </summary>
 		public IEnumerable<Item> GetAllThemes()
 		{
-			return GetAllItems().Where(item => item is Theme)
-				.Where(item => item.Deleted == false);
+			InitRepo();
+			return itemRepo.ReadAllThemes().AsEnumerable();
 		}
 
 		/// <summary>
 		/// Returns all people for specific subplatform
 		/// </summary>
-		/// <param name="subPlatformName"></param>
-		/// <returns></returns>
 		public IEnumerable<Item> GetAllPersonsForSubplatform(string subPlatformName)
 		{
 			return GetAllPersons().Where(item => item.Deleted == false)
