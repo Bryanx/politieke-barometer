@@ -402,7 +402,7 @@
 
 
         //Get subplatformId
-        function getSubplatformId() {
+        function getSubplatformId(func) {
             //Get subdomain
             var full = window.location.host;
             var subdomain = full.split('.')[0];
@@ -412,16 +412,16 @@
                 type: "GET",
                 url: "/api/Customization/GetPlatformId/" + subdomain,
                 contentType: 'application/json; charset=utf-8',
-                dataType: "json"
+                dataType: "json",
             }).fail(() => {/* ok */ })
-                .done(function (data) { return data; })
+                .done(function (data) {                    
+                    func(data);
+                })
         }
 
         //Functions for ajax calls
         //Customization
-        function putColor() {
-            var id = getSubplatformId();
-            console.log(id);
+        function putColor(id) {
             $.ajax({
                 type: "POST",
                 url: "/api/Customization/PutColor/" + id,
@@ -431,45 +431,41 @@
             }).fail(() => {/* ok */ })
                 .done(() => {/* ok */ })
         }
-        function putAlias() {
-            var id = getSubplatformId();
+        function putAlias(id) {
             $.ajax({
                 type: "POST",
                 url: "api/Customization/PutAlias/" + id,
-                data: $this.serialize(),
+                data: $("#form_page_text").serialize(),
                 contentType: 'application/json; charset=utf-8',
                 dataType: "json"
             }).fail(() => {/* ok */ })
                 .done(() => {/* ok */ })
         }
-        function putPrivacy() {
-            var id = getSubplatformId();
+        function putPrivacy(id) {
             $.ajax({
                 type: "POST",
                 url: "api/Customization/PutPrivacy/" + id,
-                data: $this.serialize(),
+                data: $("#form_page_privacy").serialize(),
                 contentType: 'application/json; charset=utf-8',
                 dataType: "json"
             }).fail(() => {/* ok */ })
                 .done(() => {/* ok */ })
         }
-        function putFAQ() {
-            var id = getSubplatformId();
+        function putFAQ(id) {
             $.ajax({
                 type: "POST",
                 url: "api/Customization/PutFAQ/" + id,
-                data: $this.serialize(),
+                data: $("#form_page_faq").serialize(),
                 contentType: 'application/json; charset=utf-8',
                 dataType: "json"
             }).fail(() => {/* ok */ })
                 .done(() => {/* ok */ })
         }
-        function putContact() {
-            var id = getSubplatformId();
+        function putContact(id) {
             $.ajax({
                 type: "POST",
                 url: "api/Customization/PutContact/" + id,
-                data: $this.serialize(),
+                data: $("#form_page_contact").serialize(),
                 contentType: 'application/json; charset=utf-8',
                 dataType: "json"
             }).fail(() => {/* ok */ })
@@ -478,23 +474,21 @@
 
         //Questions
         //TODO: write an to create a question
-        function putQuestion() {
-            var id = getSubplatformId();
+        function putQuestion(id) {
             $.ajax({
                 type: "POST",
                 url: "api/Customization/PutQuestion/" + id,
-                data: $this.serialize(),
+                data: $("#form_page_faq").serialize(),
                 contentType: 'application/json; charset=utf-8',
                 dataType: "json"
             }).fail(() => {/* ok */ })
                 .done(() => {/* ok */ })
         }
-        function deleteQuestion() {
-            var id = getSubplatformId();
+        function deleteQuestion(id) {
             $.ajax({
                 type: "POST",
                 url: "api/Customization/DeleteQuestion/" + id,
-                data: $this.serialize(),
+                data: $("#form_page_faq").serialize(),
                 contentType: 'application/json; charset=utf-8',
                 dataType: "json"
             }).fail(() => {/* ok */ })
@@ -505,34 +499,35 @@
         //Customization
         $("#form_page_color").submit(function (event) {
             event.preventDefault();
-            putColor();
+            getSubplatformId(putColor);
+            
         });
         $("#form_page_text").submit(function (event) {
             event.preventDefault();
-            putAlias();
+            getSubplatformId(putAlias);
         });
         $("#form_page_privacy").submit(function (event) {
             event.preventDefault();
-            putPrivacy();
+            getSubplatformId(putPrivacy);
         });
         $("#form_page_faq").submit(function (event) {
             event.preventDefault();
-            putFAQ();
+            getSubplatformId(putFAQ);
         });
         $("#form_page_contact").submit(function (event) {
             event.preventDefault();
-            putContact();
+            getSubplatformId(putContact);
         });
 
         //Questions
         //TODO: write a listner to create a question
         $("#form_page_faq").submit(function (event) {
             event.preventDefault();
-            putQuestion();
+            getSubplatformId(putQuestion);
         });
         $("#form_page_faq").submit(function (event) {
             event.preventDefault();
-            deleteQuestion();
+            getSubplatformId(deleteQuestion);
         });
     </script>
 }
