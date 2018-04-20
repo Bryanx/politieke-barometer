@@ -11,28 +11,28 @@ namespace BAR.BL.Managers
 	public interface ISubplatformManager
 	{
 		//Subplatsorms
-		SubPlatform GetSubPlatform(string subplatformName);
+		SubPlatform GetSubPlatform(int subplatformId);
 		IEnumerable<SubPlatform> GetSubplatforms();
-		Customization GetCustomization(string subPlatformName);
+		Customization GetCustomization(int subplatfromId);
 
 		SubPlatform AddSubplatform(string name);
 
-		SubPlatform ChangePlatformName(string platformName, string name);
-		Customization ChangePageColors(string platformName, string primaryColor, string secondairyColor, string tertiaryColor, string backgroundColor, string textColor);
-		Customization ChangePageText(string platformName, string personAlias, string personsAlias, string organisationAlias, string organisationsAlias, string themeAlias, string themesAlias);
-		Customization ChangePrivacyText(string platformName, string content, string title = "Privacy policy");
-		Customization ChangeFAQTitle(string platformName, string title);
-		Customization ChangeAddress(string platformName, string streetAndHousenumber, string zipcode, string city, string country, string email);
+		SubPlatform ChangePlatformName(int platformId, string name);
+		Customization ChangePageColors(int platformId, string primaryColor, string secondairyColor, string tertiaryColor, string backgroundColor, string textColor);
+		Customization ChangePageText(int platformId, string personAlias, string personsAlias, string organisationAlias, string organisationsAlias, string themeAlias, string themesAlias);
+		Customization ChangePrivacyText(int platformId, string content, string title = "Privacy policy");
+		Customization ChangeFAQTitle(int platformId, string title);
+		Customization ChangeAddress(int platformId, string streetAndHousenumber, string zipcode, string city, string country, string email);
 
-		void RemoveSubplatform(string platformName);
+		void RemoveSubplatform(int platformId);
 
 		//Questions
 		Question GetQuestion(int questionId);
 		IEnumerable<Question> GetAllQuestions();
-		IEnumerable<Question> GetQuestions(string subplatformName);
+		IEnumerable<Question> GetQuestions(int subplatformId);
 		IEnumerable<Question> GetQuestionsForType(QuestionType type);
 
-		Question AddQuestion(string platformName, QuestionType type, string title, string anwser);
+		Question AddQuestion(int platformId, QuestionType type, string title, string anwser);
 
 		Question ChangeQuestion(int questionId, QuestionType type, string title, string anwser);
 

@@ -30,12 +30,12 @@ namespace BAR.BL.Managers
 		/// Changes the contact properties of a specific platform
 		/// Updates the changes in database
 		/// </summary>
-		public Customization ChangeAddress(string platformName, string streetAndHousenumber, string zipcode, string city, string country, string email)
+		public Customization ChangeAddress(int platformId, string streetAndHousenumber, string zipcode, string city, string country, string email)
 		{
 			InitRepo();
 
 			//Get Customization of platform
-			SubPlatform platform = platformRepo.ReadSubplatformWithCustomization(platformName);
+			SubPlatform platform = platformRepo.ReadSubplatformWithCustomization(platformId);
 			if (platform == null || platform.Customization == null) return null;
 
 			//Change Customization
@@ -56,12 +56,12 @@ namespace BAR.BL.Managers
 		/// Changes the FAQ title of a specific platform
 		/// Updates the changes in database
 		/// </summary>
-		public Customization ChangeFAQTitle(string platformName, string title)
+		public Customization ChangeFAQTitle(int platformId, string title)
 		{
 			InitRepo();
 
 			//Get Customization of platform
-			SubPlatform platform = platformRepo.ReadSubplatformWithCustomization(platformName);
+			SubPlatform platform = platformRepo.ReadSubplatformWithCustomization(platformId);
 			if (platform == null || platform.Customization == null) return null;
 
 			//Change Customization
@@ -78,12 +78,12 @@ namespace BAR.BL.Managers
 		/// Changes the page colors of a specific platform
 		/// Updates the changes in database
 		/// </summary>
-		public Customization ChangePageColors(string platformName, string primaryColor, string secondairyColor, string tertiaryColor, string backgroundColor, string textColor)
+		public Customization ChangePageColors(int platformId, string primaryColor, string secondairyColor, string tertiaryColor, string backgroundColor, string textColor)
 		{
 			InitRepo();
 
 			//Get Customization of platform
-			SubPlatform platform = platformRepo.ReadSubplatformWithCustomization(platformName);
+			SubPlatform platform = platformRepo.ReadSubplatformWithCustomization(platformId);
 			if (platform == null || platform.Customization == null) return null;
 
 			//Change Customization
@@ -104,12 +104,12 @@ namespace BAR.BL.Managers
 		/// Changes the page text of a specific platform
 		/// Updates the changes in database
 		/// </summary>
-		public Customization ChangePageText(string platformName, string personAlias, string personsAlias, string organisationAlias, string organisationsAlias, string themeAlias, string themesAlias)
+		public Customization ChangePageText(int platformId, string personAlias, string personsAlias, string organisationAlias, string organisationsAlias, string themeAlias, string themesAlias)
 		{
 			InitRepo();
 
 			//Get Customization of platform
-			SubPlatform platform = platformRepo.ReadSubplatformWithCustomization(platformName);
+			SubPlatform platform = platformRepo.ReadSubplatformWithCustomization(platformId);
 			if (platform == null || platform.Customization == null) return null;
 
 			//Change Customization
@@ -131,12 +131,12 @@ namespace BAR.BL.Managers
 		/// Changes the contact properties of a specific platform
 		/// Updates the changes in database
 		/// </summary>
-		public Customization ChangePrivacyText(string platformName, string content, string title = "Privacy policy")
+		public Customization ChangePrivacyText(int platformId, string content, string title = "Privacy policy")
 		{
 			InitRepo();
 
 			//Get Customization
-			SubPlatform platform = platformRepo.ReadSubplatformWithCustomization(platformName);
+			SubPlatform platform = platformRepo.ReadSubplatformWithCustomization(platformId);
 			if (platform == null || platform.Customization == null) return null;
 
 			//Change Customization
@@ -157,12 +157,12 @@ namespace BAR.BL.Managers
 		/// WARNING
 		/// Method will not work because a manual change of the subdomain is required
 		/// </summary>
-		public SubPlatform ChangePlatformName(string platformName, string name)
+		public SubPlatform ChangePlatformName(int platformId, string name)
 		{
 			InitRepo();
 
 			//Get platform
-			SubPlatform platform = GetSubPlatform(platformName);
+			SubPlatform platform = GetSubPlatform(platformId);
 			if (platform == null) return null;
 
 			//Change platform
@@ -240,10 +240,10 @@ namespace BAR.BL.Managers
 		/// <summary>
 		/// Returns a speicif subplatform
 		/// </summary>
-		public SubPlatform GetSubPlatform(string subplatformName)
+		public SubPlatform GetSubPlatform(int platformId)
 		{
 			InitRepo();
-			return platformRepo.ReadSubPlatform(subplatformName);
+			return platformRepo.ReadSubPlatform(platformId);
 		}
 
 		/// <summary>
@@ -258,12 +258,12 @@ namespace BAR.BL.Managers
 		/// <summary>
 		/// Deletes a platform from the database
 		/// </summary>
-		public void RemoveSubplatform(string platformName)
+		public void RemoveSubplatform(int platformId)
 		{
 			InitRepo();
 
 			//Get platform
-			SubPlatform platform = GetSubPlatform(platformName);
+			SubPlatform platform = GetSubPlatform(platformId);
 			if (platform == null) return;
 
 			//Delete platform
@@ -291,10 +291,10 @@ namespace BAR.BL.Managers
 		/// <summary>
 		/// Gives back all the questions for a specific subplatform
 		/// </summary>
-		public IEnumerable<Question> GetQuestions(string subplatformName)
+		public IEnumerable<Question> GetQuestions(int platformId)
 		{
 			InitRepo();
-			return platformRepo.ReadQuestions(subplatformName).AsEnumerable();
+			return platformRepo.ReadQuestions(platformId).AsEnumerable();
 		}
 
 		/// <summary>
@@ -316,13 +316,13 @@ namespace BAR.BL.Managers
 		/// Unit of work is not realy needed because we work with one context
 		/// Its added just for safety.
 		/// </summary>
-		public Question AddQuestion(string platformName, QuestionType type, string title, string anwser)
+		public Question AddQuestion(int platformId, QuestionType type, string title, string anwser)
 		{
 			uowManager = new UnitOfWorkManager();
 			InitRepo();
 
 			//Get Subplatform
-			SubPlatform platform = GetSubPlatform(platformName);
+			SubPlatform platform = GetSubPlatform(platformId);
 			if (platform == null) return null;
 
 			//Create question
@@ -381,10 +381,10 @@ namespace BAR.BL.Managers
 		/// <summary>
 		/// Gives back the customization for a specific subplatform.
 		/// </summary>
-		public Customization GetCustomization(string subPlatformName)
+		public Customization GetCustomization(int platformId)
 		{
 			InitRepo();
-			return platformRepo.ReadSubplatformWithCustomization(subPlatformName).Customization;
+			return platformRepo.ReadSubplatformWithCustomization(platformId).Customization;
 		}
 
 		/// <summary>
