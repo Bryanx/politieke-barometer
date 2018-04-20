@@ -233,8 +233,8 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LanguageController.cs" />
     <Compile Include="Controllers\OrganisationController.cs" />
+    <Compile Include="Controllers\OverviewController.cs" />
     <Compile Include="Controllers\PersonController.cs" />
-    <Compile Include="Controllers\SubPlatformController.cs" />
     <Compile Include="Controllers\SuperAdminController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="DAL\WidgetManager.cs" />
@@ -251,6 +251,8 @@
     <Compile Include="Models\Graph.cs" />
     <Compile Include="Models\ItemDTO.cs" />
     <Compile Include="Models\ItemViewModels.cs" />
+    <Compile Include="Models\SubPlatformDTO.cs" />
+    <Compile Include="Models\SubPlatformViewModel.cs" />
     <Compile Include="Models\UserViewModels.cs" />
     <Compile Include="Models\Widget.cs" />
     <Compile Include="PersonDynamicNodeProvider.cs" />
@@ -516,6 +518,7 @@
     <None Include="Scripts\vue.js" />
     <None Include="Scripts\vue.min.js" />
     <Content Include="Views\Home\GetResources.cshtml" />
+    <Content Include="Views\Overview\Index.cshtml" />
     <None Include="Views\Shared\DisplayTemplates\CanonicalHelperModel.ascx" />
     <None Include="Views\Shared\DisplayTemplates\CanonicalHelperModel.cshtml" />
     <None Include="Views\Shared\DisplayTemplates\MenuHelperModel.ascx" />
@@ -537,6 +540,7 @@
     </Content>
     <Content Include="Views\Shared\Partials\_UserTable.cshtml" />
     <Content Include="Views\Shared\Partials\_SubPlatformOverview.cshtml" />
+    <Content Include="Views\Shared\_LayoutSubplatformOverview.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BAR.BL.Model\Domain.csproj">
@@ -591,7 +595,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>5000</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>https://localhost:44317/</IISUrl>
+          <IISUrl>http://localhost:5000/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>
