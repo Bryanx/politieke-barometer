@@ -17,25 +17,9 @@ namespace BAR.UI.MVC.Controllers.api
 		private ISubplatformManager platformManager;
 
 		/// <summary>
-		/// Gives back the customization of a specific subplatform
-		/// </summary>
-		[HttpGet]
-		[Route("api/Customization/GetCustom/{platformId}")]
-		public IHttpActionResult GetCustom(int platformId)
-		{
-			platformManager = new SubplatformManager();
-			Customization custom = platformManager.GetCustomization(platformId);
-
-			if (custom == null)
-				return StatusCode(HttpStatusCode.NoContent);
-
-			return Ok(custom);
-		}
-
-		/// <summary>
 		/// Changes the webpage colors of a specific subplatform
 		/// </summary>
-		[HttpPut]
+		[HttpPost]
 		[Route("api/Customization/PutColor/{platformId}")]
 		public IHttpActionResult PutColor(int platformId, [FromBody] Customization custom)
 		{
@@ -55,7 +39,7 @@ namespace BAR.UI.MVC.Controllers.api
 		/// <summary>
 		/// Changes the page alias of a specific subplatform
 		/// </summary>
-		[HttpPut]
+		[HttpPost]
 		[Route("api/Customization/PutAlias/{platformId}")]
 		public IHttpActionResult PutAlias(int platformId, [FromBody] Customization custom)
 		{
@@ -75,7 +59,7 @@ namespace BAR.UI.MVC.Controllers.api
 		/// <summary>
 		/// Changes the privacy of a specific subplatform
 		/// </summary>
-		[HttpPut]
+		[HttpPost]
 		[Route("api/Customization/PutPrivacy/{platformId}")]
 		public IHttpActionResult PutPrivacy(int platformId, [FromBody] Customization custom)
 		{
@@ -94,7 +78,7 @@ namespace BAR.UI.MVC.Controllers.api
 		/// <summary>
 		/// Changes the FAQ of a specific subplatform
 		/// </summary>
-		[HttpPut]
+		[HttpPost]
 		[Route("api/Customization/PutFAQ/{platformId}")]
 		public IHttpActionResult PutFAQ(int platformId, [FromBody] Customization custom)
 		{
@@ -113,7 +97,7 @@ namespace BAR.UI.MVC.Controllers.api
 		/// <summary>
 		/// Changes the address of a specific subplatform
 		/// </summary>
-		[HttpPut]
+		[HttpPost]
 		[Route("api/Customization/PutAddress/{platformId}")]
 		public IHttpActionResult PutAddress(int platformId, [FromBody] Customization custom)
 		{
@@ -183,7 +167,7 @@ namespace BAR.UI.MVC.Controllers.api
 		/// <summary>
 		/// Changes a specific question
 		/// </summary>
-		[HttpPut]
+		[HttpPost]
 		[Route("api/Customization/PutQuestion/{questionId}")]
 		public IHttpActionResult PutQuestion(int questionId, [FromBody] Question question)
 		{
