@@ -11,6 +11,7 @@ namespace BAR.BL.Managers
 	public interface IItemManager
 	{	
 		Item GetItem(int itemId);
+		Item GetItemWithSubPlatform(int itemId);
 		IEnumerable<Item> GetAllItems();
 		IEnumerable<Item> GetAllPersons();
 		IEnumerable<Item> GetAllOrganisations();

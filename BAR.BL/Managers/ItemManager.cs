@@ -68,10 +68,21 @@ namespace BAR.BL.Managers
 			return itemRepo.ReadItem(itemId);
 		}
 
-		/// <summary>
-		/// Gives back all the items of a specific type
-		/// </summary>
-		public IEnumerable<Item> GetItemsForType(ItemType type)
+    /// <summary>
+    /// Returns an item for a specifig itemId including the attached subplatform.
+    /// </summary>
+    /// <param name="itemId"></param>
+    /// <returns></returns>
+    public Item GetItemWithSubPlatform(int itemId)
+    {
+      InitRepo();
+      return itemRepo.ReadItemWithSubPlatform(itemId);
+    }
+
+    /// <summary>
+    /// Gives back all the items of a specific type
+    /// </summary>
+    public IEnumerable<Item> GetItemsForType(ItemType type)
 		{
 			IEnumerable<Item> items = GetAllItems();
 			return items.Where(item => item.ItemType == type).AsEnumerable();
@@ -288,5 +299,5 @@ namespace BAR.BL.Managers
 			if (uowManager == null) itemRepo = new ItemRepository();
 			else itemRepo = new ItemRepository(uowManager.UnitOfWork);
 		}
-	}
+  }
 }

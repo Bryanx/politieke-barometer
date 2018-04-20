@@ -39,6 +39,17 @@ namespace BAR.DAL
 		}
 
 		/// <summary>
+		/// Returns the item that matches the itemId including SubPlatform
+		/// </summary>       
+		public Item ReadItemWithSubPlatform(int itemId)
+		{
+			return ctx.Items
+				.Include(i => i.SubPlatform)
+				.Where(item => item.ItemId == itemId)
+				.SingleOrDefault();
+		}
+
+		/// <summary>
 		/// Gives back a list of all the items for a specific type
 		/// </summary>
 		public IEnumerable<Item> ReadItemsForType(ItemType type)

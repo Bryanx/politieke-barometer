@@ -31,7 +31,6 @@ namespace BAR.UI.MVC.Controllers
 		/// Item page for logged-in and non-logged-in users.
 		/// </summary>
 		[AllowAnonymous]
-		[SubPlatformCheck]
 		public ActionResult Index()
 		{
 			//Get hold of subplatformID we received
@@ -68,6 +67,7 @@ namespace BAR.UI.MVC.Controllers
 		/// <summary>
 		/// Detailed item page for logged-in and non-logged-in users.
 		/// </summary>
+		[SubPlatformDataCheck]
 		public ActionResult Details(int id)
 		{
 			itemManager = new ItemManager();
