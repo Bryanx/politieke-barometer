@@ -28,7 +28,13 @@ namespace BAR.UI.MVC.Attributes
         {
           ISubplatformManager subplatformManager = new SubplatformManager();
           SubPlatform subplatform = subplatformManager.GetSubPlatform(subdomain);
-          return subplatform.SubPlatformId;
+          if(subplatform == null)
+          {
+            return -1;
+          } else
+          {
+            return subplatform.SubPlatformId;
+          }
         }
       }
       return -1;
