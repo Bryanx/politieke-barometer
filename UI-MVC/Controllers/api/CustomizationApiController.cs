@@ -208,7 +208,13 @@ namespace BAR.UI.MVC.Controllers.api
 		[Route("api/Customization/DeleteQuestion/{platformId}")]
 		public IHttpActionResult DeleteQuestion(int questionId)
 		{
-			return Ok();
+			platformManager = new SubplatformManager();
+			if (!platformManager.Exists(questionId))
+				return NotFound();
+
+			platformManager.RemoveQuestion(questionId);
+
+			return StatusCode(HttpStatusCode.NoContent);
 		}
 	}
 }
