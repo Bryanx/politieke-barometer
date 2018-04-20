@@ -410,11 +410,11 @@
             //Do ajax call
             $.ajax({
                 type: "GET",
-                url: "api/Customization/GetPlatformId/" + subdomain,
+                url: "/api/Customization/GetPlatformId/" + subdomain,
                 contentType: 'application/json; charset=utf-8',
                 dataType: "json"
             }).fail(() => {/* ok */ })
-                .done(data => console.log(data))
+                .done(function (data) { return data; })
         }
 
         //Functions for ajax calls
@@ -423,7 +423,7 @@
             var id = getSubplatformId();
             $.ajax({
                 type: "POST",
-                url: "api/Customization/PutColor/" + id,
+                url: "/api/Customization/PutColor/" + id,
                 data: $("#form_page_color").serialize(),
                 contentType: 'application/json; charset=utf-8',
                 dataType: "json"
