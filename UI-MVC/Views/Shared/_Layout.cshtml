@@ -52,8 +52,6 @@
             </div>
             <!-- /top navigation -->
             <!-- breadcrumbs -->
-            @Html.MvcSiteMap().SiteMapPath("BootstrapSiteMapPathHelperModel")
-
             <!-- page content -->
             @if (IsSectionDefined("Homepage"))
             {
@@ -101,15 +99,22 @@
     </div>
     <!-- Scripts -->
     <script src="/Home/GetResources"></script>
-    @Scripts.Render("~/bundles/jquery","~/Content/build/js/searchbar.js", "~/bundles/bootstrap", "~/bundles/dates", "~/bundles/timeago")
+    
+    <script src="~/Scripts/jquery/jquery-331min.js"></script>
+    <script src="~/Scripts/jquery/jqueryautocompletemin.js"></script>
+    @Scripts.Render("~/Content/build/js/searchbar.js")
+    <script src="~/Scripts/bootstrap.js"></script>
+    <script src="~/Scripts/dates/datemin.js"></script>
+    <script src="~/Scripts/dates/momentmin.js"></script>
+    <script src="~/Scripts/dates/daterangepickermin.js"></script>
+    <script src=" ~/Scripts/jquery/jquerytimeago.js"></script>
     @Scripts.Render("~/Content/build/js/alerts.js")
-
     @if (IsSectionDefined("CustomJS"))
-    {
-        @RenderSection("CustomJS")
-    }
+    {@RenderSection("CustomJS")}
     <!-- Custom Theme Scripts -->
-    @Scripts.Render("~/bundles/custom")
+    
+    <script src="~/Content/build/js/custom.js"></script>
+    <script src="~/Content/build/js/searchbar.js"></script>
     <script defer>
         (() => {
             $(".culture", ".left_col").click(function () {

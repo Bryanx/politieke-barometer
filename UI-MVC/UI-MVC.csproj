@@ -403,8 +403,8 @@
     <Content Include="Scripts\jquery\jquery-ui-1.11.0.js" />
     <Content Include="Scripts\jquery\jquery-ui-1.11.0.min.js" />
     <Content Include="Scripts\jquery\jquery-ui.js" />
-    <Content Include="Scripts\jquery\jquery.autocomplete.min.js" />
-    <Content Include="Scripts\jquery\jquery.timeago.js" />
+    <Content Include="Scripts\jquery\jqueryautocompletemin.js" />
+    <Content Include="Scripts\jquery\jquerytimeago.js" />
     <Content Include="Scripts\bootstrap-progressbar.js" />
     <Content Include="Scripts\bootstrap-progressbar.min.js" />
     <Content Include="Scripts\datatables\datatables.net-bs\css\dataTables.bootstrap.css" />
@@ -418,9 +418,9 @@
     <Content Include="Scripts\datatables\datatables.net-responsive\js\dataTables.responsive.min.js" />
     <Content Include="Scripts\datatables\datatables.net\js\jquery.dataTables.js" />
     <Content Include="Scripts\datatables\datatables.net\js\jquery.dataTables.min.js" />
-    <Content Include="Scripts\dates\date.min.js" />
-    <Content Include="Scripts\dates\daterangepicker.min.js" />
-    <Content Include="Scripts\dates\moment.min.js" />
+    <Content Include="Scripts\dates\datemin.js" />
+    <Content Include="Scripts\dates\daterangepickermin.js" />
+    <Content Include="Scripts\dates\momentmin.js" />
     <Content Include="Scripts\fastclick.js" />
     <Content Include="Scripts\flot\curvedLines.js" />
     <Content Include="Scripts\flot\jquery.flot.js" />
@@ -528,7 +528,7 @@
     <None Include="Scripts\bootstrap.min.js" />
     <None Include="Scripts\jquery\jquery-3.3.1-vsdoc.js" />
     <None Include="Scripts\jquery\jquery-3.3.1.js" />
-    <None Include="Scripts\jquery\jquery-3.3.1.min.js" />
+    <None Include="Scripts\jquery\jquery-331min.js" />
     <None Include="Scripts\jquery\jquery-3.3.1.min.map" />
     <None Include="Scripts\jquery\jquery-3.3.1.slim.js" />
     <None Include="Scripts\jquery\jquery-3.3.1.slim.min.js" />
