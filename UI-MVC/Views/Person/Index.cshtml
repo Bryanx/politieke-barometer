@@ -7,9 +7,7 @@
 
 <h1>@Model.PageTitle</h1>
 <hr/>
-<section class="shadowed">
 @Html.Partial("Partials/_PersonTable", Model)
-</section>
 <div style="visibility: hidden">space</div>
 
 @section CustomJS{
@@ -17,13 +15,13 @@
     <script type="text/javascript">
         (() => {
             $('#datatable-infinite').dataTable({
-                "searching": false,
+                "searching": true,
                 "bScrollInfinite": true,
                 "bScrollCollapse": true,
-                "sScrollY": "1000px",
-                "paging": false,
+                "sScrollY": "750px",
+                "paging": true,
                 "bProcessing": true,
-                "info": false
+                "info": true
             });
 
             $('.subscribeItem').click(function() {

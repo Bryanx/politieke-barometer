@@ -738,6 +738,8 @@ table.tile_info {
 .dataTables_wrapper > .row {
   overflow: auto !important;
   /*prevent datatables overflowing its container*/ }
+  .dataTables_wrapper > .row:last-child {
+    margin-top: 15px; }
 
 /*
     The urls may give an error (when compiled the urls are correct)

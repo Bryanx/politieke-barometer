@@ -282,4 +282,7 @@ table {
 .dataTables_wrapper > .row {
   overflow: auto !important;
   /*prevent datatables overflowing its container*/
+  &:last-child {
+    margin-top: 15px;
+  }
 }
