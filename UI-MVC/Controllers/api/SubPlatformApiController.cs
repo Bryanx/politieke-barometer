@@ -12,7 +12,7 @@ namespace BAR.UI.MVC.Controllers.api
 	/// <summary>
 	/// This API-controller is used for the customization of the subplatforms.
 	/// </summary>
-	public class CustomizationApiController : ApiController
+	public class SubPlatformApiController : ApiController
 	{
 		private ISubplatformManager platformManager;
 
