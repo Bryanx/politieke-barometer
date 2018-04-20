@@ -156,7 +156,7 @@ namespace BAR.UI.MVC.Controllers.api
 		/// <summary>
 		/// Deletes a question
 		/// </summary>
-		[HttpDelete]
+		[HttpPost]
 		[Route("api/Customization/DeleteQuestion/{platformId}")]
 		public IHttpActionResult DeleteQuestion(int questionId)
 		{

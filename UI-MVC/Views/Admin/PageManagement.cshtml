@@ -15,7 +15,7 @@
             <div class="x_content">
                 <br />
                 <div class="col-sm-8 col-md-8 col-xs-12 center-margin">
-                    @using (Html.BeginForm("Settings", "User", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
+                    @using (Html.BeginForm("PageManagement", "User", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
                     {
                         <form id="form_page_color" class="form-horizontal form-label-left">
                             <label class="control-label">Primaire kleur</label>
@@ -70,7 +70,7 @@
             <div class="x_content">
                 <br />
                 <div class="col-sm-8 col-md-8 col-xs-12 center-margin">
-                    @using (Html.BeginForm("Settings", "User", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
+                    @using (Html.BeginForm("PageManagement", "User", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
                     {
                         <form id="form_page_text" class="form-horizontal form-label-left">
 
@@ -118,7 +118,7 @@
             </div>
             <div class="x_content">
                 <br />
-                @using (Html.BeginForm("Settings", "User", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
+                @using (Html.BeginForm("PageManagement", "User", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
                 {
                     <form id="form_page_privacy" class="form-horizontal form-label-left">
                         <div class="form-group">
@@ -259,7 +259,7 @@
             </div>
             <div class="x_content">
                 <br />
-                @using (Html.BeginForm("Settings", "User", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
+                @using (Html.BeginForm("PageManagement", "User", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
                 {
                     <form id="form_page_faq" class="form-horizontal form-label-left">
                         <div class="form-group">
@@ -316,7 +316,7 @@
             <div class="x_content">
                 <br />
                 <div class="col-sm-8 col-md-8 col-xs-12 center-margin">
-                    @using (Html.BeginForm("Settings", "User", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
+                    @using (Html.BeginForm("PageManagement", "User", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
                     {
                         <form id="form_page_contact" class="form-horizontal form-label-left">
                             <div class="form-group">
@@ -422,7 +422,9 @@
         $("#form_page_contact").submit(putContact(id));
 
         //Questions
-        //TODO
+        //TODO: write a listner to create a question
+        $("#form_page_faq").submit(putQuestion(id));
+        $("#form_page_faq").submit(deleteQuestion(id));
 
         //Functions for ajax calls
         //Customization
@@ -479,9 +481,32 @@
                 dataType: "json"
             }).fail(() => {/* ok */ })
                 .done(() => {/* ok */ })
-            event.preventDefault();}
+            event.preventDefault();
+        }
 
         //Questions
-        //TODO
+        //TODO: write an to create a question
+        function putQuestion(id) {
+            $.ajax({
+                type: "POST",
+                url: "api/Customization/PutQuestion/" + id,
+                data: $this.serialize(),
+                contentType: 'application/json; charset=utf-8',
+                dataType: "json"
+            }).fail(() => {/* ok */ })
+                .done(() => {/* ok */ })
+            event.preventDefault();
+        }
+        function deleteQuestion(id) {
+            $.ajax({
+                type: "POST",
+                url: "api/Customization/DeleteQuestion/" + id,
+                data: $this.serialize(),
+                contentType: 'application/json; charset=utf-8',
+                dataType: "json"
+            }).fail(() => {/* ok */ })
+                .done(() => {/* ok */ })
+            event.preventDefault();
+        }
     </script>
 }
