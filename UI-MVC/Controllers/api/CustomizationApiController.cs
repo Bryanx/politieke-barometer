@@ -12,14 +12,16 @@ namespace BAR.UI.MVC.Controllers.api
 	/// <summary>
 	/// This API-controller is used for the customization of the subplatforms.
 	/// </summary>
-    public class CustomizationApiController : ApiController
-    {
+	public class CustomizationApiController : ApiController
+	{
 		private ISubplatformManager platformManager;
 
 		/// <summary>
 		/// Gives back the customization of a specific subplatform
 		/// </summary>
-		public IHttpActionResult Get(int platformId)
+		[HttpGet]
+		[Route("api/Customization/GetCustom/{platformId}")]
+		public IHttpActionResult GetCustom(int platformId)
 		{
 			platformManager = new SubplatformManager();
 			Customization custom = platformManager.GetCustomization(platformId);
@@ -33,6 +35,8 @@ namespace BAR.UI.MVC.Controllers.api
 		/// <summary>
 		/// Changes the webpage colors of a specific subplatform
 		/// </summary>
+		[HttpPut]
+		[Route("api/Customization/PutColor/{platformId}")]
 		public IHttpActionResult PutColor(int platformId, [FromBody] Customization custom)
 		{
 			platformManager = new SubplatformManager();
@@ -51,6 +55,8 @@ namespace BAR.UI.MVC.Controllers.api
 		/// <summary>
 		/// Changes the page alias of a specific subplatform
 		/// </summary>
+		[HttpPut]
+		[Route("api/Customization/PutAlias/{platformId}")]
 		public IHttpActionResult PutAlias(int platformId, [FromBody] Customization custom)
 		{
 			platformManager = new SubplatformManager();
@@ -69,6 +75,8 @@ namespace BAR.UI.MVC.Controllers.api
 		/// <summary>
 		/// Changes the privacy of a specific subplatform
 		/// </summary>
+		[HttpPut]
+		[Route("api/Customization/PutPrivacy/{platformId}")]
 		public IHttpActionResult PutPrivacy(int platformId, [FromBody] Customization custom)
 		{
 			platformManager = new SubplatformManager();
@@ -86,6 +94,8 @@ namespace BAR.UI.MVC.Controllers.api
 		/// <summary>
 		/// Changes the FAQ of a specific subplatform
 		/// </summary>
+		[HttpPut]
+		[Route("api/Customization/PutFAQ/{platformId}")]
 		public IHttpActionResult PutFAQ(int platformId, [FromBody] Customization custom)
 		{
 			platformManager = new SubplatformManager();
@@ -103,6 +113,8 @@ namespace BAR.UI.MVC.Controllers.api
 		/// <summary>
 		/// Changes the address of a specific subplatform
 		/// </summary>
+		[HttpPut]
+		[Route("api/Customization/PutAddress/{platformId}")]
 		public IHttpActionResult PutAddress(int platformId, [FromBody] Customization custom)
 		{
 			platformManager = new SubplatformManager();
@@ -116,5 +128,5 @@ namespace BAR.UI.MVC.Controllers.api
 
 			return StatusCode(HttpStatusCode.NoContent);
 		}
- 	}
+	}
 }
