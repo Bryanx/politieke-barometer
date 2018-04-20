@@ -146,10 +146,45 @@ namespace BAR.UI.MVC.Controllers.api
 		}
 
 		/// <summary>
+		/// Gives a specific question
+		/// </summary>
+		[HttpGet]
+		[Route("api/Customization/GetQuestions/{questionId}")]
+		public IHttpActionResult GetQuestion(int questionId)
+		{
+			platformManager = new SubplatformManager();
+			Question requestedQuestion = platformManager.GetQuestion(questionId);
+
+			if (requestedQuestion == null)
+				return StatusCode(HttpStatusCode.NoContent);
+
+			return Ok(requestedQuestion);
+		}
+
+		/// <summary>
+		/// Creates a question for a specific subplatform
+		/// </summary>
+		[HttpGet]
+		[Route("api/Customization/PostQuestion/{platformId}")]
+		public IHttpActionResult PostQuestion(int platformId, [FromBody] Question question)
+		{
+			platformManager = new SubplatformManager();
+
+			if (question == null)
+				return BadRequest("No question given");
+			if (!ModelState.IsValid)
+				return BadRequest(ModelState);
+
+			platformManager.AddQuestion(platformId, question.QuestionType, question.Title, question.Answer);
+
+			return StatusCode(HttpStatusCode.NoContent);
+		}
+
+		/// <summary>
 		/// Changes a specific question
 		/// </summary>
-		[HttpPut]
-		[Route("api/Customization/PutAddress/{questionId}")]
+		[HttpPost]
+		[Route("api/Customization/PutQuestion/{questionId}")]
 		public IHttpActionResult PutQuestion(int questionId, [FromBody] Question question)
 		{
 			platformManager = new SubplatformManager();
@@ -165,5 +200,7 @@ namespace BAR.UI.MVC.Controllers.api
 
 			return StatusCode(HttpStatusCode.NoContent);
 		}
+
+		
 	}
 }
