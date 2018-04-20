@@ -13,232 +13,313 @@ using System.Text;
 
 namespace BAR.DAL.EF
 {
-  internal class BarometerInitializer : DropCreateDatabaseIfModelChanges<BarometerDbContext>
-  {
-    /// <summary>
-    /// Dummy data from the json file will be generated
-    /// in this file for the first wave of information.
-    /// </summary>
-    protected override void Seed(BarometerDbContext ctx)
-    {
-      GenerateSubPlatforms(ctx);
-      GenerateSources(ctx);
-      GenerateProperties(ctx);
-      GenerateAreas(ctx);
-      GenerateK3(ctx);
-    }
+	internal class BarometerInitializer : DropCreateDatabaseIfModelChanges<BarometerDbContext>
+	{
+		/// <summary>
+		/// Dummy data from the json file will be generated
+		/// in this file for the first wave of information.
+		/// </summary>
+		protected override void Seed(BarometerDbContext ctx)
+		{
+			GenerateSubPlatforms(ctx);
+			GenerateSources(ctx);
+			GenerateProperties(ctx);
+			//GenerateInformations(ctx);
+			GenerateAreas(ctx);
+			GenerateK3(ctx);
+		}
 
-    /// <summary>
-    /// Generates test data for K3 subplatform
-    /// </summary>
-    /// <param name="ctx"></param>
-    private void GenerateK3(BarometerDbContext ctx)
-    {
-      Person Marthe = new Person()
-      {
-        Name = "Marthe De Pillecyn",
-        CreationDate = DateTime.Now,
-        Baseline = 0,
-        TrendingPercentage = 0,
-        SubPlatform = ctx.SubPlatforms.Where(sp => sp.Name.Equals("k3")).SingleOrDefault()
-      };
+		/// <summary>
+		/// Generates test data for K3 subplatform
+		/// </summary>
+		/// <param name="ctx"></param>
+		private void GenerateK3(BarometerDbContext ctx)
+		{
+			Person Marthe = new Person()
+			{
+				Name = "Marthe De Pillecyn",
+				CreationDate = DateTime.Now,
+				Baseline = 0,
+				TrendingPercentage = 0,
+				SubPlatform = ctx.SubPlatforms.Where(sp => sp.Name.Equals("k3")).SingleOrDefault()
+			};
 
-      Person Wever = new Person()
-      {
-        Name = "Bart de Wever",
-        CreationDate = DateTime.Now,
-        Baseline = 0,
-        TrendingPercentage = 0,
-        SubPlatform = ctx.SubPlatforms.Where(sp => sp.Name.Equals("politiek")).SingleOrDefault()
-      };
+			Person Wever = new Person()
+			{
+				Name = "Bart de Wever",
+				CreationDate = DateTime.Now,
+				Baseline = 0,
+				TrendingPercentage = 0,
+				SubPlatform = ctx.SubPlatforms.Where(sp => sp.Name.Equals("politiek")).SingleOrDefault()
+			};
 
-      ctx.Items.Add(Wever);
-      ctx.Items.Add(Marthe);
-      ctx.SaveChanges();
-    }
+			ctx.Items.Add(Wever);
+			ctx.Items.Add(Marthe);
+			ctx.SaveChanges();
+		}
 
-    /// <summary>
-    /// Generates some subplatforms.
-    /// </summary>
-    /// <param name="ctx"></param>
-    private void GenerateSubPlatforms(BarometerDbContext ctx)
-    {
-      SubPlatform subPlatform1 = new SubPlatform
-      {
-        Name = "k3",
-        CreationDate = DateTime.Now,
-        Customization = AddDefaultCustomization()
-      };
-      ctx.SubPlatforms.Add(subPlatform1);
+		/// <summary>
+		/// Generates some subplatforms.
+		/// </summary>
+		/// <param name="ctx"></param>
+		private void GenerateSubPlatforms(BarometerDbContext ctx)
+		{
+			SubPlatform subPlatform1 = new SubPlatform
+			{
+				Name = "k3",
+				CreationDate = DateTime.Now
+			};
+			ctx.SubPlatforms.Add(subPlatform1);
 
-      SubPlatform subPlatform2 = new SubPlatform
-      {
-        Name = "politiek",
-        CreationDate = DateTime.Now,
-        Customization = AddDefaultCustomization()
-      };
-      ctx.SubPlatforms.Add(subPlatform2);
+			SubPlatform subPlatform2 = new SubPlatform
+			{
+				Name = "politiek",
+				CreationDate = DateTime.Now
+			};
+			ctx.SubPlatforms.Add(subPlatform2);
 
-      ctx.SaveChanges();
-    }
+			ctx.SaveChanges();
+		}
 
 
-    private Customization AddDefaultCustomization()
-    {
-      Customization custom = new Customization()
-      {
-        //Colors
-        PrimaryColor = "#0f8ec4",
-        SecondairyColor = "#303E4D",
-        TertiaryColor = "#278e87",
-        BackgroundColor = "#f7f7f7",
-        TextColor = "#73879C",
+		/// <summary>
+		/// Generates all of the sources we get our information from.
+		/// </summary>
+		private void GenerateSources(BarometerDbContext ctx)
+		{
+			Source source = new Source
+			{
+				Name = "Twitter",
+				SourceLine = "twitter.com"
+			};
+			ctx.Sources.Add(source);
+			ctx.SaveChanges();
+		}
 
-        //Navbar and title text
-        PersonAlias = "Persoon",
-        PersonsAlias = "Personen",
-        OrganisationAlias = "Organisation",
-        OrganisationsAlias = "Organisations",
-        ThemeAlias = "Theme",
-        ThemesAlias = "Themes",
+		/// <summary>
+		/// Performance gain if you put all items in a list
+		/// and then in the context with addRange();
+		/// </summary>
+		private void GenerateProperties(BarometerDbContext ctx)
+		{
+			List<Property> propertiesList = new List<Property>();
 
-        //Privacy
-        PrivacyTitle = "Privacy policy",
-        PrivacyText = "Copyright " + DateTime.Now.Year,
+			Property hashtag = new Property
+			{
+				Name = "Hashtag"
+			};
+			Property word = new Property
+			{
+				Name = "Word"
+			};
+			Property geo = new Property
+			{
+				Name = "Geo"
+			};
+			Property postId = new Property
+			{
+				Name = "PostId"
+			};
+			Property userId = new Property
+			{
+				Name = "UserId"
+			};
+			Property sentiment = new Property
+			{
+				Name = "Sentiment"
+			};
+			Property retweet = new Property
+			{
+				Name = "Retweet"
+			};
+			Property url = new Property
+			{
+				Name = "Url"
+			};
+			Property mention = new Property
+			{
+				Name = "Mention"
+			};
 
-        //FAQ
-        FAQTitle = "Frequently Asked Questions (FAQ)",
+			propertiesList.Add(hashtag);
+			propertiesList.Add(word);
+			propertiesList.Add(geo);
+			propertiesList.Add(postId);
+			propertiesList.Add(userId);
+			propertiesList.Add(sentiment);
+			propertiesList.Add(retweet);
+			propertiesList.Add(url);
+			propertiesList.Add(mention);
 
-        //Contact properties
-        StreetAndHousenumber = "Nationalestraat 24",
-        Zipcode = "2060",
-        City = "Antwerpen",
-        Country = "Belgiï¿½",
-        Email = "contact@politiekebarometer.be"
-      };
+			ctx.Properties.AddRange(propertiesList);
+			ctx.SaveChanges();
+		}
 
-      return custom;
-    }
+		/// <summary>
+		/// Generates information objects based on the
+		/// JSON-file.
+		/// </summary>
+		private void GenerateInformations(BarometerDbContext ctx)
+		{
+			string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "data.json");
+			string json = File.ReadAllText(path);
+			dynamic deserializedJson = JsonConvert.DeserializeObject(json);
 
-    /// <summary>
-    /// Generates all of the sources we get our information from.
-    /// </summary>
-    private void GenerateSources(BarometerDbContext ctx)
-    {
-      Source source = new Source
-      {
-        Name = "Twitter",
-        SourceLine = "twitter.com"
-      };
-      ctx.Sources.Add(source);
-      ctx.SaveChanges();
-    }
+			for (int i = 0; i < 150; i++)
+			{
+				PropertyValue propertyValue;
+				Information information = new Information
+				{
+					PropertieValues = new List<PropertyValue>()
+				};
+				//Read hashtags
+				for (int j = 0; j < deserializedJson.records[i].hashtags.Count; j++)
+				{
+					propertyValue = new PropertyValue
+					{
+						Property = ctx.Properties.Where(x => x.Name.Equals("Hashtag")).SingleOrDefault(),
+						Value = deserializedJson.records[i].hashtags[j],
+						Confidence = 1
+					};
+					information.PropertieValues.Add(propertyValue);
+				}
+				//Read words
+				for (int j = 0; j < deserializedJson.records[i].words.Count; j++)
+				{
+					propertyValue = new PropertyValue
+					{
+						Property = ctx.Properties.Where(x => x.Name.Equals("Word")).SingleOrDefault(),
+						Value = deserializedJson.records[i].words[j],
+						Confidence = 1
+					};
+					information.PropertieValues.Add(propertyValue);
+				}
+				//Read geo
+				propertyValue = new PropertyValue
+				{
+					Property = ctx.Properties.Where(x => x.Name.Equals("Geo")).SingleOrDefault(),
+					Value = deserializedJson.records[i].geo,
+					Confidence = 1
+				};
+				information.PropertieValues.Add(propertyValue);
+				//Read postId
+				propertyValue = new PropertyValue
+				{
+					Property = ctx.Properties.Where(x => x.Name.Equals("PostId")).SingleOrDefault(),
+					Value = deserializedJson.records[i].id,
+					Confidence = 1
+				};
+				information.PropertieValues.Add(propertyValue);
+				//Read userId
+				propertyValue = new PropertyValue
+				{
+					Property = ctx.Properties.Where(x => x.Name.Equals("UserId")).SingleOrDefault(),
+					Value = deserializedJson.records[i].user_id,
+					Confidence = 1
+				};
+				information.PropertieValues.Add(propertyValue);
+				//Read sentiment
+				propertyValue = new PropertyValue
+				{
+					Property = ctx.Properties.Where(x => x.Name.Equals("Sentiment")).SingleOrDefault(),
+					Value = deserializedJson.records[i].sentiment[0],
+					Confidence = deserializedJson.records[i].sentiment[1]
+				};
+				information.PropertieValues.Add(propertyValue);
+				//Read retweet
+				propertyValue = new PropertyValue
+				{
+					Property = ctx.Properties.Where(x => x.Name.Equals("Retweet")).SingleOrDefault(),
+					Value = deserializedJson.records[i].retweet,
+					Confidence = 1
+				};
+				information.PropertieValues.Add(propertyValue);
+				//Read urls
+				for (int j = 0; j < deserializedJson.records[i].urls.Count; j++)
+				{
+					propertyValue = new PropertyValue
+					{
+						Property = ctx.Properties.Where(x => x.Name.Equals("Url")).SingleOrDefault(),
+						Value = deserializedJson.records[i].urls[j],
+						Confidence = 1
+					};
+					information.PropertieValues.Add(propertyValue);
+				}
+				//Read mentions
+				for (int j = 0; j < deserializedJson.records[i].mentions.Count; j++)
+				{
+					propertyValue = new PropertyValue
+					{
+						Property = ctx.Properties.Where(x => x.Name.Equals("Mention")).SingleOrDefault(),
+						Value = deserializedJson.records[i].mentions[j],
+						Confidence = 1
+					};
+					information.PropertieValues.Add(propertyValue);
+				}
+				//Add source
+				string source = Convert.ToString(deserializedJson.records[i].source);
+				information.Source = ctx.Sources.Where(s => s.Name.ToLower().Equals(source)).SingleOrDefault();
+				//Add connection to Item (Person)
+				string personFullName = String.Format("{0} {1}", deserializedJson.records[i].politician[0], deserializedJson.records[i].politician[1]);
+				//information.Item = GeneratePeople(personFullName, ctx);
+				//Add date
+				string datum = Convert.ToString(deserializedJson.records[i].date);
+				DateTime myInfoDate = DateTime.ParseExact(datum, "yyyy-MM-dd HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture);
+				information.CreationDate = myInfoDate;
 
-    /// <summary>
-    /// Performance gain if you put all items in a list
-    /// and then in the context with addRange();
-    /// </summary>
-    private void GenerateProperties(BarometerDbContext ctx)
-    {
-      List<Property> propertiesList = new List<Property>();
+				//Add information object to the DbSet
+				ctx.Informations.Add(information);
+			}
+			ctx.SaveChanges();
+		}
 
-      Property gender = new Property
-      {
-        Name = "Gender"
-      };
-      Property age = new Property
-      {
-        Name = "Age"
-      };
-      Property education = new Property
-      {
-        Name = "Education"
-      };
-      Property language = new Property
-      {
-        Name = "Language"
-      };
-      Property personality = new Property
-      {
-        Name = "Personality"
-      };
-      Property word = new Property
-      {
-        Name = "Word"
-      };
-      Property sentiment = new Property
-      {
-        Name = "Sentiment"
-      };
-      Property hashtag = new Property
-      {
-        Name = "Hashtag"
-      };
-      Property mention = new Property
-      {
-        Name = "Mention"
-      };
-      Property url = new Property
-      {
-        Name = "Url"
-      };
-      Property date = new Property
-      {
-        Name = "Date"
-      };
-      Property geo = new Property
-      {
-        Name = "Geo"
-      };
-      Property postId = new Property
-      {
-        Name = "PostId"
-      };     
-      Property retweet = new Property
-      {
-        Name = "Retweet"
-      };
+		/// <summary>
+		/// Will return the ID of the people
+		/// If the person does not exist, he will be created.
+		/// </summary>
+		private Item GeneratePeople(string personFullName, BarometerDbContext ctx)
+		{
 
-      propertiesList.Add(gender);
-      propertiesList.Add(age);
-      propertiesList.Add(education);
-      propertiesList.Add(language);
-      propertiesList.Add(personality);
-      propertiesList.Add(word);
-      propertiesList.Add(sentiment);
-      propertiesList.Add(hashtag);
-      propertiesList.Add(mention);
-      propertiesList.Add(url);
-      propertiesList.Add(date);
-      propertiesList.Add(geo);
-      propertiesList.Add(postId);
-      propertiesList.Add(retweet);
+			Item person = ctx.Items.Where(i => i.Name.Equals(personFullName)).SingleOrDefault();
 
-      ctx.Properties.AddRange(propertiesList);
-      ctx.SaveChanges();
-    }
+			if (person == null)
+			{
+				person = new Person()
+				{
+					Name = personFullName,
+					CreationDate = DateTime.Now,
+					Baseline = 0,
+					TrendingPercentage = 0
+				};
+				ctx.Items.Add(person);
+				ctx.SaveChanges();
+			}
 
-    /// <summary>
-    /// Reads all Belgium cities from Json.
-    /// </summary>
-    /// <param name="ctx"></param>
-    private void GenerateAreas(BarometerDbContext ctx)
-    {
-      string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "zipcode-belgium.json");
-      string json = File.ReadAllText(path);
-      dynamic deserializedJson = JsonConvert.DeserializeObject(json);
+			return person;
+		}
 
-      for (int i = 0; i < deserializedJson.Count; i++)
-      {
-        Area area = new Area
-        {
-          Country = "Belgiï¿½",
-          Residence = deserializedJson[i].city
-        };
-        ctx.Areas.Add(area);
-      }
-      ctx.SaveChanges();
-    }
-  }
+		/// <summary>
+		/// Reads all Belgium cities from Json.
+		/// </summary>
+		/// <param name="ctx"></param>
+		private void GenerateAreas(BarometerDbContext ctx)
+		{
+			string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "zipcode-belgium.json");
+			string json = File.ReadAllText(path);
+			dynamic deserializedJson = JsonConvert.DeserializeObject(json);
+
+			for (int i = 0; i < deserializedJson.Count; i++)
+			{
+				Area area = new Area
+				{
+					Country = "België",
+					Residence = deserializedJson[i].city
+				};
+				ctx.Areas.Add(area);
+			}
+
+			ctx.SaveChanges();
+		}
+	}
 }
 
