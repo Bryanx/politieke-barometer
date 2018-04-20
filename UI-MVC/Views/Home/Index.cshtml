@@ -13,7 +13,8 @@
         <div class="col-md-12 col-sm-12 col-xs-12 main-header-container">
             <div class="logo"></div>
             <div class="main-header">
-                <h1 class="main-header-title">@Resources.HomepageHeaderTitle<br/>@Resources.OnSocialMedia.ToLower().
+                <h1 class="main-header-title">
+                    @Resources.HomepageHeaderTitle<br />@Resources.OnSocialMedia.ToLower().
                 </h1>
             </div>
             @Html.Partial("Partials/_SearchBar")
@@ -21,226 +22,229 @@
     </div>
     <!-- header end -->
 }
-    <a name="nieuws"></a>
-    <!-- top tiles -->
-    <div class="row tile_count">
-        @{ int i = 0;}
-        @foreach (var item in Model.Items) {
-            if (i < 6) {
-                <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
-                    <span class="count_top"><i class="fa fa-user"></i> @item.Name</span>
-                    <div class="count">123.50</div>
-                    <span class="count_bottom">
-                        <i class="green">
-                            <i
-                                class="fa fa-sort-asc">
-                            </i>@item.TrendingPercentage%
-                        </i> Sinds vorige week
-                    </span>
-                </div>
-                i++;
-            }
+<a name="nieuws"></a>
+<!-- top tiles -->
+<div class="row tile_count">
+    @{ int i = 0;}
+    @foreach (var item in Model.Items)
+    {
+        if (i < 6)
+        {
+            <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
+                <span class="count_top"><i class="fa fa-user"></i> @item.Name</span>
+                <div class="count">123.50</div>
+                <span class="count_bottom">
+                    <i class="green">
+                        <i class="fa fa-sort-asc">
+                        </i>@item.TrendingPercentage%
+                    </i> Sinds vorige week
+                </span>
+            </div>
+            i++;
         }
-    </div>
-    <!-- /top tiles -->
-    <div class="row">
+    }
+</div>
+<!-- /top tiles -->
+<div class="row">
 
-        <div class="col-md-8 col-sm-8 col-xs-12">
-            <div class="x_panel tile fixed_height_320">
-                <div class="x_title">
-                    <h2>Top 5 politici</h2>
-                    <ul class="nav navbar-right panel_toolbox">
-                        <li>
-                            <a class="collapse-link">
-                                <i class="fa fa-chevron-up"></i>
-                            </a>
-                        </li>
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
-                               aria-expanded="false">
-                                <i class="fa fa-wrench"></i>
-                            </a>
-                            <ul class="dropdown-menu" role="menu">
-                                <li>
-                                    <a href="#">Settings 1</a>
-                                </li>
-                                <li>
-                                    <a href="#">Settings 2</a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a class="close-link">
-                                <i class="fa fa-close"></i>
-                            </a>
-                        </li>
-                    </ul>
-                    <div class="clearfix"></div>
-                </div>
-                <div class="x_content">
-                    <p><strong>Aantal vermeldingen van politici op social media</strong></p>
-                    @{ int j = 1;}
-                    <table>
-                        @foreach (var item in Model.Items.OrderByDescending(m => m.TrendingPercentage)) {
-                            if (j <= 5) {
-                                <tr>
-                                    <div class="widget_summary">
-                                        <div class="w_left w_25">
-                                            <span style="display: inline" class="badge bg-green">@j</span>
-                                            <h4>@item.Name</h4>
-                                        </div>
-                                        <div class="w_center w_55">
-                                            <div class="progress">
-                                                <div class="progress-bar bg-green" role="progressbar" aria-valuenow="@item.TrendingPercentage"
-                                                     aria-valuemin="0" aria-valuemax="@Model.Items.Max(m => m.TrendingPercentage)" style="width: @(item.TrendingPercentage * 3)%;">
-                                                    <span class="sr-only">@item.TrendingPercentage% Complete</span>
-                                                </div>
+    <div class="col-md-8 col-sm-8 col-xs-12">
+        <div class="x_panel tile fixed_height_320">
+            <div class="x_title">
+                <h2>Top 5 politici</h2>
+                <ul class="nav navbar-right panel_toolbox">
+                    <li>
+                        <a class="collapse-link">
+                            <i class="fa fa-chevron-up"></i>
+                        </a>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                           aria-expanded="false">
+                            <i class="fa fa-wrench"></i>
+                        </a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li>
+                                <a href="#">Settings 1</a>
+                            </li>
+                            <li>
+                                <a href="#">Settings 2</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a class="close-link">
+                            <i class="fa fa-close"></i>
+                        </a>
+                    </li>
+                </ul>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+                <p><strong>Aantal vermeldingen van politici op social media</strong></p>
+                @{ int j = 1;}
+                <table>
+                    @foreach (var item in Model.Items.OrderByDescending(m => m.TrendingPercentage))
+                    {
+                        if (j <= 5)
+                        {
+                            <tr>
+                                <div class="widget_summary">
+                                    <div class="w_left w_25">
+                                        <span style="display: inline" class="badge bg-green">@j</span>
+                                        <h4>@item.Name</h4>
+                                    </div>
+                                    <div class="w_center w_55">
+                                        <div class="progress">
+                                            <div class="progress-bar bg-green" role="progressbar" aria-valuenow="@item.TrendingPercentage"
+                                                 aria-valuemin="0" aria-valuemax="@Model.Items.Max(m => m.TrendingPercentage)" style="width: @(item.TrendingPercentage * 3)%;">
+                                                <span class="sr-only">@item.TrendingPercentage% Complete</span>
                                             </div>
                                         </div>
-                                        <div class="w_right w_20">
-                                            <span>@item.TrendingPercentage%</span>
-                                        </div>
-                                        <div class="clearfix"></div>
                                     </div>
-                                </tr>
-                                j++;
-                            }
+                                    <div class="w_right w_20">
+                                        <span>@item.TrendingPercentage%</span>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </tr>
+                            j++;
                         }
-                    </table>
-                </div>
+                    }
+                </table>
             </div>
         </div>
-
-
-        <!-- form color picker -->
-        <div class="col-md-4 col-sm-4 col-xs-12">
-            <div class="x_panel tile fixed_height_320">
-                <div class="x_title">
-                    <h2>Color Picker</h2>
-                    <ul class="nav navbar-right panel_toolbox">
-                        <li>
-                            <a class="collapse-link">
-                                <i class="fa fa-chevron-up"></i>
-                            </a>
-                        </li>
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
-                               aria-expanded="false">
-                                <i class="fa fa-wrench"></i>
-                            </a>
-                            <ul class="dropdown-menu" role="menu">
-                                <li>
-                                    <a href="#">Settings 1</a>
-                                </li>
-                                <li>
-                                    <a href="#">Settings 2</a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a class="close-link">
-                                <i class="fa fa-close"></i>
-                            </a>
-                        </li>
-                    </ul>
-                    <div class="clearfix"></div>
-                </div>
-                <div class="x_content">
-                    <br/>
-                    <form class="form-horizontal form-label-left">
-                        <div class="form-group">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Primaire kleur</label>
-                            <div class="col-md-9 col-sm-9 col-xs-12">
-                                <div id="cp-d" class="input-group">
-                                    <input id="ip-a" type="text" value="#e01ab5" class="form-control"/>
-                                    <span class="input-group-addon">
-                                        <i></i>
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Secundaire kleur</label>
-                            <div class="col-md-9 col-sm-9 col-xs-12">
-                                <div id="cp-s" class="input-group demo2">
-                                    <input id="ip-d" type="text" value="#e01ab5" class="form-control"/>
-                                    <span class="input-group-addon">
-                                        <i></i>
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Tertiaire kleur</label>
-                            <div class="col-md-9 col-sm-9 col-xs-12">
-                                <div id="cp-a" class="input-group demo2">
-                                    <input id="ip-s" type="text" value="#e01ab5" class="form-control"/>
-                                    <span class="input-group-addon">
-                                        <i></i>
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-        <!-- /form color picker -->
-
     </div>
 
 
-    <div class="row">
-
-
-
-        <div class="col-md-12 col-sm-12 col-xs-12">
-            <div class="x_panel">
-                <div class="x_title">
-                    <h2>
-                        Populariteit per regio
-                    </h2>
-                    <ul class="nav navbar-right panel_toolbox">
-                        <li>
-                            <a class="collapse-link">
-                                <i class="fa fa-chevron-up"></i>
-                            </a>
-                        </li>
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
-                               aria-expanded="false">
-                                <i class="fa fa-wrench"></i>
-                            </a>
-                            <ul class="dropdown-menu" role="menu">
-                                <li>
-                                    <a href="#">Settings 1</a>
-                                </li>
-                                <li>
-                                    <a href="#">Settings 2</a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a class="close-link">
-                                <i class="fa fa-close"></i>
-                            </a>
-                        </li>
-                    </ul>
-                    <div class="clearfix"></div>
-                </div>
-                <div class="x_content">
-                    <div class="dashboard-widget-content">
-                        <div id="map-parent">
-                            <div id="world-map-gdp" class="col-md-12 col-sm-12 col-xs-12" style="height: 430px;">
+    <!-- form color picker -->
+    <div class="col-md-4 col-sm-4 col-xs-12">
+        <div class="x_panel tile fixed_height_320">
+            <div class="x_title">
+                <h2>Color Picker</h2>
+                <ul class="nav navbar-right panel_toolbox">
+                    <li>
+                        <a class="collapse-link">
+                            <i class="fa fa-chevron-up"></i>
+                        </a>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                           aria-expanded="false">
+                            <i class="fa fa-wrench"></i>
+                        </a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li>
+                                <a href="#">Settings 1</a>
+                            </li>
+                            <li>
+                                <a href="#">Settings 2</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a class="close-link">
+                            <i class="fa fa-close"></i>
+                        </a>
+                    </li>
+                </ul>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+                <br />
+                <form class="form-horizontal form-label-left">
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Primaire kleur</label>
+                        <div class="col-md-9 col-sm-9 col-xs-12">
+                            <div id="cp-d" class="input-group">
+                                <input id="ip-a" type="text" value="#e01ab5" class="form-control" />
+                                <span class="input-group-addon">
+                                    <i></i>
+                                </span>
                             </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Secundaire kleur</label>
+                        <div class="col-md-9 col-sm-9 col-xs-12">
+                            <div id="cp-s" class="input-group demo2">
+                                <input id="ip-d" type="text" value="#e01ab5" class="form-control" />
+                                <span class="input-group-addon">
+                                    <i></i>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Tertiaire kleur</label>
+                        <div class="col-md-9 col-sm-9 col-xs-12">
+                            <div id="cp-a" class="input-group demo2">
+                                <input id="ip-s" type="text" value="#e01ab5" class="form-control" />
+                                <span class="input-group-addon">
+                                    <i></i>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- /form color picker -->
+
+</div>
+
+
+<div class="row">
+
+
+
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>
+                    Populariteit per regio
+                </h2>
+                <ul class="nav navbar-right panel_toolbox">
+                    <li>
+                        <a class="collapse-link">
+                            <i class="fa fa-chevron-up"></i>
+                        </a>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                           aria-expanded="false">
+                            <i class="fa fa-wrench"></i>
+                        </a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li>
+                                <a href="#">Settings 1</a>
+                            </li>
+                            <li>
+                                <a href="#">Settings 2</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a class="close-link">
+                            <i class="fa fa-close"></i>
+                        </a>
+                    </li>
+                </ul>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+                <div class="dashboard-widget-content">
+                    <div id="map-parent">
+                        <div id="world-map-gdp" class="col-md-12 col-sm-12 col-xs-12" style="height: 430px;">
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-
     </div>
-    <div class="row">
+
+</div>
+<div class="row">
 
 
     <!-- Start to do list -->
@@ -341,7 +345,6 @@
         </div>
     </div>
     <!-- End to do list -->
-
     <!-- start of weather widget -->
     <div class="col-md-6 col-sm-6 col-xs-12">
         <div class="x_panel">
@@ -466,9 +469,12 @@
 
     </div>
     <!-- end of weather widget -->
-    </div>
+</div>
 @section CustomJS{
-    @Scripts.Render("~/bundles/map")
+    
+    <script src="~/Scripts/jqvmap/jqueryvmapmin.js"></script>
+    <script src="~/Scripts/jqvmap/jqueryvmapbelgium.js"></script>
+    <script src="~/Scripts/jqvmap/jqueryvmapsampledata.js"></script>
     <script type="text/javascript">
         $(window).scroll(() => {
             //After scrolling 100px from the top...
