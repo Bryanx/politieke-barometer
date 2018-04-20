@@ -20,7 +20,7 @@
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
     <Use64BitIISExpress />
-    <IISExpressSSLPort>44398</IISExpressSSLPort>
+    <IISExpressSSLPort>44317</IISExpressSSLPort>
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
@@ -223,10 +223,12 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="Attributes\SubPLatformCheck.cs" />
+    <Compile Include="Attributes\SubPlatformCheck.cs" />
+    <Compile Include="Attributes\SubPlatformDataCheck.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\api\AlertApiController.cs" />
     <Compile Include="Controllers\api\CustomizationApiController.cs" />
+    <Compile Include="Controllers\api\DataApiController.cs" />
     <Compile Include="Controllers\api\ItemApiController.cs" />
     <Compile Include="Controllers\api\UserApiController.cs" />
     <Compile Include="Controllers\api\WidgetController.cs" />
@@ -261,23 +263,52 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\build\css\bootstrap-progressbar-3.3.4.css" />
-    <Content Include="Content\build\css\bootstrap-progressbar-3.3.4.min.css" />
-    <Content Include="Content\build\css\bootstrap.css" />
-    <Content Include="Content\build\css\bootstrap.css.map" />
-    <Content Include="Content\build\css\bootstrap.min.css" />
-    <Content Include="Content\build\css\bootstrap.min.css.map" />
     <Content Include="Content\build\css\custom.scss" />
-    <Content Include="Content\build\css\daterangepicker.css" />
-    <Content Include="Content\build\css\daterangepicker.scss" />
-    <Content Include="Content\build\css\font-awesome.css" />
-    <Content Include="Content\build\css\font-awesome.css.map" />
-    <Content Include="Content\build\css\font-awesome.min.css" />
-    <Content Include="Content\build\css\gridstack.css" />
-    <Content Include="Content\build\css\gridstack.min.css" />
     <Content Include="Content\build\css\homepage.scss" />
-    <Content Include="Content\build\css\jqvmap.css" />
-    <Content Include="Content\build\css\jqvmap.min.css" />
+    <Content Include="Content\build\css\modules\animations.scss" />
+    <Content Include="Content\build\css\modules\general.scss" />
+    <Content Include="Content\build\css\modules\colors.scss" />
+    <Content Include="Content\build\css\modules\mediaqueries.scss" />
+    <Content Include="Content\build\css\partials\alerts.scss" />
+    <Content Include="Content\build\css\partials\search-autocomplete.scss" />
+    <Content Include="Content\build\css\partials\breadcrumbs.scss" />
+    <Content Include="Content\build\css\partials\buttons.scss" />
+    <Content Include="Content\build\css\partials\checkbox.scss" />
+    <Content Include="Content\build\css\partials\colors.scss" />
+    <Content Include="Content\build\css\partials\dropdowns.scss" />
+    <Content Include="Content\build\css\partials\footer.scss" />
+    <Content Include="Content\build\css\partials\forms.scss" />
+    <Content Include="Content\build\css\partials\general.scss" />
+    <Content Include="Content\build\css\partials\graphs.scss" />
+    <Content Include="Content\build\css\partials\images.scss" />
+    <Content Include="Content\build\css\partials\login.scss" />
+    <Content Include="Content\build\css\partials\modals.scss" />
+    <Content Include="Content\build\css\partials\navbar.scss" />
+    <Content Include="Content\build\css\partials\navbartoggle.scss" />
+    <Content Include="Content\build\css\partials\oneliners.scss" />
+    <Content Include="Content\build\css\partials\panelaccordion.scss" />
+    <Content Include="Content\build\css\partials\panels.scss" />
+    <Content Include="Content\build\css\partials\profile.scss" />
+    <Content Include="Content\build\css\partials\searchbar.scss" />
+    <Content Include="Content\build\css\partials\tables.scss" />
+    <Content Include="Content\build\css\partials\texteditor.scss" />
+    <Content Include="Content\build\css\partials\tiles.scss" />
+    <Content Include="Content\build\css\partials\dashboard.scss" />
+    <Content Include="Content\build\css\vendor\bootstrap-progressbar-3.3.4.css" />
+    <Content Include="Content\build\css\vendor\bootstrap-progressbar-3.3.4.min.css" />
+    <Content Include="Content\build\css\vendor\bootstrap.css" />
+    <Content Include="Content\build\css\vendor\bootstrap.css.map" />
+    <Content Include="Content\build\css\vendor\bootstrap.min.css" />
+    <Content Include="Content\build\css\vendor\bootstrap.min.css.map" />
+    <Content Include="Content\build\css\vendor\daterangepicker.css" />
+    <Content Include="Content\build\css\vendor\daterangepicker.scss" />
+    <Content Include="Content\build\css\vendor\font-awesome.css" />
+    <Content Include="Content\build\css\vendor\font-awesome.css.map" />
+    <Content Include="Content\build\css\vendor\font-awesome.min.css" />
+    <Content Include="Content\build\css\vendor\gridstack.css" />
+    <Content Include="Content\build\css\vendor\gridstack.min.css" />
+    <Content Include="Content\build\css\vendor\jqvmap.css" />
+    <Content Include="Content\build\css\vendor\jqvmap.min.css" />
     <Content Include="Content\build\fonts\fontawesome-webfont.eot" />
     <Content Include="Content\build\fonts\fontawesome-webfont.svg" />
     <Content Include="Content\build\fonts\fontawesome-webfont.ttf" />
@@ -379,6 +410,7 @@
     <Content Include="Scripts\jquery\jquery-ui-1.11.0.js" />
     <Content Include="Scripts\jquery\jquery-ui-1.11.0.min.js" />
     <Content Include="Scripts\jquery\jquery-ui.js" />
+    <Content Include="Scripts\jquery\jquery.autocomplete.min.js" />
     <Content Include="Scripts\jquery\jquery.timeago.js" />
     <Content Include="Scripts\bootstrap-progressbar.js" />
     <Content Include="Scripts\bootstrap-progressbar.min.js" />
@@ -436,7 +468,6 @@
     <Content Include="Scripts\nprogress.js" />
     <Content Include="Scripts\site.js" />
     <Content Include="Scripts\underscore.min.js" />
-    <Content Include="test.json" />
     <Content Include="Views\Admin\Index.cshtml" />
     <Content Include="Views\Admin\ItemManagement.cshtml" />
     <Content Include="Views\Admin\PageManagement.cshtml" />

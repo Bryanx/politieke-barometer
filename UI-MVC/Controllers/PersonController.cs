@@ -31,32 +31,19 @@ namespace BAR.UI.MVC.Controllers
 		/// Item page for logged-in and non-logged-in users.
 		/// </summary>
 		[AllowAnonymous]
-		[SubPlatformCheck]
 		public ActionResult Index()
 		{
 			//Get hold of subplatformID we received
 			int subPlatformID = (int) RouteData.Values["SubPlatformID"];
 
-
 			itemManager = new ItemManager();
 			userManager = new UserManager();
 			subManager = new SubscriptionManager();
 
+			//Return platformspecific data
 			IList<ItemDTO> people = null;
+			people = Mapper.Map(itemManager.GetAllPersonsForSubplatform(subPlatformID), new List<ItemDTO>());
 
-			if (subPlatformID == -1)
-			{
-				//Do generic version for no specific subplatform
-				people = Mapper.Map(itemManager.GetAllPersons(), new List<ItemDTO>());
-
-			}
-			else
-			{
-				//Return platformspecific data
-				List<Item> peopleList = itemManager.GetAllPersonsForSubplatform(subPlatformID).ToList();
-				people = Mapper.Map(itemManager.GetAllPersonsForSubplatform(subPlatformID), new List<ItemDTO>());
-
-			}
 			IEnumerable<Subscription> subs = subManager.GetSubscriptionsWithItemsForUser(User.Identity.GetUserId());
 			foreach (ItemDTO item in people)
 			{
@@ -80,6 +67,7 @@ namespace BAR.UI.MVC.Controllers
 		/// <summary>
 		/// Detailed item page for logged-in and non-logged-in users.
 		/// </summary>
+		[SubPlatformDataCheck]
 		public ActionResult Details(int id)
 		{
 			itemManager = new ItemManager();
