@@ -12,6 +12,32 @@ function addCSSgrid(id) {
     elem.css('height', '85%');
 }
 
+function noWidgetsAvailable() {
+    $('.no-widgets').show();
+}
+
+function showSaveMessage() {
+    $('#notificationMessage')
+        .addClass('bg-success')
+        .html('<i class="fa fa-check-circle"></i> ' + Resources.Saved)
+        .show()
+        .delay(3000)
+        .slideUp("slow", "swing", function () {
+            $(this).removeClass().empty();
+        });
+}
+
+function showErrorMessage() {
+    $('#notificationMessage')
+        .addClass('bg-error')
+        .html('<i class="fa fa-times-circle"></i> ' + Resources.Failed)
+        .show()
+        .delay(3000)
+        .slideUp("slow", "swing", function () {
+            $(this).removeClass().empty();
+        });
+}
+
 function addLineChart(id) {
     addCSSgrid(id);
     Morris.Line({
@@ -110,33 +136,15 @@ function addBarChart(id) {
 /**
  * The basic HTML structure of a widget
  */
-function createWidget(id, title) {
+function createUserWidget(id, title) {
     return '<div class="chart-container">' +
         '            <div class="x_panel grid-stack-item-content bg-white no-scrollbar">' +
         '                <div class="x_title">' +
         '                    <h2 class="graphTitle">' + title + '</h2>' +
         '                    <ul class="nav navbar-right panel_toolbox">' +
         '                        <li>' +
-        '                            <a class="collapse-link">' +
-        '                                <i class="fa fa-chevron-up"></i>' +
-        '                            </a>' +
-        '                        </li>' +
-        '                        <li class="dropdown">' +
-        '                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">' +
-        '                                <i class="fa fa-wrench"></i>' +
-        '                            </a>' +
-        '                            <ul class="dropdown-menu" role="menu">' +
-        '                                <li>' +
-        '                                    <a href="#">Settings 1</a>' +
-        '                                </li>' +
-        '                                <li>' +
-        '                                    <a href="#">Settings 2</a>' +
-        '                                </li>' +
-        '                            </ul>' +
-        '                        </li>' +
-        '                        <li>' +
-        '                            <a id="close-widget">' +
-        '                                <i class="fa fa-close"></i>' +
+        '                            <a class="close-widget">' +
+        '                                <i id=' + id + ' class="fa fa-close"></i>' +
         '                            </a>' +
         '                        </li>' +
         '                    </ul>' +
@@ -148,13 +156,13 @@ function createWidget(id, title) {
 }
 
 function createItemWidget(id, title) {
-    return '<div  data-widget-id='+id+' class="chart-container">' +
+    return '<div data-widget-id=' + id + ' class="chart-container">' +
         '            <div class="x_panel grid-stack-item-content bg-white no-scrollbar">' +
         '                <div class="x_title">' +
         '                    <h2 class="graphTitle">' + title + '</h2>' +
         '                    <div class="pull-right">' +
         '                       <button class="addToDashboard btn btn-dark btn-xs">Add to dashboard</button>' +
-        '                   </div>'+
+        '                   </div>' +
         '                    <div class="clearfix"></div>' +
         '                </div>' +
         '                <div id="' + id + '"></div>' +
@@ -173,90 +181,131 @@ var grid = gridselector.data('gridstack');
 
 
 function loadGrid(data) {
-    console.log(data);
-    for (var i = 0; i < data.length; i++) {
-        if (data.dashboardId !== undefined) {
-            grid.addWidget(createWidget('grafiek' + counter, data[i].Title),
-                data.RowNumber, data[i].ColumnNumber, data[i].RowSpan, data[i].ColumnSpan, true, 4, 12, 4);
-        } else {
-            grid.addWidget(createItemWidget('grafiek' + counter, data[i].Title),
-                data.RowNumber, data[i].ColumnNumber, data[i].RowSpan, data[i].ColumnSpan, true, 4, 12, 4);
-        }
-        if (data[i].Graph != null) {
-            switch (data[i].Graph.Type) {
-                case "donut" :
-                    if (data[i].Graph.DonutLabels != null && data[i].Graph.DonutValues != null) {
-                        addPieChart('grafiek' + counter, data[i].Graph.DonutLabels, data[i].Graph.DonutValues);
-                    }
-                    break;
-                case "line" :
-                    addLineChart('grafiek' + counter);
-                    break;
-                case "bar" :
-                    addBarChart('grafiek' + counter);
-                    break;
+    if (data != null && data.length) {
+        $.each(data, (index, widget) => {
+            //UserWidget
+            if (widget.DashboardId !== undefined) {
+                grid.addWidget(createUserWidget(widget.WidgetId, widget.Title), widget.RowNumber, widget.ColumnNumber, widget.RowSpan, widget.ColumnSpan,
+                    false, 4, 12, 4, 12, widget.WidgetId);
+                //ItemWidget
+            } else {
+                grid.addWidget(createItemWidget(widget.WidgetId, widget.Title), widget.RowNumber, widget.ColumnNumber, widget.RowSpan, widget.ColumnSpan,
+                    true, 4, 12, 4, 12, widget.WidgetId);
+                grid.movable('.grid-stack-item', false);
+                grid.resizable('.grid-stack-item', false);
             }
-        }
-        counter++;
+
+            if (widget.Graph != null) {
+                switch (widget.Graph.Type) {
+                    case "donut" :
+                        if (widget.Graph.DonutLabels != null && widget.Graph.DonutValues != null) {
+                            addPieChart('grafiek' + counter, widget.Graph.DonutLabels, widget.Graph.DonutValues);
+                        }
+                        break;
+                    case "line" :
+                        addLineChart('grafiek' + counter);
+                        break;
+                    case "bar" :
+                        addBarChart('grafiek' + counter);
+                        break;
+                }
+            }
+            counter++;
+        });
+    } else {
+        noWidgetsAvailable();
     }
 }
 
 var count = 0;
 
-function saveGrid() {
-    var titles = $('.graphTitle');
-    grid.serializedData = _.map($('.grid-stack > .grid-stack-item:visible'), function (el) {
-        el = $(el);
-        var node = el.data('_gridstack_node');
-        return {
-            Id: node._id,
-            Title: $(titles[count++]).html(),
-            X: node.x,
-            Y: node.y,
-            Width: node.width,
-            Height: node.height
-        };
-    }, this);
-    var JSONdata = JSON.stringify(grid.serializedData, null, '    ');
-    console.log(grid.serializedData);
-    return false;
-}
-
 function init() {
     //add widget with graph
     this.btnAddLineChart = function () {
-        grid.addWidget(createWidget('grafiek' + counter), 0, 0, 4, 4, true, 4, 12, 4);
+        grid.addWidget(createUserWidget('grafiek' + counter), 0, 0, 4, 4, true, 4, 12, 4);
         addLineChart('grafiek' + counter);
         counter++;
         return false;
     }.bind(this);
+
     this.btnAddPieChart = function () {
-        grid.addWidget(createWidget('grafiek' + counter), 0, 0, 4, 4, true, 4, 12, 4);
+        grid.addWidget(createUserWidget('grafiek' + counter), 0, 0, 4, 4, true, 4, 12, 4);
         addPieChart('grafiek' + counter);
         counter++;
         return false;
     }.bind(this);
+
     this.btnAddBarChart = function () {
-        grid.addWidget(createWidget('grafiek' + counter), 0, 0, 4, 4, true, 4, 12, 4);
+        grid.addWidget(createUserWidget('grafiek' + counter), 0, 0, 4, 4, true, 4, 12, 4);
         addBarChart('grafiek' + counter);
         counter++;
         return false;
     }.bind(this);
-    this.closeWidget = function (e) {
-        e.preventDefault();
-        let el = $(this).closest('.grid-stack-item');
-        $('#grid').data('gridstack').removeWidget(el);
-    };
-    this.addToDashBoard = function ($this) {
-        let widgetId = ('.addToDashboard').parents(".chart-container").data("widget-id");
+
+    this.createWidget = function () {
+        let widgetId = $('.addToDashboard').parents(".chart-container").data("widget-id");
+        $.ajax({
+            type: 'POST',
+            url: '/api/MoveWidget/' + widgetId,
+            dataType: 'json',
+            success: () => showSaveMessage()
+        }).fail(() => showFailedMessage());
     };
 
-//data-gs-y="0" data-gs-width="12" data-gs-height="6" data-gs-auto-position="yes" data-gs-min-width="4" data-gs-max-width="12" data-gs-min-height="4" data-gs-x="0"
-    //handlers
+    this.updateWidgets = function (items) {
+        let serializedItems = [];
+        $.each(items, function (index, item) {
+            serializedItems.push({
+                WidgetId: item.id,
+                Title: "widget", //unused title
+                RowNumber: item.x,
+                ColumnNumber: item.y,
+                RowSpan: item.width,
+                ColumnSpan: item.height,
+                WidgetType: 0,
+                DashboardId: 0
+            });
+        });
+        $.ajax({
+            type: 'PUT',
+            url: '/api/Widget/',
+            data: JSON.stringify(serializedItems),
+            dataType: 'application/json',
+            contentType: 'application/json',
+            success: () => showSaveMessage(),
+            error: (xhr) => {
+                alert($.parseJSON(xhr.responseText).Message);
+                showErrorMessage();
+            }
+        })
+    };
+
+    this.deleteWidget = function (e) {
+        let el = (e.target).closest('.grid-stack-item');
+        gridselector.data('gridstack').removeWidget(el);
+        $.ajax({
+            type: 'DELETE',
+            url: '/api/Widget/Delete/' + e.target.id,
+            dataType: 'json',
+            error: (xhr) => {
+                alert($.parseJSON(xhr.responseText).Message);
+                showErrorMessage();
+            },
+            success: () => {
+                if (!$('.grid-stack-item').length) noWidgetsAvailable();
+                showSaveMessage();
+            }
+        })
+    };
+
+    //dashboard handlers
     $('#btnAddLine').click(this.btnAddLineChart);
     $('#btnAddPie').click(this.btnAddPieChart);
     $('#btnAddBar').click(this.btnAddBarChart);
-    $(document).on('click', '#close-widget', e => this.closeWidget(e));
-    $(document).on('click', '.addToDashboard', () => this.addToDashBoard($(this)));
+    $(document).on('click', '.close-widget', (e) => this.deleteWidget(e));
+    $('.grid-stack').on('change', (event, items) => this.updateWidgets(items));
+
+    //itempage handlers
+    $(document).on('click', '.addToDashboard', () => this.createWidget());
 }
 

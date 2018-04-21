@@ -1,9 +1,14 @@
+using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Web.Http;
+using AutoMapper;
 using BAR.BL.Domain.Widgets;
 using BAR.BL.Managers;
+using BAR.UI.MVC.Models;
 using Microsoft.AspNet.Identity;
+using WebGrease.Css.Extensions;
+using Widget = BAR.BL.Domain.Widgets.Widget;
 
 namespace BAR.UI.MVC.Controllers.api
 {
@@ -24,11 +29,11 @@ namespace BAR.UI.MVC.Controllers.api
 			widgetManager = new WidgetManager();
 
 			Dashboard dash = widgetManager.GetDashboard(User.Identity.GetUserId());
-			var responses = widgetManager.GetWidgetsForDashboard(dash.DashboardId);
+			List<UserWidget> widgets = widgetManager.GetWidgetsForDashboard(dash.DashboardId).ToList();
 			
-			if (responses == null || responses.Count() == 0) return StatusCode(HttpStatusCode.NoContent);
-			
-			return Ok(responses);
+			if (widgets == null || widgets.Count() == 0) return StatusCode(HttpStatusCode.NoContent);
+
+			return Ok(Mapper.Map(widgets, new List<UserWidgetDTO>()));
 		}
 		
 		/// <summary>
@@ -46,7 +51,28 @@ namespace BAR.UI.MVC.Controllers.api
 			
 			return Ok(widgets);
 		}
+		/// <summary>
+		/// Transfers a Widget to the dashboard of a user.
+		/// The given ItemWidget will be copied to a UserWidget.
+		/// </summary>
+		[HttpPost]
+		[Route("api/MoveWidget/{widgetId}")]
+		public IHttpActionResult MoveWidgetToDashboard(int widgetId)
+		{
+			widgetManager = new WidgetManager();
 
+			Dashboard dash = widgetManager.GetDashboard(User.Identity.GetUserId());
+
+			if (widgetManager.GetWidget(widgetId) == null) return StatusCode(HttpStatusCode.Conflict);
+			
+			Widget widgetToCopy = widgetManager.GetWidget(widgetId);
+			Widget widget = widgetManager.CreateWidget(WidgetType.GraphType, 
+				widgetToCopy.Title, widgetToCopy.RowNumber, widgetToCopy.ColumnNumber, widgetToCopy.RowSpan,
+				widgetToCopy.ColumnSpan, dash.DashboardId);
+
+			return StatusCode(HttpStatusCode.NoContent);
+		}
+		
 		/// <summary>
 		/// Creates a new Widget from the body of the post request.
 		/// If the widget already exists, returns 409 Conflict
@@ -70,19 +96,19 @@ namespace BAR.UI.MVC.Controllers.api
 		/// <summary>
 		/// Updates an existing widget.
 		/// </summary>
-		/// <param name="id"></param>
-		/// <param name="widget"></param>
+		/// <param name="widgets"></param>
 		/// <returns>If all goes well, 204 No Content is returned</returns>
-		public IHttpActionResult Put(int id, [FromBody] Widget widget)
+		public IHttpActionResult Put([FromBody] UserWidgetDTO[] widgets)
 		{
 			widgetManager = new WidgetManager();
-
-			if (widget == null) return BadRequest("No widget given");
-			if (!ModelState.IsValid) return BadRequest(ModelState);
-			if (id != widget.WidgetId) return BadRequest("Id doesn't match");
-			if (widgetManager.GetWidget(widget.WidgetId) == null) return NotFound();
 			
-			widgetManager.ChangeWidget(widget);
+			foreach (UserWidgetDTO widget in widgets) {
+				if (widget == null) return BadRequest("No widget given");
+				if (widgetManager.GetWidget(widget.WidgetId) == null) return NotFound();
+
+				widgetManager.ChangeWidgetPos(widget.WidgetId, widget.RowNumber, widget.ColumnNumber, widget.RowSpan,
+					widget.ColumnSpan);
+			}
 			return StatusCode(HttpStatusCode.NoContent);
 		}
 
@@ -100,6 +126,8 @@ namespace BAR.UI.MVC.Controllers.api
 		}
 
 		/// Temp delete a widget.
+		[HttpDelete]
+		[Route("api/Widget/Delete/{id}")]
 		public IHttpActionResult Delete(int id)
 		{
 			widgetManager = new WidgetManager();

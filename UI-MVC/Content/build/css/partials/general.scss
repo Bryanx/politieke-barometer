@@ -84,3 +84,17 @@ hr {
   clear: both;
   visibility: hidden;
 }
+
+#notificationMessage {
+  position: fixed;
+  display: block;
+  z-index: 999;
+  padding: 27px 5px;
+  text-align: center;
+  color: white;
+  left: 0;
+  bottom: 23px;
+  width: 100px;
+  height: 72px;
+  vertical-align: middle;
+}

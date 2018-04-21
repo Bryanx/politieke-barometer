@@ -8,7 +8,7 @@
 
   > thead {
     margin: 0 -20px;
-    @include diagonal-gradient(#0f8ec4, #278e87);
+    @include diagonal-gradient;
     color: var(--white);
     > tr > th {
       border: 1px solid rgba(white, 0.2);

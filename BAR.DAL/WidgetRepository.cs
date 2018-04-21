@@ -94,15 +94,7 @@ namespace BAR.DAL
 		/// </summary>
 		public IEnumerable<UserWidget> ReadWidgetsForDashboard(int dashboardId)
 		{
-			//Get UserWidgete
-			List<UserWidget> widgets = new List<UserWidget>();
-			foreach (Widget widget in ctx.Widgets.AsEnumerable())
-			{
-				if (widget is UserWidget) widgets.Add((UserWidget) widget);
-			}
-
-			//Return result
-			return widgets.AsEnumerable().Where(wid => wid.Dashboard.DashboardId == dashboardId);
+			return ReadDashboardWithWidgets(dashboardId).Widgets;
 		}
 		
 		/// <summary>
