@@ -65,6 +65,7 @@ namespace BAR.BL.Managers
 			item.NumberOfFollowers++;
 			subRepo.CreateSubscription(subscription);
 			uowManager.Save();
+			uowManager = null;
 
 			return subscription;
 		}

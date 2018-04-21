@@ -5,11 +5,13 @@ using System.Threading;
 using System.Web;
 using System.Web.Mvc;
 using BAR.UI.MVC.Helpers;
+using BAR.UI.MVC.Attributes;
 
 namespace BAR.UI.MVC.Controllers {
     /// <summary>
     /// This controller stores the user preferred language in a cookie.
     /// </summary>
+    [SubPlatformCheck]
     public class LanguageController : Controller {
         protected override IAsyncResult BeginExecuteCore(AsyncCallback callback, object state) {
             string cultureName = null;

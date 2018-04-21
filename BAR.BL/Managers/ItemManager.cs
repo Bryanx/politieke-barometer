@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using BAR.BL.Domain.Data;
 using System.Linq;
 using BAR.BL.Domain.Users;
+using BAR.BL.Domain.Core;
 
 namespace BAR.BL.Managers
 {
@@ -34,7 +35,7 @@ namespace BAR.BL.Managers
 		/// </summary>
 		public void DetermineTrending(int itemId)
 		{
-			InitRepo();
+			/*InitRepo();
 
 			DataManager dataManager = new DataManager();
 			IEnumerable<Information> allInfoForId = dataManager.GetAllInformationForId(itemId);
@@ -44,7 +45,7 @@ namespace BAR.BL.Managers
 
 			int period = (lastInfoDate - earliestInfoDate).Days;
 
-      if (period == 0) period = 1;
+			if (period == 0) period = 1;
 
 			int aantalBaseline = dataManager.GetNumberInfo(itemId, earliestInfoDate);
 			int aantalTrending = dataManager.GetNumberInfo(itemId, lastInfoDate.AddDays(-1));
@@ -56,7 +57,7 @@ namespace BAR.BL.Managers
 			double trendingPer = Convert.ToDouble(aantalTrending) / baseline;
 
 			itemRepo.UpdateItemTrending(itemId, baseline, trendingPer);
-			itemRepo.UpdateLastUpdated(itemId, DateTime.Now);
+			itemRepo.UpdateLastUpdated(itemId, DateTime.Now);*/
 		}
 
 		/// <summary>
@@ -169,10 +170,21 @@ namespace BAR.BL.Managers
 			return itemRepo.ReadItem(itemId);
 		}
 
-		/// <summary>
-		/// Gives back all the items of a specific type
-		/// </summary>
-		public IEnumerable<Item> GetItemsForType(ItemType type)
+        /// <summary>
+        /// Returns an item for a specifig itemId including the attached subplatform.
+        /// </summary>
+        /// <param name="itemId"></param>
+        /// <returns></returns>
+        public Item GetItemWithSubPlatform(int itemId)
+        {
+          InitRepo();
+          return itemRepo.ReadItemWithSubPlatform(itemId);
+        }
+    
+        /// <summary>
+        /// Gives back all the items of a specific type
+        /// </summary>
+        public IEnumerable<Item> GetItemsForType(ItemType type)
 		{
 			IEnumerable<Item> items = GetAllItems();
 			return items.Where(item => item.ItemType == type).AsEnumerable();
@@ -197,20 +209,43 @@ namespace BAR.BL.Managers
 		}
 
 		/// <summary>
-		/// Returns all (undeleted) people
+		/// Returns all (undeleted) people of the whole system
 		/// </summary>
 		public IEnumerable<Item> GetAllPersons() 
 		{
-			return GetAllItems().Where(item => item is Person).Where(item => item.Deleted == false).ToList();
+			InitRepo();
+			return itemRepo.ReadAllPersons().AsEnumerable();
 		}
 
 		/// <summary>
-		/// Returns all (undeleted) organisations
+		/// Returns all (undeleted) organisations of the whole system
 		/// </summary>
 		public IEnumerable<Item> GetAllOrganisations() 
 		{
-			return GetAllItems().Where(item => item is Organisation).Where(item => item.Deleted == false);
+			InitRepo();
+			return itemRepo.ReadAllOraginsations().AsEnumerable();
 
+		}
+
+		/// <summary>
+		/// Returns all (undeleted) themes of the whole system
+		/// </summary>
+		public IEnumerable<Item> GetAllThemes()
+		{
+			InitRepo();
+			return itemRepo.ReadAllThemes().AsEnumerable();
+		}
+
+		/// <summary>
+		/// Returns all people for specific subplatform
+		/// </summary>
+		/// <param name="subPlatformName"></param>
+		/// <returns></returns>
+		public IEnumerable<Item> GetAllPersonsForSubplatform(int subPlatformID)
+		{
+			return GetAllPersons()
+				.Where(item => item.Deleted == false)
+				.Where(item => item.SubPlatform.SubPlatformId.Equals(subPlatformID));
 		}
 
 		/// <summary>
@@ -220,8 +255,10 @@ namespace BAR.BL.Managers
 		{
 			InitRepo();
 
-			//the switch statement will determine if we need to make a
-			//Organisation, person or theme.
+      //the switch statement will determine if we need to make a
+      //Organisation, person or theme.
+      ISubplatformManager subplatformManager = new SubplatformManager();
+      SubPlatform subPlatform = subplatformManager.GetSubPlatform(1);
 			Item item;
 			switch (itemType)
 			{
@@ -239,8 +276,9 @@ namespace BAR.BL.Managers
 						Baseline = 0.0,
 						Informations = new List<Information>(),
 						SocialMediaUrls = new List<SocialMediaUrl>(),
-						Function = function
-					};
+						Function = function,
+            SubPlatform = subPlatform
+          };
 					break;
 				case ItemType.Organisation:
 					item = new Organisation()
@@ -255,8 +293,9 @@ namespace BAR.BL.Managers
 						TrendingPercentage = 0.0,
 						Baseline = 0.0,
 						Informations = new List<Information>(),
-						SocialMediaUrls = new List<SocialMediaUrl>()
-					};
+						SocialMediaUrls = new List<SocialMediaUrl>(),
+            SubPlatform = subPlatform
+          };
 					break;
 				case ItemType.Theme:
 					item = new Theme()
@@ -271,8 +310,9 @@ namespace BAR.BL.Managers
 						TrendingPercentage = 0.0,
 						Baseline = 0.0,
 						Informations = new List<Information>(),
-						Category = category
-					};
+						Category = category,
+            SubPlatform = subPlatform
+          };
 					break;
 				default:
 					item = null;
@@ -367,10 +407,10 @@ namespace BAR.BL.Managers
 			else itemRepo = new ItemRepository(uowManager.UnitOfWork);
 		}
 
-    public Item GetPerson(string personName)
-    {
-      InitRepo();
-      return itemRepo.ReadPerson(personName);
-    }
+        public Item GetPerson(string personName)
+        {
+          InitRepo();
+          return itemRepo.ReadPerson(personName);
+        }
   }
 }

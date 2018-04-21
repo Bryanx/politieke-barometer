@@ -1,0 +1,25 @@
+﻿@model BAR.UI.MVC.Models.SubPlatformViewModel
+
+@{
+  ViewBag.Title = "Index";
+  Layout = "~/Views/Shared/_LayoutSubplatformOverview.cshtml";
+}
+
+<div role="main">
+    <div>
+        <div class="row">
+            @for (int i = 0; i < Model.SubPlatforms.Count(); i++)
+            {
+            <div class="col-md-3 col-sm-3 col-xs-12">
+                <div class="x_panel tile fixed_height_320">
+                    <div class="x_title">
+                        <h2>
+                            @Html.Raw("<a href=\"https://" + Model.SubPlatforms.ElementAt(i).Name + ".localhost:44317\">" + Model.SubPlatforms.ElementAt(i).Name + "</a>")
+                        </h2>
+                    </div>
+                </div>
+            </div>
+            }
+        </div>
+    </div>
+</div>
