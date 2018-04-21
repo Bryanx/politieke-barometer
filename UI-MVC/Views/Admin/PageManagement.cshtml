@@ -19,34 +19,35 @@
                     <form id="form_page_color" class="form-horizontal form-label-left">
                         <label class="control-label">Primaire kleur</label>
                         <div id="cp-primary" class="input-group">
-                            @Html.TextBoxFor(model => model.PrimaryColor, "", new { @class = "form-control", id= "ip-primary", placeholder = @Model.PrimaryColor })
+                            @Html.EditorFor(model => model.PrimaryColor, "", new { @class = "form-control", id= "ip-primary", placeholder = @Model.PrimaryColor })
                             <span class="input-group-addon">
                                 <i></i>
                             </span>
                         </div>
                         <label class="control-label">Secundaire kleur</label>
                         <div id="cp-secondary" class="input-group">
-                            <input id="ip-secondary" type="text" class="form-control" />
+                            @Html.EditorFor(model => model.SecondairyColor, "", new { @class = "form-control", id = "ip-secondary", placeholder = @Model.SecondairyColor })
                             <span class="input-group-addon">
                                 <i></i>
                             </span>
                         </div>
                         <label class="control-label">Tertiaire kleur</label>
                         <div id="cp-tertiary" class="input-group">
-                            <input id="ip-tertiary" type="text" class="form-control" />
+                            @Html.EditorFor(model => model.TertiaryColor, "", new { @class = "form-control", id = "ip-tertiary", placeholder = @Model.TertiaryColor })
                             <span class="input-group-addon">
                                 <i></i>
                             </span>
                         </div>
                         <label class="control-label">Achtergrond kleur</label>
                         <div id="cp-bg" class="input-group">
-                            <input id="ip-bg" type="text" class="form-control" />
+                            @Html.EditorFor(model => model.BackgroundColor, "", new { @class = "form-control", id = "ip-bg", placeholder = @Model.BackgroundColor })
                             <span class="input-group-addon">
                                 <i></i>
                             </span>
                         </div>
                         <label class="control-label">Tekst kleur</label>
                         <div id="cp-font" class="input-group">
+                            @Html.EditorFor(model => model.TextColor, "", new { @class = "form-control", id = "ip-font", placeholder = @Model.TextColor })
                             <input id="ip-font" type="text" class="form-control" />
                             <span class="input-group-addon">
                                 <i></i>
