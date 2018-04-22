@@ -26,7 +26,7 @@ namespace BAR.DAL.EF
 		/// CommitChanges (but that method is not publicly available)
 		/// By default, unitOfWorkPresent will be set to false
 		/// </param>
-		public BarometerDbContext(bool useUOF = false) : base("BAR_DB")
+		public BarometerDbContext(bool useUOF = false) : base("politiek")
 		{
 			delaySave = useUOF;
 		}
