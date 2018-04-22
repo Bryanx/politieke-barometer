@@ -46,8 +46,8 @@ namespace BAR.UI.MVC {
             "~/Scripts/morrisCharts/morris.min.js"
         };
         private static readonly string[] DataTables = {
-            "~/Scripts/datatables/datatables.net/js/jquery.dataTables.min.js",
-            "~/Scripts/datatables/datatables.net-bs/js/dataTables.bootstrap.min.js",
+            "~/Scripts/datatables/datatables.net/js/jquerydataTablesmin.js",
+            "~/Scripts/datatables/datatables.net-bs/js/dataTablesbootstrapmin.js",
             
         };
         private static readonly string[] CustomScripts = {
@@ -57,14 +57,19 @@ namespace BAR.UI.MVC {
         
         /// Style fields
         private static readonly string[] DefaultCss = {
-            "~/Content/build/css/vendor/bootstrapmin.css",
-            "~/Content/build/css/vendor/font-awesomemin.css",
-            "~/Content/build/css/vendor/bootstrap-progressbar-334min.css",
-            "~/Content/build/css/vendor/jqvmapmin.css"
+            "~/Content/build/css/vendor/bootstrap.min.css",
+            "~/Content/build/css/vendor/font-awesome.min.css",
+            "~/Content/build/css/vendor/nprogress.css",
+            "~/Content/build/css/vendor/bootstrap-progressbar-3.3.4.min.css",
+            "~/Content/build/css/vendor/pnotify.css",
+            "~/Content/build/css/vendor/pnotify.buttons.css",
+            "~/Content/build/css/vendor/pnotify.nonblock.css",
+            "~/Content/build/css/vendor/jqvmap.min.css",
+            "~/Content/build/css/vendor/daterangepicker.css"
         };
         private static readonly string[] DatatablesCss = {
-            "~/Scripts/datatables/datatables.net-bs/css/dataTables.bootstrap.min.css",
-            "~/Scripts/datatables/datatables.net-responsive-bs/css/responsive.bootstrap.min.css"
+            "~/Scripts/datatables/datatables.net-bs/css/dataTablesbootstrapmin.css",
+            "~/Scripts/datatables/datatables.net-responsive-bs/css/responsivebootstrapmin.css"
         };
         private static readonly string CustomCss ="~/Content/build/css/custom.css";
 
