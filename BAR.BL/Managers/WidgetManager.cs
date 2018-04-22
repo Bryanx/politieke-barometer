@@ -31,7 +31,7 @@ namespace BAR.BL.Managers
 		/// Creates a widget based on the parameters
 		/// and links that widget to a dasboard.
 		/// </summary>
-		public Widget CreateWidget(WidgetType widgetType, string title, int rowNbr, int colNbr, int rowspan = 1, int colspan = 1, int dashboardId = -1)
+		public Widget CreateWidget(WidgetType widgetType, string title, int rowNbr, int colNbr, DateTime timestamp, int rowspan = 1, int colspan = 1, int dashboardId = -1)
 		{
 			InitRepo();
 			Widget widget;
@@ -40,12 +40,16 @@ namespace BAR.BL.Managers
 			if (dashboardId == -1) widget = new ItemWidget();
 			else widget = new UserWidget();
 
+			//Check if timestamp was given
+			if (timestamp == null) timestamp = DateTime.Now.AddMonths(-1);
+
 			widget.WidgetType = widgetType;
 			widget.Title = title;
 			widget.RowNumber = rowNbr;
 			widget.ColumnNumber = colNbr;
 			widget.RowSpan = rowspan;
 			widget.ColumnSpan = colspan;
+			widget.Timestamp = timestamp;
 			widget.Items = new List<Item>();
 
 			//repo autmaticly links widget to dashboard
