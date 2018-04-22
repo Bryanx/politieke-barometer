@@ -77,6 +77,20 @@ namespace BAR.BL.Managers
 			return infos.AsEnumerable();
 		}
 
+		/// <summary>
+		/// Gives back all the infomations based on a given timestamp
+		/// </summary>
+		public IEnumerable<Information> GetInformationsWithTimestamp(int widgetId)
+		{
+			//Get timestap of widget
+			WidgetManager widgetManager = new WidgetManager();
+			DateTime? timestamp = widgetManager.GetWidget(widgetId).Timestamp;
+
+			//Return filterd informations
+			if (timestamp == null) return GetInformationsForItemid(widgetId).AsEnumerable();
+			else return GetInformationsForItemid(widgetId).Where(info => info.CreationDate >= timestamp).AsEnumerable();
+		}
+
 		public IEnumerable<Item> SynchronizeData(string json)
 		{
 			IEnumerable<Item> items = CheckPeople(json);
@@ -313,7 +327,6 @@ namespace BAR.BL.Managers
 			dataRepo.UpdateAudit(synchronizeAudit);
 			return synchronizeAudit;
 		}
-
 	}
 }
 

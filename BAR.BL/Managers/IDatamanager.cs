@@ -13,6 +13,7 @@ namespace BAR.BL.Managers
 		//Informations
 		IEnumerable<Information> GetInformationsForItemid(int itemId);
 		IEnumerable<Information> GetInformationsForWidgetid(int widgetId);
+		IEnumerable<Information> GetInformationsWithTimestamp(int widgetId);
 
 		int GetNumberInfo(int itemId, DateTime since);
 
