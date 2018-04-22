@@ -22,7 +22,7 @@ namespace BAR.UI.MVC.Controllers.api
 		private IWidgetManager widgetManager;
 		
 		/// <summary>
-		///Reads all widgets for a user dashboard and returns them (possibly in json)
+		///Reads all widgets for a user dashboard and returns them
 		/// </summary>
 		public IHttpActionResult Get()
 		{
@@ -37,11 +37,11 @@ namespace BAR.UI.MVC.Controllers.api
 		}
 		
 		/// <summary>
-		///Reads all widget for an item
+		///Reads all widgets for an item and returns them.
 		/// </summary>
 		[HttpGet]
-		[Route("api/GetWidgets/{itemId}")]
-		public IHttpActionResult GetWidgets(int itemId)
+		[Route("api/GetItemWidgets/{itemId}")]
+		public IHttpActionResult GetItemWidgets(int itemId)
 		{
 			widgetManager = new WidgetManager();
 
@@ -51,6 +51,7 @@ namespace BAR.UI.MVC.Controllers.api
 			
 			return Ok(widgets);
 		}
+		
 		/// <summary>
 		/// Transfers a Widget to the dashboard of a user.
 		/// The given ItemWidget will be copied to a UserWidget.
@@ -94,7 +95,7 @@ namespace BAR.UI.MVC.Controllers.api
 		}
 
 		/// <summary>
-		/// Updates an existing widget.
+		/// Updates existing widgets.
 		/// </summary>
 		/// <param name="widgets"></param>
 		/// <returns>If all goes well, 204 No Content is returned</returns>
@@ -124,8 +125,10 @@ namespace BAR.UI.MVC.Controllers.api
 			widgetManager.ChangeWidgetTitle(id, newTitle);
 			return StatusCode(HttpStatusCode.NoContent);
 		}
-
-		/// Temp delete a widget.
+		
+		/// <summary>
+		/// Deletes a widget
+		/// </summary>
 		[HttpDelete]
 		[Route("api/Widget/Delete/{id}")]
 		public IHttpActionResult Delete(int id)

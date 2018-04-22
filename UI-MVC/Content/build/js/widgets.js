@@ -179,7 +179,6 @@ gridselector.gridstack({
 
 var grid = gridselector.data('gridstack');
 
-
 function loadGrid(data) {
     if (data != null && data.length) {
         $.each(data, (index, widget) => {
@@ -217,6 +216,16 @@ function loadGrid(data) {
     }
 }
 
+function loadWidgets(url) {
+    $.ajax({
+        type: 'GET',
+        url: url,
+        dataType: 'json',
+        success: data => loadGrid(data),
+        error: (xhr) => alert(xhr.responseText)
+    })
+}
+
 var count = 0;
 
 function init() {
@@ -241,7 +250,8 @@ function init() {
         counter++;
         return false;
     }.bind(this);
-
+    
+    //CRUD:
     this.createWidget = function () {
         let widgetId = $('.addToDashboard').parents(".chart-container").data("widget-id");
         $.ajax({

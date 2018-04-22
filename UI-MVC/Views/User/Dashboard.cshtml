@@ -178,22 +178,8 @@
 //            }
 //        });
 
-        //Widgets:
-        //GET Request for widgets
-        function loadWidgets() {
-            $.ajax({
-                    type: 'GET',
-                    url: '/api/Widget',
-                    dataType: 'json'
-                })
-                //if GET request is succesfull: call loadGrid() in widgets.js -> loads all widgets
-                .done(data => loadGrid(data))
-                //TODO: if FAIL proper error handling
-                .fail(() => alert('Widgets could not be loaded.'));
-        }
-
         (() => {
-            loadWidgets();
+            loadWidgets("api/Widget");
 
             var wto;
             $('.subscribeItem').click(function () {

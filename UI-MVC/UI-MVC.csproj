@@ -544,21 +544,13 @@
     <None Include="Scripts\vue.js" />
     <None Include="Scripts\vue.min.js" />
     <Content Include="Views\Home\GetResources.cshtml" />
-    <None Include="Views\Shared\DisplayTemplates\CanonicalHelperModel.ascx" />
     <None Include="Views\Shared\DisplayTemplates\CanonicalHelperModel.cshtml" />
-    <None Include="Views\Shared\DisplayTemplates\MenuHelperModel.ascx" />
     <None Include="Views\Shared\DisplayTemplates\MenuHelperModel.cshtml" />
-    <None Include="Views\Shared\DisplayTemplates\MetaRobotsHelperModel.ascx" />
     <None Include="Views\Shared\DisplayTemplates\MetaRobotsHelperModel.cshtml" />
-    <None Include="Views\Shared\DisplayTemplates\SiteMapHelperModel.ascx" />
     <None Include="Views\Shared\DisplayTemplates\SiteMapHelperModel.cshtml" />
-    <None Include="Views\Shared\DisplayTemplates\SiteMapNodeModel.ascx" />
     <None Include="Views\Shared\DisplayTemplates\SiteMapNodeModel.cshtml" />
-    <None Include="Views\Shared\DisplayTemplates\SiteMapNodeModelList.ascx" />
     <None Include="Views\Shared\DisplayTemplates\SiteMapNodeModelList.cshtml" />
-    <None Include="Views\Shared\DisplayTemplates\SiteMapPathHelperModel.ascx" />
     <None Include="Views\Shared\DisplayTemplates\SiteMapPathHelperModel.cshtml" />
-    <None Include="Views\Shared\DisplayTemplates\SiteMapTitleHelperModel.ascx" />
     <None Include="Views\Shared\DisplayTemplates\SiteMapTitleHelperModel.cshtml" />
     <Content Include="zipcode-belgium.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

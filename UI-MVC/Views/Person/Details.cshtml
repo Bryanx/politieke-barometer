@@ -91,25 +91,13 @@
 @section CustomJS{
     @Scripts.Render("~/bundles/gridstack", "~/bundles/morrisCharts")
     <script type="text/javascript" defer>
-        
-        function loadWidgets() {
-            $.ajax('/api/GetWidgets/'+@Model.Person.ItemId,
-                    {
-                        type: 'GET',
-                        dataType: 'json'
-                    })
-                //if GET request is succesfull: call loadGrid() in widgets.js -> loads all widgets
-                .done(data => loadGrid(data))
-                //TODO: if FAIL proper error handling
-                .fail(() => alert('Widgets could not be loaded.'));
-        }
-        
+
         $('.subscribeItem').click(function() {
             ajaxToggleSubscribe($(this));
         });
 
         (() => {
-            loadWidgets();
+            loadWidgets("/api/GetItemWidgets/" + @Model.Person.ItemId);
         })(jQuery);
 
     </script>

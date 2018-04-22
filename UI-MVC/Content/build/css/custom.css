@@ -229,6 +229,7 @@ hr {
   visibility: hidden; }
 
 #notificationMessage {
+  font-size: 12px;
   position: fixed;
   display: block;
   z-index: 999;
@@ -378,7 +379,7 @@ hr {
   animation-timing-function: ease;
   animation-fill-mode: forwards; }
 
-a.btn-success, a.btn-primary, a.btn-warning, a.btn-danger {
+a.btn-success, a.btn-primary, a.btn-warning {
   color: var(--white); }
 
 .Google-btn, .Facebook-btn {
@@ -439,6 +440,15 @@ a.btn-success, a.btn-primary, a.btn-warning, a.btn-danger {
     color: var(--white);
     background-color: #394D5F;
     border-color: #394D5F; }
+
+.btn-danger {
+  color: var(--font-color) !important;
+  background: white !important;
+  border: 1px solid lightgrey !important; }
+  .btn-danger:hover, .btn-danger:focus, .btn-danger:active, .btn-danger.active {
+    background: red !important;
+    color: var(--white) !important;
+    border: 1px solid red !important; }
 
 .btn-primary {
   color: var(--white);
