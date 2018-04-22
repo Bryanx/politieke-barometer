@@ -83,7 +83,7 @@ namespace BAR.DAL
 		/// Returns a list of informations based on
 		/// a specific item.
 		/// </summary>
-		public IEnumerable<Information> ReadAllInfoForId(int itemId)
+		public IEnumerable<Information> ReadInformationsForItemid(int itemId)
 		{
       return ctx.Informations.Include(x => x.Items)
               .Where(info => info.Items.Any(item => item.ItemId == itemId)).AsEnumerable();

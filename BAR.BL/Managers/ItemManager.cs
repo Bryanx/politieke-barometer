@@ -38,14 +38,14 @@ namespace BAR.BL.Managers
 			InitRepo();
 
 			DataManager dataManager = new DataManager();
-			IEnumerable<Information> allInfoForId = dataManager.GetAllInformationForId(itemId);
+			IEnumerable<Information> allInfoForId = dataManager.GetInformationsForItemid(itemId);
 
 			DateTime earliestInfoDate = allInfoForId.Min(item => item.CreationDate).Value;
 			DateTime lastInfoDate = allInfoForId.Max(item => item.CreationDate).Value;
 
 			int period = (lastInfoDate - earliestInfoDate).Days;
 
-      if (period == 0) period = 1;
+			if (period == 0) period = 1;
 
 			int aantalBaseline = dataManager.GetNumberInfo(itemId, earliestInfoDate);
 			int aantalTrending = dataManager.GetNumberInfo(itemId, lastInfoDate.AddDays(-1));
@@ -168,8 +168,8 @@ namespace BAR.BL.Managers
 		{
 			InitRepo();
 			return itemRepo.ReadItem(itemId);
-		}		
-		
+		}
+
 		/// <summary>
 		/// Returns an item with widgets.
 		/// </summary>
@@ -209,7 +209,7 @@ namespace BAR.BL.Managers
 		/// <summary>
 		/// Returns all (undeleted) people
 		/// </summary>
-		public IEnumerable<Item> GetAllPersons() 
+		public IEnumerable<Item> GetAllPersons()
 		{
 			return GetAllItems().Where(item => item is Person).Where(item => item.Deleted == false).ToList();
 		}
@@ -217,7 +217,7 @@ namespace BAR.BL.Managers
 		/// <summary>
 		/// Returns all (undeleted) organisations
 		/// </summary>
-		public IEnumerable<Item> GetAllOrganisations() 
+		public IEnumerable<Item> GetAllOrganisations()
 		{
 			return GetAllItems().Where(item => item is Organisation).Where(item => item.Deleted == false);
 
@@ -228,54 +228,59 @@ namespace BAR.BL.Managers
 		/// </summary>
 		public Item CreateItem(ItemType itemType, string name, string description = "", string function = "", Category category = null)
 		{
-				InitRepo();
+			InitRepo();
 
-				//the switch statement will determine if we need to make a
-				//Organisation, person or theme.
-				Item item;
-				switch (itemType) {
-					case ItemType.Person:
-						item = new Person() {
-							SocialMediaUrls = new List<SocialMediaUrl>(),
-							Function = function
-						};
-						break;
-					case ItemType.Organisation:
-						item = new Organisation() {
-							SocialMediaUrls = new List<SocialMediaUrl>()
-						};
-						break;
-					case ItemType.Theme:
-						item = new Theme() {
-							Category = category
-						};
-						break;
-					default:
-						item = null;
-						break;
-				}
+			//the switch statement will determine if we need to make a
+			//Organisation, person or theme.
+			Item item;
+			switch (itemType)
+			{
+				case ItemType.Person:
+					item = new Person()
+					{
+						SocialMediaUrls = new List<SocialMediaUrl>(),
+						Function = function
+					};
+					break;
+				case ItemType.Organisation:
+					item = new Organisation()
+					{
+						SocialMediaUrls = new List<SocialMediaUrl>()
+					};
+					break;
+				case ItemType.Theme:
+					item = new Theme()
+					{
+						Category = category
+					};
+					break;
+				default:
+					item = null;
+					break;
+			}
 
-				if (item == null) return null;
-				item.ItemType = itemType;
-				item.Name = name;
-				item.CreationDate = DateTime.Now;
-				item.LastUpdatedInfo = DateTime.Now;
-				item.LastUpdated = DateTime.Now;
-				item.Description = description;
-				item.NumberOfFollowers = 0;
-				item.TrendingPercentage = 0.0;
-				item.Baseline = 0.0;
-				item.Informations = new List<Information>();
-				item.ItemWidgets = GenerateDefaultItemWidgets(name);
+			if (item == null) return null;
+			item.ItemType = itemType;
+			item.Name = name;
+			item.CreationDate = DateTime.Now;
+			item.LastUpdatedInfo = DateTime.Now;
+			item.LastUpdated = DateTime.Now;
+			item.Description = description;
+			item.NumberOfFollowers = 0;
+			item.TrendingPercentage = 0.0;
+			item.Baseline = 0.0;
+			item.Informations = new List<Information>();
+			item.ItemWidgets = GenerateDefaultItemWidgets(name);
 
-				itemRepo.CreateItem(item);
-				return item;
+			itemRepo.CreateItem(item);
+			return item;
 		}
 
-		public List<ItemWidget> GenerateDefaultItemWidgets(string name) {
+		public List<ItemWidget> GenerateDefaultItemWidgets(string name)
+		{
 			List<ItemWidget> lijst = new List<ItemWidget>();
 			WidgetManager widgetManager = new WidgetManager();
-			ItemWidget widget = (ItemWidget) widgetManager.CreateWidget(WidgetType.GraphType, name+" popularity", 1, 1, 12, 6);
+			ItemWidget widget = (ItemWidget)widgetManager.CreateWidget(WidgetType.GraphType, name + " popularity", 1, 1, 12, 6);
 			lijst.Add(widget);
 			return lijst;
 		}
@@ -319,7 +324,7 @@ namespace BAR.BL.Managers
 			itemRepo.UpdateItem(itemToUpdate);
 			return itemToUpdate;
 		}
-		
+
 		/// <summary>
 		/// Changes an item to non-active or active
 		/// </summary>
@@ -350,6 +355,15 @@ namespace BAR.BL.Managers
 		}
 
 		/// <summary>
+		/// Returns a person based on the persons name
+		/// </summary>
+		public Item GetPerson(string personName)
+		{
+			InitRepo();
+			return itemRepo.ReadPerson(personName);
+		}
+
+		/// <summary>
 		/// Determines if the repo needs a unit of work
 		/// if the unitOfWorkManager is present
 		/// </summary>
@@ -357,12 +371,6 @@ namespace BAR.BL.Managers
 		{
 			if (uowManager == null) itemRepo = new ItemRepository();
 			else itemRepo = new ItemRepository(uowManager.UnitOfWork);
-		}
-
-    public Item GetPerson(string personName)
-    {
-      InitRepo();
-      return itemRepo.ReadPerson(personName);
-    }
-  }
+		}		
+	}
 }

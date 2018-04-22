@@ -10,12 +10,19 @@ namespace BAR.BL.Managers
 {
 	public interface IDataManager
 	{
+		//Informations
+		IEnumerable<Information> GetInformationsForItemid(int itemId);
+		IEnumerable<Information> GetInformationsForWidgetid(int widgetId);
+
 		int GetNumberInfo(int itemId, DateTime since);
-		IEnumerable<Information> GetAllInformationForId(int itemId);
-    IEnumerable<Item> SynchronizeData(string json);
-    SynchronizeAudit GetLastAudit();
-    SynchronizeAudit AddAudit(DateTime timestamp, bool succes);
-    SynchronizeAudit GetAudit(int synchronizeAuditId);
-    SynchronizeAudit ChangeAudit(int synchronizeAuditId);
-  }
+
+		//Items
+		IEnumerable<Item> SynchronizeData(string json);
+
+		//Audits
+		SynchronizeAudit GetLastAudit();
+		SynchronizeAudit AddAudit(DateTime timestamp, bool succes);
+		SynchronizeAudit GetAudit(int synchronizeAuditId);
+		SynchronizeAudit ChangeAudit(int synchronizeAuditId);	
+	}
 }

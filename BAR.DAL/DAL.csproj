@@ -63,7 +63,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IDashboardRepository.cs" />
     <Compile Include="WidgetRepository.cs" />
     <Compile Include="EF\BarometerDbConfiguration.cs" />
     <Compile Include="EF\BarometerDbContext.cs" />
