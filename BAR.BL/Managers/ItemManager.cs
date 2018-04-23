@@ -280,7 +280,7 @@ namespace BAR.BL.Managers
 		{
 			List<ItemWidget> lijst = new List<ItemWidget>();
 			WidgetManager widgetManager = new WidgetManager();
-			ItemWidget widget = (ItemWidget)widgetManager.CreateWidget(WidgetType.GraphType, name + " popularity", 1, 1, 12, 6);
+			ItemWidget widget = (ItemWidget)widgetManager.CreateWidget(WidgetType.GraphType, name + " popularity", 1, 1, null, 12, 6);
 			lijst.Add(widget);
 			return lijst;
 		}

@@ -31,7 +31,7 @@ namespace BAR.BL.Managers
 		/// Creates a widget based on the parameters
 		/// and links that widget to a dasboard.
 		/// </summary>
-		public Widget CreateWidget(WidgetType widgetType, string title, int rowNbr, int colNbr, DateTime timestamp, int rowspan = 1, int colspan = 1, int dashboardId = -1)
+		public Widget CreateWidget(WidgetType widgetType, string title, int rowNbr, int colNbr, DateTime? timestamp = null, int rowspan = 1, int colspan = 1, int dashboardId = -1)
 		{
 			InitRepo();
 			Widget widget;
