@@ -68,7 +68,7 @@ namespace BAR.UI.MVC.Controllers.api
 			
 			Widget widgetToCopy = widgetManager.GetWidget(widgetId);
 			Widget widget = widgetManager.CreateWidget(WidgetType.GraphType, 
-				widgetToCopy.Title, widgetToCopy.RowNumber, widgetToCopy.ColumnNumber, widgetToCopy.RowSpan,
+				widgetToCopy.Title, widgetToCopy.RowNumber, widgetToCopy.ColumnNumber, null, widgetToCopy.RowSpan,
 				widgetToCopy.ColumnSpan, dash.DashboardId);
 
 			return StatusCode(HttpStatusCode.NoContent);
