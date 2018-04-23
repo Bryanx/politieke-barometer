@@ -38,7 +38,7 @@ function createItemWidget(id, title) {
         '                   </div>' +
         '                    <div class="clearfix"></div>' +
         '                </div>' +
-        '                <button class="btn btn-default btn-xs"></button>' +
+        '                <button id=' + id + ' class="chartShowLines btn btn-default btn-xs">Show lines</button>' +
         '                <div style="position: relative; height: 85%;"><canvas id="graph' + id + '"></canvas></div>' +
         '            </div>' +
         '        </div>'
@@ -85,8 +85,20 @@ function showErrorMessage() {
         });
 }
 
+var charts = [];
+
+function ShowLines(e) {
+    var id = e.target.id;
+    let chart = charts.find(c => c.config.id == id);
+    if (chart.options.showLines) chart.options.showLines = false;
+    else chart.options.showLines = true;
+    chart.legend.options.enabled = true;
+    chart.update();
+    console.log(chart);
+}
 function addLineChartJS(widgetId, chartData) {
-    return new Chart(document.getElementById("graph" + widgetId), {
+    charts.push(new Chart(document.getElementById("graph"+widgetId), {
+        id: widgetId,
         type: 'line',
         data: {
             labels: Object.keys(chartData),
@@ -94,23 +106,14 @@ function addLineChartJS(widgetId, chartData) {
                 data: Object.values(chartData),
                 label: Resources.Mentions,
                 borderColor: "#3e95cd",
-                fill: false,
+                fill: false
             }],
-        },      
+        },
         options: {
             responsive: true,
-            maintainAspectRatio: false,
-            title: {
-                display: true
-            },
-            legend: {
-                labels: {
-                    fontColor: 'black',
-                    fontSize: 12
-                }
-            }
+            maintainAspectRatio: false
         }
-    });
+    }));
 }
 
 
@@ -176,7 +179,7 @@ function init() {
         counter++;
         return false;
     }.bind(this);
-    
+
     //CRUD:
     this.createWidget = function () {
         let widgetId = $('.addToDashboard').parents(".chart-container").data("widget-id");
@@ -233,6 +236,9 @@ function init() {
             }
         })
     };
+
+    //Graph handlers
+    $(document).on('click', '.chartShowLines', (e) => ShowLines(e));
 
     //dashboard handlers
     $('#btnAddLine').click(this.btnAddLineChart);
