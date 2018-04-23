@@ -99,7 +99,7 @@ namespace BAR.BL.Managers
 		/// This method is not the same as getNumberInfo
 		/// This method will be used for widgets.
 		/// </summary>
-		IDictionary<DateTime?, int> GetNumberOfMentionsForItem(int widgetId, int itemId)
+		IDictionary<DateTime?, int> IDataManager.GetNumberOfMentionsForItem(int widgetId, int itemId)
 		{
 			//Get widget and timestamp
 			Widget widget = new WidgetManager().GetWidgetWithAllItems(widgetId);
