@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace BAR.BL.Managers
 {
@@ -22,15 +23,15 @@ namespace BAR.BL.Managers
 
 
 		Item CreateItem(ItemType itemType, string name, string description = "", string function = "", Category category = null);
-    IEnumerable<Item> ImportPersonCsv(string csv);
-    IEnumerable<Item> ImportPersonJson(string json);
+    bool ImportJson(string json);
 
 
     Item ChangeItemName(int itemId, string name);
-		Item ChangeItemDescription(int itemId, string description);
 		Item ChangeItemActivity(int itemId);
 
 		void DetermineTrending(int itemId);
 		double GetTrendingPer(int itemId);
-	}
+    string ConvertPfbToString(HttpPostedFileBase pfb);
+
+  }
 }

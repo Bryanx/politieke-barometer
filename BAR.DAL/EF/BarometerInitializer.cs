@@ -29,12 +29,18 @@ namespace BAR.DAL.EF
     /// </summary>
     private void GenerateSources(BarometerDbContext ctx)
     {
-      Source source = new Source
+      Source twitter = new Source
       {
         Name = "Twitter",
-        SourceLine = "twitter.com"
+        Site = "https://twitter.com/"
       };
-      ctx.Sources.Add(source);
+      ctx.Sources.Add(twitter);
+      Source facebook = new Source
+      {
+        Name = "Facebook",
+        Site = "https://www.facebook.com/"
+      };
+      ctx.Sources.Add(facebook);
       ctx.SaveChanges();
     }
 
@@ -136,8 +142,9 @@ namespace BAR.DAL.EF
       {
         Area area = new Area
         {
-          Country = "België",
-          Residence = deserializedJson[i].city
+          Country    = "België",
+          PostalCode = deserializedJson[i].zip,
+          Residence  = deserializedJson[i].city
         };
         ctx.Areas.Add(area);
       }

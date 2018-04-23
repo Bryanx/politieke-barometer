@@ -109,5 +109,19 @@ namespace BAR.UI.MVC.Controllers
 				  Text = x.Name,
 			  }).OrderBy(x => x.Text);
 		}
+
+    [HttpPost]
+    public ActionResult UploadJson([Bind(Exclude = "jsonFile")]ItemViewModels.ItemViewModel model)
+    {
+      itemManager = new ItemManager();
+
+      if (Request.Files.Count > 0)
+      {
+        HttpPostedFileBase pfb = Request.Files["jsonFile"];
+        string json = itemManager.ConvertPfbToString(pfb);
+        itemManager.ImportJson(json);
+      }
+      return RedirectToAction("ItemManagement", "Admin");
+    }
 	}
 }

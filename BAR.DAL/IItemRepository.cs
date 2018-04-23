@@ -13,6 +13,7 @@ namespace BAR.DAL
 		Item ReadItemWithInformations(int itemId);
 		Item ReadItem(int itemId);
     Item ReadPerson(string personName);
+    Item ReadOrganisation(string organisationName);
 		IEnumerable<Item> ReadAllItems();
 		IEnumerable<Item> ReadItemsForType(ItemType type);
 		IEnumerable<Item> ReadAllItemsForUpdatedSince(DateTime since);

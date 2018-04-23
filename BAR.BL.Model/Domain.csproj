@@ -61,9 +61,10 @@
     <Compile Include="Items\Category.cs" />
     <Compile Include="Items\Item.cs" />
     <Compile Include="Items\ItemType.cs" />
+    <Compile Include="Items\Level.cs" />
     <Compile Include="Items\Organisation.cs" />
     <Compile Include="Items\Person.cs" />
-    <Compile Include="Items\SocialMediaUrl.cs" />
+    <Compile Include="Items\SocialMediaName.cs" />
     <Compile Include="Items\Theme.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SubPlatform.cs" />
