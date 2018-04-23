@@ -377,7 +377,7 @@ namespace BAR.BL.Managers
 			InitRepo();
 
 			ISubplatformManager subplatformManager = new SubplatformManager(uowManager);
-			SubPlatform subPlatform = subplatformManager.GetSubPlatform(1);
+			SubPlatform subPlatform = subplatformManager.GetSubPlatform(2);
 
 			dynamic deserializedJson = JsonConvert.DeserializeObject(json);
 
@@ -421,7 +421,7 @@ namespace BAR.BL.Managers
 			IUserManager userManager = new UserManager(uowManager);
 			IDataManager dataManager = new DataManager(uowManager);
 			ISubplatformManager subplatformManager = new SubplatformManager(uowManager);
-			SubPlatform subPlatform = subplatformManager.GetSubPlatform(1);
+			SubPlatform subPlatform = subplatformManager.GetSubPlatform(2);
 			IEnumerable<Area> areas = userManager.GetAreas();
 			IEnumerable<Source> sources = dataManager.GetAllSources();
 			IEnumerable<Item> organisations = GetAllOrganisations();
