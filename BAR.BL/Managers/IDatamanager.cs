@@ -16,7 +16,7 @@ namespace BAR.BL.Managers
 		IEnumerable<Information> GetInformationsWithTimestamp(int widgetId);
 
 		int GetNumberInfo(int itemId, DateTime since);
-		List<IDictionary<string, double>> GetNumberOfMentionsForItem(int itemId);
+		IDictionary<string, double> GetNumberOfMentionsForItem(int itemId, int widgetId);
 
 		//Items
 		IEnumerable<Item> SynchronizeData(string json);

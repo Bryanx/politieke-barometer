@@ -64,12 +64,12 @@ namespace BAR.UI.MVC.Controllers.api
 		[Route("api/GetGraphs/{itemId}")]
 		public IHttpActionResult GetGraphs(int itemId)
 		{
-			dataManager = new DataManager();
+			//dataManager = new DataManager();
 
-			List<IDictionary<string, double>> data = dataManager.GetNumberOfMentionsForItem(itemId);
-			if (data == null) return StatusCode(HttpStatusCode.NoContent);
+			//IDictionary<string, double> data = dataManager.GetNumberOfMentionsForItem(itemId);
+			//if (data == null) return StatusCode(HttpStatusCode.NoContent);
 			
-			return Ok(data);
+			//return Ok(data);
 		}
 		
 		/// <summary>
