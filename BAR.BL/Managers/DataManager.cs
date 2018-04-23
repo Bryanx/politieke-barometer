@@ -156,7 +156,6 @@ namespace BAR.BL.Managers
 			while (checkTime > widget.Timestamp)
 			{
 				string key = checkTime.ToString();
-				data[key] = GetProp
 				checkTime = checkTime.AddDays(-1);
 			}
 
@@ -407,15 +406,6 @@ namespace BAR.BL.Managers
 		{
 			InitRepo();
 			return dataRepo.ReadInformationWithPropValues(infoId);
-		}
-
-		/// <summary>
-		/// Gives back a propertyValue object with their property
-		/// </summary>
-		public PropertyValue GetPropvalWithProperty(int propvalId)
-		{
-			InitRepo();
-			return dataRepo.ReadPropvalWithProperty(propvalId);
 		}
 	}
 }

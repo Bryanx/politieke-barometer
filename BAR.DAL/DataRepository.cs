@@ -112,8 +112,9 @@ namespace BAR.DAL
 		/// </summary>
 		public Information ReadInformationWithPropValues(int informationId)
 		{
-			return ctx.Informations.Include(info => info.PropertieValues)
-				.Where(info => info.InformationId == informationId).SingleOrDefault();
+			//return ctx.Informations.Include(info => info.PropertieValues).Include(propval => propval.Property)
+			//	.Where(info => info.InformationId == informationId).SingleOrDefault();
+			return null;
 		}
 
 		/// <summary>
@@ -198,14 +199,6 @@ namespace BAR.DAL
 		public IEnumerable<Source> ReadAllSources()
 		{
 			return ctx.Sources.ToList();
-		}
-
-		/// <summary>
-		/// Gives back a propertyvalue with their property
-		/// </summary>
-		public PropertyValue ReadPropvalWithProperty(int propvalId)
-		{
-			return null;
 		}
 	}
 }
