@@ -103,11 +103,12 @@ namespace BAR.BL.Managers
 		{
 			//Get widget and timestamp
 			Widget widget = new WidgetManager().GetWidgetWithAllItems(widgetId);
-			DateTime? timestamp = new WidgetManager().GetWidgetWithAllItems(widgetId).Timestamp;
+			DateTime? timestamp = widget.Timestamp;
 			if (widget == null || timestamp == null) return null;
 
 			//Get item to map
-			Item itemToQuery = widget.Items.Where(item => item.ItemId == itemId).SingleOrDefault();
+			IItemManager itemManager = new ItemManager();
+			Item itemToQuery = itemManager.GetItem(itemId);
 			if (itemToQuery == null) return null;
 
 			//Get informations

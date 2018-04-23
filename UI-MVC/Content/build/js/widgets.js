@@ -179,7 +179,7 @@ gridselector.gridstack({
 
 var grid = gridselector.data('gridstack');
 
-function loadGrid(data) {
+function loadGrid(data, itemId) {
     if (data != null && data.length) {
         $.each(data, (index, widget) => {
             //UserWidget
@@ -197,7 +197,7 @@ function loadGrid(data) {
             // if (widget.Graph != null) {
                 $.ajax({
                     type: 'GET',
-                    url: '/api/GetGraph/' + widget.WidgetId,
+                    url: '/api/GetGraphs/' + itemId,
                     dataType: 'json',
                     success: data => console.log(data)
                 }).fail();
@@ -209,12 +209,12 @@ function loadGrid(data) {
     }
 }
 
-function loadWidgets(url) {
+function loadWidgets(url, itemId) {
     $.ajax({
         type: 'GET',
-        url: url,
+        url: url + itemId,
         dataType: 'json',
-        success: data => loadGrid(data),
+        success: data => loadGrid(data, itemId),
         error: (xhr) => alert(xhr.responseText)
     })
 }

@@ -61,7 +61,7 @@ namespace BAR.UI.MVC.Controllers.api
 		/// Temp get graph
 		/// </summary>
 		[HttpGet]
-		[Route("api/GetGraph/{itemId}")]
+		[Route("api/GetGraphs/{itemId}")]
 		public IHttpActionResult GetGraphs(int itemId)
 		{
 			itemManager = new ItemManager();
