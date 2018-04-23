@@ -99,7 +99,7 @@ namespace BAR.BL.Managers
 		/// This method is not the same as getNumberInfo
 		/// This method will be used for widgets.
 		/// </summary>
-		IDictionary<string, double> IDataManager.GetNumberOfMentionsForItem(int itemId, int widgetId)
+		IDictionary<DateTime, double> IDataManager.GetNumberOfMentionsForItem(int itemId, int widgetId)
 		{
 			//Get item with widgets
 			ItemManager itemManager = new ItemManager();
@@ -111,7 +111,7 @@ namespace BAR.BL.Managers
 			if (widget == null) return null;
 
 			//Map informations to datetime and add them to the list
-			IDictionary<string, double> data = new Dictionary<string, double>();
+			IDictionary<DateTime, double> data = new Dictionary<DateTime, double>();
 			IEnumerable<Information> informations = GetInformationsForItemid(itemId);
 			if (informations == null || informations.Count() == 0) return null;
 
@@ -119,7 +119,7 @@ namespace BAR.BL.Managers
 			double sum = 0.0;
 			while (checkTime > widget.Timestamp)
 			{
-				string key = checkTime.ToString();
+				DateTime key = checkTime;
 				sum += informations.Count(i => i.CreationDate.Value.Day == checkTime.Day);
 				data[key] = sum;
 				checkTime = checkTime.AddDays(-1);
@@ -134,7 +134,7 @@ namespace BAR.BL.Managers
 		/// WARNING
 		/// This method will only work if the widget has a propertytag
 		/// </summary>
-		public IDictionary<string, IEnumerable<PropertyValue>> GetPropvaluesForWidget(int itemId, int widgetId)
+		public IDictionary<string, List<PropertyValue>> GetPropvaluesForWidget(int itemId, int widgetId)
 		{
 			//Get item with widgets
 			ItemManager itemManager = new ItemManager();
@@ -156,7 +156,7 @@ namespace BAR.BL.Managers
 			while (checkTime > widget.Timestamp)
 			{
 				string key = checkTime.ToString();
-				data[key] = GetProp
+				data[key] = informations.Count(i => i.CreationDate.Value.Day == checkTime.Day);
 				checkTime = checkTime.AddDays(-1);
 			}
 

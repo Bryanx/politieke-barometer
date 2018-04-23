@@ -19,7 +19,7 @@ namespace BAR.BL.Managers
 		PropertyValue GetPropvalWithProperty(int propvalId);
 
 		int GetNumberInfo(int itemId, DateTime since);
-		IDictionary<string, double> GetNumberOfMentionsForItem(int itemId, int widgetId);
+		IDictionary<string, DateTime> GetNumberOfMentionsForItem(int itemId, int widgetId);
 		IDictionary<string, List<PropertyValue>> GetPropvaluesForWidget(int itemid, int widgetId);
 
 		//Items
