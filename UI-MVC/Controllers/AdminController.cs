@@ -55,15 +55,18 @@ namespace BAR.UI.MVC.Controllers
 		/// </summary>
 		public ActionResult ItemManagement()
 		{
-			itemManager = new ItemManager();
+      //Get hold of subplatformID we received
+      int subPlatformID = (int)RouteData.Values["SubPlatformID"];
+
+      itemManager = new ItemManager();
 			userManager = new UserManager();
 
-			//Assembling the view
-			return View(new ItemViewModels.ItemViewModel()
+      //Assembling the view
+      return View(new ItemViewModels.ItemViewModel()
 			{
 				User = userManager.GetUser(User.Identity.GetUserId()),
 				PageTitle = Resources.ItemManagement,
-				Items = Mapper.Map(itemManager.GetAllItems(), new List<ItemDTO>())
+				Items = Mapper.Map(itemManager.GetAllItems().Where(item => item.SubPlatform.SubPlatformId == subPlatformID), new List<ItemDTO>())
 			});
 		}
 
