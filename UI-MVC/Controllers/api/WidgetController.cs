@@ -64,24 +64,11 @@ namespace BAR.UI.MVC.Controllers.api
 		[Route("api/GetGraphs/{itemId}")]
 		public IHttpActionResult GetGraphs(int itemId)
 		{
-			itemManager = new ItemManager();
 			dataManager = new DataManager();
 
-			Item item = itemManager.GetItemWithAllWidgets(itemId);
-			Widget widget = item.ItemWidgets.First();
-
-			IDictionary<string, double> data = new Dictionary<string, double>();
+			IDictionary<string, double> data = dataManager.GetNumberOfMentionsForItem(itemId);
+			if (data == null) return StatusCode(HttpStatusCode.NoContent);
 			
-			IEnumerable<Information> informations = dataManager.GetInformationsForItemid(itemId); //eerste item tijdelijk
-			
-			if (informations == null || informations.Count() == 0) return StatusCode(HttpStatusCode.NoContent);
-			
-			DateTime checkTime = DateTime.Now;
-			while (checkTime > widget.Timestamp) {
-				string key = checkTime.ToString();
-				data[key] = informations.Count(i => i.CreationDate.Value.Day == checkTime.Day);
-				checkTime = checkTime.AddDays(-1);
-			}
 			return Ok(data);
 		}
 		

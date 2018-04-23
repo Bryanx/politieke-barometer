@@ -99,32 +99,28 @@ namespace BAR.BL.Managers
 		/// This method is not the same as getNumberInfo
 		/// This method will be used for widgets.
 		/// </summary>
-		IDictionary<DateTime?, int> IDataManager.GetNumberOfMentionsForItem(int widgetId, int itemId)
+		IDictionary<string, double> IDataManager.GetNumberOfMentionsForItem(int itemId)
 		{
-			//Get widget and timestamp
-			Widget widget = new WidgetManager().GetWidgetWithAllItems(widgetId);
-			DateTime? timestamp = widget.Timestamp;
-			if (widget == null || timestamp == null) return null;
+			ItemManager itemManager = new ItemManager();
 
-			//Get item to map
-			IItemManager itemManager = new ItemManager();
-			Item itemToQuery = itemManager.GetItem(itemId);
-			if (itemToQuery == null) return null;
+			Item item = itemManager.GetItemWithAllWidgets(itemId);
+			Widget widget = item.ItemWidgets.First();
 
-			//Get informations
-			IEnumerable<Information> infos = itemToQuery.Informations.Where(info => info.CreationDate >= timestamp).AsEnumerable();
-			if (infos == null || infos.Count() == 0) return null;
+			IDictionary<string, double> data = new Dictionary<string, double>();
 
-			//Map keys and values
-			IDictionary<DateTime?, int> dict = new Dictionary<DateTime?, int>();
-			DateTime timerange = DateTime.Now;
-			foreach (Information infoToQuery in infos)
+			IEnumerable<Information> informations = GetInformationsForItemid(itemId);
+
+			if (informations == null || informations.Count() == 0) return null;
+
+			DateTime checkTime = DateTime.Now;
+			while (checkTime > widget.Timestamp)
 			{
-				dict[timerange] = itemToQuery.Informations.Where(into => infoToQuery.CreationDate >= timerange).Count();
-				timerange.AddDays(-1);
+				string key = checkTime.ToString();
+				data[key] = informations.Count(i => i.CreationDate.Value.Day == checkTime.Day);
+				checkTime = checkTime.AddDays(-1);
 			}
 
-			return dict;
+			return data;
 		}
 
 		public IEnumerable<Item> SynchronizeData(string json)
