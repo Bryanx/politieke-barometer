@@ -113,10 +113,12 @@ namespace BAR.BL.Managers
 			if (informations == null || informations.Count() == 0) return null;
 
 			DateTime checkTime = DateTime.Now;
+			double sum = 0.0;
 			while (checkTime > widget.Timestamp)
 			{
 				string key = checkTime.ToString();
-				data[key] = informations.Count(i => i.CreationDate.Value.Day == checkTime.Day);
+				sum += informations.Count(i => i.CreationDate.Value.Day == checkTime.Day);
+				data[key] = sum;
 				checkTime = checkTime.AddDays(-1);
 			}
 
