@@ -38,27 +38,30 @@ function showErrorMessage() {
         });
 }
 
-function addLineChart(id) {
+function addLineChart(widgetId, chartData) {
+    var ret = [];
+    $.each(chartData, (k, v) => {
+        ret.push({
+            day: k,
+            mentions: v
+        })
+    });
+    console.log(ret);
+    var id = "graph" + widgetId;
     addCSSgrid(id);
     Morris.Line({
         // ID of the element in which to draw the chart.
         element: id,
         // Chart data records -- each entry in this array corresponds to a point on
         // the chart.
-        data: [
-            {year: '2008', value: 20},
-            {year: '2009', value: 10},
-            {year: '2010', value: 5},
-            {year: '2011', value: 5},
-            {year: '2012', value: 20}
-        ],
+        data: ret,
         // The name of the data record attribute that contains x-values.
-        xkey: 'year',
+        xkey: 'day',
         // A list of names of data record attributes that contain y-values.
-        ykeys: ['value'],
+        ykeys: ['mentions'],
         // Labels for the ykeys -- will be displayed when you hover over the
         // chart.
-        labels: ['Value'],
+        labels: ['Mentions'],
         resize: true
     });
 }
@@ -165,7 +168,7 @@ function createItemWidget(id, title) {
         '                   </div>' +
         '                    <div class="clearfix"></div>' +
         '                </div>' +
-        '                <div id="' + id + '"></div>' +
+        '                <div id="graph' + id + '"></div>' +
         '            </div>' +
         '        </div>'
 }
@@ -195,12 +198,11 @@ function loadGrid(data, itemId) {
             }
 
             // if (widget.Graph != null) {
-            var test;
                 $.ajax({
                     type: 'GET',
-                    url: '/api/GetGraphs/' + itemId,
+                    url: '/api/GetGraphs/' + itemId +'/' + widget.WidgetId,
                     dataType: 'json',
-                    success: data2 => test = data2
+                    success: data2 => addLineChart(widget.WidgetId, data2)
                 }).fail();
             // }
             counter++;

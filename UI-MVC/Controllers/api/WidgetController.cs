@@ -61,16 +61,15 @@ namespace BAR.UI.MVC.Controllers.api
 		/// Temp get graph
 		/// </summary>
 		[HttpGet]
-		[Route("api/GetGraphs/{itemId}")]
-		public IHttpActionResult GetGraphs(int itemId)
+		[Route("api/GetGraphs/{itemId}/{widgetId}")]
+		public IHttpActionResult GetGraphs(int itemId, int widgetId)
 		{
-			//dataManager = new DataManager();
+			dataManager = new DataManager();
+			
+			IDictionary<DateTime, double> data = dataManager.GetNumberOfMentionsForItem(itemId, widgetId);
+			if (data == null) return StatusCode(HttpStatusCode.NoContent);
 
-			//IDictionary<string, double> data = dataManager.GetNumberOfMentionsForItem(itemId);
-			//if (data == null) return StatusCode(HttpStatusCode.NoContent);
-
-			//return Ok(data);
-			return null;
+			return Ok(data);
 		}
 		
 		/// <summary>
