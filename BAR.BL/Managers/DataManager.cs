@@ -130,10 +130,37 @@ namespace BAR.BL.Managers
 
 		/// <summary>
 		/// Gives back a map with all the propertievalues of a specific propertie
+		/// 
+		/// WARNING
+		/// This method will only work if the widget has a propertytag
 		/// </summary>
-		public IDictionary<string, List<PropertyValue>> GetPropvalue(int itemid, int widgetId)
+		public IDictionary<string, IEnumerable<PropertyValue>> GetPropvaluesForWidget(int itemId, int widgetId)
 		{
-			throw new NotImplementedException();
+			//Get item with widgets
+			ItemManager itemManager = new ItemManager();
+			Item item = itemManager.GetItemWithAllWidgets(itemId);
+			if (item == null) return null;
+
+			//Get Widget
+			Widget widget = item.ItemWidgets.Where(widgetToQuery => widgetToQuery.WidgetId == widgetId).SingleOrDefault();
+			string tag = widget.PropertyTag;
+			if (widget == null || tag == null) return null;
+
+			//Map informations to datetime and add them to the list
+			IDictionary<string, double> data = new Dictionary<string, double>();
+			IEnumerable<Information> informations = GetInformationsForItemid(itemId);
+			if (informations == null || informations.Count() == 0) return null;
+
+			DateTime checkTime = DateTime.Now;
+			
+			while (checkTime > widget.Timestamp)
+			{
+				string key = checkTime.ToString();
+				data[key] = GetProp
+				checkTime = checkTime.AddDays(-1);
+			}
+
+			return null;
 		}
 
 		public IEnumerable<Item> SynchronizeData(string json)
@@ -388,7 +415,7 @@ namespace BAR.BL.Managers
 		public PropertyValue GetPropvalWithProperty(int propvalId)
 		{
 			InitRepo();
-			throw new NotImplementedException();
+			return dataRepo.ReadPropvalWithProperty(propvalId);
 		}
 	}
 }

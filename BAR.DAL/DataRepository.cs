@@ -205,8 +205,7 @@ namespace BAR.DAL
 		/// </summary>
 		public PropertyValue ReadPropvalWithProperty(int propvalId)
 		{
-			return ctx.PropertyValues.Include(propval => propval.Property)
-									 .Where(propval => propval.PropertyValueId == propvalId).SingleOrDefault();
+			return null;
 		}
 	}
 }
