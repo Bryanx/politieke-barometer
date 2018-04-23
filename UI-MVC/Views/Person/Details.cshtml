@@ -89,7 +89,8 @@
 <div class="grid-stack" id="grid"></div>
 
 @section CustomJS{
-    @Scripts.Render("~/bundles/gridstack", "~/bundles/morrisCharts")
+    <script src="~/Scripts/ChartJS/Chart.js"></script>
+    @Scripts.Render("~/bundles/gridstack")
     <script type="text/javascript" defer>
 
         $('.subscribeItem').click(function() {

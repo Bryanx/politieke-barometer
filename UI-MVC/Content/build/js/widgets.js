@@ -6,6 +6,53 @@ var secondary_color = window.getComputedStyle(document.documentElement).getPrope
 var tertiary_color = window.getComputedStyle(document.documentElement).getPropertyValue('--tertiary-color');
 
 
+/**
+ * The basic HTML structure of a widget
+ */
+function createUserWidget(id, title) {
+    return '<div class="chart-container">' +
+        '            <div class="x_panel grid-stack-item-content bg-white no-scrollbar">' +
+        '                <div class="x_title">' +
+        '                    <h2 class="graphTitle">' + title + '</h2>' +
+        '                    <ul class="nav navbar-right panel_toolbox">' +
+        '                        <li>' +
+        '                            <a class="close-widget">' +
+        '                                <i id=' + id + ' class="fa fa-close"></i>' +
+        '                            </a>' +
+        '                        </li>' +
+        '                    </ul>' +
+        '                    <div class="clearfix"></div>' +
+        '                </div>' +
+        '                <div style="position: relative; height: 85%;"><canvas id="graph' + id + '"></canvas></div>' +
+        '            </div>' +
+        '        </div>'
+}
+
+function createItemWidget(id, title) {
+    return '<div data-widget-id=' + id + ' class="chart-container">' +
+        '            <div class="x_panel grid-stack-item-content bg-white no-scrollbar">' +
+        '                <div class="x_title">' +
+        '                    <h2 class="graphTitle">' + title + '</h2>' +
+        '                    <div class="pull-right">' +
+        '                       <button class="addToDashboard btn btn-dark btn-xs">Add to dashboard</button>' +
+        '                   </div>' +
+        '                    <div class="clearfix"></div>' +
+        '                </div>' +
+        '                <button class="btn btn-default btn-xs"></button>' +
+        '                <div style="position: relative; height: 85%;"><canvas id="graph' + id + '"></canvas></div>' +
+        '            </div>' +
+        '        </div>'
+}
+
+var gridselector = $('#grid');
+gridselector.gridstack({
+    resizable: {
+        handles: 'e, se, s, sw, w'
+    }
+});
+
+var grid = gridselector.data('gridstack');
+
 function addCSSgrid(id) {
     let elem = $('#' + id);
     elem.css('width', 'auto');
@@ -38,149 +85,34 @@ function showErrorMessage() {
         });
 }
 
-function addLineChart(widgetId, chartData) {
-    var ret = [];
-    $.each(chartData, (k, v) => {
-        ret.push({
-            day: k,
-            mentions: v
-        })
-    });
-    console.log(ret);
-    var id = "graph" + widgetId;
-    addCSSgrid(id);
-    Morris.Line({
-        // ID of the element in which to draw the chart.
-        element: id,
-        // Chart data records -- each entry in this array corresponds to a point on
-        // the chart.
-        data: ret,
-        // The name of the data record attribute that contains x-values.
-        xkey: 'day',
-        // A list of names of data record attributes that contain y-values.
-        ykeys: ['mentions'],
-        // Labels for the ykeys -- will be displayed when you hover over the
-        // chart.
-        labels: ['Mentions'],
-        resize: true
-    });
-}
-
-function addPieChart(id, labels, values) {
-    addCSSgrid(id);
-    Morris.Donut({
-        element: id,
-        resize: true,
-        data: [
-            {label: labels[0], value: values[0]},
-            {label: labels[1], value: values[1]},
-            {label: labels[2], value: values[2]},
-            {label: labels[3], value: values[3]}
-        ],
-        colors: [primary_color, secondary_color, '#ACADAC', tertiary_color]
+function addLineChartJS(widgetId, chartData) {
+    return new Chart(document.getElementById("graph" + widgetId), {
+        type: 'line',
+        data: {
+            labels: Object.keys(chartData),
+            datasets: [{
+                data: Object.values(chartData),
+                label: Resources.Mentions,
+                borderColor: "#3e95cd",
+                fill: false,
+            }],
+        },      
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            title: {
+                display: true
+            },
+            legend: {
+                labels: {
+                    fontColor: 'black',
+                    fontSize: 12
+                }
+            }
+        }
     });
 }
 
-function addBarChart(id) {
-    addCSSgrid(id);
-    Morris.Bar({
-        element: id,
-        data: [{
-            period: "2016-10-01",
-            licensed: 807,
-            sorned: 660
-        }, {
-            period: "2016-09-30",
-            licensed: 1251,
-            sorned: 729
-        }, {
-            period: "2016-09-29",
-            licensed: 1769,
-            sorned: 1018
-        }, {
-            period: "2016-09-20",
-            licensed: 2246,
-            sorned: 1461
-        }, {
-            period: "2016-09-19",
-            licensed: 2657,
-            sorned: 1967
-        }, {
-            period: "2016-09-18",
-            licensed: 3148,
-            sorned: 2627
-        }, {
-            period: "2016-09-17",
-            licensed: 3471,
-            sorned: 3740
-        }, {
-            period: "2016-09-16",
-            licensed: 2871,
-            sorned: 2216
-        }, {
-            period: "2016-09-15",
-            licensed: 2401,
-            sorned: 1656
-        }, {
-            period: "2016-09-10",
-            licensed: 2115,
-            sorned: 1022
-        }],
-        xkey: "period",
-        barColors: [primary_color, "#34495E", "#ACADAC", "#3498DB"],
-        ykeys: ["licensed", "sorned"],
-        labels: ["Licensed", "SORN"],
-        hideHover: "auto",
-        xLabelAngle: 60,
-        resize: !0
-    });
-}
-
-/**
- * The basic HTML structure of a widget
- */
-function createUserWidget(id, title) {
-    return '<div class="chart-container">' +
-        '            <div class="x_panel grid-stack-item-content bg-white no-scrollbar">' +
-        '                <div class="x_title">' +
-        '                    <h2 class="graphTitle">' + title + '</h2>' +
-        '                    <ul class="nav navbar-right panel_toolbox">' +
-        '                        <li>' +
-        '                            <a class="close-widget">' +
-        '                                <i id=' + id + ' class="fa fa-close"></i>' +
-        '                            </a>' +
-        '                        </li>' +
-        '                    </ul>' +
-        '                    <div class="clearfix"></div>' +
-        '                </div>' +
-        '                <div id="' + id + '"></div>' +
-        '            </div>' +
-        '        </div>'
-}
-
-function createItemWidget(id, title) {
-    return '<div data-widget-id=' + id + ' class="chart-container">' +
-        '            <div class="x_panel grid-stack-item-content bg-white no-scrollbar">' +
-        '                <div class="x_title">' +
-        '                    <h2 class="graphTitle">' + title + '</h2>' +
-        '                    <div class="pull-right">' +
-        '                       <button class="addToDashboard btn btn-dark btn-xs">Add to dashboard</button>' +
-        '                   </div>' +
-        '                    <div class="clearfix"></div>' +
-        '                </div>' +
-        '                <div id="graph' + id + '"></div>' +
-        '            </div>' +
-        '        </div>'
-}
-
-var gridselector = $('#grid');
-gridselector.gridstack({
-    resizable: {
-        handles: 'e, se, s, sw, w'
-    }
-});
-
-var grid = gridselector.data('gridstack');
 
 function loadGrid(data, itemId) {
     if (data != null && data.length) {
@@ -197,14 +129,12 @@ function loadGrid(data, itemId) {
                 grid.resizable('.grid-stack-item', false);
             }
 
-            // if (widget.Graph != null) {
-                $.ajax({
-                    type: 'GET',
-                    url: '/api/GetGraphs/' + itemId +'/' + widget.WidgetId,
-                    dataType: 'json',
-                    success: data2 => addLineChart(widget.WidgetId, data2)
-                }).fail();
-            // }
+            $.ajax({
+                type: 'GET',
+                url: '/api/GetGraphs/' + itemId + '/' + widget.WidgetId,
+                dataType: 'json',
+                success: data2 => addLineChartJS(widget.WidgetId, data2)
+            }).fail();
             counter++;
         });
     } else {

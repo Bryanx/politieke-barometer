@@ -99,7 +99,7 @@ namespace BAR.BL.Managers
 		/// This method is not the same as getNumberInfo
 		/// This method will be used for widgets.
 		/// </summary>
-		IDictionary<DateTime, double> IDataManager.GetNumberOfMentionsForItem(int itemId, int widgetId)
+		IDictionary<string, double> IDataManager.GetNumberOfMentionsForItem(int itemId, int widgetId, string dateFormat)
 		{
 			//Get item with widgets
 			ItemManager itemManager = new ItemManager();
@@ -111,20 +111,18 @@ namespace BAR.BL.Managers
 			if (widget == null) return null;
 
 			//Map informations to datetime and add them to the list
-			IDictionary<DateTime, double> data = new Dictionary<DateTime, double>();
+			IDictionary<string, double> data = new Dictionary<string, double>();
 			IEnumerable<Information> informations = GetInformationsForItemid(itemId);
 			if (informations == null || informations.Count() == 0) return null;
 
-			DateTime checkTime = DateTime.Now;
+			DateTime checkTime = widget.Timestamp.Value;
 			double sum = 0.0;
-			while (checkTime > widget.Timestamp)
+			while (checkTime < DateTime.Now)
 			{
-				DateTime key = checkTime;
 				sum += informations.Count(i => i.CreationDate.Value.Day == checkTime.Day);
-				data[key] = sum;
-				checkTime = checkTime.AddDays(-1);
+				data[checkTime.ToString(dateFormat)] = sum;
+				checkTime = checkTime.AddDays(1);
 			}
-
 			return data;
 		}
 
