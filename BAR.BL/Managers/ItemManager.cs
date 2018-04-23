@@ -286,7 +286,7 @@ namespace BAR.BL.Managers
 			List<ItemWidget> lijst = new List<ItemWidget>();
 			WidgetManager widgetManager = new WidgetManager();
 			
-			ItemWidget widget = (ItemWidget) widgetManager.CreateWidget(WidgetType.GraphType, name + " popularity", 1, 1, null, 12, 6);
+			ItemWidget widget = (ItemWidget) widgetManager.CreateWidget(WidgetType.GraphType, name + " popularity", 1, 1, rowspan: 12, colspan: 6);
 			lijst.Add(widget);
 			
 			widgetManager.AddItemToWidget(widget.WidgetId, itemId);

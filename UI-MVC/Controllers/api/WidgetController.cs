@@ -68,8 +68,9 @@ namespace BAR.UI.MVC.Controllers.api
 
 			//IDictionary<string, double> data = dataManager.GetNumberOfMentionsForItem(itemId);
 			//if (data == null) return StatusCode(HttpStatusCode.NoContent);
-			
+
 			//return Ok(data);
+			return null;
 		}
 		
 		/// <summary>
@@ -88,8 +89,8 @@ namespace BAR.UI.MVC.Controllers.api
 			
 			Widget widgetToCopy = widgetManager.GetWidget(widgetId);
 			Widget widget = widgetManager.CreateWidget(WidgetType.GraphType, 
-				widgetToCopy.Title, widgetToCopy.RowNumber, widgetToCopy.ColumnNumber, null, widgetToCopy.RowSpan,
-				widgetToCopy.ColumnSpan, dash.DashboardId);
+				widgetToCopy.Title, widgetToCopy.RowNumber, widgetToCopy.ColumnNumber, rowspan: widgetToCopy.RowSpan,
+				colspan: widgetToCopy.ColumnSpan, dashboardId: dash.DashboardId);
 
 			return StatusCode(HttpStatusCode.NoContent);
 		}

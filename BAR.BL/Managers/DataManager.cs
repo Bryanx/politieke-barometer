@@ -128,6 +128,14 @@ namespace BAR.BL.Managers
 			return data;
 		}
 
+		/// <summary>
+		/// Gives back a map with all the propertievalues of a specific propertie
+		/// </summary>
+		public IDictionary<string, List<PropertyValue>> GetPropvalue(int itemid, int widgetId)
+		{
+			throw new NotImplementedException();
+		}
+
 		public IEnumerable<Item> SynchronizeData(string json)
 		{
 			IEnumerable<Item> items = CheckPeople(json);
