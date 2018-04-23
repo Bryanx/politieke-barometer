@@ -27,7 +27,7 @@ namespace BAR.BL.Managers
 		IEnumerable<Item> GetAllPersonsForSubplatform(int subPlatformID);
 
 
-    bool ImportJson(string json);
+    bool ImportJson(string json, int subPlatformID);
 
 
     Item ChangeItemName(int itemId, string name);

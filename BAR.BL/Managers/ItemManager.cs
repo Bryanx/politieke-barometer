@@ -361,23 +361,23 @@ namespace BAR.BL.Managers
 		/// <summary>
 		/// Calls handling methods for a correct json transaction.
 		/// </summary>
-		public bool ImportJson(string json)
+		public bool ImportJson(string json, int subPlatformID)
 		{
-			CheckOrganisations(json);
-			return AddItemsFromJson(json);
+			CheckOrganisations(json, subPlatformID);
+			return AddItemsFromJson(json, subPlatformID);
 		}
 
 		/// <summary>
 		/// Checks if organisations used in json already exist, if not they will be made.
 		/// </summary>
-		private void CheckOrganisations(string json)
+		private void CheckOrganisations(string json, int subPlatformID)
 		{
 			uowManager = new UnitOfWorkManager();
 
 			InitRepo();
 
 			ISubplatformManager subplatformManager = new SubplatformManager(uowManager);
-			SubPlatform subPlatform = subplatformManager.GetSubPlatform(1);
+			SubPlatform subPlatform = subplatformManager.GetSubPlatform(subPlatformID);
 
 			dynamic deserializedJson = JsonConvert.DeserializeObject(json);
 
@@ -412,8 +412,8 @@ namespace BAR.BL.Managers
 		/// <summary>
 		/// Reads json and makes item objects which will be saved afterwards into the database.
 		/// </summary>
-		private bool AddItemsFromJson(string json)
-		{
+		private bool AddItemsFromJson(string json, int subPlatformID)
+    {
 			uowManager = new UnitOfWorkManager();
 			InitRepo();
 			dynamic deserializedJson = JsonConvert.DeserializeObject(json);
@@ -421,7 +421,7 @@ namespace BAR.BL.Managers
 			IUserManager userManager = new UserManager(uowManager);
 			IDataManager dataManager = new DataManager(uowManager);
 			ISubplatformManager subplatformManager = new SubplatformManager(uowManager);
-			SubPlatform subPlatform = subplatformManager.GetSubPlatform(1);
+			SubPlatform subPlatform = subplatformManager.GetSubPlatform(subPlatformID);
 			IEnumerable<Area> areas = userManager.GetAreas();
 			IEnumerable<Source> sources = dataManager.GetAllSources();
 			IEnumerable<Item> organisations = GetAllOrganisations();

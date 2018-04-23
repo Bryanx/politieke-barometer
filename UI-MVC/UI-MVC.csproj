@@ -20,7 +20,7 @@
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
     <Use64BitIISExpress />
-    <IISExpressSSLPort>44398</IISExpressSSLPort>
+    <IISExpressSSLPort>44317</IISExpressSSLPort>
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
@@ -224,6 +224,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Attributes\SubPlatformCheck.cs" />
+    <Compile Include="Attributes\SubPlatformCheckAPI.cs" />
     <Compile Include="Attributes\SubPlatformDataCheck.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\api\AlertApiController.cs" />

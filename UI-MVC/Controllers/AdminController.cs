@@ -119,13 +119,16 @@ namespace BAR.UI.MVC.Controllers
     [HttpPost]
     public ActionResult UploadJson([Bind(Exclude = "jsonFile")]ItemViewModels.ItemViewModel model)
     {
+      //Get hold of subplatformID we received
+      int subPlatformID = (int)RouteData.Values["SubPlatformID"];
+
       itemManager = new ItemManager();
 
       if (Request.Files.Count > 0)
       {
         HttpPostedFileBase pfb = Request.Files["jsonFile"];
         string json = itemManager.ConvertPfbToString(pfb);
-        itemManager.ImportJson(json);
+        itemManager.ImportJson(json, subPlatformID);
       }
       return RedirectToAction("ItemManagement", "Admin");
     }

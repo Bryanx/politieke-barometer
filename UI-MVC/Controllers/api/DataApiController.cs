@@ -1,6 +1,7 @@
 ﻿using BAR.BL.Controllers;
 using BAR.BL.Domain.Items;
 using BAR.BL.Managers;
+using BAR.UI.MVC.Attributes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,9 +17,19 @@ namespace BAR.UI.MVC.Controllers.api
     private IItemManager itemManager;
 
     [HttpGet]
+    //[SubPlatformCheckAPI]
     [Route("api/Data/Synchronize")]
     public IHttpActionResult Synchronize()
     {
+      //Get the subplatformID from the SubPlatformCheckAPI attribute
+      //object _customObject = null;
+      //int suplatformID = -1;
+
+      //if (Request.Properties.TryGetValue("SubPlatformID", out _customObject))
+      //{
+      //  suplatformID = (int)_customObject;
+      //}
+
       IDataManager dataManager = new DataManager();
       string content;
       if (dataManager.GetLastAudit() == null)
