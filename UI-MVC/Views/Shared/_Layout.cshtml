@@ -17,22 +17,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <title>@(Model.PageTitle.Length == 0 ? @ViewBag.Title : Model.PageTitle)</title>
-    <link href="~/Scripts/datatables/datatables.net-bs/css/dataTablesbootstrapmin.css" rel=" stylesheet" />
-    <link href="~/Scripts/datatables/datatables.net-responsive-bs/css/responsivebootstrapmin.css" rel=" stylesheet" />
-    <link href="~/Content/build/css/vendor/bootstrapmin.css" rel=" stylesheet" />
-    <link href="~/Content/build/css/vendor/font-awesomemin.css" rel=" stylesheet" />
-    <link href="~/Content/build/css/vendor/bootstrap-progressbar-334min.css" rel=" stylesheet" />
-    <link href="~/Content/build/css/vendor/jqvmapmin.css" rel=" stylesheet" />
-    <link href="~/Content/build/css/vendor/nprogress.css" rel=" stylesheet" />
 
+    @Styles.Render("~/Content/css")
 
-    @if (IsSectionDefined("CustomCSS"))
-    {
+    @if (IsSectionDefined("CustomCSS")) {
         @RenderSection("CustomCSS")
     }
 
     <!-- Custom Theme Style -->
-    <link href="~/Content/build/css/custom.css" rel="stylesheet" />
+    @Styles.Render("~/Content/custom")
+
     <!-- Font -->
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
 </head>
@@ -108,19 +102,19 @@
     
     <script src="~/Scripts/jquery/jquery-331min.js"></script>
     <script src="~/Scripts/jquery/jqueryautocompletemin.js"></script>
-   
-    <script src="~/Content/build/js/searchbar.js"></script>
+    @Scripts.Render("~/Content/build/js/searchbar.js")
     <script src="~/Scripts/bootstrap.js"></script>
     <script src="~/Scripts/dates/datemin.js"></script>
     <script src="~/Scripts/dates/momentmin.js"></script>
     <script src="~/Scripts/dates/daterangepickermin.js"></script>
-    <script src="~/Scripts/jquery/jquerytimeago.js"></script>
-    <script src="~/Content/build/js/alerts.js""></script>
+    <script src=" ~/Scripts/jquery/jquerytimeago.js"></script>
+    @Scripts.Render("~/Content/build/js/alerts.js")
     @if (IsSectionDefined("CustomJS"))
     {@RenderSection("CustomJS")}
     <!-- Custom Theme Scripts -->
     
-    <script src="/Content/build/js/custom.js"></script>
+    <script src="~/Content/build/js/custom.js"></script>
+    <script src="~/Content/build/js/searchbar.js"></script>
     <script defer>
         (() => {
             $(".culture", ".left_col").click(function () {
