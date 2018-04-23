@@ -17,5 +17,6 @@ namespace BAR.BL.Managers
     SynchronizeAudit AddAudit(DateTime timestamp, bool succes);
     SynchronizeAudit GetAudit(int synchronizeAuditId);
     SynchronizeAudit ChangeAudit(int synchronizeAuditId);
+    bool IsJsonEmpty(string json);
   }
 }

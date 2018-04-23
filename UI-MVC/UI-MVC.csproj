@@ -20,7 +20,7 @@
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
     <Use64BitIISExpress />
-    <IISExpressSSLPort>44317</IISExpressSSLPort>
+    <IISExpressSSLPort>44398</IISExpressSSLPort>
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
@@ -223,8 +223,11 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Attributes\SubPlatformCheck.cs" />
+    <Compile Include="Attributes\SubPlatformDataCheck.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\api\AlertApiController.cs" />
+    <Compile Include="Controllers\api\SubPlatformApiController.cs" />
     <Compile Include="Controllers\api\DataApiController.cs" />
     <Compile Include="Controllers\api\ItemApiController.cs" />
     <Compile Include="Controllers\api\UserApiController.cs" />
@@ -232,6 +235,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LanguageController.cs" />
     <Compile Include="Controllers\OrganisationController.cs" />
+    <Compile Include="Controllers\OverviewController.cs" />
     <Compile Include="Controllers\PersonController.cs" />
     <Compile Include="Controllers\SuperAdminController.cs" />
     <Compile Include="Controllers\UserController.cs" />
@@ -246,9 +250,12 @@
     <Compile Include="Models\AlertDTO.cs" />
     <Compile Include="Models\BaseViewModel.cs" />
     <Compile Include="Models\AdminViewModels.cs" />
+    <Compile Include="Models\CustomizationViewModel.cs" />
     <Compile Include="Models\Graph.cs" />
     <Compile Include="Models\ItemDTO.cs" />
     <Compile Include="Models\ItemViewModels.cs" />
+    <Compile Include="Models\SubPlatformDTO.cs" />
+    <Compile Include="Models\SubPlatformViewModel.cs" />
     <Compile Include="Models\UserViewModels.cs" />
     <Compile Include="Models\Widget.cs" />
     <Compile Include="PersonDynamicNodeProvider.cs" />
@@ -543,6 +550,7 @@
     <None Include="Scripts\vue.js" />
     <None Include="Scripts\vue.min.js" />
     <Content Include="Views\Home\GetResources.cshtml" />
+    <Content Include="Views\Overview\Index.cshtml" />
     <None Include="Views\Shared\DisplayTemplates\CanonicalHelperModel.ascx" />
     <None Include="Views\Shared\DisplayTemplates\CanonicalHelperModel.cshtml" />
     <None Include="Views\Shared\DisplayTemplates\MenuHelperModel.ascx" />
@@ -563,6 +571,8 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Views\Shared\Partials\_UserTable.cshtml" />
+    <Content Include="Views\Shared\Partials\_SubPlatformOverview.cshtml" />
+    <Content Include="Views\Shared\_LayoutSubplatformOverview.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BAR.BL.Model\Domain.csproj">
@@ -594,6 +604,9 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Views\SubPlatform\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

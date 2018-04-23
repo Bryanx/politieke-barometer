@@ -50,14 +50,23 @@ namespace BAR.UI.MVC.Controllers.api
         if (response.IsSuccessStatusCode)
         {
           var json = response.Content.ReadAsStringAsync().Result;
-          var items = dataManager.SynchronizeData(json);
-          if (items != null)
+          if (!dataManager.IsJsonEmpty(json))
           {
-            itemManager = new ItemManager();
-            foreach (Item item in items) itemManager.DetermineTrending(item.ItemId);
-            dataManager.ChangeAudit(auditId);
-          }        
-          return StatusCode(HttpStatusCode.OK);
+            var items = dataManager.SynchronizeData(json);
+            if (items != null)
+            {
+              itemManager = new ItemManager();
+              foreach (Item item in items) itemManager.DetermineTrending(item.ItemId);
+              dataManager.ChangeAudit(auditId);
+              return StatusCode(HttpStatusCode.OK);
+            } else
+            {
+              return StatusCode(HttpStatusCode.NotAcceptable);
+            }           
+          } else
+          {
+            return StatusCode(HttpStatusCode.NoContent);
+          }         
         }
         else
         {
