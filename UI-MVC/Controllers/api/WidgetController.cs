@@ -66,7 +66,7 @@ namespace BAR.UI.MVC.Controllers.api
 		{
 			dataManager = new DataManager();
 			
-			IDictionary<string, double> data = dataManager.GetNumberOfMentionsForItem(itemId, widgetId);
+			IDictionary<DateTime, double> data = dataManager.GetNumberOfMentionsForItem(itemId, widgetId);
 			if (data == null) return StatusCode(HttpStatusCode.NoContent);
 
 			return Ok(data);
