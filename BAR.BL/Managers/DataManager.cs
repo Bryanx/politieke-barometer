@@ -55,7 +55,7 @@ namespace BAR.BL.Managers
 			InitRepo();
 			return dataRepo.ReadInformationsForItemid(itemId);
 		}
-		
+
 		/// <summary>
 		/// Gives back a list of informations for a specific widget
 		/// </summary>
@@ -89,6 +89,41 @@ namespace BAR.BL.Managers
 			//Return filterd informations
 			if (timestamp == null) return GetInformationsForItemid(widgetId).AsEnumerable();
 			else return GetInformationsForItemid(widgetId).Where(info => info.CreationDate >= timestamp).AsEnumerable();
+		}
+
+		/// <summary>
+		/// Gives back a map with the number of metntions
+		/// mapped to a specific day
+		/// 
+		/// NOTE
+		/// This method is not the same as getNumberInfo
+		/// This method will be used for widgets.
+		/// </summary>
+		IDictionary<DateTime?, int> GetNumberOfMentionsForItem(int widgetId, int itemId)
+		{
+			//Get widget and timestamp
+			Widget widget = new WidgetManager().GetWidgetWithAllItems(widgetId);
+			DateTime? timestamp = new WidgetManager().GetWidgetWithAllItems(widgetId).Timestamp;
+			if (widget == null || timestamp == null) return null;
+
+			//Get item to map
+			Item itemToQuery = widget.Items.Where(item => item.ItemId == itemId).SingleOrDefault();
+			if (itemToQuery == null) return null;
+
+			//Get informations
+			IEnumerable<Information> infos = itemToQuery.Informations.Where(info => info.CreationDate >= timestamp).AsEnumerable();
+			if (infos == null || infos.Count() == 0) return null;
+
+			//Map keys and values
+			IDictionary<DateTime?, int> dict = new Dictionary<DateTime?, int>();
+			DateTime timerange = DateTime.Now;
+			foreach (Information infoToQuery in infos)
+			{
+				dict[timerange] = itemToQuery.Informations.Where(into => infoToQuery.CreationDate >= timerange).Count();
+				timerange.AddDays(-1);
+			}
+
+			return dict;
 		}
 
 		public IEnumerable<Item> SynchronizeData(string json)
