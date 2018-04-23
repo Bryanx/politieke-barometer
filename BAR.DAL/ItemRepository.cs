@@ -39,6 +39,17 @@ namespace BAR.DAL
 		}
 
 		/// <summary>
+		/// Returns the item that matches the itemId including SubPlatform
+		/// </summary>
+		public Item ReadItemWithSubPlatform(int itemId)
+		{
+			return ctx.Items
+				.Include(i => i.SubPlatform)
+				.Where(item => item.ItemId == itemId)
+				.SingleOrDefault();
+		}
+
+		/// <summary>
 		/// Gives back a list of all the items for a specific type
 		/// </summary>
 		public IEnumerable<Item> ReadItemsForType(ItemType type)
@@ -62,7 +73,31 @@ namespace BAR.DAL
 		/// <returns></returns>
 		public IEnumerable<Item> ReadAllItems()
 		{
-			return ctx.Items.AsEnumerable();
+			return ctx.Items.Include(item => item.SubPlatform).AsEnumerable();
+		}
+
+		/// <summary>
+		/// Gives back a list of all the persons
+		/// </summary>
+		public IEnumerable<Person> ReadAllPersons()
+		{
+			return ReadAllItems().OfType<Person>().AsEnumerable();
+		}
+
+		/// <summary>
+		/// Gives back a list of all the organisations
+		/// </summary>
+		public IEnumerable<Organisation> ReadAllOraginsations()
+		{
+			return ReadAllItems().OfType<Organisation>().AsEnumerable();
+		}
+
+		/// <summary>
+		/// Gives back a list of all the thetms
+		/// </summary>
+		public IEnumerable<Theme> ReadAllThemes()
+		{
+			return ReadAllItems().OfType<Theme>().AsEnumerable();
 		}
 
 		/// <summary>

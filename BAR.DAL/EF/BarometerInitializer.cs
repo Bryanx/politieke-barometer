@@ -1,3 +1,4 @@
+using BAR.BL.Domain.Core;
 using BAR.BL.Domain.Data;
 using BAR.BL.Domain.Items;
 using BAR.BL.Domain.Users;
@@ -11,18 +12,74 @@ using System.Text;
 
 namespace BAR.DAL.EF
 {
-  internal class BarometerInitializer : DropCreateDatabaseIfModelChanges<BarometerDbContext>
-  {
-    /// <summary>
-    /// Dummy data from the json file will be generated
-    /// in this file for the first wave of information.
-    /// </summary>
-    protected override void Seed(BarometerDbContext ctx)
-    {
-      GenerateSources(ctx);
-      GenerateProperties(ctx);
-      GenerateAreas(ctx);
-    }
+  internal class BarometerInitializer : CreateDatabaseIfNotExists<BarometerDbContext>
+	{
+		/// <summary>
+		/// Dummy data from the json file will be generated
+		/// in this file for the first wave of information.
+		/// </summary>
+		protected override void Seed(BarometerDbContext ctx)
+		{
+			GenerateSubPlatforms(ctx);
+			GenerateSources(ctx);
+			GenerateProperties(ctx);
+			//GenerateInformations(ctx);
+			GenerateAreas(ctx);
+			//GenerateK3(ctx);
+		}
+
+		/// <summary>
+		/// Generates test data for K3 subplatform
+		/// </summary>
+		/// <param name="ctx"></param>
+		private void GenerateK3(BarometerDbContext ctx)
+		{
+			Person Marthe = new Person()
+			{
+				Name = "Marthe De Pillecyn",
+				CreationDate = DateTime.Now,
+				Baseline = 0,
+				TrendingPercentage = 0,
+				SubPlatform = ctx.SubPlatforms.Where(sp => sp.Name.Equals("k3")).SingleOrDefault()
+			};
+
+			Person Wever = new Person()
+			{
+				Name = "Bart de Wever",
+				CreationDate = DateTime.Now,
+				Baseline = 0,
+				TrendingPercentage = 0,
+				SubPlatform = ctx.SubPlatforms.Where(sp => sp.Name.Equals("politiek")).SingleOrDefault()
+			};
+
+			ctx.Items.Add(Wever);
+			ctx.Items.Add(Marthe);
+			ctx.SaveChanges();
+		}
+
+		/// <summary>
+		/// Generates some subplatforms.
+		/// </summary>
+		/// <param name="ctx"></param>
+		private void GenerateSubPlatforms(BarometerDbContext ctx)
+		{
+			SubPlatform subPlatform1 = new SubPlatform
+			{
+				Name = "k3",
+				CreationDate = DateTime.Now
+			};
+			ctx.SubPlatforms.Add(subPlatform1);
+
+			SubPlatform subPlatform2 = new SubPlatform
+			{
+				Name = "politiek",
+				CreationDate = DateTime.Now
+			};
+			ctx.SubPlatforms.Add(subPlatform2);
+
+			ctx.SaveChanges();
+		}
+
 
     /// <summary>
     /// Generates all of the sources we get our information from.
@@ -44,13 +101,13 @@ namespace BAR.DAL.EF
       ctx.SaveChanges();
     }
 
-    /// <summary>
-    /// Performance gain if you put all items in a list
-    /// and then in the context with addRange();
-    /// </summary>
-    private void GenerateProperties(BarometerDbContext ctx)
-    {
-      List<Property> propertiesList = new List<Property>();
+		/// <summary>
+		/// Performance gain if you put all items in a list
+		/// and then in the context with addRange();
+		/// </summary>
+		private void GenerateProperties(BarometerDbContext ctx)
+		{
+			List<Property> propertiesList = new List<Property>();
 
       Property gender = new Property
       {
@@ -142,7 +199,7 @@ namespace BAR.DAL.EF
       {
         Area area = new Area
         {
-          Country    = "België",
+          Country    = "BelgiÃ«",
           PostalCode = deserializedJson[i].zip,
           Residence  = deserializedJson[i].city
         };
