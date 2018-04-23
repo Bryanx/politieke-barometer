@@ -1,8 +1,10 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Web.Http;
 using AutoMapper;
+using BAR.BL.Domain.Data;
 using BAR.BL.Domain.Widgets;
 using BAR.BL.Managers;
 using BAR.UI.MVC.Models;
@@ -50,6 +52,39 @@ namespace BAR.UI.MVC.Controllers.api
 			if (widgets == null || widgets.Count() == 0) return StatusCode(HttpStatusCode.NoContent);
 			
 			return Ok(widgets);
+		}
+		
+		/// <summary>
+		/// Temp get graph
+		/// </summary>
+		[HttpGet]
+		[Route("api/GetGraph/{widgetId}")]
+		public IHttpActionResult GetGraph(int widgetId)
+		{
+			widgetManager = new WidgetManager();
+			IDataManager dataManager = new DataManager();
+			Widget widget = widgetManager.GetWidgetWithAllItems(widgetId);
+			int itemId = widget.Items.First().ItemId;
+			IDictionary<DateTime?, int> dict = dataManager.GetNumberOfMentionsForItem(widgetId, itemId);
+
+//			IDictionary<string, double> data = new Dictionary<string, double>();
+//			
+//			IEnumerable<Information> informations = dataManager.GetInformationsForItemid(widget.Items.First().ItemId); //eerste item tijdelijk
+//			
+//			if (informations == null || informations.Count() == 0) return StatusCode(HttpStatusCode.NoContent);
+//			
+//			DateTime? startTime = widget.Timestamp;
+//			DateTime checkTime = DateTime.Now;
+//			int sum = 0;
+//			while (checkTime < startTime) {
+//				string key = startTime.ToString();
+//				sum += informations.Count(i => i.CreationDate.Value.Day == checkTime.Day);
+//				data[key] = sum;
+//				checkTime.AddDays(-1);
+//			}
+
+				
+			return Ok(dict);
 		}
 		
 		/// <summary>

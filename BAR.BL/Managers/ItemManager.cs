@@ -270,18 +270,23 @@ namespace BAR.BL.Managers
 			item.TrendingPercentage = 0.0;
 			item.Baseline = 0.0;
 			item.Informations = new List<Information>();
-			item.ItemWidgets = GenerateDefaultItemWidgets(name);
 
-			itemRepo.CreateItem(item);
+			itemRepo.CreateItem(item);		
+			item.ItemWidgets = GenerateDefaultItemWidgets(name, item.ItemId);
+			itemRepo.UpdateItem(item);
+			
 			return item;
 		}
 
-		public List<ItemWidget> GenerateDefaultItemWidgets(string name)
+		public List<ItemWidget> GenerateDefaultItemWidgets(string name, int itemId)
 		{
 			List<ItemWidget> lijst = new List<ItemWidget>();
 			WidgetManager widgetManager = new WidgetManager();
-			ItemWidget widget = (ItemWidget)widgetManager.CreateWidget(WidgetType.GraphType, name + " popularity", 1, 1, null, 12, 6);
+			
+			ItemWidget widget = (ItemWidget) widgetManager.CreateWidget(WidgetType.GraphType, name + " popularity", 1, 1, null, 12, 6);
 			lijst.Add(widget);
+			
+			widgetManager.AddItemToWidget(widget.WidgetId, itemId);
 			return lijst;
 		}
 

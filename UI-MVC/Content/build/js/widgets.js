@@ -194,21 +194,14 @@ function loadGrid(data) {
                 grid.resizable('.grid-stack-item', false);
             }
 
-            if (widget.Graph != null) {
-                switch (widget.Graph.Type) {
-                    case "donut" :
-                        if (widget.Graph.DonutLabels != null && widget.Graph.DonutValues != null) {
-                            addPieChart('grafiek' + counter, widget.Graph.DonutLabels, widget.Graph.DonutValues);
-                        }
-                        break;
-                    case "line" :
-                        addLineChart('grafiek' + counter);
-                        break;
-                    case "bar" :
-                        addBarChart('grafiek' + counter);
-                        break;
-                }
-            }
+            // if (widget.Graph != null) {
+                $.ajax({
+                    type: 'GET',
+                    url: '/api/GetGraph/' + widget.WidgetId,
+                    dataType: 'json',
+                    success: data => console.log(data)
+                }).fail();
+            // }
             counter++;
         });
     } else {

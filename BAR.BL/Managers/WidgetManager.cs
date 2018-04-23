@@ -86,7 +86,7 @@ namespace BAR.BL.Managers
 			Item itemToAdd = itemManager.GetItem(itemId);
 
 			//Add item to widget
-			Widget widgetToUpdate = GetWidget(widgetId);
+			Widget widgetToUpdate = GetWidgetWithAllItems(widgetId);
 			widgetToUpdate.Items.Add(itemToAdd);
 
 			//Update database
