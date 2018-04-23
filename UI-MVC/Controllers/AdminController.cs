@@ -1,15 +1,15 @@
-﻿using System.Collections.Generic;
-using System.Web;
-using System.Web.Mvc;
+﻿using AutoMapper;
+using BAR.BL.Domain.Core;
 using BAR.BL.Domain.Users;
 using BAR.BL.Managers;
+using BAR.UI.MVC.App_GlobalResources;
 using BAR.UI.MVC.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
+using System.Collections.Generic;
 using System.Linq;
-using AutoMapper;
-using BAR.UI.MVC.App_GlobalResources;
-using BAR.BL.Domain.Core;
+using System.Web;
+using System.Web.Mvc;
 
 namespace BAR.UI.MVC.Controllers
 {
@@ -40,9 +40,10 @@ namespace BAR.UI.MVC.Controllers
 			platformManager = new SubplatformManager();
 
 			//Map viewmodel
-			Customization platform = platformManager.GetCustomization(2);
+			int subPlatformID = (int)RouteData.Values["SubPlatformID"];
+			Customization custom = platformManager.GetCustomization(subPlatformID);
 
-			CustomizationViewModel vm = Mapper.Map(platform, new CustomizationViewModel());
+			CustomizationViewModel vm = Mapper.Map(custom, new CustomizationViewModel());
 			vm.User = userManager.GetUser(User.Identity.GetUserId());
 			vm.PageTitle = Resources.PageManagement;
 
