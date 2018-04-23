@@ -195,11 +195,12 @@ function loadGrid(data, itemId) {
             }
 
             // if (widget.Graph != null) {
+            var test;
                 $.ajax({
                     type: 'GET',
                     url: '/api/GetGraphs/' + itemId,
                     dataType: 'json',
-                    success: data => console.log(data)
+                    success: data2 => test = data2
                 }).fail();
             // }
             counter++;
