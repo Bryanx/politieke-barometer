@@ -101,7 +101,7 @@ namespace BAR.BL.Managers
 		/// </summary>
 		List<IDictionary<string, double>> IDataManager.GetNumberOfMentionsForItem(int itemId)
 		{
-			//Get item
+			//Get item with widgets
 			ItemManager itemManager = new ItemManager();
 			Item item = itemManager.GetItemWithAllWidgets(itemId);
 			if (item == null) return null;
@@ -129,7 +129,6 @@ namespace BAR.BL.Managers
 				data.Add(widgetData);
 			}
 			
-
 			return data;
 		}
 
