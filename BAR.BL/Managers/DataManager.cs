@@ -372,6 +372,24 @@ namespace BAR.BL.Managers
 			dataRepo.UpdateAudit(synchronizeAudit);
 			return synchronizeAudit;
 		}
+
+		/// <summary>
+		/// Gives back an information object with their propertyvalues
+		/// </summary>
+		public Information GetInformationWithPropvals(int infoId)
+		{
+			InitRepo();
+			return dataRepo.ReadInformationWithPropValues(infoId);
+		}
+
+		/// <summary>
+		/// Gives back a propertyValue object with their property
+		/// </summary>
+		public PropertyValue GetPropvalWithProperty(int propvalId)
+		{
+			InitRepo();
+			throw new NotImplementedException();
+		}
 	}
 }
 

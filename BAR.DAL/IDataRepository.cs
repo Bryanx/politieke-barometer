@@ -16,6 +16,7 @@ namespace BAR.DAL
 		IEnumerable<Information> ReadAllInformations();
 		IEnumerable<Information> ReadInformationsForItemid(int itemId);
 		IEnumerable<Information> ReadInformationsForDate(int itemId, DateTime since);
+		PropertyValue ReadPropvalWithProperty(int propvalId);
 		Property ReadProperty(string propertyName);
 		Source ReadSource(string sourceName);
 		SynchronizeAudit ReadLastAudit();

@@ -11,9 +11,12 @@ namespace BAR.BL.Managers
 	public interface IDataManager
 	{
 		//Informations
+		Information GetInformationWithPropvals(int infoId);
 		IEnumerable<Information> GetInformationsForItemid(int itemId);
 		IEnumerable<Information> GetInformationsForWidgetid(int widgetId);
 		IEnumerable<Information> GetInformationsWithTimestamp(int widgetId);
+		
+		PropertyValue GetPropvalWithProperty(int propvalId);
 
 		int GetNumberInfo(int itemId, DateTime since);
 		IDictionary<string, double> GetNumberOfMentionsForItem(int itemId, int widgetId);

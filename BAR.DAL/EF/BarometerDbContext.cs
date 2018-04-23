@@ -35,7 +35,8 @@ namespace BAR.DAL.EF
 		public DbSet<Source> Sources { get; set; }
 		public DbSet<Information> Informations { get; set; }
 		public DbSet<Property> Properties { get; set; }
-    public DbSet<SynchronizeAudit> SynchronizeAudits { get; set; }
+		public DbSet<PropertyValue> PropertyValues { get; set; }
+		public DbSet<SynchronizeAudit> SynchronizeAudits { get; set; }
 
     //User package
     public DbSet<Subscription> Subscriptions { get; set; }
