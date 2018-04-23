@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace BAR.BL.Managers
 {
@@ -26,13 +27,15 @@ namespace BAR.BL.Managers
 		IEnumerable<Item> GetAllPersonsForSubplatform(int subPlatformID);
 
 
-		Item CreateItem(ItemType itemType, string name, string description = "", string function = "", Category category = null);
+    bool ImportJson(string json);
 
-		Item ChangeItemName(int itemId, string name);
-		Item ChangeItemDescription(int itemId, string description);
+
+    Item ChangeItemName(int itemId, string name);
 		Item ChangeItemActivity(int itemId);
 
 		void DetermineTrending(int itemId);
 		double GetTrendingPer(int itemId);
-	}
+    string ConvertPfbToString(HttpPostedFileBase pfb);
+
+  }
 }

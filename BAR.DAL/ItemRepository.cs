@@ -40,7 +40,7 @@ namespace BAR.DAL
 
 		/// <summary>
 		/// Returns the item that matches the itemId including SubPlatform
-		/// </summary>       
+		/// </summary>
 		public Item ReadItemWithSubPlatform(int itemId)
 		{
 			return ctx.Items
@@ -182,9 +182,29 @@ namespace BAR.DAL
 			return ctx.SaveChanges();
 		}
 
-        public Item ReadPerson(string personName)
-        {
-          return ctx.Items.Where(i => i.Name.Equals(personName)).SingleOrDefault();
-        }
+    /// <summary>
+    /// Reads a person of a given name.
+    /// </summary>
+    public Item ReadPerson(string personName)
+    {
+      return ctx.Items.Where(i => i.Name.Equals(personName)).SingleOrDefault();
+    }
+
+    /// <summary>
+    /// Creates a range of items.
+    /// </summary>
+    public int CreateItems(ICollection<Item> items)
+    {
+      ctx.Items.AddRange(items);
+      return ctx.SaveChanges();
+    }
+
+    /// <summary>
+    /// Reads an organisation with a given name.
+    /// </summary>
+    public Item ReadOrganisation(string organisationName)
+    {
+      return ctx.Items.Where(x => x.Name.Equals(organisationName)).SingleOrDefault();
+    }
   }
 }

@@ -52,10 +52,11 @@ namespace BAR.UI.MVC.Controllers.api
           var json = response.Content.ReadAsStringAsync().Result;
           if (!dataManager.IsJsonEmpty(json))
           {
-            var items = dataManager.SynchronizeData(json);
-            if (items != null)
+            var completed = dataManager.SynchronizeData(json);
+            if (completed)
             {
               itemManager = new ItemManager();
+              var items = itemManager.GetAllItems();
               foreach (Item item in items) itemManager.DetermineTrending(item.ItemId);
               dataManager.ChangeAudit(auditId);
               return StatusCode(HttpStatusCode.OK);

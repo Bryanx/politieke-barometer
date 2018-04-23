@@ -6,9 +6,12 @@ using System.Threading.Tasks;
 
 namespace BAR.BL.Domain.Items
 {
-  public class Organisation : Item
+  public enum Level
   {
-    public string Site { get; set; }
-    public List<SocialMediaName> SocialMediaUrls { get; set; }
+    VLAAMS = 1,
+    BRUSSELS,
+    FEDERAAL,
+    EUROPEES,
+    GEEN
   }
 }

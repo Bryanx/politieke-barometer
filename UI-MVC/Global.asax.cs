@@ -24,7 +24,6 @@ namespace BAR.UI.MVC
         cfg.CreateMap<Item, ItemDTO>()
           .ForMember(m => m.ItemId, opt => opt.MapFrom(src => src.ItemId))
           .ForMember(m => m.Name, opt => opt.MapFrom(src => src.Name))
-          .ForMember(m => m.Description, opt => opt.MapFrom(src => src.Description))
           .ForMember(m => m.NumberOfMentions, opt => opt.MapFrom(src => src.NumberOfMentions))
           .ForMember(m => m.TrendingPercentage, opt => opt.MapFrom(src => Math.Floor(src.TrendingPercentage)));
       });
