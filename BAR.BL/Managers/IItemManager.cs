@@ -8,13 +8,14 @@ using System.Threading.Tasks;
 namespace BAR.BL.Managers
 {
 	public interface IItemManager
-	{	
+	{
 		Item GetItem(int itemId);
+		Item GetItemWithAllWidgets(int itemId);
 		IEnumerable<Item> GetAllItems();
 		IEnumerable<Item> GetAllPersons();
 		IEnumerable<Item> GetAllOrganisations();
 		IEnumerable<Item> GetItemsForType(ItemType type);
-    Item GetPerson(string personName);
+		Item GetPerson(string personName);
 		IEnumerable<Item> GetMostTrendingItems(int numberOfItems = 5);
 		IEnumerable<Item> GetMostTrendingItemsForType(ItemType type, int numberOfItems = 5);
 		IEnumerable<Item> GetMostTredningItemsForUser(string userId, int numberOfItems = 5);

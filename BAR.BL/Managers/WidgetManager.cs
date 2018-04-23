@@ -83,7 +83,7 @@ namespace BAR.BL.Managers
 
 			//Get Item
 			ItemManager itemManager = new ItemManager(uowManager);
-			Item itemToAdd = itemManager.GetItem(itemId);
+			Item itemToAdd = itemManager.GetItemWithWidgets(itemId);
 
 			//Add item to widget
 			Widget widgetToUpdate = GetWidgetWithAllItems(widgetId);
@@ -91,6 +91,9 @@ namespace BAR.BL.Managers
 
 			//Update database
 			widgetRepo.UpdateWidget(widgetToUpdate);
+
+			uowManager.Save();
+			uowManager = null;
 
 			return widgetToUpdate;
 		}

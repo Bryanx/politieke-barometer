@@ -11,6 +11,7 @@ using BAR.UI.MVC.Models;
 using Microsoft.AspNet.Identity;
 using WebGrease.Css.Extensions;
 using Widget = BAR.BL.Domain.Widgets.Widget;
+using BAR.BL.Domain.Items;
 
 namespace BAR.UI.MVC.Controllers.api
 {
@@ -22,7 +23,9 @@ namespace BAR.UI.MVC.Controllers.api
 	public class WidgetController : ApiController
 	{
 		private IWidgetManager widgetManager;
-		
+		private IItemManager itemManager;
+		private IDataManager dataManager;
+
 		/// <summary>
 		///Reads all widgets for a user dashboard and returns them
 		/// </summary>
@@ -58,13 +61,14 @@ namespace BAR.UI.MVC.Controllers.api
 		/// Temp get graph
 		/// </summary>
 		[HttpGet]
-		[Route("api/GetGraph/{widgetId}")]
-		public IHttpActionResult GetGraph(int widgetId)
+		[Route("api/GetGraph/{itemId}")]
+		public IHttpActionResult GetGraphs(int itemId)
 		{
-			widgetManager = new WidgetManager();
-			IDataManager dataManager = new DataManager();
-			Widget widget = widgetManager.GetWidgetWithAllItems(widgetId);
-			int itemId = widget.Items.First().ItemId;
+			itemManager = new ItemManager();
+			dataManager = new DataManager();
+
+			Item item = itemManager.GetItemWithAllWidgets(itemId);
+			int widgetId = item.ItemWidgets.First().WidgetId;
 			IDictionary<DateTime?, int> dict = dataManager.GetNumberOfMentionsForItem(widgetId, itemId);
 
 //			IDictionary<string, double> data = new Dictionary<string, double>();

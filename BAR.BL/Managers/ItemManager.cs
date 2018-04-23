@@ -231,7 +231,6 @@ namespace BAR.BL.Managers
 		/// </summary>
 		public Item CreateItem(ItemType itemType, string name, string description = "", string function = "", Category category = null)
 		{
-			uowManager = new UnitOfWorkManager();
 			InitRepo();
 
 			//the switch statement will determine if we need to make a
@@ -273,14 +272,11 @@ namespace BAR.BL.Managers
 			item.NumberOfFollowers = 0;
 			item.TrendingPercentage = 0.0;
 			item.Baseline = 0.0;
-			item.Informations = new List<Information>();
+			item.Informations = new List<Information>();		
 
-			itemRepo.CreateItem(item);		
+			itemRepo.CreateItem(item);
 			item.ItemWidgets = GenerateDefaultItemWidgets(name, item.ItemId);
 			itemRepo.UpdateItem(item);
-
-			uowManager.Save();
-			uowManager = null;
 			
 			return item;
 		}
@@ -376,6 +372,15 @@ namespace BAR.BL.Managers
 		}
 
 		/// <summary>
+		/// Gives back an item with all the widgets
+		/// </summary>
+		public Item GetItemWithAllWidgets(int itemId)
+		{
+			InitRepo();
+			return itemRepo.ReadItemWithWidgets(itemId);
+		}
+
+		/// <summary>
 		/// Determines if the repo needs a unit of work
 		/// if the unitOfWorkManager is present
 		/// </summary>
@@ -383,6 +388,6 @@ namespace BAR.BL.Managers
 		{
 			if (uowManager == null) itemRepo = new ItemRepository();
 			else itemRepo = new ItemRepository(uowManager.UnitOfWork);
-		}		
+		}	
 	}
 }
