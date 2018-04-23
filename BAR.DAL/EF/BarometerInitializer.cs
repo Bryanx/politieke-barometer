@@ -13,7 +13,7 @@ using System.Text;
 
 namespace BAR.DAL.EF
 {
-	internal class BarometerInitializer : DropCreateDatabaseIfModelChanges<BarometerDbContext>
+  internal class BarometerInitializer : CreateDatabaseIfNotExists<BarometerDbContext>
 	{
 		/// <summary>
 		/// Dummy data from the json file will be generated
@@ -312,7 +312,7 @@ namespace BAR.DAL.EF
 			{
 				Area area = new Area
 				{
-					Country = "België",
+					Country = "BelgiÃ«",
 					Residence = deserializedJson[i].city
 				};
 				ctx.Areas.Add(area);
