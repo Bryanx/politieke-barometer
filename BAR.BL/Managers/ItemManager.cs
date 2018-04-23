@@ -367,26 +367,26 @@ namespace BAR.BL.Managers
 			return AddItemsFromJson(json, subPlatformID);
 		}
 
-		/// <summary>
-		/// Checks if organisations used in json already exist, if not they will be made.
-		/// </summary>
-		private void CheckOrganisations(string json, int subPlatformID)
-		{
-			uowManager = new UnitOfWorkManager();
+    /// <summary>
+    /// Checks if organisations used in json already exist, if not they will be made.
+    /// </summary>
+    private void CheckOrganisations(string json, int subPlatformID)
+    {
+      uowManager = new UnitOfWorkManager();
 
-			InitRepo();
+      InitRepo();
 
-			ISubplatformManager subplatformManager = new SubplatformManager(uowManager);
-			SubPlatform subPlatform = subplatformManager.GetSubPlatform(subPlatformID);
+      ISubplatformManager subplatformManager = new SubplatformManager(uowManager);
+      SubPlatform subPlatform = subplatformManager.GetSubPlatform(subPlatformID);
 
-			dynamic deserializedJson = JsonConvert.DeserializeObject(json);
+      dynamic deserializedJson = JsonConvert.DeserializeObject(json);
 
-			for (int i = 0; i < deserializedJson.Count; i++)
-			{
-				string name = deserializedJson[i].organisation;
-				Item organisation = itemRepo.ReadOrganisation(name);
+      for (int i = 0; i < deserializedJson.Count; i++)
+      {
+        string name = deserializedJson[i].organisation;
+        Item organisation = itemRepo.ReadOrganisation(name);
 
-				if (organisation == null)
+        if (organisation == null)
 				{
 					organisation = new Organisation()
 					{
@@ -431,7 +431,8 @@ namespace BAR.BL.Managers
 			for (int i = 0; i < deserializedJson.Count; i++)
 			{
 				string fullname = deserializedJson[i].full_name;
-				if (persons.Where(x => x.Name.Equals(fullname)).SingleOrDefault() == null)
+				if (persons.Where(person => person.SubPlatform.SubPlatformId == subPlatformID)
+          .Where(x => x.Name.Equals(fullname)).SingleOrDefault() == null)
 				{
 					string gender = deserializedJson[i].gender;
 					string postalCode = deserializedJson[i].postal_code;

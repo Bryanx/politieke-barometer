@@ -204,7 +204,8 @@ namespace BAR.DAL
     /// </summary>
     public Item ReadOrganisation(string organisationName)
     {
-      return ctx.Items.Where(x => x.Name.Equals(organisationName)).SingleOrDefault();
+      return ctx.Items.Include(org => org.SubPlatform)
+        .Where(x => x.Name.Equals(organisationName)).SingleOrDefault();
     }
   }
 }
