@@ -101,15 +101,18 @@ namespace BAR.BL.Managers
 		/// </summary>
 		IDictionary<string, double> IDataManager.GetNumberOfMentionsForItem(int itemId)
 		{
+			//Get item
 			ItemManager itemManager = new ItemManager();
-
 			Item item = itemManager.GetItemWithAllWidgets(itemId);
+			if (item == null) return null;
+
+			//Get widget
 			Widget widget = item.ItemWidgets.First();
+			if (widget == null) return null;
 
+			//Map informations to datetime
 			IDictionary<string, double> data = new Dictionary<string, double>();
-
 			IEnumerable<Information> informations = GetInformationsForItemid(itemId);
-
 			if (informations == null || informations.Count() == 0) return null;
 
 			DateTime checkTime = DateTime.Now;
