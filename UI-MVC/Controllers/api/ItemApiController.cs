@@ -3,6 +3,7 @@ using System.Linq;
 using System.Net;
 using System.Web.Http;
 using BAR.BL.Managers;
+using BAR.UI.MVC.Attributes;
 
 namespace BAR.UI.MVC.Controllers.api
 {
@@ -17,11 +18,24 @@ namespace BAR.UI.MVC.Controllers.api
 		/// Returns all items for search suggestions.
 		/// </summary>
 		[HttpGet]
+    [SubPlatformCheckAPI]
 		[Route("api/GetSearchItems")]
 		public IHttpActionResult GetSearchItems()
 		{
-			itemManager = new ItemManager();
-			var lijst = itemManager.GetAllItems().Select(i => new {value=i.Name, data=i.ItemId});
+      //Get the subplatformID from the SubPlatformCheckAPI attribute
+      object _customObject = null;
+      int suplatformID = -1;
+
+      if (Request.Properties.TryGetValue("SubPlatformID", out _customObject))
+      {
+        suplatformID = (int)_customObject;
+      }
+
+
+      itemManager = new ItemManager();
+			var lijst = itemManager.GetAllItems()
+        .Where(item => item.SubPlatform.SubPlatformId == suplatformID)
+        .Select(i => new {value=i.Name, data=i.ItemId});
 			return Ok(lijst);
 		}
 
