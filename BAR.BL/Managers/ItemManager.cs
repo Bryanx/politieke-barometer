@@ -225,9 +225,13 @@ namespace BAR.BL.Managers
 
 		/// <summary>
 		/// Creates a new item based on the given parameters
+		/// 
+		/// NOTE
+		/// THIS METHOD USES UNIT OF WORK
 		/// </summary>
 		public Item CreateItem(ItemType itemType, string name, string description = "", string function = "", Category category = null)
 		{
+			uowManager = new UnitOfWorkManager();
 			InitRepo();
 
 			//the switch statement will determine if we need to make a
@@ -274,6 +278,9 @@ namespace BAR.BL.Managers
 			itemRepo.CreateItem(item);		
 			item.ItemWidgets = GenerateDefaultItemWidgets(name, item.ItemId);
 			itemRepo.UpdateItem(item);
+
+			uowManager.Save();
+			uowManager = null;
 			
 			return item;
 		}
