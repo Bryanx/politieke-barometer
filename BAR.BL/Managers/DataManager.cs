@@ -92,38 +92,43 @@ namespace BAR.BL.Managers
 		}
 
 		/// <summary>
-		/// Gives back a map with the number of metntions
-		/// mapped to a specific day
+		/// Gives back a list of maps with the number of metntions
+		/// mapped to a specific day or week
 		/// 
 		/// NOTE
 		/// This method is not the same as getNumberInfo
 		/// This method will be used for widgets.
 		/// </summary>
-		IDictionary<string, double> IDataManager.GetNumberOfMentionsForItem(int itemId)
+		List<IDictionary<string, double>> IDataManager.GetNumberOfMentionsForItem(int itemId)
 		{
 			//Get item
 			ItemManager itemManager = new ItemManager();
 			Item item = itemManager.GetItemWithAllWidgets(itemId);
 			if (item == null) return null;
 
-			//Get widget
-			Widget widget = item.ItemWidgets.First();
-			if (widget == null) return null;
+			//Map informations to datetime and add them to the list
+			List<IDictionary<string, double>> data = new List<IDictionary<string, double>>();
 
-			//Map informations to datetime
-			IDictionary<string, double> data = new Dictionary<string, double>();
-			IEnumerable<Information> informations = GetInformationsForItemid(itemId);
-			if (informations == null || informations.Count() == 0) return null;
-
-			DateTime checkTime = DateTime.Now;
-			double sum = 0.0;
-			while (checkTime > widget.Timestamp)
+			foreach (Widget widget in item.ItemWidgets.AsEnumerable())
 			{
-				string key = checkTime.ToString();
-				sum += informations.Count(i => i.CreationDate.Value.Day == checkTime.Day);
-				data[key] = sum;
-				checkTime = checkTime.AddDays(-1);
+				IDictionary<string, double> widgetData = new Dictionary<string, double>();
+
+				IEnumerable<Information> informations = GetInformationsForItemid(itemId);
+				if (informations == null || informations.Count() == 0) return null;
+
+				DateTime checkTime = DateTime.Now;
+				double sum = 0.0;
+				while (checkTime > widget.Timestamp)
+				{
+					string key = checkTime.ToString();
+					sum += informations.Count(i => i.CreationDate.Value.Day == checkTime.Day);
+					widgetData[key] = sum;
+					checkTime = checkTime.AddDays(-1);
+				}
+
+				data.Add(widgetData);
 			}
+			
 
 			return data;
 		}
