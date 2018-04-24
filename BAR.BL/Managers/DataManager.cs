@@ -128,36 +128,37 @@ namespace BAR.BL.Managers
 
 		/// <summary>
 		/// Gives back a map with all the propertievalues of a specific propertie
+		/// works dynamicly
 		/// 
 		/// WARNING
 		/// This method will only work if the widget has a propertytag
 		/// </summary>
-		public IDictionary<string, IEnumerable<PropertyValue>> GetPropvaluesForWidget(int itemId, int widgetId)
+		IDictionary<string, double> GetPropvaluesForWidget(int itemid, int widgetId)
 		{
-			//Get item with widgets
-			ItemManager itemManager = new ItemManager();
-			Item item = itemManager.GetItemWithAllWidgets(itemId);
-			if (item == null) return null;
+			//InitRepo();
 
-			//Get Widget
-			Widget widget = item.ItemWidgets.Where(widgetToQuery => widgetToQuery.WidgetId == widgetId).SingleOrDefault();
-			string tag = widget.PropertyTag;
-			if (widget == null || tag == null) return null;
+			////Get propertytag and timestamp
+			//WidgetManager widgetManager = new WidgetManager();
+			//Widget widget = widgetManager.GetWidget(widgetId);
+			//string proptag = widget.PropertyTag;
+			//DateTime? timestamp = widget.Timestamp;
+			//if (widget == null || proptag == null || timestamp == null) return null;
 
-			//Map informations to datetime and add them to the list
-			IDictionary<string, double> data = new Dictionary<string, double>();
-			IEnumerable<Information> informations = GetInformationsForItemid(itemId);
-			if (informations == null || informations.Count() == 0) return null;
+			////Get informations for item
+			//IEnumerable<Information> infos = GetInformationsWithAllInfoForItem(itemid);
 
-			DateTime checkTime = DateTime.Now;
+			////Map timestap to number of propertyValues
+			//IDictionary<string, double> dict = new Dictionary<string, double>();
+			//DateTime checkTime = DateTime.Now;
+			//foreach (Information information in infos)
+			//{
+			//	foreach (PropertyValue propval in information.PropertieValues)
+			//	{
+			//		//If the name of the property determin
+			//	}
+			//}
 
-			while (checkTime > widget.Timestamp)
-			{
-				string key = checkTime.ToString();
-				checkTime = checkTime.AddDays(-1);
-			}
-
-			return null;
+			return null;		
 		}
 
 		/// <summary>
