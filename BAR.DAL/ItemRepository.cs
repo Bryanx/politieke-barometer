@@ -29,13 +29,22 @@ namespace BAR.DAL
 			if (uow == null) ctx = new BarometerDbContext();
 			else ctx = uow.Context;
 		}
-		
+
 		/// <summary>
 		/// Returns the item that matches the itemId.
 		/// </summary>       
 		public Item ReadItem(int itemId)
 		{
 			return ctx.Items.Find(itemId);
+		}
+
+		/// <summary>
+		/// Returns the item that matches the itemId.
+		/// </summary>       
+		public Item ReadItemWithWidgets(int itemId)
+		{
+			return ctx.Items.Include(item => item.ItemWidgets)
+				.Where(item => item.ItemId == itemId).SingleOrDefault();
 		}
 
 		/// <summary>
@@ -158,7 +167,7 @@ namespace BAR.DAL
 		/// </summary>
 		public int UpdateItems(IEnumerable<Item> items)
 		{
-			foreach (Item item in items) ctx.Entry(item).State = EntityState.Modified;	
+			foreach (Item item in items) ctx.Entry(item).State = EntityState.Modified;
 			return ctx.SaveChanges();
 		}
 
@@ -182,29 +191,29 @@ namespace BAR.DAL
 			return ctx.SaveChanges();
 		}
 
-    /// <summary>
-    /// Reads a person of a given name.
-    /// </summary>
-    public Item ReadPerson(string personName)
-    {
-      return ctx.Items.Where(i => i.Name.Equals(personName)).SingleOrDefault();
-    }
+		/// <summary>
+		/// Reads a person of a given name.
+		/// </summary>
+		public Item ReadPerson(string personName)
+		{
+			return ctx.Items.Where(i => i.Name.Equals(personName)).SingleOrDefault();
+		}
 
-    /// <summary>
-    /// Creates a range of items.
-    /// </summary>
-    public int CreateItems(ICollection<Item> items)
-    {
-      ctx.Items.AddRange(items);
-      return ctx.SaveChanges();
-    }
+		/// <summary>
+		/// Creates a range of items.
+		/// </summary>
+		public int CreateItems(ICollection<Item> items)
+		{
+			ctx.Items.AddRange(items);
+			return ctx.SaveChanges();
+		}
 
-    /// <summary>
-    /// Reads an organisation with a given name.
-    /// </summary>
-    public Item ReadOrganisation(string organisationName)
-    {
-      return ctx.Items.Where(x => x.Name.Equals(organisationName)).SingleOrDefault();
-    }
-  }
+		/// <summary>
+		/// Reads an organisation with a given name.
+		/// </summary>
+		public Item ReadOrganisation(string organisationName)
+		{
+			return ctx.Items.Where(x => x.Name.Equals(organisationName)).SingleOrDefault();
+		}
+	}
 }
