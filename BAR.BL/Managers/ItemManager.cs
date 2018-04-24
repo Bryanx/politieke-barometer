@@ -303,8 +303,6 @@ namespace BAR.BL.Managers
 			item.Informations = new List<Information>();
 
 			itemRepo.CreateItem(item);
-			item.ItemWidgets = GenerateDefaultItemWidgets(name, item.ItemId);
-			itemRepo.UpdateItem(item);
 
 			return item;
 		}
@@ -541,7 +539,6 @@ namespace BAR.BL.Managers
 			IEnumerable<Item> organisations = GetAllOrganisations();
 			IEnumerable<Item> persons = GetAllPersons();
 
-
 			List<Item> items = new List<Item>();
 
 			for (int i = 0; i < deserializedJson.Count; i++)
@@ -556,31 +553,14 @@ namespace BAR.BL.Managers
 					string facebook = deserializedJson[i].facebook;
 					string stringDate = Convert.ToString(deserializedJson[i].dateOfBirth);
 					string town = deserializedJson[i].town;
+					Gender personGender = (gender == "M") ? Gender.MAN : Gender.WOMAN;
+					DateTime? dateOfBirth = DateTime.ParseExact(stringDate, "yyyy-MM-dd HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture);
 
-					//CreateItem(ItemType.Person, fullname, )
-
-					Person person = new Person()
-					{
-						ItemType = ItemType.Person,
-						Name = fullname,
-						CreationDate = DateTime.Now,
-						LastUpdatedInfo = DateTime.Now,
-						LastUpdated = DateTime.Now,
-						NumberOfFollowers = 0,
-						TrendingPercentage = 0.0,
-						Baseline = 0.0,
-						Informations = new List<Information>(),
-						SocialMediaNames = new List<SocialMediaName>(),
-						District = deserializedJson[i].district,
-						Level = deserializedJson[i].level,
-						Site = deserializedJson[i].site,
-						Position = deserializedJson[i].position,
-						SubPlatform = subPlatform
-					};
-
-					person.Gender = (gender == "M") ? Gender.MAN : Gender.WOMAN;
-					person.DateOfBirth = DateTime.ParseExact(stringDate, "yyyy-MM-dd HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture);
-					person.Area = areas.Where(x => x.PostalCode.Equals(postalCode) && x.Residence.ToLower().Equals(town.ToLower())).SingleOrDefault();
+					Person person = CreateItem(ItemType.Person, fullname, gender: personGender, district: deserializedJson[i].district,
+						level: deserializedJson[i].level, site: deserializedJson[i].site,
+						position: deserializedJson[i].position, dateOfBirth: dateOfBirth);
+					person.SubPlatform = subPlatform;	person.Area = areas.Where(x => x.PostalCode.Equals(postalCode) && x.Residence.ToLower().Equals(town.ToLower())).SingleOrDefault();
+					
 					if (!string.IsNullOrEmpty(twitter))
 					{
 						SocialMediaName twitterSocial = new SocialMediaName()
@@ -599,7 +579,7 @@ namespace BAR.BL.Managers
 						};
 						person.SocialMediaNames.Add(facebookSocial);
 					}
-					person.Organisation = (Organisation)organisations.Where(x => x.Name.Equals(organisation)).SingleOrDefault();
+					person.Organisation = (Organisation) organisations.Where(x => x.Name.Equals(organisation)).SingleOrDefault();
 
 					items.Add(person);
 				}
