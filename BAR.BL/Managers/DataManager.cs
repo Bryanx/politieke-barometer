@@ -131,20 +131,20 @@ namespace BAR.BL.Managers
 
 		/// <summary>
 		/// Gives back a map with all the propertievalues of a specific propertie
-		/// works dynamicly
+		/// works dynamicly. The values are
 		/// 
 		/// WARNING
 		/// This method will only work if the widget has a propertytag
 		/// </summary>
-		public IDictionary<string, IDictionary<string, double>> GetPropvaluesForWidget(int itemid, int widgetId, DateTime? startDate = null)
+		public IDictionary<string, IDictionary<string, double>> GetPropvaluesForWidget(int itemid, int widgetId, string proptag, DateTime? startDate = null)
 		{
 			InitRepo();
 
 			//Get propertytag and timestamp
-			WidgetManager widgetManager = new WidgetManager();
-			Widget widget = widgetManager.GetWidget(widgetId);
+			Widget widget = new WidgetManager().GetWidget(widgetId);
+			if (widget == null) return null;
 			DateTime? timestamp = widget.Timestamp.Value;
-			if (widget == null || timestamp == null) return null;
+			if (timestamp == null) return null;
 
 			//Get informations for item
 			IEnumerable<Information> infos = GetInformationsWithAllInfoForItem(itemid);
