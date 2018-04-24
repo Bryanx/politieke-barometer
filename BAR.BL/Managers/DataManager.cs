@@ -133,42 +133,43 @@ namespace BAR.BL.Managers
 		/// WARNING
 		/// This method will only work if the widget has a propertytag
 		/// </summary>
-		IDictionary<string, double> IDataManager.GetPropvaluesForWidget(int itemid, int widgetId)
+		public IDictionary<string, double> GetPropvaluesForWidget(int itemid, int widgetId)
 		{
-			//InitRepo();
+			InitRepo();
 
-			////Get propertytag and timestamp
-			//WidgetManager widgetManager = new WidgetManager();
-			//Widget widget = widgetManager.GetWidget(widgetId);
-			//string proptag = widget.PropertyTag;
-			//DateTime? timestamp = widget.Timestamp;
-			//if (widget == null || proptag == null || timestamp == null) return null;
+			//Get propertytag and timestamp
+			WidgetManager widgetManager = new WidgetManager();
+			Widget widget = widgetManager.GetWidget(widgetId);
+			string proptag = widget.PropertyTag;
+			DateTime? timestamp = widget.Timestamp;
+			if (widget == null || proptag == null || timestamp == null) return null;
 
-			////Get informations for item
-			//IEnumerable<Information> infos = GetInformationsWithAllInfoForItem(itemid);
+			//Get informations for item
+			IEnumerable<Information> infos = GetInformationsWithAllInfoForItem(itemid);
+			if (infos == null || infos.Count() == 0) return null;
 
-			////Map timestap to number of propertyValues
-			//IDictionary<string, double> dict = new Dictionary<string, double>();
-			//DateTime checkTime = DateTime.Now;
-			//while (checkTime > timestamp)
-			//{
-			//	foreach ()
-			//	foreach (PropertyValue propval in information.PropertieValues)
-			//	{
-			//		//If the name of the property is the same as the propertytag,
-			//		//Then the propertyvalue shall be added to the dictionary
-			//		if (propval.Property.Name.ToLower().Equals(proptag.ToLower()))
-			//		{
-			//			dict[checkTime.ToString()] += 1;
-			//		}
-			//	}
+			//Map timestap to number of propertyValues
+			IDictionary<string, double> dict = new Dictionary<string, double>();
+			DateTime checkTime = DateTime.Now;
+			while (checkTime > timestamp)
+			{
+				IEnumerable<Information> infosQueried = infos.Where(info => info.CreationDate == checkTime).AsEnumerable();
+				foreach (Information information in infosQueried)
+				{
+					foreach (PropertyValue propval in information.PropertieValues)
+					{
+						//If the name of the property is the same as the propertytag,
+						//Then the propertyvalue shall be added to the dictionary
+						if (propval.Property.Name.ToLower().Equals(proptag.ToLower()))
+						{
+							dict[checkTime.ToString()] += 1;
+						}
+					}
+				}
+				checkTime = checkTime.AddDays(-1);
+			}
 
-			//}
-
-
-
-
-			return null;		
+			return dict;
 		}
 
 		/// <summary>
