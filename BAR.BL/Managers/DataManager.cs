@@ -143,9 +143,8 @@ namespace BAR.BL.Managers
 			//Get propertytag and timestamp
 			WidgetManager widgetManager = new WidgetManager();
 			Widget widget = widgetManager.GetWidget(widgetId);
-			string proptag = widget.PropertyTag;
 			DateTime? timestamp = widget.Timestamp.Value;
-			if (widget == null || proptag == null || timestamp == null) return null;
+			if (widget == null || timestamp == null) return null;
 
 			//Get informations for item
 			IEnumerable<Information> infos = GetInformationsWithAllInfoForItem(itemid);
