@@ -250,7 +250,7 @@ namespace BAR.BL.Managers
 		/// NOTE
 		/// THIS METHOD USES UNIT OF WORK
 		/// </summary>
-		public Item CreateItem(ItemType itemType, string name, string description = "", string function = "", Category category = null,
+		public Item AddItem(ItemType itemType, string name, string description = "", string function = "", Category category = null,
 			string district = null, string level = null, string site = null, Gender gender = Gender.OTHER, string position = null, DateTime? dateOfBirth = null)
 		{
 			InitRepo();
@@ -562,7 +562,7 @@ namespace BAR.BL.Managers
                     Gender personGender = (gender == "M") ? Gender.MAN : Gender.WOMAN;
 					DateTime? dateOfBirth = DateTime.ParseExact(stringDate, "yyyy-MM-dd HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture);
 
-					Person person = (Person) CreateItem(itemType: ItemType.Person, name: fullname, gender: personGender, district: district,
+					Person person = (Person) AddItem(itemType: ItemType.Person, name: fullname, gender: personGender, district: district,
 						level: level, site: site, position: position, dateOfBirth: dateOfBirth);
 					person.SubPlatform = subPlatform;	person.Area = areas.Where(x => x.PostalCode.Equals(postalCode) && x.Residence.ToLower().Equals(town.ToLower())).SingleOrDefault();
 					
