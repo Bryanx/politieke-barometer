@@ -55,8 +55,8 @@ namespace BAR.BL.Managers
 			InitRepo();
 			return dataRepo.ReadInformationsForItemid(itemId);
 		}
-
-		/// <summary>
+	    
+	    /// <summary>
 		/// Gives back a list of informations for a specific widget
 		/// </summary>
 		public IEnumerable<Information> GetInformationsForWidgetid(int widgetId)
@@ -160,217 +160,200 @@ namespace BAR.BL.Managers
 			return null;
 		}
 
-		public IEnumerable<Item> SynchronizeData(string json)
+    /// <summary>
+    /// Reads json and creates batches which will then call upon BatchUpdate for further handling.
+    /// </summary>
+		public bool SynchronizeData(string json)
 		{
-			IEnumerable<Item> items = CheckPeople(json);
-			if (UpdateInformations(json)) return items;
-			else return null;
-		}
+      dynamic deserializedJson = JsonConvert.DeserializeObject(json);
+      int informationCount = deserializedJson.Count;
+      for (int i = 0; i < informationCount; i += 1000)
+      {
+        if (i + 1000 < informationCount)
+        {
+          BatchUpdate(json, i, i + 1000);
+        }
+        else
+        {
+          BatchUpdate(json, i, informationCount);
+        }
+      }
+      return true;
+    }
 
-		private bool UpdateInformations(string json)
-		{
-			dynamic deserializedJson = JsonConvert.DeserializeObject(json);
-			int informationCount = deserializedJson.Count;
-			for (int i = 0; i < informationCount; i += 1000)
-			{
-				if (i + 1000 < informationCount)
-				{
-					BatchUpdate(json, i, i + 1000);
-				}
-				else
-				{
-					BatchUpdate(json, i, informationCount);
-				}
-			}
-			return true;
-		}
+    /// <summary>
+    /// Gets json which it will convert to Information objects dat are stored into the database afterwards.
+    /// </summary>
+    private void BatchUpdate(string json, int start, int end)
+    {
+      uowManager = new UnitOfWorkManager();
+      InitRepo();
+      IItemManager itemManager = new ItemManager(uowManager);
+      IEnumerable<Item> items = itemManager.GetAllPersons();
+      IEnumerable<Property> properties = dataRepo.ReadAllProperties();
+      IEnumerable<Source> sources = dataRepo.ReadAllSources();
+      dynamic deserializedJson = JsonConvert.DeserializeObject(json);
+      List<Information> informationList = new List<Information>();
+      for (int i = start; i < end; i++)
+      {
+        PropertyValue propertyValue;
+        Information information = new Information
+        {
+          PropertieValues = new List<PropertyValue>()
+        };
+        //Read gender
+        propertyValue = new PropertyValue
+        {
+          Property = properties.Where(x => x.Name.Equals("Gender")).SingleOrDefault(),
+          Value = deserializedJson[i].profile.gender,
+          Confidence = 1
+        };
+        information.PropertieValues.Add(propertyValue);
+        //Read age
+        propertyValue = new PropertyValue
+        {
+          Property = properties.Where(x => x.Name.Equals("Age")).SingleOrDefault(),
+          Value = deserializedJson[i].profile.age,
+          Confidence = 1
+        };
+        information.PropertieValues.Add(propertyValue);
+        //Read education
+        propertyValue = new PropertyValue
+        {
+          Property = properties.Where(x => x.Name.Equals("Education")).SingleOrDefault(),
+          Value = deserializedJson[i].profile.education,
+          Confidence = 1
+        };
+        information.PropertieValues.Add(propertyValue);
+        //Read language
+        propertyValue = new PropertyValue
+        {
+          Property = properties.Where(x => x.Name.Equals("Language")).SingleOrDefault(),
+          Value = deserializedJson[i].profile.language,
+          Confidence = 1
+        };
+        information.PropertieValues.Add(propertyValue);
+        //Read personality
+        propertyValue = new PropertyValue
+        {
+          Property = properties.Where(x => x.Name.Equals("Personality")).SingleOrDefault(),
+          Value = deserializedJson[i].profile.gender,
+          Confidence = 1
+        };
+        information.PropertieValues.Add(propertyValue);
+        //Read words
+        for (int j = 0; j < deserializedJson[i].words.Count; j++)
+        {
+          propertyValue = new PropertyValue
+          {
+            Property = properties.Where(x => x.Name.Equals("Word")).SingleOrDefault(),
+            Value = deserializedJson[i].words[j],
+            Confidence = 1
+          };
+          information.PropertieValues.Add(propertyValue);
+        }
+        //Read sentiment
+        for (int j = 0; j < deserializedJson[i].sentiment.Count; j++)
+        {
+          propertyValue = new PropertyValue
+          {
+            Property = properties.Where(x => x.Name.Equals("Sentiment")).SingleOrDefault(),
+            Value = deserializedJson[i].sentiment[0],
+            Confidence = deserializedJson[i].sentiment[1]
+          };
+          information.PropertieValues.Add(propertyValue);
+        }
+        //Read hashtags
+        for (int j = 0; j < deserializedJson[i].hashtags.Count; j++)
+        {
+          propertyValue = new PropertyValue
+          {
+            Property = properties.Where(x => x.Name.Equals("Hashtag")).SingleOrDefault(),
+            Value = deserializedJson[i].hashtags[j],
+            Confidence = 1
+          };
+          information.PropertieValues.Add(propertyValue);
+        }
+        //Read mentions
+        for (int j = 0; j < deserializedJson[i].mentions.Count; j++)
+        {
+          propertyValue = new PropertyValue
+          {
+            Property = properties.Where(x => x.Name.Equals("Mention")).SingleOrDefault(),
+            Value = deserializedJson[i].mentions[j],
+            Confidence = 1
+          };
+          information.PropertieValues.Add(propertyValue);
+        }
+        //Read urls
+        for (int j = 0; j < deserializedJson[i].urls.Count; j++)
+        {
+          propertyValue = new PropertyValue
+          {
+            Property = properties.Where(x => x.Name.Equals("Url")).SingleOrDefault(),
+            Value = deserializedJson[i].urls[j],
+            Confidence = 1
+          };
+          information.PropertieValues.Add(propertyValue);
+        }
+        //Read date
+        propertyValue = new PropertyValue
+        {
+          Property = properties.Where(x => x.Name.Equals("Date")).SingleOrDefault(),
+          Value = deserializedJson[i].date,
+          Confidence = 1
+        };
+        information.PropertieValues.Add(propertyValue);
+        //Read postid
+        propertyValue = new PropertyValue
+        {
+          Property = properties.Where(x => x.Name.Equals("PostId")).SingleOrDefault(),
+          Value = deserializedJson[i].id,
+          Confidence = 1
+        };
+        information.PropertieValues.Add(propertyValue);
+        //Read retweet
+        propertyValue = new PropertyValue
+        {
+          Property = properties.Where(x => x.Name.Equals("Retweet")).SingleOrDefault(),
+          Value = deserializedJson[i].retweet,
+          Confidence = 1
+        };
+        information.PropertieValues.Add(propertyValue);
 
-		private void BatchUpdate(string json, int start, int end)
-		{
-			uowManager = new UnitOfWorkManager();
-			InitRepo();
-			IItemManager itemManager = new ItemManager(uowManager);
-			IEnumerable<Item> items = itemManager.GetAllPersons();
-			IEnumerable<Property> properties = dataRepo.ReadAllProperties();
-			IEnumerable<Source> sources = dataRepo.ReadAllSources();
-			dynamic deserializedJson = JsonConvert.DeserializeObject(json);
-			List<Information> informationList = new List<Information>();
-			for (int i = start; i < end; i++)
-			{
-				PropertyValue propertyValue;
-				Information information = new Information
-				{
-					PropertieValues = new List<PropertyValue>()
-				};
-				//Read gender
-				propertyValue = new PropertyValue
-				{
-					Property = properties.Where(x => x.Name.Equals("Gender")).SingleOrDefault(),
-					Value = deserializedJson[i].profile.gender,
-					Confidence = 1
-				};
-				information.PropertieValues.Add(propertyValue);
-				//Read age
-				propertyValue = new PropertyValue
-				{
-					Property = properties.Where(x => x.Name.Equals("Age")).SingleOrDefault(),
-					Value = deserializedJson[i].profile.age,
-					Confidence = 1
-				};
-				information.PropertieValues.Add(propertyValue);
-				//Read education
-				propertyValue = new PropertyValue
-				{
-					Property = properties.Where(x => x.Name.Equals("Education")).SingleOrDefault(),
-					Value = deserializedJson[i].profile.education,
-					Confidence = 1
-				};
-				information.PropertieValues.Add(propertyValue);
-				//Read language
-				propertyValue = new PropertyValue
-				{
-					Property = properties.Where(x => x.Name.Equals("Language")).SingleOrDefault(),
-					Value = deserializedJson[i].profile.language,
-					Confidence = 1
-				};
-				information.PropertieValues.Add(propertyValue);
-				//Read personality
-				propertyValue = new PropertyValue
-				{
-					Property = properties.Where(x => x.Name.Equals("Personality")).SingleOrDefault(),
-					Value = deserializedJson[i].profile.gender,
-					Confidence = 1
-				};
-				information.PropertieValues.Add(propertyValue);
-				//Read words
-				for (int j = 0; j < deserializedJson[i].words.Count; j++)
-				{
-					propertyValue = new PropertyValue
-					{
-						Property = properties.Where(x => x.Name.Equals("Word")).SingleOrDefault(),
-						Value = deserializedJson[i].words[j],
-						Confidence = 1
-					};
-					information.PropertieValues.Add(propertyValue);
-				}
-				//Read sentiment
-				for (int j = 0; j < deserializedJson[i].sentiment.Count; j++)
-				{
-					propertyValue = new PropertyValue
-					{
-						Property = properties.Where(x => x.Name.Equals("Sentiment")).SingleOrDefault(),
-						Value = deserializedJson[i].sentiment[0],
-						Confidence = deserializedJson[i].sentiment[1]
-					};
-					information.PropertieValues.Add(propertyValue);
-				}
-				//Read hashtags
-				for (int j = 0; j < deserializedJson[i].hashtags.Count; j++)
-				{
-					propertyValue = new PropertyValue
-					{
-						Property = properties.Where(x => x.Name.Equals("Hashtag")).SingleOrDefault(),
-						Value = deserializedJson[i].hashtags[j],
-						Confidence = 1
-					};
-					information.PropertieValues.Add(propertyValue);
-				}
-				//Read mentions
-				for (int j = 0; j < deserializedJson[i].mentions.Count; j++)
-				{
-					propertyValue = new PropertyValue
-					{
-						Property = properties.Where(x => x.Name.Equals("Mention")).SingleOrDefault(),
-						Value = deserializedJson[i].mentions[j],
-						Confidence = 1
-					};
-					information.PropertieValues.Add(propertyValue);
-				}
-				//Read urls
-				for (int j = 0; j < deserializedJson[i].urls.Count; j++)
-				{
-					propertyValue = new PropertyValue
-					{
-						Property = properties.Where(x => x.Name.Equals("Url")).SingleOrDefault(),
-						Value = deserializedJson[i].urls[j],
-						Confidence = 1
-					};
-					information.PropertieValues.Add(propertyValue);
-				}
-				//Read date
-				propertyValue = new PropertyValue
-				{
-					Property = properties.Where(x => x.Name.Equals("Date")).SingleOrDefault(),
-					Value = deserializedJson[i].date,
-					Confidence = 1
-				};
-				information.PropertieValues.Add(propertyValue);
-				//Read postid
-				propertyValue = new PropertyValue
-				{
-					Property = properties.Where(x => x.Name.Equals("PostId")).SingleOrDefault(),
-					Value = deserializedJson[i].id,
-					Confidence = 1
-				};
-				information.PropertieValues.Add(propertyValue);
-				//Read retweet
-				propertyValue = new PropertyValue
-				{
-					Property = properties.Where(x => x.Name.Equals("Retweet")).SingleOrDefault(),
-					Value = deserializedJson[i].retweet,
-					Confidence = 1
-				};
-				information.PropertieValues.Add(propertyValue);
+        //Add connection to Item (Person)
+        //Read persons
+        information.Items = new List<Item>();
+        for (int j = 0; j < deserializedJson[i].persons.Count; j++)
+        {
+          string name = deserializedJson[i].persons[j];
+          information.Items.Add(items.Where(x => x.Name.Equals(name)).SingleOrDefault());
+        }
 
-				//Add connection to Item (Person)
-				//Read persons
-				information.Items = new List<Item>();
-				for (int j = 0; j < deserializedJson[i].persons.Count; j++)
-				{
-					string name = deserializedJson[i].persons[j];
-					information.Items.Add(items.Where(x => x.Name.Equals(name)).SingleOrDefault());
-				}
+        //Add other information
+        information.Source = sources.Where(x => x.Name.Equals("Twitter")).SingleOrDefault();
+        string stringDate = Convert.ToString(deserializedJson[i].date);
+        DateTime infoDate = DateTime.ParseExact(stringDate, "yyyy-MM-dd HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture);
+        information.CreationDate = infoDate;
+        informationList.Add(information);
+      }
+      dataRepo.CreateInformations(informationList);
+      uowManager.Save();
+      uowManager = null;
+    }
 
-				//Add other information
-				information.Source = sources.Where(x => x.Name.Equals("Twitter")).SingleOrDefault();
-				string stringDate = Convert.ToString(deserializedJson[i].date);
-				DateTime infoDate = DateTime.ParseExact(stringDate, "yyyy-MM-dd HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture);
-				information.CreationDate = infoDate;
-				informationList.Add(information);
-			}
-			dataRepo.CreateInformations(informationList);
-			uowManager.Save();
-			uowManager = null;
-		}
-
-		private IEnumerable<Item> CheckPeople(string json)
-		{
-			dynamic deserializedJson = JsonConvert.DeserializeObject(json);
-
-			IItemManager itemManager = new ItemManager();
-
-			for (int i = 0; i < deserializedJson.Count; i++)
-			{
-				for (int j = 0; j < deserializedJson[i].persons.Count; j++)
-				{
-					string name = deserializedJson[i].persons[j];
-					Item person = itemManager.GetPerson(name);
-
-					if (person == null)
-					{
-						person = itemManager.CreateItem(ItemType.Person, name);
-					}
-				}
-			}
-			return itemManager.GetAllPersons();
-		}
-
+    /// <summary>
+    /// Gets last succesfull audit.
+    /// </summary>
 		public SynchronizeAudit GetLastAudit()
 		{
 			InitRepo();
 			return dataRepo.ReadLastAudit();
 		}
 
+    /// <summary>
+    /// Adds an audit with boolean false.
+    /// </summary>
 		public SynchronizeAudit AddAudit(DateTime timestamp, bool succes)
 		{
 			InitRepo();
@@ -383,29 +366,50 @@ namespace BAR.BL.Managers
 			return synchronizeAudit;
 		}
 
-		public SynchronizeAudit GetAudit(int synchronizeAuditId)
-		{
-			return dataRepo.ReadAudit(synchronizeAuditId);
-		}
+    /// <summary>
+    /// Gets audit with given id.
+    /// </summary>
+    public SynchronizeAudit GetAudit(int synchronizeAuditId)
+    {
+      return dataRepo.ReadAudit(synchronizeAuditId);
+    }
 
-		public SynchronizeAudit ChangeAudit(int synchronizeAuditId)
-		{
-			InitRepo();
-			SynchronizeAudit synchronizeAudit = GetAudit(synchronizeAuditId);
-			synchronizeAudit.Succes = true;
-			dataRepo.UpdateAudit(synchronizeAudit);
-			return synchronizeAudit;
-		}
+    /// <summary>
+    /// Changes status of audit to true.
+    /// </summary>
+    public SynchronizeAudit ChangeAudit(int synchronizeAuditId)
+    {
+      InitRepo();
+      SynchronizeAudit synchronizeAudit = GetAudit(synchronizeAuditId);
+      synchronizeAudit.Succes = true;
+      dataRepo.UpdateAudit(synchronizeAudit);
+      return synchronizeAudit;
+    }
 
-		/// <summary>
-		/// Gives back an information object with their propertyvalues
-		/// </summary>
-		public Information GetInformationWithPropvals(int infoId)
-		{
-			InitRepo();
-			return dataRepo.ReadInformationWithPropValues(infoId);
-		}
-	}
+    /// <summary>
+    /// Checks if json is empty.
+    /// </summary>
+    public bool IsJsonEmpty(string json)
+    {
+      dynamic deserializedJson = JsonConvert.DeserializeObject(json);
+      int informationCount = deserializedJson.Count;
+
+      if (informationCount == 0)
+      {
+        return true;
+      }
+      return false;
+    }
+
+    /// <summary>
+    /// Gets all sources.
+    /// </summary>
+    public IEnumerable<Source> GetAllSources()
+    {
+      InitRepo();
+      return dataRepo.ReadAllSources();
+    }
+  }
 }
 
 

@@ -1,4 +1,6 @@
-﻿using BAR.BL.Domain.Data;
+﻿using BAR.BL.Domain.Core;
+using BAR.BL.Domain.Data;
+using BAR.BL.Domain.Users;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,7 +19,6 @@ namespace BAR.BL.Domain.Items
 		public DateTime CreationDate { get; set; }
 		public DateTime? LastUpdatedInfo { get; set; }
 		public DateTime? LastUpdated { get; set; }
-		public string Description { get; set; }
 		public int NumberOfFollowers { get; set; }
 		public double TrendingPercentage { get; set; }
 		public int NumberOfMentions { get; set; }

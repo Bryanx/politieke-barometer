@@ -11,7 +11,6 @@ namespace BAR.BL.Managers
 	public interface IDataManager
 	{
 		//Informations
-		Information GetInformationWithPropvals(int infoId);
 		IEnumerable<Information> GetInformationsForItemid(int itemId);
 		IEnumerable<Information> GetInformationsForWidgetid(int widgetId);
 		IEnumerable<Information> GetInformationsWithTimestamp(int widgetId);
@@ -22,12 +21,15 @@ namespace BAR.BL.Managers
 		IDictionary<string, IEnumerable<PropertyValue>> GetPropvaluesForWidget(int itemid, int widgetId);
 
 		//Items
-		IEnumerable<Item> SynchronizeData(string json);
+		bool SynchronizeData(string json);
 
 		//Audits
-		SynchronizeAudit GetLastAudit();
 		SynchronizeAudit AddAudit(DateTime timestamp, bool succes);
 		SynchronizeAudit GetAudit(int synchronizeAuditId);
+		SynchronizeAudit GetLastAudit();
 		SynchronizeAudit ChangeAudit(int synchronizeAuditId);	
+
+		bool IsJsonEmpty(string json);
+		IEnumerable<Source> GetAllSources();
 	}
 }
