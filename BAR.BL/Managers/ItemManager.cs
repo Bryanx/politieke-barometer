@@ -497,11 +497,24 @@ namespace BAR.BL.Managers
 
 				if (organisation == null)
 				{
-					Organisation orgaisation = (Organisation)CreateItem(itemType: ItemType.Organisation, name: name);
-					orgaisation.SubPlatform = subPlatform;
+					organisation = new Organisation()
+					{
+						ItemType = ItemType.Organisation,
+						Name = name,
+						CreationDate = DateTime.Now,
+						LastUpdatedInfo = DateTime.Now,
+						LastUpdated = DateTime.Now,
+						NumberOfFollowers = 0,
+						TrendingPercentage = 0.0,
+						Baseline = 0.0,
+						Informations = new List<Information>(),
+						SocialMediaUrls = new List<SocialMediaName>(),
+						SubPlatform = subPlatform
+					};
+					itemRepo.CreateItem(organisation);
+					uowManager.Save();
+					organisations.Add(organisation);
 				}
-				uowManager.Save();
-				organisations.Add(organisation);
 			}
 			GenerateDefaultItemWidgetsForItems(organisations);
 			uowManager = null;
@@ -546,8 +559,8 @@ namespace BAR.BL.Managers
 					Person person = CreateItem(ItemType.Person, fullname, gender: personGender, district: deserializedJson[i].district,
 						level: deserializedJson[i].level, site: deserializedJson[i].site,
 						position: deserializedJson[i].position, dateOfBirth: dateOfBirth);
-					person.SubPlatform = subPlatform; person.Area = areas.Where(x => x.PostalCode.Equals(postalCode) && x.Residence.ToLower().Equals(town.ToLower())).SingleOrDefault();
-
+					person.SubPlatform = subPlatform;	person.Area = areas.Where(x => x.PostalCode.Equals(postalCode) && x.Residence.ToLower().Equals(town.ToLower())).SingleOrDefault();
+					
 					if (!string.IsNullOrEmpty(twitter))
 					{
 						SocialMediaName twitterSocial = new SocialMediaName()
@@ -566,7 +579,7 @@ namespace BAR.BL.Managers
 						};
 						person.SocialMediaNames.Add(facebookSocial);
 					}
-					person.Organisation = (Organisation)organisations.Where(x => x.Name.Equals(organisation)).SingleOrDefault();
+					person.Organisation = (Organisation) organisations.Where(x => x.Name.Equals(organisation)).SingleOrDefault();
 
 					items.Add(person);
 				}
@@ -579,7 +592,7 @@ namespace BAR.BL.Managers
 				GenerateDefaultItemWidgetsForItems(items);
 				return true;
 			}
-			else return false;
+			return false;
 		}
 	}
 }
