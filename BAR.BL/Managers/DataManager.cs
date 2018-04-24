@@ -99,7 +99,7 @@ namespace BAR.BL.Managers
 		/// This method is not the same as getNumberInfo
 		/// This method will be used for widgets.
 		/// </summary>
-		IDictionary<string, double> IDataManager.GetNumberOfMentionsForItem(int itemId, int widgetId, string dateFormat)
+		IDictionary<string, double> IDataManager.GetNumberOfMentionsForItem(int itemId, int widgetId, string dateFormat, DateTime? startDate = null)
 		{
 			//Get item with widgets
 			ItemManager itemManager = new ItemManager();
@@ -115,13 +115,16 @@ namespace BAR.BL.Managers
 			IEnumerable<Information> informations = GetInformationsForItemid(itemId);
 			if (informations == null || informations.Count() == 0) return null;
 
-			DateTime checkTime = widget.Timestamp.Value;
+			DateTime timestamp = widget.Timestamp.Value;
+			if (startDate == null) startDate = DateTime.Now;
+			else if (startDate < timestamp) return null;
+
 			double sum = 0.0;
-			while (checkTime < DateTime.Now)
+			while (timestamp < startDate)
 			{
-				sum += informations.Count(i => i.CreationDate.Value.Day == checkTime.Day);
-				data[checkTime.ToString(dateFormat)] = sum;
-				checkTime = checkTime.AddDays(1);
+				sum += informations.Count(i => i.CreationDate.Value.Day == timestamp.Day);
+				data[timestamp.ToString(dateFormat)] = sum;
+				timestamp = timestamp.AddDays(1);
 			}
 			return data;
 		}
@@ -133,7 +136,7 @@ namespace BAR.BL.Managers
 		/// WARNING
 		/// This method will only work if the widget has a propertytag
 		/// </summary>
-		public IDictionary<string, IDictionary<string, double>> GetPropvaluesForWidget(int itemid, int widgetId)
+		public IDictionary<string, IDictionary<string, double>> GetPropvaluesForWidget(int itemid, int widgetId, DateTime? startDate = null)
 		{
 			InitRepo();
 
@@ -141,7 +144,7 @@ namespace BAR.BL.Managers
 			WidgetManager widgetManager = new WidgetManager();
 			Widget widget = widgetManager.GetWidget(widgetId);
 			string proptag = widget.PropertyTag;
-			DateTime? timestamp = widget.Timestamp;
+			DateTime? timestamp = widget.Timestamp.Value;
 			if (widget == null || proptag == null || timestamp == null) return null;
 
 			//Get informations for item
@@ -150,10 +153,12 @@ namespace BAR.BL.Managers
 
 			//Map timestap to number of propertyValues
 			IDictionary<string, IDictionary<string, double>> dict = new Dictionary<string, IDictionary<string, double>>();
-			DateTime checkTime = DateTime.Now;
-			while (checkTime > timestamp)
+			if (startDate == null) startDate = DateTime.Now;
+			else if (startDate < timestamp) return null;
+
+			while (startDate > timestamp)
 			{
-				IEnumerable<Information> infosQueried = infos.Where(info => info.CreationDate == checkTime).AsEnumerable();
+				IEnumerable<Information> infosQueried = infos.Where(info => info.CreationDate == startDate).AsEnumerable();
 				IDictionary<string, double> propdict = new Dictionary<string, double>();
 				foreach (Information information in infosQueried)
 				{
@@ -168,7 +173,7 @@ namespace BAR.BL.Managers
 						//}
 					}
 				}
-				checkTime = checkTime.AddDays(-1);
+				startDate = startDate.Value.AddDays(-1);
 			}
 
 			return null;
