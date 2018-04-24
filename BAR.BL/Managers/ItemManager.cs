@@ -301,6 +301,7 @@ namespace BAR.BL.Managers
 			item.Baseline = 0.0;
 			item.Deleted = false;
 			item.Informations = new List<Information>();
+            item.ItemWidgets = new List<ItemWidget>();
 
 			itemRepo.CreateItem(item);
 
@@ -330,7 +331,7 @@ namespace BAR.BL.Managers
 			ItemWidget widget = (ItemWidget)widgetManager.CreateWidget(WidgetType.GraphType, name + " popularity", 1, 1, rowspan: 12, colspan: 6);
 			lijst.Add(widget);
 
-			widgetManager.AddItemToWidget(widget.WidgetId, itemId);
+			//widgetManager.AddItemToWidget(widget.WidgetId, itemId);
 			return lijst;
 		}
 
@@ -540,14 +541,18 @@ namespace BAR.BL.Managers
 					string facebook = deserializedJson[i].facebook;
 					string stringDate = Convert.ToString(deserializedJson[i].dateOfBirth);
 					string town = deserializedJson[i].town;
-					Gender personGender = (gender == "M") ? Gender.MAN : Gender.WOMAN;
+                    string level = deserializedJson[i].level;
+                    string site = deserializedJson[i].site;
+                    string district = deserializedJson[i].district;
+                    string position = deserializedJson[i].position;
+
+                    Gender personGender = (gender == "M") ? Gender.MAN : Gender.WOMAN;
 					DateTime? dateOfBirth = DateTime.ParseExact(stringDate, "yyyy-MM-dd HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture);
 
-					Person person = CreateItem(ItemType.Person, fullname, gender: personGender, district: deserializedJson[i].district,
-						level: deserializedJson[i].level, site: deserializedJson[i].site,
-						position: deserializedJson[i].position, dateOfBirth: dateOfBirth);
-					person.SubPlatform = subPlatform; person.Area = areas.Where(x => x.PostalCode.Equals(postalCode) && x.Residence.ToLower().Equals(town.ToLower())).SingleOrDefault();
-
+					Person person = (Person) CreateItem(itemType: ItemType.Person, name: fullname, gender: personGender, district: district,
+						level: level, site: site, position: position, dateOfBirth: dateOfBirth);
+					person.SubPlatform = subPlatform;	person.Area = areas.Where(x => x.PostalCode.Equals(postalCode) && x.Residence.ToLower().Equals(town.ToLower())).SingleOrDefault();
+					
 					if (!string.IsNullOrEmpty(twitter))
 					{
 						SocialMediaName twitterSocial = new SocialMediaName()

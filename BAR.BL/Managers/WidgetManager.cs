@@ -164,7 +164,9 @@ namespace BAR.BL.Managers
 		public IEnumerable<ItemWidget> GetWidgetsForItem(int itemId) {
 			InitRepo();
 			ItemManager itemManager = new ItemManager();
-			return itemManager.GetItemWithWidgets(itemId).ItemWidgets.AsEnumerable();
+            Item item = itemManager.GetItemWithWidgets(itemId);
+            IEnumerable<ItemWidget> list = item.ItemWidgets;
+            return list;
 		}
 
 		/// <summary>
