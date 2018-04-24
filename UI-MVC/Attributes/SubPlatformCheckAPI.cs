@@ -40,7 +40,7 @@ namespace BAR.UI.MVC.Attributes
           }
         }
       }
-      return -1;
+      return 1;
     }
   }
 }
