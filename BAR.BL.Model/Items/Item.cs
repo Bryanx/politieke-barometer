@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BAR.BL.Domain.Widgets;
 
 namespace BAR.BL.Domain.Items
 {
@@ -23,6 +24,7 @@ namespace BAR.BL.Domain.Items
 		public int NumberOfMentions { get; set; }
 		public double Baseline { get; set; }
 		public ICollection<Information> Informations { get; set; }
-		public bool Deleted { get; set; }
-  }
+		public ICollection<Widget> ItemWidgets { get; set; }
+		public bool Deleted { get; set; }	
+	}
 }

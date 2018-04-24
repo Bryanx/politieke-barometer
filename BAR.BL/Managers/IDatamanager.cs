@@ -8,15 +8,28 @@ using System.Threading.Tasks;
 
 namespace BAR.BL.Managers
 {
-	public interface IDataManager
-	{
-		int GetNumberInfo(int itemId, DateTime since);
-		IEnumerable<Information> GetAllInformationForId(int itemId);
+  public interface IDataManager
+  {
+    //Informations
+    IEnumerable<Information> GetInformationsForItemid(int itemId);
+    IEnumerable<Information> GetInformationsForWidgetid(int widgetId);
+    IEnumerable<Information> GetInformationsWithTimestamp(int widgetId);
+    IEnumerable<Information> GetInformationsWithAllInfoForItem(int itemId);
+
+    int GetNumberInfo(int itemId, DateTime since);
+
+    IDictionary<string, double> GetNumberOfMentionsForItem(int itemId, int widgetId, string dateFormat);
+    IDictionary<string, double> GetPropvaluesForWidget(int itemid, int widgetId);
+
+    //Items
     bool SynchronizeData(string json);
-    SynchronizeAudit GetLastAudit();
+
+    //Audits
     SynchronizeAudit AddAudit(DateTime timestamp, bool succes);
     SynchronizeAudit GetAudit(int synchronizeAuditId);
+    SynchronizeAudit GetLastAudit();
     SynchronizeAudit ChangeAudit(int synchronizeAuditId);
+
     bool IsJsonEmpty(string json);
     IEnumerable<Source> GetAllSources();
     Source AddSource(string name, string site);

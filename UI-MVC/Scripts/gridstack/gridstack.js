@@ -889,7 +889,7 @@
         }
     };
 
-    GridStack.prototype._triggerChangeEvent = function(forceTrigger) {
+    GridStack.prototype._triggerChangeEvent = function(forceTrigger, created = false) {
         var elements = this.grid.getDirtyNodes();
         var hasChanges = false;
 
@@ -900,7 +900,7 @@
         }
 
         if (hasChanges || forceTrigger === true) {
-            this.container.trigger('change', eventParams);
+            if (!created) this.container.trigger('change', eventParams);
         }
     };
 
@@ -1276,7 +1276,7 @@
         this._prepareElement(el, true);
         this._triggerAddEvent();
         this._updateContainerHeight();
-        this._triggerChangeEvent(true);
+        this._triggerChangeEvent(true, true);
 
         return el;
     };

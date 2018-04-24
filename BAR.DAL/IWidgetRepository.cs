@@ -12,9 +12,11 @@ namespace BAR.DAL
 		//Read
 		Dashboard ReadDashboard(int dashboardId);
 		Dashboard ReadDashboardWithWidgets(int dashboardId);
+		Dashboard ReadDashboardWithWidgets(string userId);
 		Dashboard ReadGeneralDashboard();
 		IEnumerable<Dashboard> ReadAllDashboards();
 		Widget ReadWidget(int widgetId);
+		Widget ReadWidgetWithAllitems(int widgetid);
 		IEnumerable<Widget> ReadAllWidgets();
 		IEnumerable<UserWidget> ReadWidgetsForDashboard(int dashboardId);
 

@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace BAR.BL.Domain.Widgets
 {
-	public class WidgetType
+	public enum WidgetType : byte
 	{
-		public int WidgetTypeId { get; set; }
-		public int SubTypeId { get; set; }
+		GraphType,
+		NumberType
 	}
 }

@@ -15,7 +15,9 @@ namespace BAR.BL.Domain.Widgets
 		public int RowSpan { get; set; }
 		public int ColumnNumber { get; set; }
 		public int RowNumber { get; set; }
+		public DateTime? Timestamp { get; set; }
 		public WidgetType WidgetType { get; set; }
 		public ICollection<Item> Items { get; set; }
+		public string PropertyTag { get; set; }
 	}
 }
