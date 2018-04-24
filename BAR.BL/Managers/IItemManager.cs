@@ -1,5 +1,6 @@
 ﻿using BAR.BL.Domain;
 using BAR.BL.Domain.Items;
+using BAR.BL.Domain.Users;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,7 +29,8 @@ namespace BAR.BL.Managers
 		IEnumerable<Item> GetAllPersonsForSubplatform(int subPlatformID);
 
 		bool ImportJson(string json);
-		Item CreateItem(ItemType itemType, string name, string description = "", string function = "", Category category = null);
+		Item CreateItem(ItemType itemType, string name, string description = "", string function = "", Category category = null,
+			string district = null, string level = null, string site = null, Gender gender = Gender.OTHER, string position = null, DateTime? dateOfBirth = null);
 
 		Item ChangeItemName(int itemId, string name);
 		Item ChangeItemActivity(int itemId);

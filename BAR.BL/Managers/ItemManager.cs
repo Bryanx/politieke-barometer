@@ -250,7 +250,8 @@ namespace BAR.BL.Managers
 		/// NOTE
 		/// THIS METHOD USES UNIT OF WORK
 		/// </summary>
-		public Item CreateItem(ItemType itemType, string name, string description = "", string function = "", Category category = null)
+		public Item CreateItem(ItemType itemType, string name, string description = "", string function = "", Category category = null,
+			string district = null, string level = null, string site = null, Gender gender = Gender.OTHER, string position = null, DateTime? dateOfBirth = null)
 		{
 			InitRepo();
 
@@ -262,13 +263,20 @@ namespace BAR.BL.Managers
 				case ItemType.Person:
 					item = new Person()
 					{
-                        SocialMediaNames = new List<SocialMediaName>(),
+						District = district,
+						Level = level,
+						Gender = gender,
+						Site = site,
+						DateOfBirth = dateOfBirth,
+						Position = position,
+						SocialMediaNames = new List<SocialMediaName>(),
 					};
 					break;
 				case ItemType.Organisation:
 					item = new Organisation()
 					{
-                        SocialMediaUrls = new List<SocialMediaName>()
+						Site = site,
+						SocialMediaUrls = new List<SocialMediaName>()
 					};
 					break;
 				case ItemType.Theme:
@@ -291,12 +299,13 @@ namespace BAR.BL.Managers
 			item.NumberOfFollowers = 0;
 			item.TrendingPercentage = 0.0;
 			item.Baseline = 0.0;
-			item.Informations = new List<Information>();		
+			item.Deleted = false;
+			item.Informations = new List<Information>();
 
 			itemRepo.CreateItem(item);
 			item.ItemWidgets = GenerateDefaultItemWidgets(name, item.ItemId);
 			itemRepo.UpdateItem(item);
-			
+
 			return item;
 		}
 
@@ -527,6 +536,8 @@ namespace BAR.BL.Managers
 					string stringDate = Convert.ToString(deserializedJson[i].dateOfBirth);
 					string town = deserializedJson[i].town;
 
+					//CreateItem(ItemType.Person, fullname, )
+
 					Person person = new Person()
 					{
 						ItemType = ItemType.Person,
@@ -581,5 +592,5 @@ namespace BAR.BL.Managers
 			}
 			return false;
 		}
-  }
+	}
 }
