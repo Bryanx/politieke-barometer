@@ -133,7 +133,7 @@ namespace BAR.BL.Managers
 		/// WARNING
 		/// This method will only work if the widget has a propertytag
 		/// </summary>
-		public IDictionary<string, double> GetPropvaluesForWidget(int itemid, int widgetId)
+		public IDictionary<string, IDictionary<string, double>> GetPropvaluesForWidget(int itemid, int widgetId)
 		{
 			InitRepo();
 
@@ -149,27 +149,29 @@ namespace BAR.BL.Managers
 			if (infos == null || infos.Count() == 0) return null;
 
 			//Map timestap to number of propertyValues
-			IDictionary<string, double> dict = new Dictionary<string, double>();
+			IDictionary<string, IDictionary<string, double>> dict = new Dictionary<string, IDictionary<string, double>>();
 			DateTime checkTime = DateTime.Now;
 			while (checkTime > timestamp)
 			{
 				IEnumerable<Information> infosQueried = infos.Where(info => info.CreationDate == checkTime).AsEnumerable();
+				IDictionary<string, double> propdict = new Dictionary<string, double>();
 				foreach (Information information in infosQueried)
 				{
 					foreach (PropertyValue propval in information.PropertieValues)
 					{
 						//If the name of the property is the same as the propertytag,
 						//Then the propertyvalue shall be added to the dictionary
-						if (propval.Property.Name.ToLower().Equals(proptag.ToLower()))
-						{
-							dict[checkTime.ToString()] += 1;
-						}
+						//if (propval.Property.Name.ToLower().Equals(proptag.ToLower()))
+						//{
+						//	propdict[dict[checkTime.ToString()]] = 1.2;
+						//	 += 1;
+						//}
 					}
 				}
 				checkTime = checkTime.AddDays(-1);
 			}
 
-			return dict;
+			return null;
 		}
 
 		/// <summary>
