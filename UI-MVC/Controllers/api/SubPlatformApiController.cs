@@ -6,6 +6,7 @@ using System.Net.Http;
 using System.Web.Http;
 using BAR.BL.Managers;
 using BAR.BL.Domain.Core;
+using BAR.UI.MVC.Models;
 
 namespace BAR.UI.MVC.Controllers.api
 {
@@ -35,7 +36,7 @@ namespace BAR.UI.MVC.Controllers.api
 		/// </summary>
 		[HttpPost]
 		[Route("api/Customization/PutColor/{platformId}")]
-		public IHttpActionResult PutColor(int platformId, [FromBody] Customization custom)
+		public IHttpActionResult PutColor(int platformId, [FromBody] CustomizationViewModel custom)
 		{
 			platformManager = new SubplatformManager();
 
