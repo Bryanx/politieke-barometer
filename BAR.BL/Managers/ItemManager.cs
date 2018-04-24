@@ -177,7 +177,7 @@ namespace BAR.BL.Managers
 			InitRepo();
 			return itemRepo.ReadItem(itemId);
 		}
-		
+
 		/// <summary>
 		/// Returns an item with widgets.
 		/// </summary>
@@ -186,7 +186,7 @@ namespace BAR.BL.Managers
 			InitRepo();
 			return itemRepo.ReadItemWithWidgets(itemId);
 		}
-		
+
 		/// <summary>
 		/// Returns an item for a specifig itemId including the attached subplatform.
 		/// </summary>
@@ -197,7 +197,7 @@ namespace BAR.BL.Managers
 			InitRepo();
 			return itemRepo.ReadItemWithSubPlatform(itemId);
 		}
-		
+
 		/// <summary>
 		/// Gives back all the items of a specific type
 		/// </summary>
@@ -309,18 +309,33 @@ namespace BAR.BL.Managers
 			return item;
 		}
 
-		public List<ItemWidget> GenerateDefaultItemWidgets(string name, int itemId)
+		/// <summary>
+		/// Gives every item default widgets
+		/// </summary>
+		private void GenerateDefaultItemWidgetsForItems(IEnumerable<Item> items)
+		{
+			foreach (Item item in items)
+			{
+				item.ItemWidgets = GenerateDefaultItemWidgets(item.Name, item.ItemId);
+				itemRepo.UpdateItem(item);
+			}
+		}
+
+		/// <summary>
+		/// Generates dafault widgets based on the itemid
+		/// </summary>
+		private List<ItemWidget> GenerateDefaultItemWidgets(string name, int itemId)
 		{
 			List<ItemWidget> lijst = new List<ItemWidget>();
 			WidgetManager widgetManager = new WidgetManager();
-			
-			ItemWidget widget = (ItemWidget) widgetManager.CreateWidget(WidgetType.GraphType, name + " popularity", 1, 1, rowspan: 12, colspan: 6);
+
+			ItemWidget widget = (ItemWidget)widgetManager.CreateWidget(WidgetType.GraphType, name + " popularity", 1, 1, rowspan: 12, colspan: 6);
 			lijst.Add(widget);
-			
+
 			widgetManager.AddItemToWidget(widget.WidgetId, itemId);
 			return lijst;
 		}
-		
+
 		/// <summary>
 		/// Returns all (undeleted) themes of the whole system
 		/// </summary>
@@ -420,7 +435,7 @@ namespace BAR.BL.Managers
 			if (uowManager == null) itemRepo = new ItemRepository();
 			else itemRepo = new ItemRepository(uowManager.UnitOfWork);
 		}
-		
+
 		/// <summary>
 		/// Gives back an item with all the widgets
 		/// </summary>
@@ -475,6 +490,7 @@ namespace BAR.BL.Managers
 			SubPlatform subPlatform = subplatformManager.GetSubPlatform(2);
 
 			dynamic deserializedJson = JsonConvert.DeserializeObject(json);
+			List<Item> organisations = new List<Item>();
 
 			for (int i = 0; i < deserializedJson.Count; i++)
 			{
@@ -499,8 +515,10 @@ namespace BAR.BL.Managers
 					};
 					itemRepo.CreateItem(organisation);
 					uowManager.Save();
+					organisations.Add(organisation);
 				}
 			}
+			GenerateDefaultItemWidgetsForItems(organisations);
 			uowManager = null;
 		}
 
@@ -513,6 +531,7 @@ namespace BAR.BL.Managers
 			InitRepo();
 			dynamic deserializedJson = JsonConvert.DeserializeObject(json);
 
+			//Needs to be in memory to gain preformance
 			IUserManager userManager = new UserManager(uowManager);
 			IDataManager dataManager = new DataManager(uowManager);
 			ISubplatformManager subplatformManager = new SubplatformManager(uowManager);
@@ -521,6 +540,8 @@ namespace BAR.BL.Managers
 			IEnumerable<Source> sources = dataManager.GetAllSources();
 			IEnumerable<Item> organisations = GetAllOrganisations();
 			IEnumerable<Item> persons = GetAllPersons();
+
+
 			List<Item> items = new List<Item>();
 
 			for (int i = 0; i < deserializedJson.Count; i++)
@@ -588,6 +609,7 @@ namespace BAR.BL.Managers
 			{
 				itemRepo.CreateItems(items);
 				uowManager.Save();
+				GenerateDefaultItemWidgetsForItems(items);
 				return true;
 			}
 			return false;
