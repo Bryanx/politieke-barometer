@@ -15,11 +15,19 @@ function createUserWidget(id, title) {
         '                <div class="x_title">' +
         '                    <h2 class="graphTitle">' + title + '</h2>' +
         '                    <ul class="nav navbar-right panel_toolbox">' +
-        '                        <li>' +
+        '                       <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>' +
+        '                       <li class="dropdown">' +
+        '                       <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>' +
+        '                       <ul class="dropdown-menu" role="menu">' +
+        '                           <li><a href="#">Settings 1</a></li>' +
+        '                           <li><a href="#">Settings 2</a></li>' +
+        '                       </ul>' +
+        '                       </li>' +
+        '                       <li>' +
         '                            <a class="close-widget">' +
         '                                <i id=' + id + ' class="fa fa-close"></i>' +
         '                            </a>' +
-        '                        </li>' +
+        '                       </li>' +
         '                    </ul>' +
         '                    <div class="clearfix"></div>' +
         '                </div>' +
@@ -33,12 +41,24 @@ function createItemWidget(id, title) {
         '            <div class="x_panel grid-stack-item-content bg-white no-scrollbar">' +
         '                <div class="x_title">' +
         '                    <h2 class="graphTitle">' + title + '</h2>' +
-        '                    <div class="pull-right">' +
-        '                       <button class="addToDashboard btn btn-dark btn-xs">Add to dashboard</button>' +
-        '                   </div>' +
+        '                    <ul class="nav navbar-right panel_toolbox">' +
+        '                       <li>' +
+        '                            <button class="addToDashboard btn btn-dark">Add to dashboard</button>' +
+        '                       </li>' +
+        '                       <li class="dropdown">' +
+        '                       <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-gear"></i></a>' +
+        '                       <ul class="dropdown-menu" role="menu">' +
+        '                           <li><a id=' + id + ' class="toggleChartType">Bar chart</a></li>' +
+        '                           <li><a id=' + id + ' class="chartShowLines">Lines between points</a></li>' +
+        '                           <li><a id=' + id + ' class="chartShowXGrid">X grid lines</a></li>' +
+        '                           <li><a id=' + id + ' class="chartShowYGrid">Y grid lines</a></li>' +
+        '                           <li><a id=' + id + ' class="chartShowLogScale">Logarithmic y-axes</a></li>' +
+        '                           <li><a id=' + id + ' class="chartShowLegend">Legend</a></li>' +
+        '                       </ul>' +
+        '                       </li>' +
+        '                    </ul>' +
         '                    <div class="clearfix"></div>' +
         '                </div>' +
-        '                <button id=' + id + ' class="chartShowLines btn btn-default btn-xs">Show lines</button>' +
         '                <div style="position: relative; height: 85%;"><canvas id="graph' + id + '"></canvas></div>' +
         '            </div>' +
         '        </div>'
@@ -87,15 +107,65 @@ function showErrorMessage() {
 
 var charts = [];
 
-function ShowLines(e) {
-    var id = e.target.id;
+function ToggleChartType(e) {
+    let id = e.target.id;
     let chart = charts.find(c => c.config.id == id);
-    if (chart.options.showLines) chart.options.showLines = false;
-    else chart.options.showLines = true;
-    chart.legend.options.enabled = true;
-    chart.update();
-    console.log(chart);
+    var ctx = document.getElementById("graph"+id).getContext("2d");
+    var temp = jQuery.extend(true, {}, chart.config);
+
+    //change chart type
+    let type = chart.config.type;
+    type = type === 'line' ? 'bar' : 'line';
+    
+    //Remove chart from charts and delete it.
+    charts.splice(charts.findIndex(c => c.config.id == id), 1);
+    chart.destroy();
+
+    temp.type = type; // The new chart type
+    charts.push(new Chart(ctx, temp));
+    
+    //change text on button
+    let text = $('.toggleChartType').html();
+    text = text === 'Bar chart' ? 'Line chart' : 'Bar chart';
+    $('.toggleChartType').html(text);
 }
+
+function ShowLines(e) {
+    let chart = charts.find(c => c.config.id == e.target.id);
+    chart.options.showLines = !chart.options.showLines;
+    chart.update();
+}
+
+function ShowXGrid(e) {
+    let chart = charts.find(c => c.config.id == e.target.id);
+    chart.options.scales.xAxes[0].gridLines.display = !chart.options.scales.xAxes[0].gridLines.display;
+    chart.update();
+}
+
+function ShowYGrid(e) {
+    let chart = charts.find(c => c.config.id == e.target.id);
+    chart.options.scales.yAxes[0].gridLines.display = !chart.options.scales.yAxes[0].gridLines.display;
+    chart.update();
+}
+
+function ShowLogScale(e) {
+    let id = e.target.id;
+    let chart = charts.find(c => c.config.id == id);
+    let type = chart.options.scales.yAxes[0].type;
+    type = type === 'linear' ? 'logarithmic' : 'linear';
+    chart.options.scales.yAxes[0].type = type;
+    let text = $('.chartShowLogScale').html();
+    text = text === 'Linear y-axes' ? 'Logarithmic y-axes' : 'Linear y-axes';
+    $('.chartShowLogScale').html(text);
+    chart.update();
+}
+
+function ShowLegend(e) {
+    let chart = charts.find(c => c.config.id == e.target.id);
+    chart.options.legend.display = !chart.options.legend.display;
+    chart.update();
+}
+
 function addLineChartJS(widgetId, chartData) {
     charts.push(new Chart(document.getElementById("graph"+widgetId), {
         id: widgetId,
@@ -106,7 +176,9 @@ function addLineChartJS(widgetId, chartData) {
                 data: Object.values(chartData),
                 label: Resources.Mentions,
                 borderColor: "#3e95cd",
-                fill: false
+                fill: false,
+                borderColor: "purple",
+                backgroundColor: "purple"
             }],
         },
         options: {
@@ -238,7 +310,12 @@ function init() {
     };
 
     //Graph handlers
+    $(document).on('click', '.toggleChartType', (e) => ToggleChartType(e));
     $(document).on('click', '.chartShowLines', (e) => ShowLines(e));
+    $(document).on('click', '.chartShowXGrid', (e) => ShowXGrid(e));
+    $(document).on('click', '.chartShowYGrid', (e) => ShowYGrid(e));
+    $(document).on('click', '.chartShowLogScale', (e) => ShowLogScale(e));
+    $(document).on('click', '.chartShowLegend', (e) => ShowLegend(e));
 
     //dashboard handlers
     $('#btnAddLine').click(this.btnAddLineChart);
