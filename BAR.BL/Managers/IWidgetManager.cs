@@ -14,7 +14,7 @@ namespace BAR.BL.Managers
 		Widget GetWidget(int widgetId);
 		Widget GetWidgetWithAllItems(int widgetId);
 		IEnumerable<UserWidget> GetWidgetsForDashboard(int dashboardId);
-		IEnumerable<ItemWidget> GetWidgetsForItem(int itemId);
+		IEnumerable<Widget> GetWidgetsForItem(int itemId);
 
 		Widget CreateWidget(WidgetType widgetType, string title, int rowNbr, int colNbr, string tag = null,  DateTime? timestamp = null, int rowspan = 1, int colspan = 1,
 			int dashboardId = -1);

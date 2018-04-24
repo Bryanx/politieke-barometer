@@ -24,7 +24,7 @@ namespace BAR.BL.Domain.Items
 		public int NumberOfMentions { get; set; }
 		public double Baseline { get; set; }
 		public ICollection<Information> Informations { get; set; }
-		public ICollection<ItemWidget> ItemWidgets { get; set; }
+		public ICollection<Widget> ItemWidgets { get; set; }
 		public bool Deleted { get; set; }	
 	}
 }

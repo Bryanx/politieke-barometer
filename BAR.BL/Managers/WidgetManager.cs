@@ -161,11 +161,11 @@ namespace BAR.BL.Managers
 		/// </summary>
 		/// 
 
-		public IEnumerable<ItemWidget> GetWidgetsForItem(int itemId) {
+		public IEnumerable<Widget> GetWidgetsForItem(int itemId) {
 			InitRepo();
 			ItemManager itemManager = new ItemManager();
             Item item = itemManager.GetItemWithWidgets(itemId);
-            IEnumerable<ItemWidget> list = item.ItemWidgets;
+            IEnumerable<Widget> list = item.ItemWidgets;
             return list;
 		}
 

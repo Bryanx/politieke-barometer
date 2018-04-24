@@ -301,7 +301,7 @@ namespace BAR.BL.Managers
 			item.Baseline = 0.0;
 			item.Deleted = false;
 			item.Informations = new List<Information>();
-            item.ItemWidgets = new List<ItemWidget>();
+            item.ItemWidgets = new List<Widget>();
 
 			itemRepo.CreateItem(item);
 
@@ -323,15 +323,15 @@ namespace BAR.BL.Managers
 		/// <summary>
 		/// Generates dafault widgets based on the itemid
 		/// </summary>
-		private List<ItemWidget> GenerateDefaultItemWidgets(string name, int itemId)
+		private List<Widget> GenerateDefaultItemWidgets(string name, int itemId)
 		{
-			List<ItemWidget> lijst = new List<ItemWidget>();
+			List<Widget> lijst = new List<Widget>();
 			WidgetManager widgetManager = new WidgetManager();
 
 			ItemWidget widget = (ItemWidget)widgetManager.CreateWidget(WidgetType.GraphType, name + " popularity", 1, 1, rowspan: 12, colspan: 6);
 			lijst.Add(widget);
 
-			//widgetManager.AddItemToWidget(widget.WidgetId, itemId);
+			widgetManager.AddItemToWidget(widget.WidgetId, itemId);
 			return lijst;
 		}
 
