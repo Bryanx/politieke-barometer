@@ -179,15 +179,6 @@ namespace BAR.BL.Managers
 		}
 
 		/// <summary>
-		/// Returns an item with widgets.
-		/// </summary>
-		public Item GetItemWithWidgets(int itemId)
-		{
-			InitRepo();
-			return itemRepo.ReadItemWithWidgets(itemId);
-		}
-
-		/// <summary>
 		/// Returns an item for a specifig itemId including the attached subplatform.
 		/// </summary>
 		/// <param name="itemId"></param>
@@ -197,11 +188,19 @@ namespace BAR.BL.Managers
 			InitRepo();
 			return itemRepo.ReadItemWithSubPlatform(itemId);
 		}
-
 		/// <summary>
-		/// Gives back all the items of a specific type
+		/// Returns an item with widgets.
 		/// </summary>
-		public IEnumerable<Item> GetItemsForType(ItemType type)
+		public Item GetItemWithWidgets(int itemId)
+		{
+			InitRepo();
+			return itemRepo.ReadItemWithWidgets(itemId);
+		}
+
+				/// <summary>
+				/// Gives back all the items of a specific type
+				/// </summary>
+				public IEnumerable<Item> GetItemsForType(ItemType type)
 		{
 			IEnumerable<Item> items = GetAllItems();
 			return items.Where(item => item.ItemType == type).AsEnumerable();
@@ -470,23 +469,23 @@ namespace BAR.BL.Managers
 		/// <summary>
 		/// Calls handling methods for a correct json transaction.
 		/// </summary>
-		public bool ImportJson(string json)
+		public bool ImportJson(string json, int subPlatformID)
 		{
-			CheckOrganisations(json);
-			return AddItemsFromJson(json);
+			CheckOrganisations(json, subPlatformID);
+			return AddItemsFromJson(json, subPlatformID);
 		}
 
 		/// <summary>
 		/// Checks if organisations used in json already exist, if not they will be made.
 		/// </summary>
-		private void CheckOrganisations(string json)
+		private void CheckOrganisations(string json, int subPlatformID)
 		{
 			uowManager = new UnitOfWorkManager();
 
 			InitRepo();
 
 			ISubplatformManager subplatformManager = new SubplatformManager(uowManager);
-			SubPlatform subPlatform = subplatformManager.GetSubPlatform(2);
+			SubPlatform subPlatform = subplatformManager.GetSubPlatform(subPlatformID);
 
 			dynamic deserializedJson = JsonConvert.DeserializeObject(json);
 			List<Item> organisations = new List<Item>();
@@ -524,7 +523,7 @@ namespace BAR.BL.Managers
 		/// <summary>
 		/// Reads json and makes item objects which will be saved afterwards into the database.
 		/// </summary>
-		private bool AddItemsFromJson(string json)
+		private bool AddItemsFromJson(string json, int subPlatformID)
 		{
 			uowManager = new UnitOfWorkManager();
 			InitRepo();
@@ -534,7 +533,7 @@ namespace BAR.BL.Managers
 			IUserManager userManager = new UserManager(uowManager);
 			IDataManager dataManager = new DataManager(uowManager);
 			ISubplatformManager subplatformManager = new SubplatformManager(uowManager);
-			SubPlatform subPlatform = subplatformManager.GetSubPlatform(2);
+			SubPlatform subPlatform = subplatformManager.GetSubPlatform(subPlatformID);
 			IEnumerable<Area> areas = userManager.GetAreas();
 			IEnumerable<Source> sources = dataManager.GetAllSources();
 			IEnumerable<Item> organisations = GetAllOrganisations();
@@ -545,7 +544,8 @@ namespace BAR.BL.Managers
 			for (int i = 0; i < deserializedJson.Count; i++)
 			{
 				string fullname = deserializedJson[i].full_name;
-				if (persons.Where(x => x.Name.Equals(fullname)).SingleOrDefault() == null)
+				if (persons.Where(person => person.SubPlatform.SubPlatformId == subPlatformID)
+					.Where(x => x.Name.Equals(fullname)).SingleOrDefault() == null)
 				{
 					string gender = deserializedJson[i].gender;
 					string postalCode = deserializedJson[i].postal_code;

@@ -353,18 +353,18 @@ namespace BAR.BL.Managers
 			uowManager = null;
 		}
 
-		/// <summary>
-		/// Gets last succesfull audit.
-		/// </summary>
+    /// <summary>
+    /// Gets last succesfull audit.
+    /// </summary>
 		public SynchronizeAudit GetLastAudit()
 		{
 			InitRepo();
 			return dataRepo.ReadLastAudit();
 		}
 
-		/// <summary>
-		/// Adds an audit with boolean false.
-		/// </summary>
+    /// <summary>
+    /// Adds an audit with boolean false.
+    /// </summary>
 		public SynchronizeAudit AddAudit(DateTime timestamp, bool succes)
 		{
 			InitRepo();
@@ -377,40 +377,40 @@ namespace BAR.BL.Managers
 			return synchronizeAudit;
 		}
 
-		/// <summary>
-		/// Gets audit with given id.
-		/// </summary>
-		public SynchronizeAudit GetAudit(int synchronizeAuditId)
-		{
-			return dataRepo.ReadAudit(synchronizeAuditId);
-		}
+    /// <summary>
+    /// Gets audit with given id.
+    /// </summary>
+    public SynchronizeAudit GetAudit(int synchronizeAuditId)
+    {
+      return dataRepo.ReadAudit(synchronizeAuditId);
+    }
 
-		/// <summary>
-		/// Changes status of audit to true.
-		/// </summary>
-		public SynchronizeAudit ChangeAudit(int synchronizeAuditId)
-		{
-			InitRepo();
-			SynchronizeAudit synchronizeAudit = GetAudit(synchronizeAuditId);
-			synchronizeAudit.Succes = true;
-			dataRepo.UpdateAudit(synchronizeAudit);
-			return synchronizeAudit;
-		}
+    /// <summary>
+    /// Changes status of audit to true.
+    /// </summary>
+    public SynchronizeAudit ChangeAudit(int synchronizeAuditId)
+    {
+      InitRepo();
+      SynchronizeAudit synchronizeAudit = GetAudit(synchronizeAuditId);
+      synchronizeAudit.Succes = true;
+      dataRepo.UpdateAudit(synchronizeAudit);
+      return synchronizeAudit;
+    }
 
-		/// <summary>
-		/// Checks if json is empty.
-		/// </summary>
-		public bool IsJsonEmpty(string json)
-		{
-			dynamic deserializedJson = JsonConvert.DeserializeObject(json);
-			int informationCount = deserializedJson.Count;
+    /// <summary>
+    /// Checks if json is empty.
+    /// </summary>
+    public bool IsJsonEmpty(string json)
+    {
+      dynamic deserializedJson = JsonConvert.DeserializeObject(json);
+      int informationCount = deserializedJson.Count;
 
-			if (informationCount == 0)
-			{
-				return true;
-			}
-			return false;
-		}
+      if (informationCount == 0)
+      {
+        return true;
+      }
+      return false;
+    }
 
 		/// <summary>
 		/// Gets all sources.
