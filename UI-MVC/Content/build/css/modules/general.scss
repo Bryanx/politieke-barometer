@@ -1,6 +1,6 @@
 $font-default: Roboto, Helvetica, Arial, sans-serif;
 
-@mixin diagonal-gradient($color1, $color2) {
+@mixin diagonal-gradient($color1: #0f8ec4, $color2: #278e87) {
   background-image: -webkit-gradient(linear, 0% 0%, 100% 100%, color-stop(0, $color1), $color2);
   background-image: -webkit-repeating-linear-gradient(top left, $color1 0%, $color2 100%);
   background-image: repeating-linear-gradient(to bottom right, $color1 0%, $color2 100%);

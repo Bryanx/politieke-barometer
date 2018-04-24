@@ -61,6 +61,34 @@ Preset animations
   100% {
     opacity: 1;
     transform: translateX(-20px); } }
+@-webkit-keyframes fadeTop {
+  0% {
+    opacity: 0;
+    transform: translateY(-20px); }
+  100% {
+    opacity: 1;
+    transform: translateY(0px); } }
+@-moz-keyframes fadeTop {
+  0% {
+    opacity: 0;
+    transform: translateY(-20px); }
+  100% {
+    opacity: 1;
+    transform: translateY(0px); } }
+@-o-keyframes fadeTop {
+  0% {
+    opacity: 0;
+    transform: translateY(-20px); }
+  100% {
+    opacity: 1;
+    transform: translateY(0px); } }
+@keyframes fadeTop {
+  0% {
+    opacity: 0;
+    transform: translateY(-20px); }
+  100% {
+    opacity: 1;
+    transform: translateY(0px); } }
 @-webkit-keyframes fade {
   0% {
     opacity: 0;
@@ -200,6 +228,20 @@ hr {
   clear: both;
   visibility: hidden; }
 
+#notificationMessage {
+  font-size: 12px;
+  position: fixed;
+  display: block;
+  z-index: 999;
+  padding: 27px 5px;
+  text-align: center;
+  color: white;
+  left: 0;
+  bottom: 23px;
+  width: 100px;
+  height: 72px;
+  vertical-align: middle; }
+
 .right_col {
   background: var(--bg-color); }
 
@@ -337,7 +379,7 @@ hr {
   animation-timing-function: ease;
   animation-fill-mode: forwards; }
 
-a.btn-success, a.btn-primary, a.btn-warning, a.btn-danger {
+a.btn-success, a.btn-primary, a.btn-warning {
   color: var(--white); }
 
 .Google-btn, .Facebook-btn {
@@ -398,6 +440,15 @@ a.btn-success, a.btn-primary, a.btn-warning, a.btn-danger {
     color: var(--white);
     background-color: #394D5F;
     border-color: #394D5F; }
+
+.btn-danger {
+  color: var(--font-color) !important;
+  background: white !important;
+  border: 1px solid lightgrey !important; }
+  .btn-danger:hover, .btn-danger:focus, .btn-danger:active, .btn-danger.active {
+    background: red !important;
+    color: var(--white) !important;
+    border: 1px solid red !important; }
 
 .btn-primary {
   color: var(--white);
@@ -738,6 +789,8 @@ table.tile_info {
 .dataTables_wrapper > .row {
   overflow: auto !important;
   /*prevent datatables overflowing its container*/ }
+  .dataTables_wrapper > .row:last-child {
+    margin-top: 15px; }
 
 /*
     The urls may give an error (when compiled the urls are correct)
@@ -819,6 +872,9 @@ table.tile_info {
 .green {
   color: var(--primary-color); }
 
+.dark-green {
+  color: #00a334; }
+
 .aero {
   color: #9CC2CB; }
 
@@ -859,6 +915,20 @@ table.tile_info {
   background: #E74C3C !important;
   border: 1px solid #E74C3C !important;
   color: var(--white); }
+
+.bg-success {
+  background-image: -webkit-gradient(linear, 0% 0%, 100% 100%, color-stop(0, #20a369), #278e87);
+  background-image: -webkit-repeating-linear-gradient(top left, #20a369 0%, #278e87 100%);
+  background-image: repeating-linear-gradient(to bottom right, #20a369 0%, #278e87 100%);
+  background-image: -ms-repeating-linear-gradient(top left, #20a369 0%, #278e87 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#20a369', endColorstr='#278e87'); }
+
+.bg-error {
+  background-image: -webkit-gradient(linear, 0% 0%, 100% 100%, color-stop(0, #a3354a), #74001b);
+  background-image: -webkit-repeating-linear-gradient(top left, #a3354a 0%, #74001b 100%);
+  background-image: repeating-linear-gradient(to bottom right, #a3354a 0%, #74001b 100%);
+  background-image: -ms-repeating-linear-gradient(top left, #a3354a 0%, #74001b 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#a3354a', endColorstr='#74001b'); }
 
 footer {
   background: #f0f0f0;
@@ -1712,7 +1782,7 @@ li.user-profile {
   float: right;
   min-width: 70px; }
   .panel_toolbox > li {
-    float: left;
+    float: right;
     cursor: pointer; }
     .panel_toolbox > li > a {
       padding: 5px;
@@ -1980,6 +2050,7 @@ span.right {
   animation-fill-mode: forwards; }
 
 .no-widgets {
+  display: none;
   margin: 100px 0; }
   .no-widgets > h1 {
     margin-bottom: 20px !important; }
@@ -1992,6 +2063,8 @@ span.right {
   position: relative;
   margin-left: -10px !important;
   margin-right: -10px !important; }
+  .grid-stack > .grid-stack-item {
+    z-index: 15; }
 
 .subscription > td > a:hover {
   text-decoration: none; }
@@ -2013,6 +2086,10 @@ span.right {
     .morris-hover.morris-default-style .morris-hover-point {
       white-space: nowrap;
       margin: 0.1em 0; }
+
+canvas {
+  width: 100% !important;
+  height: auto !important; }
 
 .modal-lg {
   max-width: 600px;

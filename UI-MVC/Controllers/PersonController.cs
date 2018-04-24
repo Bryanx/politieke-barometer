@@ -6,6 +6,7 @@ using AutoMapper;
 using BAR.BL;
 using BAR.BL.Domain.Items;
 using BAR.BL.Domain.Users;
+using BAR.BL.Domain.Widgets;
 using BAR.BL.Managers;
 using BAR.UI.MVC.App_GlobalResources;
 using BAR.UI.MVC.Models;
@@ -19,13 +20,14 @@ using BAR.BL.Domain.Core;
 namespace BAR.UI.MVC.Controllers
 {
 	/// <summary>
-	/// This controller is used for managing the person-page.
+	/// This controller is used for managing the person-pages.
 	/// </summary>
 	public class PersonController : LanguageController
 	{
 		private IItemManager itemManager;
 		private IUserManager userManager;
 		private ISubscriptionManager subManager;
+		private IWidgetManager widgetManager;
 
 		/// <summary>
 		/// Item page for logged-in and non-logged-in users.
@@ -45,13 +47,7 @@ namespace BAR.UI.MVC.Controllers
 			people = Mapper.Map(itemManager.GetAllPersonsForSubplatform(subPlatformID), new List<ItemDTO>());
 
 			IEnumerable<Subscription> subs = subManager.GetSubscriptionsWithItemsForUser(User.Identity.GetUserId());
-			foreach (ItemDTO item in people)
-			{
-				foreach (var sub in subs)
-				{
-					if (sub.SubscribedItem.ItemId == item.ItemId) item.Subscribed = true;
-				}
-			}
+			people.Where(p => subs.Any(s => s.SubscribedItem.ItemId == p.ItemId)).ForEach(dto => dto.Subscribed = true);
 
 			//Assembling the view
 			return View("Index",
@@ -73,20 +69,21 @@ namespace BAR.UI.MVC.Controllers
 			itemManager = new ItemManager();
 			userManager = new UserManager();
 			subManager = new SubscriptionManager();
+			widgetManager = new WidgetManager();
 
 			IEnumerable<Item> subs = subManager.GetSubscribedItemsForUser(User.Identity.GetUserId());
 			Item item = itemManager.GetItem(id);
 			Item subbedItem = subs.FirstOrDefault(i => i.ItemId == item.ItemId);
 
-			//Assembling the view
-			return View("Details",
-				new PersonViewModel()
-				{
+			PersonViewModel personViewModel =
+				new PersonViewModel() {
 					PageTitle = item.Name,
 					User = User.Identity.IsAuthenticated ? userManager.GetUser(User.Identity.GetUserId()) : null,
 					Person = Mapper.Map(item, new ItemDTO()),
-					Subscribed = subbedItem != null
-				});
+					Subscribed = subbedItem != null,
+				};
+			//Assembling the view
+			return View("Details", personViewModel);
 		}
 	}
 }

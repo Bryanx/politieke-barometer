@@ -1,5 +1,6 @@
 ﻿using BAR.BL.Domain;
 using BAR.BL.Domain.Items;
+using BAR.BL.Domain.Users;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,9 +11,10 @@ using System.Web;
 namespace BAR.BL.Managers
 {
 	public interface IItemManager
-	{	
+	{
 		Item GetItem(int itemId);
 		Item GetItemWithSubPlatform(int itemId);
+		Item GetItemWithAllWidgets(int itemId);
 		IEnumerable<Item> GetAllItems();
 		IEnumerable<Item> GetAllPersons();
 		IEnumerable<Item> GetAllOrganisations();
@@ -26,16 +28,17 @@ namespace BAR.BL.Managers
 
 		IEnumerable<Item> GetAllPersonsForSubplatform(int subPlatformID);
 
+		Item AddItem(ItemType itemType, string name, string description = "", string function = "", Category category = null,
+			string district = null, string level = null, string site = null, Gender gender = Gender.OTHER, string position = null, DateTime? dateOfBirth = null);
 
-    bool ImportJson(string json, int subPlatformID);
+		bool ImportJson(string json, int subPlatformID);
 
 
-    Item ChangeItemName(int itemId, string name);
+		Item ChangeItemName(int itemId, string name);
 		Item ChangeItemActivity(int itemId);
 
 		void DetermineTrending(int itemId);
 		double GetTrendingPer(int itemId);
-    string ConvertPfbToString(HttpPostedFileBase pfb);
-
+    	string ConvertPfbToString(HttpPostedFileBase pfb);
   }
 }

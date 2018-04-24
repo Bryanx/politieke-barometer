@@ -117,6 +117,23 @@ function InsertAlerts(alertData) {
 
 //Ajax GET request: loads all alerts and calls InsertAlerts() method to add HTML to the page.
 function loadAlerts() {
+    function loadAlertsHandler(data) {
+        //hide loading gif
+        $("#alertMenu").find(res.alertLoader).remove();
+        //There are alerts available
+        if (data != undefined) {
+            var alertData = data;
+            console.log(alertData);
+            InsertAlerts(data);
+            $('#alertMenu').append(
+                "<li id=\"seeAllAlerts\"><div class=\"text-center\"><a><strong>"+Resources.ShowAllAlerts+"</strong></a></div></li>");
+        } else { //No available alerts
+            $('#alertMenu').empty();
+            $('#alertMenu').append("<li class=\"noAlertsAvailable\"><i class=\"fa fa-bell\"></i></br>" +
+                `<strong>${Resources.YouHaveNoAlerts}</strong></br>` +
+                `${Resources.NoAlertsMessage}</li>`);
+        }
+    }
     //show loading gif
     $(".loadingAlerts").css("display", "block");
     $.ajax({
@@ -128,23 +145,7 @@ function loadAlerts() {
             alert(err.Message);
         }
     })
-        .done(data => {
-            //hide loading gif
-            $("#alertMenu").find(res.alertLoader).remove();
-            //There are alerts available
-            if (data != undefined) {
-                var alertData = data;
-                console.log(alertData);
-                InsertAlerts(data);
-                $('#alertMenu').append(
-                    "<li id=\"seeAllAlerts\"><div class=\"text-center\"><a><strong>"+Resources.ShowAllAlerts+"</strong></a></div></li>");
-            } else { //No available alerts
-                $('#alertMenu').empty();
-                $('#alertMenu').append("<li class=\"noAlertsAvailable\"><i class=\"fa fa-bell\"></i></br>" +
-                    `<strong>${Resources.YouHaveNoAlerts}</strong></br>` +
-                    `${Resources.NoAlertsMessage}</li>`);
-            }
-        });
+        .done(data => loadAlertsHandler(data));
 }
 
 

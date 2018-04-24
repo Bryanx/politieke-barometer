@@ -37,22 +37,22 @@ namespace BAR.DAL
 		/// </summary>
 		public int CreateInformations(List<Information> infos)
 		{
-      ctx.Configuration.AutoDetectChangesEnabled = false;
-      ctx.Informations.AddRange(infos);
-      return ctx.SaveChanges();
-    }
+			ctx.Configuration.AutoDetectChangesEnabled = false;
+			ctx.Informations.AddRange(infos);
+			return ctx.SaveChanges();
+		}
 
-    /// <summary>
-    /// Deletes a specific information object
-    /// Returns -1 if SaveChanges() is delayed by unit of work.
-    /// 
-    /// WARNING
-    /// All of the the propertyvalues of the information also need to be deleted.
-    /// 
-    /// NOTE
-    /// Normally we don't delete informations.
-    /// </summary>
-    public int DeleteInformation(int infoId)
+		/// <summary>
+		/// Deletes a specific information object
+		/// Returns -1 if SaveChanges() is delayed by unit of work.
+		/// 
+		/// WARNING
+		/// All of the the propertyvalues of the information also need to be deleted.
+		/// 
+		/// NOTE
+		/// Normally we don't delete informations.
+		/// </summary>
+		public int DeleteInformation(int infoId)
 		{
 			Information infoToDelete = ReadInformationWithPropValues(infoId);
 			ctx.Informations.Remove(infoToDelete);
@@ -83,10 +83,10 @@ namespace BAR.DAL
 		/// Returns a list of informations based on
 		/// a specific item.
 		/// </summary>
-		public IEnumerable<Information> ReadAllInfoForId(int itemId)
+		public IEnumerable<Information> ReadInformationsForItemid(int itemId)
 		{
-      return ctx.Informations.Include(x => x.Items)
-              .Where(info => info.Items.Any(item => item.ItemId == itemId)).AsEnumerable();
+			return ctx.Informations.Include(x => x.Items)
+					.Where(info => info.Items.Any(item => item.ItemId == itemId)).AsEnumerable();
 		}
 
 		/// <summary>
@@ -112,7 +112,7 @@ namespace BAR.DAL
 		/// </summary>
 		public Information ReadInformationWithPropValues(int informationId)
 		{
-			return ctx.Informations.Include(info => info.PropertieValues)
+			return ctx.Informations.Include(info => info.PropertieValues.Select(propval => propval.Property))
 				.Where(info => info.InformationId == informationId).SingleOrDefault();
 		}
 
@@ -168,38 +168,49 @@ namespace BAR.DAL
 			return ctx.Sources.Where(x => x.Name.Equals(sourceName)).SingleOrDefault();
 		}
 
-    public SynchronizeAudit ReadLastAudit()
-    {
-      return ctx.SynchronizeAudits.Where(x => x.Succes).OrderByDescending(x => x.TimeStamp).FirstOrDefault();
-    }
+		public SynchronizeAudit ReadLastAudit()
+		{
+			return ctx.SynchronizeAudits.Where(x => x.Succes).OrderByDescending(x => x.TimeStamp).FirstOrDefault();
+		}
 
-    public int CreateAudit(SynchronizeAudit synchronizeAudit)
-    {
-      ctx.SynchronizeAudits.Add(synchronizeAudit);
-      return ctx.SaveChanges();
-    }
+		public int CreateAudit(SynchronizeAudit synchronizeAudit)
+		{
+			ctx.SynchronizeAudits.Add(synchronizeAudit);
+			return ctx.SaveChanges();
+		}
 
-    public SynchronizeAudit ReadAudit(int synchronizeAuditId)
-    {
-      return ctx.SynchronizeAudits.Where(x => x.SynchronizeAuditId == synchronizeAuditId).SingleOrDefault();
-    }
+		public SynchronizeAudit ReadAudit(int synchronizeAuditId)
+		{
+			return ctx.SynchronizeAudits.Where(x => x.SynchronizeAuditId == synchronizeAuditId).SingleOrDefault();
+		}
 
-    public int UpdateAudit(SynchronizeAudit synchronizeAudit)
-    {
-      ctx.Entry(synchronizeAudit).State = EntityState.Modified;
-      return ctx.SaveChanges();
-    }
+		public int UpdateAudit(SynchronizeAudit synchronizeAudit)
+		{
+			ctx.Entry(synchronizeAudit).State = EntityState.Modified;
+			return ctx.SaveChanges();
+		}
 
-    public IEnumerable<Property> ReadAllProperties()
-    {
-      return ctx.Properties.ToList();
-    }
+		public IEnumerable<Property> ReadAllProperties()
+		{
+			return ctx.Properties.ToList();
+		}
 
-    public IEnumerable<Source> ReadAllSources()
-    {
-      return ctx.Sources.ToList();
-    }
-  }
+		public IEnumerable<Source> ReadAllSources()
+		{
+			return ctx.Sources.ToList();
+		}
+
+		/// <summary>
+		/// Returns a list of all the informations objects that are
+		/// related to a specific item.
+		/// </summary>
+		public IEnumerable<Information> ReadInformationsWithAllInfoForItem(int itemId)
+		{
+			return ctx.Informations.Include(infoIncl => infoIncl.PropertieValues
+								   .Select(propval => propval.Property))
+								   .Where(info => info.Items.Any(item => item.ItemId == itemId)).AsEnumerable();
+		}
+	}
 }
 
 
