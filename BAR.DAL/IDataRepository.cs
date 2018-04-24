@@ -18,6 +18,7 @@ namespace BAR.DAL
 		IEnumerable<Information> ReadInformationsForDate(int itemId, DateTime since);
     Property ReadProperty(string propertyName);
     Source ReadSource(string sourceName);
+    Source ReadSource(int sourceId);
     SynchronizeAudit ReadLastAudit();
     SynchronizeAudit ReadAudit(int synchronizeAuditId);
     IEnumerable<Property> ReadAllProperties();
@@ -26,6 +27,7 @@ namespace BAR.DAL
 		//Create
 		int CreateInformations(List<Information> infos);
     int CreateAudit(SynchronizeAudit synchronizeAudit);
+    int CreateSource(Source source);
 
     //Update
     int UpdateInformation(Information info);
@@ -35,5 +37,6 @@ namespace BAR.DAL
     //Delete
     int DeleteInformation(int infoId);
 		int DeleteInformations(IEnumerable<int> infoIds);
+    int DeleteSource(Source source);
 	}
 }

@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Data.Entity;
+using BAR.BL.Domain.Items;
 
 namespace BAR.DAL
 {
@@ -198,6 +199,23 @@ namespace BAR.DAL
     public IEnumerable<Source> ReadAllSources()
     {
       return ctx.Sources.ToList();
+    }
+
+    public int CreateSource(Source source)
+    {
+      ctx.Sources.Add(source);
+      return ctx.SaveChanges();
+    }
+
+    public Source ReadSource(int sourceId)
+    {
+      return ctx.Sources.Where(x => x.SourceId == sourceId).SingleOrDefault();
+    }
+
+    public int DeleteSource(Source source)
+    {
+      ctx.Sources.Remove(source);
+      return ctx.SaveChanges();
     }
   }
 }

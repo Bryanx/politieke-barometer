@@ -304,6 +304,25 @@ namespace BAR.BL.Managers
       InitRepo();
       return dataRepo.ReadAllSources();
     }
+
+    public Source AddSource(string name, string site)
+    {
+      InitRepo();
+      Source source = new Source()
+      {
+        Name = name,
+        Site = site
+      };
+      dataRepo.CreateSource(source);
+      return source;
+    }
+
+    public void RemoveSource(string sourceId)
+    {
+      InitRepo();
+      Source source = dataRepo.ReadSource(Convert.ToInt32(sourceId));
+      dataRepo.DeleteSource(source);
+    }
   }
 }
 

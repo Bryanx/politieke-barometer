@@ -127,7 +127,7 @@ namespace BAR.UI.MVC.Helpers {
         public static string SourceManagement(this UrlHelper helper) {
             return helper.RouteUrl("Default", new {
                 controller = "SuperAdmin",
-                action = nameof(SuperAdminController.SourceManagement)
+                action = nameof(SuperAdminController.GeneralManagement)
             });
         }
         
