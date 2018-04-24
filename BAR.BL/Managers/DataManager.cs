@@ -131,7 +131,15 @@ namespace BAR.BL.Managers
 
 		/// <summary>
 		/// Gives back a map with all the propertievalues of a specific propertie
-		/// works dynamicly. The values are
+		/// works dynamicly. The returnvalue contains the following:
+		/// 
+		/// Outer dictionary:
+		/// - key: mapping to date
+		/// - value: inner dictionary that will house the propertyvalues. this is 1:1 because each key houses one inner dictionary
+		/// 
+		/// Inner dictionary:
+		/// - key: name of the property-value
+		/// - value: number of times the property-value was mentioned
 		/// 
 		/// WARNING
 		/// This method will only work if the widget has a propertytag
@@ -165,17 +173,17 @@ namespace BAR.BL.Managers
 					{
 						//If the name of the property is the same as the propertytag,
 						//Then the propertyvalue shall be added to the dictionary
-						//if (propval.Property.Name.ToLower().Equals(proptag.ToLower()))
-						//{
-						//	propdict[dict[checkTime.ToString()]] = 1.2;
-						//	 += 1;
-						//}
+						if (propval.Property.Name.ToLower().Equals(proptag.ToLower()))
+						{
+							propdict[propval.Value] += 1;
+						}
 					}
 				}
+				dict[startDate.ToString()] = propdict;
 				startDate = startDate.Value.AddDays(-1);
 			}
 
-			return null;
+			return dict;
 		}
 
 		/// <summary>
