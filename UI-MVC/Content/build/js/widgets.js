@@ -107,6 +107,45 @@ function addBarChart(id) {
     });
 }
 
+function addNodeboxGraph(id) {
+    addCSSgrid(id);
+    createNodebox(id);
+    
+}
+
+
+/**
+ * Nodebox api
+ */
+
+function createNodebox(id) {
+    let nodeId = "canvas" + id;
+    let node = document.createElement('canvas');
+    node.id = nodeId;
+    node.width = document.getElementById(id).clientWidth;
+    node.height = document.getElementById(id).clientHeight;
+    document.getElementById(id).appendChild(node);
+    
+    var canvas = {
+        userId: 'AnthonyT',
+        projectId: 'tutorial',
+        functionId: 'circle_graph',
+        canvasId: "canvas" + id,
+        autoplay: true
+    };
+
+    // Initialize the NodeBox player object
+    ndbx.embed(canvas, function(err, player) {
+        if (err) {
+            throw new Error(err);
+        } else {
+            window.player = player;
+        }
+    });
+    
+}
+
+
 /**
  * The basic HTML structure of a widget
  */
@@ -164,15 +203,16 @@ function loadGrid(data) {
         if (data[i].Graph != null) {
             switch (data[i].Graph.Type) {
                 case "donut" :
-                    if (data[i].Graph.DonutLabels != null && data[i].Graph.DonutValues != null) {
-                        addPieChart('grafiek' + counter, data[i].Graph.DonutLabels, data[i].Graph.DonutValues);
-                    }
+                    addPieChart('grafiek' + counter);
                     break;
                 case "line" :
                     addLineChart('grafiek' + counter);
                     break;
                 case "bar" :
                     addBarChart('grafiek' + counter);
+                    break;
+                case "nodebox" :
+                    addNodeboxGraph('grafiek' + counter);
                     break;
             }
         }
@@ -228,11 +268,19 @@ function init() {
         counter++;
         return false;
     }.bind(this);
+    this.btnAddNodebox = function () {
+        grid.addWidget(createWidget('grafiek' + counter), 0, 0, 6, 6, true, 4, 12, 4);
+        addNodeboxGraph('grafiek' + counter);
+        counter++;
+        return false;
+    }.bind(this);
 
     //handlers
     $('#btnAddLine').click(this.btnAddLineChart);
     $('#btnAddPie').click(this.btnAddPieChart);
     $('#btnAddBar').click(this.btnAddBarChart);
+    $('#btnAddNodebox').click(this.btnAddNodebox);
+    
 }
 
 //TODO: Add persistence and import functionality
