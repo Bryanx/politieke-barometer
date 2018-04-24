@@ -55,10 +55,17 @@
 <div style="visibility: hidden">space</div>
 
 @section CustomJS{
-    @Scripts.Render("~/Scripts/vue.min.js")
+
+    <script src="~/Scripts/vue.min.js"></script>
     <script src="https://unpkg.com/vue-form-wizard/dist/vue-form-wizard.js"></script>
     <script src="https://rawgit.com/icebob/vue-form-generator/master/dist/vfg.js"></script>
-    @Scripts.Render("~/bundles/gridstack", "~/bundles/morrisCharts")
+    
+    <script src="~/Scripts/jquery/jquery-ui.js"></script>
+    <script src="~/Scripts/underscore.min.js"></script>
+    <script src="~/Scripts/gridstack/gridstack.js"></script>
+    <script src="~/Scripts/gridstack/gridstack.jQueryUI.js"></script>
+    <script src="~/Content/build/js/widgets.js"></script>
+
     <script type="text/javascript">
 
         Vue.use(VueFormWizard);

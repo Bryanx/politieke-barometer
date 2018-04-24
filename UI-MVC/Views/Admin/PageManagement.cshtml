@@ -13,40 +13,40 @@
                 <div class="clearfix"></div>
             </div>
             <div class="x_content">
-                <br/>
+                <br />
                 <div class="col-sm-8 col-md-8 col-xs-12 center-margin">
                     <form class="form-horizontal form-label-left">
                         <label class="control-label">Primaire kleur</label>
                         <div id="cp-primary" class="input-group">
-                            <input id="ip-primary" type="text" class="form-control"/>
+                            <input id="ip-primary" type="text" class="form-control" />
                             <span class="input-group-addon">
                                 <i></i>
                             </span>
                         </div>
                         <label class="control-label">Secundaire kleur</label>
                         <div id="cp-secondary" class="input-group">
-                            <input id="ip-secondary" type="text" class="form-control"/>
+                            <input id="ip-secondary" type="text" class="form-control" />
                             <span class="input-group-addon">
                                 <i></i>
                             </span>
                         </div>
                         <label class="control-label">Tertiaire kleur</label>
                         <div id="cp-tertiary" class="input-group">
-                            <input id="ip-tertiary" type="text" class="form-control"/>
+                            <input id="ip-tertiary" type="text" class="form-control" />
                             <span class="input-group-addon">
                                 <i></i>
                             </span>
                         </div>
                         <label class="control-label">Achtergrond kleur</label>
                         <div id="cp-bg" class="input-group">
-                            <input id="ip-bg" type="text" class="form-control"/>
+                            <input id="ip-bg" type="text" class="form-control" />
                             <span class="input-group-addon">
                                 <i></i>
                             </span>
                         </div>
                         <label class="control-label">Tekst kleur</label>
                         <div id="cp-font" class="input-group">
-                            <input id="ip-font" type="text" class="form-control"/>
+                            <input id="ip-font" type="text" class="form-control" />
                             <span class="input-group-addon">
                                 <i></i>
                             </span>
@@ -65,7 +65,7 @@
                 <div class="clearfix"></div>
             </div>
             <div class="x_content">
-                <br/>
+                <br />
                 <div class="col-sm-8 col-md-8 col-xs-12 center-margin">
                     <form class="form-horizontal form-label-left">
 
@@ -112,7 +112,7 @@
                 <div class="clearfix"></div>
             </div>
             <div class="x_content">
-                <br/>
+                <br />
                 <form class="form-horizontal form-label-left">
                     <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="privacy_title">
@@ -133,8 +133,7 @@
                                     <a class="btn dropdown-toggle" data-toggle="dropdown" title="Font">
                                         <i class="fa fa-font"></i><b class="caret"></b>
                                     </a>
-                                    <ul class="dropdown-menu">
-                                    </ul>
+                                    <ul class="dropdown-menu"></ul>
                                 </div>
 
                                 <div class="btn-group">
@@ -251,7 +250,7 @@
                 <div class="clearfix"></div>
             </div>
             <div class="x_content">
-                <br/>
+                <br />
                 <form class="form-horizontal form-label-left">
                     <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">
@@ -305,7 +304,7 @@
                 <div class="clearfix"></div>
             </div>
             <div class="x_content">
-                <br/>
+                <br />
                 <div class="col-sm-8 col-md-8 col-xs-12 center-margin">
                     <form class="form-horizontal form-label-left">
 
@@ -342,14 +341,18 @@
 
 
 @section CustomJS{
-    @Scripts.Render("~/bundles/bootstrap-wysiwyg", "~/Scripts/mjolnic-bootstrap-colorpicker/dist/js/bootstrap-colorpicker.min.js")
+    <script src="~/Scripts/mjolnic-bootstrap-colorpicker/dist/js/bootstrap-colorpicker.min.js"></script>
+    <script src="~/Scripts/bootstrap-wysiwyg/bootstrap-wysiwyg.js"></script>
+    <script src="~/Scripts/bootstrap-wysiwyg/bootstrap-wysiwyg.min.js"></script>
+    <script src="~/Scripts/bootstrap-wysiwyg/jquery.hotkeys.min.js"></script>
+    <script src="~/Scripts/bootstrap-wysiwyg/prettify.min.js"></script>
     <script>
         /**
          * When a colorpicker is changed, the page CSS updates automatically.
          */
         var htmlselector = document.getElementsByTagName('html')[0];
         var primary_color = window.getComputedStyle(document.documentElement).getPropertyValue('--primary-color')
-                .split(' ').join(''),
+            .split(' ').join(''),
             secondary_color = window.getComputedStyle(document.documentElement).getPropertyValue('--secondary-color')
                 .split(' ').join('');
         var tertiary_color = window.getComputedStyle(document.documentElement).getPropertyValue('--tertiary-color')

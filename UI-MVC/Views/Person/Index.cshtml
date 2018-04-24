@@ -2,18 +2,20 @@
 @model BAR.UI.MVC.Models.ItemViewModels.ItemViewModel
 
 @section CustomCSS{
-    @Styles.Render("~/bundles/datatables-css")
+    <link href="~/Scripts/datatables/datatables.net-responsive-bs/css/responsive.bootstrap.min.css" rel="stylesheet"></link>
+    <link href="~/Scripts/datatables/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet"></link>
 }
 
 <h1>@Model.PageTitle</h1>
-<hr/>
+<hr />
 <section class="shadowed">
-@Html.Partial("Partials/_PersonTable", Model)
+    @Html.Partial("Partials/_PersonTable", Model)
 </section>
 <div style="visibility: hidden">space</div>
 
 @section CustomJS{
-    @Scripts.Render("~/bundles/datatables")
+    <script src="~/Scripts/datatables/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="~/Scripts/datatables/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
     <script type="text/javascript">
         (() => {
             $('#datatable-infinite').dataTable({
@@ -26,7 +28,7 @@
                 "info": false
             });
 
-            $('.subscribeItem').click(function() {
+            $('.subscribeItem').click(function () {
                 ajaxToggleSubscribe($(this));
             });
         })($);
