@@ -50,11 +50,14 @@ namespace BAR.UI.MVC.Controllers.api
 		{
 			widgetManager = new WidgetManager();
 
-			var widgets = widgetManager.GetWidgetsForItem(itemId);
+			IEnumerable<Widget> widgets = widgetManager.GetWidgetsForItem(itemId);
 			
 			if (widgets == null || widgets.Count() == 0) return StatusCode(HttpStatusCode.NoContent);
-			
-			return Ok(widgets);
+
+			List<UserWidgetDTO> uWidgets = Mapper.Map(widgets, new List<UserWidgetDTO>());
+			foreach (UserWidgetDTO widgetDto in uWidgets) widgetDto.DashboardId = -1;
+
+            return Ok(uWidgets);
 		}
 		
 		/// <summary>

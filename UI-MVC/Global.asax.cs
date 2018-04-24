@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Optimization;
@@ -36,6 +37,15 @@ namespace BAR.UI.MVC
           .ForMember(w => w.RowNumber, opt => opt.MapFrom(src => src.RowNumber))
           .ForMember(w => w.WidgetType, opt => opt.MapFrom(src => src.WidgetType))
           .ForMember(w => w.DashboardId, opt => opt.MapFrom(src => src.Dashboard.DashboardId));
+        cfg.CreateMap<BAR.BL.Domain.Widgets.Widget, UserWidgetDTO>()
+          .ForMember(w => w.WidgetId, opt => opt.MapFrom(src => src.WidgetId))
+          .ForMember(w => w.Title, opt => opt.MapFrom(src => src.Title))
+          .ForMember(w => w.ColumnSpan, opt => opt.MapFrom(src => src.ColumnSpan))
+          .ForMember(w => w.RowSpan, opt => opt.MapFrom(src => src.RowSpan))
+          .ForMember(w => w.ColumnNumber, opt => opt.MapFrom(src => src.ColumnNumber))
+          .ForMember(w => w.RowNumber, opt => opt.MapFrom(src => src.RowNumber))
+          .ForMember(w => w.WidgetType, opt => opt.MapFrom(src => src.WidgetType))
+          .ForMember(w => w.ItemIds, opt => opt.MapFrom(src => src.Items.Select(i => i.ItemId)));
       });
     }
   }

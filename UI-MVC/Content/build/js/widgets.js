@@ -193,7 +193,8 @@ function loadGrid(data, itemId) {
     if (data != null && data.length) {
         $.each(data, (index, widget) => {
             //UserWidget
-            if (widget.DashboardId !== undefined) {
+            console.log(data);
+            if (widget.DashboardId !== undefined || widget.DashboardId !== -1) {
                 grid.addWidget(createUserWidget(widget.WidgetId, widget.Title), widget.RowNumber, widget.ColumnNumber, widget.RowSpan, widget.ColumnSpan,
                     false, 4, 12, 4, 12, widget.WidgetId);
                 //ItemWidget
