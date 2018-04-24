@@ -10,6 +10,6 @@ namespace BAR.BL.Domain.Data
     {
         public int SourceId { get; set; }
         public string Name { get; set; }
-        public string SourceLine { get; set; }
+        public string Site { get; set; }
     }
 }

@@ -5,6 +5,11 @@ using System.Collections.Generic;
 using BAR.BL.Domain.Data;
 using System.Linq;
 using BAR.BL.Domain.Users;
+using Newtonsoft.Json;
+using System.Web;
+using System.IO;
+using System.Text.RegularExpressions;
+using BAR.BL.Domain.Core;
 
 namespace BAR.BL.Managers
 {
@@ -29,7 +34,7 @@ namespace BAR.BL.Managers
 		}
 
 		/// <summary>
-		/// Adjusts the baseline of the given item and 
+		/// Adjusts the baseline of the given item and
 		/// Adjusts the trendingpercentage of the given item.
 		/// </summary>
 		public void DetermineTrending(int itemId)
@@ -39,24 +44,27 @@ namespace BAR.BL.Managers
 			DataManager dataManager = new DataManager();
 			IEnumerable<Information> allInfoForId = dataManager.GetAllInformationForId(itemId);
 
-			DateTime earliestInfoDate = allInfoForId.Min(item => item.CreationDate).Value;
-			DateTime lastInfoDate = allInfoForId.Max(item => item.CreationDate).Value;
+			if (allInfoForId.Count() > 0)
+			{
+				DateTime earliestInfoDate = allInfoForId.Min(item => item.CreationDate).Value;
+				DateTime lastInfoDate = allInfoForId.Max(item => item.CreationDate).Value;
 
-			int period = (lastInfoDate - earliestInfoDate).Days;
+				int period = (lastInfoDate - earliestInfoDate).Days;
 
-      if (period == 0) period = 1;
+				if (period == 0) period = 1;
 
-			int aantalBaseline = dataManager.GetNumberInfo(itemId, earliestInfoDate);
-			int aantalTrending = dataManager.GetNumberInfo(itemId, lastInfoDate.AddDays(-1));
+				int aantalBaseline = dataManager.GetNumberInfo(itemId, earliestInfoDate);
+				int aantalTrending = dataManager.GetNumberInfo(itemId, lastInfoDate.AddDays(-1));
 
-			// Calculate the baseline = number of information / number of days from the last update until now
-			double baseline = Convert.ToDouble(aantalBaseline) / Convert.ToDouble(period);
+				// Calculate the baseline = number of information / number of days from the last update until now
+				double baseline = Convert.ToDouble(aantalBaseline) / Convert.ToDouble(period);
 
-			// Calculate the trendingpercentage = baseline / number of days from the last update until now.
-			double trendingPer = Convert.ToDouble(aantalTrending) / baseline;
+				// Calculate the trendingpercentage = baseline / number of days from the last update until now.
+				double trendingPer = Convert.ToDouble(aantalTrending) / baseline;
 
-			itemRepo.UpdateItemTrending(itemId, baseline, trendingPer);
-			itemRepo.UpdateLastUpdated(itemId, DateTime.Now);
+				itemRepo.UpdateItemTrending(itemId, baseline, trendingPer);
+				itemRepo.UpdateLastUpdated(itemId, DateTime.Now);
+			}
 		}
 
 		/// <summary>
@@ -169,10 +177,21 @@ namespace BAR.BL.Managers
 			return itemRepo.ReadItem(itemId);
 		}
 
-		/// <summary>
-		/// Gives back all the items of a specific type
-		/// </summary>
-		public IEnumerable<Item> GetItemsForType(ItemType type)
+				/// <summary>
+				/// Returns an item for a specifig itemId including the attached subplatform.
+				/// </summary>
+				/// <param name="itemId"></param>
+				/// <returns></returns>
+				public Item GetItemWithSubPlatform(int itemId)
+				{
+					InitRepo();
+					return itemRepo.ReadItemWithSubPlatform(itemId);
+				}
+
+				/// <summary>
+				/// Gives back all the items of a specific type
+				/// </summary>
+				public IEnumerable<Item> GetItemsForType(ItemType type)
 		{
 			IEnumerable<Item> items = GetAllItems();
 			return items.Where(item => item.ItemType == type).AsEnumerable();
@@ -197,95 +216,43 @@ namespace BAR.BL.Managers
 		}
 
 		/// <summary>
-		/// Returns all (undeleted) people
+		/// Returns all (undeleted) people of the whole system
 		/// </summary>
-		public IEnumerable<Item> GetAllPersons() 
-		{
-			return GetAllItems().Where(item => item is Person).Where(item => item.Deleted == false).ToList();
-		}
-
-		/// <summary>
-		/// Returns all (undeleted) organisations
-		/// </summary>
-		public IEnumerable<Item> GetAllOrganisations() 
-		{
-			return GetAllItems().Where(item => item is Organisation).Where(item => item.Deleted == false);
-
-		}
-
-		/// <summary>
-		/// Creates a new item based on the given parameters
-		/// </summary>
-		public Item CreateItem(ItemType itemType, string name, string description = "", string function = "", Category category = null)
+		public IEnumerable<Item> GetAllPersons()
 		{
 			InitRepo();
+			return itemRepo.ReadAllPersons().AsEnumerable();
+		}
 
-			//the switch statement will determine if we need to make a
-			//Organisation, person or theme.
-			Item item;
-			switch (itemType)
-			{
-				case ItemType.Person:
-					item = new Person()
-					{
-						ItemType = itemType,
-						Name = name,
-						CreationDate = DateTime.Now,
-						LastUpdatedInfo = DateTime.Now,
-						LastUpdated = DateTime.Now,
-						Description = description,
-						NumberOfFollowers = 0,
-						TrendingPercentage = 0.0,
-						Baseline = 0.0,
-						Informations = new List<Information>(),
-						SocialMediaUrls = new List<SocialMediaUrl>(),
-						Function = function
-					};
-					break;
-				case ItemType.Organisation:
-					item = new Organisation()
-					{
-						ItemType = itemType,
-						Name = name,
-						CreationDate = DateTime.Now,
-						LastUpdatedInfo = DateTime.Now,
-						LastUpdated = DateTime.Now,
-						Description = description,
-						NumberOfFollowers = 0,
-						TrendingPercentage = 0.0,
-						Baseline = 0.0,
-						Informations = new List<Information>(),
-						SocialMediaUrls = new List<SocialMediaUrl>()
-					};
-					break;
-				case ItemType.Theme:
-					item = new Theme()
-					{
-						ItemType = itemType,
-						Name = name,
-						CreationDate = DateTime.Now,
-						LastUpdatedInfo = DateTime.Now,
-						LastUpdated = DateTime.Now,
-						Description = description,
-						NumberOfFollowers = 0,
-						TrendingPercentage = 0.0,
-						Baseline = 0.0,
-						Informations = new List<Information>(),
-						Category = category
-					};
-					break;
-				default:
-					item = null;
-					break;
-			}
+		/// <summary>
+		/// Returns all (undeleted) organisations of the whole system
+		/// </summary>
+		public IEnumerable<Item> GetAllOrganisations()
+		{
+			InitRepo();
+			return itemRepo.ReadAllOraginsations().AsEnumerable();
 
-			if (item == null) return item;
-			else
-			{
-				itemRepo.CreateItem(item);
-				return item;
-			}
+		}
 
+		/// <summary>
+		/// Returns all (undeleted) themes of the whole system
+		/// </summary>
+		public IEnumerable<Item> GetAllThemes()
+		{
+			InitRepo();
+			return itemRepo.ReadAllThemes().AsEnumerable();
+		}
+
+		/// <summary>
+		/// Returns all people for specific subplatform
+		/// </summary>
+		/// <param name="subPlatformName"></param>
+		/// <returns></returns>
+		public IEnumerable<Item> GetAllPersonsForSubplatform(int subPlatformID)
+		{
+			return GetAllPersons()
+				.Where(item => item.Deleted == false)
+				.Where(item => item.SubPlatform.SubPlatformId.Equals(subPlatformID));
 		}
 
 		/// <summary>
@@ -311,23 +278,23 @@ namespace BAR.BL.Managers
 		/// <summary>
 		/// Updates the description of a given item.
 		/// </summary>
-		public Item ChangeItemDescription(int itemId, string description)
-		{
-			InitRepo();
+		//public Item ChangeItemDescription(int itemId, string description)
+		//{
+		//	InitRepo();
 
-			//Get item
-			Item itemToUpdate = GetItem(itemId);
-			if (itemToUpdate == null) return null;
+		//	//Get item
+		//	Item itemToUpdate = GetItem(itemId);
+		//	if (itemToUpdate == null) return null;
 
-			//Update item
-			itemToUpdate.Description = description;
-			itemToUpdate.LastUpdated = DateTime.Now;
+		//	//Update item
+		//	itemToUpdate.Description = description;
+		//	itemToUpdate.LastUpdated = DateTime.Now;
 
-			//Update database
-			itemRepo.UpdateItem(itemToUpdate);
-			return itemToUpdate;
-		}
-		
+		//	//Update database
+		//	itemRepo.UpdateItem(itemToUpdate);
+		//	return itemToUpdate;
+		//}
+
 		/// <summary>
 		/// Changes an item to non-active or active
 		/// </summary>
@@ -367,10 +334,166 @@ namespace BAR.BL.Managers
 			else itemRepo = new ItemRepository(uowManager.UnitOfWork);
 		}
 
-    public Item GetPerson(string personName)
-    {
-      InitRepo();
-      return itemRepo.ReadPerson(personName);
-    }
-  }
+		/// <summary>
+		/// Gets person with given name.
+		/// </summary>
+		public Item GetPerson(string personName)
+		{
+			InitRepo();
+			return itemRepo.ReadPerson(personName);
+		}
+
+		/// <summary>
+		/// Convert httppostedfilebase to string (used for json parsing).
+		/// </summary>
+		public string ConvertPfbToString(HttpPostedFileBase pfb)
+		{
+			string json = string.Empty;
+
+			using (BinaryReader b = new BinaryReader(pfb.InputStream))
+			{
+				byte[] binData = b.ReadBytes(pfb.ContentLength);
+				json = System.Text.Encoding.UTF8.GetString(binData);
+			}
+			return json;
+		}
+
+		/// <summary>
+		/// Calls handling methods for a correct json transaction.
+		/// </summary>
+		public bool ImportJson(string json)
+		{
+			CheckOrganisations(json);
+			return AddItemsFromJson(json);
+		}
+
+		/// <summary>
+		/// Checks if organisations used in json already exist, if not they will be made.
+		/// </summary>
+		private void CheckOrganisations(string json)
+		{
+			uowManager = new UnitOfWorkManager();
+
+			InitRepo();
+
+			ISubplatformManager subplatformManager = new SubplatformManager(uowManager);
+			SubPlatform subPlatform = subplatformManager.GetSubPlatform(2);
+
+			dynamic deserializedJson = JsonConvert.DeserializeObject(json);
+
+			for (int i = 0; i < deserializedJson.Count; i++)
+			{
+				string name = deserializedJson[i].organisation;
+				Item organisation = itemRepo.ReadOrganisation(name);
+
+				if (organisation == null)
+				{
+					organisation = new Organisation()
+					{
+						ItemType = ItemType.Organisation,
+						Name = name,
+						CreationDate = DateTime.Now,
+						LastUpdatedInfo = DateTime.Now,
+						LastUpdated = DateTime.Now,
+						NumberOfFollowers = 0,
+						TrendingPercentage = 0.0,
+						Baseline = 0.0,
+						Informations = new List<Information>(),
+						SocialMediaUrls = new List<SocialMediaName>(),
+						SubPlatform = subPlatform
+					};
+					itemRepo.CreateItem(organisation);
+					uowManager.Save();
+				}
+			}
+			uowManager = null;
+		}
+
+		/// <summary>
+		/// Reads json and makes item objects which will be saved afterwards into the database.
+		/// </summary>
+		private bool AddItemsFromJson(string json)
+		{
+			uowManager = new UnitOfWorkManager();
+			InitRepo();
+			dynamic deserializedJson = JsonConvert.DeserializeObject(json);
+
+			IUserManager userManager = new UserManager(uowManager);
+			IDataManager dataManager = new DataManager(uowManager);
+			ISubplatformManager subplatformManager = new SubplatformManager(uowManager);
+			SubPlatform subPlatform = subplatformManager.GetSubPlatform(2);
+			IEnumerable<Area> areas = userManager.GetAreas();
+			IEnumerable<Source> sources = dataManager.GetAllSources();
+			IEnumerable<Item> organisations = GetAllOrganisations();
+			IEnumerable<Item> persons = GetAllPersons();
+			List<Item> items = new List<Item>();
+
+			for (int i = 0; i < deserializedJson.Count; i++)
+			{
+				string fullname = deserializedJson[i].full_name;
+				if (persons.Where(x => x.Name.Equals(fullname)).SingleOrDefault() == null)
+				{
+					string gender = deserializedJson[i].gender;
+					string postalCode = deserializedJson[i].postal_code;
+					string organisation = deserializedJson[i].organisation;
+					string twitter = deserializedJson[i].twitter;
+					string facebook = deserializedJson[i].facebook;
+					string stringDate = Convert.ToString(deserializedJson[i].dateOfBirth);
+					string town = deserializedJson[i].town;
+
+					Person person = new Person()
+					{
+						ItemType = ItemType.Person,
+						Name = fullname,
+						CreationDate = DateTime.Now,
+						LastUpdatedInfo = DateTime.Now,
+						LastUpdated = DateTime.Now,
+						NumberOfFollowers = 0,
+						TrendingPercentage = 0.0,
+						Baseline = 0.0,
+						Informations = new List<Information>(),
+						SocialMediaNames = new List<SocialMediaName>(),
+						District = deserializedJson[i].district,
+						Level = deserializedJson[i].level,
+						Site = deserializedJson[i].site,
+						Position = deserializedJson[i].position,
+						SubPlatform = subPlatform
+					};
+
+					person.Gender = (gender == "M") ? Gender.MAN : Gender.WOMAN;
+					person.DateOfBirth = DateTime.ParseExact(stringDate, "yyyy-MM-dd HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture);
+					person.Area = areas.Where(x => x.PostalCode.Equals(postalCode) && x.Residence.ToLower().Equals(town.ToLower())).SingleOrDefault();
+					if (!string.IsNullOrEmpty(twitter))
+					{
+						SocialMediaName twitterSocial = new SocialMediaName()
+						{
+							Username = twitter,
+							Source = sources.Where(x => x.Name.Equals("Twitter")).SingleOrDefault()
+						};
+						person.SocialMediaNames.Add(twitterSocial);
+					}
+					if (!string.IsNullOrEmpty(facebook))
+					{
+						SocialMediaName facebookSocial = new SocialMediaName()
+						{
+							Username = facebook,
+							Source = sources.Where(x => x.Name.Equals("Facebook")).SingleOrDefault()
+						};
+						person.SocialMediaNames.Add(facebookSocial);
+					}
+					person.Organisation = (Organisation)organisations.Where(x => x.Name.Equals(organisation)).SingleOrDefault();
+
+					items.Add(person);
+				}
+			}
+
+			if (items.Count > 0)
+			{
+				itemRepo.CreateItems(items);
+				uowManager.Save();
+				return true;
+			}
+			return false;
+		}
+	}
 }

@@ -1,5 +1,6 @@
 ﻿@using System.Web.Optimization
-@model BAR.UI.MVC.Models.BaseViewModel
+@model BAR.UI.MVC.Models.CustomizationViewModel
+
 
 @section CustomCSS{
     <link href="../../Scripts/mjolnic-bootstrap-colorpicker/dist/css/bootstrap-colorpicker.min.css" rel="stylesheet">
@@ -15,10 +16,10 @@
             <div class="x_content">
                 <br />
                 <div class="col-sm-8 col-md-8 col-xs-12 center-margin">
-                    <form class="form-horizontal form-label-left">
+                    <form id="form_page_color" class="form-horizontal form-label-left">
                         <label class="control-label">Primaire kleur</label>
                         <div id="cp-primary" class="input-group">
-                            <input id="ip-primary" type="text" class="form-control" />
+                            @Html.TextBoxFor(model => model.PrimaryColor, "", new { @class = "form-control", id= "ip-primary", placeholder = @Model.PrimaryColor })
                             <span class="input-group-addon">
                                 <i></i>
                             </span>
@@ -54,6 +55,7 @@
                         <button type="submit" class="btn btn-dark">Opslaan</button>
                         <div id="messageSettings" style="display: inline"></div>
                     </form>
+
                 </div>
             </div>
         </div>
@@ -67,7 +69,7 @@
             <div class="x_content">
                 <br />
                 <div class="col-sm-8 col-md-8 col-xs-12 center-margin">
-                    <form class="form-horizontal form-label-left">
+                    <form id="form_page_text" class="form-horizontal form-label-left">
 
                         <div class="form-group">
                             <label class="control-label">Persoon alias (ev)</label>
@@ -113,7 +115,7 @@
             </div>
             <div class="x_content">
                 <br />
-                <form class="form-horizontal form-label-left">
+                <form id="form_page_privacy" class="form-horizontal form-label-left">
                     <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="privacy_title">
                             Titel
@@ -251,7 +253,7 @@
             </div>
             <div class="x_content">
                 <br />
-                <form class="form-horizontal form-label-left">
+                <form id="form_page_faq" class="form-horizontal form-label-left">
                     <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">
                             Titel
@@ -306,8 +308,7 @@
             <div class="x_content">
                 <br />
                 <div class="col-sm-8 col-md-8 col-xs-12 center-margin">
-                    <form class="form-horizontal form-label-left">
-
+                    <form id="form_page_contact" class="form-horizontal form-label-left">
                         <div class="form-group">
                             <label class="control-label">Straat en huisnummer</label>
                             <input class="form-control" value="Nationalestraat 24">
@@ -403,5 +404,135 @@
             $('#ip-bg').val(bg_color).trigger('change');
             $('#ip-font').val(font_color).trigger('change');
         })($);
+
+
+        //Get subplatformId
+        function getSubplatformId(func) {
+            //Get subdomain
+            var full = window.location.host;
+            var subdomain = full.split('.')[0];
+
+            //Do ajax call
+            $.ajax({
+                type: "GET",
+                url: "/api/Customization/GetPlatformId/" + subdomain,
+                contentType: 'application/json; charset=utf-8',
+                dataType: "json",
+            }).fail(() => {/* ok */ })
+                .done(function (data) {                    
+                    func(data);
+                })
+        }
+
+        //Functions for ajax calls
+        //Customization
+        function putColor(id) {
+            $.ajax({
+                type: "POST",
+                url: "/api/Customization/PutColor/" + id,
+                data: $("#form_page_color").serialize(),
+                contentType: 'application/json; charset=utf-8',
+                dataType: "json"
+            }).fail(() => {/* ok */ })
+                .done(() => {/* ok */ })
+        }
+        function putAlias(id) {
+            $.ajax({
+                type: "POST",
+                url: "api/Customization/PutAlias/" + id,
+                data: $("#form_page_text").serialize(),
+                contentType: 'application/json; charset=utf-8',
+                dataType: "json"
+            }).fail(() => {/* ok */ })
+                .done(() => {/* ok */ })
+        }
+        function putPrivacy(id) {
+            $.ajax({
+                type: "POST",
+                url: "api/Customization/PutPrivacy/" + id,
+                data: $("#form_page_privacy").serialize(),
+                contentType: 'application/json; charset=utf-8',
+                dataType: "json"
+            }).fail(() => {/* ok */ })
+                .done(() => {/* ok */ })
+        }
+        function putFAQ(id) {
+            $.ajax({
+                type: "POST",
+                url: "api/Customization/PutFAQ/" + id,
+                data: $("#form_page_faq").serialize(),
+                contentType: 'application/json; charset=utf-8',
+                dataType: "json"
+            }).fail(() => {/* ok */ })
+                .done(() => {/* ok */ })
+        }
+        function putContact(id) {
+            $.ajax({
+                type: "POST",
+                url: "api/Customization/PutContact/" + id,
+                data: $("#form_page_contact").serialize(),
+                contentType: 'application/json; charset=utf-8',
+                dataType: "json"
+            }).fail(() => {/* ok */ })
+                .done(() => {/* ok */ })
+        }
+
+        //Questions
+        //TODO: write an to create a question
+        function putQuestion(id) {
+            $.ajax({
+                type: "POST",
+                url: "api/Customization/PutQuestion/" + id,
+                data: $("#form_page_faq").serialize(),
+                contentType: 'application/json; charset=utf-8',
+                dataType: "json"
+            }).fail(() => {/* ok */ })
+                .done(() => {/* ok */ })
+        }
+        function deleteQuestion(id) {
+            $.ajax({
+                type: "POST",
+                url: "api/Customization/DeleteQuestion/" + id,
+                data: $("#form_page_faq").serialize(),
+                contentType: 'application/json; charset=utf-8',
+                dataType: "json"
+            }).fail(() => {/* ok */ })
+                .done(() => {/* ok */ })
+        }
+
+        //Eventlistners for ajax-calls
+        //Customization
+        $("#form_page_color").submit(function (event) {
+            event.preventDefault();
+            getSubplatformId(putColor);
+            
+        });
+        $("#form_page_text").submit(function (event) {
+            event.preventDefault();
+            getSubplatformId(putAlias);
+        });
+        $("#form_page_privacy").submit(function (event) {
+            event.preventDefault();
+            getSubplatformId(putPrivacy);
+        });
+        $("#form_page_faq").submit(function (event) {
+            event.preventDefault();
+            getSubplatformId(putFAQ);
+        });
+        $("#form_page_contact").submit(function (event) {
+            event.preventDefault();
+            getSubplatformId(putContact);
+        });
+
+        //Questions
+        //TODO: write a listner to create a question
+        $("#form_page_faq").submit(function (event) {
+            event.preventDefault();
+            getSubplatformId(putQuestion);
+        });
+        $("#form_page_faq").submit(function (event) {
+            event.preventDefault();
+            getSubplatformId(deleteQuestion);
+        });
     </script>
 }

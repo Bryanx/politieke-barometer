@@ -10,8 +10,14 @@
 }
 
 <h1>
-    @Model.PageTitle <a class="btn btn-dark btn-xs">@Resources.ImportContent</a>
+    @Model.PageTitle
 </h1>
+    @using (Html.BeginForm("UploadJson", "Admin", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
+    {
+    <label for="fileUpload" class="btn btn-dark">@Resources.ImportContent</label>
+    <input type="file" style="visibility:hidden;" class="btn btn-dark" name="jsonFile" id="fileUpload" accept=".json"/>
+    <button type="submit" id="btnSubmit" style="visibility:hidden;" class="btn btn-dark">@Resources.Save</button>
+    }
 
 <hr />
 
@@ -77,4 +83,11 @@
                 });
         })($);
     </script>
+<script>
+    $(document).ready(function () {
+        $('#fileUpload').change(function () {
+            $('#btnSubmit').click();
+        });
+    });
+    </script> 
 }

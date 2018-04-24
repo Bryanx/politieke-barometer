@@ -55,15 +55,11 @@ namespace BAR.BL.Managers
 			return dataRepo.ReadAllInfoForId(itemId);
 		}
 
-		public IEnumerable<Item> SynchronizeData(string json)
+    /// <summary>
+    /// Reads json and creates batches which will then call upon BatchUpdate for further handling.
+    /// </summary>
+		public bool SynchronizeData(string json)
 		{
-      IEnumerable<Item> items = CheckPeople(json);
-			if (UpdateInformations(json)) return items;
-			else return null;
-		}
-
-    private bool UpdateInformations(string json)
-    {
       dynamic deserializedJson = JsonConvert.DeserializeObject(json);
       int informationCount = deserializedJson.Count;
       for (int i = 0; i < informationCount; i += 1000)
@@ -80,6 +76,9 @@ namespace BAR.BL.Managers
       return true;
     }
 
+    /// <summary>
+    /// Gets json which it will convert to Information objects dat are stored into the database afterwards.
+    /// </summary>
     private void BatchUpdate(string json, int start, int end)
     {
       uowManager = new UnitOfWorkManager();
@@ -238,34 +237,18 @@ namespace BAR.BL.Managers
       uowManager = null;
     }
 
-		private IEnumerable<Item> CheckPeople(string json)
-		{
-			dynamic deserializedJson = JsonConvert.DeserializeObject(json);
-
-			IItemManager itemManager = new ItemManager();
-
-			for (int i = 0; i < deserializedJson.Count; i++)
-			{
-				for (int j = 0; j < deserializedJson[i].persons.Count; j++)
-				{
-					string name = deserializedJson[i].persons[j];
-					Item person = itemManager.GetPerson(name);
-
-					if (person == null)
-					{
-						person = itemManager.CreateItem(ItemType.Person, name);
-					}
-				}
-			}
-      return itemManager.GetAllPersons();
-		}
-
+    /// <summary>
+    /// Gets last succesfull audit.
+    /// </summary>
 		public SynchronizeAudit GetLastAudit()
 		{
 			InitRepo();
 			return dataRepo.ReadLastAudit();
 		}
 
+    /// <summary>
+    /// Adds an audit with boolean false.
+    /// </summary>
 		public SynchronizeAudit AddAudit(DateTime timestamp, bool succes)
 		{
 			InitRepo();
@@ -278,11 +261,17 @@ namespace BAR.BL.Managers
 			return synchronizeAudit;
 		}
 
+    /// <summary>
+    /// Gets audit with given id.
+    /// </summary>
     public SynchronizeAudit GetAudit(int synchronizeAuditId)
     {
       return dataRepo.ReadAudit(synchronizeAuditId);
     }
 
+    /// <summary>
+    /// Changes status of audit to true.
+    /// </summary>
     public SynchronizeAudit ChangeAudit(int synchronizeAuditId)
     {
       InitRepo();
@@ -292,6 +281,9 @@ namespace BAR.BL.Managers
       return synchronizeAudit;
     }
 
+    /// <summary>
+    /// Checks if json is empty.
+    /// </summary>
     public bool IsJsonEmpty(string json)
     {
       dynamic deserializedJson = JsonConvert.DeserializeObject(json);
@@ -302,6 +294,15 @@ namespace BAR.BL.Managers
         return true;
       }
       return false;
+    }
+
+    /// <summary>
+    /// Gets all sources.
+    /// </summary>
+    public IEnumerable<Source> GetAllSources()
+    {
+      InitRepo();
+      return dataRepo.ReadAllSources();
     }
   }
 }

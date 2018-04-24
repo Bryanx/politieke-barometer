@@ -12,11 +12,12 @@ namespace BAR.BL.Managers
 	{
 		int GetNumberInfo(int itemId, DateTime since);
 		IEnumerable<Information> GetAllInformationForId(int itemId);
-    IEnumerable<Item> SynchronizeData(string json);
+    bool SynchronizeData(string json);
     SynchronizeAudit GetLastAudit();
     SynchronizeAudit AddAudit(DateTime timestamp, bool succes);
     SynchronizeAudit GetAudit(int synchronizeAuditId);
     SynchronizeAudit ChangeAudit(int synchronizeAuditId);
     bool IsJsonEmpty(string json);
+    IEnumerable<Source> GetAllSources();
   }
 }
