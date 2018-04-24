@@ -1,5 +1,6 @@
 
 .no-widgets {
+  display: none;
   margin: 100px 0;
   > h1 {
     margin-bottom: 20px !important;
@@ -16,6 +17,9 @@
   position: relative;
   margin-left: -10px !important;
   margin-right: -10px !important;
+  > .grid-stack-item {
+    z-index: 15;
+  }
 }
 
 .subscription > td > a:hover {

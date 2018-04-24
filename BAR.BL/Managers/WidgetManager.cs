@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.Linq;
 using BAR.BL.Domain.Widgets;
 using BAR.DAL;
 using BAR.BL.Domain.Users;
@@ -29,7 +31,7 @@ namespace BAR.BL.Managers
 		/// Creates a widget based on the parameters
 		/// and links that widget to a dasboard.
 		/// </summary>
-		public Widget CreateWidget(WidgetType widgetType, string title, int rowNbr, int colNbr, int rowspan = 1, int colspan = 1, int dashboardId = -1)
+		public Widget CreateWidget(WidgetType widgetType, string title, int rowNbr, int colNbr,string tag = null, DateTime? timestamp = null, int rowspan = 1, int colspan = 1, int dashboardId = -1)
 		{
 			InitRepo();
 			Widget widget;
@@ -38,13 +40,31 @@ namespace BAR.BL.Managers
 			if (dashboardId == -1) widget = new ItemWidget();
 			else widget = new UserWidget();
 
+			//Check if timestamp was given
+			if (timestamp == null) timestamp = DateTime.Now.AddMonths(-1);
+
 			widget.WidgetType = widgetType;
 			widget.Title = title;
 			widget.RowNumber = rowNbr;
 			widget.ColumnNumber = colNbr;
 			widget.RowSpan = rowspan;
 			widget.ColumnSpan = colspan;
+			widget.Timestamp = timestamp;
 			widget.Items = new List<Item>();
+			widget.PropertyTag = tag;
+
+			//repo autmaticly links widget to dashboard
+			widgetRepo.CreateWidget(widget, dashboardId);
+			return widget;
+		}
+		
+		/// <summary>
+		/// Creates a userwidget based on a model
+		/// and links that widget to a dasboard.
+		/// </summary>
+		public Widget CreateUserWidget(Widget widget, int dashboardId)
+		{
+			InitRepo();
 
 			//repo autmaticly links widget to dashboard
 			widgetRepo.CreateWidget(widget, dashboardId);
@@ -64,14 +84,17 @@ namespace BAR.BL.Managers
 
 			//Get Item
 			ItemManager itemManager = new ItemManager(uowManager);
-			Item itemToAdd = itemManager.GetItem(itemId);
+			Item itemToAdd = itemManager.GetItemWithWidgets(itemId);
 
 			//Add item to widget
-			Widget widgetToUpdate = GetWidget(widgetId);
+			Widget widgetToUpdate = GetWidgetWithAllItems(widgetId);
 			widgetToUpdate.Items.Add(itemToAdd);
 
 			//Update database
 			widgetRepo.UpdateWidget(widgetToUpdate);
+
+			uowManager.Save();
+			uowManager = null;
 
 			return widgetToUpdate;
 		}
@@ -131,6 +154,18 @@ namespace BAR.BL.Managers
 			InitRepo();
 			return widgetRepo.ReadWidgetsForDashboard(dashboardId);
 		}
+		
+		/// <summary>
+		/// Gives back a list of widgets
+		/// for a specific item.
+		/// </summary>
+		/// 
+
+		public IEnumerable<Widget> GetWidgetsForItem(int itemId) {
+			InitRepo();
+			ItemManager itemManager = new ItemManager();
+			return itemManager.GetItemWithWidgets(itemId).ItemWidgets.AsEnumerable();
+		}
 
 		/// <summary>
 		/// Updates the position of the widget.
@@ -176,12 +211,32 @@ namespace BAR.BL.Managers
 		}
 
 		/// <summary>
+		/// Updates a widget.
+		/// </summary>
+		public Widget ChangeWidget(Widget widget) {
+			InitRepo();
+			widgetRepo.UpdateWidget(widget);
+			return widget;
+		}
+
+		/// <summary>
 		/// Gives back a dashboard with their widgets.
 		/// </summary>
 		public Dashboard GetDashboard(int dashboardId)
 		{
 			InitRepo();
 			return widgetRepo.ReadDashboardWithWidgets(dashboardId);
+		}
+		
+		/// <summary>
+		/// Gives back a dashboard with their widgets.
+		/// </summary>
+		public Dashboard GetDashboard(string userId)
+		{
+			InitRepo();
+			Dashboard dash = widgetRepo.ReadDashboardWithWidgets(userId);
+			if (dash == null) return CreateDashboard(userId);
+			return dash;
 		}
 
 		/// <summary>
@@ -190,7 +245,7 @@ namespace BAR.BL.Managers
 		/// NOTE
 		/// THIS METHOD USES UNIT OF WORK
 		/// </summary>
-		public Dashboard CreateDashboard(string userId = "-1", DashboardType dashType = DashboardType.Public)
+		public Dashboard CreateDashboard(string userId = "-1", DashboardType dashType = DashboardType.Private)
 		{
 			uowManager = new UnitOfWorkManager();
 			InitRepo();
@@ -204,7 +259,7 @@ namespace BAR.BL.Managers
 			};
 
 			//Get user if not general dashboard
-			if (userId.Equals("-1"))
+			if (!userId.Equals("-1"))
 			{
 				UserManager userManager = new UserManager(uowManager);
 				User user = userManager.GetUser(userId);
@@ -213,8 +268,8 @@ namespace BAR.BL.Managers
 				else dashboard.User = user;
 			}
 			
-			//Update database
-			widgetRepo.UpdateDashboard(dashboard);
+			//Create database
+			widgetRepo.CreateDashboard(dashboard);
 			uowManager.Save();
 
 			return dashboard;
@@ -230,6 +285,15 @@ namespace BAR.BL.Managers
 		}
 
 		/// <summary>
+		/// Gives back a widget with all the items
+		/// </summary>
+		public Widget GetWidgetWithAllItems(int widgetId)
+		{
+			InitRepo();
+			return widgetRepo.ReadWidgetWithAllitems(widgetId);
+		}
+
+		/// <summary>
 		/// Determines if the repo needs a unit of work
 		/// if the unitOfWorkManager is present.
 		/// </summary>
@@ -237,6 +301,6 @@ namespace BAR.BL.Managers
 		{
 			if (uowManager == null) widgetRepo = new WidgetRepository();
 			else widgetRepo = new WidgetRepository(uowManager.UnitOfWork);
-		}
+		}	
 	}
 }

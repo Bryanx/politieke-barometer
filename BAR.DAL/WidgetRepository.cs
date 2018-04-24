@@ -59,6 +59,15 @@ namespace BAR.DAL
 			return ctx.Dashboards.Include(dash => dash.Widgets)
 				.Where(dash => dash.DashboardId == dashboardId).SingleOrDefault();
 		}
+		
+		/// <summary>
+		/// Gives back a dashboard object with all the widgets
+		/// for a specific user id.
+		/// </summary>
+		public Dashboard ReadDashboardWithWidgets(string userId) {
+			return ctx.Dashboards.Include(dash => dash.Widgets)
+				.Where(dash => dash.User.Id == userId).FirstOrDefault();
+		}
 
 		/// <summary>
 		/// Gives back the general dashboard.
@@ -85,15 +94,7 @@ namespace BAR.DAL
 		/// </summary>
 		public IEnumerable<UserWidget> ReadWidgetsForDashboard(int dashboardId)
 		{
-			//Get UserWidgete
-			List<UserWidget> widgets = new List<UserWidget>();
-			foreach (Widget widget in ctx.Widgets.AsEnumerable())
-			{
-				if (widget is UserWidget) widgets.Add((UserWidget) widget);
-			}
-
-			//Return result
-			return widgets.AsEnumerable().Where(wid => wid.Dashboard.DashboardId == dashboardId);
+			return ReadDashboardWithWidgets(dashboardId).Widgets;
 		}
 		
 		/// <summary>
@@ -213,6 +214,15 @@ namespace BAR.DAL
 		}
 
 		/// <summary>
+		/// Gives back a widget with all the informations
+		/// </summary>
+		public Widget ReadWidgetWithAllitems(int widgetid)
+		{
+			return ctx.Widgets.Include(widget => widget.Items)
+							  .Where(widget => widget.WidgetId == widgetid).SingleOrDefault();
+		}
+
+		/// <summary>
 		/// Deletes a list of widgets.
 		/// Returns -1 if SaveChanges() is delayed by unit of work.
 		/// </summary>
@@ -220,6 +230,6 @@ namespace BAR.DAL
 		{
 			foreach (UserWidget widget in widgets) ctx.Widgets.Remove(widget);
 			return ctx.SaveChanges();
-		}		
+		}	
 	}
 }
