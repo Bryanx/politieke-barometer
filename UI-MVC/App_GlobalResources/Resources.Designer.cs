@@ -1186,6 +1186,15 @@ namespace BAR.UI.MVC.App_GlobalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Source management.
+        /// </summary>
+        public static string SourceManagement {
+            get {
+                return ResourceManager.GetString("SourceManagement", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Sources.
         /// </summary>
         public static string Sources {

@@ -561,4 +561,7 @@
   <data name="RemoveSource" xml:space="preserve">
     <value>Remove source</value>
   </data>
+  <data name="SourceManagement" xml:space="preserve">
+    <value>Source management</value>
+  </data>
 </root>
