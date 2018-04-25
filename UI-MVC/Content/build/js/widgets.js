@@ -98,6 +98,9 @@ function loadGraphs(itemId, widget) {
     //When no data is available this function shows a message.
     let displayNoGraphData = function (WidgetId) {
         $(".no-graph-data").css("display", "flex");
+        let widget = $("#graph"+WidgetId).parents(".grid-stack-item-content");
+        $(widget).find(".graph-options").hide();
+        $(widget).find(".panel_toolbox").hide();
         $("#graph"+WidgetId).hide();
     };
 
