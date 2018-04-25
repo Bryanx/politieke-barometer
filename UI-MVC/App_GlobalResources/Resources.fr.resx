@@ -141,6 +141,9 @@
   <data name="AddAChart" xml:space="preserve">
     <value>Ajouter un graphique</value>
   </data>
+  <data name="AddSource" xml:space="preserve">
+    <value>Ajouter une source</value>
+  </data>
   <data name="Admin" xml:space="preserve">
     <value>Administrateur</value>
   </data>
@@ -435,6 +438,9 @@
   <data name="RemoveItem" xml:space="preserve">
     <value>Enlever un élément</value>
   </data>
+  <data name="RemoveSource" xml:space="preserve">
+    <value>Supprimer la source</value>
+  </data>
   <data name="Reset" xml:space="preserve">
     <value>Réinitialiser</value>
   </data>
@@ -481,7 +487,10 @@
     <value>Inscrire pour suivre</value>
   </data>
   <data name="SourceManagement" xml:space="preserve">
-    <value>Gérer des sources</value>
+    <value>Gérer général</value>
+  </data>
+  <data name="Sources" xml:space="preserve">
+    <value>Sources</value>
   </data>
   <data name="StayUpToDate" xml:space="preserve">
     <value>Restez à jour</value>
@@ -497,6 +506,9 @@
   </data>
   <data name="SuccesfullyLoggedInWith" xml:space="preserve">
     <value>Connecté en tant que </value>
+  </data>
+  <data name="Synchronize" xml:space="preserve">
+    <value>Synchroniser</value>
   </data>
   <data name="ThanksEmailConfirm" xml:space="preserve">
     <value>Merci pour confirmer votre e-mail.</value>
