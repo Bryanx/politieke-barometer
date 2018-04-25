@@ -1134,6 +1134,12 @@ div.nav_menu .searchbar .search-field, form.navbar-form .input-group {
 .dropdown-search {
   right: auto !important; }
 
+.compareSearch {
+  width: 400px;
+  height: 34px;
+  vertical-align: top;
+  display: inline-block; }
+
 .autocomplete-suggestions {
   background: var(--white);
   overflow: hidden;
@@ -2059,6 +2065,12 @@ span.right {
     .no-widgets > a:hover {
       text-decoration: none; }
 
+.no-graph-data {
+  display: none;
+  justify-content: center;
+  align-items: center;
+  height: 100%; }
+
 .grid-stack {
   position: relative;
   margin-left: -10px !important;
@@ -2068,6 +2080,13 @@ span.right {
 
 .subscription > td > a:hover {
   text-decoration: none; }
+
+.addToDashboard {
+  display: inline-block;
+  vertical-align: top; }
+
+.graph-options {
+  text-align: center; }
 
 .morris-hover {
   position: absolute;
@@ -2131,5 +2150,11 @@ div.nav_menu .searchbar .search-field, form.navbar-form .input-group {
 
 .dropdown-search {
   right: auto !important; }
+
+.compareSearch {
+  width: 400px;
+  height: 34px;
+  vertical-align: top;
+  display: inline-block; }
 
 /*# sourceMappingURL=custom.css.map */

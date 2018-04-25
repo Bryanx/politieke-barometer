@@ -13,6 +13,13 @@
   }
 }
 
+.no-graph-data {
+  display: none;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
 .grid-stack {
   position: relative;
   margin-left: -10px !important;
@@ -24,4 +31,13 @@
 
 .subscription > td > a:hover {
   text-decoration: none;
+}
+
+.addToDashboard {
+  display: inline-block;
+  vertical-align: top;
+}
+
+.graph-options {
+  text-align: center;
 }
