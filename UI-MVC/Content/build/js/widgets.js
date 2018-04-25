@@ -402,7 +402,9 @@ function init() {
     
     //dashboard handlers
     $(document).on("click", ".close-widget", (e) => deleteWidget(e));
-    $(".grid-stack").on("change", (event, items) => updateWidgets(items));
+    if ($("."+Resources.Dashboard).length()) { // only on dashboard page
+        $(".grid-stack").on("change", (event, items) => updateWidgets(items));
+    }
 
     //itempage handlers
     $(document).on("click", ".addToDashboard", () => moveWidget());
