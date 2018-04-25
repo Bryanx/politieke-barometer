@@ -258,10 +258,17 @@ function loadGraphs(itemId, widget) {
         lookup: searchlist,
         triggerSelectOnValidInput: false,
         maxHeight: 200,
-        onSelect: function(suggestion) {
+        formatResult: function (suggestion) {
+            return "<div class='compareSuggestion'>" + suggestion.value + "</div>";
+        },
+        onSelect: function (suggestion) {
             LoadGraphDataSet(suggestion, $(this))
         }
     });
+    $('.compareSearch').keyup(()=> {
+        $($('.compareSuggestion')[0]).parent().parent().css("margin-left", "0");
+    });
+
 }
 
 function loadWidgets(url, itemId) {

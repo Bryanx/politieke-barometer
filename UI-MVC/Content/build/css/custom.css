@@ -1176,7 +1176,7 @@ div.nav_menu .searchbar .search-field, form.navbar-form .input-group {
   border-radius: 5px; }
 
 .autocomplete-suggestion {
-  padding: 10px 10px;
+  padding: 10px;
   white-space: nowrap;
   overflow: hidden; }
   .autocomplete-suggestion:hover {
