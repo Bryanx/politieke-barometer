@@ -43,7 +43,7 @@ function createItemWidget(id, title) {
         '                    <h2 class="graphTitle">' + title + '</h2>' +
         '                    <ul class="nav navbar-right panel_toolbox">' +
         '                       <li>' +
-        '                            <button class="addToDashboard btn btn-dark">Add to dashboard</button>' +
+        '                            <a class="addToDashboard">Add to dashboard</a>' +
         '                       </li>' +
         '                       <li class="dropdown">' +
         '                       <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-gear"></i></a>' +
@@ -72,12 +72,6 @@ gridselector.gridstack({
 });
 
 var grid = gridselector.data('gridstack');
-
-function addCSSgrid(id) {
-    let elem = $('#' + id);
-    elem.css('width', 'auto');
-    elem.css('height', '85%');
-}
 
 function noWidgetsAvailable() {
     $('.no-widgets').show();
@@ -190,10 +184,10 @@ function addLineChartJS(widgetId, chartData) {
 
 
 function loadGrid(data, itemId) {
+    console.log(data);
     if (data != null && data.length) {
         $.each(data, (index, widget) => {
             //UserWidget
-            console.log(data);
             if (widget.DashboardId !== -1) {
                 grid.addWidget(createUserWidget(widget.WidgetId, widget.Title), widget.RowNumber, widget.ColumnNumber, widget.RowSpan, widget.ColumnSpan,
                     false, 4, 12, 4, 12, widget.WidgetId);
@@ -204,13 +198,15 @@ function loadGrid(data, itemId) {
                 grid.movable('.grid-stack-item', false);
                 grid.resizable('.grid-stack-item', false);
             }
-
-            $.ajax({
-                type: 'GET',
-                url: '/api/GetGraphs/' + itemId + '/' + widget.WidgetId,
-                dataType: 'json',
-                success: data2 => addLineChartJS(widget.WidgetId, data2)
-            }).fail();
+            //if widgettype == graphtype
+            if (widget.WidgetType == 0) {
+                $.ajax({
+                    type: 'GET',
+                    url: '/api/GetGraphs/' + itemId + '/' + widget.WidgetId,
+                    dataType: 'json',
+                    success: data2 => addLineChartJS(widget.WidgetId, data2)
+                }).fail();
+            }
             counter++;
         });
     } else {
@@ -254,14 +250,14 @@ function init() {
     }.bind(this);
 
     //CRUD:
-    this.createWidget = function () {
+    this.moveWidget = function () {
         let widgetId = $('.addToDashboard').parents(".chart-container").data("widget-id");
         $.ajax({
             type: 'POST',
             url: '/api/MoveWidget/' + widgetId,
             dataType: 'json',
             success: () => showSaveMessage()
-        }).fail(() => showFailedMessage());
+        }).fail(() => showErrorMessage());
     };
 
     this.updateWidgets = function (items) {
@@ -326,6 +322,6 @@ function init() {
     $('.grid-stack').on('change', (event, items) => this.updateWidgets(items));
 
     //itempage handlers
-    $(document).on('click', '.addToDashboard', () => this.createWidget());
+    $(document).on('click', '.addToDashboard', () => this.moveWidget());
 }
 

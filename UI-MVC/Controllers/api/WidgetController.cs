@@ -88,13 +88,13 @@ namespace BAR.UI.MVC.Controllers.api
 
 			Dashboard dash = widgetManager.GetDashboard(User.Identity.GetUserId());
 
+
 			if (widgetManager.GetWidget(widgetId) == null) return StatusCode(HttpStatusCode.Conflict);
 			
 			Widget widgetToCopy = widgetManager.GetWidget(widgetId);
 			Widget widget = widgetManager.AddWidget(WidgetType.GraphType, 
 				widgetToCopy.Title, widgetToCopy.RowNumber, widgetToCopy.ColumnNumber, widgetToCopy.PropertyTags.ToList(), rowspan: widgetToCopy.RowSpan,
 				colspan: widgetToCopy.ColumnSpan, dashboardId: dash.DashboardId);
-
 			return StatusCode(HttpStatusCode.NoContent);
 		}
 		

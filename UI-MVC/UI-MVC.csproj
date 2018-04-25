@@ -241,7 +241,6 @@
     <Compile Include="Controllers\PersonController.cs" />
     <Compile Include="Controllers\SuperAdminController.cs" />
     <Compile Include="Controllers\UserController.cs" />
-    <Compile Include="DAL\WidgetManager.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -261,7 +260,6 @@
     <Compile Include="Models\SuperAdminViewModels.cs" />
     <Compile Include="Models\UserViewModels.cs" />
     <Compile Include="Models\UserWidgetDTO.cs" />
-    <Compile Include="Models\Widgettt.cs" />
     <Compile Include="PersonDynamicNodeProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
