@@ -15,6 +15,7 @@ using System.Configuration;
 using System.Linq;
 using System.Net.Http;
 using System.Web;
+using webapi.Providers;
 
 namespace BAR.UI.MVC
 {
@@ -79,15 +80,20 @@ namespace BAR.UI.MVC
         }
       });
 
-      ////Configure the application for OAuth based flow
-      //PublicClientId = "self";
-      //var test = new ApplicationOAuthProvider
-      //OAuthOptions = new OAuthAuthorizationServerOptions
-      //{
-      //  TokenEndpointPath = new PathString("/Token"),
-      //  Provider = new ApplicationOAuthProvider
+      //Configure the application for OAuth based flow
+      PublicClientId = "self";
+      OAuthOptions = new OAuthAuthorizationServerOptions
+      {
+        TokenEndpointPath = new PathString("/Token"),
+        Provider = new ApplicationOAuthProvider(PublicClientId),
+        AuthorizeEndpointPath = new PathString("/api/Android/ExternalLogin"),
+        AccessTokenExpireTimeSpan = TimeSpan.FromDays(14),
+        //For development
+        AllowInsecureHttp = true
+      };
 
-      //}
+      //Enable the application to use bearer tokens to authenticate users
+      app.UseOAuthBearerTokens(OAuthOptions);
     }
   }
 }
