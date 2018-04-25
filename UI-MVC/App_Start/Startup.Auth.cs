@@ -79,15 +79,15 @@ namespace BAR.UI.MVC
         }
       });
 
-      //Configure the application for OAuth based flow
-      PublicClientId = "self";
-      var test = new ApplicationOAuthProvider
-      OAuthOptions = new OAuthAuthorizationServerOptions
-      {
-        TokenEndpointPath = new PathString("/Token"),
-        Provider = new ApplicationOAuthProvider
+      ////Configure the application for OAuth based flow
+      //PublicClientId = "self";
+      //var test = new ApplicationOAuthProvider
+      //OAuthOptions = new OAuthAuthorizationServerOptions
+      //{
+      //  TokenEndpointPath = new PathString("/Token"),
+      //  Provider = new ApplicationOAuthProvider
 
-      }
+      //}
     }
   }
 }
