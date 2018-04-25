@@ -7,6 +7,7 @@ using Microsoft.Owin;
 using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.Facebook;
 using Microsoft.Owin.Security.Google;
+using Microsoft.Owin.Security.OAuth;
 using Owin;
 using System;
 using System.Collections.Generic;
@@ -19,6 +20,9 @@ namespace BAR.UI.MVC
 {
   public partial class Startup
   {
+    public static OAuthAuthorizationServerOptions OAuthOptions { get; private set; }
+    public static string PublicClientId { get; private set; }
+
     public void ConfigureAuth(IAppBuilder app)
     {
       // Configure the db context, user manager and signin manager to use a single instance per request
@@ -74,6 +78,16 @@ namespace BAR.UI.MVC
           }
         }
       });
+
+      //Configure the application for OAuth based flow
+      PublicClientId = "self";
+      var test = new ApplicationOAuthProvider
+      OAuthOptions = new OAuthAuthorizationServerOptions
+      {
+        TokenEndpointPath = new PathString("/Token"),
+        Provider = new ApplicationOAuthProvider
+
+      }
     }
   }
 }

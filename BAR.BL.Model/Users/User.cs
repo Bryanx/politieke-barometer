@@ -26,10 +26,10 @@ namespace BAR.BL.Domain.Users
     public byte[] ProfilePicture { get; set; }
 
     //Method for cookie verification (maybe removed later from domain)
-    public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<User> manager)
+    public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<User> manager, string authenticationType = DefaultAuthenticationTypes.ApplicationCookie)
 		{
 			//Note the authenticationType must match the one defined in CookieAuthenticationOptions.AuthenticationType
-			var userIdentity = await manager.CreateIdentityAsync(this, DefaultAuthenticationTypes.ApplicationCookie);
+			var userIdentity = await manager.CreateIdentityAsync(this, authenticationType);
 			return userIdentity;
 		}
 	}
