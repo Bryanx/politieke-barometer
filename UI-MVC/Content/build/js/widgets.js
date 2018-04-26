@@ -18,18 +18,23 @@ function addNodeboxGraph(id) {
  */
 
 function createNodebox(id) {
-    let nodeId = "canvas" + id;
-    let node = document.createElement('canvas');
-    node.id = nodeId;
-    node.width = document.getElementById(id).clientWidth;
-    node.height = document.getElementById(id).clientHeight;
-    document.getElementById(id).appendChild(node);
+    let node = document.getElementById('graph' + id);
+    let parent =  node.parentElement;
     
-    var canvas = {
+    parent.removeChild(node);
+    node = document.createElement('canvas'); 
+    node.id = 'graph' + id;
+    node.width = parent.clientWidth;
+    node.height = parent.clientHeight;
+    parent.appendChild(node);
+    
+    parent.parentElement.parentElement.onchange = function() {nodeboxSize(node, parent, id)};
+
+    let canvas = {
         userId: 'AnthonyT',
         projectId: 'tutorial',
         functionId: 'circle_graph',
-        canvasId: "canvas" + id,
+        canvasId: 'graph' + id,
         autoplay: true
     };
 
@@ -41,6 +46,16 @@ function createNodebox(id) {
             window.player = player;
         }
     });
+
+}
+
+function nodeboxSize(node, parent, id) {
+    parent.removeChild(node);
+    node = document.createElement('canvas');
+    node.id = 'graph' + id;
+    node.width = parent.clientWidth;
+    node.height = parent.clientHeight;
+    parent.appendChild(node);
 }
 
 /**
@@ -272,7 +287,7 @@ function init() {
     //add widget with graph
     this.btnAddLineChart = function () {
         grid.addWidget(createUserWidget('grafiek' + counter), 0, 0, 4, 4, true, 4, 12, 4);
-        addLineChart('grafiek' + counter);
+        addLineChartJS('grafiek' + counter);
         counter++;
         return false;
     }.bind(this);
@@ -291,7 +306,7 @@ function init() {
         return false;
     }.bind(this);
     this.btnAddNodebox = function () {
-        grid.addWidget(createWidget('grafiek' + counter), 0, 0, 6, 6, true, 4, 12, 4);
+        grid.addWidget(createUserWidget('grafiek' + counter), 0, 0, 6, 6, true, 4, 12, 4, 12);
         addNodeboxGraph('grafiek' + counter);
         counter++;
         return false;
@@ -366,8 +381,8 @@ function init() {
     $('#btnAddLine').click(this.btnAddLineChart);
     $('#btnAddPie').click(this.btnAddPieChart);
     $('#btnAddBar').click(this.btnAddBarChart);
-
     $('#btnAddNodebox').click(this.btnAddNodebox);
+    
     $(document).on('click', '.close-widget', (e) => this.deleteWidget(e));
     $('.grid-stack').on('change', (event, items) => this.updateWidgets(items));
     //itempage handlers
