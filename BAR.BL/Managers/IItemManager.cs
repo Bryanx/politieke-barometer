@@ -31,6 +31,7 @@ namespace BAR.BL.Managers
 		bool ImportJson(string json);
 		Item AddItem(ItemType itemType, string name, string description = "", string function = "", Category category = null,
 			string district = null, string level = null, string site = null, Gender gender = Gender.OTHER, string position = null, DateTime? dateOfBirth = null);
+		Item AddWidgetsToItem(int itemId, IEnumerable<int> widgetIds);
 
 		Item ChangeItemName(int itemId, string name);
 		Item ChangeItemActivity(int itemId);

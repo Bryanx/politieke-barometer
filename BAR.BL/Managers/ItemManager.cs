@@ -326,20 +326,22 @@ namespace BAR.BL.Managers
 		private List<Widget> GenerateDefaultItemWidgets(string name, int itemId)
 		{
 			List<Widget> lijst = new List<Widget>();
+			List<int> widgetIds = new List<int>();
 			WidgetManager widgetManager = new WidgetManager();
 
 			ItemWidget widget1 = (ItemWidget)widgetManager.CreateWidget(WidgetType.GraphType, name + " popularity", 1, 1, rowspan: 12, colspan: 6);
 			lijst.Add(widget1);
+			widgetIds.Add(widget1.WidgetId);
 
-			ItemWidget widget2 = (ItemWidget)widgetManager.CreateWidget(WidgetType.GraphType, name + " popularity", 1, 1, rowspan: 12, colspan: 6);
+			ItemWidget widget2 = (ItemWidget)widgetManager.CreateWidget(WidgetType.GraphType, name + " gender comparison ", 1, 1, rowspan: 6, colspan: 6);
 			lijst.Add(widget2);
+			widgetIds.Add(widget2.WidgetId);
 
-			ItemWidget widget3 = (ItemWidget)widgetManager.CreateWidget(WidgetType.GraphType, name + " popularity", 1, 1, rowspan: 12, colspan: 6);
+			ItemWidget widget3 = (ItemWidget)widgetManager.CreateWidget(WidgetType.GraphType, name + " age comparison", 1, 1, rowspan: 6, colspan: 6);
 			lijst.Add(widget3);
+			widgetIds.Add(widget3.WidgetId);
 
-			widgetManager.AddItemToWidget(widget1.WidgetId, itemId);
-			widgetManager.AddItemToWidget(widget1.WidgetId, itemId);
-			widgetManager.AddItemToWidget(widget1.WidgetId, itemId);
+			AddWidgetsToItem(itemId, widgetIds);
 			return lijst;
 		}
 
@@ -606,6 +608,14 @@ namespace BAR.BL.Managers
 				return true;
 			}
 			return false;
+		}
+
+		/// <summary>
+		/// Adds widgets to a specific item.
+		/// </summary>
+		public Item AddWidgetsToItem(int itemId, IEnumerable<int> widgetIds)
+		{
+			throw new NotImplementedException();
 		}
 	}
 }
