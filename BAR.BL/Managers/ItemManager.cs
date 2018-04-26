@@ -329,16 +329,8 @@ namespace BAR.BL.Managers
 
 			ItemWidget widget = (ItemWidget)widgetManager.CreateWidget(WidgetType.GraphType, name + " popularity", 1, 1, rowspan: 12, colspan: 6);
 			lijst.Add(widget);
+
 			widgetManager.AddItemToWidget(widget.WidgetId, itemId);
-			
-			ItemWidget widget2 = (ItemWidget)widgetManager.CreateWidget(WidgetType.GraphType, "Gender comparison", 1, 1, rowspan: 6, colspan: 6);
-			lijst.Add(widget2);
-			widgetManager.AddItemToWidget(widget2.WidgetId, itemId);
-			
-			ItemWidget widget3 = (ItemWidget)widgetManager.CreateWidget(WidgetType.GraphType, "Age comparison", 1, 1, rowspan: 6, colspan: 6);
-			lijst.Add(widget3);
-			widgetManager.AddItemToWidget(widget3.WidgetId, itemId);
-			
 			return lijst;
 		}
 
