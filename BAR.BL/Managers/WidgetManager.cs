@@ -70,19 +70,6 @@ namespace BAR.BL.Managers
 			widgetRepo.CreateWidget(widget, dashboardId);
 			return widget;
 		}
-		
-		/// <summary>
-		/// Creates a userwidget based on a model
-		/// and links that widget to a dasboard.
-		/// </summary>
-		public Widget CreateUserWidget(Widget widget, int dashboardId)
-		{
-			InitRepo();
-
-			//repo autmaticly links widget to dashboard
-			widgetRepo.CreateWidget(widget, dashboardId);
-			return widget;
-		}
 
 		/// <summary>
 		/// Adds an item to a widget.

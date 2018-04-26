@@ -19,21 +19,7 @@ namespace BAR.DAL.EF
     /// </summary>
     private readonly bool delaySave;
 
-<<<<<<< HEAD
-		/// <summary>
-		/// Constructor of PizzaDbContext, loads the connectionstring based on de
-		/// configuration key "PizzaDB"
-		/// </summary>
-		/// Indicates if this context class operates under a Unit-Of-Work pattern. If so,
-		/// SaveChanges will not be executed on the database, instead you'll need to use
-		/// CommitChanges (but that method is not publicly available)
-		/// By default, unitOfWorkPresent will be set to false
-		/// </param>
-		public BarometerDbContext(bool useUOF = false) : base("dbTeam11")
-		{
-			delaySave = useUOF;
-		}
-=======
+
     /// <summary>
     /// Constructor of PizzaDbContext, loads the connectionstring based on de
     /// configuration key "PizzaDB"
@@ -43,11 +29,11 @@ namespace BAR.DAL.EF
     /// CommitChanges (but that method is not publicly available)
     /// By default, unitOfWorkPresent will be set to false
     /// </param>
-    public BarometerDbContext(bool useUOF = false) : base("BAR_DB")
+    public BarometerDbContext(bool useUOF = false) : base("dbTeam11")
     {
       delaySave = useUOF;
     }
->>>>>>> master
+
 
     //Data package
     public DbSet<Source> Sources { get; set; }

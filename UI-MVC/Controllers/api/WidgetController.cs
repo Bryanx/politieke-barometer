@@ -1,11 +1,4 @@
-<<<<<<< HEAD
-using System.Linq;
-using System.Net;
-using System.Web.Http;
-using BAR.BL.Domain.Widgets;
-using BAR.BL.Managers;
-using Microsoft.AspNet.Identity;
-=======
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,7 +13,7 @@ using Microsoft.AspNet.Identity;
 using WebGrease.Css.Extensions;
 using Widget = BAR.BL.Domain.Widgets.Widget;
 using BAR.BL.Domain.Items;
->>>>>>> master
+
 
 namespace BAR.UI.MVC.Controllers.api
 {
@@ -32,36 +25,24 @@ namespace BAR.UI.MVC.Controllers.api
 	public class WidgetController : ApiController
 	{
 		private IWidgetManager widgetManager;
-<<<<<<< HEAD
-		
-		/// <summary>
-		///Reads all widgets and returns them (possibly in json)
-=======
+
 		private IItemManager itemManager;
 		private IDataManager dataManager;
 
 		/// <summary>
 		///Reads all widgets for a user dashboard and returns them
->>>>>>> master
 		/// </summary>
 		public IHttpActionResult Get()
 		{
 			widgetManager = new WidgetManager();
 
 			Dashboard dash = widgetManager.GetDashboard(User.Identity.GetUserId());
-<<<<<<< HEAD
-			var responses = widgetManager.GetWidgetsForDashboard(dash.DashboardId);
-			
-			if (responses == null || responses.Count() == 0) return StatusCode(HttpStatusCode.NoContent);
-			
-			return Ok(responses);
-=======
+
 			List<UserWidget> widgets = widgetManager.GetWidgetsForDashboard(dash.DashboardId).ToList();
 			
 			if (widgets == null || widgets.Count() == 0) return StatusCode(HttpStatusCode.NoContent);
 
 			return Ok(Mapper.Map(widgets, new List<UserWidgetDTO>()));
->>>>>>> master
 		}
 		
 		/// <summary>
@@ -152,19 +133,9 @@ namespace BAR.UI.MVC.Controllers.api
 			foreach (UserWidgetDTO widget in widgets) {
 				if (widget == null) return BadRequest("No widget given");
 				if (widgetManager.GetWidget(widget.WidgetId) == null) return NotFound();
-
-<<<<<<< HEAD
-			if (widget == null) return BadRequest("No widget given");
-			if (!ModelState.IsValid) return BadRequest(ModelState);
-			if (id != widget.WidgetId) return BadRequest("Id doesn't match");
-			if (widgetManager.GetWidget(widget.WidgetId) == null) return NotFound();
-			
-			widgetManager.ChangeWidget(widget);
-=======
 				widgetManager.ChangeWidgetPos(widget.WidgetId, widget.RowNumber, widget.ColumnNumber, widget.RowSpan,
 					widget.ColumnSpan);
 			}
->>>>>>> master
 			return StatusCode(HttpStatusCode.NoContent);
 		}
 

@@ -13,19 +13,7 @@ using System.Text;
 namespace BAR.DAL.EF
 {
   internal class BarometerInitializer : CreateDatabaseIfNotExists<BarometerDbContext>
-<<<<<<< HEAD
-  {
-    /// <summary>
-    /// Dummy data from the json file will be generated
-    /// in this file for the first wave of information.
-    /// </summary>
-    protected override void Seed(BarometerDbContext ctx)
-    {
-      GenerateSources(ctx);
-      GenerateProperties(ctx);
-      GenerateAreas(ctx);
-    }
-=======
+
 	{
 		/// <summary>
 		/// Dummy data from the json file will be generated
@@ -90,8 +78,6 @@ namespace BAR.DAL.EF
 
 			ctx.SaveChanges();
 		}
-
->>>>>>> master
 
     /// <summary>
     /// Generates all of the sources we get our information from.
@@ -211,14 +197,9 @@ namespace BAR.DAL.EF
       {
         Area area = new Area
         {
-<<<<<<< HEAD
-          Country = "Belgi�",
-          Residence = deserializedJson[i].city
-=======
           Country    = "België",
           PostalCode = deserializedJson[i].zip,
           Residence  = deserializedJson[i].city
->>>>>>> master
         };
         ctx.Areas.Add(area);
       }
