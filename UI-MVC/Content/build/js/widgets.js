@@ -110,6 +110,7 @@ function loadGraphs(itemId, widget) {
         var newDataset = {
             label: name,
             borderColor: newColor,
+            backgroundColor: newColor,
             data: values,
             fill: false
         };
@@ -217,6 +218,8 @@ function loadGraphs(itemId, widget) {
                     data: Object.values(chartData),
                     label: widget.Title,
                     borderColor: COLORS[0],
+                    backgroundColor: COLORS[0],
+                    hoverBackgroundColor: COLORS[0],
                     fill: false,
                 }],
             },
@@ -250,7 +253,6 @@ function loadGraphs(itemId, widget) {
     $(document).on("click", ".chartShowYGrid", (e) => ShowYGrid(e));
     $(document).on("click", ".chartShowLogScale", (e) => ShowLogScale(e));
     $(document).on("click", ".chartShowLegend", (e) => ShowLegend(e));
-    $(document).on("click", ".addGraphData", (e) => AddGraphData(e));
 
     //Loads the graph data.
     $(() => ajaxLoadGraphs(widget));
@@ -402,7 +404,9 @@ function init() {
     
     //dashboard handlers
     $(document).on("click", ".close-widget", (e) => deleteWidget(e));
-    if ($("."+Resources.Dashboard).length()) { // only on dashboard page
+    
+    //persist widget state if changed. (only for dashboard widgets)
+    if ($("." + Resources.Dashboard).length) { 
         $(".grid-stack").on("change", (event, items) => updateWidgets(items));
     }
 
