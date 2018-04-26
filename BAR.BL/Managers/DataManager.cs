@@ -133,18 +133,14 @@ namespace BAR.BL.Managers
 		/// Gives back a map with all the propertievalues of a specific propertie
 		/// works dynamicly. The returnvalue contains the following:
 		/// 
-		/// Outer dictionary:
-		/// - key: mapping to date
-		/// - value: inner dictionary that will house the propertyvalues. this is 1:1 because each key houses one inner dictionary
-		/// 
-		/// Inner dictionary:
+		/// Dictionary:
 		/// - key: name of the property-value
 		/// - value: number of times the property-value was mentioned
 		/// 
 		/// WARNING
 		/// This method will only work if the widget has a propertytag
 		/// </summary>
-		public IDictionary<string, IDictionary<string, double>> GetPropvaluesForWidget(int itemid, int widgetId, string proptag, DateTime? startDate = null)
+		public IDictionary<string, double> GetPropvaluesForWidget(int itemid, int widgetId, string proptag, DateTime? startDate = null)
 		{
 			InitRepo();
 
@@ -154,35 +150,31 @@ namespace BAR.BL.Managers
 			DateTime? timestamp = widget.Timestamp.Value;
 			if (timestamp == null) return null;
 
-			//Get informations for item
-			IEnumerable<Information> infos = GetInformationsWithAllInfoForItem(itemid);
-			if (infos == null || infos.Count() == 0) return null;
-
-			//Map timestap to number of propertyValues
-			IDictionary<string, IDictionary<string, double>> dict = new Dictionary<string, IDictionary<string, double>>();
 			if (startDate == null) startDate = DateTime.Now;
 			else if (startDate < timestamp) return null;
 
-			while (startDate > timestamp)
+			//Get informations for item
+			IEnumerable<Information> infos = GetInformationsWithAllInfoForItem(itemid);
+			IEnumerable<Information> infosQueried = infos.Where(info => info.CreationDate > startDate)
+														 .Where(info => info.CreationDate < timestamp)
+														 .AsEnumerable();
+			if (infos == null || infos.Count() == 0) return null;
+
+			//Map timestap to number of propertyValues		
+			IDictionary<string, double> dict = new Dictionary<string, double>();
+			foreach (Information information in infosQueried)
 			{
-				IEnumerable<Information> infosQueried = infos.Where(info => info.CreationDate == startDate).AsEnumerable();
-				IDictionary<string, double> propdict = new Dictionary<string, double>();
-				foreach (Information information in infosQueried)
+				foreach (PropertyValue propval in information.PropertieValues)
 				{
-					foreach (PropertyValue propval in information.PropertieValues)
+					//If the name of the property is the same as the propertytag,
+					//Then the propertyvalue shall be added to the dictionary
+					if (propval.Property.Name.ToLower().Equals(proptag.ToLower()))
 					{
-						//If the name of the property is the same as the propertytag,
-						//Then the propertyvalue shall be added to the dictionary
-						if (propval.Property.Name.ToLower().Equals(proptag.ToLower()))
-						{
-							propdict[propval.Value] += 1;
-						}
+						dict[propval.Value] += 1;
 					}
 				}
-				dict[startDate.ToString()] = propdict;
-				startDate = startDate.Value.AddDays(-1);
 			}
-
+			
 			return dict;
 		}
 
