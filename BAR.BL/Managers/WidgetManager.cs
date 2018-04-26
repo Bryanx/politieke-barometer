@@ -52,6 +52,7 @@ namespace BAR.BL.Managers
 			widget.Timestamp = timestamp;
 			widget.Items = new List<Item>();
 			widget.GraphType = graphType;
+			widget.Data = new List<IDictionary<string, double>>();
 
 			//Update database
 			if (dashboardId == -1)

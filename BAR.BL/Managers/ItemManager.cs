@@ -190,7 +190,6 @@ namespace BAR.BL.Managers
 		/// <summary>
 		/// Returns an item for a specifig itemId including the attached subplatform.
 		/// </summary>
-		/// <param name="itemId"></param>
 		/// <returns></returns>
 		public Item GetItemWithSubPlatform(int itemId)
 		{
@@ -330,6 +329,7 @@ namespace BAR.BL.Managers
 			WidgetManager widgetManager = new WidgetManager();
 
 			ItemWidget widget1 = (ItemWidget)widgetManager.AddWidget(WidgetType.GraphType, name + " popularity", 1, 1, rowspan: 12, colspan: 6);
+			widget1.Data
 			lijst.Add(widget1);
 			widgetIds.Add(widget1.WidgetId);
 
