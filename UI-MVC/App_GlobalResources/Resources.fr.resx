@@ -141,6 +141,9 @@
   <data name="AddAChart" xml:space="preserve">
     <value>Ajouter un graphique</value>
   </data>
+  <data name="AddSource" xml:space="preserve">
+    <value>Ajouter une source</value>
+  </data>
   <data name="Admin" xml:space="preserve">
     <value>Administrateur</value>
   </data>
@@ -187,16 +190,16 @@
     <value>Confirmer votre compte</value>
   </data>
   <data name="ConfirmAccountClickingHere" xml:space="preserve">
-    <value>Confirmer votre compte par cliquez ici</value>
+    <value>Confirmez votre compte par cliquez ici.</value>
   </data>
   <data name="ConfirmForgotPassword" xml:space="preserve">
-    <value>Confirmer de oublié le mot de passe</value>
+    <value>Confirmer de oublié le mot de passe.</value>
   </data>
   <data name="ConfirmPassword" xml:space="preserve">
     <value>Confirmer votre mot de passe</value>
   </data>
   <data name="ConfirmResetPassword" xml:space="preserve">
-    <value>Confirmer le reset du mot de passe</value>
+    <value>Confirmer le reset du mot de passe.</value>
   </data>
   <data name="ConfirmYourEmail" xml:space="preserve">
     <value>Confirmer votre e-mail</value>
@@ -229,19 +232,19 @@
     <value>Effacez mon profil</value>
   </data>
   <data name="DeleteAccountWarning" xml:space="preserve">
-    <value>Attention! à enlevez votre account toutes les institutions, graphiques et préférences doivent effacer.</value>
+    <value>Attention! À enlevez votre account toutes les institutions, graphiques et préférences doivent effacer.</value>
   </data>
   <data name="DeleteUser" xml:space="preserve">
     <value>Enlever utilisateur</value>
   </data>
   <data name="Email" xml:space="preserve">
-    <value>e-mail</value>
+    <value>E-mail</value>
   </data>
   <data name="EmailRequired" xml:space="preserve">
-    <value>e-mail obligatoire</value>
+    <value>E-mail obligatoire</value>
   </data>
   <data name="EmailSentPasswordReset" xml:space="preserve">
-    <value>Un e-mail est envoyé pour réinitialiser votre mot de passe</value>
+    <value>Un e-mail est envoyé pour réinitialiser votre mot de passe.</value>
   </data>
   <data name="EmailUs" xml:space="preserve">
     <value>Envoyez un courriel</value>
@@ -277,13 +280,13 @@
     <value>Page d'acceuil</value>
   </data>
   <data name="HomepageHeaderTitle" xml:space="preserve">
-    <value>Regardez quel politiciens sont tendence</value>
+    <value>Regardez quel politiciens sont tendence.</value>
   </data>
   <data name="Hours" xml:space="preserve">
     <value>Heures</value>
   </data>
   <data name="IAgreeWithTheTermsAndCondition" xml:space="preserve">
-    <value>J'ai lu et accepté les modalités et conditions</value>
+    <value>J'ai lu et accepté les modalités et conditions.</value>
   </data>
   <data name="ImportContent" xml:space="preserve">
     <value>Importer contenu</value>
@@ -304,10 +307,10 @@
     <value>Moins d'une minute</value>
   </data>
   <data name="Link" xml:space="preserve">
-    <value>lien</value>
+    <value>Lien</value>
   </data>
   <data name="Links" xml:space="preserve">
-    <value>liens</value>
+    <value>Liens</value>
   </data>
   <data name="Login" xml:space="preserve">
     <value>Se connecter</value>
@@ -388,7 +391,7 @@
     <value>Mot de passe</value>
   </data>
   <data name="PasswordNotMatch" xml:space="preserve">
-    <value>Les mots de passe ne corresponds pas</value>
+    <value>Les mots de passe ne corresponds pas.</value>
   </data>
   <data name="Photo" xml:space="preserve">
     <value>Photo</value>
@@ -435,14 +438,17 @@
   <data name="RemoveItem" xml:space="preserve">
     <value>Enlever un élément</value>
   </data>
+  <data name="RemoveSource" xml:space="preserve">
+    <value>Supprimer la source</value>
+  </data>
   <data name="Reset" xml:space="preserve">
     <value>Réinitialiser</value>
   </data>
   <data name="ResetPassword" xml:space="preserve">
-    <value>Réinitialiser votre mot de passe</value>
+    <value>Réinitialisez votre mot de passe</value>
   </data>
   <data name="ResetPasswordByClickingHere" xml:space="preserve">
-    <value>Réinitialiser votre mot de passe par cliquer ici</value>
+    <value>Réinitialisez votre mot de passe par cliquer ici.</value>
   </data>
   <data name="Role" xml:space="preserve">
     <value>Rôle</value>
@@ -454,7 +460,7 @@
     <value>Sauvegardé</value>
   </data>
   <data name="SearchbarPlaceholder" xml:space="preserve">
-    <value>Chechez des Politiciens, des Parties ou des sujets</value>
+    <value>Cherchez des politiciens, des parties ou des sujets.</value>
   </data>
   <data name="SelectYourCity" xml:space="preserve">
     <value>Choisissez votre ville</value>
@@ -481,7 +487,10 @@
     <value>Inscrire pour suivre</value>
   </data>
   <data name="SourceManagement" xml:space="preserve">
-    <value>Gérer des sources</value>
+    <value>Gérer général</value>
+  </data>
+  <data name="Sources" xml:space="preserve">
+    <value>Sources</value>
   </data>
   <data name="StayUpToDate" xml:space="preserve">
     <value>Restez à jour</value>
@@ -497,6 +506,9 @@
   </data>
   <data name="SuccesfullyLoggedInWith" xml:space="preserve">
     <value>Connecté en tant que </value>
+  </data>
+  <data name="Synchronize" xml:space="preserve">
+    <value>Synchroniser</value>
   </data>
   <data name="ThanksEmailConfirm" xml:space="preserve">
     <value>Merci pour confirmer votre e-mail.</value>
@@ -544,6 +556,6 @@
     <value>Votre</value>
   </data>
   <data name="YourPasswordHasBeenReset" xml:space="preserve">
-    <value>Votre mot de passe est réinitialisé</value>
+    <value>Votre mot de passe est réinitialisé.</value>
   </data>
 </root>

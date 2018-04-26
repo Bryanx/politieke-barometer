@@ -480,8 +480,8 @@
   <data name="SignupToFollow" xml:space="preserve">
     <value>Signup to follow</value>
   </data>
-  <data name="SourceManagement" xml:space="preserve">
-    <value>Source management</value>
+  <data name="GeneralManagement" xml:space="preserve">
+    <value>General management</value>
   </data>
   <data name="StayUpToDate" xml:space="preserve">
     <value>Stay up-to-date.</value>
@@ -545,5 +545,23 @@
   </data>
   <data name="YourPasswordHasBeenReset" xml:space="preserve">
     <value>Your password has been reset.</value>
+  </data>
+  <data name="Site" xml:space="preserve">
+    <value>Site</value>
+  </data>
+  <data name="Sources" xml:space="preserve">
+    <value>Sources</value>
+  </data>
+  <data name="Synchronize" xml:space="preserve">
+    <value>Synchronize</value>
+  </data>
+  <data name="AddSource" xml:space="preserve">
+    <value>Add source</value>
+  </data>
+  <data name="RemoveSource" xml:space="preserve">
+    <value>Remove source</value>
+  </data>
+  <data name="SourceManagement" xml:space="preserve">
+    <value>Source management</value>
   </data>
 </root>

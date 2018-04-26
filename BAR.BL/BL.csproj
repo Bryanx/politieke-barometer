@@ -112,9 +112,11 @@
     <Compile Include="Managers\IDataManager.cs" />
     <Compile Include="Managers\IdentityUserManager.cs" />
     <Compile Include="Managers\IItemManager.cs" />
+    <Compile Include="Managers\ISubplatformManager.cs" />
     <Compile Include="Managers\ISubscriptionManager.cs" />
     <Compile Include="Managers\ItemManager.cs" />
     <Compile Include="Managers\IUserManager.cs" />
+    <Compile Include="Managers\SubplatformManager.cs" />
     <Compile Include="Managers\ServiceManager.cs" />
     <Compile Include="Managers\SignInManager.cs" />
     <Compile Include="Managers\SubscriptionManager.cs" />

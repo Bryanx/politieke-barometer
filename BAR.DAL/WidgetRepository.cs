@@ -94,15 +94,7 @@ namespace BAR.DAL
 		/// </summary>
 		public IEnumerable<UserWidget> ReadWidgetsForDashboard(int dashboardId)
 		{
-			//Get UserWidgete
-			List<UserWidget> widgets = new List<UserWidget>();
-			foreach (Widget widget in ctx.Widgets.AsEnumerable())
-			{
-				if (widget is UserWidget) widgets.Add((UserWidget) widget);
-			}
-
-			//Return result
-			return widgets.AsEnumerable().Where(wid => wid.Dashboard.DashboardId == dashboardId);
+			return ReadDashboardWithWidgets(dashboardId).Widgets;
 		}
 		
 		/// <summary>
@@ -222,6 +214,15 @@ namespace BAR.DAL
 		}
 
 		/// <summary>
+		/// Gives back a widget with all the informations
+		/// </summary>
+		public Widget ReadWidgetWithAllitems(int widgetid)
+		{
+			return ctx.Widgets.Include(widget => widget.Items)
+							  .Where(widget => widget.WidgetId == widgetid).SingleOrDefault();
+		}
+
+		/// <summary>
 		/// Deletes a list of widgets.
 		/// Returns -1 if SaveChanges() is delayed by unit of work.
 		/// </summary>
@@ -229,6 +230,6 @@ namespace BAR.DAL
 		{
 			foreach (UserWidget widget in widgets) ctx.Widgets.Remove(widget);
 			return ctx.SaveChanges();
-		}		
+		}	
 	}
 }

@@ -9,6 +9,7 @@ using Microsoft.AspNet.Identity.Owin;
 using System.Linq;
 using AutoMapper;
 using BAR.UI.MVC.App_GlobalResources;
+using BAR.BL.Domain.Core;
 
 namespace BAR.UI.MVC.Controllers
 {
@@ -20,6 +21,7 @@ namespace BAR.UI.MVC.Controllers
 	{
 		private IUserManager userManager;
 		private IItemManager itemManager;
+		private ISubplatformManager platformManager;
 
 		/// <summary>
 		/// Dashboard page of admin.
@@ -35,13 +37,17 @@ namespace BAR.UI.MVC.Controllers
 		public ActionResult PageManagement()
 		{
 			userManager = new UserManager();
+			platformManager = new SubplatformManager();
+
+			//Map viewmodel
+			Customization platform = platformManager.GetCustomization(2);
+
+			CustomizationViewModel vm = Mapper.Map(platform, new CustomizationViewModel());
+			vm.User = userManager.GetUser(User.Identity.GetUserId());
+			vm.PageTitle = Resources.PageManagement;
 
 			//Assembling the view
-			return View(new BaseViewModel()
-			{
-				User = userManager.GetUser(User.Identity.GetUserId()),
-				PageTitle = Resources.PageManagement
-			});
+			return View(vm);
 		}
 
 		/// <summary>
@@ -49,15 +55,18 @@ namespace BAR.UI.MVC.Controllers
 		/// </summary>
 		public ActionResult ItemManagement()
 		{
-			itemManager = new ItemManager();
+      //Get hold of subplatformID we received
+      int subPlatformID = (int)RouteData.Values["SubPlatformID"];
+
+      itemManager = new ItemManager();
 			userManager = new UserManager();
 
-			//Assembling the view
-			return View(new ItemViewModels.ItemViewModel()
+      //Assembling the view
+      return View(new ItemViewModels.ItemViewModel()
 			{
 				User = userManager.GetUser(User.Identity.GetUserId()),
 				PageTitle = Resources.ItemManagement,
-				Items = Mapper.Map(itemManager.GetAllItems(), new List<ItemDTO>())
+				Items = Mapper.Map(itemManager.GetAllItems().Where(item => item.SubPlatform.SubPlatformId == subPlatformID), new List<ItemDTO>())
 			});
 		}
 
@@ -109,5 +118,22 @@ namespace BAR.UI.MVC.Controllers
 				  Text = x.Name,
 			  }).OrderBy(x => x.Text);
 		}
+
+    [HttpPost]
+    public ActionResult UploadJson([Bind(Exclude = "jsonFile")]ItemViewModels.ItemViewModel model)
+    {
+      //Get hold of subplatformID we received
+      int subPlatformID = (int)RouteData.Values["SubPlatformID"];
+
+      itemManager = new ItemManager();
+
+      if (Request.Files.Count > 0)
+      {
+        HttpPostedFileBase pfb = Request.Files["jsonFile"];
+        string json = itemManager.ConvertPfbToString(pfb);
+        itemManager.ImportJson(json, subPlatformID);
+      }
+      return RedirectToAction("ItemManagement", "Admin");
+    }
 	}
 }

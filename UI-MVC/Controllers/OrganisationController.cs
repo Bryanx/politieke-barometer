@@ -28,11 +28,14 @@ namespace BAR.UI.MVC.Controllers
 		[AllowAnonymous]
 		public ActionResult Index()
 		{
-			subManager = new SubscriptionManager();
+      //Get hold of subplatformID we received
+      int subPlatformID = (int)RouteData.Values["SubPlatformID"];
+
+      subManager = new SubscriptionManager();
 			itemManager = new ItemManager();
 			userManager = new UserManager();
 
-			IList<ItemDTO> people = Mapper.Map<IList<Item>, IList<ItemDTO>>(itemManager.GetAllOrganisations().ToList());
+			IList<ItemDTO> people = Mapper.Map<IList<Item>, IList<ItemDTO>>(itemManager.GetAllOrganisations().Where(org => org.SubPlatform.SubPlatformId == subPlatformID).ToList());
 			IEnumerable<Subscription> subs = subManager.GetSubscriptionsWithItemsForUser(User.Identity.GetUserId());
 
 			foreach (ItemDTO item in people)

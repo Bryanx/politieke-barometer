@@ -29,13 +29,33 @@ namespace BAR.DAL
 			if (uow == null) ctx = new BarometerDbContext();
 			else ctx = uow.Context;
 		}
-		
+
 		/// <summary>
 		/// Returns the item that matches the itemId.
 		/// </summary>       
 		public Item ReadItem(int itemId)
 		{
 			return ctx.Items.Find(itemId);
+		}
+
+		/// <summary>
+		/// Returns the item that matches the itemId.
+		/// </summary>       
+		public Item ReadItemWithWidgets(int itemId)
+		{
+			return ctx.Items.Include(item => item.ItemWidgets)
+				.Where(item => item.ItemId == itemId).SingleOrDefault();
+		}
+
+		/// <summary>
+		/// Returns the item that matches the itemId including SubPlatform
+		/// </summary>
+		public Item ReadItemWithSubPlatform(int itemId)
+		{
+			return ctx.Items
+				.Include(i => i.SubPlatform)
+				.Where(item => item.ItemId == itemId)
+				.SingleOrDefault();
 		}
 
 		/// <summary>
@@ -62,7 +82,31 @@ namespace BAR.DAL
 		/// <returns></returns>
 		public IEnumerable<Item> ReadAllItems()
 		{
-			return ctx.Items.AsEnumerable();
+			return ctx.Items.Include(item => item.SubPlatform).AsEnumerable();
+		}
+
+		/// <summary>
+		/// Gives back a list of all the persons
+		/// </summary>
+		public IEnumerable<Person> ReadAllPersons()
+		{
+			return ReadAllItems().OfType<Person>().AsEnumerable();
+		}
+
+		/// <summary>
+		/// Gives back a list of all the organisations
+		/// </summary>
+		public IEnumerable<Organisation> ReadAllOraginsations()
+		{
+			return ReadAllItems().OfType<Organisation>().AsEnumerable();
+		}
+
+		/// <summary>
+		/// Gives back a list of all the thetms
+		/// </summary>
+		public IEnumerable<Theme> ReadAllThemes()
+		{
+			return ReadAllItems().OfType<Theme>().AsEnumerable();
 		}
 
 		/// <summary>
@@ -123,7 +167,7 @@ namespace BAR.DAL
 		/// </summary>
 		public int UpdateItems(IEnumerable<Item> items)
 		{
-			foreach (Item item in items) ctx.Entry(item).State = EntityState.Modified;	
+			foreach (Item item in items) ctx.Entry(item).State = EntityState.Modified;
 			return ctx.SaveChanges();
 		}
 
@@ -147,9 +191,30 @@ namespace BAR.DAL
 			return ctx.SaveChanges();
 		}
 
-    public Item ReadPerson(string personName)
-    {
-      return ctx.Items.Where(i => i.Name.Equals(personName)).SingleOrDefault();
-    }
+		/// <summary>
+		/// Reads a person of a given name.
+		/// </summary>
+		public Item ReadPerson(string personName)
+		{
+			return ctx.Items.Where(i => i.Name.Equals(personName)).SingleOrDefault();
+		}
+
+		/// <summary>
+		/// Creates a range of items.
+		/// </summary>
+		public int CreateItems(ICollection<Item> items)
+		{
+			ctx.Items.AddRange(items);
+			return ctx.SaveChanges();
+		}
+
+        /// <summary>
+        /// Reads an organisation with a given name.
+        /// </summary>
+        public Item ReadOrganisation(string organisationName)
+        {
+          return ctx.Items.Include(org => org.SubPlatform)
+            .Where(x => x.Name.Equals(organisationName)).SingleOrDefault();
+        }
   }
 }
