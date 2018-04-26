@@ -111,7 +111,13 @@ namespace BAR.UI.MVC.Controllers.api
 
 			if (!ModelState.IsValid) return BadRequest(ModelState);
 			if (widgetManager.GetWidget(widget.WidgetId) != null) return StatusCode(HttpStatusCode.Conflict);
-			widgetManager.CreateUserWidget(widget, dash.DashboardId);
+			
+			//Copy operation to make a userWidget from an itemWidget
+			//This operation needs to be done because a userWidget has to be from a user
+			//And a user has a dashboard.
+			widgetManager.AddWidget(widget.WidgetType, widget.Title, widget.RowNumber,
+				widget.ColumnNumber, widget.Timestamp, widget.GraphType, widget.RowSpan, widget.ColumnSpan, dash.DashboardId);
+
 			return CreatedAtRoute("DefaultApi"
 				, new { controller = "Widget", id = widget.WidgetId }
 				, widget);
