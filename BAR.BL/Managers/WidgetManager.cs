@@ -99,32 +99,6 @@ namespace BAR.BL.Managers
 		}
 
 		/// <summary>
-		/// Adds multiple items to a single widget.
-		/// 
-		/// WARNING
-		/// THIS METHOD USES UNIT OF WORK
-		/// </summary>
-		public Widget AddItemsToWidget(int widgetId, IEnumerable<int> itemIds)
-		{
-			uowManager = new UnitOfWorkManager();
-			InitRepo();
-
-			//Get Items
-			ItemManager itemManager = new ItemManager(uowManager);
-			List<Item> items = new List<Item>();
-			foreach (int id in itemIds) items.Add(itemManager.GetItem(id));
-
-			//Add items to widget
-			Widget widgetToUpdate = GetWidget(widgetId);
-			foreach (Item item in items) widgetToUpdate.Items.Add(item);
-
-			//Update database
-			widgetRepo.UpdateWidget(widgetToUpdate);
-
-			return widgetToUpdate;
-		}
-
-		/// <summary>
 		/// Deletes a widget from the dashboard.
 		/// </summary>
 		public void RemoveWidget(int widgetId)

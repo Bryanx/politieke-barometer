@@ -328,10 +328,18 @@ namespace BAR.BL.Managers
 			List<Widget> lijst = new List<Widget>();
 			WidgetManager widgetManager = new WidgetManager();
 
-			ItemWidget widget = (ItemWidget)widgetManager.CreateWidget(WidgetType.GraphType, name + " popularity", 1, 1, rowspan: 12, colspan: 6);
-			lijst.Add(widget);
+			ItemWidget widget1 = (ItemWidget)widgetManager.CreateWidget(WidgetType.GraphType, name + " popularity", 1, 1, rowspan: 12, colspan: 6);
+			lijst.Add(widget1);
 
-			widgetManager.AddItemToWidget(widget.WidgetId, itemId);
+			ItemWidget widget2 = (ItemWidget)widgetManager.CreateWidget(WidgetType.GraphType, name + " popularity", 1, 1, rowspan: 12, colspan: 6);
+			lijst.Add(widget2);
+
+			ItemWidget widget3 = (ItemWidget)widgetManager.CreateWidget(WidgetType.GraphType, name + " popularity", 1, 1, rowspan: 12, colspan: 6);
+			lijst.Add(widget3);
+
+			widgetManager.AddItemToWidget(widget1.WidgetId, itemId);
+			widgetManager.AddItemToWidget(widget1.WidgetId, itemId);
+			widgetManager.AddItemToWidget(widget1.WidgetId, itemId);
 			return lijst;
 		}
 

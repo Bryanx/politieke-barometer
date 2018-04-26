@@ -20,7 +20,6 @@ namespace BAR.BL.Managers
 			int dashboardId = -1);
 		Widget CreateUserWidget(Widget widget, int dashboardId);
 		Widget AddItemToWidget(int widgetId, int itemId);
-		Widget AddItemsToWidget(int widgetId, IEnumerable<int> itemIds);
 
 		Widget ChangeWidgetPos(int widgetId, int rowNbr, int colNbr, int rowspan = 1, int colspan = 1);
 		Widget ChangeWidgetTitle(int widgetId, string title);
