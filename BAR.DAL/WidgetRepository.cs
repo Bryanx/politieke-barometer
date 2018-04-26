@@ -24,7 +24,7 @@ namespace BAR.DAL
 			if (uow == null) ctx = new BarometerDbContext();
 			else ctx = uow.Context;
 		}
-		
+
 		/// <summary>
 		/// Gives back a list of all the dashboards.
 		/// </summary>
@@ -59,12 +59,13 @@ namespace BAR.DAL
 			return ctx.Dashboards.Include(dash => dash.Widgets)
 				.Where(dash => dash.DashboardId == dashboardId).SingleOrDefault();
 		}
-		
+
 		/// <summary>
 		/// Gives back a dashboard object with all the widgets
 		/// for a specific user id.
 		/// </summary>
-		public Dashboard ReadDashboardWithWidgets(string userId) {
+		public Dashboard ReadDashboardWithWidgets(string userId)
+		{
 			return ctx.Dashboards.Include(dash => dash.Widgets)
 				.Where(dash => dash.User.Id == userId).FirstOrDefault();
 		}
@@ -96,7 +97,7 @@ namespace BAR.DAL
 		{
 			return ReadDashboardWithWidgets(dashboardId).Widgets;
 		}
-		
+
 		/// <summary>
 		/// Creates a new dashboard and persist that
 		/// to the database.
@@ -117,19 +118,10 @@ namespace BAR.DAL
 		/// widget needs to be linked to dashboard.
 		/// Alternative: call ReadDashboard(), add widget to the list, updateDashboard();
 		/// </summary>
-		public int CreateWidget(Widget widget, int dashboardId)
+		public int CreateWidget(Widget widget)
 		{
-			if (widget is UserWidget)		
-			{
-				//Add reference if userwidget
-				Dashboard dasboardToAddWidget = ReadDashboardWithWidgets(dashboardId);
-				dasboardToAddWidget.Widgets.Add((UserWidget)widget);
-				return UpdateDashboard(dasboardToAddWidget);
-			} else
-			{
-				ctx.Widgets.Add(widget);
-				return ctx.SaveChanges();
-			}		
+			ctx.Widgets.Add(widget);
+			return ctx.SaveChanges();
 		}
 
 		/// <summary>
@@ -230,6 +222,6 @@ namespace BAR.DAL
 		{
 			foreach (UserWidget widget in widgets) ctx.Widgets.Remove(widget);
 			return ctx.SaveChanges();
-		}	
+		}
 	}
 }

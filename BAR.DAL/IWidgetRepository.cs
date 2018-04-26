@@ -22,7 +22,7 @@ namespace BAR.DAL
 
 		//Create
 		int CreateDashboard(Dashboard dashboard);
-		int CreateWidget(Widget widget, int dashboardId);
+		int CreateWidget(Widget widget);
 
 		//Update
 		int UpdateDashboard(Dashboard dashboard);

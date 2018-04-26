@@ -31,7 +31,7 @@ namespace BAR.BL.Managers
 		/// Creates a widget based on the parameters
 		/// and links that widget to a dasboard.
 		/// </summary>
-		public Widget CreateWidget(WidgetType widgetType, string title, int rowNbr, int colNbr, DateTime? timestamp = null, int rowspan = 1, int colspan = 1, int dashboardId = -1)
+		public Widget AddWidget(WidgetType widgetType, string title, int rowNbr, int colNbr, DateTime? timestamp = null, GraphType? graphType = null, int rowspan = 1, int colspan = 1, int dashboardId = -1)
 		{
 			InitRepo();
 			Widget widget;
@@ -51,9 +51,16 @@ namespace BAR.BL.Managers
 			widget.ColumnSpan = colspan;
 			widget.Timestamp = timestamp;
 			widget.Items = new List<Item>();
+			widget.GraphType = graphType;
 
-			//repo autmaticly links widget to dashboard
-			widgetRepo.CreateWidget(widget, dashboardId);
+			//Update database
+			if (dashboardId == -1)
+			{
+				Dashboard dasboardToAddWidget = widgetRepo.ReadDashboardWithWidgets(dashboardId);
+				dasboardToAddWidget.Widgets.Add((UserWidget)widget);
+			}				
+			widgetRepo.CreateWidget(widget);
+
 			return widget;
 		}
 		
@@ -208,7 +215,7 @@ namespace BAR.BL.Managers
 		{
 			InitRepo();
 			Dashboard dash = widgetRepo.ReadDashboardWithWidgets(userId);
-			if (dash == null) return CreateDashboard(userId);
+			if (dash == null) return AddDashboard(userId);
 			return dash;
 		}
 
@@ -218,7 +225,7 @@ namespace BAR.BL.Managers
 		/// NOTE
 		/// THIS METHOD USES UNIT OF WORK
 		/// </summary>
-		public Dashboard CreateDashboard(string userId = "-1", DashboardType dashType = DashboardType.Private)
+		public Dashboard AddDashboard(string userId = "-1", DashboardType dashType = DashboardType.Private)
 		{
 			uowManager = new UnitOfWorkManager();
 			InitRepo();

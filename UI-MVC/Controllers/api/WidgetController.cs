@@ -90,7 +90,7 @@ namespace BAR.UI.MVC.Controllers.api
 			if (widgetManager.GetWidget(widgetId) == null) return StatusCode(HttpStatusCode.Conflict);
 			
 			Widget widgetToCopy = widgetManager.GetWidget(widgetId);
-			Widget widget = widgetManager.CreateWidget(WidgetType.GraphType, 
+			Widget widget = widgetManager.AddWidget(WidgetType.GraphType, 
 				widgetToCopy.Title, widgetToCopy.RowNumber, widgetToCopy.ColumnNumber, rowspan: widgetToCopy.RowSpan,
 				colspan: widgetToCopy.ColumnSpan, dashboardId: dash.DashboardId);
 

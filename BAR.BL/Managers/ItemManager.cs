@@ -329,15 +329,15 @@ namespace BAR.BL.Managers
 			List<int> widgetIds = new List<int>();
 			WidgetManager widgetManager = new WidgetManager();
 
-			ItemWidget widget1 = (ItemWidget)widgetManager.CreateWidget(WidgetType.GraphType, name + " popularity", 1, 1, rowspan: 12, colspan: 6);
+			ItemWidget widget1 = (ItemWidget)widgetManager.AddWidget(WidgetType.GraphType, name + " popularity", 1, 1, rowspan: 12, colspan: 6);
 			lijst.Add(widget1);
 			widgetIds.Add(widget1.WidgetId);
 
-			ItemWidget widget2 = (ItemWidget)widgetManager.CreateWidget(WidgetType.GraphType, name + " gender comparison ", 1, 1, rowspan: 6, colspan: 6);
+			ItemWidget widget2 = (ItemWidget)widgetManager.AddWidget(WidgetType.GraphType, name + " gender comparison ", 1, 1, rowspan: 6, colspan: 6);
 			lijst.Add(widget2);
 			widgetIds.Add(widget2.WidgetId);
 
-			ItemWidget widget3 = (ItemWidget)widgetManager.CreateWidget(WidgetType.GraphType, name + " age comparison", 1, 1, rowspan: 6, colspan: 6);
+			ItemWidget widget3 = (ItemWidget)widgetManager.AddWidget(WidgetType.GraphType, name + " age comparison", 1, 1, rowspan: 6, colspan: 6);
 			lijst.Add(widget3);
 			widgetIds.Add(widget3.WidgetId);
 
