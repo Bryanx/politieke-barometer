@@ -337,10 +337,12 @@ namespace BAR.BL.Managers
 		/// <summary>
 		/// Returns all (undeleted) themes of the whole system
 		/// </summary>
-		public IEnumerable<Item> GetAllThemes()
+		public IEnumerable<Item> GetAllThemes(int subplatformId)
 		{
 			InitRepo();
-			return itemRepo.ReadAllThemes().AsEnumerable();
+			return itemRepo.ReadAllThemes()
+				.Where(item => item.SubPlatform.SubPlatformId == subplatformId)
+				.AsEnumerable();
 		}
 
 		/// <summary>

@@ -240,6 +240,7 @@
     <Compile Include="Controllers\OverviewController.cs" />
     <Compile Include="Controllers\PersonController.cs" />
     <Compile Include="Controllers\SuperAdminController.cs" />
+    <Compile Include="Controllers\ThemeController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="DAL\WidgetManager.cs" />
     <Compile Include="Global.asax.cs">
@@ -606,6 +607,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\SubPlatform\" />
+    <Folder Include="Views\Theme\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
