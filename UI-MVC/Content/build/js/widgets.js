@@ -39,6 +39,7 @@ function createItemWidget(id, title) {
         "                <div class='x_title'>" +
         "                    <h2 class='graphTitle'>" + title + "</h2>" +
         "                    <ul class='nav navbar-right panel_toolbox'>" +
+        "                   <li><a class='addToDashboard'>" + Resources.Save + "</a></li>" +
         "                       <li class='dropdown'>" +
         "                       <a href='#' class='dropdown-toggle' data-toggle='dropdown' role='button' aria-expanded='false'><i class='fa fa-gear'></i></a>" +
         "                       <ul class='dropdown-menu' role='menu'>" +
@@ -48,8 +49,14 @@ function createItemWidget(id, title) {
         "                           <li><a data-widget-id=" + id + " class='chartShowYGrid'>Y grid lines</a></li>" +
         "                           <li><a data-widget-id=" + id + " class='chartShowLogScale'>Logarithmic y-axes</a></li>" +
         "                           <li><a data-widget-id=" + id + " class='chartShowLegend'>Legend</a></li>" +
+        "                           <li><a data-widget-id=" + id + " class='getPNGImage'>Download PNG image</a></li>" +
+        "                           <li><a data-widget-id=" + id + " class='getJPGImage'>Download JPG image</a></li>" +
         "                       </ul>" +
         "                       </li>" +
+        "                   <li><a data-widget-id=" + id + " class='changeToWeek'>7d</a></li>" +
+        "                   <li><a data-widget-id=" + id + " class='changeToMonth'>1m</a></li>" +
+        "                   <li><a data-widget-id=" + id + " class='changeTo3Month'>3m</a></li>" +
+        "                   <li><a data-widget-id=" + id + " class='changeToYear'>1y</a></li>" +
         "                    </ul>" +
         "                    <div class='clearfix'></div>" +
         "                </div>" +
@@ -59,7 +66,6 @@ function createItemWidget(id, title) {
         "               </div>" +
         "               <div class='graph-options'>" +
         "                   <input id=" + id + " type='text' class='form-control compareSearch' placeholder='Compare data with someone else.'>" +
-        "                   <button class='btn btn-success addToDashboard'>Add to dashboard</button>" +
         "               </div>" +
         "            </div>" +
         "        </div>";
@@ -94,7 +100,49 @@ function loadGraphs(itemId, widget) {
         '#58595b',
         '#8549ba'
     ];
-
+    var DARKCOLORS = [
+        '#3a99e1',
+        '#e25b11',
+        '#e11f70',
+        '#2f4db3',
+        '#8dac1b',
+        '#135a79',
+        '#009547',
+        '#414243',
+        '#7540a4'
+    ];
+    
+    //Retrieves a chart by data-id.
+    let FindChartByEvent = function(e) {
+        let widgetId = $(e.target).data("widget-id");
+        return charts.find(c => c.config.id == widgetId);
+    };
+    
+    //Retrieves an image of the graph
+    let AddImageUrl = function (id) {
+        let chart = charts.find(c => c.config.id == id);
+        $(".getPNGImage").attr("href", chart.toBase64Image())
+            .attr("download","graph.png");        
+        $(".getJPGImage").attr("href", chart.toBase64Image())
+            .attr("download","graph.jpg");
+    };
+    
+    //Time is changed on the x-axes accordingly.
+    let ChangeTime = function (e, value, date) {
+        let chart = FindChartByEvent(e);
+        chart.options.scales = {
+            xAxes: [{
+                type: 'time',
+                id: 'x-axes-0',
+                time: {
+                    format: "DD-MM",
+                    min: moment().add(value, date).format('DD-MM')
+                }
+            }],
+        };
+        chart.update();
+    };
+    
     //When no data is available this function shows a message.
     let displayNoGraphData = function (WidgetId) {
         $(".no-graph-data").css("display", "flex");
@@ -105,12 +153,14 @@ function loadGraphs(itemId, widget) {
     };
 
     //Add data to graph.
-    function AddDataSet(chart, name, values) {
+    let AddDataSet = function (chart, name, values) {
         var newColor = COLORS[chart.config.data.datasets.length];
+        var hoverColor = DARKCOLORS[chart.config.data.datasets.length];
         var newDataset = {
             label: name,
             borderColor: newColor,
             backgroundColor: newColor,
+            hoverBackgroundColor: hoverColor,
             data: values,
             fill: false
         };
@@ -164,32 +214,28 @@ function loadGraphs(itemId, widget) {
 
     //Toggles lines between points on a line graph.
     let ShowLines = function (e) {
-        let widgetId = $(e.target).data("widget-id");
-        let chart = charts.find(c => c.config.id == widgetId);
+        let chart = FindChartByEvent(e);
         chart.options.showLines = !chart.options.showLines;
         chart.update();
     };
 
     //Toggles the horizontal lines on a graph.
     let ShowXGrid = function (e) {
-        let widgetId = $(e.target).data("widget-id");
-        let chart = charts.find(c => c.config.id == widgetId);
+        let chart = FindChartByEvent(e);
         chart.options.scales.xAxes[0].gridLines.display = !chart.options.scales.xAxes[0].gridLines.display;
         chart.update();
     };
 
     //Toggles the vertical lines on a graph.
     let ShowYGrid = function (e) {
-        let widgetId = $(e.target).data("widget-id");
-        let chart = charts.find(c => c.config.id == widgetId);
+        let chart = FindChartByEvent(e);
         chart.options.scales.yAxes[0].gridLines.display = !chart.options.scales.yAxes[0].gridLines.display;
         chart.update();
     };
 
     //Transforms graph type to logarithmic or linear.
     let ShowLogScale = function (e) {
-        let widgetId = $(e.target).data("widget-id");
-        let chart = charts.find(c => c.config.id == widgetId);
+        let chart = FindChartByEvent(e);
         let type = chart.options.scales.yAxes[0].type;
         type = type === "linear" ? "logarithmic" : "linear";
         chart.options.scales.yAxes[0].type = type;
@@ -201,8 +247,7 @@ function loadGraphs(itemId, widget) {
 
     //Shows the legend of a graph.
     let ShowLegend = function (e) {
-        let widgetId = $(e.target).data("widget-id");
-        let chart = charts.find(c => c.config.id == widgetId);
+        let chart = FindChartByEvent(e);
         chart.options.legend.display = !chart.options.legend.display;
         chart.update();
     };
@@ -219,13 +264,28 @@ function loadGraphs(itemId, widget) {
                     label: widget.Title,
                     borderColor: COLORS[0],
                     backgroundColor: COLORS[0],
-                    hoverBackgroundColor: COLORS[0],
+                    hoverBackgroundColor: DARKCOLORS[0],
                     fill: false,
                 }],
             },
             options: {
                 responsive: true,
-                maintainAspectRatio: false
+                maintainAspectRatio: false,
+                animation: {
+                    onComplete: function () {
+                        AddImageUrl(widgetId);
+                    }
+                },
+                scales: {
+                    xAxes: [{
+                        type: 'time',
+                        display: true,
+                        time: {
+                            format: "DD-MM",
+                            // round: 'day'
+                        }
+                    }],
+                },
             }
         }));
     };
@@ -253,6 +313,10 @@ function loadGraphs(itemId, widget) {
     $(document).on("click", ".chartShowYGrid", (e) => ShowYGrid(e));
     $(document).on("click", ".chartShowLogScale", (e) => ShowLogScale(e));
     $(document).on("click", ".chartShowLegend", (e) => ShowLegend(e));
+    $(document).on("click", ".changeToWeek", (e) => ChangeTime(e, -7, 'day'));
+    $(document).on("click", ".changeToMonth", (e) => ChangeTime(e, -1, 'month'));
+    $(document).on("click", ".changeTo3Month", (e) => ChangeTime(e, -3, 'month'));
+    $(document).on("click", ".changeToYear", (e) => ChangeTime(e, -12, 'month'));
 
     //Loads the graph data.
     $(() => ajaxLoadGraphs(widget));
@@ -317,7 +381,6 @@ function loadWidgets(url, itemId) {
 }
 
 function init() {
-    "use strict";
     
     //Shows an animated save message
     function showSaveMessage() {

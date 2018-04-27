@@ -69,21 +69,23 @@ namespace BAR.UI.MVC.Controllers
 			itemManager = new ItemManager();
 			userManager = new UserManager();
 			subManager = new SubscriptionManager();
-			widgetManager = new WidgetManager();
 
-			IEnumerable<Item> subs = subManager.GetSubscribedItemsForUser(User.Identity.GetUserId());
-			Item item = itemManager.GetItem(id);
-			Item subbedItem = subs.FirstOrDefault(i => i.ItemId == item.ItemId);
+			Item item = itemManager.GetItemWithPersonalInfo(id);
 
-			PersonViewModel personViewModel =
-				new PersonViewModel() {
-					PageTitle = item.Name,
-					User = User.Identity.IsAuthenticated ? userManager.GetUser(User.Identity.GetUserId()) : null,
-					Person = Mapper.Map(item, new ItemDTO()),
-					Subscribed = subbedItem != null,
-				};
+			if (item == null) return HttpNotFound();
+
+			Item subbedItem = subManager.GetSubscribedItemsForUser(User.Identity.GetUserId())
+				.FirstOrDefault(i => i.ItemId == item.ItemId);
+
+			PersonViewModel personViewModel = Mapper.Map(item, new PersonViewModel());
+			
+			personViewModel.PageTitle = item.Name;
+			personViewModel.User = User.Identity.IsAuthenticated ? userManager.GetUser(User.Identity.GetUserId()) : null;
+			personViewModel.Person = Mapper.Map(item, new ItemDTO());
+			personViewModel.Subscribed = subbedItem != null;
+			                             
 			//Assembling the view
-			return View("Details", personViewModel);
+			return View(personViewModel);
 		}
 	}
 }

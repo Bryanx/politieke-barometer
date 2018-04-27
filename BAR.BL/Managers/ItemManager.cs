@@ -178,6 +178,11 @@ namespace BAR.BL.Managers
 			return itemRepo.ReadItem(itemId);
 		}
 
+		public Item GetItemWithPersonalInfo(int itemId) {
+			InitRepo();
+			return itemRepo.ReadItemWithPersonalInfo(itemId);
+		}
+
 		/// <summary>
 		/// Returns an item for a specifig itemId including the attached subplatform.
 		/// </summary>
