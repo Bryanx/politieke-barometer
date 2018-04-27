@@ -308,17 +308,6 @@ namespace BAR.BL.Managers
 		}
 
 		/// <summary>
-		/// Gives every item default widgets
-		/// 
-		/// WARNING
-		/// THIS METHOD USES UNIT OF WORK
-		/// </summary>
-		private void GenerateDefaultItemWidgetsForItems(IEnumerable<Item> items)
-		{
-			foreach (Item item in items) GenerateDefaultItemWidgets(item.Name, item.ItemId);
-		}
-
-		/// <summary>
 		/// Generates dafault widgets based on the itemid
 		/// </summary>
 		private void GenerateDefaultItemWidgets(string name, int itemId)
@@ -573,7 +562,9 @@ namespace BAR.BL.Managers
 					organisations.Add(organisation);
 				}
 			}
-			GenerateDefaultItemWidgetsForItems(organisations);
+
+			//Generate default widgets for items
+			foreach (Item item in organisations) GenerateDefaultItemWidgets(item.Name, item.ItemId);
 			uowManager = null;
 		}
 
@@ -650,7 +641,7 @@ namespace BAR.BL.Managers
 			{
 				itemRepo.CreateItems(items);
 				uowManager.Save();
-				GenerateDefaultItemWidgetsForItems(items);
+				foreach (Item item in items) GenerateDefaultItemWidgets(item.Name, item.ItemId);
 				return true;
 			}
 
