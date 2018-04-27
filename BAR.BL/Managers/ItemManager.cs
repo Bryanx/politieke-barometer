@@ -309,49 +309,57 @@ namespace BAR.BL.Managers
 
 		/// <summary>
 		/// Gives every item default widgets
+		/// 
+		/// WARNING
+		/// THIS METHOD USES UNIT OF WORK
 		/// </summary>
 		private void GenerateDefaultItemWidgetsForItems(IEnumerable<Item> items)
 		{
-			foreach (Item item in items)
-			{
-				item.ItemWidgets = GenerateDefaultItemWidgets(item.Name, item.ItemId);
-				itemRepo.UpdateItem(item);
-			}
+			foreach (Item item in items) GenerateDefaultItemWidgets(item.Name, item.ItemId);
 		}
 
 		/// <summary>
 		/// Generates dafault widgets based on the itemid
 		/// </summary>
-		private List<Widget> GenerateDefaultItemWidgets(string name, int itemId)
+		private void GenerateDefaultItemWidgets(string name, int itemId)
 		{
-			WidgetManager widgetManager = new WidgetManager();
-			ItemManager itemManager = new ItemManager();
-			List<Widget> lijst = new List<Widget>();
+			uowManager = new UnitOfWorkManager();
+			InitRepo();
+
+			WidgetManager widgetManager = new WidgetManager(uowManager);
+			List<Widget> itemWidgets = new List<Widget>();
 			List<int> widgetIds = new List<int>();
 			List<string> proptags;
+
+			//Get item
+			Item item = GetItemWithAllWidgets(itemId);
 
 			//1st widget
 			proptags = new List<string>();
 			proptags.Add("Mentions");
 			ItemWidget widget1 = (ItemWidget)widgetManager.AddWidget(WidgetType.GraphType, name + " popularity", 1, 1, proptags: proptags, graphType: GraphType.LineChart, rowspan: 12, colspan: 6);
-			lijst.Add(widget1);
+			itemWidgets.Add(widget1);
 			widgetIds.Add(widget1.WidgetId);
 
 			//2nd widget
 			proptags = new List<string>();
 			proptags.Add("Gender");
 			ItemWidget widget2 = (ItemWidget)widgetManager.AddWidget(WidgetType.GraphType, name + " gender comparison ", 1, 1, proptags: proptags, graphType: GraphType.BarChart, rowspan: 6, colspan: 6);
-			lijst.Add(widget2);
+			itemWidgets.Add(widget2);
 			widgetIds.Add(widget2.WidgetId);
 
 			//3rd widget
 			proptags = new List<string>();
 			proptags.Add("Age");
 			ItemWidget widget3 = (ItemWidget)widgetManager.AddWidget(WidgetType.GraphType, name + " age comparison", 1, 1, proptags: proptags, graphType: GraphType.PieChart, rowspan: 6, colspan: 6);
-			lijst.Add(widget3);
+			itemWidgets.Add(widget3);
 			widgetIds.Add(widget3.WidgetId);
 
-			return lijst;
+			//Link widgets to item & save changes to database
+			item.ItemWidgets = itemWidgets;
+			itemRepo.UpdateItem(item);
+			uowManager.Save();
+			uowManager = null;
 		}
 
 		/// <summary>

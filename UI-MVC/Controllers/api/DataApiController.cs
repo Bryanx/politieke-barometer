@@ -62,6 +62,7 @@ namespace BAR.UI.MVC.Controllers.api
 							dataManager.ChangeAudit(auditId);
 
 							//Syncronize recent data with all the widgets
+							itemManager.GenerateDataForMwidgets();
 
 							return StatusCode(HttpStatusCode.OK);
 						}
