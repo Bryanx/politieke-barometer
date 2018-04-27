@@ -221,6 +221,7 @@ namespace BAR.DAL
 		public IEnumerable<Widget> ReadAllWidgetsWithAllItems()
 		{
 			return ctx.Widgets.Include(Widget => Widget.PropertyTags)
+							  .Include(widget => widget.Data)
 							  .Include(widget => widget.Items).AsEnumerable();
 		}
 
