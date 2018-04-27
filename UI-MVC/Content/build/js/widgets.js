@@ -55,6 +55,7 @@ function nodeboxSize(node, parent, id) {
     node.id = 'graph' + id;
     node.width = parent.clientWidth;
     node.height = parent.clientHeight;
+    console.log("height: " + parent.clientHeight + "\nwidth: " + parent.clientWidth);
     parent.appendChild(node);
 }
 
