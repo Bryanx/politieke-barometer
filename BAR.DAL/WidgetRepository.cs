@@ -215,6 +215,14 @@ namespace BAR.DAL
 		}
 
 		/// <summary>
+		/// Gives back a list with all the widgets with all their items.
+		/// </summary>
+		public IEnumerable<Widget> ReadAllWidgetsWithAllItems()
+		{
+			return ctx.Widgets.Include(widget => widget.Items).AsEnumerable();
+		}
+
+		/// <summary>
 		/// Deletes a list of widgets.
 		/// Returns -1 if SaveChanges() is delayed by unit of work.
 		/// </summary>

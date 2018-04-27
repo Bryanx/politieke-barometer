@@ -262,6 +262,15 @@ namespace BAR.BL.Managers
 		}
 
 		/// <summary>
+		/// Gives back a list with all the widgets and all the items.
+		/// </summary>
+		public IEnumerable<Widget> GetAllWidgetsWithAllItems()
+		{
+			InitRepo();
+			return widgetRepo.ReadAllWidgetsWithAllItems().AsEnumerable();
+		}
+
+		/// <summary>
 		/// Determines if the repo needs a unit of work
 		/// if the unitOfWorkManager is present.
 		/// </summary>
@@ -269,6 +278,6 @@ namespace BAR.BL.Managers
 		{
 			if (uowManager == null) widgetRepo = new WidgetRepository();
 			else widgetRepo = new WidgetRepository(uowManager.UnitOfWork);
-		}	
+		
 	}
 }

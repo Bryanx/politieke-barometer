@@ -348,6 +348,11 @@ namespace BAR.BL.Managers
 			return lijst;
 		}
 
+		public void GenerateDataForMwidgets()
+		{
+			IEnumerable<Widget> widgets = new WidgetManager()
+		}
+
 		/// <summary>
 		/// Returns all (undeleted) themes of the whole system
 		/// </summary>
@@ -610,6 +615,7 @@ namespace BAR.BL.Managers
 				GenerateDefaultItemWidgetsForItems(items);
 				return true;
 			}
+
 			return false;
 		}
 
