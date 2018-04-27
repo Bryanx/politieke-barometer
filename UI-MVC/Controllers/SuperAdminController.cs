@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using System.Text;
 using System;
 using Microsoft.AspNet.Identity.Owin;
+using AutoMapper;
 
 namespace BAR.UI.MVC.Controllers
 {
@@ -23,7 +24,9 @@ namespace BAR.UI.MVC.Controllers
 	public class SuperAdminController : LanguageController
 	{
 		private IUserManager userManager;
-    private IDataManager dataManager;
+		private IItemManager itemManager;
+		private ISubplatformManager subplatformManager;
+		private IDataManager dataManager;
 
 		/// <summary>
 		/// Sourcemanagement page of the SuperAdmin.
@@ -47,12 +50,17 @@ namespace BAR.UI.MVC.Controllers
 		public ActionResult PlatformManagement()
 		{
 			userManager = new UserManager();
+			subplatformManager = new SubplatformManager();
+
+			IList<SubPlatformDTO> subplatforms = null;
+			subplatforms = Mapper.Map(subplatformManager.GetSubplatforms(), new List<SubPlatformDTO>());
 
 			//Assembling the view
-			return View(new BaseViewModel
+			return View(new SubPlatformManagement
 			{
 				PageTitle = Resources.SubPlatformManagement,
-				User = userManager.GetUser(User.Identity.GetUserId())
+				User = userManager.GetUser(User.Identity.GetUserId()),
+				SubPlatforms = subplatforms
 			});
 		}
 
