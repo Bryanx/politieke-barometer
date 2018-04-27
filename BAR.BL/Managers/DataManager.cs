@@ -119,11 +119,9 @@ namespace BAR.BL.Managers
 			if (startDate == null) startDate = DateTime.Now;
 			else if (startDate < timestamp) return null;
 
-			double sum = 0.0;
 			while (timestamp < startDate)
 			{
-				sum += informations.Count(i => i.CreationDate.Value.Day == timestamp.Day);
-				data[timestamp.ToString(dateFormat)] = sum;
+				data[timestamp.ToString(dateFormat)] = informations.Count(i => i.CreationDate.Value.Day == timestamp.Day); ;
 				timestamp = timestamp.AddDays(1);
 			}
 			return data;

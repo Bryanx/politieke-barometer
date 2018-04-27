@@ -56,7 +56,7 @@ namespace BAR.BL.Managers
 			widget.PropertyTags = proptags.ToList();
 
 			//Update database
-			if (dashboardId == -1)
+			if (dashboardId != -1)
 			{
 				Dashboard dasboardToAddWidget = widgetRepo.ReadDashboardWithWidgets(dashboardId);
 				dasboardToAddWidget.Widgets.Add((UserWidget)widget);
