@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace BAR.BL.Domain.Widgets
 {
-	public class ValueNumberOfTimes
+	public class GraphValue
 	{
 		public int ValueNumberOfTimesId { get; set; }
-		public double NumberOfTimes { get; set; }
+		public double Value { get; set; }
 	}
 }

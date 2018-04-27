@@ -99,7 +99,7 @@ namespace BAR.BL.Managers
 		/// This method is not the same as getNumberInfo
 		/// This method will be used for widgets.
 		/// </summary>
-		public IDictionary<string, double> GetNumberOfMentionsForItem(int itemId, int widgetId, string dateFormat, DateTime? startDate = null)
+		public IDictionary<Graphkey, GraphValue> GetNumberOfMentionsForItem(int itemId, int widgetId, string dateFormat, DateTime? startDate = null)
 		{
 			//Get item with widgets
 			ItemManager itemManager = new ItemManager();
@@ -111,7 +111,7 @@ namespace BAR.BL.Managers
 			if (widget == null) return null;
 
 			//Map informations to datetime and add them to the list
-			IDictionary<string, double> data = new Dictionary<string, double>();
+			IDictionary<Graphkey, GraphValue> data = new Dictionary<Graphkey, GraphValue>();
 			IEnumerable<Information> informations = GetInformationsForItemid(itemId);
 			if (informations == null || informations.Count() == 0) return null;
 
@@ -119,9 +119,19 @@ namespace BAR.BL.Managers
 			if (startDate == null) startDate = DateTime.Now;
 			else if (startDate < timestamp) return null;
 
+			Graphkey graphkey;
+			GraphValue graphValue;
 			while (timestamp < startDate)
 			{
-				data[timestamp.ToString(dateFormat)] = informations.Count(i => i.CreationDate.Value.Day == timestamp.Day); ;
+				graphkey = new Graphkey()
+				{
+					KeyValue = timestamp.ToString(dateFormat),
+				};
+				graphValue = new GraphValue()
+				{
+					Value = informations.Count(i => i.CreationDate.Value.Day == timestamp.Day)
+				};
+				data[graphkey] = graphValue;
 				timestamp = timestamp.AddDays(1);
 			}
 			return data;
@@ -138,7 +148,7 @@ namespace BAR.BL.Managers
 		/// WARNING
 		/// This method will only work if the widget has a propertytag
 		/// </summary>
-		public IDictionary<string, double> GetPropvaluesForWidget(int itemid, int widgetId, string proptag, DateTime? startDate = null)
+		public IDictionary<Graphkey, GraphValue> GetPropvaluesForWidget(int itemid, int widgetId, string proptag, DateTime? startDate = null)
 		{
 			InitRepo();
 
@@ -159,7 +169,10 @@ namespace BAR.BL.Managers
 			if (infos == null || infos.Count() == 0) return null;
 
 			//Map timestap to number of propertyValues		
-			IDictionary<string, double> dict = new Dictionary<string, double>();
+			IDictionary<Graphkey, GraphValue> dict = new Dictionary<Graphkey, GraphValue>();
+			Graphkey graphkey;
+			GraphValue graphValue;
+
 			foreach (Information information in infosQueried)
 			{
 				foreach (PropertyValue propval in information.PropertieValues)
@@ -168,11 +181,35 @@ namespace BAR.BL.Managers
 					//Then the propertyvalue shall be added to the dictionary
 					if (propval.Property.Name.ToLower().Equals(proptag.ToLower()))
 					{
-						dict[propval.Value] += 1;
+						graphkey = new Graphkey()
+						{
+							KeyValue = propval.Value
+						};
+
+						//If there were no graphvalues present, then it means that
+						//this is a new key.
+						double numberOfTimes = dict[graphkey].Value;
+						if (dict[graphkey].Value == 0)
+						{
+							graphValue = new GraphValue()
+							{
+								Value = 1
+							};
+						}
+						else
+						{
+							graphValue = new GraphValue()
+							{
+								Value = ++numberOfTimes
+							};
+						}
+
+
+						dict[graphkey] = graphValue;
 					}
 				}
 			}
-			
+
 			return dict;
 		}
 

@@ -69,7 +69,7 @@ namespace BAR.UI.MVC.Controllers.api
 		{
 			dataManager = new DataManager();
 			
-			IDictionary<string, double> data = dataManager.GetNumberOfMentionsForItem(itemId, widgetId, "dd-MM");
+			IDictionary<Graphkey, GraphValue> data = dataManager.GetNumberOfMentionsForItem(itemId, widgetId, "dd-MM");
 			if (data == null) return StatusCode(HttpStatusCode.NoContent);
 
 			return Ok(data);
