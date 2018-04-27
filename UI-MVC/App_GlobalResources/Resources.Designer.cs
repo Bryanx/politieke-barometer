@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace BAR.UI.MVC.App_GlobalResources {
+namespace Resources {
     using System;
     
     
