@@ -81,10 +81,12 @@
     <Compile Include="Users\User.cs" />
     <Compile Include="Widgets\Dashboard.cs" />
     <Compile Include="Widgets\DashboardType.cs" />
+    <Compile Include="Widgets\DateKey.cs" />
     <Compile Include="Widgets\GraphType.cs" />
     <Compile Include="Widgets\ItemWidget.cs" />
     <Compile Include="Widgets\SubType.cs" />
     <Compile Include="Widgets\UserWidget.cs" />
+    <Compile Include="Widgets\ValueNumberOfTimes.cs" />
     <Compile Include="Widgets\Widget.cs" />
     <Compile Include="Widgets\WidgetType.cs" />
   </ItemGroup>
