@@ -6,6 +6,7 @@ using BAR.BL.Domain.Widgets;
 using BAR.DAL;
 using BAR.BL.Domain.Users;
 using BAR.BL.Domain.Items;
+using BAR.BL.Domain.Data;
 
 namespace BAR.BL.Managers
 {
@@ -31,7 +32,7 @@ namespace BAR.BL.Managers
 		/// Creates a widget based on the parameters
 		/// and links that widget to a dasboard.
 		/// </summary>
-		public Widget AddWidget(WidgetType widgetType, string title, int rowNbr, int colNbr, List<string> proptags, DateTime? timestamp = null, GraphType? graphType = null, int rowspan = 1, int colspan = 1, int dashboardId = -1)
+		public Widget AddWidget(WidgetType widgetType, string title, int rowNbr, int colNbr, List<PropertyTag> proptags, DateTime? timestamp = null, GraphType? graphType = null, int rowspan = 1, int colspan = 1, int dashboardId = -1)
 		{
 			InitRepo();
 			Widget widget;

@@ -91,7 +91,7 @@ namespace BAR.UI.MVC.Controllers.api
 			
 			Widget widgetToCopy = widgetManager.GetWidget(widgetId);
 			Widget widget = widgetManager.AddWidget(WidgetType.GraphType, 
-				widgetToCopy.Title, widgetToCopy.RowNumber, widgetToCopy.ColumnNumber, widgetToCopy.PropertyTags, rowspan: widgetToCopy.RowSpan,
+				widgetToCopy.Title, widgetToCopy.RowNumber, widgetToCopy.ColumnNumber, widgetToCopy.PropertyTags.ToList(), rowspan: widgetToCopy.RowSpan,
 				colspan: widgetToCopy.ColumnSpan, dashboardId: dash.DashboardId);
 
 			return StatusCode(HttpStatusCode.NoContent);
@@ -116,7 +116,7 @@ namespace BAR.UI.MVC.Controllers.api
 			//This operation needs to be done because a userWidget has to be from a user
 			//And a user has a dashboard.
 			widgetManager.AddWidget(widget.WidgetType, widget.Title, widget.RowNumber,
-				widget.ColumnNumber, widget.PropertyTags, widget.Timestamp, widget.GraphType, widget.RowSpan, widget.ColumnSpan, dash.DashboardId);
+				widget.ColumnNumber, widget.PropertyTags.ToList(), widget.Timestamp, widget.GraphType, widget.RowSpan, widget.ColumnSpan, dash.DashboardId);
 
 			return CreatedAtRoute("DefaultApi"
 				, new { controller = "Widget", id = widget.WidgetId }

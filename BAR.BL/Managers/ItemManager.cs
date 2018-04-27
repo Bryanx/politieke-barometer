@@ -60,6 +60,7 @@ namespace BAR.BL.Managers
 				// Calculate the baseline = number of information / number of days from the last update until now
 				double baseline = Convert.ToDouble(aantalBaseline) / Convert.ToDouble(period);
 
+				if (baseline == 0) return;
 				// Calculate the trendingpercentage = baseline / number of days from the last update until now.
 				double trendingPer = Convert.ToDouble(aantalTrending) / baseline;
 
@@ -221,7 +222,7 @@ namespace BAR.BL.Managers
 		public IEnumerable<Item> GetAllItems()
 		{
 			InitRepo();
-			return itemRepo.ReadAllItems();
+			return itemRepo.ReadAllItems().AsEnumerable();
 		}
 
 		/// <summary>
@@ -318,28 +319,38 @@ namespace BAR.BL.Managers
 			WidgetManager widgetManager = new WidgetManager(uowManager);
 			List<Widget> itemWidgets = new List<Widget>();
 			List<int> widgetIds = new List<int>();
-			List<string> proptags;
+			List<PropertyTag> proptags;
 
 			//Get item
 			Item item = GetItemWithAllWidgets(itemId);
 
 			//1st widget
-			proptags = new List<string>();
-			proptags.Add("Mentions");
+			proptags = new List<PropertyTag>();
+			proptags.Add(new PropertyTag()
+			{
+				Name = "Mentions"
+			});
+			
 			ItemWidget widget1 = (ItemWidget)widgetManager.AddWidget(WidgetType.GraphType, name + " popularity", 1, 1, proptags: proptags, graphType: GraphType.LineChart, rowspan: 12, colspan: 6);
 			itemWidgets.Add(widget1);
 			widgetIds.Add(widget1.WidgetId);
 
 			//2nd widget
-			proptags = new List<string>();
-			proptags.Add("Gender");
+			proptags = new List<PropertyTag>();
+			proptags.Add(new PropertyTag()
+			{
+				Name = "Gender"
+			});
 			ItemWidget widget2 = (ItemWidget)widgetManager.AddWidget(WidgetType.GraphType, name + " gender comparison ", 1, 1, proptags: proptags, graphType: GraphType.BarChart, rowspan: 6, colspan: 6);
 			itemWidgets.Add(widget2);
 			widgetIds.Add(widget2.WidgetId);
 
 			//3rd widget
-			proptags = new List<string>();
-			proptags.Add("Age");
+			proptags = new List<PropertyTag>();
+			proptags.Add(new PropertyTag()
+			{
+				Name = "Age"
+			});
 			ItemWidget widget3 = (ItemWidget)widgetManager.AddWidget(WidgetType.GraphType, name + " age comparison", 1, 1, proptags: proptags, graphType: GraphType.PieChart, rowspan: 6, colspan: 6);
 			itemWidgets.Add(widget3);
 			widgetIds.Add(widget3.WidgetId);
@@ -364,17 +375,18 @@ namespace BAR.BL.Managers
 			{
 				for (int i = 0; i < widget.Items.Count(); i++)
 				{
-					foreach (string proptag in widget.PropertyTags)
+					foreach (PropertyTag proptag in widget.PropertyTags)
 					{
-						if (proptag.ToLower().Equals("mentions"))
+						if (proptag.Name.ToLower().Equals("mentions"))
 						{
 
 							widget.Data[i] = dataManager.GetNumberOfMentionsForItem
 								(widget.Items.ElementAt(i).ItemId, widget.WidgetId, "dd-MM");
-						} else
+						}
+						else
 						{
 							widget.Data[i] = dataManager.GetPropvaluesForWidget
-								(widget.Items.ElementAt(i).ItemId, widget.WidgetId, proptag);
+								(widget.Items.ElementAt(i).ItemId, widget.WidgetId, proptag.Name);
 						}
 					}
 				}

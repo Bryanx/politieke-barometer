@@ -85,8 +85,8 @@ namespace BAR.DAL
 		/// </summary>
 		public IEnumerable<Information> ReadInformationsForItemid(int itemId)
 		{
-			return ctx.Informations.Include(x => x.Items)
-					.Where(info => info.Items.Any(item => item.ItemId == itemId)).AsEnumerable();
+			return ctx.Informations.Include(info => info.Items).AsEnumerable();
+					//.Where(info => info.Items.Any(item => item.ItemId == itemId)).AsEnumerable();
 		}
 
 		/// <summary>

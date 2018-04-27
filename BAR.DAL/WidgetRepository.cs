@@ -210,7 +210,8 @@ namespace BAR.DAL
 		/// </summary>
 		public Widget ReadWidgetWithAllitems(int widgetid)
 		{
-			return ctx.Widgets.Include(widget => widget.Items)
+			return ctx.Widgets.Include(widget => widget.PropertyTags)
+							  .Include(widget => widget.Items)
 							  .Where(widget => widget.WidgetId == widgetid).SingleOrDefault();
 		}
 
@@ -219,7 +220,8 @@ namespace BAR.DAL
 		/// </summary>
 		public IEnumerable<Widget> ReadAllWidgetsWithAllItems()
 		{
-			return ctx.Widgets.Include(widget => widget.Items).AsEnumerable();
+			return ctx.Widgets.Include(Widget => Widget.PropertyTags)
+							  .Include(widget => widget.Items).AsEnumerable();
 		}
 
 		/// <summary>
