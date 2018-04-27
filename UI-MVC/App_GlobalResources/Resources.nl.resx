@@ -378,6 +378,9 @@
   <data name="Or" xml:space="preserve">
     <value>Of</value>
   </data>
+  <data name="Organisation" xml:space="preserve">
+    <value>Organisatie</value>
+  </data>
   <data name="PageManagement" xml:space="preserve">
     <value>Pagina's beheren</value>
   </data>

@@ -546,4 +546,7 @@
   <data name="YourPasswordHasBeenReset" xml:space="preserve">
     <value>Your password has been reset.</value>
   </data>
+  <data name="Organisation" xml:space="preserve">
+    <value>Organisation</value>
+  </data>
 </root>

@@ -844,6 +844,15 @@ namespace BAR.UI.MVC.App_GlobalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Organisation.
+        /// </summary>
+        public static string Organisation {
+            get {
+                return ResourceManager.GetString("Organisation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Page management.
         /// </summary>
         public static string PageManagement {

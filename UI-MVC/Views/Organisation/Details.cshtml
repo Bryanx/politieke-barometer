@@ -1,7 +1,6 @@
-@using System.Web.Optimization
+﻿@using System.Web.Optimization
 @using BAR.BL.Domain.Items
-@using BAR.UI.MVC.Helpers
-@model BAR.UI.MVC.Models.ItemViewModels.PersonViewModel
+@model BAR.UI.MVC.Models.ItemViewModels.OrganisationViewModel
 
 @{
     ViewBag.Title = Model.PageTitle;
@@ -28,7 +27,7 @@
 
                 </div>
                 <div class="col-md-9 col-sm-9 col-xs-12">
-                   <button onclick="window.location='@Url.OrganisationUrl(@Model.OrganisationId)';" class="btn btn-default btn-xs">@Model.OrganisationName</button>
+                    @Resources.Organisation
                     <h1>
                         @Model.Person.Name
                         @if (User.Identity.IsAuthenticated) {
@@ -46,12 +45,6 @@
                         <strong>@Resources.Politician details</strong>
                     </h4>
                     <ul class="list-unstyled user_data">
-                        <li>
-                            <i class="fa fa-map-marker user-profile-icon"></i> @Model.District
-                        </li>
-                        <li>
-                            <i class="fa fa-briefcase user-profile-icon"></i> @Model.Position
-                        </li>
                         <li class="m-top-xs">
                             <i class="fa fa-globe external-link user-profile-icon"></i>
                             <a href="@Model.Site" target="_blank">@Model.Site</a>

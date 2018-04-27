@@ -178,9 +178,20 @@ namespace BAR.BL.Managers
 			return itemRepo.ReadItem(itemId);
 		}
 
-		public Item GetItemWithPersonalInfo(int itemId) {
+		/// <summary>
+		/// Returns a person with all personal details.
+		/// </summary>
+		public Item GetPersonWithDetails(int itemId) {
 			InitRepo();
-			return itemRepo.ReadItemWithPersonalInfo(itemId);
+			return itemRepo.ReadPersonWithDetails(itemId);
+		}
+		
+		/// <summary>
+		/// Returns an organisation with all personal details.
+		/// </summary>
+		public Item GetOrganisationWithDetails(int itemId) {
+			InitRepo();
+			return itemRepo.ReadOrganisationWithDetails(itemId);
 		}
 
 		/// <summary>
