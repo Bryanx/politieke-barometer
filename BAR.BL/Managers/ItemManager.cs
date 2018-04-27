@@ -300,7 +300,7 @@ namespace BAR.BL.Managers
 			item.Baseline = 0.0;
 			item.Deleted = false;
 			item.Informations = new List<Information>();
-            item.ItemWidgets = new List<Widget>();
+			item.ItemWidgets = new List<Widget>();
 
 			itemRepo.CreateItem(item);
 
@@ -366,7 +366,7 @@ namespace BAR.BL.Managers
 			{
 				for (int i = 0; i < widget.Items.Count(); i++)
 				{
-					//widget.Data[i] = dataManager.g
+					//idget.Data[i] = dataManager.g
 				}
 			}
 		}
@@ -590,18 +590,18 @@ namespace BAR.BL.Managers
 					string facebook = deserializedJson[i].facebook;
 					string stringDate = Convert.ToString(deserializedJson[i].dateOfBirth);
 					string town = deserializedJson[i].town;
-                    string level = deserializedJson[i].level;
-                    string site = deserializedJson[i].site;
-                    string district = deserializedJson[i].district;
-                    string position = deserializedJson[i].position;
+					string level = deserializedJson[i].level;
+					string site = deserializedJson[i].site;
+					string district = deserializedJson[i].district;
+					string position = deserializedJson[i].position;
 
-                    Gender personGender = (gender == "M") ? Gender.MAN : Gender.WOMAN;
+					Gender personGender = (gender == "M") ? Gender.MAN : Gender.WOMAN;
 					DateTime? dateOfBirth = DateTime.ParseExact(stringDate, "yyyy-MM-dd HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture);
 
-					Person person = (Person) AddItem(itemType: ItemType.Person, name: fullname, gender: personGender, district: district,
+					Person person = (Person)AddItem(itemType: ItemType.Person, name: fullname, gender: personGender, district: district,
 						level: level, site: site, position: position, dateOfBirth: dateOfBirth);
-					person.SubPlatform = subPlatform;	person.Area = areas.Where(x => x.PostalCode.Equals(postalCode) && x.Residence.ToLower().Equals(town.ToLower())).SingleOrDefault();
-					
+					person.SubPlatform = subPlatform; person.Area = areas.Where(x => x.PostalCode.Equals(postalCode) && x.Residence.ToLower().Equals(town.ToLower())).SingleOrDefault();
+
 					if (!string.IsNullOrEmpty(twitter))
 					{
 						SocialMediaName twitterSocial = new SocialMediaName()
@@ -620,7 +620,7 @@ namespace BAR.BL.Managers
 						};
 						person.SocialMediaNames.Add(facebookSocial);
 					}
-					person.Organisation = (Organisation) organisations.Where(x => x.Name.Equals(organisation)).SingleOrDefault();
+					person.Organisation = (Organisation)organisations.Where(x => x.Name.Equals(organisation)).SingleOrDefault();
 
 					items.Add(person);
 				}
@@ -639,10 +639,32 @@ namespace BAR.BL.Managers
 
 		/// <summary>
 		/// Adds widgets to a specific item.
+		/// 
+		/// WARNING 
+		/// THIS METHOD USES UNIT OF WORK
 		/// </summary>
 		public Item AddWidgetsToItem(int itemId, IEnumerable<int> widgetIds)
 		{
-			throw new NotImplementedException();
+			uowManager = new UnitOfWorkManager();
+			InitRepo();
+
+			//Get item
+			Item item = GetItemWithAllWidgets(itemId);
+			if (item == null) return null;
+
+			//Get widgets
+			WidgetManager widgetManager = new WidgetManager(uowManager);
+			foreach (int widgetId in widgetIds)
+			{
+				Widget widgetToAdd = widgetManager.GetWidget(widgetId);
+				if (widgetToAdd == null) return null;
+				else item.ItemWidgets.Add(widgetToAdd);
+			}
+
+			//Update database
+			itemRepo.UpdateItem(item);
+
+			return item;
 		}
 	}
 }
