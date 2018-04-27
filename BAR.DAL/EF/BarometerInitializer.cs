@@ -8,11 +8,10 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.IO;
 using System.Linq;
-using System.Text;
 
 namespace BAR.DAL.EF
 {
-  internal class BarometerInitializer : DropCreateDatabaseAlways<BarometerDbContext>
+  internal class BarometerInitializer : CreateDatabaseIfNotExists<BarometerDbContext>
 	{
 		/// <summary>
 		/// Dummy data from the json file will be generated
