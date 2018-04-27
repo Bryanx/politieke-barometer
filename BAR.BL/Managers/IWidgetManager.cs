@@ -17,8 +17,8 @@ namespace BAR.BL.Managers
 		IEnumerable<Widget> GetAllWidgetsWithAllItems();
 		IEnumerable<Widget> GetWidgetsForItem(int itemId);
 
-		Widget AddWidget(WidgetType widgetType, string title, int rowNbr, int colNbr, DateTime? timestamp = null, GraphType? graphType = null, int rowspan = 1, int colspan = 1,
-			int dashboardId = -1);
+		Widget AddWidget(WidgetType widgetType, string title, int rowNbr, int colNbr, IEnumerable<string> proptags,
+			DateTime? timestamp = null, GraphType? graphType = null, int rowspan = 1, int colspan = 1, int dashboardId = -1);
 		Widget AddItemToWidget(int widgetId, int itemId);
 
 		Widget ChangeWidgetPos(int widgetId, int rowNbr, int colNbr, int rowspan = 1, int colspan = 1);

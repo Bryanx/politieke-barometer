@@ -31,7 +31,7 @@ namespace BAR.BL.Managers
 		/// Creates a widget based on the parameters
 		/// and links that widget to a dasboard.
 		/// </summary>
-		public Widget AddWidget(WidgetType widgetType, string title, int rowNbr, int colNbr, DateTime? timestamp = null, GraphType? graphType = null, int rowspan = 1, int colspan = 1, int dashboardId = -1)
+		public Widget AddWidget(WidgetType widgetType, string title, int rowNbr, int colNbr, IEnumerable<string> proptags, DateTime? timestamp = null, GraphType? graphType = null, int rowspan = 1, int colspan = 1, int dashboardId = -1)
 		{
 			InitRepo();
 			Widget widget;
@@ -53,18 +53,19 @@ namespace BAR.BL.Managers
 			widget.Items = new List<Item>();
 			widget.GraphType = graphType;
 			widget.Data = new List<IDictionary<string, double>>();
+			widget.PropertyTags = proptags.ToList();
 
 			//Update database
 			if (dashboardId == -1)
 			{
 				Dashboard dasboardToAddWidget = widgetRepo.ReadDashboardWithWidgets(dashboardId);
 				dasboardToAddWidget.Widgets.Add((UserWidget)widget);
-			}				
+			}
 			widgetRepo.CreateWidget(widget);
 
 			return widget;
 		}
-		
+
 		/// <summary>
 		/// Adds an item to a widget.
 		/// 
@@ -122,14 +123,15 @@ namespace BAR.BL.Managers
 			InitRepo();
 			return widgetRepo.ReadWidgetsForDashboard(dashboardId);
 		}
-		
+
 		/// <summary>
 		/// Gives back a list of widgets
 		/// for a specific item.
 		/// </summary>
 		/// 
 
-		public IEnumerable<Widget> GetWidgetsForItem(int itemId) {
+		public IEnumerable<Widget> GetWidgetsForItem(int itemId)
+		{
 			InitRepo();
 			ItemManager itemManager = new ItemManager();
 			return itemManager.GetItemWithWidgets(itemId).ItemWidgets.AsEnumerable();
@@ -181,7 +183,8 @@ namespace BAR.BL.Managers
 		/// <summary>
 		/// Updates a widget.
 		/// </summary>
-		public Widget ChangeWidget(Widget widget) {
+		public Widget ChangeWidget(Widget widget)
+		{
 			InitRepo();
 			widgetRepo.UpdateWidget(widget);
 			return widget;
@@ -195,7 +198,7 @@ namespace BAR.BL.Managers
 			InitRepo();
 			return widgetRepo.ReadDashboardWithWidgets(dashboardId);
 		}
-		
+
 		/// <summary>
 		/// Gives back a dashboard with their widgets.
 		/// </summary>
@@ -235,7 +238,7 @@ namespace BAR.BL.Managers
 				if (user == null) return null;
 				else dashboard.User = user;
 			}
-			
+
 			//Create database
 			widgetRepo.CreateDashboard(dashboard);
 			uowManager.Save();
@@ -278,6 +281,7 @@ namespace BAR.BL.Managers
 		{
 			if (uowManager == null) widgetRepo = new WidgetRepository();
 			else widgetRepo = new WidgetRepository(uowManager.UnitOfWork);
-		
+
+		}
 	}
 }

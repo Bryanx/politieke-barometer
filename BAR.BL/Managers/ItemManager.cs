@@ -327,15 +327,26 @@ namespace BAR.BL.Managers
 			WidgetManager widgetManager = new WidgetManager();
 			List<Widget> lijst = new List<Widget>();
 			List<int> widgetIds = new List<int>();
-			
-			ItemWidget widget1 = (ItemWidget)widgetManager.AddWidget(WidgetType.GraphType, name + " popularity", 1, 1, graphType: GraphType.LineChart, rowspan: 12, colspan: 6);
+			List<string> proptags;
+
+			//1st widget
+			proptags = new List<string>();
+			proptags.Add("Mentions");
+			ItemWidget widget1 = (ItemWidget)widgetManager.AddWidget(WidgetType.GraphType, name + " popularity", 1, 1, proptags: proptags, graphType: GraphType.LineChart, rowspan: 12, colspan: 6);
 			lijst.Add(widget1);
 			widgetIds.Add(widget1.WidgetId);
 
-			ItemWidget widget2 = (ItemWidget)widgetManager.AddWidget(WidgetType.GraphType, name + " gender comparison ", 1, 1, graphType: GraphType.BarChart, rowspan: 6, colspan: 6);
+			//2nd widget
+			proptags = new List<string>();
+			proptags.Add("Gender");
+			ItemWidget widget2 = (ItemWidget)widgetManager.AddWidget(WidgetType.GraphType, name + " gender comparison ", 1, 1, proptags: proptags, graphType: GraphType.BarChart, rowspan: 6, colspan: 6);
 			lijst.Add(widget2);
 			widgetIds.Add(widget2.WidgetId);
 
+			//3rd widget
+			proptags = new List<string>();
+			proptags.Add("Age");
+			ItemWidget widget3 = (ItemWidget)widgetManager.AddWidget(WidgetType.GraphType, name + " age comparison", 1, 1, proptags: proptags, graphType: GraphType.PieChart, rowspan: 6, colspan: 6);
 			lijst.Add(widget3);
 			widgetIds.Add(widget3.WidgetId);
 
@@ -343,15 +354,19 @@ namespace BAR.BL.Managers
 			return lijst;
 		}
 
+		/// <summary>
+		/// Generate new data for all the widgets in the system
+		/// This method takes time, but it happens in the background.
+		/// </summary>
 		public void GenerateDataForMwidgets()
 		{
-			//Get all widgets with all items
+			DataManager dataManager = new DataManager();
 			IEnumerable<Widget> widgets = new WidgetManager().GetAllWidgetsWithAllItems();
 			foreach (Widget widget in widgets)
 			{
-				foreach (IDictionary<string, double> dict in widget.Data)
+				for (int i = 0; i < widget.Items.Count(); i++)
 				{
-					//dict = 
+					//widget.Data[i] = dataManager.g
 				}
 			}
 		}
