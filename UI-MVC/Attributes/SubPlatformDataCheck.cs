@@ -14,7 +14,7 @@ namespace BAR.UI.MVC.Attributes
 		{
 			if (filterContext.ActionParameters.ContainsKey("id"))
 			{
-				int id = 1;
+				int id = (filterContext.ActionParameters["id"] as Int32?).GetValueOrDefault();
 
 				bool partOfSubplatform = IsItemInSubPlatform(id, GetSubDomain(HttpContext.Current.Request.Url));
 
