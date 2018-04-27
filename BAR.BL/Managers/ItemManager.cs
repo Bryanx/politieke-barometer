@@ -325,6 +325,7 @@ namespace BAR.BL.Managers
 		private List<Widget> GenerateDefaultItemWidgets(string name, int itemId)
 		{
 			WidgetManager widgetManager = new WidgetManager();
+			ItemManager itemManager = new ItemManager();
 			List<Widget> lijst = new List<Widget>();
 			List<int> widgetIds = new List<int>();
 			List<string> proptags;
@@ -350,7 +351,6 @@ namespace BAR.BL.Managers
 			lijst.Add(widget3);
 			widgetIds.Add(widget3.WidgetId);
 
-			AddWidgetsToItem(itemId, widgetIds);
 			return lijst;
 		}
 
@@ -647,36 +647,6 @@ namespace BAR.BL.Managers
 			}
 
 			return false;
-		}
-
-		/// <summary>
-		/// Adds widgets to a specific item.
-		/// 
-		/// WARNING 
-		/// THIS METHOD USES UNIT OF WORK
-		/// </summary>
-		public Item AddWidgetsToItem(int itemId, IEnumerable<int> widgetIds)
-		{
-			uowManager = new UnitOfWorkManager();
-			InitRepo();
-
-			//Get item
-			Item item = GetItemWithAllWidgets(itemId);
-			if (item == null) return null;
-
-			//Get widgets
-			WidgetManager widgetManager = new WidgetManager(uowManager);
-			foreach (int widgetId in widgetIds)
-			{
-				Widget widgetToAdd = widgetManager.GetWidget(widgetId);
-				if (widgetToAdd == null) return null;
-				else item.ItemWidgets.Add(widgetToAdd);
-			}
-
-			//Update database
-			itemRepo.UpdateItem(item);
-
-			return item;
 		}
 	}
 }
