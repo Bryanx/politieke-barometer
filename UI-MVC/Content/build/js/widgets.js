@@ -34,13 +34,13 @@ function createUserWidget(id, title) {
 
 //item widget element
 function createItemWidget(id, title) {
-    let element = "<div data-widget-id=" + id + " class='chart-container'>" +
+    return "<div data-widget-id=" + id + " class='chart-container'>" +
         "            <div class='x_panel grid-stack-item-content bg-white no-scrollbar'>" +
         "                <div class='x_title'>" +
         "                    <h2 class='graphTitle'>" + title + "</h2>" +
         "                    <ul class='nav navbar-right panel_toolbox'>" +
         "                   <li><a class='addToDashboard'>" + Resources.Save + "</a></li>" +
-        "                       <li class='dropdown'>" +
+        "                   <li class='dropdown'>" +
         "                       <a href='#' class='dropdown-toggle' data-toggle='dropdown' role='button' aria-expanded='false'><i class='fa fa-gear'></i></a>" +
         "                       <ul class='dropdown-menu' role='menu'>" +
         "                           <li><a data-widget-id=" + id + " class='toggleChartType'>Bar chart</a></li>" +
@@ -49,10 +49,15 @@ function createItemWidget(id, title) {
         "                           <li><a data-widget-id=" + id + " class='chartShowYGrid'>Y grid lines</a></li>" +
         "                           <li><a data-widget-id=" + id + " class='chartShowLogScale'>Logarithmic y-axes</a></li>" +
         "                           <li><a data-widget-id=" + id + " class='chartShowLegend'>Legend</a></li>" +
-        "                           <li><a data-widget-id=" + id + " class='getPNGImage'>Download PNG image</a></li>" +
-        "                           <li><a data-widget-id=" + id + " class='getJPGImage'>Download JPG image</a></li>" +
         "                       </ul>" +
-        "                       </li>" +
+        "                   </li>" +
+        "                   <li class='dropdown'>" +
+        "                       <a href='#' class='dropdown-toggle' data-toggle='dropdown' role='button' aria-expanded='false'><i class='fa fa-floppy-o'></i></a>" +
+        "                       <ul class='dropdown-menu' role='menu'>" +
+        "                           <li><a data-widget-id=" + id + " class='getJPGImage'>Download JPG image</a></li>" +
+        "                           <li><a data-widget-id=" + id + " class='getPNGImage'>Download PNG image</a></li>" +
+        "                       </ul>" +
+        "                   </li>" +
         "                   <li><a data-widget-id=" + id + " class='changeToWeek'>7d</a></li>" +
         "                   <li><a data-widget-id=" + id + " class='changeToMonth'>1m</a></li>" +
         "                   <li><a data-widget-id=" + id + " class='changeTo3Month'>3m</a></li>" +
@@ -69,7 +74,6 @@ function createItemWidget(id, title) {
         "               </div>" +
         "            </div>" +
         "        </div>";
-    return element;
 }
 
 var gridselector = $("#grid");
