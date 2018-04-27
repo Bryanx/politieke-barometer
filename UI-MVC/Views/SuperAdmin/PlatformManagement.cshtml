@@ -1,32 +1,114 @@
-﻿@using System.Web.Optimization
-@model BAR.UI.MVC.Models.SubPlatformManagement
-
-@section CustomCSS{
-    @Styles.Render("~/bundles/datatables-css")
-}
+﻿@model BAR.UI.MVC.Models.SubPlatformManagement
 
 <h1>@Model.PageTitle</h1>
-<hr />
-@Html.Partial("Partials/_SubPlatformTable", Model)
-<div style="visibility: hidden">space</div>
+
+<div class="row">
+    <!-- Add source -->
+    <div class="col-md-12 col-xs-12">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>@Resources.AddSource</h2>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+                <br />
+                <form method="post" action="/api/SuperAdmin/AddSubplatform" id="addSubPlatformForm" class="form-horizontal">
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">
+                            @Resources.Name
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            @Html.TextBoxFor(model => model.Name, "", new { @class = "form-control col-md-7 col-xs-12", id = "name" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+                            <button type="submit" class="btn btn-dark">@Resources.Save</button>
+                            <div id="addSourceMessage" style="display: inline"></div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <!-- Remove source -->
+    <div class="col-md-12 col-xs-12">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>@Resources.Sources</h2>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+                <div class="form-group">
+                    @Html.Partial("Partials/_SubPlatformTable", Model)
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 @section CustomJS{
-    @Scripts.Render("~/bundles/datatables")
     <script type="text/javascript">
-        (() => {
-            $('#datatable-infinite').dataTable({
-                "searching": true,
-                "bScrollInfinite": true,
-                "bScrollCollapse": true,
-                "sScrollY": "750px",
-                "paging": true,
-                "bProcessing": true,
-                "info": true
+        //Ajax call in generic function so every form can use the same code.
+        function submitForm($this, event, message) {
+            $.ajax({
+                type: $this.attr('method'),
+                url: $this.attr('action'),
+                data: $this.serialize(),
+                succes: message
+                    .addClass('green')
+                    .html("@Resources.Saved")
+                    .fadeOut(2000,
+                    function () {
+                        $(this)
+                            .removeClass()
+                            .html("")
+                            .css("display", "inline");
+                    })
+            }).fail(() => message
+                .addClass('red')
+                .html("@Resources.Failed")
+                .fadeOut(2000,
+                function () {
+                    $(this)
+                        .removeClass()
+                        .html("")
+                        .css("display", "inline");
+                }));
+            event.preventDefault();
+            }
+
+            $("#addSubPlatformForm").on("submit", function (event) {
+                event.preventDefault();
+                var $this = $(this);
+                $.ajax({
+                    type: $this.attr('method'),
+                    url: $this.attr('action'),
+                    data: $this.serialize()
+                }).fail(() => {/* ok */ })
+                    .done(function (data) {
+                        $("#datatable-responsive > tbody:last-child").append("<tr><td>" + $("#name").val() + "</td><td>" + $("#site").val() + "</td><td><btn class='sourceChange btn btn-danger btn-xs' id='" + data + "' title='@Resources.RemoveSource'>@Resources.Remove</btn></td></tr>");
+                        $("#name").val("");
+                        $("#site").val("");
+                    });
             });
 
-            $('.subscribeItem').click(function() {
-                ajaxToggleSubscribe($(this));
-            });
-        })($);
+            $(document).on("click", ".sourceChange", (function (event) {
+                event.preventDefault();
+                var $this = $(this);
+                var id = $this.attr('id');
+                $.ajax({
+                    type: 'POST',
+                    url: '/api/SuperAdmin/RemoveSource',
+                    data: JSON.stringify(id),
+                    contentType: 'application/json; charset=utf-8',
+                    dataType: "json"
+                }).fail(() => {/* ok */ })
+                    .done(function () {
+                        $this.closest('tr').remove();
+                    });
+            }));
     </script>
 }

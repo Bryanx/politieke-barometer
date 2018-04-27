@@ -142,6 +142,15 @@ namespace BAR.UI.MVC.App_GlobalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add SubPlatform.
+        /// </summary>
+        public static string AddSubPlatform {
+            get {
+                return ResourceManager.GetString("AddSubPlatform", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Admin.
         /// </summary>
         public static string Admin {
