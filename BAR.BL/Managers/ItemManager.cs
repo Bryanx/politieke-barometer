@@ -362,11 +362,24 @@ namespace BAR.BL.Managers
 		{
 			DataManager dataManager = new DataManager();
 			IEnumerable<Widget> widgets = new WidgetManager().GetAllWidgetsWithAllItems();
+
 			foreach (Widget widget in widgets)
 			{
 				for (int i = 0; i < widget.Items.Count(); i++)
 				{
-					//idget.Data[i] = dataManager.g
+					foreach (string proptag in widget.PropertyTags)
+					{
+						if (proptag.ToLower().Equals("mentions"))
+						{
+
+							widget.Data[i] = dataManager.GetNumberOfMentionsForItem
+								(widget.Items.ElementAt(i).ItemId, widget.WidgetId, "dd-MM");
+						} else
+						{
+							widget.Data[i] = dataManager.GetPropvaluesForWidget
+								(widget.Items.ElementAt(i).ItemId, widget.WidgetId, proptag);
+						}
+					}
 				}
 			}
 		}
@@ -383,7 +396,6 @@ namespace BAR.BL.Managers
 		/// <summary>
 		/// Returns all people for specific subplatform
 		/// </summary>
-		/// <param name="subPlatformName"></param>
 		/// <returns></returns>
 		public IEnumerable<Item> GetAllPersonsForSubplatform(int subPlatformID)
 		{
