@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using System.Text;
 using System;
 using Microsoft.AspNet.Identity.Owin;
+using AutoMapper;
 
 namespace BAR.UI.MVC.Controllers
 {
@@ -24,7 +25,7 @@ namespace BAR.UI.MVC.Controllers
 	{
 		private IUserManager userManager;
 		private IItemManager itemManager;
-		private ISubplatformManager platformManager;
+		private ISubplatformManager subplatformManager;
 		private IDataManager dataManager;
 
 		/// <summary>
@@ -49,12 +50,17 @@ namespace BAR.UI.MVC.Controllers
 		public ActionResult PlatformManagement()
 		{
 			userManager = new UserManager();
+			subplatformManager = new SubplatformManager();
+
+			IList<SubPlatformDTO> subplatforms = null;
+			subplatforms = Mapper.Map(subplatformManager.GetSubplatforms(), new List<SubPlatformDTO>());
 
 			//Assembling the view
 			return View(new SubPlatformManagement
 			{
 				PageTitle = Resources.SubPlatformManagement,
-				User = userManager.GetUser(User.Identity.GetUserId())
+				User = userManager.GetUser(User.Identity.GetUserId()),
+				SubPlatforms = subplatforms
 			});
 		}
 

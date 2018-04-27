@@ -1,3 +1,32 @@
-﻿@model BAR.UI.MVC.Models.BaseViewModel
+﻿@using System.Web.Optimization
+@model BAR.UI.MVC.Models.SubPlatformManagement
 
-<h1>title</h1>
+@section CustomCSS{
+    @Styles.Render("~/bundles/datatables-css")
+}
+
+<h1>@Model.PageTitle</h1>
+<hr />
+@Html.Partial("Partials/_SubPlatformTable", Model)
+<div style="visibility: hidden">space</div>
+
+@section CustomJS{
+    @Scripts.Render("~/bundles/datatables")
+    <script type="text/javascript">
+        (() => {
+            $('#datatable-infinite').dataTable({
+                "searching": true,
+                "bScrollInfinite": true,
+                "bScrollCollapse": true,
+                "sScrollY": "750px",
+                "paging": true,
+                "bProcessing": true,
+                "info": true
+            });
+
+            $('.subscribeItem').click(function() {
+                ajaxToggleSubscribe($(this));
+            });
+        })($);
+    </script>
+}
