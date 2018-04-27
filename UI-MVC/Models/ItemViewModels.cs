@@ -9,6 +9,7 @@ namespace BAR.UI.MVC.Models {
             public IEnumerable<ItemDTO> Items { get; set; }
             public string Json { get; set; }
         }
+        
         public class PersonViewModel : BaseViewModel {
             public ItemDTO Person { get; set; }
             public bool Subscribed { get; set; }
@@ -23,5 +24,13 @@ namespace BAR.UI.MVC.Models {
             public string OrganisationName { get; set; }
             public List<SocialMediaName> SocialMediaNames { get; set; }
         }
+        
+        public class OrganisationViewModel : BaseViewModel {
+            public ItemDTO Person { get; set; }
+            public bool Subscribed { get; set; }
+            public string Site { get; set; }
+            public List<SocialMediaName> SocialMediaNames { get; set; }
+        }
+        
     }
 }

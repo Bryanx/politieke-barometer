@@ -88,6 +88,14 @@ namespace BAR.UI.MVC.Helpers {
                 action = nameof(OrganisationController.Index)
             });
         }
+        
+        public static string OrganisationUrl(this UrlHelper helper, int organisationId) {
+            return helper.RouteUrl("Default", new {
+                controller = "Organisation",
+                action = nameof(OrganisationController.Details),
+                id = organisationId
+            });
+        }
         #endregion
         
         #region AdminUrls

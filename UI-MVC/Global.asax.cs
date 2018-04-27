@@ -57,6 +57,9 @@ namespace BAR.UI.MVC
           .ForMember(p => p.OrganisationName, opt => opt.MapFrom(src => src.Organisation.Name))
           .ForMember(p => p.Position, opt => opt.MapFrom(src => src.Position))
           .ForMember(p => p.SocialMediaNames, opt => opt.MapFrom(src => src.SocialMediaNames));
+        cfg.CreateMap<Organisation, ItemViewModels.OrganisationViewModel>()
+          .ForMember(p => p.Site, opt => opt.MapFrom(src => src.Site))
+          .ForMember(p => p.SocialMediaNames, opt => opt.MapFrom(src => src.SocialMediaUrls));
       });
     }
   }

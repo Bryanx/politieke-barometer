@@ -564,4 +564,7 @@
   <data name="SourceManagement" xml:space="preserve">
     <value>Source management</value>
   </data>
+  <data name="Organisation" xml:space="preserve">
+    <value>Organisation</value>
+  </data>
 </root>

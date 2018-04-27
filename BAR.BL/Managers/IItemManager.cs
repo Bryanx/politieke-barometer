@@ -13,7 +13,8 @@ namespace BAR.BL.Managers
 	public interface IItemManager
 	{
 		Item GetItem(int itemId);
-		Item GetItemWithPersonalInfo(int itemId);
+		Item GetPersonWithDetails(int itemId);
+		Item GetOrganisationWithDetails(int itemId);
 		Item GetItemWithSubPlatform(int itemId);
 		Item GetItemWithAllWidgets(int itemId);
 		IEnumerable<Item> GetAllItems();

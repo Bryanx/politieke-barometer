@@ -41,13 +41,25 @@ namespace BAR.DAL
 		/// <summary>
 		/// Returns the item that matches the itemId.
 		/// </summary>       
-		public Item ReadItemWithPersonalInfo(int itemId)
+		public Item ReadPersonWithDetails(int itemId)
 		{
 			return ctx.Items.OfType<Person>()
 				.Include(i => i.Area)
 				.Include(i => i.Organisation)
 				.Include(i => i.SocialMediaNames)
 				.Include(i => i.SocialMediaNames.Select(s => s.Source))
+				.Where(i => i.ItemId == itemId)
+				.SingleOrDefault();
+		}
+		
+		/// <summary>
+		/// Returns the item that matches the itemId.
+		/// </summary>       
+		public Item ReadOrganisationWithDetails(int itemId)
+		{
+			return ctx.Items.OfType<Organisation>()
+				.Include(i => i.SocialMediaUrls)
+				.Include(i => i.SocialMediaUrls.Select(s => s.Source))
 				.Where(i => i.ItemId == itemId)
 				.SingleOrDefault();
 		}

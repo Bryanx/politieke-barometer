@@ -260,7 +260,7 @@
     <Compile Include="Models\SuperAdminViewModels.cs" />
     <Compile Include="Models\UserViewModels.cs" />
     <Compile Include="Models\UserWidgetDTO.cs" />
-    <Compile Include="PersonDynamicNodeProvider.cs" />
+    <Compile Include="ItemDynamicNodeProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -478,6 +478,7 @@
     <Content Include="Views\Admin\UserManagement.cshtml" />
     <Content Include="Views\Home\Faq.cshtml" />
     <Content Include="Views\Home\Privacy.cshtml" />
+    <Content Include="Views\Organisation\Details.cshtml" />
     <Content Include="Views\Organisation\Index.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\BootstrapSiteMapPathHelperModel.cshtml" />
     <Content Include="Views\Shared\Partials\_AdminTable.cshtml" />
@@ -492,6 +493,7 @@
     <Content Include="Views\Shared\Partials\_LoginModal.cshtml" />
     <Content Include="Views\Shared\Partials\_NavBarAdminLinks.cshtml" />
     <Content Include="Views\Shared\Partials\_NavBarSuperAdminLinks.cshtml" />
+    <Content Include="Views\Shared\Partials\_OrganisationTable.cshtml" />
     <Content Include="Views\Shared\Partials\_PersonTable.cshtml" />
     <Content Include="Views\Shared\Partials\_RegisterModal.cshtml" />
     <Content Include="Views\Shared\Partials\_SearchBar.cshtml" />

@@ -70,7 +70,7 @@ namespace BAR.UI.MVC.Controllers
 			userManager = new UserManager();
 			subManager = new SubscriptionManager();
 
-			Item item = itemManager.GetItemWithPersonalInfo(id);
+			Item item = itemManager.GetPersonWithDetails(id);
 
 			if (item == null) return HttpNotFound();
 
