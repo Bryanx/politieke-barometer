@@ -23,7 +23,9 @@ namespace BAR.UI.MVC.Controllers
 	public class SuperAdminController : LanguageController
 	{
 		private IUserManager userManager;
-    private IDataManager dataManager;
+		private IItemManager itemManager;
+		private ISubplatformManager platformManager;
+		private IDataManager dataManager;
 
 		/// <summary>
 		/// Sourcemanagement page of the SuperAdmin.
@@ -49,7 +51,7 @@ namespace BAR.UI.MVC.Controllers
 			userManager = new UserManager();
 
 			//Assembling the view
-			return View(new BaseViewModel
+			return View(new SubPlatformManagement
 			{
 				PageTitle = Resources.SubPlatformManagement,
 				User = userManager.GetUser(User.Identity.GetUserId())
