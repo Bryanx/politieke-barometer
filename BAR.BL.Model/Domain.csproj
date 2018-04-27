@@ -59,6 +59,7 @@
     <Compile Include="Core\SubPlatform.cs" />
     <Compile Include="Data\Information.cs" />
     <Compile Include="Data\Property.cs" />
+    <Compile Include="Data\PropertyTag.cs" />
     <Compile Include="Data\PropertyValue.cs" />
     <Compile Include="Data\Source.cs" />
     <Compile Include="Data\SynchronizeAudit.cs" />

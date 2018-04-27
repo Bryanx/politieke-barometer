@@ -54,7 +54,7 @@ namespace BAR.DAL
 		/// </summary>
 		public int DeleteInformation(int infoId)
 		{
-			Information infoToDelete = ReadInformationWithPropValues(infoId);
+			Information infoToDelete = ReadInformationWitlAllInfo(infoId);
 			ctx.Informations.Remove(infoToDelete);
 			return ctx.SaveChanges();
 		}
@@ -73,7 +73,7 @@ namespace BAR.DAL
 		{
 			foreach (int infoId in infoIds)
 			{
-				Information infoToDelete = ReadInformationWithPropValues(infoId);
+				Information infoToDelete = ReadInformationWitlAllInfo(infoId);
 				ctx.Informations.Remove(infoToDelete);
 			}
 			return ctx.SaveChanges();
@@ -110,10 +110,11 @@ namespace BAR.DAL
 		/// Gives back an information object with his property-values
 		/// based on informationid.
 		/// </summary>
-		public Information ReadInformationWithPropValues(int informationId)
+		public Information ReadInformationWitlAllInfo(int informationId)
 		{
-			return ctx.Informations.Include(info => info.PropertieValues.Select(propval => propval.Property))
-				.Where(info => info.InformationId == informationId).SingleOrDefault();
+			return ctx.Informations.Include(info => info.PropertieValues)
+								   .Include(info => info.PropertieValues.Select(propval => propval.Property))
+								   .Where(info => info.InformationId == informationId).SingleOrDefault();
 		}
 
 		/// <summary>

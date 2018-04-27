@@ -31,7 +31,7 @@ namespace BAR.BL.Managers
 		/// Creates a widget based on the parameters
 		/// and links that widget to a dasboard.
 		/// </summary>
-		public Widget AddWidget(WidgetType widgetType, string title, int rowNbr, int colNbr, IEnumerable<string> proptags, DateTime? timestamp = null, GraphType? graphType = null, int rowspan = 1, int colspan = 1, int dashboardId = -1)
+		public Widget AddWidget(WidgetType widgetType, string title, int rowNbr, int colNbr, List<string> proptags, DateTime? timestamp = null, GraphType? graphType = null, int rowspan = 1, int colspan = 1, int dashboardId = -1)
 		{
 			InitRepo();
 			Widget widget;
@@ -53,7 +53,7 @@ namespace BAR.BL.Managers
 			widget.Items = new List<Item>();
 			widget.GraphType = graphType;
 			widget.Data = new List<IDictionary<string, double>>();
-			widget.PropertyTags = proptags.ToList();
+			widget.PropertyTags = proptags;
 
 			//Update database
 			if (dashboardId != -1)

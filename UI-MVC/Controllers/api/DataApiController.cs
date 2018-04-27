@@ -23,10 +23,10 @@ namespace BAR.UI.MVC.Controllers.api
 			string content;
 			if (dataManager.GetLastAudit() == null)
 			{
-				content = "{}";
+				//content = "{}";
 
 				//Test with fewer data 
-				//content = "{\"since\":\"2018-04-17 00:00\"}";
+				content = "{\"since\":\"2018-04-25 00:00\"}";
 			}
 			else
 			{
