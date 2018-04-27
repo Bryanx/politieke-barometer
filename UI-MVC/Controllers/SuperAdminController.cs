@@ -23,19 +23,21 @@ namespace BAR.UI.MVC.Controllers
 	public class SuperAdminController : LanguageController
 	{
 		private IUserManager userManager;
+    private IDataManager dataManager;
 
 		/// <summary>
 		/// Sourcemanagement page of the SuperAdmin.
 		/// </summary>
-		public ActionResult SourceManagement()
+		public ActionResult GeneralManagement()
 		{
 			userManager = new UserManager();
-
-			//Assembling the view
-			return View(new BaseViewModel
-			{
-				PageTitle = Resources.SourceManagement,
-				User = userManager.GetUser(User.Identity.GetUserId())
+      dataManager = new DataManager();
+      //Assembling the view
+      return View(new SourceManagement
+      {
+        PageTitle = Resources.GeneralManagement,
+        User = userManager.GetUser(User.Identity.GetUserId()),
+        Sources = dataManager.GetAllSources()
 			});
 		}
 

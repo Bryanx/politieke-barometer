@@ -23,9 +23,7 @@ namespace BAR.DAL.EF
 			GenerateSubPlatforms(ctx);
 			GenerateSources(ctx);
 			GenerateProperties(ctx);
-			//GenerateInformations(ctx);
 			GenerateAreas(ctx);
-			//GenerateK3(ctx);
 		}
 
 		/// <summary>
@@ -65,14 +63,14 @@ namespace BAR.DAL.EF
 		{
 			SubPlatform subPlatform1 = new SubPlatform
 			{
-				Name = "k3",
+				Name = "politiek",
 				CreationDate = DateTime.Now
 			};
 			ctx.SubPlatforms.Add(subPlatform1);
 
 			SubPlatform subPlatform2 = new SubPlatform
 			{
-				Name = "politiek",
+				Name = "k3",
 				CreationDate = DateTime.Now
 			};
 			ctx.SubPlatforms.Add(subPlatform2);

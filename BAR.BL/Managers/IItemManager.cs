@@ -28,9 +28,11 @@ namespace BAR.BL.Managers
 
 		IEnumerable<Item> GetAllPersonsForSubplatform(int subPlatformID);
 
-		bool ImportJson(string json);
 		Item AddItem(ItemType itemType, string name, string description = "", string function = "", Category category = null,
 			string district = null, string level = null, string site = null, Gender gender = Gender.OTHER, string position = null, DateTime? dateOfBirth = null);
+
+		bool ImportJson(string json, int subPlatformID);
+
 
 		Item ChangeItemName(int itemId, string name);
 		Item ChangeItemActivity(int itemId);

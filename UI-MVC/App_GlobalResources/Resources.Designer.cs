@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace BAR.UI.MVC.App_GlobalResources {
+namespace Resources {
     using System;
     
     
@@ -129,6 +129,15 @@ namespace BAR.UI.MVC.App_GlobalResources {
         public static string AddAChart {
             get {
                 return ResourceManager.GetString("AddAChart", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add source.
+        /// </summary>
+        public static string AddSource {
+            get {
+                return ResourceManager.GetString("AddSource", resourceCulture);
             }
         }
         
@@ -525,6 +534,15 @@ namespace BAR.UI.MVC.App_GlobalResources {
         public static string Gender {
             get {
                 return ResourceManager.GetString("Gender", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to General management.
+        /// </summary>
+        public static string GeneralManagement {
+            get {
+                return ResourceManager.GetString("GeneralManagement", resourceCulture);
             }
         }
         
@@ -1015,6 +1033,15 @@ namespace BAR.UI.MVC.App_GlobalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Remove source.
+        /// </summary>
+        public static string RemoveSource {
+            get {
+                return ResourceManager.GetString("RemoveSource", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Reset.
         /// </summary>
         public static string Reset {
@@ -1150,11 +1177,29 @@ namespace BAR.UI.MVC.App_GlobalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Site.
+        /// </summary>
+        public static string Site {
+            get {
+                return ResourceManager.GetString("Site", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Source management.
         /// </summary>
         public static string SourceManagement {
             get {
                 return ResourceManager.GetString("SourceManagement", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sources.
+        /// </summary>
+        public static string Sources {
+            get {
+                return ResourceManager.GetString("Sources", resourceCulture);
             }
         }
         
@@ -1200,6 +1245,15 @@ namespace BAR.UI.MVC.App_GlobalResources {
         public static string SuccesfullyLoggedInWith {
             get {
                 return ResourceManager.GetString("SuccesfullyLoggedInWith", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Synchronize.
+        /// </summary>
+        public static string Synchronize {
+            get {
+                return ResourceManager.GetString("Synchronize", resourceCulture);
             }
         }
         
