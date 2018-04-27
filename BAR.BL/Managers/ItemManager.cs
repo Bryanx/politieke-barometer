@@ -325,22 +325,17 @@ namespace BAR.BL.Managers
 		private List<Widget> GenerateDefaultItemWidgets(string name, int itemId)
 		{
 			WidgetManager widgetManager = new WidgetManager();
-			DataManager dataManager = new DataManager();
 			List<Widget> lijst = new List<Widget>();
 			List<int> widgetIds = new List<int>();
 			
 			ItemWidget widget1 = (ItemWidget)widgetManager.AddWidget(WidgetType.GraphType, name + " popularity", 1, 1, graphType: GraphType.LineChart, rowspan: 12, colspan: 6);
-			widget1.Data.Add(dataManager.GetNumberOfMentionsForItem(itemId, widget1.WidgetId, "dd-MM"));
 			lijst.Add(widget1);
 			widgetIds.Add(widget1.WidgetId);
 
 			ItemWidget widget2 = (ItemWidget)widgetManager.AddWidget(WidgetType.GraphType, name + " gender comparison ", 1, 1, graphType: GraphType.BarChart, rowspan: 6, colspan: 6);
-			widget2.Data.Add(dataManager.GetPropvaluesForWidget(itemId, widget2.WidgetId, "Gender"));
 			lijst.Add(widget2);
 			widgetIds.Add(widget2.WidgetId);
 
-			ItemWidget widget3 = (ItemWidget)widgetManager.AddWidget(WidgetType.GraphType, name + " age comparison", 1, 1, graphType: GraphType.PieChart, rowspan: 6, colspan: 6);
-			widget2.Data.Add(dataManager.GetPropvaluesForWidget(itemId, widget3.WidgetId, "Age"));
 			lijst.Add(widget3);
 			widgetIds.Add(widget3.WidgetId);
 
@@ -350,7 +345,15 @@ namespace BAR.BL.Managers
 
 		public void GenerateDataForMwidgets()
 		{
-			IEnumerable<Widget> widgets = new WidgetManager()
+			//Get all widgets with all items
+			IEnumerable<Widget> widgets = new WidgetManager().GetAllWidgetsWithAllItems();
+			foreach (Widget widget in widgets)
+			{
+				foreach (IDictionary<string, double> dict in widget.Data)
+				{
+					//dict = 
+				}
+			}
 		}
 
 		/// <summary>
