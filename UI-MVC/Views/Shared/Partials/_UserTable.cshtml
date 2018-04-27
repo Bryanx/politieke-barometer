@@ -52,9 +52,12 @@
                     </td>
                     <td>
                         @Model.Users.ElementAt(i).FirstName
+                        <span style="display:none">@Model.Users.ElementAt(i).FirstName</span>
                     </td>
                     <td>
                         @Model.Users.ElementAt(i).LastName
+                        <span style="display:none">@Model.Users.ElementAt(i).LastName</span>
+
                     </td>
                     @if (Model.Users.ElementAt(i).Gender == BAR.BL.Domain.Users.Gender.MAN) {
                         <td>
