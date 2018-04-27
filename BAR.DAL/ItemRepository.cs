@@ -37,6 +37,20 @@ namespace BAR.DAL
 		{
 			return ctx.Items.Find(itemId);
 		}
+		
+		/// <summary>
+		/// Returns the item that matches the itemId.
+		/// </summary>       
+		public Item ReadItemWithPersonalInfo(int itemId)
+		{
+			return ctx.Items.OfType<Person>()
+				.Include(i => i.Area)
+				.Include(i => i.Organisation)
+				.Include(i => i.SocialMediaNames)
+				.Include(i => i.SocialMediaNames.Select(s => s.Source))
+				.Where(i => i.ItemId == itemId)
+				.SingleOrDefault();
+		}
 
 		/// <summary>
 		/// Returns the item that matches the itemId.

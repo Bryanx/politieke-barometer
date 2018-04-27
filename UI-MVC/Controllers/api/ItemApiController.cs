@@ -62,5 +62,17 @@ namespace BAR.UI.MVC.Controllers.api
 			itemManager.ChangeItemName(Int32.Parse(itemId), itemName);
 			return StatusCode(HttpStatusCode.NoContent);
 		}
+		
+		/// <summary>
+		/// Changes the name of an item for a given item id.
+		/// </summary>
+		[HttpGet]
+		[Route("api/GetNumberOfMentions/{itemId}")]
+		public IHttpActionResult GetNumberOfMentions(string itemId)
+		{
+			IDataManager dataManager = new DataManager();
+			int numberOfMentions = dataManager.GetNumberInfo(Int32.Parse(itemId), DateTime.MinValue);
+			return Ok(numberOfMentions);
+		}
 	}
 }
