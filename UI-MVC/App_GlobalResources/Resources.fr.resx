@@ -303,6 +303,9 @@
   <data name="ItemManagement" xml:space="preserve">
     <value>Gérer des éléments</value>
   </data>
+  <data name="JustNow" xml:space="preserve">
+    <value>Juste maintenant</value>
+  </data>
   <data name="Lastname" xml:space="preserve">
     <value>Nom de famille</value>
   </data>

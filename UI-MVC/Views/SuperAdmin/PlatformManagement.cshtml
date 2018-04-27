@@ -24,7 +24,7 @@
                     <div class="form-group">
                         <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
                             <button type="submit" class="btn btn-dark">@Resources.Save</button>
-                            <div id="addSourceMessage" style="display: inline"></div>
+                            <div id="addSubPlatformForm" style="display: inline"></div>
                         </div>
                     </div>
                 </form>
@@ -89,26 +89,9 @@
                     data: $this.serialize()
                 }).fail(() => {/* ok */ })
                     .done(function (data) {
-                        $("#datatable-responsive > tbody:last-child").append("<tr><td>" + $("#name").val() + "</td><td>" + $("#site").val() + "</td><td><btn class='sourceChange btn btn-danger btn-xs' id='" + data + "' title='@Resources.RemoveSource'>@Resources.Remove</btn></td></tr>");
+                        $("#datatable-responsive > tbody:last-child").append("<tr><td>" + $("#name").val() + "</td><td>0</td><td>0</td></tr>");
                         $("#name").val("");
-                        $("#site").val("");
                     });
             });
-
-            $(document).on("click", ".sourceChange", (function (event) {
-                event.preventDefault();
-                var $this = $(this);
-                var id = $this.attr('id');
-                $.ajax({
-                    type: 'POST',
-                    url: '/api/SuperAdmin/RemoveSource',
-                    data: JSON.stringify(id),
-                    contentType: 'application/json; charset=utf-8',
-                    dataType: "json"
-                }).fail(() => {/* ok */ })
-                    .done(function () {
-                        $this.closest('tr').remove();
-                    });
-            }));
     </script>
 }

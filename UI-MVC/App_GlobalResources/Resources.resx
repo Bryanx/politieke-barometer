@@ -567,4 +567,7 @@
   <data name="AddSubPlatform" xml:space="preserve">
     <value>Add SubPlatform</value>
   </data>
+  <data name="JustNow" xml:space="preserve">
+    <value>Just now</value>
+  </data>
 </root>
