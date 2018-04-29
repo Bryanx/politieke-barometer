@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Data.Entity;
+using BAR.BL.Domain.Items;
 
 namespace BAR.DAL
 {
@@ -200,8 +201,8 @@ namespace BAR.DAL
 		{
 			return ctx.Sources.ToList();
 		}
-
-		/// <summary>
+    
+    /// <summary>
 		/// Returns a list of all the informations objects that are
 		/// related to a specific item.
 		/// </summary>
@@ -212,7 +213,7 @@ namespace BAR.DAL
 								   .Where(info => info.Items.Any(item => item.ItemId == itemId))
 								   .AsEnumerable();
 		}
-	}
 }
+
 
 

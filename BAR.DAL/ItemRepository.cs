@@ -209,12 +209,13 @@ namespace BAR.DAL
 			return ctx.SaveChanges();
 		}
 
-		/// <summary>
-		/// Reads an organisation with a given name.
-		/// </summary>
-		public Item ReadOrganisation(string organisationName)
-		{
-			return ctx.Items.Where(x => x.Name.Equals(organisationName)).SingleOrDefault();
-		}
-	}
+        /// <summary>
+        /// Reads an organisation with a given name.
+        /// </summary>
+        public Item ReadOrganisation(string organisationName)
+        {
+          return ctx.Items.Include(org => org.SubPlatform)
+            .Where(x => x.Name.Equals(organisationName)).SingleOrDefault();
+        }
+  }
 }

@@ -141,6 +141,9 @@
   <data name="AddAChart" xml:space="preserve">
     <value>Voeg een grafiek toe.</value>
   </data>
+  <data name="AddSource" xml:space="preserve">
+    <value>Bron toevoegen</value>
+  </data>
   <data name="Admin" xml:space="preserve">
     <value>Admin</value>
   </data>
@@ -435,6 +438,9 @@
   <data name="RemoveItem" xml:space="preserve">
     <value>Verwijder item</value>
   </data>
+  <data name="RemoveSource" xml:space="preserve">
+    <value>Bron verwijderen</value>
+  </data>
   <data name="Reset" xml:space="preserve">
     <value>Reset</value>
   </data>
@@ -481,7 +487,10 @@
     <value>Registreer om te volgen</value>
   </data>
   <data name="SourceManagement" xml:space="preserve">
-    <value>Bronnen beheren</value>
+    <value>Algemene instellingen</value>
+  </data>
+  <data name="Sources" xml:space="preserve">
+    <value>Bronnen</value>
   </data>
   <data name="StayUpToDate" xml:space="preserve">
     <value>Blijf op de hoogte.</value>
@@ -497,6 +506,9 @@
   </data>
   <data name="SuccesfullyLoggedInWith" xml:space="preserve">
     <value>Je bent succesvol ingelogd met</value>
+  </data>
+  <data name="Synchronize" xml:space="preserve">
+    <value>Synchroniseer</value>
   </data>
   <data name="ThanksEmailConfirm" xml:space="preserve">
     <value>Bedankt voor het bevestigen van uw e-mailadres.</value>

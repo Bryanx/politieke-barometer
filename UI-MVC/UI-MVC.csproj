@@ -20,7 +20,7 @@
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
     <Use64BitIISExpress />
-    <IISExpressSSLPort>44398</IISExpressSSLPort>
+    <IISExpressSSLPort>44317</IISExpressSSLPort>
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
@@ -224,12 +224,14 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Attributes\SubPlatformCheck.cs" />
+    <Compile Include="Attributes\SubPlatformCheckAPI.cs" />
     <Compile Include="Attributes\SubPlatformDataCheck.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\api\AlertApiController.cs" />
     <Compile Include="Controllers\api\SubPlatformApiController.cs" />
     <Compile Include="Controllers\api\DataApiController.cs" />
     <Compile Include="Controllers\api\ItemApiController.cs" />
+    <Compile Include="Controllers\api\SuperAdminApiController.cs" />
     <Compile Include="Controllers\api\UserApiController.cs" />
     <Compile Include="Controllers\api\WidgetController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -256,6 +258,7 @@
     <Compile Include="Models\ItemViewModels.cs" />
     <Compile Include="Models\SubPlatformDTO.cs" />
     <Compile Include="Models\SubPlatformViewModel.cs" />
+    <Compile Include="Models\SuperAdminViewModels.cs" />
     <Compile Include="Models\UserViewModels.cs" />
     <Compile Include="Models\UserWidgetDTO.cs" />
     <Compile Include="Models\Widgettt.cs" />
@@ -497,7 +500,7 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\SuperAdmin\AdminManagement.cshtml" />
     <Content Include="Views\SuperAdmin\PlatformManagement.cshtml" />
-    <Content Include="Views\SuperAdmin\SourceManagement.cshtml" />
+    <Content Include="Views\SuperAdmin\GeneralManagement.cshtml" />
     <Content Include="Views\User\Dashboard.cshtml" />
     <Content Include="Views\User\Settings.cshtml" />
     <Content Include="Web.config">
@@ -568,6 +571,7 @@
     <Content Include="Views\Shared\Partials\_UserTable.cshtml" />
     <Content Include="Views\Shared\Partials\_SubPlatformOverview.cshtml" />
     <Content Include="Views\Shared\_LayoutSubplatformOverview.cshtml" />
+    <Content Include="Views\Shared\Partials\_SourceTable.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BAR.BL.Model\Domain.csproj">
