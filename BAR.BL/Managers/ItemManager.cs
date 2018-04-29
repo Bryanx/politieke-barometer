@@ -370,7 +370,7 @@ namespace BAR.BL.Managers
 		{
 			DataManager dataManager = new DataManager();
 			WidgetManager widgetManager = new WidgetManager();
-			IEnumerable<Widget> widgets = widgetManager.GetAllWidgetsWithAllItems();
+			IEnumerable<Widget> widgets = widgetManager.GetAllWidgetsWithAllData();
 
 			foreach (Widget widget in widgets)
 			{
@@ -378,24 +378,23 @@ namespace BAR.BL.Managers
 				{
 					foreach (PropertyTag proptag in widget.PropertyTags)
 					{
+						WidgetData widgetData;
 						if (proptag.Name.ToLower().Equals("mentions"))
 						{
 
-							widget.Data.ToArray()[i] = dataManager.GetNumberOfMentionsForItem
+							widgetData = dataManager.GetNumberOfMentionsForItem
 								(widget.Items.ElementAt(i).ItemId, widget.WidgetId, "dd-MM");
 						}
 						else
 						{
-							widget.Data.ToArray()[i] = dataManager.GetPropvaluesForWidget
+							widgetData = dataManager.GetPropvaluesForWidget
 								(widget.Items.ElementAt(i).ItemId, widget.WidgetId, proptag.Name);
 						}
+						widget.WidgetData.Add(widgetData);
 					}
 				}
-				widgetManager.ChangeWidget(widget);
 			}
-
-			//Update database
-			
+			widgetManager.ChangeWidgets(widgets);
 		}
 
 		/// <summary>

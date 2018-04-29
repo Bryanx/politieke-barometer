@@ -302,5 +302,15 @@ namespace BAR.BL.Managers
 			InitRepo();
 			return widgetRepo.ReadAllWidgetsWithAllData().AsEnumerable();
 		}
+
+		/// <summary>
+		/// Updates all the given widgets
+		/// </summary>
+		public IEnumerable<Widget> ChangeWidgets(IEnumerable<Widget> widgets)
+		{
+			InitRepo();
+			widgetRepo.UpdateWidgets(widgets);
+			return widgets;
+		}
 	}
 }

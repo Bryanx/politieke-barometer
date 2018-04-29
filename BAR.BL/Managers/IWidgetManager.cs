@@ -27,6 +27,7 @@ namespace BAR.BL.Managers
 		Widget ChangeWidgetPos(int widgetId, int rowNbr, int colNbr, int rowspan = 1, int colspan = 1);
 		Widget ChangeWidgetTitle(int widgetId, string title);
 		Widget ChangeWidget(Widget widget);
+		IEnumerable<Widget> ChangeWidgets(IEnumerable<Widget> widgets);
 
 		void RemoveWidget(int widgetId);
 
