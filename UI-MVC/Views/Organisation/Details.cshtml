@@ -55,19 +55,18 @@
                     <h4>
                         <strong>Social media</strong>
                     </h4>
-                    @foreach (var item in Model.SocialMediaNames)
-                    {
+                    @foreach (var item in Model.SocialMediaNames) {
                         if (item.Source.SourceId == 1) {
                             if (item.Username != null) {
-                                <a href="http://www.twitter.com/@item.Username" class="c-link c-link--twitter c-tooltip" aria-label="Twitter">
-                                    <svg class="c-icon"><use xlink:href="#icon--twitter"></use></svg>
+                                <a href="http://www.twitter.com/@item.Username" class="social-icon" aria-label="Twitter">
+                                    <i class="fa fa-2x fa-twitter-square"></i>
                                 </a>
                             }
                         }
                         if (item.Source.SourceId == 2) {
                             if (item.Username != null) {
-                                <a href="@item.Username" class="c-link c-link--facebook c-tooltip" aria-label="Facebook">
-                                    <svg class="c-icon"><use xlink:href="#icon--facebook"></use></svg>
+                                <a href="@item.Username" class="social-icon" aria-label="Facebook">
+                                    <i class="fa fa-2x fa-facebook-square"></i>
                                 </a>
                             }
                         }
