@@ -481,6 +481,6 @@ namespace BAR.BL.Managers
       return dataRepo.ReadInformationsWithAllInfoForItem(itemId);
     }
  }
-
+}
 
 

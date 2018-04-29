@@ -169,6 +169,24 @@ namespace BAR.DAL
 		{
 			return ctx.Sources.Where(x => x.Name.Equals(sourceName)).SingleOrDefault();
 		}
+		
+		public int CreateSource(Source source) 
+		{ 
+			ctx.Sources.Add(source); 
+			return ctx.SaveChanges(); 
+		} 
+ 
+		public Source ReadSource(int sourceId) 
+		{ 
+			return ctx.Sources.Where(x => x.SourceId == sourceId).SingleOrDefault(); 
+		} 
+ 
+		public int DeleteSource(Source source) 
+		{ 
+			ctx.Sources.Remove(source); 
+			return ctx.SaveChanges(); 
+		}
+		
 
 		public SynchronizeAudit ReadLastAudit()
 		{
@@ -213,7 +231,7 @@ namespace BAR.DAL
 								   .Where(info => info.Items.Any(item => item.ItemId == itemId))
 								   .AsEnumerable();
 		}
+	}
 }
-
 
 
