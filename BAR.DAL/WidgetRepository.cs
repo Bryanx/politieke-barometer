@@ -221,7 +221,6 @@ namespace BAR.DAL
 		public IEnumerable<Widget> ReadAllWidgetsWithAllItems()
 		{
 			return ctx.Widgets.Include(Widget => Widget.PropertyTags)
-							  .Include(widget => widget.Data)
 							  .Include(widget => widget.Items).AsEnumerable();
 		}
 
@@ -233,6 +232,31 @@ namespace BAR.DAL
 		{
 			foreach (UserWidget widget in widgets) ctx.Widgets.Remove(widget);
 			return ctx.SaveChanges();
+		}
+
+		/// <summary>
+		/// Reads a widget with all the data of that specific widget.
+		/// </summary>
+		public Widget ReadWidgetWithAllData(int widgetId)
+		{
+			return ctx.Widgets.Include(widget => widget.Items)
+					   .Include(widget => widget.PropertyTags)
+					   .Include(widget => widget.WidgetData)
+					   .Include(widget => widget.WidgetData.Select(widgetData => widgetData.GraphValues))
+					   .Where(widget => widget.WidgetId == widgetId)
+					   .SingleOrDefault();
+		}
+
+		/// <summary>
+		/// Reads all the widgets with all the data.
+		/// </summary>
+		public IEnumerable<Widget> ReadAllWidgetsWithAllData()
+		{
+			return ctx.Widgets.Include(widget => widget.Items)
+					   .Include(widget => widget.PropertyTags)
+					   .Include(widget => widget.WidgetData)
+					   .Include(widget => widget.WidgetData.Select(widgetData => widgetData.GraphValues))
+					   .AsEnumerable();
 		}
 	}
 }
