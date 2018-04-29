@@ -163,18 +163,17 @@ namespace BAR.BL.Managers
 			else if (startDate < timestamp) return null;
 
 			//Get informations for item
-			IEnumerable<Information> infos = GetInformationsWithAllInfoForItem(itemid);
-			IEnumerable<Information> infosQueried = infos.Where(info => info.CreationDate > startDate)
-														 .Where(info => info.CreationDate < timestamp)
-														 .AsEnumerable();
-			if (infos == null || infos.Count() == 0) return null;
-
-			//Map timestap to number of propertyValues		
 			WidgetData widgetData = new WidgetData()
 			{
 				KeyValue = proptag,
 				GraphValues = new List<GraphValue>()
 			};
+			IEnumerable<Information> infosQueried = GetInformationsWithAllInfoForItem(itemid).Where(info => info.CreationDate > startDate)
+																							 .Where(info => info.CreationDate < timestamp)
+																							 .AsEnumerable();
+			if (infosQueried == null || infosQueried.Count() == 0) return null;
+
+			//Map timestap to number of propertyValues			
 			foreach (Information information in infosQueried)
 			{
 				foreach (PropertyValue propval in information.PropertieValues)
