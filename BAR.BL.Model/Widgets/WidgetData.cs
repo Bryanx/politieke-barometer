@@ -6,9 +6,10 @@ using System.Threading.Tasks;
 
 namespace BAR.BL.Domain.Widgets
 {
-	public class Graphkey
+	public class WidgetData
 	{
-		public int DateKeyId { get; set; }
+		public int WidgetDataId { get; set; }
 		public string KeyValue { get; set; }
+		public ICollection<GraphValue> GraphValues { get; set; }
 	}
 }

@@ -21,6 +21,6 @@ namespace BAR.BL.Domain.Widgets
 		public WidgetType WidgetType { get; set; }
 		public ICollection<Item> Items { get; set; }
 		public GraphType? GraphType { get; set; }
-		public ICollection<IDictionary<Graphkey, GraphValue>> Data { get; set; }
+		public ICollection<WidgetData> WidgetData { get; set; }
 	}
 }
