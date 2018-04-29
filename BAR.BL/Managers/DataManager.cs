@@ -118,7 +118,11 @@ namespace BAR.BL.Managers
 			if (startDate == null) startDate = DateTime.Now;
 			else if (startDate < timestamp) return null;
 
-			WidgetData widgetData = new WidgetData();
+			WidgetData widgetData = new WidgetData()
+			{
+				KeyValue = "Number of mentions",
+				GraphValues = new List<GraphValue>()
+			};
 			while (timestamp < startDate)
 			{
 				//Each grapvalue represents a total number of mentions mapped
@@ -166,7 +170,11 @@ namespace BAR.BL.Managers
 			if (infos == null || infos.Count() == 0) return null;
 
 			//Map timestap to number of propertyValues		
-			WidgetData widgetData = new WidgetData();
+			WidgetData widgetData = new WidgetData()
+			{
+				KeyValue = proptag,
+				GraphValues = new List<GraphValue>()
+			};
 			foreach (Information information in infosQueried)
 			{
 				foreach (PropertyValue propval in information.PropertieValues)
