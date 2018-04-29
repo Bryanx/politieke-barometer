@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Net;
 using System.Web.Http;
+using BAR.BL.Domain.Items;
 using BAR.BL.Managers;
 using BAR.UI.MVC.Attributes;
 
@@ -73,6 +74,18 @@ namespace BAR.UI.MVC.Controllers.api
 			IDataManager dataManager = new DataManager();
 			int numberOfMentions = dataManager.GetNumberInfo(Int32.Parse(itemId), DateTime.MinValue);
 			return Ok(numberOfMentions);
+		}
+		
+		/// <summary>
+		/// Retrieves an item.
+		/// </summary>
+		[HttpGet]
+		[Route("api/GetItemWithDetails/{itemId}")]
+		public IHttpActionResult GetItemWithDetails(string itemId)
+		{
+			itemManager = new ItemManager();
+			Item item = itemManager.GetPersonWithDetails(Int32.Parse(itemId));
+			return Ok(item);
 		}
 	}
 }

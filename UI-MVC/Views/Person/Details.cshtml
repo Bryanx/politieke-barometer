@@ -28,7 +28,7 @@
 
                 </div>
                 <div class="col-md-9 col-sm-9 col-xs-12">
-                   <button onclick="window.location='@Url.OrganisationUrl(@Model.OrganisationId)';" class="btn btn-default btn-xs">@Model.OrganisationName</button>
+                    <button onclick="window.location = '@Url.OrganisationUrl(@Model.OrganisationId)';" class="btn btn-default btn-xs">@Model.OrganisationName</button>
                     <h1>
                         @Model.Person.Name
                         @if (User.Identity.IsAuthenticated) {
@@ -54,7 +54,7 @@
                         </li>
                         <li class="m-top-xs">
                             <i class="fa fa-globe external-link user-profile-icon"></i>
-                            <a href="@Model.Site" target="_blank">@Model.Site</a>
+                            <a href="@Model.Site" target="_blank">@Model.Site.Replace("http://","").Replace("www.","")</a>
                         </li>
                     </ul>
                 </div>
@@ -62,19 +62,18 @@
                     <h4>
                         <strong>Social media</strong>
                     </h4>
-                    @foreach (var item in Model.SocialMediaNames)
-                    {
+                    @foreach (var item in Model.SocialMediaNames) {
                         if (item.Source.SourceId == 1) {
                             if (item.Username != null) {
-                                <a href="http://www.twitter.com/@item.Username" class="c-link c-link--twitter c-tooltip" aria-label="Twitter">
-                                    <svg class="c-icon"><use xlink:href="#icon--twitter"></use></svg>
+                                <a href="http://www.twitter.com/@item.Username" class="social-icon" aria-label="Twitter">
+                                    <i class="fa fa-2x fa-twitter-square"></i>
                                 </a>
                             }
                         }
                         if (item.Source.SourceId == 2) {
                             if (item.Username != null) {
-                                <a href="@item.Username" class="c-link c-link--facebook c-tooltip" aria-label="Facebook">
-                                    <svg class="c-icon"><use xlink:href="#icon--facebook"></use></svg>
+                                <a href="@item.Username" class="social-icon" aria-label="Facebook">
+                                    <i class="fa fa-2x fa-facebook-square"></i>
                                 </a>
                             }
                         }
@@ -94,10 +93,22 @@
 </div>
 <!-- Widgets -->
 <div class="grid-stack" id="grid"></div>
-
 @Html.Partial("Partials/_SocialIcons")
+
 @section CustomJS{
+    <div id="fb-root"></div>
+    <script>
+        (function(d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) return;
+            js = d.createElement(s);
+            js.id = id;
+            js.src = 'https://connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v2.12';
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+    </script>
     <script src="~/Scripts/ChartJS/Chart.js"></script>
+    <script src="https://platform.twitter.com/widgets.js"></script>
     @Scripts.Render("~/bundles/gridstack")
     <script type="text/javascript" defer>
 
@@ -120,4 +131,3 @@
 
     </script>
 }
-

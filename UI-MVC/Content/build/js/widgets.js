@@ -76,6 +76,24 @@ function createItemWidget(id, title) {
         "        </div>";
 }
 
+//twitter widget
+function createTwitterWidget(title) {
+    return "<div class='chart-container'>" +
+        "            <div class='x_panel grid-stack-item-content bg-white no-scrollbar'>" +
+        "                <div class='x_title'>" +
+        "                    <h2 class='graphTitle'>" + title + "</h2>" +
+        "                    <ul class='nav navbar-right panel_toolbox'>" +
+        "                       <li><a class='addToDashboard'>" + Resources.Save + "</a></li>" +
+        "                    </ul>"+
+        "                    <div class='clearfix'></div>" +
+        "                </div>" +
+        "                <div class='scroll' style='position: relative; height: 88%;'> " +
+        "                    <div id='twitter-feed'></div>"+
+        "               </div>" +
+        "            </div>" +
+        "        </div>";
+}
+
 var gridselector = $("#grid");
 gridselector.gridstack({
     resizable: {
@@ -345,6 +363,39 @@ function loadGraphs(itemId, widget) {
 }
 
 function loadWidgets(url, itemId) {
+    //Loads a social widget.
+    let loadSocialWidget = function(data) {
+        console.log(data);
+        $.each(data.SocialMediaNames, (index, value) => {
+            if (value.Source.Name === "Twitter") {
+                grid.addWidget(createTwitterWidget("Twitter feed"), 1, 1, 6, 6, true, 4, 12, 4, 12, 1);
+                grid.movable(".grid-stack-item", false);
+                grid.resizable(".grid-stack-item", false);
+                twttr.widgets.createTimeline(
+                    {
+                        sourceType: "profile",
+                        screenName: value.Username.replace("@",""),
+                    },
+                    document.getElementById("twitter-feed"),
+                    {
+                        chrome: "noheader, noborder, nofooter",
+                        linkColor: primary_color,
+                        tweetLimit: 5
+                    }
+                );
+            }
+        });
+    };
+    
+    //Retrieves item for social widget..
+    let loadItemForSocialWidget = function (itemId) {
+        $.ajax({
+            method: "GET",
+            url: "/api/GetItemWithDetails/" + itemId,
+            success: data => loadSocialWidget(data)
+        });
+    };
+    
     //Puts the widgets on the grid.
     let loadGrid = function (data, itemId) {
         if (data != null && data.length) {
@@ -359,6 +410,7 @@ function loadWidgets(url, itemId) {
                         true, 4, 12, 4, 12, widget.WidgetId);
                     grid.movable(".grid-stack-item", false);
                     grid.resizable(".grid-stack-item", false);
+                    loadItemForSocialWidget(itemId);
                 }
                 //if widgettype == graphtype
                 if (widget.WidgetType === 0) {
