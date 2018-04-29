@@ -14,8 +14,10 @@ namespace BAR.BL.Managers
 		//widgets
 		Widget GetWidget(int widgetId);
 		Widget GetWidgetWithAllItems(int widgetId);
+		Widget GetWidgetWithAllData(int widgetId);
 		IEnumerable<UserWidget> GetWidgetsForDashboard(int dashboardId);
 		IEnumerable<Widget> GetAllWidgetsWithAllItems();
+		IEnumerable<Widget> GetAllWidgetsWithAllData();
 		IEnumerable<Widget> GetWidgetsForItem(int itemId);
 
 		Widget AddWidget(WidgetType widgetType, string title, int rowNbr, int colNbr, List<PropertyTag> proptags,

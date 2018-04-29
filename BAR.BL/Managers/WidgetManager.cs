@@ -53,8 +53,8 @@ namespace BAR.BL.Managers
 			widget.Timestamp = timestamp;
 			widget.Items = new List<Item>();
 			widget.GraphType = graphType;
-			widget.Data = new List<IDictionary<Graphkey, GraphValue>>();
 			widget.PropertyTags = proptags;
+			widget.WidgetData = new List<WidgetData>();
 
 			//Update database
 			if (dashboardId != -1)
@@ -283,6 +283,24 @@ namespace BAR.BL.Managers
 			if (uowManager == null) widgetRepo = new WidgetRepository();
 			else widgetRepo = new WidgetRepository(uowManager.UnitOfWork);
 
+		}
+
+		/// <summary>
+		/// Gives back a widget with all the data.
+		/// </summary>
+		public Widget GetWidgetWithAllData(int widgetId)
+		{
+			InitRepo();
+			return widgetRepo.ReadWidgetWithAllData(widgetId);
+		}
+
+		/// <summary>
+		/// Gives back all the widgets with all the data.
+		/// </summary>
+		public IEnumerable<Widget> GetAllWidgetsWithAllData()
+		{
+			InitRepo();
+			return widgetRepo.ReadAllWidgetsWithAllData().AsEnumerable();
 		}
 	}
 }
