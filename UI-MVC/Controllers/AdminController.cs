@@ -79,7 +79,6 @@ namespace BAR.UI.MVC.Controllers
 
 			//Get Roles
 			IdentityUserManager identityUserManager = HttpContext.GetOwinContext().GetUserManager<IdentityUserManager>();
-
 			IEnumerable<User> users = userManager.GetAllUsers();
 			List<string> currentRoles = new List<string>();
 			for (int i = 0; i < users.Count(); i++)
