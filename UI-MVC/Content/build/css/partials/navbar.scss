@@ -521,3 +521,7 @@ li.user-profile {
     max-height: 400px !important;
   }
 }
+
+ul.nav li.dropdown:hover > ul.dropdown-menu {
+  display: block;
+}

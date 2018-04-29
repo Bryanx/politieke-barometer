@@ -1670,6 +1670,9 @@ li.user-profile {
 .left_col .mCSB_dragger {
   max-height: 400px !important; }
 
+ul.nav li.dropdown:hover > ul.dropdown-menu {
+  display: block; }
+
 .breadcrumb {
   position: relative;
   background-color: #f0f0f0;
