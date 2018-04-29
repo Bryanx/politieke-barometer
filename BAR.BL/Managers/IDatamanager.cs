@@ -1,4 +1,5 @@
 ﻿using BAR.BL.Domain.Data;
+using BAR.BL.Domain.Widgets;
 using BAR.BL.Domain.Items;
 using System;
 using System.Collections.Generic;
@@ -17,10 +18,10 @@ namespace BAR.BL.Managers
     IEnumerable<Information> GetInformationsWithAllInfoForItem(int itemId);
 
     int GetNumberInfo(int itemId, DateTime since);
-
-    IDictionary<string, double> GetNumberOfMentionsForItem(int itemId, int widgetId, string dateFormat);
-    IDictionary<string, double> GetPropvaluesForWidget(int itemid, int widgetId);
-
+    
+		WidgetData GetNumberOfMentionsForItem(int itemId, int widgetId, string dateFormat, DateTime? startDate = null);
+		WidgetData GetPropvaluesForWidget(int itemid, int widgetId, string proptag, DateTime? startDate = null);
+    
     //Items
     bool SynchronizeData(string json);
 

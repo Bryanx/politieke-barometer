@@ -38,6 +38,7 @@ namespace BAR.BL.Managers
 		Item ChangeItemActivity(int itemId);
 
 		void DetermineTrending(int itemId);
+		void GenerateDataForMwidgets();
 		double GetTrendingPer(int itemId);
     	string ConvertPfbToString(HttpPostedFileBase pfb);
   }
