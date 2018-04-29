@@ -19,8 +19,8 @@ namespace BAR.BL.Managers
 
 		int GetNumberInfo(int itemId, DateTime since);
 
-		IDictionary<Graphkey, GraphValue> GetNumberOfMentionsForItem(int itemId, int widgetId, string dateFormat, DateTime? startDate = null);
-		IDictionary<Graphkey, GraphValue> GetPropvaluesForWidget(int itemid, int widgetId, string proptag, DateTime? startDate = null);
+		WidgetData GetNumberOfMentionsForItem(int itemId, int widgetId, string dateFormat, DateTime? startDate = null);
+		WidgetData GetPropvaluesForWidget(int itemid, int widgetId, string proptag, DateTime? startDate = null);
 
 		//Items
 		bool SynchronizeData(string json);

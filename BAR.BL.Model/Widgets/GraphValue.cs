@@ -9,7 +9,7 @@ namespace BAR.BL.Domain.Widgets
 	public class GraphValue
 	{
 		public int GrapValueId { get; set; }
-		public double Value { get; set; }
+		public string Value { get; set; }
 		public double NumberOfTimes { get; set; }
 	}
 }

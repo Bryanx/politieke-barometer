@@ -99,7 +99,7 @@ namespace BAR.BL.Managers
 		/// This method is not the same as getNumberInfo
 		/// This method will be used for widgets.
 		/// </summary>
-		public IDictionary<Graphkey, GraphValue> GetNumberOfMentionsForItem(int itemId, int widgetId, string dateFormat, DateTime? startDate = null)
+		public WidgetData GetNumberOfMentionsForItem(int itemId, int widgetId, string dateFormat, DateTime? startDate = null)
 		{
 			//Get item with widgets
 			ItemManager itemManager = new ItemManager();
@@ -111,7 +111,6 @@ namespace BAR.BL.Managers
 			if (widget == null) return null;
 
 			//Map informations to datetime and add them to the list
-			IDictionary<Graphkey, GraphValue> data = new Dictionary<Graphkey, GraphValue>();
 			IEnumerable<Information> informations = GetInformationsForItemid(itemId);
 			if (informations == null || informations.Count() == 0) return null;
 
@@ -119,22 +118,20 @@ namespace BAR.BL.Managers
 			if (startDate == null) startDate = DateTime.Now;
 			else if (startDate < timestamp) return null;
 
-			Graphkey graphkey;
-			GraphValue graphValue;
+			WidgetData widgetData = new WidgetData();
 			while (timestamp < startDate)
 			{
-				graphkey = new Graphkey()
+				//Each grapvalue represents a total number of mentions mapped
+				//To a specific data
+				widgetData.GraphValues.Add(new GraphValue()
 				{
-					KeyValue = timestamp.ToString(dateFormat),
-				};
-				graphValue = new GraphValue()
-				{
-					Value = informations.Count(i => i.CreationDate.Value.Day == timestamp.Day)
-				};
-				data[graphkey] = graphValue;
-				timestamp = timestamp.AddDays(1);
+					Value = startDate.Value.ToString(dateFormat),
+					NumberOfTimes = informations.Count(i => i.CreationDate.Value.Day == timestamp.Day) 
+				});
+				startDate = startDate.Value.AddDays(-1);
 			}
-			return data;
+
+			return widgetData;
 		}
 
 		/// <summary>
@@ -148,7 +145,7 @@ namespace BAR.BL.Managers
 		/// WARNING
 		/// This method will only work if the widget has a propertytag
 		/// </summary>
-		public IDictionary<Graphkey, GraphValue> GetPropvaluesForWidget(int itemid, int widgetId, string proptag, DateTime? startDate = null)
+		public WidgetData GetPropvaluesForWidget(int itemid, int widgetId, string proptag, DateTime? startDate = null)
 		{
 			InitRepo();
 
@@ -169,10 +166,9 @@ namespace BAR.BL.Managers
 			if (infos == null || infos.Count() == 0) return null;
 
 			//Map timestap to number of propertyValues		
-			IDictionary<Graphkey, GraphValue> dict = new Dictionary<Graphkey, GraphValue>();
-			Graphkey graphkey;
-			GraphValue graphValue;
+			List<WidgetData> widgetDatas = new List<WidgetData>();
 
+			WidgetData newWidgetData;
 			foreach (Information information in infosQueried)
 			{
 				foreach (PropertyValue propval in information.PropertieValues)
@@ -181,36 +177,33 @@ namespace BAR.BL.Managers
 					//Then the propertyvalue shall be added to the dictionary
 					if (propval.Property.Name.ToLower().Equals(proptag.ToLower()))
 					{
-						graphkey = new Graphkey()
-						{
-							KeyValue = propval.Value
-						};
-
-						//If there were no graphvalues present, then it means that
-						//this is a new key.
-						double numberOfTimes = dict[graphkey].Value;
-						if (dict[graphkey].Value == 0)
-						{
-							graphValue = new GraphValue()
+						//If widgetdata for a property already exists
+						WidgetData widgetData = widgetDatas.Where(data => data.KeyValue.ToLower().Equals(propval.Value.ToLower())).SingleOrDefault();
+						if (widgetData != null)
+						{		
+							//If a graphvalue for a specific widgetdata already exists
+							GraphValue grapValue = widgetData.GraphValues.Where(value => value.Value.ToLower().Equals(propval.Value.ToLower())).SingleOrDefault();
+							if (grapValue != null) grapValue.NumberOfTimes++;
+							//If a grapvalue does not yet exists for a specific widgetData
+							else
 							{
-								Value = 1
-							};
+								grapValue = new GraphValue()
+								{
+									Value = propval.Value,
+									NumberOfTimes = 1
+								};
+								widgetData.GraphValues.Add(grapValue);
+							}
 						}
 						else
 						{
-							graphValue = new GraphValue()
-							{
-								Value = ++numberOfTimes
-							};
+							widgetData
 						}
-
-
-						dict[graphkey] = graphValue;
 					}
 				}
 			}
 
-			return dict;
+			return widgetDatas.AsEnumerable();
 		}
 
 		/// <summary>
