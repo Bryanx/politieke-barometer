@@ -421,6 +421,15 @@ namespace BAR.UI.MVC.App_GlobalResources {
         }
         
         /// <summary>
+        ///   Hiermee zoekt u een vertaalde tekenreeks die vergelijkbaar is met Details.
+        /// </summary>
+        public static string Details {
+            get {
+                return ResourceManager.GetString("Details", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Hiermee zoekt u een vertaalde tekenreeks die vergelijkbaar is met Email.
         /// </summary>
         public static string Email {
@@ -1191,6 +1200,15 @@ namespace BAR.UI.MVC.App_GlobalResources {
         public static string Site {
             get {
                 return ResourceManager.GetString("Site", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Hiermee zoekt u een vertaalde tekenreeks die vergelijkbaar is met Social media.
+        /// </summary>
+        public static string SocialMedia {
+            get {
+                return ResourceManager.GetString("SocialMedia", resourceCulture);
             }
         }
         

@@ -237,6 +237,9 @@
   <data name="DeleteUser" xml:space="preserve">
     <value>Enlever utilisateur</value>
   </data>
+  <data name="Details" xml:space="preserve">
+    <value>Détails</value>
+  </data>
   <data name="Email" xml:space="preserve">
     <value>E-mail</value>
   </data>
@@ -485,6 +488,9 @@
   </data>
   <data name="SignupToFollow" xml:space="preserve">
     <value>Inscrire pour suivre</value>
+  </data>
+  <data name="SocialMedia" xml:space="preserve">
+    <value>Médias sociaux</value>
   </data>
   <data name="SourceManagement" xml:space="preserve">
     <value>Gérer général</value>

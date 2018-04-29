@@ -43,7 +43,7 @@
                 </div>
                 <div class="col-md-3 col-sm-3 col-xs-12">
                     <h4>
-                        <strong>@Resources.Politician details</strong>
+                        <strong>@Resources.Politician @Resources.Details</strong>
                     </h4>
                     <ul class="list-unstyled user_data">
                         <li>
@@ -60,7 +60,7 @@
                 </div>
                 <div class="col-md-3 col-sm-3 col-xs-12">
                     <h4>
-                        <strong>Social media</strong>
+                        <strong>@Resources.SocialMedia</strong>
                     </h4>
                     @foreach (var item in Model.SocialMediaNames) {
                         if (item.Source.SourceId == 1) {
@@ -81,7 +81,7 @@
                 </div>
                 <div class="col-md-3 col-sm-3 col-xs-12">
                     <h4>
-                        <strong>Totale vermeldingen</strong>
+                        <strong>@Resources.NumberOfMentions</strong>
                     </h4>
                     <h1>
                         <strong class="totalNumberOfMentions"></strong>
