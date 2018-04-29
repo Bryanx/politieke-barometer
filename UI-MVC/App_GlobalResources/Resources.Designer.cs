@@ -412,6 +412,15 @@ namespace BAR.UI.MVC.App_GlobalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Details.
+        /// </summary>
+        public static string Details {
+            get {
+                return ResourceManager.GetString("Details", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Email.
         /// </summary>
         public static string Email {
@@ -1155,6 +1164,15 @@ namespace BAR.UI.MVC.App_GlobalResources {
         public static string SignupToFollow {
             get {
                 return ResourceManager.GetString("SignupToFollow", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Social media.
+        /// </summary>
+        public static string SocialMedia {
+            get {
+                return ResourceManager.GetString("SocialMedia", resourceCulture);
             }
         }
         
