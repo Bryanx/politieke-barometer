@@ -60,6 +60,7 @@ namespace BAR.BL.Managers
 				// Calculate the baseline = number of information / number of days from the last update until now
 				double baseline = Convert.ToDouble(aantalBaseline) / Convert.ToDouble(period);
 
+				if (baseline == 0) return;
 				// Calculate the trendingpercentage = baseline / number of days from the last update until now.
 				double trendingPer = Convert.ToDouble(aantalTrending) / baseline;
 
@@ -181,7 +182,6 @@ namespace BAR.BL.Managers
 		/// <summary>
 		/// Returns an item for a specifig itemId including the attached subplatform.
 		/// </summary>
-		/// <param name="itemId"></param>
 		/// <returns></returns>
 		public Item GetItemWithSubPlatform(int itemId)
 		{
@@ -221,7 +221,7 @@ namespace BAR.BL.Managers
 		public IEnumerable<Item> GetAllItems()
 		{
 			InitRepo();
-			return itemRepo.ReadAllItems();
+			return itemRepo.ReadAllItems().AsEnumerable();
 		}
 
 		/// <summary>
@@ -300,7 +300,7 @@ namespace BAR.BL.Managers
 			item.Baseline = 0.0;
 			item.Deleted = false;
 			item.Informations = new List<Information>();
-            item.ItemWidgets = new List<Widget>();
+			item.ItemWidgets = new List<Widget>();
 
 			itemRepo.CreateItem(item);
 
@@ -308,30 +308,92 @@ namespace BAR.BL.Managers
 		}
 
 		/// <summary>
-		/// Gives every item default widgets
+		/// Generates dafault widgets based on the itemid
 		/// </summary>
-		private void GenerateDefaultItemWidgetsForItems(IEnumerable<Item> items)
+		private void GenerateDefaultItemWidgets(string name, int itemId)
 		{
-			foreach (Item item in items)
+			uowManager = new UnitOfWorkManager();
+			InitRepo();
+
+			WidgetManager widgetManager = new WidgetManager(uowManager);
+			List<Widget> itemWidgets = new List<Widget>();
+			List<int> widgetIds = new List<int>();
+			List<PropertyTag> proptags;
+
+			//Get item
+			Item item = GetItemWithAllWidgets(itemId);
+
+			//1st widget
+			proptags = new List<PropertyTag>();
+			proptags.Add(new PropertyTag()
 			{
-				item.ItemWidgets = GenerateDefaultItemWidgets(item.Name, item.ItemId);
-				itemRepo.UpdateItem(item);
-			}
+				Name = "Mentions"
+			});
+			
+			ItemWidget widget1 = (ItemWidget)widgetManager.AddWidget(WidgetType.GraphType, name + " popularity", 1, 1, proptags: proptags, graphType: GraphType.LineChart, rowspan: 12, colspan: 6);
+			itemWidgets.Add(widget1);
+			widgetIds.Add(widget1.WidgetId);
+
+			//2nd widget
+			proptags = new List<PropertyTag>();
+			proptags.Add(new PropertyTag()
+			{
+				Name = "Gender"
+			});
+			ItemWidget widget2 = (ItemWidget)widgetManager.AddWidget(WidgetType.GraphType, name + " gender comparison ", 1, 1, proptags: proptags, graphType: GraphType.BarChart, rowspan: 6, colspan: 6);
+			itemWidgets.Add(widget2);
+			widgetIds.Add(widget2.WidgetId);
+
+			//3rd widget
+			proptags = new List<PropertyTag>();
+			proptags.Add(new PropertyTag()
+			{
+				Name = "Age"
+			});
+			ItemWidget widget3 = (ItemWidget)widgetManager.AddWidget(WidgetType.GraphType, name + " age comparison", 1, 1, proptags: proptags, graphType: GraphType.PieChart, rowspan: 6, colspan: 6);
+			itemWidgets.Add(widget3);
+			widgetIds.Add(widget3.WidgetId);
+
+			//Link widgets to item & save changes to database
+			item.ItemWidgets = itemWidgets;
+			itemRepo.UpdateItem(item);
+			uowManager.Save();
+			uowManager = null;
 		}
 
 		/// <summary>
-		/// Generates dafault widgets based on the itemid
+		/// Generate new data for all the widgets in the system
+		/// This method takes time, but it happens in the background.
 		/// </summary>
-		private List<Widget> GenerateDefaultItemWidgets(string name, int itemId)
+		public void GenerateDataForMwidgets()
 		{
-			List<Widget> lijst = new List<Widget>();
+			DataManager dataManager = new DataManager();
 			WidgetManager widgetManager = new WidgetManager();
+			IEnumerable<Widget> widgets = widgetManager.GetAllWidgetsWithAllData();
 
-			ItemWidget widget = (ItemWidget)widgetManager.CreateWidget(WidgetType.GraphType, name + " popularity", 1, 1, rowspan: 12, colspan: 6);
-			lijst.Add(widget);
+			foreach (Widget widget in widgets)
+			{
+				for (int i = 0; i < widget.Items.Count(); i++)
+				{
+					foreach (PropertyTag proptag in widget.PropertyTags)
+					{
+						WidgetData widgetData;
+						if (proptag.Name.ToLower().Equals("mentions"))
+						{
 
-			widgetManager.AddItemToWidget(widget.WidgetId, itemId);
-			return lijst;
+							widgetData = dataManager.GetNumberOfMentionsForItem
+								(widget.Items.ElementAt(i).ItemId, widget.WidgetId, "dd-MM");
+						}
+						else
+						{
+							widgetData = dataManager.GetPropvaluesForWidget
+								(widget.Items.ElementAt(i).ItemId, widget.WidgetId, proptag.Name);
+						}
+						widget.WidgetData.Add(widgetData);
+					}
+				}
+			}
+			widgetManager.ChangeWidgets(widgets);
 		}
 
 		/// <summary>
@@ -346,7 +408,6 @@ namespace BAR.BL.Managers
 		/// <summary>
 		/// Returns all people for specific subplatform
 		/// </summary>
-		/// <param name="subPlatformName"></param>
 		/// <returns></returns>
 		public IEnumerable<Item> GetAllPersonsForSubplatform(int subPlatformID)
 		{
@@ -516,7 +577,9 @@ namespace BAR.BL.Managers
 					organisations.Add(organisation);
 				}
 			}
-			GenerateDefaultItemWidgetsForItems(organisations);
+
+			//Generate default widgets for items
+			foreach (Item item in organisations) GenerateDefaultItemWidgets(item.Name, item.ItemId);
 			uowManager = null;
 		}
 
@@ -554,18 +617,18 @@ namespace BAR.BL.Managers
 					string facebook = deserializedJson[i].facebook;
 					string stringDate = Convert.ToString(deserializedJson[i].dateOfBirth);
 					string town = deserializedJson[i].town;
-                    string level = deserializedJson[i].level;
-                    string site = deserializedJson[i].site;
-                    string district = deserializedJson[i].district;
-                    string position = deserializedJson[i].position;
+					string level = deserializedJson[i].level;
+					string site = deserializedJson[i].site;
+					string district = deserializedJson[i].district;
+					string position = deserializedJson[i].position;
 
-                    Gender personGender = (gender == "M") ? Gender.MAN : Gender.WOMAN;
+					Gender personGender = (gender == "M") ? Gender.MAN : Gender.WOMAN;
 					DateTime? dateOfBirth = DateTime.ParseExact(stringDate, "yyyy-MM-dd HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture);
 
-					Person person = (Person) AddItem(itemType: ItemType.Person, name: fullname, gender: personGender, district: district,
+					Person person = (Person)AddItem(itemType: ItemType.Person, name: fullname, gender: personGender, district: district,
 						level: level, site: site, position: position, dateOfBirth: dateOfBirth);
-					person.SubPlatform = subPlatform;	person.Area = areas.Where(x => x.PostalCode.Equals(postalCode) && x.Residence.ToLower().Equals(town.ToLower())).SingleOrDefault();
-					
+					person.SubPlatform = subPlatform; person.Area = areas.Where(x => x.PostalCode.Equals(postalCode) && x.Residence.ToLower().Equals(town.ToLower())).SingleOrDefault();
+
 					if (!string.IsNullOrEmpty(twitter))
 					{
 						SocialMediaName twitterSocial = new SocialMediaName()
@@ -584,7 +647,7 @@ namespace BAR.BL.Managers
 						};
 						person.SocialMediaNames.Add(facebookSocial);
 					}
-					person.Organisation = (Organisation) organisations.Where(x => x.Name.Equals(organisation)).SingleOrDefault();
+					person.Organisation = (Organisation)organisations.Where(x => x.Name.Equals(organisation)).SingleOrDefault();
 
 					items.Add(person);
 				}
@@ -594,9 +657,10 @@ namespace BAR.BL.Managers
 			{
 				itemRepo.CreateItems(items);
 				uowManager.Save();
-				GenerateDefaultItemWidgetsForItems(items);
+				foreach (Item item in items) GenerateDefaultItemWidgets(item.Name, item.ItemId);
 				return true;
 			}
+
 			return false;
 		}
 	}

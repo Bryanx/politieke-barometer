@@ -71,12 +71,13 @@ namespace BAR.UI.MVC.Controllers.api
 		[Route("api/GetGraphs/{itemId}/{widgetId}")]
 		public IHttpActionResult GetGraphs(int itemId, int widgetId)
 		{
-			dataManager = new DataManager();
-			
-			IDictionary<string, double> data = dataManager.GetNumberOfMentionsForItem(itemId, widgetId, "dd-MM");
-			if (data == null) return StatusCode(HttpStatusCode.NoContent);
+			//dataManager = new DataManager();
 
-			return Ok(data);
+			//IDictionary<Graphkey, GraphValue> data = dataManager.GetNumberOfMentionsForItem(itemId, widgetId, "dd-MM");
+			//if (data == null) return StatusCode(HttpStatusCode.NoContent);
+
+			//return Ok(data);
+			return Ok();
 		}
 		
 		/// <summary>
@@ -94,8 +95,8 @@ namespace BAR.UI.MVC.Controllers.api
 			if (widgetManager.GetWidget(widgetId) == null) return StatusCode(HttpStatusCode.Conflict);
 			
 			Widget widgetToCopy = widgetManager.GetWidget(widgetId);
-			Widget widget = widgetManager.CreateWidget(WidgetType.GraphType, 
-				widgetToCopy.Title, widgetToCopy.RowNumber, widgetToCopy.ColumnNumber, rowspan: widgetToCopy.RowSpan,
+			Widget widget = widgetManager.AddWidget(WidgetType.GraphType, 
+				widgetToCopy.Title, widgetToCopy.RowNumber, widgetToCopy.ColumnNumber, widgetToCopy.PropertyTags.ToList(), rowspan: widgetToCopy.RowSpan,
 				colspan: widgetToCopy.ColumnSpan, dashboardId: dash.DashboardId);
 
 			return StatusCode(HttpStatusCode.NoContent);
@@ -115,7 +116,13 @@ namespace BAR.UI.MVC.Controllers.api
 
 			if (!ModelState.IsValid) return BadRequest(ModelState);
 			if (widgetManager.GetWidget(widget.WidgetId) != null) return StatusCode(HttpStatusCode.Conflict);
-			widgetManager.CreateUserWidget(widget, dash.DashboardId);
+
+			//Copy operation to make a userWidget from an itemWidget
+			//This operation needs to be done because a userWidget has to be from a user
+			//And a user has a dashboard.
+			widgetManager.AddWidget(widget.WidgetType, widget.Title, widget.RowNumber,
+				widget.ColumnNumber, widget.PropertyTags.ToList(), widget.Timestamp, widget.GraphType, widget.RowSpan, widget.ColumnSpan, dash.DashboardId);
+
 			return CreatedAtRoute("DefaultApi"
 				, new { controller = "Widget", id = widget.WidgetId }
 				, widget);
