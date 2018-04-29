@@ -192,7 +192,7 @@ function addLineChartJS(widgetId, chartData) {
 function loadGrid(data, itemId) {
     if (data != null && data.length) {
         $.each(data, (index, widget) => {
-            //UserWidgets
+            //UserWidget
             console.log(data);
             if (widget.DashboardId !== -1) {
                 grid.addWidget(createUserWidget(widget.WidgetId, widget.Title), widget.RowNumber, widget.ColumnNumber, widget.RowSpan, widget.ColumnSpan,
