@@ -126,7 +126,7 @@ namespace BAR.BL.Managers
 				widgetData.GraphValues.Add(new GraphValue()
 				{
 					Value = startDate.Value.ToString(dateFormat),
-					NumberOfTimes = informations.Count(i => i.CreationDate.Value.Day == timestamp.Day) 
+					NumberOfTimes = informations.Count(i => i.CreationDate.Value.Day == timestamp.Day)
 				});
 				startDate = startDate.Value.AddDays(-1);
 			}
@@ -166,44 +166,33 @@ namespace BAR.BL.Managers
 			if (infos == null || infos.Count() == 0) return null;
 
 			//Map timestap to number of propertyValues		
-			List<WidgetData> widgetDatas = new List<WidgetData>();
-
-			WidgetData newWidgetData;
+			WidgetData widgetData = new WidgetData();
 			foreach (Information information in infosQueried)
 			{
 				foreach (PropertyValue propval in information.PropertieValues)
 				{
 					//If the name of the property is the same as the propertytag,
-					//Then the propertyvalue shall be added to the dictionary
+					//Then the propertyvalue shall be added to the widgetdata
 					if (propval.Property.Name.ToLower().Equals(proptag.ToLower()))
 					{
-						//If widgetdata for a property already exists
-						WidgetData widgetData = widgetDatas.Where(data => data.KeyValue.ToLower().Equals(propval.Value.ToLower())).SingleOrDefault();
-						if (widgetData != null)
-						{		
-							//If a graphvalue for a specific widgetdata already exists
-							GraphValue grapValue = widgetData.GraphValues.Where(value => value.Value.ToLower().Equals(propval.Value.ToLower())).SingleOrDefault();
-							if (grapValue != null) grapValue.NumberOfTimes++;
-							//If a grapvalue does not yet exists for a specific widgetData
-							else
-							{
-								grapValue = new GraphValue()
-								{
-									Value = propval.Value,
-									NumberOfTimes = 1
-								};
-								widgetData.GraphValues.Add(grapValue);
-							}
-						}
+						GraphValue grapValue = widgetData.GraphValues.Where(value => value.Value.ToLower().Equals(propval.Value.ToLower())).SingleOrDefault();
+						//If A grapvalue yet exists for a specific widgetData object
+						if (grapValue != null) grapValue.NumberOfTimes++;
+						//If a grapvalue does not yet exists for a specific widgetData object
 						else
 						{
-							widgetData
+							grapValue = new GraphValue()
+							{
+								Value = propval.Value,
+								NumberOfTimes = 1
+							};
+							widgetData.GraphValues.Add(grapValue);
 						}
 					}
 				}
 			}
 
-			return widgetDatas.AsEnumerable();
+			return widgetData;
 		}
 
 		/// <summary>
