@@ -49,7 +49,7 @@ namespace BAR.UI.MVC
         cfg.CreateMap<Person, ItemViewModels.PersonViewModel>()
           .ForMember(p => p.District, opt => opt.MapFrom(src => src.District))
           .ForMember(p => p.Area, opt => opt.MapFrom(src => src.Area))
-          .ForMember(p => p.DateOfBirth, opt => opt.MapFrom(src => src.Area))
+          .ForMember(p => p.DateOfBirth, opt => opt.MapFrom(src => src.DateOfBirth))
           .ForMember(p => p.Gender, opt => opt.MapFrom(src => src.Gender))
           .ForMember(p => p.Site, opt => opt.MapFrom(src => src.Site))
           .ForMember(p => p.Level, opt => opt.MapFrom(src => src.Level))

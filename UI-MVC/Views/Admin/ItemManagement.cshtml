@@ -49,20 +49,19 @@
                     500);
             });
 
-            var loader = $("<div />", { "class": "loadMessage" });
             $(".renameItem").on('input propertychange paste',
                 function() {
                     clearTimeout(wto);
                     var $this = $(this);
                     var id = $this.data('item-id');
-                    $this.after(loader);
+                    $this.addClass("loadMessage");
                     wto = setTimeout(function() {
                             $.ajax({
                                     type: 'POST',
                                     url: '/api/Admin/RenameItem/' + id + '/' + $this.val()
                                 }).fail(() => { /**/ })
                                 .done(function() {
-                                    $this.parent().find(loader).remove();
+                                    $this.removeClass("loadMessage");
                                 });
                         },
                         1000);

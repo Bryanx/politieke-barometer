@@ -4778,11 +4778,17 @@ function init_DataTables() {
 }
 
 //Generic Ajax call
-function submitForm($this, event, message=null) {
+function submitForm($this, event, message=null, data=null) {
+	if (data == null) {
+        data = $this.serializeArray().reduce(function (a, x) {
+            a[x.name] = x.value;
+            return a;
+        }, {});
+    }
     $.ajax({
         type: $this.attr('method'),
         url: $this.attr('action'),
-        data: $this.serialize(),
+        data: data,
         succes: message
             .addClass('green')
             .html("Saved.")

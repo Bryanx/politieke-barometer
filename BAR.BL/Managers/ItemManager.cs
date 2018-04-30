@@ -182,7 +182,7 @@ namespace BAR.BL.Managers
 		/// <summary>
 		/// Returns a person with all personal details.
 		/// </summary>
-		public Item GetPersonWithDetails(int itemId) {
+		public Person GetPersonWithDetails(int itemId) {
 			InitRepo();
 			return itemRepo.ReadPersonWithDetails(itemId);
 		}
@@ -190,7 +190,7 @@ namespace BAR.BL.Managers
 		/// <summary>
 		/// Returns an organisation with all personal details.
 		/// </summary>
-		public Item GetOrganisationWithDetails(int itemId) {
+		public Organisation GetOrganisationWithDetails(int itemId) {
 			InitRepo();
 			return itemRepo.ReadOrganisationWithDetails(itemId);
 		}
@@ -243,7 +243,7 @@ namespace BAR.BL.Managers
 		/// <summary>
 		/// Returns all (undeleted) people of the whole system
 		/// </summary>
-		public IEnumerable<Item> GetAllPersons()
+		public IEnumerable<Person> GetAllPersons()
 		{
 			InitRepo();
 			return itemRepo.ReadAllPersons().AsEnumerable();
@@ -252,7 +252,7 @@ namespace BAR.BL.Managers
 		/// <summary>
 		/// Returns all (undeleted) organisations of the whole system
 		/// </summary>
-		public IEnumerable<Item> GetAllOrganisations()
+		public IEnumerable<Organisation> GetAllOrganisations()
 		{
 			InitRepo();
 			return itemRepo.ReadAllOraginsations().AsEnumerable();
@@ -431,6 +431,17 @@ namespace BAR.BL.Managers
 				.Where(item => item.Deleted == false)
 				.Where(item => item.SubPlatform.SubPlatformId.Equals(subPlatformID));
 		}
+		
+		/// <summary>
+		/// Returns all organisations for specific subplatform
+		/// </summary>
+		/// <returns></returns>
+		public IEnumerable<Item> GetAllOrganisationsForSubplatform(int subPlatformID)
+		{
+			return GetAllOrganisations()
+				.Where(item => item.Deleted == false)
+				.Where(item => item.SubPlatform.SubPlatformId.Equals(subPlatformID));
+		}
 
 		/// <summary>
 		/// Updates the name of a given item.
@@ -450,6 +461,30 @@ namespace BAR.BL.Managers
 			//Update database
 			itemRepo.UpdateItem(itemToUpdate);
 			return itemToUpdate;
+		}
+		
+		/// <summary>
+		/// Updates a person.
+		/// </summary>
+		public Person ChangePerson(int itemId, DateTime birthday, Gender gender, string position, string district)
+		{
+			InitRepo();
+
+			//Get item
+			Person personToUpdate = GetPersonWithDetails(itemId);
+			
+			if (personToUpdate == null) return null;
+
+			//Update item
+			personToUpdate.DateOfBirth = birthday;
+			personToUpdate.Gender = gender;
+			personToUpdate.Position = position;
+			personToUpdate.District = district;
+			personToUpdate.LastUpdated = DateTime.Now;
+
+			//Update database
+			itemRepo.UpdateItem(personToUpdate);
+			return personToUpdate;
 		}
 
 		/// <summary>
@@ -522,7 +557,7 @@ namespace BAR.BL.Managers
 		/// <summary>
 		/// Gets person with given name.
 		/// </summary>
-		public Item GetPerson(string personName)
+		public Person GetPerson(string personName)
 		{
 			InitRepo();
 			return itemRepo.ReadPerson(personName);

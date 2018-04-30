@@ -1,0 +1,78 @@
+﻿@using System.Web.Optimization
+@using BAR.BL.Domain.Items
+@using BAR.UI.MVC.Helpers
+@model BAR.UI.MVC.Models.ItemViewModels.PersonViewModel
+
+<div class="x_content">
+    <div class="col-md-3 col-sm-3 col-xs-12 profile_left">
+        <div class="profile_img">
+            <div id="crop-avatar">
+                <!-- Current avatar -->
+                <img class="img-responsive avatar-view" src="../../Content/build/images/picture.jpg" alt="Avatar">
+            </div>
+        </div>
+
+    </div>
+    <div class="col-md-9 col-sm-9 col-xs-12">
+        <button onclick="window.location = '@Url.OrganisationUrl(@Model.OrganisationId)';" class="btn btn-default btn-xs">@Model.OrganisationName</button>
+        <h1>
+            <span class="item-name">@Model.Person.Name</span>
+            @if (User.Identity.IsAuthenticated) {
+                if (Model.Subscribed != true) {
+                    <a class="w-100px subscribeItem btn btn-success pull-right" data-item-id="@Model.Person.ItemId" title="Deze persoon volgen">@Resources.Subscribe</a>
+                } else {
+                    <a class="w-100px subscribeItem btn btn-danger pull-right" data-item-id="@Model.Person.ItemId" title="Uitschrijven">@Resources.Unsubscribe</a>
+                }
+            }
+        </h1>
+        <hr/>
+    </div>
+    <div class="col-md-3 col-sm-3 col-xs-12">
+        <h4>
+            <strong>@Resources.Politician @Resources.Details</strong>
+        </h4>
+        <ul class="list-unstyled user_data">
+            <li>
+                <i class="fa fa-map-marker user-profile-icon"></i> @Model.District
+            </li>
+            <li>
+                <i class="fa fa-briefcase user-profile-icon"></i> @Model.Position
+            </li>
+            @if (@Model.Site.Any()) {
+                <li class="m-top-xs">
+                    <i class="fa fa-globe external-link user-profile-icon"></i>
+                    <a href="@Model.Site" target="_blank">@Model.Site.Replace("http://", "").Replace("www.", "")</a>
+                </li>
+            }
+        </ul>
+    </div>
+    <div class="col-md-3 col-sm-3 col-xs-12">
+        <h4>
+            <strong>@Resources.SocialMedia</strong>
+        </h4>
+        @foreach (var item in Model.SocialMediaNames) {
+            if (item.Source.SourceId == 1) {
+                if (item.Username != null) {
+                    <a href="http://www.twitter.com/@item.Username" class="social-icon" aria-label="Twitter">
+                        <i class="fa fa-2x fa-twitter-square"></i>
+                    </a>
+                }
+            }
+            if (item.Source.SourceId == 2) {
+                if (item.Username != null) {
+                    <a href="@item.Username" class="social-icon" aria-label="Facebook">
+                        <i class="fa fa-2x fa-facebook-square"></i>
+                    </a>
+                }
+            }
+        }
+    </div>
+    <div class="col-md-3 col-sm-3 col-xs-12">
+        <h4>
+            <strong>@Resources.NumberOfMentions</strong>
+        </h4>
+        <h1>
+            <strong class="totalNumberOfMentions">@Model.Person.NumberOfMentions</strong>
+        </h1>
+    </div>
+</div>

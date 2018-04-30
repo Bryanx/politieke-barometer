@@ -1,0 +1,71 @@
+﻿@using System.Web.Optimization
+@using BAR.BL.Domain.Items
+@using BAR.UI.MVC.Helpers
+@model BAR.UI.MVC.Models.ItemViewModels.PersonViewModel
+
+<div class="x_content">
+    <div class="col-md-3 col-sm-3 col-xs-12 profile_left">
+        <div class="profile_img">
+            <div id="crop-avatar">
+                <!-- Current avatar -->
+                <img class="img-responsive avatar-view" src="../../Content/build/images/picture.jpg" alt="Avatar" title="Change the avatar">
+                <input type="file" name="ProfilePicture" id="fileUpload" accept=".png,.jpg,.jpeg,.gif,.tif"/>
+
+            </div>
+        </div>
+
+    </div>
+    <div class="col-md-9 col-sm-9 col-xs-12">
+        <button onclick="window.location = '@Url.OrganisationUrl(@Model.OrganisationId)';" class="btn btn-default btn-xs">@Model.OrganisationName</button>
+        <h1>
+            @Html.TextBoxFor(i => @Model.Person.Name, new {@class = "renameItem form-control width-auto inline", data_item_id = @Model.Person.ItemId})
+        </h1>
+        <hr/>
+    </div>
+    <div class="col-md-3 col-sm-3 col-xs-12">
+        <h4>
+            <strong>@Resources.Politician @Resources.Details</strong>
+        </h4>
+        <ul class="list-unstyled user_data">
+            <form method="post" action="/api/Admin/UpdateItem/@Model.Person.ItemId" id="itemForm" data-item-id="@Model.Person.ItemId">
+                <li>
+                    <i class="fa fa-map-marker user-profile-icon"></i> @Html.TextBoxFor(i => @Model.District, new {@class = "item-input form-control form-control-xs width-auto inline"})
+                </li>
+                <li>
+                    <i class="fa fa-birthday-cake user-profile-icon"></i> @Html.TextBoxFor(i => @Model.DateOfBirth, new {@class = "item-input form-control form-control-xs width-auto inline"})
+                </li>
+                <li>
+                    <i class="fa fa-briefcase user-profile-icon"></i> @Html.TextBoxFor(i => @Model.Position, new {@class = "item-input form-control form-control-xs width-auto inline"})
+                </li>
+                <li>
+                    <i class="fa fa-globe user-profile-icon"></i> @Html.TextBoxFor(i => @Model.Site, new {@class = "item-input form-control form-control-xs width-auto inline"})
+                </li>
+            </form>
+        </ul>
+    </div>
+    <div class="col-md-3 col-sm-3 col-xs-12">
+        <h4>
+            <strong>@Resources.SocialMedia</strong>
+        </h4>
+        @foreach (var item in Model.SocialMediaNames) {
+            if (item.Source.Name == "Twitter") {
+                <div>Twitter: </div>
+                @Html.TextBoxFor(i => item.Username, new {@class = "renameItem form-control form-control-xs width-auto inline", data_item_id = @Model.Person.ItemId})
+                ;
+            }
+            if (item.Source.Name == "Facebook") {
+                <div>Facebook: </div>
+                @Html.TextBoxFor(i => item.Username, new {@class = "renameItem form-control form-control-xs width-auto inline", data_item_id = @Model.Person.ItemId})
+                ;
+            }
+        }
+    </div>
+    <div class="col-md-3 col-sm-3 col-xs-12">
+        <h4>
+            <strong>@Resources.NumberOfMentions</strong>
+        </h4>
+        <h1>
+            <strong class="totalNumberOfMentions">@Model.Person.NumberOfMentions</strong>
+        </h1>
+    </div>
+</div>

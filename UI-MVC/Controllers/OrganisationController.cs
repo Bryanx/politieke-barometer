@@ -36,7 +36,7 @@ namespace BAR.UI.MVC.Controllers
 			itemManager = new ItemManager();
 			userManager = new UserManager();
 
-			IList<ItemDTO> people = Mapper.Map<IList<Item>, IList<ItemDTO>>(itemManager.GetAllOrganisations().Where(org => org.SubPlatform.SubPlatformId == subPlatformID).ToList());
+			IList<ItemDTO> people = Mapper.Map<IList<Item>, IList<ItemDTO>>(itemManager.GetAllOrganisationsForSubplatform(subPlatformID).ToList());
 			IEnumerable<Subscription> subs = subManager.GetSubscriptionsWithItemsForUser(User.Identity.GetUserId());
 
 			foreach (ItemDTO item in people)

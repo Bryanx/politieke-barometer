@@ -17,7 +17,7 @@ namespace BAR.UI.MVC.Models {
             public string Level { get; set; }
             public Gender Gender { get; set; }
             public string Site { get; set; }
-            public DateTime? DateOfBirth { get; set; }
+            public DateTime DateOfBirth { get; set; }
             public Area Area { get; set; }
             public string Position { get; set; }
             public int OrganisationId { get; set; }

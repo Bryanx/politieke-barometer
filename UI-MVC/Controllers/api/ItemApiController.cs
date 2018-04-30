@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
 using System.Web.Http;
 using BAR.BL.Domain.Items;
 using BAR.BL.Managers;
 using BAR.UI.MVC.Attributes;
+using BAR.UI.MVC.Models;
 
 namespace BAR.UI.MVC.Controllers.api
 {
@@ -65,18 +67,6 @@ namespace BAR.UI.MVC.Controllers.api
 		}
 		
 		/// <summary>
-		/// Changes the name of an item for a given item id.
-		/// </summary>
-		[HttpGet]
-		[Route("api/GetNumberOfMentions/{itemId}")]
-		public IHttpActionResult GetNumberOfMentions(string itemId)
-		{
-			IDataManager dataManager = new DataManager();
-			int numberOfMentions = dataManager.GetNumberInfo(Int32.Parse(itemId), DateTime.MinValue);
-			return Ok(numberOfMentions);
-		}
-		
-		/// <summary>
 		/// Retrieves an item.
 		/// </summary>
 		[HttpGet]
@@ -86,6 +76,18 @@ namespace BAR.UI.MVC.Controllers.api
 			itemManager = new ItemManager();
 			Item item = itemManager.GetPersonWithDetails(Int32.Parse(itemId));
 			return Ok(item);
+		}
+		
+		/// <summary>
+		/// Updates an item
+		/// </summary>
+		[HttpPost]
+		[Route("api/Admin/UpdateItem/{itemId}")]
+		public IHttpActionResult UpdateItem(string itemId, [FromBody] ItemViewModels.PersonViewModel model)
+		{
+			itemManager = new ItemManager();
+			itemManager.ChangePerson(Int32.Parse(itemId), model.DateOfBirth, model.Gender, model.Position, model.District);						
+			return StatusCode(HttpStatusCode.NoContent);
 		}
 	}
 }

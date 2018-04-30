@@ -13,22 +13,23 @@ namespace BAR.BL.Managers
 	public interface IItemManager
 	{
 		Item GetItem(int itemId);
-		Item GetPersonWithDetails(int itemId);
-		Item GetOrganisationWithDetails(int itemId);
+		Person GetPersonWithDetails(int itemId);
+		Organisation GetOrganisationWithDetails(int itemId);
 		Item GetItemWithSubPlatform(int itemId);
 		Item GetItemWithAllWidgets(int itemId);
 		IEnumerable<Item> GetAllItems();
-		IEnumerable<Item> GetAllPersons();
-		IEnumerable<Item> GetAllOrganisations();
+		IEnumerable<Person> GetAllPersons();
+		IEnumerable<Organisation> GetAllOrganisations();
 		IEnumerable<Item> GetAllThemes();
 		IEnumerable<Item> GetItemsForType(ItemType type);
-		Item GetPerson(string personName);
+		Person GetPerson(string personName);
 		IEnumerable<Item> GetMostTrendingItems(int numberOfItems = 5);
 		IEnumerable<Item> GetMostTrendingItemsForType(ItemType type, int numberOfItems = 5);
 		IEnumerable<Item> GetMostTredningItemsForUser(string userId, int numberOfItems = 5);
 		IEnumerable<Item> GetMostTredningItemsForUserAndItemType(string userId, ItemType type, int numberOfItems = 5);
 
 		IEnumerable<Item> GetAllPersonsForSubplatform(int subPlatformID);
+		IEnumerable<Item> GetAllOrganisationsForSubplatform(int subPlatformID);
 
 		Item AddItem(ItemType itemType, string name, string description = "", string function = "", Category category = null,
 			string district = null, string level = null, string site = null, Gender gender = Gender.OTHER, string position = null, DateTime? dateOfBirth = null);
@@ -38,7 +39,7 @@ namespace BAR.BL.Managers
 
 		Item ChangeItemName(int itemId, string name);
 		Item ChangeItemActivity(int itemId);
-
+		Person ChangePerson(int itemId, DateTime birthday, Gender gender, string position, string district);
 		void DetermineTrending(int itemId);
 		void GenerateDataForMwidgets();
 		double GetTrendingPer(int itemId);

@@ -275,6 +275,12 @@ hr {
 .full-width {
   width: 100%; }
 
+.width-auto {
+  width: auto !important; }
+
+.inline {
+  display: inline; }
+
 .full-height {
   height: 100%; }
 
@@ -839,15 +845,9 @@ table.tile_info {
   margin: 30px auto 30px auto; }
 
 .loadMessage {
-  position: absolute;
-  display: inline-block;
-  width: 20px;
-  height: 20px;
   background-image: url("../images/rolling.svg");
-  background-position: center;
-  background-size: cover;
-  margin-top: 8px;
-  margin-left: 5px; }
+  background-position: right 10px center;
+  background-repeat: no-repeat; }
 
 .profile_pic {
   width: 35%;
@@ -1929,6 +1929,9 @@ div[data-role="editor-toolbar"] {
   width: 100%;
   height: 40px;
   box-shadow: none; }
+
+.form-control-xs {
+  height: 30px !important; }
 
 .input-sm {
   height: 30px; }
