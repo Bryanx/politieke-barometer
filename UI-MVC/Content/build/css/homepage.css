@@ -6,9 +6,9 @@ h1 {
   line-height: 45px; }
 
 .nav_menu {
-  background-color: transparent;
+  background-color: rgba(255, 255, 255, 0);
   box-shadow: none;
-  position: relative !important; }
+  border-bottom: 0px none; }
 
 .left_col {
   left: -100px;
@@ -182,5 +182,10 @@ div.nav_menu .searchbar {
   z-index: 999; }
   .navbar-right > li > a > span, .navbar-right > li > a > i {
     color: white; }
+
+/* Navbar transparancy homepage  */
+.scrolled {
+  transition: 1s ease-in-out;
+  background-color: white; }
 
 /*# sourceMappingURL=homepage.css.map */

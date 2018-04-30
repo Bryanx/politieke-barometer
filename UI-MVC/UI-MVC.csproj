@@ -274,7 +274,6 @@
     <Content Include="Content\build\css\modules\colors.scss" />
     <Content Include="Content\build\css\modules\mediaqueries.scss" />
     <Content Include="Content\build\css\partials\alerts.scss" />
-    <Content Include="Content\build\css\partials\main_layout.scss" />
     <Content Include="Content\build\css\partials\search-autocomplete.scss" />
     <Content Include="Content\build\css\partials\breadcrumbs.scss" />
     <Content Include="Content\build\css\partials\buttons.scss" />
@@ -353,6 +352,7 @@
     <Content Include="Content\build\images\user.png" />
     <Content Include="Content\build\js\alerts.js" />
     <Content Include="Content\build\js\custom.js" />
+    <Content Include="Content\build\js\homepage.js" />
     <Content Include="Content\build\js\template.js" />
     <Content Include="Content\build\js\template.min.js" />
     <Content Include="Content\build\js\searchbar.js" />
