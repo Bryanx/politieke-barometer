@@ -389,7 +389,7 @@ namespace BAR.BL.Managers
 							widgetData = dataManager.GetPropvaluesForWidget
 								(widget.Items.ElementAt(i).ItemId, widget.WidgetId, proptag.Name);
 						}
-						widget.WidgetData.Add(widgetData);
+						widget.WidgetDatas.Add(widgetData);
 					}
 				}
 			}
