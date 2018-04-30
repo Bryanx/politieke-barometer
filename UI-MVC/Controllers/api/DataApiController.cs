@@ -14,7 +14,6 @@ namespace BAR.UI.MVC.Controllers.api
 {
 	public class DataApiController : ApiController
 	{
-		private IItemManager itemManager;
 		private IDataManager dataManager;
 
 		[HttpGet]
@@ -22,6 +21,7 @@ namespace BAR.UI.MVC.Controllers.api
 		public IHttpActionResult Synchronize()
 		{
 			dataManager = new DataManager();
+			
 
 			string content;
 			if (dataManager.GetLastAudit() == null)
@@ -58,14 +58,16 @@ namespace BAR.UI.MVC.Controllers.api
 					{
 						var completed = dataManager.SynchronizeData(json);
 						if (completed)
-						{
-							itemManager = new ItemManager();
-							var items = itemManager.GetAllItems();
-							foreach (Item item in items) itemManager.DetermineTrending(item.ItemId);
+						{						
+							//var items = itemManager.GetAllItems();
+							//foreach (Item item in items) itemManager.DetermineTrending(item.ItemId);
 							dataManager.ChangeAudit(auditId);
 
 							//Syncronize recent data with all the widgets
 							new WidgetManager().GenerateDataForMwidgets();
+							//Update all items with recent data
+							new ItemManager().FillItems();
+
 
 							return StatusCode(HttpStatusCode.OK);
 						}

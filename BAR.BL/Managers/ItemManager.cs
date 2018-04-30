@@ -628,5 +628,56 @@ namespace BAR.BL.Managers
 
 			return false;
 		}
+
+		/// <summary>
+		/// Fills all items with recent data from the last
+		/// synchronisation
+		/// </summary>
+		public void FillItems()
+		{
+			DataManager dataManager = new DataManager();
+			IEnumerable<Item> items = GetAllItems();
+
+			foreach (Item item in items)
+			{
+				DetermineTrending(item.ItemId);
+				item.NumberOfMentions = dataManager.GetInformationsForItemid(item.ItemId).Count();
+
+				//Gather sentiment
+				double sentiment = 0.0;
+				IEnumerable<Information> informations = dataManager.GetInformationsWithAllInfoForItem(item.ItemId)
+																   .Where(info => info.CreationDate >= DateTime.Now.AddMonths(-1))
+																   .AsEnumerable();
+				foreach (Information info in informations)
+				{
+					foreach (PropertyValue propvalue in info.PropertieValues)
+					{
+						if (propvalue.Property.Name.ToLower().Equals("Sentiment"))
+						{
+							sentiment += Int32.Parse(propvalue.Value);
+							continue;
+						}
+					}
+				}
+
+				//Determine sentiment
+				sentiment = sentiment / informations.Count();
+				if (sentiment >= 5.0) item.SentimentPositve = sentiment * 2;
+				else item.SentimentNegative = sentiment * 2;
+			}
+
+			//Persist changes
+			ChangeItems(items);
+		}
+
+		/// <summary>
+		/// Changes all the the given items
+		/// </summary>
+		public IEnumerable<Item> ChangeItems(IEnumerable<Item> items)
+		{
+			InitRepo();
+			itemRepo.UpdateItems(items);
+			return items;
+		}
 	}
 }
