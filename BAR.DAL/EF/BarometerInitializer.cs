@@ -12,7 +12,6 @@ using System.Linq;
 namespace BAR.DAL.EF
 {
   internal class BarometerInitializer : CreateDatabaseIfNotExists<BarometerDbContext>
-
 	{
 		/// <summary>
 		/// Dummy data from the json file will be generated
@@ -77,6 +76,7 @@ namespace BAR.DAL.EF
 
 			ctx.SaveChanges();
 		}
+
 
     /// <summary>
     /// Generates all of the sources we get our information from.
