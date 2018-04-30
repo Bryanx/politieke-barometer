@@ -51,8 +51,9 @@ namespace BAR.UI.MVC {
             
         };
         private static readonly string[] CustomScripts = {
-            "~/Content/build/js/custom.js",
-            "~/Content/build/js/searchbar.js"
+            "~/Content/build/js/template.js",
+            "~/Content/build/js/searchbar.js",
+            "~/Content/build/js/custom.js"
         };
         
         /// Style fields

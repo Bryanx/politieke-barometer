@@ -1,3 +1,4 @@
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +14,7 @@ using WebGrease.Css.Extensions;
 using Widget = BAR.BL.Domain.Widgets.Widget;
 using BAR.BL.Domain.Items;
 
+
 namespace BAR.UI.MVC.Controllers.api
 {
 	/// <summary>
@@ -23,6 +25,7 @@ namespace BAR.UI.MVC.Controllers.api
 	public class WidgetController : ApiController
 	{
 		private IWidgetManager widgetManager;
+
 		private IItemManager itemManager;
 		private IDataManager dataManager;
 
@@ -34,6 +37,7 @@ namespace BAR.UI.MVC.Controllers.api
 			widgetManager = new WidgetManager();
 
 			Dashboard dash = widgetManager.GetDashboard(User.Identity.GetUserId());
+
 			List<UserWidget> widgets = widgetManager.GetWidgetsForDashboard(dash.DashboardId).ToList();
 			
 			if (widgets == null || widgets.Count() == 0) return StatusCode(HttpStatusCode.NoContent);
@@ -136,7 +140,6 @@ namespace BAR.UI.MVC.Controllers.api
 			foreach (UserWidgetDTO widget in widgets) {
 				if (widget == null) return BadRequest("No widget given");
 				if (widgetManager.GetWidget(widget.WidgetId) == null) return NotFound();
-
 				widgetManager.ChangeWidgetPos(widget.WidgetId, widget.RowNumber, widget.ColumnNumber, widget.RowSpan,
 					widget.ColumnSpan);
 			}

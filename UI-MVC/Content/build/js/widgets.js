@@ -6,6 +6,59 @@ var secondary_color = window.getComputedStyle(document.documentElement).getPrope
 var tertiary_color = window.getComputedStyle(document.documentElement).getPropertyValue('--tertiary-color');
 
 
+function addNodeboxGraph(id) {
+    addCSSgrid(id);
+    createNodebox(id);
+    
+}
+
+
+/**
+ * Nodebox api
+ */
+
+function createNodebox(id) {
+    let node = document.getElementById('graph' + id);
+    let parent =  node.parentElement;
+    
+    parent.removeChild(node);
+    node = document.createElement('canvas'); 
+    node.id = 'graph' + id;
+    node.width = parent.clientWidth;
+    node.height = parent.clientHeight;
+    parent.appendChild(node);
+    
+    parent.parentElement.parentElement.onchange = function() {nodeboxSize(node, parent, id)};
+
+    let canvas = {
+        userId: 'AnthonyT',
+        projectId: 'tutorial',
+        functionId: 'circle_graph',
+        canvasId: 'graph' + id,
+        autoplay: true
+    };
+
+    // Initialize the NodeBox player object
+    ndbx.embed(canvas, function(err, player) {
+        if (err) {
+            throw new Error(err);
+        } else {
+            window.player = player;
+        }
+    });
+
+}
+
+function nodeboxSize(node, parent, id) {
+    parent.removeChild(node);
+    node = document.createElement('canvas');
+    node.id = 'graph' + id;
+    node.width = parent.clientWidth;
+    node.height = parent.clientHeight;
+    console.log("height: " + parent.clientHeight + "\nwidth: " + parent.clientWidth);
+    parent.appendChild(node);
+}
+
 /**
  * The basic HTML structure of a widget
  */
@@ -184,6 +237,7 @@ function addLineChartJS(widgetId, chartData) {
         options: {
             responsive: true,
             maintainAspectRatio: false
+
         }
     }));
 }
@@ -234,7 +288,7 @@ function init() {
     //add widget with graph
     this.btnAddLineChart = function () {
         grid.addWidget(createUserWidget('grafiek' + counter), 0, 0, 4, 4, true, 4, 12, 4);
-        addLineChart('grafiek' + counter);
+        addLineChartJS('grafiek' + counter);
         counter++;
         return false;
     }.bind(this);
@@ -249,6 +303,12 @@ function init() {
     this.btnAddBarChart = function () {
         grid.addWidget(createUserWidget('grafiek' + counter), 0, 0, 4, 4, true, 4, 12, 4);
         addBarChart('grafiek' + counter);
+        counter++;
+        return false;
+    }.bind(this);
+    this.btnAddNodebox = function () {
+        grid.addWidget(createUserWidget('grafiek' + counter), 0, 0, 6, 6, true, 4, 12, 4, 12);
+        addNodeboxGraph('grafiek' + counter);
         counter++;
         return false;
     }.bind(this);
@@ -322,9 +382,10 @@ function init() {
     $('#btnAddLine').click(this.btnAddLineChart);
     $('#btnAddPie').click(this.btnAddPieChart);
     $('#btnAddBar').click(this.btnAddBarChart);
+    $('#btnAddNodebox').click(this.btnAddNodebox);
+    
     $(document).on('click', '.close-widget', (e) => this.deleteWidget(e));
     $('.grid-stack').on('change', (event, items) => this.updateWidgets(items));
-
     //itempage handlers
     $(document).on('click', '.addToDashboard', () => this.createWidget());
 }
