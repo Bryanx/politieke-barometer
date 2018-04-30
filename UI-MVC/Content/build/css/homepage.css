@@ -8,7 +8,8 @@ h1 {
 .nav_menu {
   background-color: rgba(255, 255, 255, 0);
   box-shadow: none;
-  border-bottom: 0px none; }
+  border-bottom: 0px none;
+  transition: 1.2s ease-in-out; }
 
 .left_col {
   left: -100px;
@@ -40,16 +41,13 @@ h1 {
   margin-left: auto;
   margin-right: auto;
   margin-bottom: 160px;
-  margin-top: 10px;
+  margin-top: 4px;
   max-width: 500px;
   padding: 0;
   float: none; }
 
 .nav-sm span.fa {
   display: inline; }
-
-nav_menu {
-  position: relative !important; }
 
 /* main-header */
 .nav-sm .container.body .main-header-container-parent {
@@ -169,7 +167,12 @@ nav_menu {
     display: none; }
 
 div.nav_menu .searchbar {
-  visibility: hidden; }
+  width: 700px;
+  max-width: 700px;
+  margin-top: 4px;
+  margin-bottom: 50px;
+  transition: 1s ease-in-out;
+  overflow: hidden; }
 
 .signup {
   right: 60px; }
@@ -184,8 +187,5 @@ div.nav_menu .searchbar {
     color: white; }
 
 /* Navbar transparancy homepage  */
-.scrolled {
-  transition: 1s ease-in-out;
-  background-color: white; }
 
 /*# sourceMappingURL=homepage.css.map */

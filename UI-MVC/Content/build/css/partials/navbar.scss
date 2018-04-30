@@ -15,6 +15,7 @@
   top: 0;
   position: fixed !important;
   border-bottom: 1px solid rgba(0,0,0,0.07);
+  box-shadow: 0px 1px 2px 2px rgba(0, 0, 0, 0.1);
 }
 
 .dropdown-menu .label-icon {
@@ -288,6 +289,7 @@
   }
   li i {
     font-size: 22px;
+    color: var(--font-color);
   }
 }
 
@@ -463,7 +465,8 @@
 
 .nav {
   &.navbar-nav > li > a {
-    color: #a5a9ac !important;
+    color: var(--font-color) !important;
+    font-weight: bold;
     &#alertDropdown {
       line-height: 32px;
       padding-bottom: 12px;
