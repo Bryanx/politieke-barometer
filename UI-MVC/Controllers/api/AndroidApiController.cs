@@ -28,8 +28,9 @@ namespace webapi.Controllers
   {
     // POST api/Android/Register
     [AllowAnonymous]
+    [HttpPost]
     [Route("Register")]
-    public async Task<IHttpActionResult> Register(RegisterBindingModel model)
+    public async Task<IHttpActionResult> Register([FromBody]RegisterBindingModel model)
     {
       if (!ModelState.IsValid)
       {
@@ -54,13 +55,15 @@ namespace webapi.Controllers
     [Route("UserInfo")]
     public UserInfoViewModel GetUserInfo()
     {
-      ExternalLoginData externalLogin = ExternalLoginData.FromIdentity(User.Identity as ClaimsIdentity);
+      //ExternalLoginData externalLogin = ExternalLoginData.FromIdentity(User.Identity as ClaimsIdentity);
+      IUserManager userManager = new UserManager();
+      var user = userManager.GetUser(User.Identity.GetUserId());
 
       return new UserInfoViewModel
       {
-        Email = User.Identity.GetUserName(),
-        HasRegistered = externalLogin == null,
-        LoginProvider = externalLogin != null ? externalLogin.LoginProvider : null
+        FirstName = user.FirstName,
+        LastName = user.LastName,
+        ProfilePicture = Convert.ToBase64String(user.ProfilePicture)
       };
     }
 

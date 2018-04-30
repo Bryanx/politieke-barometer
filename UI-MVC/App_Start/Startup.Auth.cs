@@ -87,7 +87,7 @@ namespace BAR.UI.MVC
         TokenEndpointPath = new PathString("/Token"),
         Provider = new ApplicationOAuthProvider(PublicClientId),
         AuthorizeEndpointPath = new PathString("/api/Android/ExternalLogin"),
-        AccessTokenExpireTimeSpan = TimeSpan.FromDays(14),
+        AccessTokenExpireTimeSpan = TimeSpan.FromDays(365),
         //For development
         AllowInsecureHttp = true
       };

@@ -258,7 +258,7 @@
     <Compile Include="Models\ItemViewModels.cs" />
     <Compile Include="Models\SubPlatformDTO.cs" />
     <Compile Include="Models\SubPlatformViewModel.cs" />
-    <Compile Include="Models\UserApiViewModels.cs" />
+    <Compile Include="Models\AndroidApiViewModels.cs" />
     <Compile Include="Models\UserViewModels.cs" />
     <Compile Include="Models\UserWidgetDTO.cs" />
     <Compile Include="Models\Widgettt.cs" />
@@ -627,7 +627,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>5000</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>https://localhost:44303/</IISUrl>
+          <IISUrl>http://localhost:5000/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>
