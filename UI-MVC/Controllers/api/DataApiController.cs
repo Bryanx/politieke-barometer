@@ -15,12 +15,14 @@ namespace BAR.UI.MVC.Controllers.api
 	public class DataApiController : ApiController
 	{
 		private IItemManager itemManager;
+		private IDataManager dataManager;
 
 		[HttpGet]
 		[Route("api/Data/Synchronize")]
 		public IHttpActionResult Synchronize()
 		{
-			IDataManager dataManager = new DataManager();
+			dataManager = new DataManager();
+
 			string content;
 			if (dataManager.GetLastAudit() == null)
 			{
@@ -63,7 +65,7 @@ namespace BAR.UI.MVC.Controllers.api
 							dataManager.ChangeAudit(auditId);
 
 							//Syncronize recent data with all the widgets
-							itemManager.GenerateDataForMwidgets();
+							new WidgetManager().GenerateDataForMwidgets();
 
 							return StatusCode(HttpStatusCode.OK);
 						}
