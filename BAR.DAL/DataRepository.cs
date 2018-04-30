@@ -86,8 +86,9 @@ namespace BAR.DAL
 		/// </summary>
 		public IEnumerable<Information> ReadInformationsForItemid(int itemId)
 		{
-			return ctx.Informations.Include(info => info.Items).AsEnumerable();
-					//.Where(info => info.Items.Any(item => item.ItemId == itemId)).AsEnumerable();
+			return ctx.Informations.Include(info => info.Items)
+										.Where(info => info.Items.Any(item => item.ItemId == itemId))
+									   .AsEnumerable();
 		}
 
 		/// <summary>
@@ -169,24 +170,24 @@ namespace BAR.DAL
 		{
 			return ctx.Sources.Where(x => x.Name.Equals(sourceName)).SingleOrDefault();
 		}
-		
-		public int CreateSource(Source source) 
-		{ 
-			ctx.Sources.Add(source); 
-			return ctx.SaveChanges(); 
-		} 
- 
-		public Source ReadSource(int sourceId) 
-		{ 
-			return ctx.Sources.Where(x => x.SourceId == sourceId).SingleOrDefault(); 
-		} 
- 
-		public int DeleteSource(Source source) 
-		{ 
-			ctx.Sources.Remove(source); 
-			return ctx.SaveChanges(); 
+
+		public int CreateSource(Source source)
+		{
+			ctx.Sources.Add(source);
+			return ctx.SaveChanges();
 		}
-		
+
+		public Source ReadSource(int sourceId)
+		{
+			return ctx.Sources.Where(x => x.SourceId == sourceId).SingleOrDefault();
+		}
+
+		public int DeleteSource(Source source)
+		{
+			ctx.Sources.Remove(source);
+			return ctx.SaveChanges();
+		}
+
 
 		public SynchronizeAudit ReadLastAudit()
 		{
@@ -219,15 +220,16 @@ namespace BAR.DAL
 		{
 			return ctx.Sources.ToList();
 		}
-    
-    /// <summary>
+
+		/// <summary>
 		/// Returns a list of all the informations objects that are
 		/// related to a specific item.
 		/// </summary>
 		public IEnumerable<Information> ReadInformationsWithAllInfoForItem(int itemId)
 		{
-			return ctx.Informations.Include(infoIncl => infoIncl.PropertieValues)
-								   .Include(infoIncl => infoIncl.PropertieValues.Select(propval => propval.Property))
+			return ctx.Informations.Include(info => info.Items)
+								   .Include(info => info.PropertieValues)
+								   .Include(info => info.PropertieValues.Select(propval => propval.Property))
 								   .Where(info => info.Items.Any(item => item.ItemId == itemId))
 								   .AsEnumerable();
 		}
