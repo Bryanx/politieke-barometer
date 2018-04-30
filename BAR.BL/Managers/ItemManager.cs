@@ -656,7 +656,7 @@ namespace BAR.BL.Managers
 						if (propvalue.Property.Name.ToLower().Equals("sentiment"))
 						{
 							double propSen =+ Double.Parse(propvalue.Value);
-							if (propSen != 0) sentiment += propSen / 10;
+							if (propSen != 0) sentiment += propSen / 100;
 							counter++;
 						}
 					}
@@ -664,7 +664,7 @@ namespace BAR.BL.Managers
 
 				//Determine sentiment
 				if (sentiment != 0) {
-					sentiment = (sentiment / counter) * 100;
+					sentiment = Math.Round((sentiment / counter) * 100, 2);
 					if (sentiment >= 0) item.SentimentPositve = sentiment;
 					else item.SentimentNegative = Math.Abs(sentiment);
 				}				
