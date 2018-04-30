@@ -365,7 +365,6 @@ function loadGraphs(itemId, widget) {
 function loadWidgets(url, itemId) {
     //Loads a social widget.
     let loadSocialWidget = function(data) {
-        console.log(data);
         $.each(data.SocialMediaNames, (index, value) => {
             if (value.Source.Name === "Twitter") {
                 grid.addWidget(createTwitterWidget("Twitter feed"), 1, 1, 6, 6, true, 4, 12, 4, 12, 1);
@@ -410,7 +409,6 @@ function loadWidgets(url, itemId) {
                         true, 4, 12, 4, 12, widget.WidgetId);
                     grid.movable(".grid-stack-item", false);
                     grid.resizable(".grid-stack-item", false);
-                    loadItemForSocialWidget(itemId);
                 }
                 //if widgettype == graphtype
                 if (widget.WidgetType === 0) {
@@ -420,6 +418,7 @@ function loadWidgets(url, itemId) {
         } else {
             noWidgetsAvailable();
         }
+        loadItemForSocialWidget(itemId);
     };
     
     //Loads the widgets via api call.

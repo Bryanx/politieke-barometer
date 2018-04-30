@@ -279,6 +279,9 @@
   <data name="Gender" xml:space="preserve">
     <value>Genre</value>
   </data>
+  <data name="GeneralManagement" xml:space="preserve">
+    <value>Gestion générale</value>
+  </data>
   <data name="Home" xml:space="preserve">
     <value>Page d'acceuil</value>
   </data>

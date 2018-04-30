@@ -21,6 +21,7 @@
         <mvcSiteMapNode title="$resources:Resources,ItemManagement" controller="Admin" action="ItemManagement"/>
         <mvcSiteMapNode title="$resources:Resources,UserManagement" controller="Admin" action="UserManagement"/>
     </mvcSiteMapNode>
+    <mvcSiteMapNode title="$resources:Resources,GeneralManagement" controller="SuperAdmin" action="GeneralManagement"/>
     <mvcSiteMapNode title="$resources:Resources,SourceManagement" controller="SuperAdmin" action="SourceManagement"/>
     <mvcSiteMapNode title="$resources:Resources,AdminManagement" controller="SuperAdmin" action="AdminManagement"/>
     <mvcSiteMapNode title="$resources:Resources,SubPlatformManagement" controller="SuperAdmin" action="PlatformManagement"/>

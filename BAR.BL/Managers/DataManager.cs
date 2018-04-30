@@ -168,8 +168,8 @@ namespace BAR.BL.Managers
 				KeyValue = proptag,
 				GraphValues = new List<GraphValue>()
 			};
-			IEnumerable<Information> infosQueried = GetInformationsWithAllInfoForItem(itemid).Where(info => info.CreationDate > startDate)
-																							 .Where(info => info.CreationDate < timestamp)
+			IEnumerable<Information> infosQueried = GetInformationsWithAllInfoForItem(itemid).Where(info => info.CreationDate <= startDate)
+																							 .Where(info => info.CreationDate > timestamp)
 																							 .AsEnumerable();
 			if (infosQueried == null || infosQueried.Count() == 0) return null;
 

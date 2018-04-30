@@ -67,13 +67,12 @@ namespace BAR.UI.MVC.Controllers.api
 		[Route("api/GetGraphs/{itemId}/{widgetId}")]
 		public IHttpActionResult GetGraphs(int itemId, int widgetId)
 		{
-			//dataManager = new DataManager();
-
-			//IDictionary<Graphkey, GraphValue> data = dataManager.GetNumberOfMentionsForItem(itemId, widgetId, "dd-MM");
-			//if (data == null) return StatusCode(HttpStatusCode.NoContent);
-
-			//return Ok(data);
-			return Ok();
+			dataManager = new DataManager();
+			WidgetData data = dataManager.GetNumberOfMentionsForItem(itemId, widgetId, "dd-MM");
+			
+			if (data == null) return StatusCode(HttpStatusCode.NoContent);
+			
+			return Ok(data);
 		}
 		
 		/// <summary>
