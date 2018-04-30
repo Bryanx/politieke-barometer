@@ -274,6 +274,7 @@
     <Content Include="Content\build\css\modules\colors.scss" />
     <Content Include="Content\build\css\modules\mediaqueries.scss" />
     <Content Include="Content\build\css\partials\alerts.scss" />
+    <Content Include="Content\build\css\partials\main_layout.scss" />
     <Content Include="Content\build\css\partials\search-autocomplete.scss" />
     <Content Include="Content\build\css\partials\breadcrumbs.scss" />
     <Content Include="Content\build\css\partials\buttons.scss" />
@@ -435,15 +436,6 @@
     <Content Include="Scripts\dates\daterangepicker.min.js" />
     <Content Include="Scripts\dates\moment.min.js" />
     <Content Include="Scripts\fastclick.js" />
-    <Content Include="Scripts\flot\curvedLines.js" />
-    <Content Include="Scripts\flot\jquery.flot.js" />
-    <Content Include="Scripts\flot\jquery.flot.orderBars.js" />
-    <Content Include="Scripts\flot\jquery.flot.pie.js" />
-    <Content Include="Scripts\flot\jquery.flot.resize.js" />
-    <Content Include="Scripts\flot\jquery.flot.spline.js" />
-    <Content Include="Scripts\flot\jquery.flot.spline.min.js" />
-    <Content Include="Scripts\flot\jquery.flot.stack.js" />
-    <Content Include="Scripts\flot\jquery.flot.time.js" />
     <Content Include="Scripts\gridstack\gridstack.jQueryUI.js" />
     <Content Include="Scripts\gridstack\gridstack.jQueryUI.min.js" />
     <Content Include="Scripts\gridstack\gridstack.js" />
@@ -466,10 +458,6 @@
     <Content Include="Scripts\mjolnic-bootstrap-colorpicker\dist\img\bootstrap-colorpicker\saturation.png" />
     <Content Include="Scripts\mjolnic-bootstrap-colorpicker\dist\js\bootstrap-colorpicker.js" />
     <Content Include="Scripts\mjolnic-bootstrap-colorpicker\dist\js\bootstrap-colorpicker.min.js" />
-    <Content Include="Scripts\morrisCharts\morris.js" />
-    <Content Include="Scripts\morrisCharts\morris.min.js" />
-    <Content Include="Scripts\morrisCharts\raphael.js" />
-    <Content Include="Scripts\morrisCharts\raphael.min.js" />
     <Content Include="Scripts\npm.js" />
     <Content Include="Scripts\nprogress.js" />
     <Content Include="Scripts\site.js" />
