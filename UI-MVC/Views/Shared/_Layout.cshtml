@@ -41,7 +41,7 @@
                 <div class="nav_menu">
                     <div class="navbar" style="border: 0;">
                         <a href='@Url.RootUrl()'>
-                            <i class="small-logo colored"></i>
+                            <i class="small-logo colored nav-home"></i>
                         </a>
                     </div>
 
@@ -52,6 +52,7 @@
                 </div>
             </div>
             <!-- /top navigation -->
+            
             <!-- breadcrumbs -->
             @Html.MvcSiteMap().SiteMapPath("BootstrapSiteMapPathHelperModel")
 
@@ -65,39 +66,11 @@
                 @RenderBody()
             </div>
             <!-- /page content -->
-            <!-- navbar left -->
-            <div class="col-md-3 left_col">
-                <div class="left_col scroll-view">
-                    <div class="navbar" style="border: 0;">
-                        <a href='@Url.RootUrl()'>
-                            <i class="small-logo"></i>
-                        </a>
-                    </div>
-                    <div class="clearfix"></div>
-
-                    <!-- sidebar menu -->
-                    <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
-                        <div class="menu_section">
-                            <ul class="nav side-menu">
-                                @Html.LeftNavBarHelper(Model)
-                            </ul>
-                        </div>
-                    </div>
-                    <!-- /sidebar menu -->
-
-                </div>
-                <div class="hover-nav">
-                    <a id="menu_toggle">
-                        <div class="nav toggle">
-                            <i class="fa fa-arrow-left"></i>
-                        </div>
-                    </a>
-                </div>
-            </div>
-            <!-- /navbar left -->
+            
             <!-- footer content -->
             @Html.Partial("Partials/_Footer")
             <!-- /footer content -->
+            
         </div>
     </div>
 <div id="notificationMessage"></div>
@@ -111,15 +84,5 @@
     {
         @RenderSection("CustomJS")
     }
-    <!-- Custom Theme Scripts -->
-    @Scripts.Render("~/bundles/custom")
-    <script defer>
-        (() => {
-            $(".culture", ".left_col").click(function () {
-                $(this).parents("form").submit(); // post form
-            });
-        })($)
-    </script>
-
 </body>
 </html>

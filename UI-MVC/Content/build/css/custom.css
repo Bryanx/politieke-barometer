@@ -977,9 +977,6 @@ footer.joinus {
       border: 1px solid transparent;
       background: rgba(0, 0, 0, 0.2); }
 
-.nav-sm footer {
-  margin-left: 100px; }
-
 .footer_fixed footer {
   position: fixed;
   left: 0px;
@@ -1369,8 +1366,7 @@ div.nav_menu .searchbar .search-field, form.navbar-form .input-group {
 .nav-sm .hidden-small {
   visibility: hidden; }
 .nav-sm .container.body .right_col {
-  padding: 15px 20px 50px 20px;
-  margin-left: 100px; }
+  padding: 15px 20px 50px 20px; }
 .nav-sm .navbar.nav_title {
   width: 100px; }
   .nav-sm .navbar.nav_title a span {
@@ -1679,7 +1675,6 @@ ul.nav li.dropdown:hover > ul.dropdown-menu {
   color: var(--white);
   padding-left: 20px;
   border-radius: 0;
-  margin-left: 100px;
   margin-bottom: 0px;
   -webkit-box-shadow: inset 0px 3px 3px -2px rgba(0, 0, 0, 0.05);
   -moz-box-shadow: inset 0px 3px 3px -2px rgba(0, 0, 0, 0.05);

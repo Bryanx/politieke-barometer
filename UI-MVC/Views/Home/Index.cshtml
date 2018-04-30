@@ -467,16 +467,3 @@
     </div>
     <!-- end of weather widget -->
     </div>
-@section CustomJS{
-    @Scripts.Render("~/bundles/map")
-    <script type="text/javascript">
-        $(window).scroll(() => {
-            //After scrolling 100px from the top...
-            if ($(window).scrollTop() >= 100) {
-                $('.left_col').css('left', '0');
-            } else {
-                $('.left_col').css('left', '-100px');
-            }
-        });
-    </script>
-}
