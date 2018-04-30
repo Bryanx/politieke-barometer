@@ -31,6 +31,8 @@ namespace BAR.BL.Managers
 
 		void RemoveWidget(int widgetId);
 
+		void GenerateDataForMwidgets();
+
 		//dashboards
 		Dashboard GetDashboard(int dashboardId);
 		Dashboard GetDashboard(string userId);
