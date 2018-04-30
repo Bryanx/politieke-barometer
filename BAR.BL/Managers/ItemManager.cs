@@ -645,6 +645,7 @@ namespace BAR.BL.Managers
 
 				//Gather sentiment
 				double sentiment = 0.0;
+				int counter = 0;
 				IEnumerable<Information> informations = dataManager.GetInformationsWithAllInfoForItem(item.ItemId)
 																   .Where(info => info.CreationDate >= DateTime.Now.AddMonths(-1))
 																   .AsEnumerable();
@@ -652,18 +653,21 @@ namespace BAR.BL.Managers
 				{
 					foreach (PropertyValue propvalue in info.PropertieValues)
 					{
-						if (propvalue.Property.Name.ToLower().Equals("Sentiment"))
+						if (propvalue.Property.Name.ToLower().Equals("sentiment"))
 						{
-							sentiment += Int32.Parse(propvalue.Value);
-							continue;
+							double propSen =+ Double.Parse(propvalue.Value);
+							if (propSen != 0) sentiment += propSen / 10;
+							counter++;
 						}
 					}
 				}
 
 				//Determine sentiment
-				sentiment = sentiment / informations.Count();
-				if (sentiment >= 5.0) item.SentimentPositve = sentiment * 2;
-				else item.SentimentNegative = sentiment * 2;
+				if (sentiment != 0) {
+					sentiment = (sentiment / counter) * 100;
+					if (sentiment >= 0) item.SentimentPositve = sentiment;
+					else item.SentimentNegative = Math.Abs(sentiment);
+				}				
 			}
 
 			//Persist changes
