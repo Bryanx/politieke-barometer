@@ -19,7 +19,6 @@ namespace BAR.DAL.EF
     /// </summary>
     private readonly bool delaySave;
 
-
     /// <summary>
     /// Constructor of PizzaDbContext, loads the connectionstring based on de
     /// configuration key "PizzaDB"
@@ -33,7 +32,6 @@ namespace BAR.DAL.EF
     {
       delaySave = useUOF;
     }
-
 
     //Data package
     public DbSet<Source> Sources { get; set; }
