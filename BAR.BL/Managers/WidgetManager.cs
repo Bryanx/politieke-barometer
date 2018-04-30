@@ -54,7 +54,7 @@ namespace BAR.BL.Managers
 			widget.Items = new List<Item>();
 			widget.GraphType = graphType;
 			widget.PropertyTags = proptags;
-			widget.WidgetData = new List<WidgetData>();
+			widget.WidgetDatas = new List<WidgetData>();
 
 			//Update database
 			if (dashboardId != -1)

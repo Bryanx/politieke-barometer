@@ -241,8 +241,8 @@ namespace BAR.DAL
 		{
 			return ctx.Widgets.Include(widget => widget.Items)
 					   .Include(widget => widget.PropertyTags)
-					   .Include(widget => widget.WidgetData)
-					   .Include(widget => widget.WidgetData.Select(widgetData => widgetData.GraphValues))
+					   .Include(widget => widget.WidgetDatas)
+					   .Include(widget => widget.WidgetDatas.Select(widgetData => widgetData.GraphValues))
 					   .Where(widget => widget.WidgetId == widgetId)
 					   .SingleOrDefault();
 		}
@@ -254,8 +254,8 @@ namespace BAR.DAL
 		{
 			return ctx.Widgets.Include(widget => widget.Items)
 					   .Include(widget => widget.PropertyTags)
-					   .Include(widget => widget.WidgetData)
-					   .Include(widget => widget.WidgetData.Select(widgetData => widgetData.GraphValues))
+					   .Include(widget => widget.WidgetDatas)
+					   .Include(widget => widget.WidgetDatas.Select(widgetData => widgetData.GraphValues))
 					   .AsEnumerable();
 		}
 	}
