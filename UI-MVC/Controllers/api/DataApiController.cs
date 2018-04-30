@@ -59,12 +59,10 @@ namespace BAR.UI.MVC.Controllers.api
 						var completed = dataManager.SynchronizeData(json);
 						if (completed)
 						{						
-							//var items = itemManager.GetAllItems();
-							//foreach (Item item in items) itemManager.DetermineTrending(item.ItemId);
 							dataManager.ChangeAudit(auditId);
 
 							//Syncronize recent data with all the widgets
-							//new WidgetManager().GenerateDataForMwidgets();
+							new WidgetManager().GenerateDataForMwidgets();
 							//Update all items with recent data
 							new ItemManager().FillItems();
 
