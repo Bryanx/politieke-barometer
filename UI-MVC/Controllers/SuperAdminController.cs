@@ -54,54 +54,6 @@ namespace BAR.UI.MVC.Controllers
 				PageTitle = Resources.SubPlatformManagement,
 				User = userManager.GetUser(User.Identity.GetUserId())
 			});
-		}
-
-		/// <summary>
-		/// Adminmanagement page of the SuperAdmin.
-		/// </summary>
-		public ActionResult AdminManagement()
-		{
-			IdentityUserManager identityUserManager = HttpContext.GetOwinContext().GetUserManager<IdentityUserManager>();
-			userManager = new UserManager();
-
-			IEnumerable<User> users = userManager.GetAllUsers();
-			List<string> currentRoles = new List<string>();
-			for (int i = 0; i < users.Count(); i++)
-			{
-				currentRoles.Add(identityUserManager.GetRoles(users.ElementAt(i).Id).FirstOrDefault());
-			}
-
-			//Assembling the view
-			ViewBag.CurrentRoles = currentRoles;
-			EditUserViewModel vm = new EditUserViewModel()
-			{
-				User = userManager.GetUser(User.Identity.GetUserId()),
-				PageTitle = Resources.AdminManagement,
-				Users = users,
-			};
-			FillViewModels(vm);
-			return View(vm);
-		}
-
-		/// <summary>
-		/// Fills a viewmodel with selectionlists. the selectionlist will
-		/// be shown in a dropdownmenu.
-		/// </summary>
-		private void FillViewModels(EditUserViewModel vm)
-		{
-			userManager = new UserManager();
-
-			vm.AdminRoles = userManager.GetAllRoles().Select(x => new SelectListItem
-			{
-				Value = x.Id,
-				Text = x.Name,
-			}).OrderBy(x => x.Text);
-			vm.UserRoles = userManager.GetAllRoles().Where(r => r.Name == "Admin" || r.Name == "User")
-				.Select(x => new SelectListItem
-				{
-					Value = x.Id,
-					Text = x.Name,
-				}).OrderBy(x => x.Text);
-		}
+		}w
 	}
 }

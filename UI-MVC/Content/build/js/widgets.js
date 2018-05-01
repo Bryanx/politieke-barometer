@@ -5,6 +5,63 @@ var secondary_color = window.getComputedStyle(document.documentElement).getPrope
 var tertiary_color = window.getComputedStyle(document.documentElement).getPropertyValue("--tertiary-color");
 
 //user widget element
+
+function addNodeboxGraph(id) {
+    addCSSgrid(id);
+    createNodebox(id);
+    
+}
+
+
+/**
+ * Nodebox api
+ */
+
+function createNodebox(id) {
+    let node = document.getElementById('graph' + id);
+    let parent =  node.parentElement;
+    
+    parent.removeChild(node);
+    node = document.createElement('canvas'); 
+    node.id = 'graph' + id;
+    node.width = parent.clientWidth;
+    node.height = parent.clientHeight;
+    parent.appendChild(node);
+    
+    parent.parentElement.parentElement.onchange = function() {nodeboxSize(node, parent, id)};
+
+    let canvas = {
+        userId: 'AnthonyT',
+        projectId: 'tutorial',
+        functionId: 'circle_graph',
+        canvasId: 'graph' + id,
+        autoplay: true
+    };
+
+    // Initialize the NodeBox player object
+    ndbx.embed(canvas, function(err, player) {
+        if (err) {
+            throw new Error(err);
+        } else {
+            window.player = player;
+        }
+    });
+
+}
+
+function nodeboxSize(node, parent, id) {
+    parent.removeChild(node);
+    node = document.createElement('canvas');
+    node.id = 'graph' + id;
+    node.width = parent.clientWidth;
+    node.height = parent.clientHeight;
+    console.log("height: " + parent.clientHeight + "\nwidth: " + parent.clientWidth);
+    parent.appendChild(node);
+}
+
+/**
+ * The basic HTML structure of a widget
+ */
 function createUserWidget(id, title) {
     return "<div class='chart-container'>" +
         "            <div class='x_panel grid-stack-item-content bg-white no-scrollbar'>" +
@@ -436,7 +493,14 @@ function loadWidgets(url, itemId) {
 }
 
 function init() {
-    
+
+    this.btnAddNodebox = function () {
+        grid.addWidget(createUserWidget('grafiek' + counter), 0, 0, 6, 6, true, 4, 12, 4, 12);
+        addNodeboxGraph('grafiek' + counter);
+        counter++;
+        return false;
+    }.bind(this);
+
     //Shows an animated save message
     function showSaveMessage() {
         $("#notificationMessage")
@@ -522,7 +586,8 @@ function init() {
     
     //dashboard handlers
     $(document).on("click", ".close-widget", (e) => deleteWidget(e));
-    
+    $('#btnAddNodebox').click(this.btnAddNodebox);
+
     //persist widget state if changed. (only for dashboard widgets)
     if ($("." + Resources.Dashboard).length) { 
         $(".grid-stack").on("change", (event, items) => updateWidgets(items));

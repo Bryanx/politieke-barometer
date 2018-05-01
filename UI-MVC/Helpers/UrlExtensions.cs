@@ -146,13 +146,6 @@ namespace BAR.UI.MVC.Helpers {
             });
         }
         
-        public static string AdminManagement(this UrlHelper helper) {
-            return helper.RouteUrl("Default", new {
-                controller = "SuperAdmin",
-                action = nameof(SuperAdminController.AdminManagement)
-            });
-        }
-        
         public static string PlatformManagement(this UrlHelper helper) {
             return helper.RouteUrl("Default", new {
                 controller = "SuperAdmin",

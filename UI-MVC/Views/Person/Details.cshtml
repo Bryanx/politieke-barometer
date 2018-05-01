@@ -13,13 +13,14 @@
 
 <div class="clearfix"></div>
 
-@if (@User.IsInRole("Admin") || @User.IsInRole("SuperAdmin")) {
-    <button id="viewAsUser" class="btn btn-default btn-xs pull-right">Toggle adminview</button>
-}
 <div class="row">
     <div class="col-md-12 col-sm-12 col-xs-12">
         <div class="x_panel">
             <div class="clearfix"></div>
+            
+            @if (@User.IsInRole("Admin") || @User.IsInRole("SuperAdmin")) {
+                <button id="viewAsUser" class="adminview btn btn-default btn-xs">Toggle adminview</button>
+            }
                             <!-- Current avatar -->
             <div id="userview">
                 @Html.Partial("Partials/_DetailsAsUser", Model)
@@ -80,7 +81,7 @@
                     method: "GET",
                     url: "/api/GetItemWithDetails/" + form.data("item-id"),
                     success: data => {
-                        let formdata = form.serializeArray().reduce(function (a, x) {
+                        formdata = form.serializeArray().reduce(function (a, x) {
                             a[x.name] = x.value;
                             return a;
                         }, {});
