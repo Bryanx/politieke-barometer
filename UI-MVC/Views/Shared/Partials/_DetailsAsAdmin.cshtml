@@ -8,9 +8,15 @@
         <div class="profile_img">
             <div id="crop-avatar">
                 <!-- Current avatar -->
-                <img class="img-responsive avatar-view" src="../../Content/build/images/picture.jpg" alt="Avatar" title="Change the avatar">
-                <input type="file" name="ProfilePicture" id="fileUpload" accept=".png,.jpg,.jpeg,.gif,.tif"/>
-
+                @using (Html.BeginForm("ChangePicture", "Person", new {itemId=@Model.Person.ItemId}, FormMethod.Post, new { id="formFileUpload", role = "form", enctype = "multipart/form-data" }))
+                {
+                    @Html.AntiForgeryToken()
+                    <div class="form-group">
+                        @Html.ImageHelper(@Url.Action("Picture", "Person", new {itemId = @Model.Person.ItemId}), htmlAttributes: new { @class = "img-responsive avatar-view half-brightness", onerror = "this.onload = null; this.src='/Content/build/images/picture.jpg';"})
+                        <div id="uploadPicture" class="text-over-image">Upload picture</div>
+                        <input type="file" name="Picture" id="fileUpload" accept=".png,.jpg,.jpeg,.gif,.tif" style="display: none;"/>
+                    </div>
+                }
             </div>
         </div>
 

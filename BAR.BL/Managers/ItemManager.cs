@@ -734,5 +734,30 @@ namespace BAR.BL.Managers
 			itemRepo.UpdateItems(items);
 			return items;
 		}
+		
+		
+		/// <summary>
+		/// Changes profile picture of given user.
+		/// </summary>
+		public Item ChangePicture(int itemId, HttpPostedFileBase poImgFile)
+		{
+			InitRepo();
+
+			//Get User
+			Item itemToUpdate = itemRepo.ReadItem(itemId);
+			if (itemToUpdate == null) return null;
+
+			//Change profile picture
+			byte[] imageData = null;
+			using (var binary = new BinaryReader(poImgFile.InputStream))
+			{
+				imageData = binary.ReadBytes(poImgFile.ContentLength);
+			}
+			itemToUpdate.Picture = imageData;
+
+			//Update database
+			itemRepo.UpdateItem(itemToUpdate);
+			return itemToUpdate;
+		}
 	}
 }

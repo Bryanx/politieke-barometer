@@ -391,6 +391,9 @@ hr {
   animation-timing-function: ease;
   animation-fill-mode: forwards; }
 
+.half-brightness {
+  filter: brightness(0.5); }
+
 a.btn-success, a.btn-primary, a.btn-warning {
   color: var(--white); }
 
@@ -862,6 +865,25 @@ table.tile_info {
   margin-top: 10px;
   border: 1px solid rgba(52, 73, 94, 0.44);
   padding: 4px; }
+
+.text-over-image {
+  position: absolute;
+  margin: auto;
+  left: 0;
+  right: 0;
+  bottom: 20px;
+  color: var(--secondary-color);
+  height: 40px;
+  width: 123px;
+  text-align: center;
+  cursor: pointer;
+  line-height: 40px;
+  background: rgba(255, 255, 255, 0.5);
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px; }
+  .text-over-image:hover {
+    background: white; }
 
 .c-primary {
   color: var(--primary-color); }

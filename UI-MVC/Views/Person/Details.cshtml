@@ -50,6 +50,7 @@
     <script src="~/Scripts/ChartJS/Chart.js"></script>
     <script src="https://platform.twitter.com/widgets.js"></script>
     @Scripts.Render("~/bundles/gridstack")
+    
     <script type="text/javascript" defer>
         var wto;
         $(".renameItem").on('input propertychange paste',
@@ -79,7 +80,7 @@
                     method: "GET",
                     url: "/api/GetItemWithDetails/" + form.data("item-id"),
                     success: data => {
-                        formdata = form.serializeArray().reduce(function (a, x) {
+                        let formdata = form.serializeArray().reduce(function (a, x) {
                             a[x.name] = x.value;
                             return a;
                         }, {});
@@ -92,14 +93,10 @@
                 });
             });
 
-        $(".item-input").on('input propertychange paste',
-            function() {
-                $("#itemForm").submit();
-            });
-
-        $('.subscribeItem').click(function() {
-            ajaxToggleSubscribe($(this));
-        });
+        $(".item-input").on('input propertychange paste',() => $("#itemForm").submit());
+        $('.subscribeItem').click(function() { ajaxToggleSubscribe($(this));});
+        $("#fileUpload").on("change",() => $("#formFileUpload").submit());
+        $("#uploadPicture").click(() => $("#fileUpload").click());
 
         (() => {
             loadWidgets("/api/GetItemWidgets/", @Model.Person.ItemId);

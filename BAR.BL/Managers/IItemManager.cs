@@ -41,6 +41,7 @@ namespace BAR.BL.Managers
 		Item ChangeItemActivity(int itemId);
 		Person ChangePerson(int itemId, DateTime birthday, Gender gender, string position, string district);
 		IEnumerable<Item> ChangeItems(IEnumerable<Item> items);
+		Item ChangePicture(int itemId, HttpPostedFileBase poImgFile);
 
 		void FillItems();
 		void DetermineTrending(int itemId);

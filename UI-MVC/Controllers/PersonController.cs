@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Web;
 using System.Web.Mvc;
 using AutoMapper;
 using BAR.BL;
@@ -86,6 +87,36 @@ namespace BAR.UI.MVC.Controllers
 			                             
 			//Assembling the view
 			return View(personViewModel);
+		}
+
+		/// <summary>
+		/// Returns image of byte array.
+		/// </summary>
+		public FileContentResult Picture(int itemId)
+		{
+			itemManager = new ItemManager();
+
+			Item item = itemManager.GetItem(itemId);
+			if (item.Picture == null) return null;
+			return new FileContentResult(item.Picture, "image/jpeg");
+		}
+
+		/// <summary>
+		/// POST
+		/// Changes profile picture of logged-in user.
+		/// </summary>
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		public ActionResult ChangePicture([Bind(Exclude = "Picture")]ItemDTO model)
+		{
+			itemManager = new ItemManager();
+
+			if (Request.Files.Count > 0)
+			{
+				HttpPostedFileBase poImgFile = Request.Files["Picture"];
+				itemManager.ChangePicture(model.ItemId, poImgFile);
+			}
+			return RedirectToAction("Details", "Person", new { id = model.ItemId });
 		}
 	}
 }

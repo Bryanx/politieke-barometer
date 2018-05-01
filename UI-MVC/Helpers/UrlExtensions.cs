@@ -95,6 +95,13 @@ namespace BAR.UI.MVC.Helpers {
                 action = nameof(OrganisationController.Details),
                 id = organisationId
             });
+        }        
+        public static string ItemPictureUrl(this UrlHelper helper, int itemId) {
+            return helper.RouteUrl("Default", new {
+                controller = "Person",
+                action = nameof(PersonController.Picture),
+                id = itemId
+            });
         }
         #endregion
         

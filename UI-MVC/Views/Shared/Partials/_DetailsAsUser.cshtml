@@ -8,7 +8,7 @@
         <div class="profile_img">
             <div id="crop-avatar">
                 <!-- Current avatar -->
-                <img class="img-responsive avatar-view" src="../../Content/build/images/picture.jpg" alt="Avatar">
+                @Html.ImageHelper(@Url.Action("Picture", "Person", new {itemId=@Model.Person.ItemId}), htmlAttributes: new {@class = "img-responsive avatar-view", onerror = "this.onload = null; this.src='/Content/build/images/picture.jpg';"})
             </div>
         </div>
 
