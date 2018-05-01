@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
 using System.Web.Http;
+using BAR.BL.Domain.Items;
 using BAR.BL.Managers;
 using BAR.UI.MVC.Attributes;
+using BAR.UI.MVC.Models;
 
 namespace BAR.UI.MVC.Controllers.api
 {
@@ -60,6 +63,30 @@ namespace BAR.UI.MVC.Controllers.api
 		{
 			itemManager = new ItemManager();
 			itemManager.ChangeItemName(Int32.Parse(itemId), itemName);
+			return StatusCode(HttpStatusCode.NoContent);
+		}
+		
+		/// <summary>
+		/// Retrieves an item.
+		/// </summary>
+		[HttpGet]
+		[Route("api/GetItemWithDetails/{itemId}")]
+		public IHttpActionResult GetItemWithDetails(string itemId)
+		{
+			itemManager = new ItemManager();
+			Item item = itemManager.GetPersonWithDetails(Int32.Parse(itemId));
+			return Ok(item);
+		}
+		
+		/// <summary>
+		/// Updates an item
+		/// </summary>
+		[HttpPost]
+		[Route("api/Admin/UpdateItem/{itemId}")]
+		public IHttpActionResult UpdateItem(string itemId, [FromBody] ItemViewModels.PersonViewModel model)
+		{
+			itemManager = new ItemManager();
+			itemManager.ChangePerson(Int32.Parse(itemId), model.DateOfBirth, model.Gender, model.Position, model.District);						
 			return StatusCode(HttpStatusCode.NoContent);
 		}
 	}

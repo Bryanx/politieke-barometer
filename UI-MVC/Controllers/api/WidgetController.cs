@@ -71,13 +71,12 @@ namespace BAR.UI.MVC.Controllers.api
 		[Route("api/GetGraphs/{itemId}/{widgetId}")]
 		public IHttpActionResult GetGraphs(int itemId, int widgetId)
 		{
-			//dataManager = new DataManager();
-
-			//IDictionary<Graphkey, GraphValue> data = dataManager.GetNumberOfMentionsForItem(itemId, widgetId, "dd-MM");
-			//if (data == null) return StatusCode(HttpStatusCode.NoContent);
-
-			//return Ok(data);
-			return Ok();
+			WidgetManager widgetManager = new WidgetManager();
+			Widget widget = widgetManager.GetWidgetWithAllData(widgetId);
+			
+			if (widget == null) return StatusCode(HttpStatusCode.NoContent);
+			
+			return Ok(widget);
 		}
 		
 		/// <summary>
@@ -92,13 +91,13 @@ namespace BAR.UI.MVC.Controllers.api
 
 			Dashboard dash = widgetManager.GetDashboard(User.Identity.GetUserId());
 
+
 			if (widgetManager.GetWidget(widgetId) == null) return StatusCode(HttpStatusCode.Conflict);
 			
 			Widget widgetToCopy = widgetManager.GetWidget(widgetId);
 			Widget widget = widgetManager.AddWidget(WidgetType.GraphType, 
 				widgetToCopy.Title, widgetToCopy.RowNumber, widgetToCopy.ColumnNumber, widgetToCopy.PropertyTags.ToList(), rowspan: widgetToCopy.RowSpan,
 				colspan: widgetToCopy.ColumnSpan, dashboardId: dash.DashboardId);
-
 			return StatusCode(HttpStatusCode.NoContent);
 		}
 		

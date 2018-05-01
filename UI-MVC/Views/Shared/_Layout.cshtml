@@ -76,13 +76,20 @@
 <div id="notificationMessage"></div>
 
     <!-- Scripts -->
-    <script src="/Home/GetResources"></script>
-    @Scripts.Render("~/bundles/jquery","~/Content/build/js/searchbar.js", "~/bundles/bootstrap", "~/bundles/dates", "~/bundles/timeago")
+    <script src="/Home/GetResources"></script> 
+    @Scripts.Render("~/bundles/jquery","~/Content/build/js/searchbar.js", "~/bundles/bootstrap", "~/bundles/dates", "~/bundles/timeago", "~/bundles/custom")
     @Scripts.Render("~/Content/build/js/alerts.js")
 
     @if (IsSectionDefined("CustomJS"))
     {
         @RenderSection("CustomJS")
     }
+    <script defer>
+        (() => {
+            $(".culture").click(function () {
+                $(this).parents("form").submit(); // post form
+            });
+        })($)
+    </script>
 </body>
 </html>

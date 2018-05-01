@@ -1,4 +1,4 @@
-searchlist = [];
+var searchlist = [];
 
 //create autocomplete
 function loadSuggestions() {

@@ -13,7 +13,7 @@ namespace BAR.UI.MVC.Attributes
   {
     public override void OnActionExecuting(HttpActionContext actionContext)
     {
-      int subdomainId = 1;
+      int subdomainId = GetSubDomain(HttpContext.Current.Request.Url);
       actionContext.Request.Properties.Add("SubPlatformID", subdomainId);
 
       base.OnActionExecuting(actionContext);

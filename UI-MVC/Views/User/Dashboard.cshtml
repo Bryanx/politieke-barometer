@@ -26,7 +26,7 @@
     </div>
     <br>
     <!-- Widgets -->
-    <div class="grid-stack" id="grid">
+    <div class="grid-stack @Model.PageTitle" id="grid">
     </div>
 
 </section>
@@ -62,7 +62,7 @@
     @Scripts.Render("~/Scripts/vue.min.js")
     <script src="https://unpkg.com/vue-form-wizard/dist/vue-form-wizard.js"></script>
     <script src="https://rawgit.com/icebob/vue-form-generator/master/dist/vfg.js"></script>
-    @Scripts.Render("~/bundles/gridstack", "~/bundles/morrisCharts")
+    @Scripts.Render("~/bundles/gridstack")
     <script type="text/javascript">
 
 //        Vue.use(VueFormWizard);

@@ -44,15 +44,9 @@
 }
 
 .loadMessage {
-  position: absolute;
-  display: inline-block;
-  width: 20px;
-  height: 20px;
   background-image: url("../images/rolling.svg");
-  background-position: center;
-  background-size: cover;
-  margin-top: 8px;
-  margin-left: 5px;
+  background-position: right 10px center;
+  background-repeat: no-repeat;
 }
 
 .profile_pic {
@@ -69,4 +63,23 @@
   margin-top: 10px;
   border: 1px solid rgba(52, 73, 94, 0.44);
   padding: 4px;
+}
+
+.text-over-image {
+  position: absolute;
+  margin: auto;
+  left: 0;
+  right: 0;
+  bottom: 20px;
+  color: var(--secondary-color);
+  height: 40px;
+  width: 123px;
+  text-align: center;
+  cursor: pointer;
+  line-height: 40px;
+  background: rgba(255, 255, 255, .5);
+  @include border-radius;
+  &:hover {
+    background: rgb(255, 255, 255);
+  }
 }

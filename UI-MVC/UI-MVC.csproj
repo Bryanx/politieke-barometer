@@ -241,7 +241,6 @@
     <Compile Include="Controllers\PersonController.cs" />
     <Compile Include="Controllers\SuperAdminController.cs" />
     <Compile Include="Controllers\UserController.cs" />
-    <Compile Include="DAL\WidgetManager.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -261,8 +260,7 @@
     <Compile Include="Models\SuperAdminViewModels.cs" />
     <Compile Include="Models\UserViewModels.cs" />
     <Compile Include="Models\UserWidgetDTO.cs" />
-    <Compile Include="Models\Widgettt.cs" />
-    <Compile Include="PersonDynamicNodeProvider.cs" />
+    <Compile Include="ItemDynamicNodeProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -294,6 +292,7 @@
     <Content Include="Content\build\css\partials\panels.scss" />
     <Content Include="Content\build\css\partials\profile.scss" />
     <Content Include="Content\build\css\partials\searchbar.scss" />
+    <Content Include="Content\build\css\partials\socialicons.scss" />
     <Content Include="Content\build\css\partials\tables.scss" />
     <Content Include="Content\build\css\partials\texteditor.scss" />
     <Content Include="Content\build\css\partials\tiles.scss" />
@@ -468,26 +467,29 @@
     <Content Include="Views\Admin\UserManagement.cshtml" />
     <Content Include="Views\Home\Faq.cshtml" />
     <Content Include="Views\Home\Privacy.cshtml" />
+    <Content Include="Views\Organisation\Details.cshtml" />
     <Content Include="Views\Organisation\Index.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\BootstrapSiteMapPathHelperModel.cshtml" />
     <Content Include="Views\Shared\Partials\_AdminTable.cshtml" />
+    <Content Include="Views\Shared\Partials\_DetailsAsAdmin.cshtml" />
+    <Content Include="Views\Shared\Partials\_DetailsAsUser.cshtml" />
     <Content Include="Views\Shared\Partials\_ExternalLoginsListPartial.cshtml" />
     <Content Include="Views\Shared\Partials\_Footer.cshtml" />
     <Content Include="Views\Shared\Partials\_FooterRegister.cshtml" />
     <Content Include="Views\Shared\Partials\_GraphWizard.cshtml" />
     <Content Include="Views\Shared\Partials\_ItemTable.cshtml" />
     <Content Include="Views\Shared\Partials\_LanguagePreferences.cshtml" />
-    <Content Include="Views\Shared\Partials\_LoggedInLeftNavBarLinks.cshtml" />
     <Content Include="Views\Shared\Partials\_LoggedInNavbar.cshtml" />
     <Content Include="Views\Shared\Partials\_LoginModal.cshtml" />
     <Content Include="Views\Shared\Partials\_NavBarAdminLinks.cshtml" />
     <Content Include="Views\Shared\Partials\_NavBarSuperAdminLinks.cshtml" />
+    <Content Include="Views\Shared\Partials\_OrganisationTable.cshtml" />
     <Content Include="Views\Shared\Partials\_PersonTable.cshtml" />
     <Content Include="Views\Shared\Partials\_RegisterModal.cshtml" />
     <Content Include="Views\Shared\Partials\_SearchBar.cshtml" />
+    <Content Include="Views\Shared\Partials\_SocialIcons.cshtml" />
     <Content Include="Views\Shared\Partials\_VisitorLeftNavBarLinks.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\SuperAdmin\AdminManagement.cshtml" />
     <Content Include="Views\SuperAdmin\PlatformManagement.cshtml" />
     <Content Include="Views\SuperAdmin\GeneralManagement.cshtml" />
     <Content Include="Views\User\Dashboard.cshtml" />
