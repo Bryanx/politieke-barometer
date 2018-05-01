@@ -11,8 +11,10 @@
   width: 100%;
   color: var(--white);
   z-index: 5;
-  height: 70px;
+  height: 50px;
   top: 0;
+  position: fixed !important;
+  box-shadow: 0px 3px 3px -2px rgba(0, 0, 0, 0.05);
 }
 
 .dropdown-menu .label-icon {
@@ -35,13 +37,30 @@
 .signup {
   right: 20px;
   padding: 19px 19px !important;
+  height: 40px;
 }
 
 .nav.navbar-nav > li > a.signup {
-  color: var(--primary-color) !important;
+  color: var(--primary-color);
   &:hover {
-    background-color: var(--primary-color);
+    background-color: var(--primary-color) !important;
     color: var(--white) !important;
+  }
+}
+
+.nav.navbar-nav > li > a.signup {
+  color: white !important;
+  line-height: 0px;
+  background-color: #73879C;
+  z-index: 2;
+  border: 2px solid white;
+  top: 4px;
+  border-radius: 5px;
+  right: 60px;
+  &:hover {
+    background-color: white !important;
+    color: #73879C !important;
+    border: 1px solid #73879C;
   }
 }
 
@@ -85,8 +104,8 @@
   }
   .container.body .right_col {
     padding: 15px 20px 50px 20px;
-    margin-left: 100px;
   }
+  
   .navbar.nav_title {
     width: 100px;
     a {
@@ -205,7 +224,7 @@
 }
 @media (min-width: 480px) {
   .nav_menu {
-    position: static;
+    position: fixed;
   }
 }
 
@@ -274,8 +293,9 @@
   .navbar-right {
     margin: 0;
     order: 3;
-    height: 70px;
+    height: 50px;
     /* flex-basis: 0.000000001px; */
+    min-width: 220px;
     li {
       display: inline-block;
       float: right;
@@ -286,6 +306,7 @@
   }
   li i {
     font-size: 22px;
+    color: var(--font-color);
   }
 }
 
@@ -398,7 +419,7 @@
   > li > a {
     position: relative;
     display: block;
-    padding: 19px 17px;
+    padding: 8px 17px 12px 17px;
   }
 }
 
@@ -461,9 +482,10 @@
 
 .nav {
   &.navbar-nav > li > a {
-    color: #a5a9ac !important;
+    color: var(--font-color) !important;
+    font-weight: bold;
     &#alertDropdown {
-      line-height: 42px;
+      line-height: 32px;
       padding-bottom: 12px;
       flex-grow: 0;
       flex-shrink: 0;
@@ -520,4 +542,25 @@ li.user-profile {
   .mCSB_dragger {
     max-height: 400px !important;
   }
+}
+
+ul.nav li.dropdown:hover {
+  > ul.dropdown-menu {
+    display: block;
+  }
+  > div.dropdown-menu {
+    display: block;
+  }
+} 
+
+.item-menu {
+  padding-top: 12px !important;
+}
+
+.dashboard-menu {
+    padding-top: 12px !important;
+}
+
+.nav > li > a {
+  max-height: 50px;
 }

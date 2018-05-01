@@ -8,9 +8,10 @@ h1 {
 }
 
 .nav_menu {
-  background-color: transparent;
+  background-color: rgba(255,255,255,0);
   box-shadow: none;
-  position: relative !important;
+  border-bottom: 0px none;
+  transition: 1.2s ease-in-out;
 }
 
 .left_col {
@@ -28,18 +29,7 @@ h1 {
   padding-top: 0px;
 }
 
-.nav.navbar-nav > li > a.signup {
-  color: white !important;
-  background-color: rgba(0, 0, 0, 0.1);
-  z-index: 2;
-  border: 2px solid white;
-  top: 58px;
-  border-radius: 5px;
-  &:hover {
-    background-color: white;
-    color: var(--primary-color) !important;
-  }
-}
+
 
 .btn-search-submit:hover {
   background-color: var(--primary-darkest);
@@ -49,7 +39,7 @@ h1 {
   margin-left: auto;
   margin-right: auto;
   margin-bottom: 160px;
-  margin-top: 10px;
+  margin-top: 4px;
   max-width: 500px;
   padding: 0;
   float: none;
@@ -57,10 +47,6 @@ h1 {
 
 .nav-sm span.fa {
   display: inline;
-}
-
-nav_menu {
-  position: relative !important;
 }
 
 /* main-header */
@@ -95,7 +81,8 @@ nav_menu {
   margin-top: 80px;
 }
 
-.small-logo.colored {
+.nav-home {
+  transition: 1s ease-in-out;
   display: none;
 }
 
@@ -211,11 +198,12 @@ nav_menu {
 }
 
 div.nav_menu .searchbar {
-  visibility: hidden;
-}
-
-.signup {
-  right: 60px;
+  width: 700px;
+  max-width: 700px;
+  margin-top: 4px;
+  margin-bottom: 50px;
+  transition: 1s ease-in-out;
+  overflow: hidden;
 }
 
 .right_col {
@@ -229,3 +217,8 @@ div.nav_menu .searchbar {
     color: white;
   }
 }
+
+.nav.navbar-nav > li > a.signup {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+

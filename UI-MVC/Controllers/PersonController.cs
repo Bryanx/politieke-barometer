@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Web;
 using System.Web.Mvc;
 using AutoMapper;
 using BAR.BL;
@@ -69,21 +70,53 @@ namespace BAR.UI.MVC.Controllers
 			itemManager = new ItemManager();
 			userManager = new UserManager();
 			subManager = new SubscriptionManager();
-			widgetManager = new WidgetManager();
 
-			IEnumerable<Item> subs = subManager.GetSubscribedItemsForUser(User.Identity.GetUserId());
-			Item item = itemManager.GetItem(id);
-			Item subbedItem = subs.FirstOrDefault(i => i.ItemId == item.ItemId);
+			Item item = itemManager.GetPersonWithDetails(id);
 
-			PersonViewModel personViewModel =
-				new PersonViewModel() {
-					PageTitle = item.Name,
-					User = User.Identity.IsAuthenticated ? userManager.GetUser(User.Identity.GetUserId()) : null,
-					Person = Mapper.Map(item, new ItemDTO()),
-					Subscribed = subbedItem != null,
-				};
+			if (item == null) return HttpNotFound();
+
+			Item subbedItem = subManager.GetSubscribedItemsForUser(User.Identity.GetUserId())
+				.FirstOrDefault(i => i.ItemId == item.ItemId);
+
+			PersonViewModel personViewModel = Mapper.Map(item, new PersonViewModel());
+			
+			personViewModel.PageTitle = item.Name;
+			personViewModel.User = User.Identity.IsAuthenticated ? userManager.GetUser(User.Identity.GetUserId()) : null;
+			personViewModel.Person = Mapper.Map(item, new ItemDTO());
+			personViewModel.Subscribed = subbedItem != null;
+			                             
 			//Assembling the view
-			return View("Details", personViewModel);
+			return View(personViewModel);
+		}
+
+		/// <summary>
+		/// Returns image of byte array.
+		/// </summary>
+		public FileContentResult Picture(int itemId)
+		{
+			itemManager = new ItemManager();
+
+			Item item = itemManager.GetItem(itemId);
+			if (item.Picture == null) return null;
+			return new FileContentResult(item.Picture, "image/jpeg");
+		}
+
+		/// <summary>
+		/// POST
+		/// Changes profile picture of logged-in user.
+		/// </summary>
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		public ActionResult ChangePicture([Bind(Exclude = "Picture")]ItemDTO model)
+		{
+			itemManager = new ItemManager();
+
+			if (Request.Files.Count > 0)
+			{
+				HttpPostedFileBase poImgFile = Request.Files["Picture"];
+				itemManager.ChangePicture(model.ItemId, poImgFile);
+			}
+			return RedirectToAction("Details", "Person", new { id = model.ItemId });
 		}
 	}
 }

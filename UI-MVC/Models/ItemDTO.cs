@@ -30,5 +30,7 @@ namespace BAR.UI.MVC.Models {
         [Display(Name = "Category", ResourceType = typeof(Resources))]    
         public ItemType? ItemType { get; set; }
         public bool Deleted { get; set; }
+
+        public byte[] Picture { get; set; }
     }
 }
