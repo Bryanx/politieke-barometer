@@ -1285,7 +1285,7 @@ div.nav_menu .searchbar .search-field, form.navbar-form .input-group {
   top: 0;
   position: fixed !important;
   border-bottom: 1px solid rgba(0, 0, 0, 0.07);
-  box-shadow: 0px 1px 2px 2px rgba(0, 0, 0, 0.1); }
+  box-shadow: 0px 3px 3px -2px rgba(0, 0, 0, 0.05); }
 
 .dropdown-menu .label-icon {
   margin-left: 5px; }
@@ -1312,7 +1312,7 @@ div.nav_menu .searchbar .search-field, form.navbar-form .input-group {
 
 .nav.navbar-nav > li > a.signup {
   color: white !important;
-  line-height: 4px;
+  line-height: 0px;
   background-color: #73879C;
   z-index: 2;
   border: 2px solid white;

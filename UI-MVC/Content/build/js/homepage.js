@@ -10,7 +10,7 @@ function checkScroll() {
 
     if ($(window).scrollTop() > startY) {
         $('.nav_menu').css("background-color", "rgba(255,255,255,1)")
-            .css("box-shadow", "0px 1px 2px 2px rgba(0, 0, 0, 0.1)");
+            .css("box-shadow", "0px 3px 3px -2px rgba(0, 0, 0, 0.05)");
         $('.navbar-right > li > a > i').css("color", "#73879C");
         $('.navbar-right > li > a > span').css("color", "#73879C");
         $('div.nav_menu .searchbar').css('margin-bottom', '0');
