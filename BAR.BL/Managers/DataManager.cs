@@ -101,28 +101,31 @@ namespace BAR.BL.Managers
 		/// </summary>
 		public WidgetData GetNumberOfMentionsForItem(int itemId, int widgetId, string dateFormat, DateTime? startDate = null)
 		{
-			//Get item with widgets
-			ItemManager itemManager = new ItemManager();
-			Item item = itemManager.GetItemWithAllWidgets(itemId);
-			if (item == null) return null;
-
-			//Get Widget
-			Widget widget = item.ItemWidgets.Where(widgetToQuery => widgetToQuery.WidgetId == widgetId).SingleOrDefault();
-			if (widget == null) return null;
-
-			//Map informations to datetime and add them to the list
-			IEnumerable<Information> informations = GetInformationsForItemid(itemId);
-			if (informations == null || informations.Count() == 0) return null;
-
-			DateTime timestamp = widget.Timestamp.Value;
-			if (startDate == null) startDate = DateTime.Now;
-			else if (startDate < timestamp) return null;
-
+			//Create widgetdata
 			WidgetData widgetData = new WidgetData()
 			{
 				KeyValue = "Number of mentions",
 				GraphValues = new List<GraphValue>()
 			};
+
+			//Get item with widgets
+			ItemManager itemManager = new ItemManager();
+			Item item = itemManager.GetItemWithAllWidgets(itemId);
+			if (item == null) return widgetData;
+
+			//Get Widget
+			Widget widget = item.ItemWidgets.Where(widgetToQuery => widgetToQuery.WidgetId == widgetId).SingleOrDefault();
+			if (widget == null) return widgetData;
+
+			//Map informations to datetime and add them to the list	
+			IEnumerable<Information> informations = GetInformationsForItemid(itemId);
+			if (informations == null || informations.Count() == 0) return widgetData;
+
+			DateTime timestamp = widget.Timestamp.Value;
+			if (startDate == null) startDate = DateTime.Now;
+			else if (startDate < timestamp) return widgetData;
+
+			
 			while (timestamp < startDate)
 			{
 				//Each grapvalue represents a total number of mentions mapped
@@ -151,23 +154,23 @@ namespace BAR.BL.Managers
 		/// </summary>
 		public WidgetData GetPropvaluesForWidget(int itemid, int widgetId, string proptag, DateTime? startDate = null)
 		{
-			InitRepo();
-
-			//Get propertytag and timestamp
-			Widget widget = new WidgetManager().GetWidget(widgetId);
-			if (widget == null) return null;
-			DateTime? timestamp = widget.Timestamp.Value;
-			if (timestamp == null) return null;
-
-			if (startDate == null) startDate = DateTime.Now;
-			else if (startDate < timestamp) return null;
-
-			//Get informations for item
+			//Create widgetdata
 			WidgetData widgetData = new WidgetData()
 			{
 				KeyValue = proptag,
 				GraphValues = new List<GraphValue>()
 			};
+
+			//Get propertytag and timestamp
+			Widget widget = new WidgetManager().GetWidget(widgetId);
+			if (widget == null) return widgetData;
+			DateTime? timestamp = widget.Timestamp.Value;
+			if (timestamp == null) return widgetData;
+
+			if (startDate == null) startDate = DateTime.Now;
+			else if (startDate < timestamp) return widgetData;
+
+			//Get informations for item
 			IEnumerable<Information> infosQueried = GetInformationsWithAllInfoForItem(itemid).Where(info => info.CreationDate <= startDate)
 													 .Where(info => info.CreationDate > timestamp)
 													 .AsEnumerable();
