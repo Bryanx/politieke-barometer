@@ -339,7 +339,9 @@ namespace BAR.BL.Managers
 		/// </summary>
 		public void GenerateDataForMwidgets()
 		{
-			DataManager dataManager = new DataManager();
+			uowManager = new UnitOfWorkManager();
+
+			DataManager dataManager = new DataManager(uowManager);
 			IEnumerable<Widget> widgets = GetAllWidgetsWithAllData();
 
 			foreach (Widget widget in widgets)
@@ -351,7 +353,6 @@ namespace BAR.BL.Managers
 						WidgetData widgetData;
 						if (proptag.Name.ToLower().Equals("mentions"))
 						{
-
 							widgetData = dataManager.GetNumberOfMentionsForItem
 								(widget.Items.ElementAt(i).ItemId, widget.WidgetId, "dd-MM");
 						}
@@ -361,10 +362,12 @@ namespace BAR.BL.Managers
 								(widget.Items.ElementAt(i).ItemId, widget.WidgetId, proptag.Name);
 						}
 						widgetData.Widget = widget;
-						AddWidgetData(widgetData);				
+						AddWidgetData(widgetData);
+						uowManager.Save();
 					}
 				}
 			}
+			uowManager = null;
 		}
 	}
 }

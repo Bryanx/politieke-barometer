@@ -109,16 +109,17 @@ namespace BAR.BL.Managers
 			};
 
 			//Get item with widgets
-			ItemManager itemManager = new ItemManager();
-			Item item = itemManager.GetItemWithAllWidgets(itemId);
-			if (item == null) return widgetData;
+			//ItemManager itemManager = new ItemManager(uowManager);
+			//Item item = itemManager.GetItemWithAllWidgets(itemId);
+			//if (item == null) return widgetData;
 
 			//Get Widget
-			Widget widget = item.ItemWidgets.Where(widgetToQuery => widgetToQuery.WidgetId == widgetId).SingleOrDefault();
+			Widget widget = new WidgetManager(uowManager).GetWidget(widgetId);
+			//Widget widget = item.ItemWidgets.Where(widgetToQuery => widgetToQuery.WidgetId == widgetId).SingleOrDefault();
 			if (widget == null) return widgetData;
 
 			//Map informations to datetime and add them to the list	
-			IEnumerable<Information> informations = GetInformationsForItemid(itemId);
+			IEnumerable<Information> informations = GetInformationsWithAllInfoForItem(itemId);
 			if (informations == null || informations.Count() == 0) return widgetData;
 
 			DateTime timestamp = widget.Timestamp.Value;
@@ -162,7 +163,7 @@ namespace BAR.BL.Managers
 			};
 
 			//Get propertytag and timestamp
-			Widget widget = new WidgetManager().GetWidget(widgetId);
+			Widget widget = new WidgetManager(uowManager).GetWidget(widgetId);
 			if (widget == null) return widgetData;
 			DateTime? timestamp = widget.Timestamp.Value;
 			if (timestamp == null) return widgetData;
