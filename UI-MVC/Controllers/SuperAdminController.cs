@@ -54,6 +54,6 @@ namespace BAR.UI.MVC.Controllers
 				PageTitle = Resources.SubPlatformManagement,
 				User = userManager.GetUser(User.Identity.GetUserId())
 			});
-		}w
+		}
 	}
 }

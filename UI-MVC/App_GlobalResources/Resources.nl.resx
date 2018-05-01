@@ -303,6 +303,9 @@
   <data name="ItemManagement" xml:space="preserve">
     <value>Items beheren</value>
   </data>
+  <data name="Languages" xml:space="preserve">
+    <value>Talen</value>
+  </data>
   <data name="Lastname" xml:space="preserve">
     <value>Achternaam</value>
   </data>

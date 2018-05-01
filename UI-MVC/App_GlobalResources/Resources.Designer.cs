@@ -628,6 +628,15 @@ namespace BAR.UI.MVC.App_GlobalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Languages.
+        /// </summary>
+        public static string Languages {
+            get {
+                return ResourceManager.GetString("Languages", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Last name.
         /// </summary>
         public static string Lastname {
