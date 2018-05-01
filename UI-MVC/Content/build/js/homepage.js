@@ -1,3 +1,5 @@
+
+/* Checking how much you have scrolled. if it is past 60% of the screen or 500px then show the navbar otherwise hide it */
 function checkScroll() {
 
     if (($(window).height() * 0.6) > 500) {
@@ -12,16 +14,14 @@ function checkScroll() {
         $('.navbar-right > li > a > i').css("color", "#73879C");
         $('.navbar-right > li > a > span').css("color", "#73879C");
         $('div.nav_menu .searchbar').css('margin-bottom', '0');
-        $('.nav-home').css('transition', '1s ease-in-out')
-            .css('display', 'block');
+        $('.nav-home').css('display', 'block');
     } else {
         $('.nav_menu').css("background-color", "rgba(255,255,255,0)")
             .css("box-shadow", "0px 1px 2px 2px rgba(0, 0, 0, 0)");
         $('.navbar-right > li > a > i').css("color", "white");
         $('.navbar-right > li > a > span').css("color", "white");
         $('div.nav_menu .searchbar').css('margin-bottom', '50px');
-        $('.nav-home').css('transition', '1s ease-in-out')
-            .css('display', 'none');
+        $('.nav-home').css('display', 'none');
     }
 }
 

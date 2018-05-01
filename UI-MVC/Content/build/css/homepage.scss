@@ -93,7 +93,7 @@ h1 {
 }
 
 .nav-home {
-  display: none;
+  transition: 1s ease-in-out;
 }
 
 .main-header {
@@ -232,4 +232,3 @@ div.nav_menu .searchbar {
   }
 }
 
-/* Navbar transparancy homepage  */

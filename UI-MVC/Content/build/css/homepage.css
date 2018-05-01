@@ -77,7 +77,7 @@ h1 {
   margin-top: 80px; }
 
 .nav-home {
-  display: none; }
+  transition: 1s ease-in-out; }
 
 .main-header {
   text-align: center;
@@ -185,7 +185,5 @@ div.nav_menu .searchbar {
   z-index: 999; }
   .navbar-right > li > a > span, .navbar-right > li > a > i {
     color: white; }
-
-/* Navbar transparancy homepage  */
 
 /*# sourceMappingURL=homepage.css.map */
