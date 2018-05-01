@@ -29,18 +29,7 @@ h1 {
   padding-top: 0px;
 }
 
-.nav.navbar-nav > li > a.signup {
-  color: white !important;
-  background-color: rgba(0, 0, 0, 0.1);
-  z-index: 2;
-  border: 2px solid white;
-  top: 58px;
-  border-radius: 5px;
-  &:hover {
-    background-color: white;
-    color: var(--primary-color) !important;
-  }
-}
+
 
 .btn-search-submit:hover {
   background-color: var(--primary-darkest);
@@ -94,6 +83,7 @@ h1 {
 
 .nav-home {
   transition: 1s ease-in-out;
+  display: none;
 }
 
 .main-header {
@@ -216,10 +206,6 @@ div.nav_menu .searchbar {
   overflow: hidden;
 }
 
-.signup {
-  right: 60px;
-}
-
 .right_col {
   margin-top: 0 !important;
 }
@@ -230,5 +216,9 @@ div.nav_menu .searchbar {
   > li > a > span, > li > a > i {
     color: white;
   }
+}
+
+.nav.navbar-nav > li > a.signup {
+  background-color: rgba(0, 0, 0, 0.1);
 }
 

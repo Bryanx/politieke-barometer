@@ -38,13 +38,30 @@
 .signup {
   right: 20px;
   padding: 19px 19px !important;
+  height: 40px;
 }
 
 .nav.navbar-nav > li > a.signup {
-  color: var(--primary-color) !important;
+  color: var(--primary-color);
   &:hover {
-    background-color: var(--primary-color);
+    background-color: var(--primary-color) !important;
     color: var(--white) !important;
+  }
+}
+
+.nav.navbar-nav > li > a.signup {
+  color: white !important;
+  line-height: 4px;
+  background-color: #73879C;
+  z-index: 2;
+  border: 2px solid white;
+  top: 4px;
+  border-radius: 5px;
+  right: 60px;
+  &:hover {
+    background-color: white !important;
+    color: #73879C !important;
+    border: 1px solid #73879C;
   }
 }
 
@@ -279,6 +296,7 @@
     order: 3;
     height: 50px;
     /* flex-basis: 0.000000001px; */
+    min-width: 220px;
     li {
       display: inline-block;
       float: right;

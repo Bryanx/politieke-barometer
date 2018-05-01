@@ -1301,13 +1301,28 @@ div.nav_menu .searchbar .search-field, form.navbar-form .input-group {
     display: none; } }
 .signup {
   right: 20px;
-  padding: 19px 19px !important; }
+  padding: 19px 19px !important;
+  height: 40px; }
 
 .nav.navbar-nav > li > a.signup {
-  color: var(--primary-color) !important; }
+  color: var(--primary-color); }
   .nav.navbar-nav > li > a.signup:hover {
-    background-color: var(--primary-color);
+    background-color: var(--primary-color) !important;
     color: var(--white) !important; }
+
+.nav.navbar-nav > li > a.signup {
+  color: white !important;
+  line-height: 4px;
+  background-color: #73879C;
+  z-index: 2;
+  border: 2px solid white;
+  top: 4px;
+  border-radius: 5px;
+  right: 60px; }
+  .nav.navbar-nav > li > a.signup:hover {
+    background-color: white !important;
+    color: #73879C !important;
+    border: 1px solid #73879C; }
 
 .nav-sm .container.body .col-md-3.left_col {
   width: 100px;
@@ -1505,7 +1520,8 @@ div.nav_menu .searchbar .search-field, form.navbar-form .input-group {
   margin: 0;
   order: 3;
   height: 50px;
-  /* flex-basis: 0.000000001px; */ }
+  /* flex-basis: 0.000000001px; */
+  min-width: 220px; }
   .top_nav .navbar-right li {
     display: inline-block;
     float: right; }
