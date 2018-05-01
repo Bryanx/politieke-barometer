@@ -416,3 +416,11 @@ ASALocalRun/
 
 # MSBuild Binary and Structured Log
 *.binlog
+
+BAR.DAL/App.config
+
+UI-MVC/Web.config
+
+BAR.DAL/EF/BarometerDbContext.cs
+
+BAR.BL.Model/App.config
