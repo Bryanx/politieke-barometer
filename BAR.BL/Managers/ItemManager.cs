@@ -60,6 +60,7 @@ namespace BAR.BL.Managers
 				// Calculate the baseline = number of information / number of days from the last update until now
 				double baseline = Convert.ToDouble(aantalBaseline) / Convert.ToDouble(period);
 
+				if (baseline == 0) return;
 				// Calculate the trendingpercentage = baseline / number of days from the last update until now.
 				double trendingPer = Convert.ToDouble(aantalTrending) / baseline;
 
@@ -181,7 +182,6 @@ namespace BAR.BL.Managers
 		/// <summary>
 		/// Returns an item for a specifig itemId including the attached subplatform.
 		/// </summary>
-		/// <param name="itemId"></param>
 		/// <returns></returns>
 		public Item GetItemWithSubPlatform(int itemId)
 		{
@@ -221,7 +221,7 @@ namespace BAR.BL.Managers
 		public IEnumerable<Item> GetAllItems()
 		{
 			InitRepo();
-			return itemRepo.ReadAllItems();
+			return itemRepo.ReadAllItems().AsEnumerable();
 		}
 
 		/// <summary>
@@ -300,7 +300,7 @@ namespace BAR.BL.Managers
 			item.Baseline = 0.0;
 			item.Deleted = false;
 			item.Informations = new List<Information>();
-            item.ItemWidgets = new List<Widget>();
+			item.ItemWidgets = new List<Widget>();
 
 			itemRepo.CreateItem(item);
 
@@ -308,30 +308,57 @@ namespace BAR.BL.Managers
 		}
 
 		/// <summary>
-		/// Gives every item default widgets
-		/// </summary>
-		private void GenerateDefaultItemWidgetsForItems(IEnumerable<Item> items)
-		{
-			foreach (Item item in items)
-			{
-				item.ItemWidgets = GenerateDefaultItemWidgets(item.Name, item.ItemId);
-				itemRepo.UpdateItem(item);
-			}
-		}
-
-		/// <summary>
 		/// Generates dafault widgets based on the itemid
 		/// </summary>
-		private List<Widget> GenerateDefaultItemWidgets(string name, int itemId)
+		private void GenerateDefaultItemWidgets(string name, int itemId)
 		{
-			List<Widget> lijst = new List<Widget>();
-			WidgetManager widgetManager = new WidgetManager();
+			uowManager = new UnitOfWorkManager();
+			InitRepo();
 
-			ItemWidget widget = (ItemWidget)widgetManager.CreateWidget(WidgetType.GraphType, name + " popularity", 1, 1, rowspan: 12, colspan: 6);
-			lijst.Add(widget);
+			WidgetManager widgetManager = new WidgetManager(uowManager);
+			List<Widget> itemWidgets = new List<Widget>();
+			List<int> widgetIds = new List<int>();
+			List<PropertyTag> proptags;
 
-			widgetManager.AddItemToWidget(widget.WidgetId, itemId);
-			return lijst;
+			//Get item
+			Item item = GetItemWithAllWidgets(itemId);
+
+			//1st widget
+			proptags = new List<PropertyTag>();
+			proptags.Add(new PropertyTag()
+			{
+				Name = "Mentions"
+			});
+			
+			ItemWidget widget1 = (ItemWidget)widgetManager.AddWidget(WidgetType.GraphType, name + " popularity", 1, 1, proptags: proptags, graphType: GraphType.LineChart, rowspan: 12, colspan: 6);
+			itemWidgets.Add(widget1);
+			widgetIds.Add(widget1.WidgetId);
+
+			//2nd widget
+			proptags = new List<PropertyTag>();
+			proptags.Add(new PropertyTag()
+			{
+				Name = "Gender"
+			});
+			ItemWidget widget2 = (ItemWidget)widgetManager.AddWidget(WidgetType.GraphType, name + " gender comparison ", 1, 1, proptags: proptags, graphType: GraphType.BarChart, rowspan: 6, colspan: 6);
+			itemWidgets.Add(widget2);
+			widgetIds.Add(widget2.WidgetId);
+
+			//3rd widget
+			proptags = new List<PropertyTag>();
+			proptags.Add(new PropertyTag()
+			{
+				Name = "Age"
+			});
+			ItemWidget widget3 = (ItemWidget)widgetManager.AddWidget(WidgetType.GraphType, name + " age comparison", 1, 1, proptags: proptags, graphType: GraphType.PieChart, rowspan: 6, colspan: 6);
+			itemWidgets.Add(widget3);
+			widgetIds.Add(widget3.WidgetId);
+
+			//Link widgets to item & save changes to database
+			item.ItemWidgets = itemWidgets;
+			itemRepo.UpdateItem(item);
+			uowManager.Save();
+			uowManager = null;
 		}
 
 		/// <summary>
@@ -346,7 +373,6 @@ namespace BAR.BL.Managers
 		/// <summary>
 		/// Returns all people for specific subplatform
 		/// </summary>
-		/// <param name="subPlatformName"></param>
 		/// <returns></returns>
 		public IEnumerable<Item> GetAllPersonsForSubplatform(int subPlatformID)
 		{
@@ -516,7 +542,9 @@ namespace BAR.BL.Managers
 					organisations.Add(organisation);
 				}
 			}
-			GenerateDefaultItemWidgetsForItems(organisations);
+
+			//Generate default widgets for items
+			foreach (Item item in organisations) GenerateDefaultItemWidgets(item.Name, item.ItemId);
 			uowManager = null;
 		}
 
@@ -554,18 +582,18 @@ namespace BAR.BL.Managers
 					string facebook = deserializedJson[i].facebook;
 					string stringDate = Convert.ToString(deserializedJson[i].dateOfBirth);
 					string town = deserializedJson[i].town;
-                    string level = deserializedJson[i].level;
-                    string site = deserializedJson[i].site;
-                    string district = deserializedJson[i].district;
-                    string position = deserializedJson[i].position;
+					string level = deserializedJson[i].level;
+					string site = deserializedJson[i].site;
+					string district = deserializedJson[i].district;
+					string position = deserializedJson[i].position;
 
-                    Gender personGender = (gender == "M") ? Gender.MAN : Gender.WOMAN;
+					Gender personGender = (gender == "M") ? Gender.MAN : Gender.WOMAN;
 					DateTime? dateOfBirth = DateTime.ParseExact(stringDate, "yyyy-MM-dd HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture);
 
-					Person person = (Person) AddItem(itemType: ItemType.Person, name: fullname, gender: personGender, district: district,
+					Person person = (Person)AddItem(itemType: ItemType.Person, name: fullname, gender: personGender, district: district,
 						level: level, site: site, position: position, dateOfBirth: dateOfBirth);
-					person.SubPlatform = subPlatform;	person.Area = areas.Where(x => x.PostalCode.Equals(postalCode) && x.Residence.ToLower().Equals(town.ToLower())).SingleOrDefault();
-					
+					person.SubPlatform = subPlatform; person.Area = areas.Where(x => x.PostalCode.Equals(postalCode) && x.Residence.ToLower().Equals(town.ToLower())).SingleOrDefault();
+
 					if (!string.IsNullOrEmpty(twitter))
 					{
 						SocialMediaName twitterSocial = new SocialMediaName()
@@ -584,7 +612,7 @@ namespace BAR.BL.Managers
 						};
 						person.SocialMediaNames.Add(facebookSocial);
 					}
-					person.Organisation = (Organisation) organisations.Where(x => x.Name.Equals(organisation)).SingleOrDefault();
+					person.Organisation = (Organisation)organisations.Where(x => x.Name.Equals(organisation)).SingleOrDefault();
 
 					items.Add(person);
 				}
@@ -594,10 +622,66 @@ namespace BAR.BL.Managers
 			{
 				itemRepo.CreateItems(items);
 				uowManager.Save();
-				GenerateDefaultItemWidgetsForItems(items);
+				foreach (Item item in items) GenerateDefaultItemWidgets(item.Name, item.ItemId);
 				return true;
 			}
+
 			return false;
+		}
+
+		/// <summary>
+		/// Fills all items with recent data from the last
+		/// synchronisation
+		/// </summary>
+		public void FillItems()
+		{
+			DataManager dataManager = new DataManager();
+			IEnumerable<Item> items = GetAllItems();
+
+			foreach (Item item in items)
+			{
+				DetermineTrending(item.ItemId);
+				item.NumberOfMentions = dataManager.GetInformationsForItemid(item.ItemId).Count();
+
+				//Gather sentiment
+				double sentiment = 0.0;
+				int counter = 0;
+				IEnumerable<Information> informations = dataManager.GetInformationsWithAllInfoForItem(item.ItemId)
+																   .Where(info => info.CreationDate >= DateTime.Now.AddMonths(-1))
+																   .AsEnumerable();
+				foreach (Information info in informations)
+				{
+					foreach (PropertyValue propvalue in info.PropertieValues)
+					{
+						if (propvalue.Property.Name.ToLower().Equals("sentiment"))
+						{
+							double propSen =+ Double.Parse(propvalue.Value);
+							if (propSen != 0) sentiment += propSen / 100;
+							counter++;
+						}
+					}
+				}
+
+				//Determine sentiment
+				if (sentiment != 0) {
+					sentiment = Math.Round((sentiment / counter) * 100, 2);
+					if (sentiment >= 0) item.SentimentPositve = sentiment;
+					else item.SentimentNegative = Math.Abs(sentiment);
+				}				
+			}
+
+			//Persist changes
+			ChangeItems(items);
+		}
+
+		/// <summary>
+		/// Changes all the the given items
+		/// </summary>
+		public IEnumerable<Item> ChangeItems(IEnumerable<Item> items)
+		{
+			InitRepo();
+			itemRepo.UpdateItems(items);
+			return items;
 		}
 	}
 }

@@ -6,9 +6,10 @@ using System.Threading.Tasks;
 
 namespace BAR.BL.Domain.Widgets
 {
-    public class SubType
-    {
-        public int SubTypeId { get; set; }
-        public string Name { get; set; }
-    }
+	public class GraphValue
+	{
+		public int GraphValueId { get; set; }
+		public string Value { get; set; }
+		public double NumberOfTimes { get; set; }
+	}
 }
