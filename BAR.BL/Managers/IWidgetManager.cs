@@ -40,5 +40,10 @@ namespace BAR.BL.Managers
 		Dashboard AddDashboard(string userId, DashboardType dashType = DashboardType.Private);
 
 		void RemoveDashboard(int dashboardId);
+
+		//WidgetDatas
+		WidgetData AddWidgetData(WidgetData widgetData);
+
+		WidgetData ChangeWidgetData(WidgetData widgetData);
 	}
 }

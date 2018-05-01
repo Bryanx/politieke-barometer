@@ -11,5 +11,6 @@ namespace BAR.BL.Domain.Widgets
 		public int WidgetDataId { get; set; }
 		public string KeyValue { get; set; }
 		public ICollection<GraphValue> GraphValues { get; set; }
+		public Widget Widget { get; set; }
 	}
 }

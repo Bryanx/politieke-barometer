@@ -324,15 +324,15 @@ namespace BAR.BL.Managers
 			Item item = GetItemWithAllWidgets(itemId);
 
 			//1st widget
-			proptags = new List<PropertyTag>();
-			proptags.Add(new PropertyTag()
-			{
-				Name = "Mentions"
-			});
+			//proptags = new List<PropertyTag>();
+			//proptags.Add(new PropertyTag()
+			//{
+			//	Name = "Mentions"
+			//});
 			
-			ItemWidget widget1 = (ItemWidget)widgetManager.AddWidget(WidgetType.GraphType, name + " popularity", 1, 1, proptags: proptags, graphType: GraphType.LineChart, rowspan: 12, colspan: 6);
-			itemWidgets.Add(widget1);
-			widgetIds.Add(widget1.WidgetId);
+			//ItemWidget widget1 = (ItemWidget)widgetManager.AddWidget(WidgetType.GraphType, name + " popularity", 1, 1, proptags: proptags, graphType: GraphType.LineChart, rowspan: 12, colspan: 6);
+			//itemWidgets.Add(widget1);
+			//widgetIds.Add(widget1.WidgetId);
 
 			//2nd widget
 			proptags = new List<PropertyTag>();
