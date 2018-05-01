@@ -378,41 +378,6 @@ namespace BAR.BL.Managers
 		}
 
 		/// <summary>
-		/// Generate new data for all the widgets in the system
-		/// This method takes time, but it happens in the background.
-		/// </summary>
-		public void GenerateDataForMwidgets()
-		{
-			DataManager dataManager = new DataManager();
-			WidgetManager widgetManager = new WidgetManager();
-			IEnumerable<Widget> widgets = widgetManager.GetAllWidgetsWithAllData();
-
-			foreach (Widget widget in widgets)
-			{
-				for (int i = 0; i < widget.Items.Count(); i++)
-				{
-					foreach (PropertyTag proptag in widget.PropertyTags)
-					{
-						WidgetData widgetData;
-						if (proptag.Name.ToLower().Equals("mentions"))
-						{
-
-							widgetData = dataManager.GetNumberOfMentionsForItem
-								(widget.Items.ElementAt(i).ItemId, widget.WidgetId, "dd-MM");
-						}
-						else
-						{
-							widgetData = dataManager.GetPropvaluesForWidget
-								(widget.Items.ElementAt(i).ItemId, widget.WidgetId, proptag.Name);
-						}
-						widget.WidgetData.Add(widgetData);
-					}
-				}
-			}
-			widgetManager.ChangeWidgets(widgets);
-		}
-
-		/// <summary>
 		/// Returns all (undeleted) themes of the whole system
 		/// </summary>
 		public IEnumerable<Item> GetAllThemes()
@@ -713,6 +678,61 @@ namespace BAR.BL.Managers
 			}
 
 			return false;
+		}
+
+		/// <summary>
+		/// Fills all items with recent data from the last
+		/// synchronisation
+		/// </summary>
+		public void FillItems()
+		{
+			DataManager dataManager = new DataManager();
+			IEnumerable<Item> items = GetAllItems();
+
+			foreach (Item item in items)
+			{
+				DetermineTrending(item.ItemId);
+				item.NumberOfMentions = dataManager.GetInformationsForItemid(item.ItemId).Count();
+
+				//Gather sentiment
+				double sentiment = 0.0;
+				int counter = 0;
+				IEnumerable<Information> informations = dataManager.GetInformationsWithAllInfoForItem(item.ItemId)
+																   .Where(info => info.CreationDate >= DateTime.Now.AddMonths(-1))
+																   .AsEnumerable();
+				foreach (Information info in informations)
+				{
+					foreach (PropertyValue propvalue in info.PropertieValues)
+					{
+						if (propvalue.Property.Name.ToLower().Equals("sentiment"))
+						{
+							double propSen =+ Double.Parse(propvalue.Value);
+							if (propSen != 0) sentiment += propSen / 100;
+							counter++;
+						}
+					}
+				}
+
+				//Determine sentiment
+				if (sentiment != 0) {
+					sentiment = Math.Round((sentiment / counter) * 100, 2);
+					if (sentiment >= 0) item.SentimentPositve = sentiment;
+					else item.SentimentNegative = Math.Abs(sentiment);
+				}				
+			}
+
+			//Persist changes
+			ChangeItems(items);
+		}
+
+		/// <summary>
+		/// Changes all the the given items
+		/// </summary>
+		public IEnumerable<Item> ChangeItems(IEnumerable<Item> items)
+		{
+			InitRepo();
+			itemRepo.UpdateItems(items);
+			return items;
 		}
 	}
 }

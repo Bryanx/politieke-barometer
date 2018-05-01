@@ -72,7 +72,7 @@ namespace BAR.UI.MVC.Controllers.api
 			
 			if (widget == null) return StatusCode(HttpStatusCode.NoContent);
 			
-			return Ok(widget.WidgetData);
+			return Ok(widget);
 		}
 		
 		/// <summary>

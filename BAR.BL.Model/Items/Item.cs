@@ -22,6 +22,8 @@ namespace BAR.BL.Domain.Items
 		public int NumberOfFollowers { get; set; }
 		public double TrendingPercentage { get; set; }
 		public int NumberOfMentions { get; set; }
+		public double SentimentPositve { get; set; }
+		public double SentimentNegative { get; set; }
 		public double Baseline { get; set; }
 		public ICollection<Information> Informations { get; set; }
 		public ICollection<Widget> ItemWidgets { get; set; }

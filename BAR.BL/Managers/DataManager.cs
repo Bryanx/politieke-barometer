@@ -169,9 +169,9 @@ namespace BAR.BL.Managers
 				GraphValues = new List<GraphValue>()
 			};
 			IEnumerable<Information> infosQueried = GetInformationsWithAllInfoForItem(itemid).Where(info => info.CreationDate <= startDate)
-																							 .Where(info => info.CreationDate > timestamp)
-																							 .AsEnumerable();
-			if (infosQueried == null || infosQueried.Count() == 0) return null;
+													 .Where(info => info.CreationDate > timestamp)
+													 .AsEnumerable();
+			if (infosQueried == null || infosQueried.Count() == 0) return widgetData;
 
 			//Map timestap to number of propertyValues			
 			foreach (Information information in infosQueried)

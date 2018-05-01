@@ -54,7 +54,7 @@ namespace BAR.BL.Managers
 			widget.Items = new List<Item>();
 			widget.GraphType = graphType;
 			widget.PropertyTags = proptags;
-			widget.WidgetData = new List<WidgetData>();
+			widget.WidgetDatas = new List<WidgetData>();
 
 			//Update database
 			if (dashboardId != -1)
@@ -311,6 +311,40 @@ namespace BAR.BL.Managers
 			InitRepo();
 			widgetRepo.UpdateWidgets(widgets);
 			return widgets;
+		}
+
+		/// <summary>
+		/// Generate new data for all the widgets in the system
+		/// This method takes time, but it happens in the background.
+		/// </summary>
+		public void GenerateDataForMwidgets()
+		{
+			DataManager dataManager = new DataManager();
+			IEnumerable<Widget> widgets = GetAllWidgetsWithAllData();
+
+			foreach (Widget widget in widgets)
+			{
+				for (int i = 0; i < widget.Items.Count(); i++)
+				{
+					foreach (PropertyTag proptag in widget.PropertyTags)
+					{
+						WidgetData widgetData;
+						if (proptag.Name.ToLower().Equals("mentions"))
+						{
+
+							widgetData = dataManager.GetNumberOfMentionsForItem
+								(widget.Items.ElementAt(i).ItemId, widget.WidgetId, "dd-MM");
+						}
+						else
+						{
+							widgetData = dataManager.GetPropvaluesForWidget
+								(widget.Items.ElementAt(i).ItemId, widget.WidgetId, proptag.Name);
+						}
+						widget.WidgetDatas.Add(widgetData);
+					}
+				}
+			}
+			ChangeWidgets(widgets);
 		}
 	}
 }
