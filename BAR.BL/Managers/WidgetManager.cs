@@ -367,6 +367,16 @@ namespace BAR.BL.Managers
 			//Remove overflowing items (temporary solution)
 			new ItemManager().RemoveOverflowingItems();
 		}
+
+		/// <summary>
+		/// Gives back all the widgets for a specific itemId
+		/// The widgets contain all the information to construct a graph
+		/// </summary>
+		public IEnumerable<Widget> GetAllWidgetsWithAllDataForItem(int itemId)
+		{
+			InitRepo();
+			return widgetRepo.ReadAllWidgetsWithAllDataForItem(itemId).AsEnumerable();
+		}
 	}
 }
 		
