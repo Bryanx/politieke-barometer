@@ -286,7 +286,6 @@
     <Content Include="Content\build\css\partials\login.scss" />
     <Content Include="Content\build\css\partials\modals.scss" />
     <Content Include="Content\build\css\partials\navbar.scss" />
-    <Content Include="Content\build\css\partials\navbartoggle.scss" />
     <Content Include="Content\build\css\partials\oneliners.scss" />
     <Content Include="Content\build\css\partials\panelaccordion.scss" />
     <Content Include="Content\build\css\partials\panels.scss" />
