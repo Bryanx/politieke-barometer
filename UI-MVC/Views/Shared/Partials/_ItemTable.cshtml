@@ -48,6 +48,7 @@
         <tr class="subscription">
             <td>
                 @Html.TextBoxFor(i => item.Name, new {@class = "renameItem form-control", data_item_id = @item.ItemId})
+                <span style="display:none">@item.Name</span>
             </td>
             <td>
                 @item.ItemType

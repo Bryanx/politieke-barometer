@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Data.Entity;
+using BAR.BL.Domain.Items;
 
 namespace BAR.DAL
 {
@@ -54,7 +55,7 @@ namespace BAR.DAL
 		/// </summary>
 		public int DeleteInformation(int infoId)
 		{
-			Information infoToDelete = ReadInformationWithPropValues(infoId);
+			Information infoToDelete = ReadInformationWitlAllInfo(infoId);
 			ctx.Informations.Remove(infoToDelete);
 			return ctx.SaveChanges();
 		}
@@ -73,7 +74,7 @@ namespace BAR.DAL
 		{
 			foreach (int infoId in infoIds)
 			{
-				Information infoToDelete = ReadInformationWithPropValues(infoId);
+				Information infoToDelete = ReadInformationWitlAllInfo(infoId);
 				ctx.Informations.Remove(infoToDelete);
 			}
 			return ctx.SaveChanges();
@@ -85,8 +86,9 @@ namespace BAR.DAL
 		/// </summary>
 		public IEnumerable<Information> ReadInformationsForItemid(int itemId)
 		{
-			return ctx.Informations.Include(x => x.Items)
-					.Where(info => info.Items.Any(item => item.ItemId == itemId)).AsEnumerable();
+			return ctx.Informations.Include(info => info.Items)
+										.Where(info => info.Items.Any(item => item.ItemId == itemId))
+									   .AsEnumerable();
 		}
 
 		/// <summary>
@@ -110,10 +112,11 @@ namespace BAR.DAL
 		/// Gives back an information object with his property-values
 		/// based on informationid.
 		/// </summary>
-		public Information ReadInformationWithPropValues(int informationId)
+		public Information ReadInformationWitlAllInfo(int informationId)
 		{
-			return ctx.Informations.Include(info => info.PropertieValues.Select(propval => propval.Property))
-				.Where(info => info.InformationId == informationId).SingleOrDefault();
+			return ctx.Informations.Include(info => info.PropertieValues)
+								   .Include(info => info.PropertieValues.Select(propval => propval.Property))
+								   .Where(info => info.InformationId == informationId).SingleOrDefault();
 		}
 
 		/// <summary>
@@ -168,6 +171,24 @@ namespace BAR.DAL
 			return ctx.Sources.Where(x => x.Name.Equals(sourceName)).SingleOrDefault();
 		}
 
+		public int CreateSource(Source source)
+		{
+			ctx.Sources.Add(source);
+			return ctx.SaveChanges();
+		}
+
+		public Source ReadSource(int sourceId)
+		{
+			return ctx.Sources.Where(x => x.SourceId == sourceId).SingleOrDefault();
+		}
+
+		public int DeleteSource(Source source)
+		{
+			ctx.Sources.Remove(source);
+			return ctx.SaveChanges();
+		}
+
+
 		public SynchronizeAudit ReadLastAudit()
 		{
 			return ctx.SynchronizeAudits.Where(x => x.Succes).OrderByDescending(x => x.TimeStamp).FirstOrDefault();
@@ -206,9 +227,11 @@ namespace BAR.DAL
 		/// </summary>
 		public IEnumerable<Information> ReadInformationsWithAllInfoForItem(int itemId)
 		{
-			return ctx.Informations.Include(infoIncl => infoIncl.PropertieValues
-								   .Select(propval => propval.Property))
-								   .Where(info => info.Items.Any(item => item.ItemId == itemId)).AsEnumerable();
+			return ctx.Informations.Include(info => info.Items)
+								   .Include(info => info.PropertieValues)
+								   .Include(info => info.PropertieValues.Select(propval => propval.Property))
+								   .Where(info => info.Items.Any(item => item.ItemId == itemId))
+								   .AsEnumerable();
 		}
 	}
 }

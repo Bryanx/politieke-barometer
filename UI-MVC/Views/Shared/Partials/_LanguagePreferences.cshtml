@@ -10,17 +10,17 @@
 
 <div class="culture-form">
     @using (Html.BeginForm("SetCulture", "Home", new {@class = "form-horizontal"})) {
-        <div class="control-group">
+        <div class="">
             <input class="culture" name="culture" id="en-us" value="en-us" type="radio" @selected("en-us", culture)/>
-            <label for="en-us">EN</label>
+            <label for="en-us">English</label>
         </div>
-        <div class="control-group">
+        <div class="">
             <input class="culture" name="culture" id="nl" value="nl" type="radio" @selected("nl", culture)/>
-            <label for="nl">NL</label>
+            <label for="nl">Nederlands</label>
         </div>
-        <div class="control-group">
+        <div class="">
             <input class="culture" name="culture" id="fr" value="fr" type="radio" @selected("fr", culture)/>
-            <label for="fr">FR</label>
+            <label for="fr">Français</label>
         </div>
     }
 </div>

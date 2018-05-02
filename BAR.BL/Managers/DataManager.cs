@@ -99,76 +99,105 @@ namespace BAR.BL.Managers
 		/// This method is not the same as getNumberInfo
 		/// This method will be used for widgets.
 		/// </summary>
-		IDictionary<string, double> IDataManager.GetNumberOfMentionsForItem(int itemId, int widgetId, string dateFormat)
+		public WidgetData GetNumberOfMentionsForItem(int itemId, int widgetId, string dateFormat, DateTime? startDate = null)
 		{
-			//Get item with widgets
-			ItemManager itemManager = new ItemManager();
-			Item item = itemManager.GetItemWithAllWidgets(itemId);
-			if (item == null) return null;
+			//Create widgetdata
+			WidgetData widgetData = new WidgetData()
+			{
+				KeyValue = "Number of mentions",
+				GraphValues = new List<GraphValue>()
+			};
 
 			//Get Widget
-			Widget widget = item.ItemWidgets.Where(widgetToQuery => widgetToQuery.WidgetId == widgetId).SingleOrDefault();
-			if (widget == null) return null;
+			Widget widget = new WidgetManager(uowManager).GetWidget(widgetId);
+			if (widget == null) return widgetData;
 
-			//Map informations to datetime and add them to the list
-			IDictionary<string, double> data = new Dictionary<string, double>();
-			IEnumerable<Information> informations = GetInformationsForItemid(itemId);
-			if (informations == null || informations.Count() == 0) return null;
+			//Map informations to datetime and add them to the list	
+			IEnumerable<Information> informations = GetInformationsWithAllInfoForItem(itemId);
+			if (informations == null || informations.Count() == 0) return widgetData;
 
-			DateTime checkTime = widget.Timestamp.Value;
-			double sum = 0.0;
-			while (checkTime < DateTime.Now)
+			DateTime timestamp = widget.Timestamp.Value;
+			if (startDate == null) startDate = DateTime.Now;
+			else if (startDate < timestamp) return widgetData;
+
+			
+			while (timestamp < startDate)
 			{
-				sum += informations.Count(i => i.CreationDate.Value.Day == checkTime.Day);
-				data[checkTime.ToString(dateFormat)] = sum;
-				checkTime = checkTime.AddDays(1);
+				//Each grapvalue represents a total number of mentions mapped
+				//To a specific data
+				widgetData.GraphValues.Add(new GraphValue()
+				{
+					Value = startDate.Value.ToString(dateFormat),
+					NumberOfTimes = informations.Count(i => i.CreationDate.Value.Day == timestamp.Day)
+				});
+				startDate = startDate.Value.AddDays(-1);
 			}
-			return data;
+
+			return widgetData;
 		}
 
 		/// <summary>
 		/// Gives back a map with all the propertievalues of a specific propertie
-		/// works dynamicly
+		/// works dynamicly. The returnvalue contains the following:
+		/// 
+		/// Dictionary:
+		/// - key: name of the property-value
+		/// - value: number of times the property-value was mentioned
 		/// 
 		/// WARNING
 		/// This method will only work if the widget has a propertytag
 		/// </summary>
-		IDictionary<string, double> IDataManager.GetPropvaluesForWidget(int itemid, int widgetId)
+		public WidgetData GetPropvaluesForWidget(int itemid, int widgetId, string proptag, DateTime? startDate = null)
 		{
-			//InitRepo();
+			//Create widgetdata
+			WidgetData widgetData = new WidgetData()
+			{
+				KeyValue = proptag,
+				GraphValues = new List<GraphValue>()
+			};
 
-			////Get propertytag and timestamp
-			//WidgetManager widgetManager = new WidgetManager();
-			//Widget widget = widgetManager.GetWidget(widgetId);
-			//string proptag = widget.PropertyTag;
-			//DateTime? timestamp = widget.Timestamp;
-			//if (widget == null || proptag == null || timestamp == null) return null;
+			//Get propertytag and timestamp
+			Widget widget = new WidgetManager(uowManager).GetWidget(widgetId);
+			if (widget == null) return widgetData;
+			DateTime? timestamp = widget.Timestamp.Value;
+			if (timestamp == null) return widgetData;
 
-			////Get informations for item
-			//IEnumerable<Information> infos = GetInformationsWithAllInfoForItem(itemid);
+			if (startDate == null) startDate = DateTime.Now;
+			else if (startDate < timestamp) return widgetData;
 
-			////Map timestap to number of propertyValues
-			//IDictionary<string, double> dict = new Dictionary<string, double>();
-			//DateTime checkTime = DateTime.Now;
-			//while (checkTime > timestamp)
-			//{
-			//	foreach ()
-			//	foreach (PropertyValue propval in information.PropertieValues)
-			//	{
-			//		//If the name of the property is the same as the propertytag,
-			//		//Then the propertyvalue shall be added to the dictionary
-			//		if (propval.Property.Name.ToLower().Equals(proptag.ToLower()))
-			//		{
-			//			dict[checkTime.ToString()] += 1;
-			//		}
-			//	}
+			//Get informations for item
+			IEnumerable<Information> infosQueried = GetInformationsWithAllInfoForItem(itemid).Where(info => info.CreationDate <= startDate)
+													 .Where(info => info.CreationDate > timestamp)
+													 .AsEnumerable();
+			if (infosQueried == null || infosQueried.Count() == 0) return widgetData;
 
-			//}
+			//Map timestap to number of propertyValues			
+			foreach (Information information in infosQueried)
+			{
+				foreach (PropertyValue propval in information.PropertieValues)
+				{
+					//If the name of the property is the same as the propertytag,
+					//Then the propertyvalue shall be added to the widgetdata
+					if (propval.Property.Name.ToLower().Equals(proptag.ToLower()))
+					{
+						GraphValue grapValue = widgetData.GraphValues.Where(value => value.Value.ToLower().Equals(propval.Value.ToLower())).SingleOrDefault();
+						//If A grapvalue yet exists for a specific widgetData object
+						if (grapValue != null) grapValue.NumberOfTimes++;
+						//If a grapvalue does not yet exists for a specific widgetData object
+						else
+						{
+							grapValue = new GraphValue()
+							{
+								Value = propval.Value,
+								NumberOfTimes = 1
+							};
+							widgetData.GraphValues.Add(grapValue);
+						}
+					}
+				}
+			}
 
-
-
-
-			return null;		
+			return widgetData;
 		}
 
 		/// <summary>
@@ -353,29 +382,29 @@ namespace BAR.BL.Managers
 			uowManager = null;
 		}
 
-    /// <summary>
-    /// Gets last succesfull audit.
-    /// </summary>
+		/// <summary>
+		/// Gets last succesfull audit.
+		/// </summary>
 		public SynchronizeAudit GetLastAudit()
-		{
-			InitRepo();
-			return dataRepo.ReadLastAudit();
-		}
+    {
+      InitRepo();
+      return dataRepo.ReadLastAudit();
+    }
 
     /// <summary>
     /// Adds an audit with boolean false.
     /// </summary>
 		public SynchronizeAudit AddAudit(DateTime timestamp, bool succes)
-		{
-			InitRepo();
-			SynchronizeAudit synchronizeAudit = new SynchronizeAudit()
-			{
-				TimeStamp = timestamp,
-				Succes = succes
-			};
-			dataRepo.CreateAudit(synchronizeAudit);
-			return synchronizeAudit;
-		}
+    {
+      InitRepo();
+      SynchronizeAudit synchronizeAudit = new SynchronizeAudit()
+      {
+        TimeStamp = timestamp,
+        Succes = succes
+      };
+      dataRepo.CreateAudit(synchronizeAudit);
+      return synchronizeAudit;
+    }
 
     /// <summary>
     /// Gets audit with given id.
@@ -412,25 +441,44 @@ namespace BAR.BL.Managers
       return false;
     }
 
-		/// <summary>
-		/// Gets all sources.
-		/// </summary>
-		public IEnumerable<Source> GetAllSources()
-		{
-			InitRepo();
-			return dataRepo.ReadAllSources();
-		}
+    /// <summary>
+    /// Gets all sources.
+    /// </summary>
+    public IEnumerable<Source> GetAllSources()
+    {
+      InitRepo();
+      return dataRepo.ReadAllSources();
+    }
 
-		/// <summary>
+    public Source AddSource(string name, string site)
+    {
+      InitRepo();
+      Source source = new Source()
+      {
+        Name = name,
+        Site = site
+      };
+      dataRepo.CreateSource(source);
+      return source;
+    }
+
+    public void RemoveSource(string sourceId)
+    {
+      InitRepo();
+      Source source = dataRepo.ReadSource(Convert.ToInt32(sourceId));
+      dataRepo.DeleteSource(source);
+    }
+
+    /// <summary>
 		/// Returns a list of all the informations objects that are
 		/// related to a specific item.
 		/// </summary>
 		public IEnumerable<Information> GetInformationsWithAllInfoForItem(int itemId)
-		{
-			InitRepo();
-			return dataRepo.ReadInformationsWithAllInfoForItem(itemId);
-		}
-	}
+    {
+      InitRepo();
+      return dataRepo.ReadInformationsWithAllInfoForItem(itemId);
+    }
+ }
 }
 
 

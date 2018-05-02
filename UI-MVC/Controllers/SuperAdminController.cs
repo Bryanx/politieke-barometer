@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using System.Text;
 using System;
 using Microsoft.AspNet.Identity.Owin;
+using AutoMapper;
 
 namespace BAR.UI.MVC.Controllers
 {
@@ -23,19 +24,23 @@ namespace BAR.UI.MVC.Controllers
 	public class SuperAdminController : LanguageController
 	{
 		private IUserManager userManager;
+		private IItemManager itemManager;
+		private ISubplatformManager subplatformManager;
+		private IDataManager dataManager;
 
 		/// <summary>
 		/// Sourcemanagement page of the SuperAdmin.
 		/// </summary>
-		public ActionResult SourceManagement()
+		public ActionResult GeneralManagement()
 		{
 			userManager = new UserManager();
-
-			//Assembling the view
-			return View(new BaseViewModel
-			{
-				PageTitle = Resources.SourceManagement,
-				User = userManager.GetUser(User.Identity.GetUserId())
+      dataManager = new DataManager();
+      //Assembling the view
+      return View(new SourceManagement
+      {
+        PageTitle = Resources.GeneralManagement,
+        User = userManager.GetUser(User.Identity.GetUserId()),
+        Sources = dataManager.GetAllSources()
 			});
 		}
 
@@ -45,61 +50,18 @@ namespace BAR.UI.MVC.Controllers
 		public ActionResult PlatformManagement()
 		{
 			userManager = new UserManager();
+			subplatformManager = new SubplatformManager();
+
+			IList<SubPlatformDTO> subplatforms = null;
+			subplatforms = Mapper.Map(subplatformManager.GetSubplatforms(), new List<SubPlatformDTO>());
 
 			//Assembling the view
-			return View(new BaseViewModel
+			return View(new SubPlatformManagement
 			{
 				PageTitle = Resources.SubPlatformManagement,
-				User = userManager.GetUser(User.Identity.GetUserId())
-			});
-		}
-
-		/// <summary>
-		/// Adminmanagement page of the SuperAdmin.
-		/// </summary>
-		public ActionResult AdminManagement()
-		{
-			IdentityUserManager identityUserManager = HttpContext.GetOwinContext().GetUserManager<IdentityUserManager>();
-			userManager = new UserManager();
-
-			IEnumerable<User> users = userManager.GetAllUsers();
-			List<string> currentRoles = new List<string>();
-			for (int i = 0; i < users.Count(); i++)
-			{
-				currentRoles.Add(identityUserManager.GetRoles(users.ElementAt(i).Id).FirstOrDefault());
-			}
-
-			//Assembling the view
-			ViewBag.CurrentRoles = currentRoles;
-			EditUserViewModel vm = new EditUserViewModel()
-			{
 				User = userManager.GetUser(User.Identity.GetUserId()),
-				PageTitle = Resources.AdminManagement,
-				Users = users,
-			};
-			FillViewModels(vm);
-			return View(vm);
-		}
-
-		/// <summary>
-		/// Fills a viewmodel with selectionlists. the selectionlist will
-		/// be shown in a dropdownmenu.
-		/// </summary>
-		private void FillViewModels(EditUserViewModel vm)
-		{
-			userManager = new UserManager();
-
-			vm.AdminRoles = userManager.GetAllRoles().Select(x => new SelectListItem
-			{
-				Value = x.Id,
-				Text = x.Name,
-			}).OrderBy(x => x.Text);
-			vm.UserRoles = userManager.GetAllRoles().Where(r => r.Name == "Admin" || r.Name == "User")
-				.Select(x => new SelectListItem
-				{
-					Value = x.Id,
-					Text = x.Name,
-				}).OrderBy(x => x.Text);
+				SubPlatforms = subplatforms
+			});
 		}
 	}
 }

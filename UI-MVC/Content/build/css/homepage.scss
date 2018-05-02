@@ -7,38 +7,11 @@ h1 {
   line-height: 45px;
 }
 
-.nav_menu {
-  background-color: transparent;
+nav {
+  background-color: rgba(255,255,255,0);
   box-shadow: none;
-  position: relative !important;
-}
-
-.left_col {
-  left: -100px;
-  transition: .2s;
-  position: fixed;
-  width: 100px;
-}
-
-#menu_toggle {
-  display: inline;
-}
-
-.nav-sm .container.body .col-md-3.left_col {
-  padding-top: 0px;
-}
-
-.nav.navbar-nav > li > a.signup {
-  color: white !important;
-  background-color: rgba(0, 0, 0, 0.1);
-  z-index: 2;
-  border: 2px solid white;
-  top: 58px;
-  border-radius: 5px;
-  &:hover {
-    background-color: white;
-    color: var(--primary-color) !important;
-  }
+  border-bottom: 0px none;
+  transition: 1.2s ease-in-out;
 }
 
 .btn-search-submit:hover {
@@ -49,23 +22,19 @@ h1 {
   margin-left: auto;
   margin-right: auto;
   margin-bottom: 160px;
-  margin-top: 10px;
+  margin-top: 4px;
   max-width: 500px;
   padding: 0;
   float: none;
 }
 
-.nav-sm span.fa {
+body span.fa {
   display: inline;
 }
 
-nav_menu {
-  position: relative !important;
-}
+/* main-header / banner */
 
-/* main-header */
-
-.nav-sm .container.body .main-header-container-parent {
+body .container.body .main-header-container-parent {
   margin-left: 0px !important;
   z-index: 2;
 }
@@ -95,7 +64,8 @@ nav_menu {
   margin-top: 80px;
 }
 
-.small-logo.colored {
+.nav-home {
+  transition: 1s ease-in-out;
   display: none;
 }
 
@@ -119,13 +89,6 @@ nav_menu {
   background-size: contain;
   background-position: bottom center;
   background-color: var(--primary-color);
-}
-
-@media (max-width: 991px) {
-  .nav-md .container.body .main-header-container-parent {
-    margin-left: 230px;
-    z-index: 2;
-  }
 }
 
 @media (min-height: 700px) {
@@ -203,23 +166,13 @@ nav_menu {
   border: 1px solid transparent;
 }
 
-#menu_toggle {
-  display: none;
-  > i {
-    display: none;
-  }
-}
-
-div.nav_menu .searchbar {
-  visibility: hidden;
-}
-
-.signup {
-  right: 60px;
-}
-
-.right_col {
-  margin-top: 0 !important;
+nav .searchbar {
+  width: 700px;
+  max-width: 700px;
+  margin-top: 4px;
+  margin-bottom: 50px;
+  transition: 1s ease-in-out;
+  overflow: hidden;
 }
 
 .navbar-right {
@@ -229,3 +182,4 @@ div.nav_menu .searchbar {
     color: white;
   }
 }
+

@@ -141,6 +141,12 @@
   <data name="AddAChart" xml:space="preserve">
     <value>Ajouter un graphique</value>
   </data>
+  <data name="AddSource" xml:space="preserve">
+    <value>Ajouter une source</value>
+  </data>
+  <data name="AddSubPlatform" xml:space="preserve">
+    <value>Adder un subplatformer</value>
+  </data>
   <data name="Admin" xml:space="preserve">
     <value>Administrateur</value>
   </data>
@@ -234,6 +240,9 @@
   <data name="DeleteUser" xml:space="preserve">
     <value>Enlever utilisateur</value>
   </data>
+  <data name="Details" xml:space="preserve">
+    <value>Détails</value>
+  </data>
   <data name="Email" xml:space="preserve">
     <value>E-mail</value>
   </data>
@@ -273,6 +282,9 @@
   <data name="Gender" xml:space="preserve">
     <value>Genre</value>
   </data>
+  <data name="GeneralManagement" xml:space="preserve">
+    <value>Gestion générale</value>
+  </data>
   <data name="Home" xml:space="preserve">
     <value>Page d'acceuil</value>
   </data>
@@ -296,6 +308,12 @@
   </data>
   <data name="ItemManagement" xml:space="preserve">
     <value>Gérer des éléments</value>
+  </data>
+  <data name="Languages" xml:space="preserve">
+    <value>Langues</value>
+  </data>
+  <data name="JustNow" xml:space="preserve">
+    <value>Juste maintenant</value>
   </data>
   <data name="Lastname" xml:space="preserve">
     <value>Nom de famille</value>
@@ -435,6 +453,9 @@
   <data name="RemoveItem" xml:space="preserve">
     <value>Enlever un élément</value>
   </data>
+  <data name="RemoveSource" xml:space="preserve">
+    <value>Supprimer la source</value>
+  </data>
   <data name="Reset" xml:space="preserve">
     <value>Réinitialiser</value>
   </data>
@@ -480,8 +501,14 @@
   <data name="SignupToFollow" xml:space="preserve">
     <value>Inscrire pour suivre</value>
   </data>
+  <data name="SocialMedia" xml:space="preserve">
+    <value>Médias sociaux</value>
+  </data>
   <data name="SourceManagement" xml:space="preserve">
-    <value>Gérer des sources</value>
+    <value>Gérer général</value>
+  </data>
+  <data name="Sources" xml:space="preserve">
+    <value>Sources</value>
   </data>
   <data name="StayUpToDate" xml:space="preserve">
     <value>Restez à jour</value>
@@ -497,6 +524,9 @@
   </data>
   <data name="SuccesfullyLoggedInWith" xml:space="preserve">
     <value>Connecté en tant que </value>
+  </data>
+  <data name="Synchronize" xml:space="preserve">
+    <value>Synchroniser</value>
   </data>
   <data name="ThanksEmailConfirm" xml:space="preserve">
     <value>Merci pour confirmer votre e-mail.</value>
