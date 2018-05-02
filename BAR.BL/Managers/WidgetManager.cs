@@ -361,6 +361,8 @@ namespace BAR.BL.Managers
 						}
 						widgetData.Widget = widget;
 						AddWidgetData(widgetData);
+						widget.WidgetDatas.Add(widgetData);
+						ChangeWidget(widget);
 					}
 				}
 			}
