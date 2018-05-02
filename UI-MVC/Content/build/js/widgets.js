@@ -12,11 +12,9 @@ function addNodeboxGraph(id) {
     
 }
 
-
 /**
  * Nodebox api
  */
-
 function createNodebox(id) {
     let node = document.getElementById('graph' + id);
     let parent =  node.parentElement;
@@ -373,9 +371,10 @@ function loadGraphs(itemId, widget) {
     let ajaxLoadGraphs = function (widget) {
         $.ajax({
             type: "GET",
-            url: "/api/GetGraphs/" + itemId + "/" + widgetId,
+            url: "/api/GetGraphs/" + itemId,
             dataType: "json",
             success: data2 => {
+                console.log(data2);
                 if (data2 !== undefined) {
                     addLineChartJS(widget, data2);
                 } else {
