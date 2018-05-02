@@ -9,25 +9,25 @@ function checkScroll() {
     }
 
     if ($(window).scrollTop() > startY) {
-        $('.nav_menu').css("background-color", "rgba(255,255,255,1)")
+        $('nav').css("background-color", "rgba(255,255,255,1)")
             .css("box-shadow", "0px 3px 3px -2px rgba(0, 0, 0, 0.05)");
         $('.navbar-right > li > a > i').css("color", "#73879C");
         $('.navbar-right > li > a > span').css("color", "#73879C");
-        $('div.nav_menu .searchbar').css('margin-bottom', '0');
+        $('nav .searchbar').css('margin-bottom', '0');
         $('.nav-home').css('display', 'block');
         $('.nav.navbar-nav > li > a.signup').css("background-color", "#73879C")
     } else {
-        $('.nav_menu').css("background-color", "rgba(255,255,255,0)")
+        $('nav').css("background-color", "rgba(255,255,255,0)")
             .css("box-shadow", "0px 1px 2px 2px rgba(0, 0, 0, 0)");
         $('.navbar-right > li > a > i').css("color", "white");
         $('.navbar-right > li > a > span').css("color", "white");
-        $('div.nav_menu .searchbar').css('margin-bottom', '50px');
+        $('nav .searchbar').css('margin-bottom', '50px');
         $('.nav-home').css('display', 'none');
         $('.nav.navbar-nav > li > a.signup').css("background-color", "rgba(0, 0, 0, 0.1)")
     }
 }
 
-if ($('.nav_menu').length > 0) {
+if ($('.main-header-container').length) {
     $(window).on("scroll load resize", function () {
         checkScroll();
     });

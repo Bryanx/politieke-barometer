@@ -37,20 +37,18 @@
         <div class="main_container">
 
             <!-- top navigation -->
-            <div class="top_nav">
-                <div class="nav_menu">
-                    <div class="navbar" style="border: 0;">
-                        <a href='@Url.RootUrl()'>
-                            <i class="small-logo colored nav-home"></i>
-                        </a>
-                    </div>
-
-                    <!-- login -->
-                    @Html.ShowNavLogin(Model)
-                    <!-- search -->
-                    @Html.Partial("Partials/_SearchBar")
+            <nav>
+                <div class="navbar-logo-container" style="border: 0;">
+                    <a href='@Url.RootUrl()'>
+                        <i class="small-logo colored nav-home"></i>
+                    </a>
                 </div>
-            </div>
+                <!-- search -->
+                @Html.Partial("Partials/_SearchBar")
+
+                <!-- login -->
+                @Html.ShowNavLogin(Model)
+            </nav>
             <!-- /top navigation -->
             
             <!-- breadcrumbs -->
