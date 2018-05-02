@@ -339,9 +339,7 @@ namespace BAR.BL.Managers
 		/// </summary>
 		public void GenerateDataForMwidgets()
 		{
-			uowManager = new UnitOfWorkManager();
-
-			DataManager dataManager = new DataManager(uowManager);
+			DataManager dataManager = new DataManager();
 			IEnumerable<Widget> widgets = GetAllWidgetsWithAllData();
 
 			foreach (Widget widget in widgets)
@@ -363,11 +361,12 @@ namespace BAR.BL.Managers
 						}
 						widgetData.Widget = widget;
 						AddWidgetData(widgetData);
-						uowManager.Save();
 					}
 				}
 			}
-			uowManager = null;
+
+			//Remove overflowing items (temporary solution)
+			new ItemManager().RemoveOverflowingItems();
 		}
 	}
 }

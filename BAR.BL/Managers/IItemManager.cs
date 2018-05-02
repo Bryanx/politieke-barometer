@@ -38,6 +38,9 @@ namespace BAR.BL.Managers
 		Item ChangeItemActivity(int itemId);
 		IEnumerable<Item> ChangeItems(IEnumerable<Item> items);
 
+		void RemoveItem(int itemId);
+		void RemoveOverflowingItems();
+
 		void FillItems();
 		void DetermineTrending(int itemId);
 		double GetTrendingPer(int itemId);

@@ -108,14 +108,8 @@ namespace BAR.BL.Managers
 				GraphValues = new List<GraphValue>()
 			};
 
-			//Get item with widgets
-			//ItemManager itemManager = new ItemManager(uowManager);
-			//Item item = itemManager.GetItemWithAllWidgets(itemId);
-			//if (item == null) return widgetData;
-
 			//Get Widget
 			Widget widget = new WidgetManager(uowManager).GetWidget(widgetId);
-			//Widget widget = item.ItemWidgets.Where(widgetToQuery => widgetToQuery.WidgetId == widgetId).SingleOrDefault();
 			if (widget == null) return widgetData;
 
 			//Map informations to datetime and add them to the list	
