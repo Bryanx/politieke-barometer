@@ -314,6 +314,26 @@ namespace BAR.BL.Managers
 		}
 
 		/// <summary>
+		/// Creates a new widgetdata in the database
+		/// </summary>
+		public WidgetData AddWidgetData(WidgetData widgetData)
+		{
+			InitRepo();
+			widgetRepo.CreateWidgetData(widgetData);
+			return widgetData;
+		}
+
+		/// <summary>
+		/// Changes a specific widgetdata in the database
+		/// </summary>
+		public WidgetData ChangeWidgetData(WidgetData widgetData)
+		{
+			InitRepo();
+			widgetRepo.UpdateWidgetData(widgetData);
+			return widgetData;
+		}
+
+		/// <summary>
 		/// Generate new data for all the widgets in the system
 		/// This method takes time, but it happens in the background.
 		/// </summary>
@@ -331,7 +351,6 @@ namespace BAR.BL.Managers
 						WidgetData widgetData;
 						if (proptag.Name.ToLower().Equals("mentions"))
 						{
-
 							widgetData = dataManager.GetNumberOfMentionsForItem
 								(widget.Items.ElementAt(i).ItemId, widget.WidgetId, "dd-MM");
 						}
@@ -340,11 +359,16 @@ namespace BAR.BL.Managers
 							widgetData = dataManager.GetPropvaluesForWidget
 								(widget.Items.ElementAt(i).ItemId, widget.WidgetId, proptag.Name);
 						}
-						widget.WidgetDatas.Add(widgetData);
+						widgetData.Widget = widget;
+						AddWidgetData(widgetData);
 					}
 				}
 			}
-			ChangeWidgets(widgets);
+			//Remove overflowing items (temporary solution)
+			new ItemManager().RemoveOverflowingItems();
 		}
 	}
 }
+		
+	
+

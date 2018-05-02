@@ -33,16 +33,17 @@ namespace BAR.BL.Managers
 
 		Item AddItem(ItemType itemType, string name, string description = "", string function = "", Category category = null,
 			string district = null, string level = null, string site = null, Gender gender = Gender.OTHER, string position = null, DateTime? dateOfBirth = null);
-
-		bool ImportJson(string json, int subPlatformID);
-
-
+		
 		Item ChangeItemName(int itemId, string name);
 		Item ChangeItemActivity(int itemId);
-		Person ChangePerson(int itemId, DateTime birthday, Gender gender, string position, string district);
-		IEnumerable<Item> ChangeItems(IEnumerable<Item> items);
+    Person ChangePerson(int itemId, DateTime birthday, Gender gender, string position, string district);
 		Item ChangePicture(int itemId, HttpPostedFileBase poImgFile);
-
+    
+		IEnumerable<Item> ChangeItems(IEnumerable<Item> items);
+		void RemoveItem(int itemId);
+		void RemoveOverflowingItems();
+	
+    bool ImportJson(string json, int subPlatformID);
 		void FillItems();
 		void DetermineTrending(int itemId);
 		double GetTrendingPer(int itemId);

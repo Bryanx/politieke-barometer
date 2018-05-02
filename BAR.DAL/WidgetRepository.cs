@@ -258,5 +258,23 @@ namespace BAR.DAL
 					   .Include(widget => widget.WidgetDatas.Select(widgetData => widgetData.GraphValues))
 					   .AsEnumerable();
 		}
+
+		/// <summary>
+		/// Creates a new widgetData in the database
+		/// </summary>
+		public int CreateWidgetData(WidgetData widgetData)
+		{
+			ctx.WidgetDatas.Add(widgetData);
+			return ctx.SaveChanges();
+		}
+
+		/// <summary>
+		/// Updates a given widgetData
+		/// </summary>
+		public int UpdateWidgetData(WidgetData widgetData)
+		{
+			ctx.Entry(widgetData).State = EntityState.Modified;
+			return ctx.SaveChanges();
+		}
 	}
 }

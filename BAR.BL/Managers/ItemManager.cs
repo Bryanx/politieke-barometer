@@ -345,7 +345,7 @@ namespace BAR.BL.Managers
 			{
 				Name = "Mentions"
 			});
-			
+
 			ItemWidget widget1 = (ItemWidget)widgetManager.AddWidget(WidgetType.GraphType, name + " popularity", 1, 1, proptags: proptags, graphType: GraphType.LineChart, rowspan: 12, colspan: 6);
 			itemWidgets.Add(widget1);
 			widgetIds.Add(widget1.WidgetId);
@@ -734,8 +734,17 @@ namespace BAR.BL.Managers
 			itemRepo.UpdateItems(items);
 			return items;
 		}
-		
-		
+
+		/// <summary>
+		/// Removes all given items from the database
+		/// </summary>
+		public void RemoveOverflowingItems()
+		{
+			InitRepo();
+			IEnumerable<Item> itemsToRemove = GetAllItems().Where(item => item.SubPlatform == null).AsEnumerable();
+			itemRepo.DeleteItems(itemsToRemove);
+		}
+	
 		/// <summary>
 		/// Changes profile picture of given user.
 		/// </summary>
@@ -758,6 +767,7 @@ namespace BAR.BL.Managers
 			//Update database
 			itemRepo.UpdateItem(itemToUpdate);
 			return itemToUpdate;
+
 		}
 	}
 }
