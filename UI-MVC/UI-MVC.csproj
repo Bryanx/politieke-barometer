@@ -573,6 +573,9 @@
     <Content Include="Views\Shared\Partials\_SubPlatformOverview.cshtml" />
     <Content Include="Views\Shared\_LayoutSubplatformOverview.cshtml" />
     <Content Include="Views\Shared\Partials\_SourceTable.cshtml" />
+    <Content Include="Views\Theme\Index.cshtml" />
+    <Content Include="Views\Theme\Details.cshtml" />
+    <Content Include="Views\Shared\Partials\_ThemeTable.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BAR.BL.Model\Domain.csproj">
@@ -607,7 +610,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\SubPlatform\" />
-    <Folder Include="Views\Theme\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

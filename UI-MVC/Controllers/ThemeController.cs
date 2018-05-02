@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
+using BAR.BL.Domain.Items;
 using BAR.BL.Domain.Users;
 using BAR.BL.Managers;
 using BAR.UI.MVC.App_GlobalResources;
+using BAR.UI.MVC.Attributes;
 using BAR.UI.MVC.Models;
 using Microsoft.AspNet.Identity;
 using System;
@@ -25,7 +27,7 @@ namespace BAR.UI.MVC.Controllers
 		private IWidgetManager widgetManager;
 
 		/// <summary>
-		/// Item page for logged-in and non-logged-in users.
+		/// Theme overview page for logged-in and non-logged-in users.
 		/// </summary>
 		[AllowAnonymous]
 		public ActionResult Index()
@@ -39,7 +41,7 @@ namespace BAR.UI.MVC.Controllers
 
 			//Return platformspecific data
 			IList<ItemDTO> themes = null;
-			themes = Mapper.Map(itemManager.GetAllThemes(subPlatformID), new List<ItemDTO>());
+			themes = Mapper.Map(itemManager.GetAllThemes().Where(theme => theme.SubPlatform.SubPlatformId == subPlatformID), new List<ItemDTO>());
 
 			IEnumerable<Subscription> subs = subManager.GetSubscriptionsWithItemsForUser(User.Identity.GetUserId());
 			themes.Where(p => subs.Any(s => s.SubscribedItem.ItemId == p.ItemId)).ForEach(dto => dto.Subscribed = true);
@@ -52,7 +54,33 @@ namespace BAR.UI.MVC.Controllers
 					User = User.Identity.IsAuthenticated ? userManager.GetUser(User.Identity.GetUserId()) : null,
 					Items = themes
 				});
+		}
 
+		/// <summary>
+		/// Detailed item page for logged-in and non-logged-in users.
+		/// </summary>
+		[SubPlatformDataCheck]
+		public ActionResult Details(int id)
+		{
+			itemManager = new ItemManager();
+			userManager = new UserManager();
+			subManager = new SubscriptionManager();
+			widgetManager = new WidgetManager();
+
+			IEnumerable<Item> subs = subManager.GetSubscribedItemsForUser(User.Identity.GetUserId());
+			Item item = itemManager.GetItem(id);
+			Item subbedItem = subs.FirstOrDefault(i => i.ItemId == item.ItemId);
+
+			ThemeViewModel personViewModel =
+				new ThemeViewModel()
+				{
+					PageTitle = item.Name,
+					User = User.Identity.IsAuthenticated ? userManager.GetUser(User.Identity.GetUserId()) : null,
+					Theme = Mapper.Map(item, new ItemDTO()),
+					Subscribed = subbedItem != null,
+				};
+			//Assembling the view
+			return View("Details", personViewModel);
 		}
 	}
 }
