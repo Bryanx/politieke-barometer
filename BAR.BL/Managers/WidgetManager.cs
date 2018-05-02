@@ -359,8 +359,10 @@ namespace BAR.BL.Managers
 							widgetData = dataManager.GetPropvaluesForWidget
 								(widget.Items.ElementAt(i).ItemId, widget.WidgetId, proptag.Name);
 						}
-						widgetData.Widget = widget;
+						//widgetData.Widget = widget;
 						AddWidgetData(widgetData);
+						widget.WidgetDatas.Add(widgetData);
+						ChangeWidget(widget);
 					}
 				}
 			}
@@ -385,6 +387,15 @@ namespace BAR.BL.Managers
 		{
 			InitRepo();
 			return widgetRepo.ReadWidgetDatasForitemid(itemId).AsEnumerable();
+		}
+
+		/// <summary>
+		/// Gives back all the widgetData of the system
+		/// </summary>
+		public IEnumerable<WidgetData> GetAllWidgetDatas()
+		{
+			InitRepo();
+			return widgetRepo.ReadAllWidgetDatas().AsEnumerable();
 		}
 	}
 }

@@ -302,5 +302,16 @@ namespace BAR.DAL
 								  .Where(data => data.Widget.Items.Any(item => item.ItemId == itemId))
 								  .AsEnumerable();
 		}
+
+		/// <summary>
+		/// Gives back all the widgetData in the system
+		/// </summary>
+		public IEnumerable<WidgetData> ReadAllWidgetDatas()
+		{
+			return ctx.WidgetDatas.Include(data => data.Widget)
+								  .Include(data => data.Widget.Items)
+								  .Include(data => data.GraphValues)
+								  .AsEnumerable();
+		}
 	}
 }

@@ -43,6 +43,7 @@ namespace BAR.BL.Managers
 		void RemoveDashboard(int dashboardId);
 
 		//WidgetDatas
+		IEnumerable<WidgetData> GetAllWidgetDatas();
 		IEnumerable<WidgetData> GetWidgetDatasForItemId(int itemId);
 
 		WidgetData AddWidgetData(WidgetData widgetData);
