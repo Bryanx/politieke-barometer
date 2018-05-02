@@ -743,6 +743,7 @@ namespace BAR.BL.Managers
 			InitRepo();
 			IEnumerable<Item> itemsToRemove = GetAllItems().Where(item => item.SubPlatform == null).AsEnumerable();
 			itemRepo.DeleteItems(itemsToRemove);
+		}
 	
 		/// <summary>
 		/// Changes profile picture of given user.
