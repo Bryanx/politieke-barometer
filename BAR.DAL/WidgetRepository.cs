@@ -276,5 +276,19 @@ namespace BAR.DAL
 			ctx.Entry(widgetData).State = EntityState.Modified;
 			return ctx.SaveChanges();
 		}
+
+		/// <summary>
+		/// Gives back all widgets for a specific item id
+		/// The widget contains all the data needed to construct a graph
+		/// </summary>
+		public IEnumerable<Widget> ReadAllWidgetsWithAllDataForItem(int itemId)
+		{
+			return ctx.Widgets.Include(widget => widget.Items)
+					   .Include(widget => widget.PropertyTags)
+					   .Include(widget => widget.WidgetDatas)
+					   .Include(widget => widget.WidgetDatas.Select(widgetData => widgetData.GraphValues))
+					   .Where(widget => widget.Items.Any(item => item.ItemId == itemId))
+					   .AsEnumerable();
+		}
 	}
 }
