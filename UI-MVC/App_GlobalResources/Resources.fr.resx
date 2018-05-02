@@ -513,6 +513,10 @@
   <data name="ThanksEmailConfirm" xml:space="preserve">
     <value>Merci pour confirmer votre e-mail.</value>
   </data>
+  <data name="Theme" xml:space="preserve">
+    <value>5/5000
+Thème</value>
+  </data>
   <data name="Topics" xml:space="preserve">
     <value>Sujets</value>
   </data>

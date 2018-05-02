@@ -513,6 +513,9 @@
   <data name="ThanksEmailConfirm" xml:space="preserve">
     <value>Bedankt voor het bevestigen van uw e-mailadres.</value>
   </data>
+  <data name="Theme" xml:space="preserve">
+    <value>Thema</value>
+  </data>
   <data name="Topics" xml:space="preserve">
     <value>Thema's</value>
   </data>

@@ -26,24 +26,24 @@
 
                 </div>
                 <div class="col-md-9 col-sm-9 col-xs-12">
-                    @Resources.Politician
+                    @Resources.Theme
                     <h1>
-                        @Model.Person.Name
+                        @Model.Theme.Name
                         @if (User.Identity.IsAuthenticated)
                         {
                             if (Model.Subscribed != true)
                             {
-                            <a class="w-100px subscribeItem btn btn-success pull-right" data-item-id="@Model.Person.ItemId" title="Deze persoon volgen">@Resources.Subscribe</a>}
+                            <a class="w-100px subscribeItem btn btn-success pull-right" data-item-id="@Model.Theme.ItemId" title="Deze persoon volgen">@Resources.Subscribe</a>}
                             else
                             {
-                            <a class="w-100px subscribeItem btn btn-danger pull-right" data-item-id="@Model.Person.ItemId" title="Uitschrijven">@Resources.Unsubscribe</a>}
+                            <a class="w-100px subscribeItem btn btn-danger pull-right" data-item-id="@Model.Theme.ItemId" title="Uitschrijven">@Resources.Unsubscribe</a>}
                         }
                     </h1>
                     <hr />
                 </div>
                 <div class="col-md-3 col-sm-3 col-xs-12">
                     <h4>
-                        <strong>@Resources.Politician details</strong>
+                        <strong>@Resources.Theme details</strong>
                     </h4>
                     <ul class="list-unstyled user_data">
                         <li>
@@ -100,7 +100,7 @@
         });
 
         (() => {
-            loadWidgets("/api/GetItemWidgets/", @Model.Person.ItemId);
+            loadWidgets("/api/GetItemWidgets/", @Model.Theme.ItemId);
         })(jQuery);
 
     </script>
