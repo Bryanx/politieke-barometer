@@ -361,8 +361,6 @@ namespace BAR.BL.Managers
 						}
 						widgetData.Widget = widget;
 						AddWidgetData(widgetData);
-						widget.WidgetDatas.Add(widgetData);
-						ChangeWidget(widget);
 					}
 				}
 			}
@@ -378,6 +376,15 @@ namespace BAR.BL.Managers
 		{
 			InitRepo();
 			return widgetRepo.ReadAllWidgetsWithAllDataForItem(itemId).AsEnumerable();
+		}
+
+		/// <summary>
+		/// Gives back all the widgetdatas for a specifc itemId.
+		/// </summary>
+		public IEnumerable<WidgetData> GetWidgetDatasForItemId(int itemId)
+		{
+			InitRepo();
+			return widgetRepo.ReadWidgetDatasForitemid(itemId).AsEnumerable();
 		}
 	}
 }

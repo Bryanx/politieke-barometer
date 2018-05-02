@@ -294,7 +294,7 @@ namespace BAR.DAL
 		/// <summary>
 		/// Gives back all the widgetdatas for a specific itemId
 		/// </summary>
-		public IEnumerable<WidgetData> GetWidgetDataForitemid(int itemId)
+		public IEnumerable<WidgetData> ReadWidgetDatasForitemid(int itemId)
 		{
 			return ctx.WidgetDatas.Include(data => data.Widget)
 								  .Include(data => data.GraphValues)
