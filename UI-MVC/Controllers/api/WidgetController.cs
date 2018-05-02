@@ -25,7 +25,6 @@ namespace BAR.UI.MVC.Controllers.api
 	public class WidgetController : ApiController
 	{
 		private IWidgetManager widgetManager;
-
 		private IItemManager itemManager;
 		private IDataManager dataManager;
 
@@ -69,14 +68,14 @@ namespace BAR.UI.MVC.Controllers.api
 		/// </summary>
 		[HttpGet]
 		[Route("api/GetGraphs/{itemId}/{widgetId}")]
-		public IHttpActionResult GetGraphs(int itemId, int widgetId)
+		public IHttpActionResult GetGraphs(int itemId)
 		{
-			WidgetManager widgetManager = new WidgetManager();
-			Widget widget = widgetManager.GetWidgetWithAllData(widgetId);
+			widgetManager = new WidgetManager();
+			IEnumerable<Widget> requestedWidgets = widgetManager.GetAllWidgetsWithAllDataForItem(itemId).AsEnumerable();
 			
-			if (widget == null) return StatusCode(HttpStatusCode.NoContent);
+			if (requestedWidgets == null) return StatusCode(HttpStatusCode.NoContent);
 			
-			return Ok(widget);
+			return Ok(requestedWidgets);
 		}
 		
 		/// <summary>
