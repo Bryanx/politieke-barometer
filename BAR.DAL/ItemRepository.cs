@@ -37,6 +37,32 @@ namespace BAR.DAL
 		{
 			return ctx.Items.Find(itemId);
 		}
+		
+		/// <summary>
+		/// Returns the item that matches the itemId.
+		/// </summary>       
+		public Person ReadPersonWithDetails(int itemId)
+		{
+			return ctx.Items.OfType<Person>()
+				.Include(i => i.Area)
+				.Include(i => i.Organisation)
+				.Include(i => i.SocialMediaNames)
+				.Include(i => i.SocialMediaNames.Select(s => s.Source))
+				.Where(i => i.ItemId == itemId && i.Deleted == false)
+				.SingleOrDefault();
+		}
+		
+		/// <summary>
+		/// Returns the item that matches the itemId.
+		/// </summary>       
+		public Organisation ReadOrganisationWithDetails(int itemId)
+		{
+			return ctx.Items.OfType<Organisation>()
+				.Include(i => i.SocialMediaUrls)
+				.Include(i => i.SocialMediaUrls.Select(s => s.Source))
+				.Where(i => i.ItemId == itemId && i.Deleted == false)
+				.SingleOrDefault();
+		}
 
 		/// <summary>
 		/// Returns the item that matches the itemId.
@@ -195,9 +221,10 @@ namespace BAR.DAL
 		/// <summary>
 		/// Reads a person of a given name.
 		/// </summary>
-		public Item ReadPerson(string personName)
+		public Person ReadPerson(string personName)
 		{
-			return ctx.Items.Where(i => i.Name.Equals(personName)).SingleOrDefault();
+			
+			return ctx.Items.OfType<Person>().Where(i => i.Name.Equals(personName)).SingleOrDefault();
 		}
 
 		/// <summary>

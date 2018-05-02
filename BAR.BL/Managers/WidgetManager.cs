@@ -364,9 +364,11 @@ namespace BAR.BL.Managers
 					}
 				}
 			}
-
 			//Remove overflowing items (temporary solution)
-			new ItemManager().RemoveOverflowingItems();
+			new ItemManager().RemoveOverflowingItems();				
+					}
+				}
+			}
 		}
 	}
 }

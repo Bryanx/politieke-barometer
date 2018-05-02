@@ -421,6 +421,15 @@ namespace BAR.UI.MVC.App_GlobalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Details.
+        /// </summary>
+        public static string Details {
+            get {
+                return ResourceManager.GetString("Details", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Email.
         /// </summary>
         public static string Email {
@@ -615,6 +624,15 @@ namespace BAR.UI.MVC.App_GlobalResources {
         public static string ItemManagement {
             get {
                 return ResourceManager.GetString("ItemManagement", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Languages.
+        /// </summary>
+        public static string Languages {
+            get {
+                return ResourceManager.GetString("Languages", resourceCulture);
             }
         }
         
@@ -858,6 +876,15 @@ namespace BAR.UI.MVC.App_GlobalResources {
         public static string Or {
             get {
                 return ResourceManager.GetString("Or", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Organisation.
+        /// </summary>
+        public static string Organisation {
+            get {
+                return ResourceManager.GetString("Organisation", resourceCulture);
             }
         }
         
@@ -1182,6 +1209,15 @@ namespace BAR.UI.MVC.App_GlobalResources {
         public static string Site {
             get {
                 return ResourceManager.GetString("Site", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Social media.
+        /// </summary>
+        public static string SocialMedia {
+            get {
+                return ResourceManager.GetString("SocialMedia", resourceCulture);
             }
         }
         

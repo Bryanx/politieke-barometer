@@ -21,6 +21,7 @@ body {
   font-size: 15px;
   font-weight: 400;
   line-height: 1.471;
+  margin-top: 50px;
 }
 
 ::selection {
@@ -98,4 +99,10 @@ hr {
   width: 100px;
   height: 72px;
   vertical-align: middle;
+}
+
+
+/* Main padding on every page */
+.main_padding {
+  padding: 40px 30px ;
 }

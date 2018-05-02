@@ -37,7 +37,7 @@ namespace BAR.UI.MVC
           .ForMember(w => w.RowNumber, opt => opt.MapFrom(src => src.RowNumber))
           .ForMember(w => w.WidgetType, opt => opt.MapFrom(src => src.WidgetType))
           .ForMember(w => w.DashboardId, opt => opt.MapFrom(src => src.Dashboard.DashboardId));
-        cfg.CreateMap<BAR.BL.Domain.Widgets.Widget, UserWidgetDTO>()
+        cfg.CreateMap<Widget, UserWidgetDTO>()
           .ForMember(w => w.WidgetId, opt => opt.MapFrom(src => src.WidgetId))
           .ForMember(w => w.Title, opt => opt.MapFrom(src => src.Title))
           .ForMember(w => w.ColumnSpan, opt => opt.MapFrom(src => src.ColumnSpan))
@@ -46,6 +46,20 @@ namespace BAR.UI.MVC
           .ForMember(w => w.RowNumber, opt => opt.MapFrom(src => src.RowNumber))
           .ForMember(w => w.WidgetType, opt => opt.MapFrom(src => src.WidgetType))
           .ForMember(w => w.ItemIds, opt => opt.MapFrom(src => src.Items.Select(i => i.ItemId)));
+        cfg.CreateMap<Person, ItemViewModels.PersonViewModel>()
+          .ForMember(p => p.District, opt => opt.MapFrom(src => src.District))
+          .ForMember(p => p.Area, opt => opt.MapFrom(src => src.Area))
+          .ForMember(p => p.DateOfBirth, opt => opt.MapFrom(src => src.DateOfBirth))
+          .ForMember(p => p.Gender, opt => opt.MapFrom(src => src.Gender))
+          .ForMember(p => p.Site, opt => opt.MapFrom(src => src.Site))
+          .ForMember(p => p.Level, opt => opt.MapFrom(src => src.Level))
+          .ForMember(p => p.OrganisationId, opt => opt.MapFrom(src => src.Organisation.ItemId))
+          .ForMember(p => p.OrganisationName, opt => opt.MapFrom(src => src.Organisation.Name))
+          .ForMember(p => p.Position, opt => opt.MapFrom(src => src.Position))
+          .ForMember(p => p.SocialMediaNames, opt => opt.MapFrom(src => src.SocialMediaNames));
+        cfg.CreateMap<Organisation, ItemViewModels.OrganisationViewModel>()
+          .ForMember(p => p.Site, opt => opt.MapFrom(src => src.Site))
+          .ForMember(p => p.SocialMediaNames, opt => opt.MapFrom(src => src.SocialMediaUrls));
       });
     }
   }

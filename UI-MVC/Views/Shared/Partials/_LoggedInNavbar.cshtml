@@ -4,27 +4,57 @@
 @using Microsoft.AspNet.Identity.EntityFramework
 @model BAR.UI.MVC.Models.BaseViewModel
 <ul class="nav navbar-nav navbar-right">
-    <li class="user-profile">
-        <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown"
+    <!-- Items -->
+    <li class="dropdown navbar-left">
+        <a href="" class="dropdown-toggle item-menu" data-toggle="dropdown"
            aria-expanded="false">
-            @Html.ImageHelper(@Url.ProfilePictureUrl(), htmlAttributes: new {@class = "img-circle person-image-top", onerror = "this.onload = null; this.src='/Content/build/images/user.png';"})
-            <span class="userNameNav">@Model.User.FirstName</span>
+            <i class="fa fa-users"></i>
+        </a>
+        <ul class="dropdown-menu pull-right">
+            <li>
+                <a href="@Url.PersonUrl()"><i class="fa fa-users"></i>@Resources.Politicians</a>
+            </li>
+            <li>
+                <a href="@Url.OrganisationUrl()"><i class="fa fa-briefcase"></i>@Resources.Parties</a>
+            </li>
+            <li>
+                <a href='#'><i class="fa fa-tag"></i>@Resources.Topics</a>
+            </li>
+        </ul>
+    </li>
+    <!-- /Items -->
+    
+    <!-- Dashboard / weekly review -->
+    <li class="dropdown navbar-left">
+        <a href="" class="dropdown-toggle dashboard-menu" data-toggle="dropdown"
+           aria-expanded="false">
+            <i class="fa fa-bar-chart"></i>
         </a>
         <ul class="dropdown-menu pull-right">
             <li>
                 <a href="@Url.DashboardUrl()"><i class="fa fa-bar-chart"></i>@Resources.Dashboard</a>
             </li>
             <li>
+                <a href="javascript:;"><i class="fa fa-calendar"></i>@Resources.WeeklyReview</a>
+            </li>
+        </ul>
+    </li>
+    <!-- /Dashboard / weekly review -->
+
+    <!-- profile -->
+    <li class="dropdown user-profile">
+        <a href="" class="dropdown-toggle" data-toggle="dropdown"
+           aria-expanded="false">
+            @Html.ImageHelper(@Url.ProfilePictureUrl(), htmlAttributes: new {@class = "img-circle person-image-top", onerror = "this.onload = null; this.src='/Content/build/images/user.png';"})
+            <span class="userNameNav">@Model.User.FirstName</span>
+        </a>
+        <ul class="dropdown-menu pull-right">
+            <li>
                 <a href="@Url.SettingsUrl()"><i class="fa fa-gear"></i>@Resources.Settings</a>
             </li>
             <li>
-                <a href="@Url.SettingsUrl()"><i class="fa fa-bell"></i>@Resources.Alerts @Resources.Settings.ToLower()</a>
-            </li>
-            <li>
-                <a href="javascript:;"><i class="fa fa-calendar"></i>@Resources.WeeklyReview</a>
-            </li>
-            <li>
-                @using (Html.BeginForm("LogOff", "User", FormMethod.Post, new {id = "logoutForm2"})) {
+                @using (Html.BeginForm("LogOff", "User", FormMethod.Post, new {id = "logoutForm2"}))
+                {
                     @Html.AntiForgeryToken()
                     <a href="javascript:document.getElementById('logoutForm2').submit()"><i class="fa fa-sign-out"></i>@Resources.Logout</a>
                 }
@@ -33,9 +63,11 @@
             @Html.ShowSuperAdminLinks(User)
         </ul>
     </li>
+    <!-- /profile -->
+
     <!-- alerts -->
     <li role="presentation" class="dropdown">
-        <a id="alertDropdown" href="javascript:;" class="dropdown-toggle info-number" data-toggle="dropdown"
+        <a id="alertDropdown" href="" class="dropdown-toggle info-number" data-toggle="dropdown"
            aria-menu1expanded="false">
             <i class="fa fa-bell"></i>
             <span id="alertCount" class="badge bg-green"></span>
@@ -53,4 +85,6 @@
             </ul>
         </div>
     </li>
+    <!-- /alerts -->
 </ul>
+

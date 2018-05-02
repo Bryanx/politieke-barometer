@@ -564,4 +564,16 @@
   <data name="SourceManagement" xml:space="preserve">
     <value>Source management</value>
   </data>
+  <data name="Details" xml:space="preserve">
+    <value>Details</value>
+  </data>
+  <data name="Organisation" xml:space="preserve">
+    <value>Organisation</value>
+  </data>
+  <data name="SocialMedia" xml:space="preserve">
+    <value>Social media</value>
+  </data>
+  <data name="Languages" xml:space="preserve">
+    <value>Languages</value>
+  </data>
 </root>
