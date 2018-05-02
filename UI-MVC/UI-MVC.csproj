@@ -257,7 +257,6 @@
     <Compile Include="Models\ItemDTO.cs" />
     <Compile Include="Models\ItemViewModels.cs" />
     <Compile Include="Models\SubPlatformDTO.cs" />
-    <Compile Include="Models\SubPlatformViewModel.cs" />
     <Compile Include="Models\AndroidApiViewModels.cs" />
     <Compile Include="Models\SuperAdminViewModels.cs" />
     <Compile Include="Models\UserViewModels.cs" />
