@@ -72,7 +72,7 @@ namespace BAR.UI.MVC.Controllers.api
 		{
 			widgetManager = new WidgetManager();
 			IEnumerable<Widget> requestedWidgets = widgetManager.GetAllWidgetsWithAllDataForItem(itemId).AsEnumerable();
-			int count = requestedWidgets.Count();
+			int count = requestedWidgets.First().WidgetDatas.Count();
 			
 			if (requestedWidgets == null) return StatusCode(HttpStatusCode.NoContent);
 			
