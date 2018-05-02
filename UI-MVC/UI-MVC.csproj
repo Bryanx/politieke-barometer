@@ -256,7 +256,6 @@
     <Compile Include="Models\ItemDTO.cs" />
     <Compile Include="Models\ItemViewModels.cs" />
     <Compile Include="Models\SubPlatformDTO.cs" />
-    <Compile Include="Models\SubPlatformViewModel.cs" />
     <Compile Include="Models\SuperAdminViewModels.cs" />
     <Compile Include="Models\UserViewModels.cs" />
     <Compile Include="Models\UserWidgetDTO.cs" />
@@ -559,9 +558,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Views\Shared\Partials\_UserTable.cshtml" />
-    <Content Include="Views\Shared\Partials\_SubPlatformOverview.cshtml" />
     <Content Include="Views\Shared\_LayoutSubplatformOverview.cshtml" />
     <Content Include="Views\Shared\Partials\_SourceTable.cshtml" />
+    <Content Include="Views\Shared\Partials\_SubPlatformTable.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BAR.BL.Model\Domain.csproj">

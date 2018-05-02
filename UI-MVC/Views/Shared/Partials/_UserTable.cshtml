@@ -45,16 +45,19 @@
     <tbody>
         @for (int i = 0; i < Model.Users.Count(); i++)
         {
-            if (@ViewBag.CurrentRoles[i] == "User") {
+            
                 <tr class="subscription @(@Model.Users.ElementAt(i).Deleted ? "greyed-out" : "")">
                     <td>
                         <div class="img-circle person-image"></div>
                     </td>
                     <td>
                         @Model.Users.ElementAt(i).FirstName
+                        <span style="display:none">@Model.Users.ElementAt(i).FirstName</span>
                     </td>
                     <td>
                         @Model.Users.ElementAt(i).LastName
+                        <span style="display:none">@Model.Users.ElementAt(i).LastName</span>
+
                     </td>
                     @if (Model.Users.ElementAt(i).Gender == BAR.BL.Domain.Users.Gender.MAN) {
                         <td>
@@ -95,7 +98,6 @@
                         @Html.DropDownListFor(model => model.User.Roles, Model.UserRoles, @Resources.ChangeRole, new {@class = "form-control input-sm", @onchange = $"changeRole('{Model.Users.ElementAt(i).Id}', '{i}')", id = $"dd{i}"})
                     </td>
                 </tr>
-            }
         }
     </tbody>
 </table>

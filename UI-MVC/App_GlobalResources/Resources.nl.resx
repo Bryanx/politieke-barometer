@@ -144,6 +144,9 @@
   <data name="AddSource" xml:space="preserve">
     <value>Bron toevoegen</value>
   </data>
+  <data name="AddSubPlatform" xml:space="preserve">
+    <value>Voeg SubPlatform toe</value>
+  </data>
   <data name="Admin" xml:space="preserve">
     <value>Admin</value>
   </data>
@@ -302,6 +305,9 @@
   </data>
   <data name="ItemManagement" xml:space="preserve">
     <value>Items beheren</value>
+  </data>
+  <data name="JustNow" xml:space="preserve">
+    <value>Zojuist</value>
   </data>
   <data name="Languages" xml:space="preserve">
     <value>Talen</value>
