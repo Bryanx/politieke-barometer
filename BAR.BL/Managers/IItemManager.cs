@@ -32,6 +32,7 @@ namespace BAR.BL.Managers
 			string district = null, string level = null, string site = null, Gender gender = Gender.OTHER, string position = null, DateTime? dateOfBirth = null);
 
 		bool ImportJson(string json, int subPlatformID);
+		bool ImportThemes(string json, int subPlatformID);
 
 
 		Item ChangeItemName(int itemId, string name);

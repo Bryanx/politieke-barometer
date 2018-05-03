@@ -300,7 +300,7 @@ namespace BAR.BL.Managers
 			item.Baseline = 0.0;
 			item.Deleted = false;
 			item.Informations = new List<Information>();
-            item.ItemWidgets = new List<Widget>();
+						item.ItemWidgets = new List<Widget>();
 
 			itemRepo.CreateItem(item);
 
@@ -477,6 +477,63 @@ namespace BAR.BL.Managers
 		}
 
 		/// <summary>
+		/// Import all the themes from the json file
+		/// </summary>
+		/// <param name="json"></param>
+		/// <param name="subPlatformID"></param>
+		/// <returns></returns>
+		public bool ImportThemes(string json, int subPlatformID)
+		{
+			AddThemesFromJson(json, subPlatformID);
+			return true;
+		}
+
+		/// <summary>
+		/// Check if theme exists, if not add it to the Database
+		/// </summary>
+		/// <param name="json"></param>
+		/// <param name="subPlatformID"></param>
+		private void AddThemesFromJson(string json, int subPlatformID)
+		{
+			uowManager = new UnitOfWorkManager();
+
+			InitRepo();
+
+			ISubplatformManager subplatformManager = new SubplatformManager(uowManager);
+			SubPlatform subPlatform = subplatformManager.GetSubPlatform(subPlatformID);
+
+			dynamic deserializedJson = JsonConvert.DeserializeObject(json);
+			List<Item> themes = new List<Item>();
+
+			for(int i = 0; i < deserializedJson[i].Count; i++)
+			{
+				string name = deserializedJson[i].name;
+				Item theme = itemRepo.ReadOrganisation(name);
+
+				if (theme == null)
+				{
+					theme = new Theme()
+					{
+						ItemType = ItemType.Organisation,
+						Name = name,
+						CreationDate = DateTime.Now,
+						LastUpdatedInfo = DateTime.Now,
+						LastUpdated = DateTime.Now,
+						NumberOfFollowers = 0,
+						TrendingPercentage = 0.0,
+						Baseline = 0.0,
+						Informations = new List<Information>(),
+						SubPlatform = subPlatform
+					};
+					itemRepo.CreateItem(theme);
+					uowManager.Save();
+				}
+			}
+
+			uowManager = null;
+		}
+
+		/// <summary>
 		/// Checks if organisations used in json already exist, if not they will be made.
 		/// </summary>
 		private void CheckOrganisations(string json, int subPlatformID)
@@ -555,12 +612,12 @@ namespace BAR.BL.Managers
 					string facebook = deserializedJson[i].facebook;
 					string stringDate = Convert.ToString(deserializedJson[i].dateOfBirth);
 					string town = deserializedJson[i].town;
-                    string level = deserializedJson[i].level;
-                    string site = deserializedJson[i].site;
-                    string district = deserializedJson[i].district;
-                    string position = deserializedJson[i].position;
+										string level = deserializedJson[i].level;
+										string site = deserializedJson[i].site;
+										string district = deserializedJson[i].district;
+										string position = deserializedJson[i].position;
 
-                    Gender personGender = (gender == "M") ? Gender.MAN : Gender.WOMAN;
+										Gender personGender = (gender == "M") ? Gender.MAN : Gender.WOMAN;
 					DateTime? dateOfBirth = DateTime.ParseExact(stringDate, "yyyy-MM-dd HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture);
 
 					Person person = (Person) AddItem(itemType: ItemType.Person, name: fullname, gender: personGender, district: district,

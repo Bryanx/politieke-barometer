@@ -16,6 +16,13 @@
     <button type="submit" id="btnSubmit" style="visibility:hidden;" class="btn btn-dark">@Resources.Save</button>
     }
 
+    @using (Html.BeginForm("UploadThemes", "Admin", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
+    {
+    <label for="fileUpload" class="btn btn-dark">Import themes</label>
+    <input type="file" style="visibility:hidden;" class="btn btn-dark" name="jsonFile" id="fileUpload" accept=".json" />
+    <button type="submit" id="btnSubmit" style="visibility:hidden;" class="btn btn-dark">@Resources.Save</button>
+    }
+
 <hr/>
 
 @Html.Partial("Partials/_ItemTable", Model)
