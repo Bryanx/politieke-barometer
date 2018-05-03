@@ -13,9 +13,10 @@ namespace BAR.UI.MVC.Attributes
 	{
 		public override void OnActionExecuting(ActionExecutingContext filterContext)
 		{
-			int subdomainID = GetSubDomain(HttpContext.Current.Request.Url);
+			//int subdomainID = GetSubDomain(HttpContext.Current.Request.Url);
+      int subdomainID = 1;
 
-			base.OnActionExecuting(filterContext);
+      base.OnActionExecuting(filterContext);
 
 			if (subdomainID == -1)
 			{

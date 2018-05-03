@@ -1,5 +1,6 @@
 ﻿@using System
-@using System.Activities.Statements
+
+
 @using System.Web.Optimization
 @using BAR.UI.MVC.Controllers
 @using BAR.UI.MVC.Helpers
@@ -47,21 +48,20 @@
         <div class="main_container">
 
             <!-- top navigation -->
-            <div class="top_nav">
-                <div class="nav_menu">
-                    <div class="navbar" style="border: 0;">
-                        <a href='@Url.RootUrl()'>
-                            <i class="small-logo colored"></i>
-                        </a>
-                    </div>
-
-                    <!-- login -->
-                    @Html.ShowNavLogin(Model)
-                    <!-- search -->
-                    @Html.Partial("Partials/_SearchBar")
+            <nav>
+                <div class="navbar-logo-container" style="border: 0;">
+                    <a href='@Url.RootUrl()'>
+                        <i class="small-logo colored nav-home"></i>
+                    </a>
                 </div>
-            </div>
+                <!-- search -->
+                @Html.Partial("Partials/_SearchBar")
+
+                <!-- login -->
+                @Html.ShowNavLogin(Model)
+            </nav>
             <!-- /top navigation -->
+
             <!-- breadcrumbs -->
             @Html.MvcSiteMap().SiteMapPath("BootstrapSiteMapPathHelperModel")
             <!-- page content -->
@@ -70,43 +70,15 @@
                 @RenderSection("Homepage")
             }
 
-            <div class="right_col" role="main">
+            <div class="main_padding" role="main">
                 @RenderBody()
             </div>
             <!-- /page content -->
-            <!-- navbar left -->
-            <div class="col-md-3 left_col">
-                <div class="left_col scroll-view">
-                    <div class="navbar" style="border: 0;">
-                        <a href='@Url.RootUrl()'>
-                            <i class="small-logo"></i>
-                        </a>
-                    </div>
-                    <div class="clearfix"></div>
 
-                    <!-- sidebar menu -->
-                    <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
-                        <div class="menu_section">
-                            <ul class="nav side-menu">
-                                @Html.LeftNavBarHelper(Model)
-                            </ul>
-                        </div>
-                    </div>
-                    <!-- /sidebar menu -->
-
-                </div>
-                <div class="hover-nav">
-                    <a id="menu_toggle">
-                        <div class="nav toggle">
-                            <i class="fa fa-arrow-left"></i>
-                        </div>
-                    </a>
-                </div>
-            </div>
-            <!-- /navbar left -->
             <!-- footer content -->
             @Html.Partial("Partials/_Footer")
             <!-- /footer content -->
+
         </div>
     </div>
 <div id="notificationMessage"></div>
@@ -125,9 +97,9 @@
     <script src="~/Scripts/dates/daterangepicker.min.js"></script>
     <script src="~/Scripts/jquery/jquery.timeago.js"></script>
 
-    
+
     <script src="~/Content/build/js/alerts.js"></script>
-    
+
     @if (IsSectionDefined("CustomJS"))
     {
         @RenderSection("CustomJS")
@@ -138,11 +110,10 @@
     <script src="~/Content/build/js/searchbar.js"></script>
     <script defer>
         (() => {
-            $(".culture", ".left_col").click(function () {
+            $(".culture").click(function () {
                 $(this).parents("form").submit(); // post form
             });
         })($)
     </script>
-
 </body>
 </html>

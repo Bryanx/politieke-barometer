@@ -12,7 +12,9 @@ namespace BAR.DAL
 		//Read
 		Item ReadItemWithInformations(int itemId);
 		Item ReadItem(int itemId);
-		Item ReadPerson(string personName);
+		Person ReadPerson(string personName);
+		Person ReadPersonWithDetails(int itemId);
+		Organisation ReadOrganisationWithDetails(int itemId);
 		Item ReadItemWithSubPlatform(int itemId);
     	Item ReadOrganisation(string organisationName);
 		IEnumerable<Item> ReadAllItems();

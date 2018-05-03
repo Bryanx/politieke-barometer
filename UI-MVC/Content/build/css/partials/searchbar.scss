@@ -1,13 +1,13 @@
 .searchbar {
   display: block !important;
   max-width: 700px;
-  margin: 15px 20px;
+  margin: 4px 20px;
   flex-basis: 0%;
   flex-grow: 1;
   flex-shrink: 1;
 }
 
-div.nav_menu .searchbar .search-field, form.navbar-form .input-group {
+nav .searchbar .search-field, form.navbar-form .input-group {
   border: 1px solid transparent;
 }
 
@@ -34,4 +34,15 @@ div.nav_menu .searchbar .search-field, form.navbar-form .input-group {
 
 .dropdown-search {
   right: auto !important;
+}
+
+.compareSearch {
+  width: 400px;
+  height: 34px;
+  vertical-align: top;
+  display: inline-block;
+}
+
+.navbar-search .input-group .input-group-btn {
+  width: 1% !important;
 }

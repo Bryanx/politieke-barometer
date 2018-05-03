@@ -1,5 +1,4 @@
-﻿﻿@using System.Web.Optimization
-@using System.Web.Optimization
+﻿@using System.Web.Optimization
 @model BAR.UI.MVC.Models.ItemViewModels.ItemViewModel
 
 @section CustomCSS{
@@ -9,14 +8,14 @@
     <link href="~/Scripts/datatables/datatables.net-buttons-bs/css/buttons.bootstrap.min.css" rel="stylesheet" />
 }
 
-<h1>
-    @Model.PageTitle
-</h1>
-    @using (Html.BeginForm("UploadJson", "Admin", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
+    @using (Html.BeginForm("UploadJson", "Admin", FormMethod.Post, new {role = "form", enctype = "multipart/form-data" }))
     {
-    <label for="fileUpload" class="btn btn-dark">@Resources.ImportContent</label>
-    <input type="file" style="visibility:hidden;" class="btn btn-dark" name="jsonFile" id="fileUpload" accept=".json"/>
+    <h1>
+         @Model.PageTitle 
+    <label for="fileUpload" class="btn btn-dark btn-xs" style="display: inline;">@Resources.ImportContent</label>
+    <input type="file" style="display:none;" class="btn btn-dark" name="jsonFile" id="fileUpload" accept=".json"/>
     <button type="submit" id="btnSubmit" style="visibility:hidden;" class="btn btn-dark">@Resources.Save</button>
+    </h1>
     }
 
 <hr />
@@ -63,26 +62,25 @@
                     500);
             });
 
-            var loader = $("<div />", { "class": "loadMessage" });
             $(".renameItem").on('input propertychange paste',
                 function() {
                     clearTimeout(wto);
                     var $this = $(this);
                     var id = $this.data('item-id');
-                    $this.after(loader);
+                    $this.addClass("loadMessage");
                     wto = setTimeout(function() {
                             $.ajax({
                                     type: 'POST',
                                     url: '/api/Admin/RenameItem/' + id + '/' + $this.val()
                                 }).fail(() => { /**/ })
                                 .done(function() {
-                                    $this.parent().find(loader).remove();
+                                    $this.removeClass("loadMessage");
                                 });
                         },
                         1000);
                 });
             $('#datatable-buttons').dataTable({
-                "sScrollY": "500px",
+                "sScrollY": "700px",
                 "paging": true
             });
 

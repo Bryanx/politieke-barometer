@@ -45,7 +45,7 @@
     <tbody>
         @for (int i = 0; i < Model.Users.Count(); i++)
         {
-            if (@ViewBag.CurrentRoles[i] == "Admin") {
+            if (@ViewBag.CurrentRoles[i] != "SuperAdmin") {
                 <tr class="subscription @(@Model.Users.ElementAt(i).Deleted ? "greyed-out" : "")">
                     <td>
                         <div class="img-circle person-image"></div>

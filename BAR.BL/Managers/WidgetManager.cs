@@ -6,6 +6,7 @@ using BAR.BL.Domain.Widgets;
 using BAR.DAL;
 using BAR.BL.Domain.Users;
 using BAR.BL.Domain.Items;
+using BAR.BL.Domain.Data;
 
 namespace BAR.BL.Managers
 {
@@ -31,7 +32,7 @@ namespace BAR.BL.Managers
 		/// Creates a widget based on the parameters
 		/// and links that widget to a dasboard.
 		/// </summary>
-		public Widget CreateWidget(WidgetType widgetType, string title, int rowNbr, int colNbr,string tag = null, DateTime? timestamp = null, int rowspan = 1, int colspan = 1, int dashboardId = -1)
+		public Widget AddWidget(WidgetType widgetType, string title, int rowNbr, int colNbr, List<PropertyTag> proptags, DateTime? timestamp = null, GraphType? graphType = null, int rowspan = 1, int colspan = 1, int dashboardId = -1)
 		{
 			InitRepo();
 			Widget widget;
@@ -51,23 +52,18 @@ namespace BAR.BL.Managers
 			widget.ColumnSpan = colspan;
 			widget.Timestamp = timestamp;
 			widget.Items = new List<Item>();
-			widget.PropertyTag = tag;
+			widget.GraphType = graphType;
+			widget.PropertyTags = proptags;
+			widget.WidgetDatas = new List<WidgetData>();
 
-			//repo autmaticly links widget to dashboard
-			widgetRepo.CreateWidget(widget, dashboardId);
-			return widget;
-		}
-		
-		/// <summary>
-		/// Creates a userwidget based on a model
-		/// and links that widget to a dasboard.
-		/// </summary>
-		public Widget CreateUserWidget(Widget widget, int dashboardId)
-		{
-			InitRepo();
+			//Update database
+			if (dashboardId != -1)
+			{
+				Dashboard dasboardToAddWidget = widgetRepo.ReadDashboardWithWidgets(dashboardId);
+				dasboardToAddWidget.Widgets.Add((UserWidget)widget);
+			}
+			widgetRepo.CreateWidget(widget);
 
-			//repo autmaticly links widget to dashboard
-			widgetRepo.CreateWidget(widget, dashboardId);
 			return widget;
 		}
 
@@ -95,32 +91,6 @@ namespace BAR.BL.Managers
 
 			uowManager.Save();
 			uowManager = null;
-
-			return widgetToUpdate;
-		}
-
-		/// <summary>
-		/// Adds multiple items to a single widget.
-		/// 
-		/// WARNING
-		/// THIS METHOD USES UNIT OF WORK
-		/// </summary>
-		public Widget AddItemsToWidget(int widgetId, IEnumerable<int> itemIds)
-		{
-			uowManager = new UnitOfWorkManager();
-			InitRepo();
-
-			//Get Items
-			ItemManager itemManager = new ItemManager(uowManager);
-			List<Item> items = new List<Item>();
-			foreach (int id in itemIds) items.Add(itemManager.GetItem(id));
-
-			//Add items to widget
-			Widget widgetToUpdate = GetWidget(widgetId);
-			foreach (Item item in items) widgetToUpdate.Items.Add(item);
-
-			//Update database
-			widgetRepo.UpdateWidget(widgetToUpdate);
 
 			return widgetToUpdate;
 		}
@@ -154,14 +124,15 @@ namespace BAR.BL.Managers
 			InitRepo();
 			return widgetRepo.ReadWidgetsForDashboard(dashboardId);
 		}
-		
+
 		/// <summary>
 		/// Gives back a list of widgets
 		/// for a specific item.
 		/// </summary>
 		/// 
 
-		public IEnumerable<Widget> GetWidgetsForItem(int itemId) {
+		public IEnumerable<Widget> GetWidgetsForItem(int itemId)
+		{
 			InitRepo();
 			ItemManager itemManager = new ItemManager();
 			return itemManager.GetItemWithWidgets(itemId).ItemWidgets.AsEnumerable();
@@ -213,7 +184,8 @@ namespace BAR.BL.Managers
 		/// <summary>
 		/// Updates a widget.
 		/// </summary>
-		public Widget ChangeWidget(Widget widget) {
+		public Widget ChangeWidget(Widget widget)
+		{
 			InitRepo();
 			widgetRepo.UpdateWidget(widget);
 			return widget;
@@ -227,7 +199,7 @@ namespace BAR.BL.Managers
 			InitRepo();
 			return widgetRepo.ReadDashboardWithWidgets(dashboardId);
 		}
-		
+
 		/// <summary>
 		/// Gives back a dashboard with their widgets.
 		/// </summary>
@@ -235,7 +207,7 @@ namespace BAR.BL.Managers
 		{
 			InitRepo();
 			Dashboard dash = widgetRepo.ReadDashboardWithWidgets(userId);
-			if (dash == null) return CreateDashboard(userId);
+			if (dash == null) return AddDashboard(userId);
 			return dash;
 		}
 
@@ -245,7 +217,7 @@ namespace BAR.BL.Managers
 		/// NOTE
 		/// THIS METHOD USES UNIT OF WORK
 		/// </summary>
-		public Dashboard CreateDashboard(string userId = "-1", DashboardType dashType = DashboardType.Private)
+		public Dashboard AddDashboard(string userId = "-1", DashboardType dashType = DashboardType.Private)
 		{
 			uowManager = new UnitOfWorkManager();
 			InitRepo();
@@ -267,7 +239,7 @@ namespace BAR.BL.Managers
 				if (user == null) return null;
 				else dashboard.User = user;
 			}
-			
+
 			//Create database
 			widgetRepo.CreateDashboard(dashboard);
 			uowManager.Save();
@@ -294,6 +266,15 @@ namespace BAR.BL.Managers
 		}
 
 		/// <summary>
+		/// Gives back a list with all the widgets and all the items.
+		/// </summary>
+		public IEnumerable<Widget> GetAllWidgetsWithAllItems()
+		{
+			InitRepo();
+			return widgetRepo.ReadAllWidgetsWithAllItems().AsEnumerable();
+		}
+
+		/// <summary>
 		/// Determines if the repo needs a unit of work
 		/// if the unitOfWorkManager is present.
 		/// </summary>
@@ -301,6 +282,93 @@ namespace BAR.BL.Managers
 		{
 			if (uowManager == null) widgetRepo = new WidgetRepository();
 			else widgetRepo = new WidgetRepository(uowManager.UnitOfWork);
-		}	
+
+		}
+
+		/// <summary>
+		/// Gives back a widget with all the data.
+		/// </summary>
+		public Widget GetWidgetWithAllData(int widgetId)
+		{
+			InitRepo();
+			return widgetRepo.ReadWidgetWithAllData(widgetId);
+		}
+
+		/// <summary>
+		/// Gives back all the widgets with all the data.
+		/// </summary>
+		public IEnumerable<Widget> GetAllWidgetsWithAllData()
+		{
+			InitRepo();
+			return widgetRepo.ReadAllWidgetsWithAllData().AsEnumerable();
+		}
+
+		/// <summary>
+		/// Updates all the given widgets
+		/// </summary>
+		public IEnumerable<Widget> ChangeWidgets(IEnumerable<Widget> widgets)
+		{
+			InitRepo();
+			widgetRepo.UpdateWidgets(widgets);
+			return widgets;
+		}
+
+		/// <summary>
+		/// Creates a new widgetdata in the database
+		/// </summary>
+		public WidgetData AddWidgetData(WidgetData widgetData)
+		{
+			InitRepo();
+			widgetRepo.CreateWidgetData(widgetData);
+			return widgetData;
+		}
+
+		/// <summary>
+		/// Changes a specific widgetdata in the database
+		/// </summary>
+		public WidgetData ChangeWidgetData(WidgetData widgetData)
+		{
+			InitRepo();
+			widgetRepo.UpdateWidgetData(widgetData);
+			return widgetData;
+		}
+
+		/// <summary>
+		/// Generate new data for all the widgets in the system
+		/// This method takes time, but it happens in the background.
+		/// </summary>
+		public void GenerateDataForMwidgets()
+		{
+			DataManager dataManager = new DataManager();
+			IEnumerable<Widget> widgets = GetAllWidgetsWithAllData();
+
+			foreach (Widget widget in widgets)
+			{
+				for (int i = 0; i < widget.Items.Count(); i++)
+				{
+					foreach (PropertyTag proptag in widget.PropertyTags)
+					{
+						WidgetData widgetData;
+						if (proptag.Name.ToLower().Equals("mentions"))
+						{
+							widgetData = dataManager.GetNumberOfMentionsForItem
+								(widget.Items.ElementAt(i).ItemId, widget.WidgetId, "dd-MM");
+						}
+						else
+						{
+							widgetData = dataManager.GetPropvaluesForWidget
+								(widget.Items.ElementAt(i).ItemId, widget.WidgetId, proptag.Name);
+						}
+						widgetData.Widget = widget;
+						AddWidgetData(widgetData);
+					}
+				}
+			}
+			//Remove overflowing items (temporary solution)
+			new ItemManager().RemoveOverflowingItems();
+		}
 	}
 }
+		
+	
+
