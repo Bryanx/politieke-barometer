@@ -339,38 +339,42 @@ namespace BAR.BL.Managers
 		/// </summary>
 		public void GenerateDataForMwidgets()
 		{
+			InitRepo();
+
 			DataManager dataManager = new DataManager();
-			IEnumerable<Widget> widgets = GetAllWidgetsWithAllData();
+			List<Widget> widgets = GetAllWidgetsWithAllData().ToList();
+			int widgetCount = widgets.Count();
+
+			List<WidgetData> widgetDatas = new List<WidgetData>();
+
 			foreach (Widget widget in widgets)
 			{
 				for (int i = 0; i < widget.Items.Count(); i++)
 				{
-					uowManager = new UnitOfWorkManager();
 					foreach (PropertyTag proptag in widget.PropertyTags)
 					{
 						WidgetData widgetData;
 						if (proptag.Name.ToLower().Equals("mentions"))
 						{
 							widgetData = dataManager.GetNumberOfMentionsForItem
-								(widget.Items.ElementAt(i).ItemId, widget.WidgetId, "dd-MM");						
+								(widget.Items.ElementAt(i).ItemId, widget.WidgetId, "dd-MM");
 						}
 						else
 						{
 							widgetData = dataManager.GetPropvaluesForWidget
 								(widget.Items.ElementAt(i).ItemId, widget.WidgetId, proptag.Name);
 						}
-						
 						widgetData.Widget = widget;
-						widget.WidgetDatas.Add(AddWidgetData(widgetData));
+						widgetDatas.Add(widgetData);
+						//widget.WidgetDatas.Add(AddWidgetData(widgetData));
 					}
-				}
-				ChangeWidget(widget);
-				uowManager.Save();
-				uowManager = null;
+				}				
 			}
+
+			widgetRepo.CreateWidgetDatas(widgetDatas);
 			//Remove overflowing items (temporary solution)
 			new ItemManager().RemoveOverflowingItems();
-			
+
 		}
 
 		/// <summary>
@@ -402,6 +406,6 @@ namespace BAR.BL.Managers
 		}
 	}
 }
-		
-	
+
+
 

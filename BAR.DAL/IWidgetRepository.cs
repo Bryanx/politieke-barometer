@@ -30,6 +30,7 @@ namespace BAR.DAL
 		int CreateDashboard(Dashboard dashboard);
 		int CreateWidget(Widget widget);
 		int CreateWidgetData(WidgetData widgetData);
+		int CreateWidgetDatas(ICollection<WidgetData> items);
 
 		//Update
 		int UpdateDashboard(Dashboard dashboard);

@@ -313,5 +313,15 @@ namespace BAR.DAL
 								  .Include(data => data.GraphValues)
 								  .AsEnumerable();
 		}
+
+
+		/// <summary>
+		/// Creates a range of WidgetData.
+		/// </summary>
+		public int CreateWidgetDatas(ICollection<WidgetData> widgetDatas)
+		{
+			ctx.WidgetDatas.AddRange(widgetDatas);
+			return ctx.SaveChanges();
+		}
 	}
 }
