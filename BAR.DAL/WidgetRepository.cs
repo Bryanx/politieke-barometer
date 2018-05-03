@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using BAR.BL.Domain.Widgets;
 using System.Data.Entity;
+using BAR.BL.Domain.Items;
 
 namespace BAR.DAL
 {
@@ -283,12 +284,11 @@ namespace BAR.DAL
 		/// </summary>
 		public IEnumerable<Widget> ReadAllWidgetsWithAllDataForItem(int itemId)
 		{
-			return ctx.Widgets.Include(widget => widget.Items)
-					   .Include(widget => widget.PropertyTags)
-					   .Include(widget => widget.WidgetDatas)
-					   .Include(widget => widget.WidgetDatas.Select(widgetData => widgetData.GraphValues))
-					   .Where(widget => widget.Items.Any(item => item.ItemId == itemId))
-					   .AsEnumerable();
+			Item itemToReturn =  ctx.Items.Include(item => item.ItemWidgets)
+							.Include(item => item.ItemWidgets.Select(widget => widget.WidgetDatas))
+							.Include(item => item.ItemWidgets.Select(widget => widget.WidgetDatas.Select(data => data.GraphValues)))
+							.Where(item => item.ItemId == itemId).SingleOrDefault();
+			return itemToReturn.ItemWidgets.AsEnumerable();
 		}
 
 		/// <summary>

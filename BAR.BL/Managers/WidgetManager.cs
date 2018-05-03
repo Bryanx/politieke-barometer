@@ -339,35 +339,40 @@ namespace BAR.BL.Managers
 		/// </summary>
 		public void GenerateDataForMwidgets()
 		{
+			
+
 			DataManager dataManager = new DataManager();
 			IEnumerable<Widget> widgets = GetAllWidgetsWithAllData();
-
 			foreach (Widget widget in widgets)
 			{
 				for (int i = 0; i < widget.Items.Count(); i++)
 				{
+					uowManager = new UnitOfWorkManager();
 					foreach (PropertyTag proptag in widget.PropertyTags)
 					{
 						WidgetData widgetData;
 						if (proptag.Name.ToLower().Equals("mentions"))
 						{
 							widgetData = dataManager.GetNumberOfMentionsForItem
-								(widget.Items.ElementAt(i).ItemId, widget.WidgetId, "dd-MM");
+								(widget.Items.ElementAt(i).ItemId, widget.WidgetId, "dd-MM");						
 						}
 						else
 						{
 							widgetData = dataManager.GetPropvaluesForWidget
 								(widget.Items.ElementAt(i).ItemId, widget.WidgetId, proptag.Name);
 						}
-						//widgetData.Widget = widget;
-						AddWidgetData(widgetData);
-						widget.WidgetDatas.Add(widgetData);
-						ChangeWidget(widget);
+						
+						widgetData.Widget = widget;
+						widget.WidgetDatas.Add(AddWidgetData(widgetData));
 					}
 				}
+				ChangeWidget(widget);
+				uowManager.Save();
+				uowManager = null;
 			}
 			//Remove overflowing items (temporary solution)
 			new ItemManager().RemoveOverflowingItems();
+			
 		}
 
 		/// <summary>

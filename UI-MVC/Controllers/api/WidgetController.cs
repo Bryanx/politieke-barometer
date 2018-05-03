@@ -71,12 +71,12 @@ namespace BAR.UI.MVC.Controllers.api
 		public IHttpActionResult GetGraphs(int itemId)
 		{
 			widgetManager = new WidgetManager();
-			IEnumerable<WidgetData> requestedData = widgetManager.GetWidgetDatasForItemId(itemId).AsEnumerable();
-			int count = requestedData.Count();
+			IEnumerable<Widget> widgets = widgetManager.GetAllWidgetsWithAllDataForItem(itemId).AsEnumerable();
+			int count = widgets.First().WidgetDatas.Count();
 			
-			if (requestedData == null) return StatusCode(HttpStatusCode.NoContent);
+			if (widgets == null) return StatusCode(HttpStatusCode.NoContent);
 			
-			return Ok(requestedData);
+			return Ok(widgets);
 		}
 		
 		/// <summary>
