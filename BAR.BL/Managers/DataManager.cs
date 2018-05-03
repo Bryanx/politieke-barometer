@@ -121,15 +121,15 @@ namespace BAR.BL.Managers
 			else if (startDate < timestamp) return widgetData;
 
 			
-			while (timestamp < startDate)
+			while (timestamp <= startDate)
 			{
 				//Each grapvalue represents a total number of mentions mapped
 				//To a specific data
-				int count = informations.Count(i => i.CreationDate.Value.Day == timestamp.Day);
+				int couny = informations.Count(i => i.CreationDate.Value.Day == startDate.Value.Day);
 				widgetData.GraphValues.Add(new GraphValue()
 				{
 					Value = startDate.Value.ToString(dateFormat),
-					NumberOfTimes = informations.Count(i => i.CreationDate.Value.Day == timestamp.Day)
+					NumberOfTimes = informations.Count(i => i.CreationDate.Value.Day == startDate.Value.Day)
 				});
 				startDate = startDate.Value.AddDays(-1);
 			}
