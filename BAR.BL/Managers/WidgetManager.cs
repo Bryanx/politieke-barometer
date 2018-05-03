@@ -339,8 +339,6 @@ namespace BAR.BL.Managers
 		/// </summary>
 		public void GenerateDataForMwidgets()
 		{
-			
-
 			DataManager dataManager = new DataManager();
 			IEnumerable<Widget> widgets = GetAllWidgetsWithAllData();
 			foreach (Widget widget in widgets)
