@@ -509,7 +509,9 @@
     <Content Include="Views\Person\Details.cshtml" />
     <Content Include="Views\Person\Index.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
-    <Content Include="Views\Web.config" />
+    <Content Include="Views\Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\User\Register.cshtml" />
     <Content Include="Views\User\Login.cshtml" />
@@ -526,6 +528,7 @@
     <None Include="Mvc.sitemap" />
     <None Include="MvcSiteMapSchema.xsd" />
     <None Include="packages.config" />
+    <None Include="Properties\PublishProfiles\CustomProfile1.pubxml" />
     <None Include="Scripts\bootstrap-wysiwyg\bootstrap-wysiwyg.js" />
     <None Include="Scripts\bootstrap-wysiwyg\jquery.hotkeys.min.js" />
     <None Include="Scripts\bootstrap-wysiwyg\prettify.min.js" />
@@ -587,14 +590,17 @@
     <EmbeddedResource Include="App_GlobalResources\Resources.fr.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.fr.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>Resources</CustomToolNamespace>
     </EmbeddedResource>
     <EmbeddedResource Include="App_GlobalResources\Resources.nl.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.nl.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>Resources</CustomToolNamespace>
     </EmbeddedResource>
     <EmbeddedResource Include="App_GlobalResources\Resources.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>Resources</CustomToolNamespace>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

@@ -2,7 +2,10 @@
 @model BAR.UI.MVC.Models.ItemViewModels.ItemViewModel
 
 @section CustomCSS{
-    @Styles.Render("~/bundles/datatables-css", "~/bundles/datatables-buttons-css")
+    <link href="~/Scripts/datatables/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Scripts/datatables/datatables.net-responsive-bs/css/responsive.bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Scripts/datatables/datatables.net-buttons-bs/css/buttons.bootstrap.css" rel="stylesheet" />
+    <link href="~/Scripts/datatables/datatables.net-buttons-bs/css/buttons.bootstrap.min.css" rel="stylesheet" />
 }
 
     @using (Html.BeginForm("UploadJson", "Admin", FormMethod.Post, new {role = "form", enctype = "multipart/form-data" }))
@@ -15,7 +18,7 @@
     </h1>
     }
 
-<hr/>
+<hr />
 
 @Html.Partial("Partials/_ItemTable", Model)
 
@@ -23,8 +26,19 @@
 
 
 @section CustomJS{
-    @Scripts.Render("~/bundles/datatables")
-    @Scripts.Render("~/bundles/datatables-buttons", "~/bundles/datatables-buttons-bs")
+    <script src="~/Scripts/datatables/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="~/Scripts/datatables/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+    <script src="~/Scripts/datatables/datatables.net-buttons/js/buttons.colVis.js"></script>
+    <script src="~/Scripts/datatables/datatables.net-buttons/js/buttons.colVis.min.js"></script>
+    <script src="~/Scripts/datatables/datatables.net-buttons/js/buttons.flash.js"></script>
+    <script src="~/Scripts/datatables/datatables.net-buttons/js/buttons.flash.min.js"></script>
+    <script src="~/Scripts/datatables/datatables.net-buttons/js/buttons.html5.js"></script>
+    <script src="~/Scripts/datatables/datatables.net-buttons/js/buttons.html5.min.js"></script>
+    <script src="~/Scripts/datatables/datatables.net-buttons/js/buttons.print.js"></script>
+    <script src="~/Scripts/datatables/datatables.net-buttons/js/buttons.print.min.js"></script>
+
+    <script src="~/Scripts/datatables/datatables.net-buttons-bs/js/buttons.bootstrap.js"></script>
+    <script src="~/Scripts/datatables/datatables.net-buttons-bs/js/buttons.bootstrap.min.js"></script>
     <script type="text/javascript">
         (() => {
             var wto;

@@ -2,7 +2,8 @@
 @model BAR.UI.MVC.Models.EditUserViewModel
 
 @section CustomCSS{
-    @Styles.Render("~/bundles/datatables")
+    <script src="~/Scripts/datatables/datatables.net-responsive-bs/css/responsive.bootstrap.min.css"></script>
+    <script src="~/Scripts/datatables/datatables.net-bs/css/dataTables.bootstrap.min.css"></script>
 }
 
 <h1>@Model.PageTitle</h1>
@@ -15,7 +16,8 @@
 <div style="visibility: hidden">space</div>
 
 @section CustomJS{
-    @Scripts.Render("~/bundles/datatables")
+    <script src="~/Scripts/datatables/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="~/Scripts/datatables/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
     <script type="text/javascript">
 
         $('.accountActivityChange').click(function() {
@@ -32,7 +34,7 @@
                         .parent().parent().toggleClass("greyed-out");
                 });
         });
-        
+
         function changeRole(id, htmlId) {
             $.ajax({
                     type: "POST",
