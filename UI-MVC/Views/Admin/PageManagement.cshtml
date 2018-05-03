@@ -3,421 +3,452 @@
 
 
 @section CustomCSS{
-    <link href="../../Scripts/mjolnic-bootstrap-colorpicker/dist/css/bootstrap-colorpicker.min.css" rel="stylesheet">
+  <link href="../../Scripts/mjolnic-bootstrap-colorpicker/dist/css/bootstrap-colorpicker.min.css" rel="stylesheet">
 }
 
 <div class="row">
-    <div class="col-md-6 col-sm-6 col-xs-12">
-        <div class="x_panel fixed_height_670">
-            <div class="x_title">
-                <h2>Pagina kleuren</h2>
-                <div class="clearfix"></div>
+  <div class="col-md-6 col-sm-6 col-xs-12">
+    <div class="x_panel fixed_height_670">
+      <div class="x_title">
+        <h2>Pagina kleuren</h2>
+        <div class="clearfix"></div>
+      </div>
+      <div class="x_content">
+        <br />
+        <div class="col-sm-8 col-md-8 col-xs-12 center-margin">
+          <form id="form_page_color" class="form-horizontal form-label-left">
+            <label class="control-label">Primaire kleur</label>
+            <div id="cp-primary" class="input-group">
+              @Html.EditorFor(model => model.PrimaryColor, "", new { @class = "form-control", id = "ip-primary", placeholder = @Model.PrimaryColor })
+              <span class="input-group-addon">
+                <i></i>
+              </span>
             </div>
-            <div class="x_content">
-                <br />
-                <div class="col-sm-8 col-md-8 col-xs-12 center-margin">
-                    <form id="form_page_color" class="form-horizontal form-label-left">
-                        <label class="control-label">Primaire kleur</label>
-                        <div id="cp-primary" class="input-group">
-                            @Html.EditorFor(model => model.PrimaryColor, "", new { @class = "form-control", id= "ip-primary", placeholder = @Model.PrimaryColor })
-                            <span class="input-group-addon">
-                                <i></i>
-                            </span>
-                        </div>
-                        <label class="control-label">Secundaire kleur</label>
-                        <div id="cp-secondary" class="input-group">
-                            @Html.EditorFor(model => model.SecondairyColor, "", new { @class = "form-control", id = "ip-secondary", placeholder = @Model.SecondairyColor })
-                            <span class="input-group-addon">
-                                <i></i>
-                            </span>
-                        </div>
-                        <label class="control-label">Tertiaire kleur</label>
-                        <div id="cp-tertiary" class="input-group">
-                            @Html.EditorFor(model => model.TertiaryColor, "", new { @class = "form-control", id = "ip-tertiary", placeholder = @Model.TertiaryColor })
-                            <span class="input-group-addon">
-                                <i></i>
-                            </span>
-                        </div>
-                        <label class="control-label">Achtergrond kleur</label>
-                        <div id="cp-bg" class="input-group">
-                            @Html.EditorFor(model => model.BackgroundColor, "", new { @class = "form-control", id = "ip-bg", placeholder = @Model.BackgroundColor })
-                            <span class="input-group-addon">
-                                <i></i>
-                            </span>
-                        </div>
-                        <label class="control-label">Tekst kleur</label>
-                        <div id="cp-font" class="input-group">
-                            @Html.EditorFor(model => model.TextColor, "", new { @class = "form-control", id = "ip-font", placeholder = @Model.TextColor })
-                            <span class="input-group-addon">
-                                <i></i>
-                            </span>
-                        </div>
-                        <button type="submit" class="btn btn-dark">Opslaan</button>
-                        <div id="messageSettings" style="display: inline"></div>
-                    </form>
+            <label class="control-label">Secundaire kleur</label>
+            <div id="cp-secondary" class="input-group">
+              @Html.EditorFor(model => model.SecondairyColor, "", new { @class = "form-control", id = "ip-secondary", placeholder = @Model.SecondairyColor })
+              <span class="input-group-addon">
+                <i></i>
+              </span>
+            </div>
+            <label class="control-label">Tertiaire kleur</label>
+            <div id="cp-tertiary" class="input-group">
+              @Html.EditorFor(model => model.TertiaryColor, "", new { @class = "form-control", id = "ip-tertiary", placeholder = @Model.TertiaryColor })
+              <span class="input-group-addon">
+                <i></i>
+              </span>
+            </div>
+            <label class="control-label">Achtergrond kleur</label>
+            <div id="cp-bg" class="input-group">
+              @Html.EditorFor(model => model.BackgroundColor, "", new { @class = "form-control", id = "ip-bg", placeholder = @Model.BackgroundColor })
+              <span class="input-group-addon">
+                <i></i>
+              </span>
+            </div>
+            <label class="control-label">Tekst kleur</label>
+            <div id="cp-font" class="input-group">
+              @Html.EditorFor(model => model.TextColor, "", new { @class = "form-control", id = "ip-font", placeholder = @Model.TextColor })
+              <span class="input-group-addon">
+                <i></i>
+              </span>
+            </div>
+            <button type="submit" class="btn btn-dark">Opslaan</button>
+            <div id="messageSettings" style="display: inline"></div>
+          </form>
 
-                </div>
-            </div>
         </div>
+      </div>
     </div>
-    <div class="col-md-6 col-sm-6 col-xs-12">
-        <div class="x_panel fixed_height_670">
-            <div class="x_title">
-                <h2>Pagina teksten</h2>
-                <div class="clearfix"></div>
-            </div>
-            <div class="x_content">
-                <br />
-                <div class="col-sm-8 col-md-8 col-xs-12 center-margin">
-                    <form id="form_page_text" class="form-horizontal form-label-left">
+  </div>
+  <div class="col-md-6 col-sm-6 col-xs-12">
+    <div class="x_panel fixed_height_670">
+      <div class="x_title">
+        <h2>Pagina teksten</h2>
+        <div class="clearfix"></div>
+      </div>
+      <div class="x_content">
+        <br />
+        <div class="col-sm-8 col-md-8 col-xs-12 center-margin">
+          <form id="form_page_text" class="form-horizontal form-label-left">
 
-                        <div class="form-group">
-                            <label class="control-label">Persoon alias (ev)</label>
-                            @Html.EditorFor(model => model.PersonAlias, "", new { @class = "form-control", placeholder = @Model.PersonAlias })
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label">Personen alias (mv)</label>
-                            @Html.EditorFor(model => model.PersonsAlias, "", new { @class = "form-control", placeholder = @Model.PersonsAlias })
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label">Organisatie alias (ev)</label>
-                            @Html.EditorFor(model => model.OrganisationAlias, "", new { @class = "form-control", placeholder = @Model.OrganisationAlias })
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label">Organisaties alias (mv)</label>
-                            @Html.EditorFor(model => model.OrganisationsAlias, "", new { @class = "form-control", placeholder = @Model.OrganisationsAlias })
-                        </div>
-                        <div class="form-group">
-                            <label class="control-labe">Thema alias (ev)</label>
-                            @Html.EditorFor(model => model.ThemeAlias, "", new { @class = "form-control", placeholder = @Model.ThemeAlias })
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label">Thema's alias (mv)</label>
-                            @Html.EditorFor(model => model.ThemesAlias, "", new { @class = "form-control", placeholder = @Model.ThemesAlias })
-                        </div>
-                        <div class="form-group">
-                            <button type="submit" class="btn btn-dark">Opslaan</button>                     
-                            <div id="messageSettings" style="display: inline"></div>
-                        </div>
-                    </form>
-                </div>
+            <div class="form-group">
+              <label class="control-label">Persoon alias (ev)</label>
+              @Html.EditorFor(model => model.PersonAlias, "", new { @class = "form-control", placeholder = @Model.PersonAlias })
             </div>
+            <div class="form-group">
+              <label class="control-label">Personen alias (mv)</label>
+              @Html.EditorFor(model => model.PersonsAlias, "", new { @class = "form-control", placeholder = @Model.PersonsAlias })
+            </div>
+            <div class="form-group">
+              <label class="control-label">Organisatie alias (ev)</label>
+              @Html.EditorFor(model => model.OrganisationAlias, "", new { @class = "form-control", placeholder = @Model.OrganisationAlias })
+            </div>
+            <div class="form-group">
+              <label class="control-label">Organisaties alias (mv)</label>
+              @Html.EditorFor(model => model.OrganisationsAlias, "", new { @class = "form-control", placeholder = @Model.OrganisationsAlias })
+            </div>
+            <div class="form-group">
+              <label class="control-labe">Thema alias (ev)</label>
+              @Html.EditorFor(model => model.ThemeAlias, "", new { @class = "form-control", placeholder = @Model.ThemeAlias })
+            </div>
+            <div class="form-group">
+              <label class="control-label">Thema's alias (mv)</label>
+              @Html.EditorFor(model => model.ThemesAlias, "", new { @class = "form-control", placeholder = @Model.ThemesAlias })
+            </div>
+            <div class="form-group">
+              <button type="submit" class="btn btn-dark">Opslaan</button>
+              <div id="messageSettings" style="display: inline"></div>
+            </div>
+          </form>
         </div>
+      </div>
     </div>
+  </div>
 </div>
 
 <div class="row">
-    <div class="col-md-12 col-sm-12 col-xs-12">
-        <div class="x_panel">
-            <div class="x_title">
-                <h2>Privacy Pagina</h2>
-                <div class="clearfix"></div>
+  <div class="col-md-12 col-sm-12 col-xs-12">
+    <div class="x_panel">
+      <div class="x_title">
+        <h2>Privacy Pagina</h2>
+        <div class="clearfix"></div>
+      </div>
+      <div class="x_content">
+        <br />
+        <form id="form_page_privacy" class="form-horizontal form-label-left">
+          <div class="form-group">
+            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="privacy_title">
+              Titel
+            </label>
+            <div class="col-md-6 col-sm-6 col-xs-12">
+              @Html.EditorFor(model => model.PrivacyTitle, "", new { @class = "form-control", placeholder = @Model.PrivacyTitle })
             </div>
-            <div class="x_content">
-                <br />
-                <form id="form_page_privacy" class="form-horizontal form-label-left">
-                    <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="privacy_title">
-                            Titel
-                        </label>
-                        <div class="col-md-6 col-sm-6 col-xs-12">
-                            @Html.EditorFor(model => model.PrivacyTitle, "", new { @class = "form-control", placeholder = @Model.PrivacyTitle })
-                        </div>
-                    </div>
-                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="privacy_title">
-                        Privacy content
-                    </label>
-                    <div class="col-sm-6 col-md-6 col-xs-12 center-margin">
-                        <div class="form-group">
-                            <div id="alerts"></div>
-                            <div class="btn-toolbar editor" data-role="editor-toolbar" data-target="#editor-one">
-                                <div class="btn-group">
-                                    <a class="btn dropdown-toggle" data-toggle="dropdown" title="Font">
-                                        <i class="fa fa-font"></i><b class="caret"></b>
-                                    </a>
-                                    <ul class="dropdown-menu"></ul>
-                                </div>
-
-                                <div class="btn-group">
-                                    <a class="btn dropdown-toggle" data-toggle="dropdown" title="Font Size"><i class="fa fa-text-height"></i>&nbsp;<b class="caret"></b></a>
-                                    <ul class="dropdown-menu">
-                                        <li>
-                                            <a data-edit="fontSize 5">
-                                                <p style="font-size: 17px">Huge</p>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a data-edit="fontSize 3">
-                                                <p style="font-size: 14px">Normal</p>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a data-edit="fontSize 1">
-                                                <p style="font-size: 11px">Small</p>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </div>
-
-                                <div class="btn-group">
-                                    <a class="btn" data-edit="bold" title="Bold (Ctrl/Cmd+B)">
-                                        <i class="fa fa-bold"></i>
-                                    </a>
-                                    <a class="btn" data-edit="italic" title="Italic (Ctrl/Cmd+I)">
-                                        <i class="fa fa-italic"></i>
-                                    </a>
-                                    <a class="btn" data-edit="strikethrough" title="Strikethrough">
-                                        <i class="fa fa-strikethrough"></i>
-                                    </a>
-                                    <a class="btn" data-edit="underline" title="Underline (Ctrl/Cmd+U)">
-                                        <i class="fa fa-underline"></i>
-                                    </a>
-                                </div>
-
-                                <div class="btn-group">
-                                    <a class="btn" data-edit="insertunorderedlist" title="Bullet list">
-                                        <i class="fa fa-list-ul"></i>
-                                    </a>
-                                    <a class="btn" data-edit="insertorderedlist" title="Number list">
-                                        <i class="fa fa-list-ol"></i>
-                                    </a>
-                                    <a class="btn" data-edit="outdent" title="Reduce indent (Shift+Tab)">
-                                        <i class="fa fa-dedent"></i>
-                                    </a>
-                                    <a class="btn" data-edit="indent" title="Indent (Tab)">
-                                        <i class="fa fa-indent"></i>
-                                    </a>
-                                </div>
-
-                                <div class="btn-group">
-                                    <a class="btn" data-edit="justifyleft" title="Align Left (Ctrl/Cmd+L)">
-                                        <i class="fa fa-align-left"></i>
-                                    </a>
-                                    <a class="btn" data-edit="justifycenter" title="Center (Ctrl/Cmd+E)">
-                                        <i class="fa fa-align-center"></i>
-                                    </a>
-                                    <a class="btn" data-edit="justifyright" title="Align Right (Ctrl/Cmd+R)">
-                                        <i class="fa fa-align-right"></i>
-                                    </a>
-                                    <a class="btn" data-edit="justifyfull" title="Justify (Ctrl/Cmd+J)">
-                                        <i class="fa fa-align-justify"></i>
-                                    </a>
-                                </div>
-
-                                <div class="btn-group">
-                                    <a class="btn dropdown-toggle" data-toggle="dropdown" title="Hyperlink">
-                                        <i class="fa fa-link"></i>
-                                    </a>
-                                    <div class="dropdown-menu input-append">
-                                        <input class="span2" placeholder="URL" type="text" data-edit="createLink">
-                                        <button class="btn" type="button">Add</button>
-                                    </div>
-                                    <a class="btn" data-edit="unlink" title="Remove Hyperlink">
-                                        <i class="fa fa-cut"></i>
-                                    </a>
-                                </div>
-
-                                <div class="btn-group">
-                                    <a class="btn" data-edit="undo" title="Undo (Ctrl/Cmd+Z)">
-                                        <i class="fa fa-undo"></i>
-                                    </a>
-                                    <a class="btn" data-edit="redo" title="Redo (Ctrl/Cmd+Y)">
-                                        <i class="fa fa-repeat"></i>
-                                    </a>
-                                </div>
-                            </div>
-
-                            <div id="editor-one" class="editor-wrapper placeholderText" contenteditable="true"></div>
-                            @Html.EditorFor(model => model.PrivacyText, "", new { @class = "form-control", id = "descr", placeholder = @Model.PrivacyText })
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-md-6 col-xs-12 center-margin">
-                        <div class="form-group">
-                            <button type="submit" class="btn btn-dark">Opslaan</button>
-                            <div id="messageSettings" style="display: inline"></div>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="row">
-    <div class="col-md-12 col-sm-12 col-xs-12">
-        <div class="x_panel">
-            <div class="x_title">
-                <h2>FAQ Pagina</h2>
-                <div class="clearfix"></div>
-            </div>
-            <div class="x_content">
-                <br />
-                <form id="form_page_faq" class="form-horizontal form-label-left">
-                    <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12">
-                            Titel
-                        </label>
-                        <div class="col-md-6 col-sm-6 col-xs-12">
-                            @Html.EditorFor(model => model.FAQTitle, "", new { @class = "form-control", placeholder = @Model.FAQTitle })
-                        </div>
-                    </div>
-                    <div class="ln_solid"></div>
-                    <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="faq_question">
-                            Vraag 1
-                        </label>
-                        <div class="col-md-6 col-sm-6 col-xs-12">
-                            <input class="form-control" value="Waar komt de data vandaan?">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="faq_question">
-                            Categorie
-                        </label>
-                        <div class="col-md-6 col-sm-6 col-xs-12">
-                            <input class="form-control" value="Algemeen">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Antwoord</label>
-                        <div class="col-md-6 col-sm-6 col-xs-12">
-                            <textarea class="resizable_textarea form-control" placeholder="Momenteel wordt als input van alle grafieken Twitter gebruikt."></textarea>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-md-6 col-xs-12 center-margin">
-                        <div class="form-group">
-                            <button type="submit" class="btn btn-dark">Opslaan</button>
-                            <button class="btn btn-danger">Verwijderen</button>
-                            <button class="btn btn-success">Vraag toevoegen</button>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="row">
-    <div class="col-md-6 col-sm-6 col-xs-12">
-        <div class="x_panel">
-            <div class="x_title">
-                <h2>Contact gegevens</h2>
-                <div class="clearfix"></div>
-            </div>
-            <div class="x_content">
-                <br />
-                <div class="col-sm-8 col-md-8 col-xs-12 center-margin">
-                    <form id="form_page_contact" class="form-horizontal form-label-left">
-                        <div class="form-group">
-                            <label class="control-label">Straat en huisnummer</label>
-                            @Html.EditorFor(model => model.StreetAndHousenumber, "", new { @class = "form-control", placeholder = @Model.StreetAndHousenumber })
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label">Postcode</label>
-                            @Html.EditorFor(model => model.Zipcode, "", new { @class = "form-control", placeholder = @Model.Zipcode })
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label">Stad</label>
-                            @Html.EditorFor(model => model.City, "", new { @class = "form-control", placeholder = @Model.City })
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label">Land</label>
-                            @Html.EditorFor(model => model.Country, "", new { @class = "form-control", placeholder = @Model.Country })
-                        </div>
-                        <div class="form-group">
-                            <label class="control-labe">Email adres</label>
-                            @Html.EditorFor(model => model.Email, "", new { @class = "form-control", placeholder = @Model.Email })
-                        </div>
-                        <div class="form-group">
-                            <button type="submit" class="btn btn-dark">Opslaan</button>
-                            <div id="messageSettings" style="display: inline"></div>
-                        </div>
-                    </form>
+          </div>
+          <label class="control-label col-md-3 col-sm-3 col-xs-12" for="privacy_title">
+            Privacy content
+          </label>
+          <div class="col-sm-6 col-md-6 col-xs-12 center-margin">
+            <div class="form-group">
+              <div id="alerts"></div>
+              <div class="btn-toolbar editor" data-role="editor-toolbar" data-target="#editor-one">
+                <div class="btn-group">
+                  <a class="btn dropdown-toggle" data-toggle="dropdown" title="Font">
+                    <i class="fa fa-font"></i><b class="caret"></b>
+                  </a>
+                  <ul class="dropdown-menu"></ul>
                 </div>
+
+                <div class="btn-group">
+                  <a class="btn dropdown-toggle" data-toggle="dropdown" title="Font Size"><i class="fa fa-text-height"></i>&nbsp;<b class="caret"></b></a>
+                  <ul class="dropdown-menu">
+                    <li>
+                      <a data-edit="fontSize 5">
+                        <p style="font-size: 17px">Huge</p>
+                      </a>
+                    </li>
+                    <li>
+                      <a data-edit="fontSize 3">
+                        <p style="font-size: 14px">Normal</p>
+                      </a>
+                    </li>
+                    <li>
+                      <a data-edit="fontSize 1">
+                        <p style="font-size: 11px">Small</p>
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+
+                <div class="btn-group">
+                  <a class="btn" data-edit="bold" title="Bold (Ctrl/Cmd+B)">
+                    <i class="fa fa-bold"></i>
+                  </a>
+                  <a class="btn" data-edit="italic" title="Italic (Ctrl/Cmd+I)">
+                    <i class="fa fa-italic"></i>
+                  </a>
+                  <a class="btn" data-edit="strikethrough" title="Strikethrough">
+                    <i class="fa fa-strikethrough"></i>
+                  </a>
+                  <a class="btn" data-edit="underline" title="Underline (Ctrl/Cmd+U)">
+                    <i class="fa fa-underline"></i>
+                  </a>
+                </div>
+
+                <div class="btn-group">
+                  <a class="btn" data-edit="insertunorderedlist" title="Bullet list">
+                    <i class="fa fa-list-ul"></i>
+                  </a>
+                  <a class="btn" data-edit="insertorderedlist" title="Number list">
+                    <i class="fa fa-list-ol"></i>
+                  </a>
+                  <a class="btn" data-edit="outdent" title="Reduce indent (Shift+Tab)">
+                    <i class="fa fa-dedent"></i>
+                  </a>
+                  <a class="btn" data-edit="indent" title="Indent (Tab)">
+                    <i class="fa fa-indent"></i>
+                  </a>
+                </div>
+
+                <div class="btn-group">
+                  <a class="btn" data-edit="justifyleft" title="Align Left (Ctrl/Cmd+L)">
+                    <i class="fa fa-align-left"></i>
+                  </a>
+                  <a class="btn" data-edit="justifycenter" title="Center (Ctrl/Cmd+E)">
+                    <i class="fa fa-align-center"></i>
+                  </a>
+                  <a class="btn" data-edit="justifyright" title="Align Right (Ctrl/Cmd+R)">
+                    <i class="fa fa-align-right"></i>
+                  </a>
+                  <a class="btn" data-edit="justifyfull" title="Justify (Ctrl/Cmd+J)">
+                    <i class="fa fa-align-justify"></i>
+                  </a>
+                </div>
+
+                <div class="btn-group">
+                  <a class="btn dropdown-toggle" data-toggle="dropdown" title="Hyperlink">
+                    <i class="fa fa-link"></i>
+                  </a>
+                  <div class="dropdown-menu input-append">
+                    <input class="span2" placeholder="URL" type="text" data-edit="createLink">
+                    <button class="btn" type="button">Add</button>
+                  </div>
+                  <a class="btn" data-edit="unlink" title="Remove Hyperlink">
+                    <i class="fa fa-cut"></i>
+                  </a>
+                </div>
+
+                <div class="btn-group">
+                  <a class="btn" data-edit="undo" title="Undo (Ctrl/Cmd+Z)">
+                    <i class="fa fa-undo"></i>
+                  </a>
+                  <a class="btn" data-edit="redo" title="Redo (Ctrl/Cmd+Y)">
+                    <i class="fa fa-repeat"></i>
+                  </a>
+                </div>
+              </div>
+
+              <div id="editor-one" class="editor-wrapper placeholderText" contenteditable="true"></div>
+              @Html.EditorFor(model => model.PrivacyText, "", new { @class = "form-control", id = "descr", placeholder = @Model.PrivacyText })
             </div>
-        </div>
+          </div>
+          <div class="col-sm-6 col-md-6 col-xs-12 center-margin">
+            <div class="form-group">
+              <button type="submit" class="btn btn-dark">Opslaan</button>
+              <div id="messageSettings" style="display: inline"></div>
+            </div>
+          </div>
+        </form>
+      </div>
     </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-12 col-sm-12 col-xs-12">
+    <div class="x_panel">
+      <div class="x_title">
+        <h2>FAQ Pagina</h2>
+        <div class="clearfix"></div>
+      </div>
+      <div class="x_content">
+        <br />
+        <form id="form_page_faq" class="form-horizontal form-label-left">
+          <div class="form-group">
+            <label class="control-label col-md-3 col-sm-3 col-xs-12">
+              Titel
+            </label>
+            <div class="col-md-6 col-sm-6 col-xs-12">
+              @Html.EditorFor(model => model.FAQTitle, "", new { @class = "form-control", placeholder = @Model.FAQTitle })
+            </div>
+          </div>
+          <div class="ln_solid"></div>
+          <div class="form-group">
+            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="faq_question">
+              Vraag 1
+            </label>
+            <div class="col-md-6 col-sm-6 col-xs-12">
+              <input class="form-control" value="Waar komt de data vandaan?">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="faq_question">
+              Categorie
+            </label>
+            <div class="col-md-6 col-sm-6 col-xs-12">
+              <input class="form-control" value="Algemeen">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="control-label col-md-3 col-sm-3 col-xs-12">Antwoord</label>
+            <div class="col-md-6 col-sm-6 col-xs-12">
+              <textarea class="resizable_textarea form-control" placeholder="Momenteel wordt als input van alle grafieken Twitter gebruikt."></textarea>
+            </div>
+          </div>
+          <div class="col-sm-6 col-md-6 col-xs-12 center-margin">
+            <div class="form-group">
+              <button type="submit" class="btn btn-dark">Opslaan</button>
+              <button class="btn btn-danger">Verwijderen</button>
+              <button class="btn btn-success">Vraag toevoegen</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-6 col-sm-6 col-xs-12">
+    <div class="x_panel">
+      <div class="x_title">
+        <h2>Contact gegevens</h2>
+        <div class="clearfix"></div>
+      </div>
+      <div class="x_content">
+        <br />
+        <div class="col-sm-8 col-md-8 col-xs-12 center-margin">
+          <form id="form_page_contact" class="form-horizontal form-label-left">
+            <div class="form-group">
+              <label class="control-label">Straat en huisnummer</label>
+              @Html.EditorFor(model => model.StreetAndHousenumber, "", new { @class = "form-control", placeholder = @Model.StreetAndHousenumber })
+            </div>
+            <div class="form-group">
+              <label class="control-label">Postcode</label>
+              @Html.EditorFor(model => model.Zipcode, "", new { @class = "form-control", placeholder = @Model.Zipcode })
+            </div>
+            <div class="form-group">
+              <label class="control-label">Stad</label>
+              @Html.EditorFor(model => model.City, "", new { @class = "form-control", placeholder = @Model.City })
+            </div>
+            <div class="form-group">
+              <label class="control-label">Land</label>
+              @Html.EditorFor(model => model.Country, "", new { @class = "form-control", placeholder = @Model.Country })
+            </div>
+            <div class="form-group">
+              <label class="control-labe">Email adres</label>
+              @Html.EditorFor(model => model.Email, "", new { @class = "form-control", placeholder = @Model.Email })
+            </div>
+            <div class="form-group">
+              <button type="submit" class="btn btn-dark">Opslaan</button>
+              <div id="messageSettings" style="display: inline"></div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 
 
 @section CustomJS{
-    @Scripts.Render("~/bundles/bootstrap-wysiwyg", "~/Scripts/mjolnic-bootstrap-colorpicker/dist/js/bootstrap-colorpicker.min.js")
-    <script>
-        /**
-         * When a colorpicker is changed, the page CSS updates automatically.
-         */
-        var htmlselector = document.getElementsByTagName('html')[0];
-        var primary_color = window.getComputedStyle(document.documentElement).getPropertyValue('--primary-color')
-            .split(' ').join(''),
-            secondary_color = window.getComputedStyle(document.documentElement).getPropertyValue('--secondary-color')
-                .split(' ').join('');
-        var tertiary_color = window.getComputedStyle(document.documentElement).getPropertyValue('--tertiary-color')
-            .split(' ').join('');
-        var bg_color = window.getComputedStyle(document.documentElement).getPropertyValue('--bg-color').split(' ')
-            .join('');
-        var font_color = window.getComputedStyle(document.documentElement).getPropertyValue('--font-color').split(' ')
-            .join('');
+  @Scripts.Render("~/bundles/bootstrap-wysiwyg", "~/Scripts/mjolnic-bootstrap-colorpicker/dist/js/bootstrap-colorpicker.min.js")
+  <script>
+      /**
+       * When a colorpicker is changed, the page CSS updates automatically.
+       */
+      var htmlselector = document.getElementsByTagName('html')[0];
+      var primary_color = window.getComputedStyle(document.documentElement).getPropertyValue('--primary-color')
+        .split(' ').join(''),
+        secondary_color = window.getComputedStyle(document.documentElement).getPropertyValue('--secondary-color')
+          .split(' ').join('');
+      var tertiary_color = window.getComputedStyle(document.documentElement).getPropertyValue('--tertiary-color')
+        .split(' ').join('');
+      var bg_color = window.getComputedStyle(document.documentElement).getPropertyValue('--bg-color').split(' ')
+        .join('');
+      var font_color = window.getComputedStyle(document.documentElement).getPropertyValue('--font-color').split(' ')
+        .join('');
 
-        /*
-         * Changes rgb string to hex
-         */
-        function rgb2hex(rgb) {
-            rgb = rgb.toString();
-            rgb = rgb.match(/^rgba?[\s+]?\([\s+]?(\d+)[\s+]?,[\s+]?(\d+)[\s+]?,[\s+]?(\d+)[\s+]?/i);
-            return (rgb && rgb.length === 4)
-                ? "#" +
-                ("0" + parseInt(rgb[1], 10).toString(16)).slice(-2) +
-                ("0" + parseInt(rgb[2], 10).toString(16)).slice(-2) +
-                ("0" + parseInt(rgb[3], 10).toString(16)).slice(-2)
-                : '';
-        }
+      /*
+       * Changes rgb string to hex
+       */
+      function rgb2hex(rgb) {
+        rgb = rgb.toString();
+        rgb = rgb.match(/^rgba?[\s+]?\([\s+]?(\d+)[\s+]?,[\s+]?(\d+)[\s+]?,[\s+]?(\d+)[\s+]?/i);
+        return (rgb && rgb.length === 4)
+          ? "#" +
+          ("0" + parseInt(rgb[1], 10).toString(16)).slice(-2) +
+          ("0" + parseInt(rgb[2], 10).toString(16)).slice(-2) +
+          ("0" + parseInt(rgb[3], 10).toString(16)).slice(-2)
+          : '';
+      }
 
-        /*
-         * Updates the color field of the colorpicker and updates the CSS.
-         */
-        function changeColor(variable, color, event) {
-            color = rgb2hex(event.color);
-            htmlselector.setAttribute("style", variable + ": " + color);
-        }
+      /*
+       * Updates the color field of the colorpicker and updates the CSS.
+       */
+      function changeColor(variable, color, event) {
+        color = rgb2hex(event.color);
+        htmlselector.setAttribute("style", variable + ": " + color);
+      }
 
-        /*
-         * When a colorpicker is changed css is updated.
-         */
-        $('#cp-primary').colorpicker().on('changeColor', (e) => changeColor("--primary-color", primary_color, e));
-        $('#cp-secondary').colorpicker().on('changeColor', (e) => changeColor("--secondary-color", secondary_color, e));
-        $('#cp-tertiary').colorpicker().on('changeColor', (e) => changeColor("--tertiary-color", tertiary_color, e));
-        $('#cp-bg').colorpicker().on('changeColor', (e) => changeColor("--bg-color", bg_color, e));
-        $('#cp-font').colorpicker().on('changeColor', (e) => changeColor("--font-color", font_color, e));
+      /*
+       * When a colorpicker is changed css is updated.
+       */
+      $('#cp-primary').colorpicker().on('changeColor', (e) => changeColor("--primary-color", primary_color, e));
+      $('#cp-secondary').colorpicker().on('changeColor', (e) => changeColor("--secondary-color", secondary_color, e));
+      $('#cp-tertiary').colorpicker().on('changeColor', (e) => changeColor("--tertiary-color", tertiary_color, e));
+      $('#cp-bg').colorpicker().on('changeColor', (e) => changeColor("--bg-color", bg_color, e));
+      $('#cp-font').colorpicker().on('changeColor', (e) => changeColor("--font-color", font_color, e));
 
-        /*
-         * Initial values of colorpickers are set.
-         */
-        (() => {
-            $('#ip-primary').val(primary_color).trigger('change');
-            $('#ip-secondary').val(secondary_color).trigger('change');
-            $('#ip-tertiary').val(tertiary_color).trigger('change');
-            $('#ip-bg').val(bg_color).trigger('change');
-            $('#ip-font').val(font_color).trigger('change');
-        })($);
+      /*
+       * Initial values of colorpickers are set.
+       */
+      (() => {
+        $('#ip-primary').val(primary_color).trigger('change');
+        $('#ip-secondary').val(secondary_color).trigger('change');
+        $('#ip-tertiary').val(tertiary_color).trigger('change');
+        $('#ip-bg').val(bg_color).trigger('change');
+        $('#ip-font').val(font_color).trigger('change');
+      })($);
 
 
-        //Get subplatformId
-        function getSubplatformId(func) {
-            //Get subdomain
-            var full = window.location.host;
-            var subdomain = full.split('.')[0];
+      //Get subplatformId
+      function getSubplatformId(func) {
+        //Get subdomain
+        var full = window.location.host;
+        var subdomain = full.split('.')[0];
 
-            //Do ajax call
-            $.ajax({
-                type: "GET",
-                url: "/api/Customization/GetPlatformId/" + subdomain,
-                contentType: 'application/json; charset=utf-8',
-                dataType: "json",
-            }).fail(() => {/* ok */ })
-                .done(function (data) {                    
-                    func(data);
-                })
-        }
+        //Do ajax call
+        $.ajax({
+          type: "GET",
+          url: "/api/Customization/GetPlatformId/" + subdomain,
+          contentType: 'application/json; charset=utf-8',
+          dataType: "json",
+        }).fail(() => {/* ok */ })
+          .done(function (data) {
+            func(data);
+          })
+      }
+
+      var custom = [
+        //Colors
+        PrimaryColor: @Model.PrimaryColor,
+        PrimaryColor: @Model.PrimaryColor,
+        TertiaryColor: @Model.TertiaryColor,
+        BackgroundColor: @Model.BackgroundColor,
+        TextColor: @Model.TextColor,
+
+        //Aliases
+        PersonAlias: @Model.PersonAlias,
+        PersonsAlias: @Model.PersonsAlias,
+        OrganisationAlias: @Model.OrganisationAlias,
+        OrganisationsAlias: @Model.OrganisationsAlias,
+        ThemeAlias: @Model.ThemeAlias,
+        ThemesAlias: @Model.ThemesAlias,
+
+        //Privacy
+        PrivacyTitle: @Model.PrivacyTitle,
+        PrivacyText: @Model.PrivacyText,
+
+        //FAQ
+        FAQTitle: @Model.FAQTitle,
+
+        //Contact
+        StreetAndHousenumber: @Model.StreetAndHousenumber,
+        Zipcode: @Model.Zipcode,
+        City: @Model.City,
+        Country: @Model.Country,
+        Email: @Model.Email
+      ];
 
         //Functions for ajax calls
         //Customization
@@ -500,7 +531,7 @@
         $("#form_page_color").submit(function (event) {
             event.preventDefault();
             getSubplatformId(putColor);
-            
+
         });
         $("#form_page_text").submit(function (event) {
             event.preventDefault();
@@ -529,5 +560,5 @@
             event.preventDefault();
             getSubplatformId(deleteQuestion);
         });
-    </script>
+  </script>
 }
