@@ -36,7 +36,7 @@ namespace BAR.UI.MVC.Controllers.api
 		/// </summary>
 		[HttpPost]
 		[Route("api/Customization/PutColor/{platformId}")]
-		public IHttpActionResult PutColor(int platformId, [FromBody] CustomizationViewModel custom)
+		public IHttpActionResult PutColor(int platformId, [FromBody] Customization custom)
 		{
 			platformManager = new SubplatformManager();
 

@@ -19,35 +19,35 @@
           <form id="form_page_color" class="form-horizontal form-label-left">
             <label class="control-label">Primaire kleur</label>
             <div id="cp-primary" class="input-group">
-              @Html.EditorFor(model => model.PrimaryColor, "", new { @class = "form-control", id = "ip-primary", placeholder = @Model.PrimaryColor })
+              @Html.TextBoxFor(model => model.PrimaryColor, "", new { @class = "form-control", id = "ip-primary", placeholder = @Model.PrimaryColor })
               <span class="input-group-addon">
                 <i></i>
               </span>
             </div>
             <label class="control-label">Secundaire kleur</label>
             <div id="cp-secondary" class="input-group">
-              @Html.EditorFor(model => model.SecondairyColor, "", new { @class = "form-control", id = "ip-secondary", placeholder = @Model.SecondairyColor })
+              @Html.TextBoxFor(model => model.SecondairyColor, "", new { @class = "form-control", id = "ip-secondary", placeholder = @Model.SecondairyColor })
               <span class="input-group-addon">
                 <i></i>
               </span>
             </div>
             <label class="control-label">Tertiaire kleur</label>
             <div id="cp-tertiary" class="input-group">
-              @Html.EditorFor(model => model.TertiaryColor, "", new { @class = "form-control", id = "ip-tertiary", placeholder = @Model.TertiaryColor })
+              @Html.TextBoxFor(model => model.TertiaryColor, "", new { @class = "form-control", id = "ip-tertiary", placeholder = @Model.TertiaryColor })
               <span class="input-group-addon">
                 <i></i>
               </span>
             </div>
             <label class="control-label">Achtergrond kleur</label>
             <div id="cp-bg" class="input-group">
-              @Html.EditorFor(model => model.BackgroundColor, "", new { @class = "form-control", id = "ip-bg", placeholder = @Model.BackgroundColor })
+              @Html.TextBoxFor(model => model.BackgroundColor, "", new { @class = "form-control", id = "ip-bg", placeholder = @Model.BackgroundColor })
               <span class="input-group-addon">
                 <i></i>
               </span>
             </div>
             <label class="control-label">Tekst kleur</label>
             <div id="cp-font" class="input-group">
-              @Html.EditorFor(model => model.TextColor, "", new { @class = "form-control", id = "ip-font", placeholder = @Model.TextColor })
+              @Html.TextBoxFor(model => model.TextColor, "", new { @class = "form-control", id = "ip-font", placeholder = @Model.TextColor })
               <span class="input-group-addon">
                 <i></i>
               </span>
@@ -419,44 +419,51 @@
           })
       }
 
-      var custom = [
+      var custom = {
+        CustomizationId: @Model.CustomizationId,
+
         //Colors
-        PrimaryColor: @Model.PrimaryColor,
-        PrimaryColor: @Model.PrimaryColor,
-        TertiaryColor: @Model.TertiaryColor,
-        BackgroundColor: @Model.BackgroundColor,
-        TextColor: @Model.TextColor,
+        PrimaryColor: "@Model.PrimaryColor",
+        SecondairyColor: " @Model.SecondairyColor",
+        TertiaryColor: "@Model.TertiaryColor",
+        BackgroundColor: "@Model.BackgroundColor",
+        TextColor: "@Model.TextColor",
 
         //Aliases
-        PersonAlias: @Model.PersonAlias,
-        PersonsAlias: @Model.PersonsAlias,
-        OrganisationAlias: @Model.OrganisationAlias,
-        OrganisationsAlias: @Model.OrganisationsAlias,
-        ThemeAlias: @Model.ThemeAlias,
-        ThemesAlias: @Model.ThemesAlias,
+        PersonAlias: "@Model.PersonAlias",
+        PersonsAlias: "@Model.PersonsAlias",
+        OrganisationAlias: "@Model.OrganisationAlias",
+        OrganisationsAlias: "@Model.OrganisationsAlias",
+        ThemeAlias: "@Model.ThemeAlias",
+        ThemesAlias: "@Model.ThemesAlias",
 
         //Privacy
-        PrivacyTitle: @Model.PrivacyTitle,
-        PrivacyText: @Model.PrivacyText,
+        PrivacyTitle: "@Model.PrivacyTitle",
+        PrivacyText: "@Model.PrivacyText",
 
         //FAQ
-        FAQTitle: @Model.FAQTitle,
+        FAQTitle: "@Model.FAQTitle",
 
         //Contact
-        StreetAndHousenumber: @Model.StreetAndHousenumber,
-        Zipcode: @Model.Zipcode,
-        City: @Model.City,
-        Country: @Model.Country,
-        Email: @Model.Email
-      ];
+        StreetAndHousenumber: "@Model.StreetAndHousenumber",
+        Zipcode: "@Model.Zipcode",
+        City: "@Model.City",
+        Country: "@Model.Country",
+        Email: "@Model.Email"
+      };
 
         //Functions for ajax calls
         //Customization
-        function putColor(id) {
-            $.ajax({
+      function putColor(id) {
+        formdata = $("#form_page_color").serializeArray().reduce(function (a, x) {
+          a[x.name] = x.value;
+          return a;
+        }, {});
+        console.log(custom);
+        $.ajax({
                 type: "POST",
                 url: "/api/Customization/PutColor/" + id,
-                data: $("#form_page_color").serialize(),
+                data: custom,
                 contentType: 'application/json; charset=utf-8',
                 dataType: "json"
             }).fail(() => {/* ok */ })
