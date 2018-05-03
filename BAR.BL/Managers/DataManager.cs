@@ -125,6 +125,7 @@ namespace BAR.BL.Managers
 			{
 				//Each grapvalue represents a total number of mentions mapped
 				//To a specific data
+				int count = informations.Count(i => i.CreationDate.Value.Day == timestamp.Day);
 				widgetData.GraphValues.Add(new GraphValue()
 				{
 					Value = startDate.Value.ToString(dateFormat),
