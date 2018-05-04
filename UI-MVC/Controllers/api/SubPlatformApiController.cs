@@ -32,6 +32,23 @@ namespace BAR.UI.MVC.Controllers.api
 		}
 
 		/// <summary>
+		/// Gives back the customization of a specific subplatform
+		/// </summary>
+		[HttpGet]
+		[Route("api/Customization/GetCustomForPlatform/{platformId}")]
+		public IHttpActionResult GetCustomForPlatform(int platformId)
+		{
+			Customization custom = new SubplatformManager().GetSubPlatform(platformId).Customization;
+
+			if (custom == null)
+				return BadRequest("No customization given");
+			if (!ModelState.IsValid)
+				return BadRequest(ModelState);
+
+			return Ok(custom);
+		}
+
+		/// <summary>
 		/// Changes the webpage colors of a specific subplatform
 		/// </summary>
 		[HttpPost]
