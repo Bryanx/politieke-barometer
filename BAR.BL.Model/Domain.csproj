@@ -59,13 +59,13 @@
     <Compile Include="Core\SubPlatform.cs" />
     <Compile Include="Data\Information.cs" />
     <Compile Include="Data\Property.cs" />
+    <Compile Include="Data\PropertyTag.cs" />
     <Compile Include="Data\PropertyValue.cs" />
     <Compile Include="Data\Source.cs" />
     <Compile Include="Data\SynchronizeAudit.cs" />
     <Compile Include="Items\Category.cs" />
     <Compile Include="Items\Item.cs" />
     <Compile Include="Items\ItemType.cs" />
-    <Compile Include="Items\Level.cs" />
     <Compile Include="Items\Organisation.cs" />
     <Compile Include="Items\Person.cs" />
     <Compile Include="Items\SocialMediaName.cs" />
@@ -80,10 +80,12 @@
     <Compile Include="Users\User.cs" />
     <Compile Include="Widgets\Dashboard.cs" />
     <Compile Include="Widgets\DashboardType.cs" />
+    <Compile Include="Widgets\GraphType.cs" />
     <Compile Include="Widgets\ItemWidget.cs" />
-    <Compile Include="Widgets\SubType.cs" />
     <Compile Include="Widgets\UserWidget.cs" />
+    <Compile Include="Widgets\GraphValue.cs" />
     <Compile Include="Widgets\Widget.cs" />
+    <Compile Include="Widgets\WidgetData.cs" />
     <Compile Include="Widgets\WidgetType.cs" />
   </ItemGroup>
   <ItemGroup>

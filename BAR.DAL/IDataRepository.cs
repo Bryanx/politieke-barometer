@@ -12,7 +12,7 @@ namespace BAR.DAL
 		//Read
 		int ReadNumberInfo(int itemId, DateTime since);
 		Information ReadInformation(int informationid);
-		Information ReadInformationWithPropValues(int informationId);
+		Information ReadInformationWitlAllInfo(int informationId);
 		IEnumerable<Information> ReadAllInformations();
 		IEnumerable<Information> ReadInformationsForItemid(int itemId);
 		IEnumerable<Information> ReadInformationsForDate(int itemId, DateTime since);

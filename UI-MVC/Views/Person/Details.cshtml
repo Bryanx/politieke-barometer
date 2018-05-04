@@ -1,4 +1,6 @@
 @using System.Web.Optimization
+@using BAR.BL.Domain.Items
+@using BAR.UI.MVC.Helpers
 @model BAR.UI.MVC.Models.ItemViewModels.PersonViewModel
 
 @{
@@ -15,92 +17,96 @@
     <div class="col-md-12 col-sm-12 col-xs-12">
         <div class="x_panel">
             <div class="clearfix"></div>
-            <div class="x_content">
-                <div class="col-md-3 col-sm-3 col-xs-12 profile_left">
-                    <div class="profile_img">
-                        <div id="crop-avatar">
+            
+            @if (@User.IsInRole("Admin") || @User.IsInRole("SuperAdmin")) {
+                <button id="viewAsUser" class="adminview btn btn-default btn-xs">Toggle adminview</button>
+            }
                             <!-- Current avatar -->
-                            <img class="img-responsive avatar-view" src="../../Content/build/images/picture.jpg" alt="Avatar" title="Change the avatar">
-                        </div>
-                    </div>
-
-                </div>
-                <div class="col-md-9 col-sm-9 col-xs-12">
-                    @Resources.Politician
-                    <h1>
-                        @Model.Person.Name
-                        @if (User.Identity.IsAuthenticated) {
-                            if (Model.Subscribed != true) {
-                                <a class="w-100px subscribeItem btn btn-success pull-right" data-item-id="@Model.Person.ItemId" title="Deze persoon volgen">@Resources.Subscribe</a>
-                            } else {
-                                <a class="w-100px subscribeItem btn btn-danger pull-right" data-item-id="@Model.Person.ItemId" title="Uitschrijven">@Resources.Unsubscribe</a>
-                            }
-                        }
-                    </h1>
-                    <hr/>
-                </div>
-                <div class="col-md-3 col-sm-3 col-xs-12">
-                    <h4>
-                        <strong>@Resources.Politician details</strong>
-                    </h4>
-                    <ul class="list-unstyled user_data">
-                        <li>
-                            <i class="fa fa-map-marker user-profile-icon"></i> Locatie
-                        </li>
-                        <li>
-                            <i class="fa fa-briefcase user-profile-icon"></i> Functie
-                        </li>
-                        <li class="m-top-xs">
-                            <i class="fa fa-globe external-link user-profile-icon"></i>
-                            <a href="http://www.kimlabs.com/profile/" target="_blank">www.kimlabs.com</a>
-                        </li>
-                    </ul>
-                </div>
-                <div class="col-md-3 col-sm-3 col-xs-12">
-                    <h4>
-                        <strong>Laatste verhalen</strong>
-                    </h4>
-                    <ul class="list-unstyled person-data">
-                        <li>
-                            <i class="fa fa-map-marker user-profile-icon"></i> Locatie
-                        </li>
-                        <li>
-                            <i class="fa fa-briefcase user-profile-icon"></i> Functie
-                        </li>
-                        <li class="m-top-xs">
-                            <i class="fa fa-external-link user-profile-icon"></i>
-                            <a href="http://www.kimlabs.com/profile/" target="_blank">www.kimlabs.com</a>
-                        </li>
-                    </ul>
-                </div>
-                <div class="col-md-3 col-sm-3 col-xs-12">
-                    <h4>
-                        <strong>Totale vermeldingen</strong>
-                    </h4>
-                    <h1>
-                        <strong>232</strong>
-                    </h1>
-                </div>
+            <div id="userview">
+                @Html.Partial("Partials/_DetailsAsUser", Model)
+            </div>
+            <div style="display: none" id="adminview">
+                @Html.Partial("Partials/_DetailsAsAdmin", Model)
             </div>
         </div>
     </div>
 </div>
+
 <!-- Widgets -->
 <div class="grid-stack" id="grid"></div>
+@Html.Partial("Partials/_SocialIcons")
 
 @section CustomJS{
+    <div id="fb-root"></div>
+    <script>
+        (function(d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) return;
+            js = d.createElement(s);
+            js.id = id;
+            js.src = 'https://connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v2.12';
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+    </script>
     <script src="~/Scripts/ChartJS/Chart.js"></script>
+    <script src="https://platform.twitter.com/widgets.js"></script>
     @Scripts.Render("~/bundles/gridstack")
+    
     <script type="text/javascript" defer>
+        var wto;
+        $(".renameItem").on('input propertychange paste',
+            function() {
+                clearTimeout(wto);
+                var $this = $(this);
+                var id = $this.data('item-id');
+                $this.addClass("loadMessage");
+                wto = setTimeout(function() {
+                        $.ajax({
+                                type: 'POST',
+                                url: '/api/Admin/RenameItem/' + id + '/' + $this.val()
+                            }).fail(() => { /**/ })
+                            .done(function() {
+                                $this.removeClass("loadMessage");
+                                $(".item-name").html($this.val());
+                            });
+                    },
+                    1000);
+            });
 
-        $('.subscribeItem').click(function() {
-            ajaxToggleSubscribe($(this));
-        });
+        $("#itemForm").on("submit",
+            function(event) {
+                event.preventDefault();
+                let form = $(this);
+                $.ajax({
+                    method: "GET",
+                    url: "/api/GetItemWithDetails/" + form.data("item-id"),
+                    success: data => {
+                        formdata = form.serializeArray().reduce(function (a, x) {
+                            a[x.name] = x.value;
+                            return a;
+                        }, {});
+                        data.District = formdata.District;
+                        data.Site = formdata.Site;
+                        data.DateOfBirth = formdata.DateOfBirth;
+                        data.Position = formdata.Position;
+                    submitForm($(this), event, $("#accountSettingsMessage"), data);
+                    }
+                });
+            });
+
+        $(".item-input").on('input propertychange paste',() => $("#itemForm").submit());
+        $('.subscribeItem').click(function() { ajaxToggleSubscribe($(this));});
+        $("#fileUpload").on("change",() => $("#formFileUpload").submit());
+        $("#uploadPicture").click(() => $("#fileUpload").click());
 
         (() => {
             loadWidgets("/api/GetItemWidgets/", @Model.Person.ItemId);
+
+            $("#viewAsUser").click(function() {
+                $("#userview").toggle();
+                $("#adminview").toggle();
+            });
         })(jQuery);
 
     </script>
 }
-

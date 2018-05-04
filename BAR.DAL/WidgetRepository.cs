@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using BAR.BL.Domain.Widgets;
 using System.Data.Entity;
+using BAR.BL.Domain.Items;
 
 namespace BAR.DAL
 {
@@ -24,7 +25,7 @@ namespace BAR.DAL
 			if (uow == null) ctx = new BarometerDbContext();
 			else ctx = uow.Context;
 		}
-		
+
 		/// <summary>
 		/// Gives back a list of all the dashboards.
 		/// </summary>
@@ -59,12 +60,13 @@ namespace BAR.DAL
 			return ctx.Dashboards.Include(dash => dash.Widgets)
 				.Where(dash => dash.DashboardId == dashboardId).SingleOrDefault();
 		}
-		
+
 		/// <summary>
 		/// Gives back a dashboard object with all the widgets
 		/// for a specific user id.
 		/// </summary>
-		public Dashboard ReadDashboardWithWidgets(string userId) {
+		public Dashboard ReadDashboardWithWidgets(string userId)
+		{
 			return ctx.Dashboards.Include(dash => dash.Widgets)
 				.Where(dash => dash.User.Id == userId).FirstOrDefault();
 		}
@@ -96,7 +98,7 @@ namespace BAR.DAL
 		{
 			return ReadDashboardWithWidgets(dashboardId).Widgets;
 		}
-		
+
 		/// <summary>
 		/// Creates a new dashboard and persist that
 		/// to the database.
@@ -117,19 +119,10 @@ namespace BAR.DAL
 		/// widget needs to be linked to dashboard.
 		/// Alternative: call ReadDashboard(), add widget to the list, updateDashboard();
 		/// </summary>
-		public int CreateWidget(Widget widget, int dashboardId)
+		public int CreateWidget(Widget widget)
 		{
-			if (widget is UserWidget)		
-			{
-				//Add reference if userwidget
-				Dashboard dasboardToAddWidget = ReadDashboardWithWidgets(dashboardId);
-				dasboardToAddWidget.Widgets.Add((UserWidget)widget);
-				return UpdateDashboard(dasboardToAddWidget);
-			} else
-			{
-				ctx.Widgets.Add(widget);
-				return ctx.SaveChanges();
-			}		
+			ctx.Widgets.Add(widget);
+			return ctx.SaveChanges();
 		}
 
 		/// <summary>
@@ -218,8 +211,18 @@ namespace BAR.DAL
 		/// </summary>
 		public Widget ReadWidgetWithAllitems(int widgetid)
 		{
-			return ctx.Widgets.Include(widget => widget.Items)
+			return ctx.Widgets.Include(widget => widget.PropertyTags)
+							  .Include(widget => widget.Items)
 							  .Where(widget => widget.WidgetId == widgetid).SingleOrDefault();
+		}
+
+		/// <summary>
+		/// Gives back a list with all the widgets with all their items.
+		/// </summary>
+		public IEnumerable<Widget> ReadAllWidgetsWithAllItems()
+		{
+			return ctx.Widgets.Include(Widget => Widget.PropertyTags)
+							  .Include(widget => widget.Items).AsEnumerable();
 		}
 
 		/// <summary>
@@ -230,6 +233,95 @@ namespace BAR.DAL
 		{
 			foreach (UserWidget widget in widgets) ctx.Widgets.Remove(widget);
 			return ctx.SaveChanges();
-		}	
+		}
+
+		/// <summary>
+		/// Reads a widget with all the data of that specific widget.
+		/// </summary>
+		public Widget ReadWidgetWithAllData(int widgetId)
+		{
+			return ctx.Widgets.Include(widget => widget.Items)
+					   .Include(widget => widget.PropertyTags)
+					   .Include(widget => widget.WidgetDatas)
+					   .Include(widget => widget.WidgetDatas.Select(widgetData => widgetData.GraphValues))
+					   .Where(widget => widget.WidgetId == widgetId)
+					   .SingleOrDefault();
+		}
+
+		/// <summary>
+		/// Reads all the widgets with all the data.
+		/// </summary>
+		public IEnumerable<Widget> ReadAllWidgetsWithAllData()
+		{
+			return ctx.Widgets.Include(widget => widget.Items)
+					   .Include(widget => widget.PropertyTags)
+					   .Include(widget => widget.WidgetDatas)
+					   .Include(widget => widget.WidgetDatas.Select(widgetData => widgetData.GraphValues))
+					   .AsEnumerable();
+		}
+
+		/// <summary>
+		/// Creates a new widgetData in the database
+		/// </summary>
+		public int CreateWidgetData(WidgetData widgetData)
+		{
+			ctx.WidgetDatas.Add(widgetData);
+			return ctx.SaveChanges();
+		}
+
+		/// <summary>
+		/// Updates a given widgetData
+		/// </summary>
+		public int UpdateWidgetData(WidgetData widgetData)
+		{
+			ctx.Entry(widgetData).State = EntityState.Modified;
+			return ctx.SaveChanges();
+		}
+
+		/// <summary>
+		/// Gives back all widgets for a specific item id
+		/// The widget contains all the data needed to construct a graph
+		/// </summary>
+		public IEnumerable<Widget> ReadAllWidgetsWithAllDataForItem(int itemId)
+		{
+			Item itemToReturn =  ctx.Items.Include(item => item.ItemWidgets)
+							.Include(item => item.ItemWidgets.Select(widget => widget.WidgetDatas))
+							.Include(item => item.ItemWidgets.Select(widget => widget.WidgetDatas.Select(data => data.GraphValues)))
+							.Where(item => item.ItemId == itemId).SingleOrDefault();
+			return itemToReturn.ItemWidgets.AsEnumerable();
+		}
+
+		/// <summary>
+		/// Gives back all the widgetdatas for a specific itemId
+		/// </summary>
+		public IEnumerable<WidgetData> ReadWidgetDatasForitemid(int itemId)
+		{
+			return ctx.WidgetDatas.Include(data => data.Widget)
+								  .Include(data => data.GraphValues)
+								  .Include(data => data.Widget.Items)
+								  .Where(data => data.Widget.Items.Any(item => item.ItemId == itemId))
+								  .AsEnumerable();
+		}
+
+		/// <summary>
+		/// Gives back all the widgetData in the system
+		/// </summary>
+		public IEnumerable<WidgetData> ReadAllWidgetDatas()
+		{
+			return ctx.WidgetDatas.Include(data => data.Widget)
+								  .Include(data => data.Widget.Items)
+								  .Include(data => data.GraphValues)
+								  .AsEnumerable();
+		}
+
+
+		/// <summary>
+		/// Creates a range of WidgetData.
+		/// </summary>
+		public int CreateWidgetDatas(ICollection<WidgetData> widgetDatas)
+		{
+			ctx.WidgetDatas.AddRange(widgetDatas);
+			return ctx.SaveChanges();
+		}
 	}
 }

@@ -4,6 +4,25 @@
 
 <!-- login -->
 <ul class="nav navbar-nav navbar-right">
+    <!-- Items -->
+    <li class="dropdown navbar-left">
+        <a href="" class="dropdown-toggle item-menu" data-toggle="dropdown"
+           aria-expanded="false">
+            <i class="fa fa-users"></i>
+        </a>
+        <ul class="dropdown-menu pull-right">
+            <li>
+                <a href="@Url.PersonUrl()"><i class="fa fa-users"></i>@Resources.Politicians</a>
+            </li>
+            <li>
+                <a href="@Url.OrganisationUrl()"><i class="fa fa-briefcase"></i>@Resources.Parties</a>
+            </li>
+            <li>
+                <a href='#'><i class="fa fa-tag"></i>@Resources.Topics</a>
+            </li>
+        </ul>
+    </li>
+    <!-- /Items -->
     <li class="c-primary">
         <a class="signup" href="#" data-toggle="modal" data-target=".bs-example-modal-lg">@Resources.Login</a>
         <div class="modal bs-example-modal-lg fade" tabindex="-1" role="dialog" aria-hidden="true">
@@ -18,7 +37,8 @@
                                 <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
                                     <div class="panel-body">
                                         @Html.Partial("Partials/_ExternalLoginsListPartial", new ExternalLoginListViewModel {ReturnUrl = ViewBag.ReturnUrl})
-                                        @using (Html.BeginForm("Login", "User", new {ReturnUrl = ViewBag.ReturnUrl}, FormMethod.Post, new {role = "form"})) {
+                                        @using (Html.BeginForm("Login", "User", new {ReturnUrl = ViewBag.ReturnUrl}, FormMethod.Post, new {role = "form"}))
+                                        {
                                             @Html.AntiForgeryToken()
                                             <div class="form-group">
                                                 @Html.TextBoxFor(m => m.Email, new {@class = "form-control login-input", @placeholder = Resources.Email})

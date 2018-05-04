@@ -142,7 +142,16 @@ namespace BAR.UI.MVC.App_GlobalResources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Admin.
+        ///   Hiermee zoekt u een vertaalde tekenreeks die vergelijkbaar is met Add SubPlatform.
+        /// </summary>
+        public static string AddSubPlatform {
+            get {
+                return ResourceManager.GetString("AddSubPlatform", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Hiermee zoekt u een vertaalde tekenreeks die vergelijkbaar is met Admin.
         /// </summary>
         public static string Admin {
             get {
@@ -421,7 +430,16 @@ namespace BAR.UI.MVC.App_GlobalResources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Email.
+        ///   Hiermee zoekt u een vertaalde tekenreeks die vergelijkbaar is met Details.
+        /// </summary>
+        public static string Details {
+            get {
+                return ResourceManager.GetString("Details", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Hiermee zoekt u een vertaalde tekenreeks die vergelijkbaar is met Email.
         /// </summary>
         public static string Email {
             get {
@@ -480,6 +498,15 @@ namespace BAR.UI.MVC.App_GlobalResources {
         public static string Failed {
             get {
                 return ResourceManager.GetString("Failed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Female.
+        /// </summary>
+        public static string Female {
+            get {
+                return ResourceManager.GetString("Female", resourceCulture);
             }
         }
         
@@ -619,7 +646,25 @@ namespace BAR.UI.MVC.App_GlobalResources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Last name.
+        ///   Hiermee zoekt u een vertaalde tekenreeks die vergelijkbaar is met Just now.
+        /// </summary>
+        public static string JustNow {
+            get {
+                return ResourceManager.GetString("JustNow", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Hiermee zoekt u een vertaalde tekenreeks die vergelijkbaar is met Languages.
+        /// </summary>
+        public static string Languages {
+            get {
+                return ResourceManager.GetString("Languages", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Hiermee zoekt u een vertaalde tekenreeks die vergelijkbaar is met Last name.
         /// </summary>
         public static string Lastname {
             get {
@@ -705,6 +750,15 @@ namespace BAR.UI.MVC.App_GlobalResources {
         public static string Logout {
             get {
                 return ResourceManager.GetString("Logout", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Male.
+        /// </summary>
+        public static string Male {
+            get {
+                return ResourceManager.GetString("Male", resourceCulture);
             }
         }
         
@@ -862,7 +916,16 @@ namespace BAR.UI.MVC.App_GlobalResources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Page management.
+        ///   Hiermee zoekt u een vertaalde tekenreeks die vergelijkbaar is met Organisation.
+        /// </summary>
+        public static string Organisation {
+            get {
+                return ResourceManager.GetString("Organisation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Hiermee zoekt u een vertaalde tekenreeks die vergelijkbaar is met Page management.
         /// </summary>
         public static string PageManagement {
             get {
@@ -1186,7 +1249,16 @@ namespace BAR.UI.MVC.App_GlobalResources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Source management.
+        ///   Hiermee zoekt u een vertaalde tekenreeks die vergelijkbaar is met Social media.
+        /// </summary>
+        public static string SocialMedia {
+            get {
+                return ResourceManager.GetString("SocialMedia", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Hiermee zoekt u een vertaalde tekenreeks die vergelijkbaar is met Source management.
         /// </summary>
         public static string SourceManagement {
             get {
