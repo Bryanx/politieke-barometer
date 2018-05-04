@@ -582,4 +582,10 @@
   <data name="Languages" xml:space="preserve">
     <value>Languages</value>
   </data>
+  <data name="Female" xml:space="preserve">
+    <value>Female</value>
+  </data>
+  <data name="Male" xml:space="preserve">
+    <value>Male</value>
+  </data>
 </root>

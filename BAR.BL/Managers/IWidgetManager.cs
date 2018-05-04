@@ -19,9 +19,10 @@ namespace BAR.BL.Managers
 		IEnumerable<Widget> GetAllWidgetsWithAllItems();
 		IEnumerable<Widget> GetAllWidgetsWithAllData();
 		IEnumerable<Widget> GetWidgetsForItem(int itemId);
+		IEnumerable<Widget> GetAllWidgetsWithAllDataForItem(int itemId);
 
 		Widget AddWidget(WidgetType widgetType, string title, int rowNbr, int colNbr, List<PropertyTag> proptags,
-			DateTime? timestamp = null, GraphType? graphType = null, int rowspan = 1, int colspan = 1, int dashboardId = -1);
+			DateTime? timestamp = null, GraphType? graphType = null, int rowspan = 1, int colspan = 1, int dashboardId = -1, List<WidgetData> datas = null);
 		Widget AddItemToWidget(int widgetId, int itemId);
 
 		Widget ChangeWidgetPos(int widgetId, int rowNbr, int colNbr, int rowspan = 1, int colspan = 1);
@@ -42,6 +43,9 @@ namespace BAR.BL.Managers
 		void RemoveDashboard(int dashboardId);
 
 		//WidgetDatas
+		IEnumerable<WidgetData> GetAllWidgetDatas();
+		IEnumerable<WidgetData> GetWidgetDatasForItemId(int itemId);
+
 		WidgetData AddWidgetData(WidgetData widgetData);
 
 		WidgetData ChangeWidgetData(WidgetData widgetData);

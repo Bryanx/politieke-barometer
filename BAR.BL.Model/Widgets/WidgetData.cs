@@ -12,5 +12,16 @@ namespace BAR.BL.Domain.Widgets
 		public string KeyValue { get; set; }
 		public ICollection<GraphValue> GraphValues { get; set; }
 		public Widget Widget { get; set; }
+
+		public WidgetData() {
+		}
+
+		//Constructor for making a copy of WidgetData
+		public WidgetData(WidgetData o) {
+			WidgetDataId = o.WidgetDataId;
+			KeyValue = o.KeyValue;
+			GraphValues = o.GraphValues;
+			Widget = o.Widget;
+		}
 	}
 }
