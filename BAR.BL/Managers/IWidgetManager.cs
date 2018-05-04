@@ -37,6 +37,7 @@ namespace BAR.BL.Managers
 		//dashboards
 		Dashboard GetDashboard(int dashboardId);
 		Dashboard GetDashboard(string userId);
+		Dashboard GetDashboardWithAllDataForUserId(string userId);
 
 		Dashboard AddDashboard(string userId, DashboardType dashType = DashboardType.Private);
 

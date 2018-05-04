@@ -406,6 +406,16 @@ namespace BAR.BL.Managers
 			InitRepo();
 			return widgetRepo.ReadAllWidgetDatas().AsEnumerable();
 		}
+
+		/// <summary>
+		/// Gives back a dashboard with all data
+		/// for a specific userId
+		/// </summary>
+		public Dashboard GetDashboardWithAllDataForUserId(string userId)
+		{
+			InitRepo();
+			return widgetRepo.ReadDashboardWithAllDataForUserId(userId);
+		}
 	}
 }
 
