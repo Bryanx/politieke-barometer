@@ -439,7 +439,6 @@
         a[x.name] = x.value;
         return a;
       }, {});
-      console.log(formdata);
       data.PrimaryColor = formdata.PrimaryColor;
       data.SecondairyColor = formdata.SecondairyColor;
       data.TertiaryColor = formdata.TertiaryColor;
@@ -447,6 +446,7 @@
       data.TextColor = formdata.TextColor;
       console.log(data);
 
+      //Do ajax call
       $.ajax({
         type: "POST",
         url: "/api/Customization/PutColor/" + id,
@@ -454,46 +454,85 @@
       }).fail(() => {/* ok */ })
         .done(() => {/* ok */ })
     }
-    //function putAlias(id) {
-    //  $.ajax({
-    //    type: "POST",
-    //    url: "api/Customization/PutAlias/" + id,
-    //    data: $("#form_page_text").serialize(),
-    //    contentType: 'application/json; charset=utf-8',
-    //    dataType: "json"
-    //  }).fail(() => {/* ok */ })
-    //    .done(() => {/* ok */ })
-    //}
-    //function putPrivacy(id) {
-    //  $.ajax({
-    //    type: "POST",
-    //    url: "api/Customization/PutPrivacy/" + id,
-    //    data: $("#form_page_privacy").serialize(),
-    //    contentType: 'application/json; charset=utf-8',
-    //    dataType: "json"
-    //  }).fail(() => {/* ok */ })
-    //    .done(() => {/* ok */ })
-    //}
-    //function putFAQ(id) {
-    //  $.ajax({
-    //    type: "POST",
-    //    url: "api/Customization/PutFAQ/" + id,
-    //    data: $("#form_page_faq").serialize(),
-    //    contentType: 'application/json; charset=utf-8',
-    //    dataType: "json"
-    //  }).fail(() => {/* ok */ })
-    //    .done(() => {/* ok */ })
-    //}
-    //function putContact(id) {
-    //  $.ajax({
-    //    type: "POST",
-    //    url: "api/Customization/PutContact/" + id,
-    //    data: $("#form_page_contact").serialize(),
-    //    contentType: 'application/json; charset=utf-8',
-    //    dataType: "json"
-    //  }).fail(() => {/* ok */ })
-    //    .done(() => {/* ok */ })
-    //}
+    function putAlias(id, data) {
+      //Update dataforms
+      formdata = $("#form_page_text").serializeArray().reduce(function (a, x) {
+        a[x.name] = x.value;
+        return a;
+      }, {});
+      data.PersonAlias = formdata.PersonAlias;
+      data.PersonsAlias = formdata.PersonsAlias;
+      data.OrganisationAlias = formdata.OrganisationAlias;
+      data.OrganisationsAlias = formdata.OrganisationsAlias;
+      data.ThemeAlias = formdata.ThemeAlias;
+      data.ThemesAlias = formdata.ThemesAlias;
+      console.log(data);
+
+      //Do ajax-call
+      $.ajax({
+        type: "POST",
+        url: "api/Customization/PutAlias/" + id,
+        data: data
+      }).fail(() => {/* ok */ })
+        .done(() => {/* ok */ })
+    }
+    function putPrivacy(id, data) {
+      //Update dataforms
+      formdata = $("#form_page_privacy").serializeArray().reduce(function (a, x) {
+        a[x.name] = x.value;
+        return a;
+      }, {});
+      data.PrivacyTitle = formdata.PrivacyTitle;
+      data.PrivacyText = formdata.PrivacyText;
+      console.log(data);
+
+      //Do ajax-call
+      $.ajax({
+        type: "POST",
+        url: "api/Customization/PutPrivacy/" + id,
+        data: data
+
+      }).fail(() => {/* ok */ })
+        .done(() => {/* ok */ })
+    }
+    function putFAQ(id, data) {
+      //Update dataforms
+      formdata = $("#form_page_faq").serializeArray().reduce(function (a, x) {
+        a[x.name] = x.value;
+        return a;
+      }, {});
+      data.FAQTitle = formdata.FAQTitle;
+      console.log(data);
+
+      //Do ajax-call
+      $.ajax({
+        type: "POST",
+        url: "api/Customization/PutFAQ/" + id,
+        data: data
+      }).fail(() => {/* ok */ })
+        .done(() => {/* ok */ })
+    }
+    function putContact(id, data) {
+      //Update dataforms
+      formdata = $("#form_page_contact").serializeArray().reduce(function (a, x) {
+        a[x.name] = x.value;
+        return a;
+      }, {});
+      data.StreetAndHousenumber = formdata.StreetAndHousenumber;
+      data.Zipcode = formdata.Zipcode;
+      data.City = formdata.City;
+      data.Country = formdata.Country;
+      data.Email = formdata.Email;
+      console.log(data);
+
+      //Do ajax-call
+      $.ajax({
+        type: "POST",
+        url: "api/Customization/PutContact/" + id,
+        data: data
+      }).fail(() => {/* ok */ })
+        .done(() => {/* ok */ })
+    }
 
     ////Questions
     ////TODO: write an to create a question
@@ -524,24 +563,22 @@
       event.preventDefault();
       getSubplatformId(getCustomData, putColor);
     });
-
-    $()
-    //$("#form_page_text").submit(function (event) {
-    //  event.preventDefault();
-    //  getSubplatformId$(getCustomData);
-    //});
-    //$("#form_page_privacy").submit(function (event) {
-    //  event.preventDefault();
-    //  getSubplatformId(getCustomData);
-    //});
-    //$("#form_page_faq").submit(function (event) {
-    //  event.preventDefault();
-    //  getSubplatformId(getCustomData);
-    //});
-    //$("#form_page_contact").submit(function (event) {
-    //  event.preventDefault();
-    //  getSubplatformId(getCustomData);
-    //});
+    $("#form_page_text").submit(function (event) {
+      event.preventDefault();
+      getSubplatformId$(getCustomData, putAlias);
+    });
+    $("#form_page_privacy").submit(function (event) {
+      event.preventDefault();
+      getSubplatformId(getCustomData, putPrivacy);
+    });
+    $("#form_page_faq").submit(function (event) {
+      event.preventDefault();
+      getSubplatformId(getCustomData, putFAQ);
+    });
+    $("#form_page_contact").submit(function (event) {
+      event.preventDefault();
+      getSubplatformId(getCustomData, putContact);
+    });
 
     ////Questions
     ////TODO: write a listner to create a question
