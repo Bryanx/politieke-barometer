@@ -33,6 +33,8 @@ namespace BAR.UI.MVC
 
 				//Mapping customization
 				cfg.CreateMap<Customization, CustomizationViewModel>()
+					.ForMember(m => m.CustomizationId, opt => opt.MapFrom(src => src.CustomizationId))
+
 					//Mapping Page colors
 					.ForMember(m => m.PrimaryColor, opt => opt.MapFrom(src => src.PrimaryColor))
 					.ForMember(m => m.SecondairyColor, opt => opt.MapFrom(src => src.SecondairyColor))

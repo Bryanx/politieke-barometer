@@ -73,27 +73,27 @@
 
             <div class="form-group">
               <label class="control-label">Persoon alias (ev)</label>
-              @Html.EditorFor(model => model.PersonAlias, "", new { @class = "form-control", placeholder = @Model.PersonAlias })
+              @Html.TextBoxFor(model => model.PersonAlias, "", new { @class = "form-control", placeholder = @Model.PersonAlias })
             </div>
             <div class="form-group">
               <label class="control-label">Personen alias (mv)</label>
-              @Html.EditorFor(model => model.PersonsAlias, "", new { @class = "form-control", placeholder = @Model.PersonsAlias })
+              @Html.TextBoxFor(model => model.PersonsAlias, "", new { @class = "form-control", placeholder = @Model.PersonsAlias })
             </div>
             <div class="form-group">
               <label class="control-label">Organisatie alias (ev)</label>
-              @Html.EditorFor(model => model.OrganisationAlias, "", new { @class = "form-control", placeholder = @Model.OrganisationAlias })
+              @Html.TextBoxFor(model => model.OrganisationAlias, "", new { @class = "form-control", placeholder = @Model.OrganisationAlias })
             </div>
             <div class="form-group">
               <label class="control-label">Organisaties alias (mv)</label>
-              @Html.EditorFor(model => model.OrganisationsAlias, "", new { @class = "form-control", placeholder = @Model.OrganisationsAlias })
+              @Html.TextBoxFor(model => model.OrganisationsAlias, "", new { @class = "form-control", placeholder = @Model.OrganisationsAlias })
             </div>
             <div class="form-group">
               <label class="control-labe">Thema alias (ev)</label>
-              @Html.EditorFor(model => model.ThemeAlias, "", new { @class = "form-control", placeholder = @Model.ThemeAlias })
+              @Html.TextBoxFor(model => model.ThemeAlias, "", new { @class = "form-control", placeholder = @Model.ThemeAlias })
             </div>
             <div class="form-group">
               <label class="control-label">Thema's alias (mv)</label>
-              @Html.EditorFor(model => model.ThemesAlias, "", new { @class = "form-control", placeholder = @Model.ThemesAlias })
+              @Html.TextBoxFor(model => model.ThemesAlias, "", new { @class = "form-control", placeholder = @Model.ThemesAlias })
             </div>
             <div class="form-group">
               <button type="submit" class="btn btn-dark">Opslaan</button>
@@ -121,7 +121,7 @@
               Titel
             </label>
             <div class="col-md-6 col-sm-6 col-xs-12">
-              @Html.EditorFor(model => model.PrivacyTitle, "", new { @class = "form-control", placeholder = @Model.PrivacyTitle })
+              @Html.TextBoxFor(model => model.PrivacyTitle, "", new { @class = "form-control", placeholder = @Model.PrivacyTitle })
             </div>
           </div>
           <label class="control-label col-md-3 col-sm-3 col-xs-12" for="privacy_title">
@@ -228,7 +228,7 @@
               </div>
 
               <div id="editor-one" class="editor-wrapper placeholderText" contenteditable="true"></div>
-              @Html.EditorFor(model => model.PrivacyText, "", new { @class = "form-control", id = "descr", placeholder = @Model.PrivacyText })
+              @Html.TextBoxFor(model => model.PrivacyText, "", new { @class = "form-control", id = "descr", placeholder = @Model.PrivacyText })
             </div>
           </div>
           <div class="col-sm-6 col-md-6 col-xs-12 center-margin">
@@ -258,7 +258,7 @@
               Titel
             </label>
             <div class="col-md-6 col-sm-6 col-xs-12">
-              @Html.EditorFor(model => model.FAQTitle, "", new { @class = "form-control", placeholder = @Model.FAQTitle })
+              @Html.TextBoxFor(model => model.FAQTitle, "", new { @class = "form-control", placeholder = @Model.FAQTitle })
             </div>
           </div>
           <div class="ln_solid"></div>
@@ -310,23 +310,23 @@
           <form id="form_page_contact" class="form-horizontal form-label-left">
             <div class="form-group">
               <label class="control-label">Straat en huisnummer</label>
-              @Html.EditorFor(model => model.StreetAndHousenumber, "", new { @class = "form-control", placeholder = @Model.StreetAndHousenumber })
+              @Html.TextBoxFor(model => model.StreetAndHousenumber, "", new { @class = "form-control", placeholder = @Model.StreetAndHousenumber })
             </div>
             <div class="form-group">
               <label class="control-label">Postcode</label>
-              @Html.EditorFor(model => model.Zipcode, "", new { @class = "form-control", placeholder = @Model.Zipcode })
+              @Html.TextBoxFor(model => model.Zipcode, "", new { @class = "form-control", placeholder = @Model.Zipcode })
             </div>
             <div class="form-group">
               <label class="control-label">Stad</label>
-              @Html.EditorFor(model => model.City, "", new { @class = "form-control", placeholder = @Model.City })
+              @Html.TextBoxFor(model => model.City, "", new { @class = "form-control", placeholder = @Model.City })
             </div>
             <div class="form-group">
               <label class="control-label">Land</label>
-              @Html.EditorFor(model => model.Country, "", new { @class = "form-control", placeholder = @Model.Country })
+              @Html.TextBoxFor(model => model.Country, "", new { @class = "form-control", placeholder = @Model.Country })
             </div>
             <div class="form-group">
               <label class="control-labe">Email adres</label>
-              @Html.EditorFor(model => model.Email, "", new { @class = "form-control", placeholder = @Model.Email })
+              @Html.TextBoxFor(model => model.Email, "", new { @class = "form-control", placeholder = @Model.Email })
             </div>
             <div class="form-group">
               <button type="submit" class="btn btn-dark">Opslaan</button>
