@@ -564,6 +564,12 @@
   <data name="SourceManagement" xml:space="preserve">
     <value>Source management</value>
   </data>
+  <data name="AddSubPlatform" xml:space="preserve">
+    <value>Add SubPlatform</value>
+  </data>
+  <data name="JustNow" xml:space="preserve">
+    <value>Just now</value>
+  </data>
   <data name="Details" xml:space="preserve">
     <value>Details</value>
   </data>

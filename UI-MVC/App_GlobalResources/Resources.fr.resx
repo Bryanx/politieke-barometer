@@ -144,6 +144,9 @@
   <data name="AddSource" xml:space="preserve">
     <value>Ajouter une source</value>
   </data>
+  <data name="AddSubPlatform" xml:space="preserve">
+    <value>Adder un subplatformer</value>
+  </data>
   <data name="Admin" xml:space="preserve">
     <value>Administrateur</value>
   </data>
@@ -311,6 +314,9 @@
   </data>
   <data name="Languages" xml:space="preserve">
     <value>Langues</value>
+  </data>
+  <data name="JustNow" xml:space="preserve">
+    <value>Juste maintenant</value>
   </data>
   <data name="Lastname" xml:space="preserve">
     <value>Nom de famille</value>

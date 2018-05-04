@@ -20,7 +20,7 @@
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
     <Use64BitIISExpress />
-    <IISExpressSSLPort>44317</IISExpressSSLPort>
+    <IISExpressSSLPort>44303</IISExpressSSLPort>
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
@@ -227,6 +227,7 @@
     <Compile Include="Attributes\SubPlatformCheckAPI.cs" />
     <Compile Include="Attributes\SubPlatformDataCheck.cs" />
     <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\api\AndroidApiController.cs" />
     <Compile Include="Controllers\api\AlertApiController.cs" />
     <Compile Include="Controllers\api\SubPlatformApiController.cs" />
     <Compile Include="Controllers\api\DataApiController.cs" />
@@ -256,13 +257,15 @@
     <Compile Include="Models\ItemDTO.cs" />
     <Compile Include="Models\ItemViewModels.cs" />
     <Compile Include="Models\SubPlatformDTO.cs" />
-    <Compile Include="Models\SubPlatformViewModel.cs" />
+    <Compile Include="Models\AndroidApiViewModels.cs" />
     <Compile Include="Models\SuperAdminViewModels.cs" />
     <Compile Include="Models\UserViewModels.cs" />
     <Compile Include="Models\UserWidgetDTO.cs" />
     <Compile Include="ItemDynamicNodeProvider.cs" />
     <Compile Include="Models\WidgetDataDTO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Providers\ApplicationOAuthProvider.cs" />
+    <Compile Include="Results\ChallengeResult.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -560,9 +563,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Views\Shared\Partials\_UserTable.cshtml" />
-    <Content Include="Views\Shared\Partials\_SubPlatformOverview.cshtml" />
     <Content Include="Views\Shared\_LayoutSubplatformOverview.cshtml" />
     <Content Include="Views\Shared\Partials\_SourceTable.cshtml" />
+    <Content Include="Views\Shared\Partials\_SubPlatformTable.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BAR.BL.Model\Domain.csproj">
@@ -617,7 +620,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>5000</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>https://localhost:44317/</IISUrl>
+          <IISUrl>https://localhost:44303/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>
