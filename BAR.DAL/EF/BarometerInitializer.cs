@@ -23,7 +23,7 @@ namespace BAR.DAL.EF
 			GenerateSources(ctx);
 			GenerateProperties(ctx);
 			GenerateAreas(ctx);
-			GenerateThemes(ctx);
+			//GenerateThemes(ctx);
 		}
 
 		/// <summary>
@@ -42,7 +42,8 @@ namespace BAR.DAL.EF
 				NumberOfFollowers = 0,
 				NumberOfMentions = 0,
 				LastUpdated = DateTime.Now,
-				LastUpdatedInfo = DateTime.Now
+				LastUpdatedInfo = DateTime.Now,
+				ItemType = ItemType.Theme
 			};
 
 			Theme t2 = new Theme()
@@ -55,7 +56,8 @@ namespace BAR.DAL.EF
 				NumberOfFollowers = 0,
 				NumberOfMentions = 0,
 				LastUpdated = DateTime.Now,
-				LastUpdatedInfo = DateTime.Now
+				LastUpdatedInfo = DateTime.Now,
+				ItemType = ItemType.Theme
 			};
 
 			Theme t3 = new Theme()
@@ -68,7 +70,8 @@ namespace BAR.DAL.EF
 				NumberOfFollowers = 0,
 				NumberOfMentions = 0,
 				LastUpdated = DateTime.Now,
-				LastUpdatedInfo = DateTime.Now
+				LastUpdatedInfo = DateTime.Now,
+				ItemType = ItemType.Theme
 			};
 
 			ctx.Items.Add(t1);

@@ -182,15 +182,17 @@ namespace BAR.BL.Managers
 		/// <summary>
 		/// Returns a person with all personal details.
 		/// </summary>
-		public Person GetPersonWithDetails(int itemId) {
+		public Person GetPersonWithDetails(int itemId)
+		{
 			InitRepo();
 			return itemRepo.ReadPersonWithDetails(itemId);
 		}
-		
+
 		/// <summary>
 		/// Returns an organisation with all personal details.
 		/// </summary>
-		public Organisation GetOrganisationWithDetails(int itemId) {
+		public Organisation GetOrganisationWithDetails(int itemId)
+		{
 			InitRepo();
 			return itemRepo.ReadOrganisationWithDetails(itemId);
 		}
@@ -213,10 +215,10 @@ namespace BAR.BL.Managers
 			return itemRepo.ReadItemWithWidgets(itemId);
 		}
 
-				/// <summary>
-				/// Gives back all the items of a specific type
-				/// </summary>
-				public IEnumerable<Item> GetItemsForType(ItemType type)
+		/// <summary>
+		/// Gives back all the items of a specific type
+		/// </summary>
+		public IEnumerable<Item> GetItemsForType(ItemType type)
 		{
 			IEnumerable<Item> items = GetAllItems();
 			return items.Where(item => item.ItemType == type).AsEnumerable();
@@ -397,7 +399,7 @@ namespace BAR.BL.Managers
 				.Where(item => item.Deleted == false)
 				.Where(item => item.SubPlatform.SubPlatformId.Equals(subPlatformID));
 		}
-		
+
 		/// <summary>
 		/// Returns all organisations for specific subplatform
 		/// </summary>
@@ -428,7 +430,7 @@ namespace BAR.BL.Managers
 			itemRepo.UpdateItem(itemToUpdate);
 			return itemToUpdate;
 		}
-		
+
 		/// <summary>
 		/// Updates a person.
 		/// </summary>
@@ -438,7 +440,7 @@ namespace BAR.BL.Managers
 
 			//Get item
 			Person personToUpdate = GetPersonWithDetails(itemId);
-			
+
 			if (personToUpdate == null) return null;
 
 			//Update item
@@ -578,20 +580,23 @@ namespace BAR.BL.Managers
 
 			ISubplatformManager subplatformManager = new SubplatformManager(uowManager);
 			SubPlatform subPlatform = subplatformManager.GetSubPlatform(subPlatformID);
+			IEnumerable<Item> themes = GetAllThemes();
 
 			dynamic deserializedJson = JsonConvert.DeserializeObject(json);
-			List<Item> themes = new List<Item>();
 
-			for(int i = 0; i < deserializedJson[i].Count; i++)
+			for (int i = 0; i < deserializedJson.Count; i++)
 			{
 				string name = deserializedJson[i].name;
-				Item theme = itemRepo.ReadOrganisation(name);
 
-				if (theme == null)
+				Theme theme = null;
+
+				if (themes
+					.Where(t => t.SubPlatform.SubPlatformId == subPlatformID)
+					.Where(x => x.Name.Equals(name)).SingleOrDefault() == null)
 				{
 					theme = new Theme()
 					{
-						ItemType = ItemType.Organisation,
+						ItemType = ItemType.Theme,
 						Name = name,
 						CreationDate = DateTime.Now,
 						LastUpdatedInfo = DateTime.Now,
@@ -756,15 +761,15 @@ namespace BAR.BL.Managers
 				double sentiment = 0.0;
 				int counter = 0;
 				IEnumerable<Information> informations = dataManager.GetInformationsWithAllInfoForItem(item.ItemId)
-																   .Where(info => info.CreationDate >= DateTime.Now.AddMonths(-1))
-																   .AsEnumerable();
+																	 .Where(info => info.CreationDate >= DateTime.Now.AddMonths(-1))
+																	 .AsEnumerable();
 				foreach (Information info in informations)
 				{
 					foreach (PropertyValue propvalue in info.PropertieValues)
 					{
 						if (propvalue.Property.Name.ToLower().Equals("sentiment"))
 						{
-							double propSen =+ Double.Parse(propvalue.Value);
+							double propSen = +Double.Parse(propvalue.Value);
 							if (propSen != 0) sentiment += propSen / 100;
 							counter++;
 						}
@@ -772,11 +777,12 @@ namespace BAR.BL.Managers
 				}
 
 				//Determine sentiment
-				if (sentiment != 0) {
+				if (sentiment != 0)
+				{
 					sentiment = Math.Round((sentiment / counter) * 100, 2);
 					if (sentiment >= 0) item.SentimentPositve = sentiment;
 					else item.SentimentNegative = Math.Abs(sentiment);
-				}				
+				}
 			}
 
 			//Persist changes
@@ -802,7 +808,7 @@ namespace BAR.BL.Managers
 			IEnumerable<Item> itemsToRemove = GetAllItems().Where(item => item.SubPlatform == null).AsEnumerable();
 			itemRepo.DeleteItems(itemsToRemove);
 		}
-	
+
 		/// <summary>
 		/// Changes profile picture of given user.
 		/// </summary>
