@@ -563,8 +563,7 @@ namespace BAR.BL.Managers
 		/// <returns></returns>
 		public bool ImportThemes(string json, int subPlatformID)
 		{
-			AddThemesFromJson(json, subPlatformID);
-			return true;
+			return AddThemesFromJson(json, subPlatformID);
 		}
 
 		/// <summary>
@@ -572,7 +571,7 @@ namespace BAR.BL.Managers
 		/// </summary>
 		/// <param name="json"></param>
 		/// <param name="subPlatformID"></param>
-		private void AddThemesFromJson(string json, int subPlatformID)
+		private bool AddThemesFromJson(string json, int subPlatformID)
 		{
 			uowManager = new UnitOfWorkManager();
 
@@ -581,6 +580,7 @@ namespace BAR.BL.Managers
 			ISubplatformManager subplatformManager = new SubplatformManager(uowManager);
 			SubPlatform subPlatform = subplatformManager.GetSubPlatform(subPlatformID);
 			IEnumerable<Item> themes = GetAllThemes();
+			List<Item> newThemes = new List<Item>();
 
 			dynamic deserializedJson = JsonConvert.DeserializeObject(json);
 
@@ -609,10 +609,15 @@ namespace BAR.BL.Managers
 					};
 					itemRepo.CreateItem(theme);
 					uowManager.Save();
+					newThemes.Add(theme);
 				}
 			}
 
+			//Generate default widgets for items
+			foreach (Item item in newThemes) GenerateDefaultItemWidgets(item.Name, item.ItemId);
 			uowManager = null;
+
+			return true;
 		}
 
 		/// <summary>
