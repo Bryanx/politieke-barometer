@@ -348,7 +348,7 @@
      */
     var htmlselector = document.getElementsByTagName('html')[0];
     var primary_color = window.getComputedStyle(document.documentElement).getPropertyValue('--primary-color')
-      .split(' ').join(''),
+      .split(' ').join('');
       secondary_color = window.getComputedStyle(document.documentElement).getPropertyValue('--secondary-color')
         .split(' ').join('');
     var tertiary_color = window.getComputedStyle(document.documentElement).getPropertyValue('--tertiary-color')
@@ -471,7 +471,7 @@
       //Do ajax-call
       $.ajax({
         type: "POST",
-        url: "api/Customization/PutAlias/" + id,
+        url: "/api/Customization/PutAlias/" + id,
         data: data
       }).fail(() => {/* ok */ })
         .done(() => {/* ok */ })
@@ -489,7 +489,7 @@
       //Do ajax-call
       $.ajax({
         type: "POST",
-        url: "api/Customization/PutPrivacy/" + id,
+        url: "/api/Customization/PutPrivacy/" + id,
         data: data
 
       }).fail(() => {/* ok */ })
@@ -507,7 +507,7 @@
       //Do ajax-call
       $.ajax({
         type: "POST",
-        url: "api/Customization/PutFAQ/" + id,
+        url: "/api/Customization/PutFAQ/" + id,
         data: data
       }).fail(() => {/* ok */ })
         .done(() => {/* ok */ })
@@ -528,7 +528,7 @@
       //Do ajax-call
       $.ajax({
         type: "POST",
-        url: "api/Customization/PutContact/" + id,
+        url: "/api/Customization/PutContact/" + id,
         data: data
       }).fail(() => {/* ok */ })
         .done(() => {/* ok */ })
@@ -565,7 +565,7 @@
     });
     $("#form_page_text").submit(function (event) {
       event.preventDefault();
-      getSubplatformId$(getCustomData, putAlias);
+      getSubplatformId(getCustomData, putAlias);
     });
     $("#form_page_privacy").submit(function (event) {
       event.preventDefault();
@@ -582,13 +582,13 @@
 
     ////Questions
     ////TODO: write a listner to create a question
-    //$("#form_page_faq").submit(function (event) {
-    //  event.preventDefault();
-    //  getSubplatformId(getCustomData);
-    //});
-    //$("#form_page_faq").submit(function (event) {
-    //  event.preventDefault();
-    //  getSubplatformId(getCustomData);
-    //});
+    $("#form_page_faq").submit(function (event) {
+      event.preventDefault();
+      getSubplatformId(getCustomData);
+    });
+    $("#form_page_faq").submit(function (event) {
+      event.preventDefault();
+      getSubplatformId(getCustomData);
+    });
   </script>
 }

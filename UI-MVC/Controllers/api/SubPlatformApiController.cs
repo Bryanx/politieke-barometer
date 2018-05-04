@@ -77,7 +77,7 @@ namespace BAR.UI.MVC.Controllers.api
 		/// </summary>
 		[HttpPost]
 		[Route("api/Customization/PutAlias/{platformId}")]
-		public IHttpActionResult PutAlias(int platformId, [FromBody] Customization custom)
+		public IHttpActionResult PutAlias(int platformId, [FromBody] CustomizationViewModel custom)
 		{
 			platformManager = new SubplatformManager();
 
@@ -97,7 +97,7 @@ namespace BAR.UI.MVC.Controllers.api
 		/// </summary>
 		[HttpPost]
 		[Route("api/Customization/PutPrivacy/{platformId}")]
-		public IHttpActionResult PutPrivacy(int platformId, [FromBody] Customization custom)
+		public IHttpActionResult PutPrivacy(int platformId, [FromBody] CustomizationViewModel custom)
 		{
 			platformManager = new SubplatformManager();
 
@@ -116,7 +116,7 @@ namespace BAR.UI.MVC.Controllers.api
 		/// </summary>
 		[HttpPost]
 		[Route("api/Customization/PutFAQ/{platformId}")]
-		public IHttpActionResult PutFAQ(int platformId, [FromBody] Customization custom)
+		public IHttpActionResult PutFAQ(int platformId, [FromBody] CustomizationViewModel custom)
 		{
 			platformManager = new SubplatformManager();
 
@@ -135,7 +135,7 @@ namespace BAR.UI.MVC.Controllers.api
 		/// </summary>
 		[HttpPost]
 		[Route("api/Customization/PutContact/{platformId}")]
-		public IHttpActionResult PutContact(int platformId, [FromBody] Customization custom)
+		public IHttpActionResult PutContact(int platformId, [FromBody] CustomizationViewModel custom)
 		{
 			platformManager = new SubplatformManager();
 
