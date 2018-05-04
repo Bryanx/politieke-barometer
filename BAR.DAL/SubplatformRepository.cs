@@ -188,5 +188,16 @@ namespace BAR.DAL
 			foreach (Question question in questions) ctx.Questions.Remove(question);
 			return ctx.SaveChanges();
 		}
+
+		/// <summary>
+		/// Gives back the customisation for a specific subplatform
+		/// </summary>
+		public Customization ReadCustomisation(int platformId)
+		{
+			SubPlatform subplatFrom = ctx.SubPlatforms.Include(platform => platform.Customization)
+													  .Where(platform => platform.SubPlatformId == platformId)
+													  .SingleOrDefault();
+			return subplatFrom.Customization;
+		}
 	}
 }
