@@ -564,4 +564,28 @@
   <data name="SourceManagement" xml:space="preserve">
     <value>Source management</value>
   </data>
+  <data name="AddSubPlatform" xml:space="preserve">
+    <value>Add SubPlatform</value>
+  </data>
+  <data name="JustNow" xml:space="preserve">
+    <value>Just now</value>
+  </data>
+  <data name="Details" xml:space="preserve">
+    <value>Details</value>
+  </data>
+  <data name="Organisation" xml:space="preserve">
+    <value>Organisation</value>
+  </data>
+  <data name="SocialMedia" xml:space="preserve">
+    <value>Social media</value>
+  </data>
+  <data name="Languages" xml:space="preserve">
+    <value>Languages</value>
+  </data>
+  <data name="Female" xml:space="preserve">
+    <value>Female</value>
+  </data>
+  <data name="Male" xml:space="preserve">
+    <value>Male</value>
+  </data>
 </root>

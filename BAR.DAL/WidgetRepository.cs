@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using BAR.BL.Domain.Widgets;
 using System.Data.Entity;
+using BAR.BL.Domain.Items;
 
 namespace BAR.DAL
 {
@@ -257,6 +258,70 @@ namespace BAR.DAL
 					   .Include(widget => widget.WidgetDatas)
 					   .Include(widget => widget.WidgetDatas.Select(widgetData => widgetData.GraphValues))
 					   .AsEnumerable();
+		}
+
+		/// <summary>
+		/// Creates a new widgetData in the database
+		/// </summary>
+		public int CreateWidgetData(WidgetData widgetData)
+		{
+			ctx.WidgetDatas.Add(widgetData);
+			return ctx.SaveChanges();
+		}
+
+		/// <summary>
+		/// Updates a given widgetData
+		/// </summary>
+		public int UpdateWidgetData(WidgetData widgetData)
+		{
+			ctx.Entry(widgetData).State = EntityState.Modified;
+			return ctx.SaveChanges();
+		}
+
+		/// <summary>
+		/// Gives back all widgets for a specific item id
+		/// The widget contains all the data needed to construct a graph
+		/// </summary>
+		public IEnumerable<Widget> ReadAllWidgetsWithAllDataForItem(int itemId)
+		{
+			Item itemToReturn =  ctx.Items.Include(item => item.ItemWidgets)
+							.Include(item => item.ItemWidgets.Select(widget => widget.WidgetDatas))
+							.Include(item => item.ItemWidgets.Select(widget => widget.WidgetDatas.Select(data => data.GraphValues)))
+							.Where(item => item.ItemId == itemId).SingleOrDefault();
+			return itemToReturn.ItemWidgets.AsEnumerable();
+		}
+
+		/// <summary>
+		/// Gives back all the widgetdatas for a specific itemId
+		/// </summary>
+		public IEnumerable<WidgetData> ReadWidgetDatasForitemid(int itemId)
+		{
+			return ctx.WidgetDatas.Include(data => data.Widget)
+								  .Include(data => data.GraphValues)
+								  .Include(data => data.Widget.Items)
+								  .Where(data => data.Widget.Items.Any(item => item.ItemId == itemId))
+								  .AsEnumerable();
+		}
+
+		/// <summary>
+		/// Gives back all the widgetData in the system
+		/// </summary>
+		public IEnumerable<WidgetData> ReadAllWidgetDatas()
+		{
+			return ctx.WidgetDatas.Include(data => data.Widget)
+								  .Include(data => data.Widget.Items)
+								  .Include(data => data.GraphValues)
+								  .AsEnumerable();
+		}
+
+
+		/// <summary>
+		/// Creates a range of WidgetData.
+		/// </summary>
+		public int CreateWidgetDatas(ICollection<WidgetData> widgetDatas)
+		{
+			ctx.WidgetDatas.AddRange(widgetDatas);
+			return ctx.SaveChanges();
 		}
 	}
 }

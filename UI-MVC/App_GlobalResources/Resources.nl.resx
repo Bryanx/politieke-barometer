@@ -144,6 +144,9 @@
   <data name="AddSource" xml:space="preserve">
     <value>Bron toevoegen</value>
   </data>
+  <data name="AddSubPlatform" xml:space="preserve">
+    <value>Voeg SubPlatform toe</value>
+  </data>
   <data name="Admin" xml:space="preserve">
     <value>Admin</value>
   </data>
@@ -237,6 +240,9 @@
   <data name="DeleteUser" xml:space="preserve">
     <value>Verwijder gebruiker</value>
   </data>
+  <data name="Details" xml:space="preserve">
+    <value>Details</value>
+  </data>
   <data name="Email" xml:space="preserve">
     <value>E-mailadres</value>
   </data>
@@ -257,6 +263,9 @@
   </data>
   <data name="Failed" xml:space="preserve">
     <value>Mislukt</value>
+  </data>
+  <data name="Female" xml:space="preserve">
+    <value>Vrouw</value>
   </data>
   <data name="FillTheRemainingFields" xml:space="preserve">
     <value>Vull de overige velden in en registreer.</value>
@@ -300,6 +309,12 @@
   <data name="ItemManagement" xml:space="preserve">
     <value>Items beheren</value>
   </data>
+  <data name="JustNow" xml:space="preserve">
+    <value>Zojuist</value>
+  </data>
+  <data name="Languages" xml:space="preserve">
+    <value>Talen</value>
+  </data>
   <data name="Lastname" xml:space="preserve">
     <value>Achternaam</value>
   </data>
@@ -329,6 +344,9 @@
   </data>
   <data name="Logout" xml:space="preserve">
     <value>Uitloggen</value>
+  </data>
+  <data name="Male" xml:space="preserve">
+    <value>Man</value>
   </data>
   <data name="Man" xml:space="preserve">
     <value>Man</value>
@@ -380,6 +398,9 @@
   </data>
   <data name="Or" xml:space="preserve">
     <value>Of</value>
+  </data>
+  <data name="Organisation" xml:space="preserve">
+    <value>Organisatie</value>
   </data>
   <data name="PageManagement" xml:space="preserve">
     <value>Pagina's beheren</value>
@@ -485,6 +506,9 @@
   </data>
   <data name="SignupToFollow" xml:space="preserve">
     <value>Registreer om te volgen</value>
+  </data>
+  <data name="SocialMedia" xml:space="preserve">
+    <value>Social media</value>
   </data>
   <data name="SourceManagement" xml:space="preserve">
     <value>Algemene instellingen</value>

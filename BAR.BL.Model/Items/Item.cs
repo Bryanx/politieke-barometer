@@ -28,5 +28,6 @@ namespace BAR.BL.Domain.Items
 		public ICollection<Information> Informations { get; set; }
 		public ICollection<Widget> ItemWidgets { get; set; }
 		public bool Deleted { get; set; }	
+		public byte[] Picture { get; set; }
 	}
 }

@@ -92,3 +92,10 @@ a {
     border-color: var(--primary-darkest);
   }
 }
+
+.adminview {
+  position: absolute;
+  right: 32px;
+  z-index: 1;
+  bottom: 20px;
+}

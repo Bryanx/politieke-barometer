@@ -180,6 +180,22 @@ namespace BAR.BL.Managers
 		}
 
 		/// <summary>
+		/// Returns a person with all personal details.
+		/// </summary>
+		public Person GetPersonWithDetails(int itemId) {
+			InitRepo();
+			return itemRepo.ReadPersonWithDetails(itemId);
+		}
+		
+		/// <summary>
+		/// Returns an organisation with all personal details.
+		/// </summary>
+		public Organisation GetOrganisationWithDetails(int itemId) {
+			InitRepo();
+			return itemRepo.ReadOrganisationWithDetails(itemId);
+		}
+
+		/// <summary>
 		/// Returns an item for a specifig itemId including the attached subplatform.
 		/// </summary>
 		/// <returns></returns>
@@ -227,7 +243,7 @@ namespace BAR.BL.Managers
 		/// <summary>
 		/// Returns all (undeleted) people of the whole system
 		/// </summary>
-		public IEnumerable<Item> GetAllPersons()
+		public IEnumerable<Person> GetAllPersons()
 		{
 			InitRepo();
 			return itemRepo.ReadAllPersons().AsEnumerable();
@@ -236,7 +252,7 @@ namespace BAR.BL.Managers
 		/// <summary>
 		/// Returns all (undeleted) organisations of the whole system
 		/// </summary>
-		public IEnumerable<Item> GetAllOrganisations()
+		public IEnumerable<Organisation> GetAllOrganisations()
 		{
 			InitRepo();
 			return itemRepo.ReadAllOraginsations().AsEnumerable();
@@ -329,7 +345,7 @@ namespace BAR.BL.Managers
 			{
 				Name = "Mentions"
 			});
-			
+
 			ItemWidget widget1 = (ItemWidget)widgetManager.AddWidget(WidgetType.GraphType, name + " popularity", 1, 1, proptags: proptags, graphType: GraphType.LineChart, rowspan: 12, colspan: 6);
 			itemWidgets.Add(widget1);
 			widgetIds.Add(widget1.WidgetId);
@@ -340,7 +356,7 @@ namespace BAR.BL.Managers
 			{
 				Name = "Gender"
 			});
-			ItemWidget widget2 = (ItemWidget)widgetManager.AddWidget(WidgetType.GraphType, name + " gender comparison ", 1, 1, proptags: proptags, graphType: GraphType.BarChart, rowspan: 6, colspan: 6);
+			ItemWidget widget2 = (ItemWidget)widgetManager.AddWidget(WidgetType.GraphType, name + " gender comparison ", 1, 1, proptags: proptags, graphType: GraphType.PieChart, rowspan: 6, colspan: 6);
 			itemWidgets.Add(widget2);
 			widgetIds.Add(widget2.WidgetId);
 
@@ -350,7 +366,7 @@ namespace BAR.BL.Managers
 			{
 				Name = "Age"
 			});
-			ItemWidget widget3 = (ItemWidget)widgetManager.AddWidget(WidgetType.GraphType, name + " age comparison", 1, 1, proptags: proptags, graphType: GraphType.PieChart, rowspan: 6, colspan: 6);
+			ItemWidget widget3 = (ItemWidget)widgetManager.AddWidget(WidgetType.GraphType, name + " age comparison", 1, 1, proptags: proptags, graphType: GraphType.DonutChart, rowspan: 6, colspan: 6);
 			itemWidgets.Add(widget3);
 			widgetIds.Add(widget3.WidgetId);
 
@@ -380,6 +396,17 @@ namespace BAR.BL.Managers
 				.Where(item => item.Deleted == false)
 				.Where(item => item.SubPlatform.SubPlatformId.Equals(subPlatformID));
 		}
+		
+		/// <summary>
+		/// Returns all organisations for specific subplatform
+		/// </summary>
+		/// <returns></returns>
+		public IEnumerable<Item> GetAllOrganisationsForSubplatform(int subPlatformID)
+		{
+			return GetAllOrganisations()
+				.Where(item => item.Deleted == false)
+				.Where(item => item.SubPlatform.SubPlatformId.Equals(subPlatformID));
+		}
 
 		/// <summary>
 		/// Updates the name of a given item.
@@ -399,6 +426,30 @@ namespace BAR.BL.Managers
 			//Update database
 			itemRepo.UpdateItem(itemToUpdate);
 			return itemToUpdate;
+		}
+		
+		/// <summary>
+		/// Updates a person.
+		/// </summary>
+		public Person ChangePerson(int itemId, DateTime birthday, Gender gender, string position, string district)
+		{
+			InitRepo();
+
+			//Get item
+			Person personToUpdate = GetPersonWithDetails(itemId);
+			
+			if (personToUpdate == null) return null;
+
+			//Update item
+			personToUpdate.DateOfBirth = birthday;
+			personToUpdate.Gender = gender;
+			personToUpdate.Position = position;
+			personToUpdate.District = district;
+			personToUpdate.LastUpdated = DateTime.Now;
+
+			//Update database
+			itemRepo.UpdateItem(personToUpdate);
+			return personToUpdate;
 		}
 
 		/// <summary>
@@ -471,7 +522,7 @@ namespace BAR.BL.Managers
 		/// <summary>
 		/// Gets person with given name.
 		/// </summary>
-		public Item GetPerson(string personName)
+		public Person GetPerson(string personName)
 		{
 			InitRepo();
 			return itemRepo.ReadPerson(personName);
@@ -682,6 +733,41 @@ namespace BAR.BL.Managers
 			InitRepo();
 			itemRepo.UpdateItems(items);
 			return items;
+		}
+
+		/// <summary>
+		/// Removes all given items from the database
+		/// </summary>
+		public void RemoveOverflowingItems()
+		{
+			InitRepo();
+			IEnumerable<Item> itemsToRemove = GetAllItems().Where(item => item.SubPlatform == null).AsEnumerable();
+			itemRepo.DeleteItems(itemsToRemove);
+		}
+	
+		/// <summary>
+		/// Changes profile picture of given user.
+		/// </summary>
+		public Item ChangePicture(int itemId, HttpPostedFileBase poImgFile)
+		{
+			InitRepo();
+
+			//Get User
+			Item itemToUpdate = itemRepo.ReadItem(itemId);
+			if (itemToUpdate == null) return null;
+
+			//Change profile picture
+			byte[] imageData = null;
+			using (var binary = new BinaryReader(poImgFile.InputStream))
+			{
+				imageData = binary.ReadBytes(poImgFile.ContentLength);
+			}
+			itemToUpdate.Picture = imageData;
+
+			//Update database
+			itemRepo.UpdateItem(itemToUpdate);
+			return itemToUpdate;
+
 		}
 	}
 }

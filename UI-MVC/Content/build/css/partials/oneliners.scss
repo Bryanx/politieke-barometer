@@ -35,8 +35,20 @@
   width: 100px !important;
 }
 
+.h-100 {
+  height: 100% !important;
+}
+
 .full-width {
   width: 100%;
+}
+
+.width-auto {
+  width: auto !important;
+}
+
+.inline {
+  display: inline;
 }
 
 .full-height {
@@ -59,6 +71,10 @@
 
 .no-scrollbar {
   overflow-y: hidden !important;
+}
+
+.scroll {
+  overflow-y: auto !important;
 }
 
 .zero-margin {
@@ -150,4 +166,8 @@
 
 .animate {
   @include animation(0,0.5s,ease,both);
+}
+
+.half-brightness {
+  filter: brightness(.5);
 }

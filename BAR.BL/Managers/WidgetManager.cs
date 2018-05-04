@@ -32,7 +32,8 @@ namespace BAR.BL.Managers
 		/// Creates a widget based on the parameters
 		/// and links that widget to a dasboard.
 		/// </summary>
-		public Widget AddWidget(WidgetType widgetType, string title, int rowNbr, int colNbr, List<PropertyTag> proptags, DateTime? timestamp = null, GraphType? graphType = null, int rowspan = 1, int colspan = 1, int dashboardId = -1)
+		public Widget AddWidget(WidgetType widgetType, string title, int rowNbr, int colNbr, List<PropertyTag> proptags, DateTime? timestamp = null,
+			GraphType? graphType = null, int rowspan = 1, int colspan = 1, int dashboardId = -1, List<WidgetData> datas = null)
 		{
 			InitRepo();
 			Widget widget;
@@ -54,7 +55,10 @@ namespace BAR.BL.Managers
 			widget.Items = new List<Item>();
 			widget.GraphType = graphType;
 			widget.PropertyTags = proptags;
-			widget.WidgetDatas = new List<WidgetData>();
+
+			//Check for adding widgetData
+			if (datas == null) widget.WidgetDatas = new List<WidgetData>();
+			else widget.WidgetDatas = datas;
 
 			//Update database
 			if (dashboardId != -1)
@@ -314,13 +318,38 @@ namespace BAR.BL.Managers
 		}
 
 		/// <summary>
+		/// Creates a new widgetdata in the database
+		/// </summary>
+		public WidgetData AddWidgetData(WidgetData widgetData)
+		{
+			InitRepo();
+			widgetRepo.CreateWidgetData(widgetData);
+			return widgetData;
+		}
+
+		/// <summary>
+		/// Changes a specific widgetdata in the database
+		/// </summary>
+		public WidgetData ChangeWidgetData(WidgetData widgetData)
+		{
+			InitRepo();
+			widgetRepo.UpdateWidgetData(widgetData);
+			return widgetData;
+		}
+
+		/// <summary>
 		/// Generate new data for all the widgets in the system
 		/// This method takes time, but it happens in the background.
 		/// </summary>
 		public void GenerateDataForMwidgets()
 		{
+			InitRepo();
+
 			DataManager dataManager = new DataManager();
-			IEnumerable<Widget> widgets = GetAllWidgetsWithAllData();
+			List<Widget> widgets = GetAllWidgetsWithAllData().ToList();
+			int widgetCount = widgets.Count();
+
+			List<WidgetData> widgetDatas = new List<WidgetData>();
 
 			foreach (Widget widget in widgets)
 			{
@@ -331,7 +360,6 @@ namespace BAR.BL.Managers
 						WidgetData widgetData;
 						if (proptag.Name.ToLower().Equals("mentions"))
 						{
-
 							widgetData = dataManager.GetNumberOfMentionsForItem
 								(widget.Items.ElementAt(i).ItemId, widget.WidgetId, "dd-MM");
 						}
@@ -340,11 +368,46 @@ namespace BAR.BL.Managers
 							widgetData = dataManager.GetPropvaluesForWidget
 								(widget.Items.ElementAt(i).ItemId, widget.WidgetId, proptag.Name);
 						}
-						widget.WidgetDatas.Add(widgetData);
+						widgetData.Widget = widget;
+						widgetDatas.Add(widgetData);
 					}
-				}
+				}				
 			}
-			ChangeWidgets(widgets);
+			widgetRepo.CreateWidgetDatas(widgetDatas);
+
+			//Remove overflowing items (temporary solution)
+			new ItemManager().RemoveOverflowingItems();
+		}
+
+		/// <summary>
+		/// Gives back all the widgets for a specific itemId
+		/// The widgets contain all the information to construct a graph
+		/// </summary>
+		public IEnumerable<Widget> GetAllWidgetsWithAllDataForItem(int itemId)
+		{
+			InitRepo();
+			return widgetRepo.ReadAllWidgetsWithAllDataForItem(itemId).AsEnumerable();
+		}
+
+		/// <summary>
+		/// Gives back all the widgetdatas for a specifc itemId.
+		/// </summary>
+		public IEnumerable<WidgetData> GetWidgetDatasForItemId(int itemId)
+		{
+			InitRepo();
+			return widgetRepo.ReadWidgetDatasForitemid(itemId).AsEnumerable();
+		}
+
+		/// <summary>
+		/// Gives back all the widgetData of the system
+		/// </summary>
+		public IEnumerable<WidgetData> GetAllWidgetDatas()
+		{
+			InitRepo();
+			return widgetRepo.ReadAllWidgetDatas().AsEnumerable();
 		}
 	}
 }
+
+
+
