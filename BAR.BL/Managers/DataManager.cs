@@ -371,6 +371,12 @@ namespace BAR.BL.Managers
 					information.Items.Add(items.Where(x => x.Name.Equals(name)).SingleOrDefault());
 				}
 
+				for (int k = 0; k < deserializedJson[i].themes.Count; k++)
+				{
+					string name = deserializedJson[i].themes[k];
+					information.Items.Add(items.Where(x => x.Name.Equals(name)).SingleOrDefault());
+				}
+
 				//Add other information
 				information.Source = sources.Where(x => x.Name.Equals("Twitter")).SingleOrDefault();
 				string stringDate = Convert.ToString(deserializedJson[i].date);
@@ -387,98 +393,98 @@ namespace BAR.BL.Managers
 		/// Gets last succesfull audit.
 		/// </summary>
 		public SynchronizeAudit GetLastAudit()
-    {
-      InitRepo();
-      return dataRepo.ReadLastAudit();
-    }
+		{
+			InitRepo();
+			return dataRepo.ReadLastAudit();
+		}
 
-    /// <summary>
-    /// Adds an audit with boolean false.
-    /// </summary>
+		/// <summary>
+		/// Adds an audit with boolean false.
+		/// </summary>
 		public SynchronizeAudit AddAudit(DateTime timestamp, bool succes)
-    {
-      InitRepo();
-      SynchronizeAudit synchronizeAudit = new SynchronizeAudit()
-      {
-        TimeStamp = timestamp,
-        Succes = succes
-      };
-      dataRepo.CreateAudit(synchronizeAudit);
-      return synchronizeAudit;
-    }
+		{
+			InitRepo();
+			SynchronizeAudit synchronizeAudit = new SynchronizeAudit()
+			{
+				TimeStamp = timestamp,
+				Succes = succes
+			};
+			dataRepo.CreateAudit(synchronizeAudit);
+			return synchronizeAudit;
+		}
 
-    /// <summary>
-    /// Gets audit with given id.
-    /// </summary>
-    public SynchronizeAudit GetAudit(int synchronizeAuditId)
-    {
-      return dataRepo.ReadAudit(synchronizeAuditId);
-    }
+		/// <summary>
+		/// Gets audit with given id.
+		/// </summary>
+		public SynchronizeAudit GetAudit(int synchronizeAuditId)
+		{
+			return dataRepo.ReadAudit(synchronizeAuditId);
+		}
 
-    /// <summary>
-    /// Changes status of audit to true.
-    /// </summary>
-    public SynchronizeAudit ChangeAudit(int synchronizeAuditId)
-    {
-      InitRepo();
-      SynchronizeAudit synchronizeAudit = GetAudit(synchronizeAuditId);
-      synchronizeAudit.Succes = true;
-      dataRepo.UpdateAudit(synchronizeAudit);
-      return synchronizeAudit;
-    }
+		/// <summary>
+		/// Changes status of audit to true.
+		/// </summary>
+		public SynchronizeAudit ChangeAudit(int synchronizeAuditId)
+		{
+			InitRepo();
+			SynchronizeAudit synchronizeAudit = GetAudit(synchronizeAuditId);
+			synchronizeAudit.Succes = true;
+			dataRepo.UpdateAudit(synchronizeAudit);
+			return synchronizeAudit;
+		}
 
-    /// <summary>
-    /// Checks if json is empty.
-    /// </summary>
-    public bool IsJsonEmpty(string json)
-    {
-      dynamic deserializedJson = JsonConvert.DeserializeObject(json);
-      int informationCount = deserializedJson.Count;
+		/// <summary>
+		/// Checks if json is empty.
+		/// </summary>
+		public bool IsJsonEmpty(string json)
+		{
+			dynamic deserializedJson = JsonConvert.DeserializeObject(json);
+			int informationCount = deserializedJson.Count;
 
-      if (informationCount == 0)
-      {
-        return true;
-      }
-      return false;
-    }
+			if (informationCount == 0)
+			{
+				return true;
+			}
+			return false;
+		}
 
-    /// <summary>
-    /// Gets all sources.
-    /// </summary>
-    public IEnumerable<Source> GetAllSources()
-    {
-      InitRepo();
-      return dataRepo.ReadAllSources();
-    }
+		/// <summary>
+		/// Gets all sources.
+		/// </summary>
+		public IEnumerable<Source> GetAllSources()
+		{
+			InitRepo();
+			return dataRepo.ReadAllSources();
+		}
 
-    public Source AddSource(string name, string site)
-    {
-      InitRepo();
-      Source source = new Source()
-      {
-        Name = name,
-        Site = site
-      };
-      dataRepo.CreateSource(source);
-      return source;
-    }
+		public Source AddSource(string name, string site)
+		{
+			InitRepo();
+			Source source = new Source()
+			{
+				Name = name,
+				Site = site
+			};
+			dataRepo.CreateSource(source);
+			return source;
+		}
 
-    public void RemoveSource(string sourceId)
-    {
-      InitRepo();
-      Source source = dataRepo.ReadSource(Convert.ToInt32(sourceId));
-      dataRepo.DeleteSource(source);
-    }
+		public void RemoveSource(string sourceId)
+		{
+			InitRepo();
+			Source source = dataRepo.ReadSource(Convert.ToInt32(sourceId));
+			dataRepo.DeleteSource(source);
+		}
 
-    /// <summary>
+		/// <summary>
 		/// Returns a list of all the informations objects that are
 		/// related to a specific item.
 		/// </summary>
 		public IEnumerable<Information> GetInformationsWithAllInfoForItem(int itemId)
-    {
-      InitRepo();
-      return dataRepo.ReadInformationsWithAllInfoForItem(itemId);
-    }
+		{
+			InitRepo();
+			return dataRepo.ReadInformationsWithAllInfoForItem(itemId);
+		}
  }
 }
 

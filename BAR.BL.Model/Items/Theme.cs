@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace BAR.BL.Domain.Items
 {
-  public class Theme : Item
-  {
-    public Category Category { get; set; }
-  }
+	public class Theme : Item
+	{
+		public ICollection<Keyword> Keywords { get; set; }
+	}
 }

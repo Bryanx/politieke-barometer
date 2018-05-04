@@ -218,6 +218,10 @@ namespace BAR.DAL.EF
       {
         Name = "Retweet"
       };
+			Property theme = new Property
+			{
+				Name = "Theme"
+			};
 
       propertiesList.Add(gender);
       propertiesList.Add(age);
@@ -233,8 +237,10 @@ namespace BAR.DAL.EF
       propertiesList.Add(geo);
       propertiesList.Add(postId);
       propertiesList.Add(retweet);
+			propertiesList.Add(theme);
 
-      ctx.Properties.AddRange(propertiesList);
+
+			ctx.Properties.AddRange(propertiesList);
       ctx.SaveChanges();
     }
 

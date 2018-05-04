@@ -267,7 +267,7 @@ namespace BAR.BL.Managers
 		/// NOTE
 		/// THIS METHOD USES UNIT OF WORK
 		/// </summary>
-		public Item AddItem(ItemType itemType, string name, string description = "", string function = "", Category category = null,
+		public Item AddItem(ItemType itemType, string name, string description = "", string function = "",
 			string district = null, string level = null, string site = null, Gender gender = Gender.OTHER, string position = null, DateTime? dateOfBirth = null)
 		{
 			InitRepo();
@@ -299,7 +299,10 @@ namespace BAR.BL.Managers
 				case ItemType.Theme:
 					item = new Theme()
 					{
-						Category = category
+						Keywords = new List<Keyword>()
+					{
+						
+					}
 					};
 					break;
 				default:
@@ -605,7 +608,8 @@ namespace BAR.BL.Managers
 						TrendingPercentage = 0.0,
 						Baseline = 0.0,
 						Informations = new List<Information>(),
-						SubPlatform = subPlatform
+						SubPlatform = subPlatform,
+						Keywords = new List<Keyword>()
 					};
 					itemRepo.CreateItem(theme);
 					uowManager.Save();
