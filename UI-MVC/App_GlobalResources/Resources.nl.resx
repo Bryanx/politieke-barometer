@@ -261,6 +261,9 @@
   <data name="Failed" xml:space="preserve">
     <value>Mislukt</value>
   </data>
+  <data name="Female" xml:space="preserve">
+    <value>Vrouw</value>
+  </data>
   <data name="FillTheRemainingFields" xml:space="preserve">
     <value>Vull de overige velden in en registreer.</value>
   </data>
@@ -335,6 +338,9 @@
   </data>
   <data name="Logout" xml:space="preserve">
     <value>Uitloggen</value>
+  </data>
+  <data name="Male" xml:space="preserve">
+    <value>Man</value>
   </data>
   <data name="Man" xml:space="preserve">
     <value>Man</value>

@@ -1,5 +1,6 @@
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -67,16 +68,19 @@ namespace BAR.UI.MVC.Controllers.api
 		/// Temp get graph
 		/// </summary>
 		[HttpGet]
-		[Route("api/GetGraphs/{itemId}")]
-		public IHttpActionResult GetGraphs(int itemId)
+		[Route("api/GetGraphs/{itemId}/{widgetId}")]
+		public IHttpActionResult GetGraphs(int itemId, int widgetId)
 		{
 			widgetManager = new WidgetManager();
-			IEnumerable<Widget> widgets = widgetManager.GetAllWidgetsWithAllDataForItem(itemId).AsEnumerable();
-			int count = widgets.First().WidgetDatas.Count();
+			IEnumerable<WidgetData> datas = widgetManager
+				.GetAllWidgetsWithAllDataForItem(itemId)
+				.AsEnumerable()
+				.First(w => w.WidgetId == widgetId)
+				.WidgetDatas;
+			IEnumerable<WidgetDataDTO> widgetDataDtos = Mapper.Map(datas, new List<WidgetDataDTO>());
+			if (widgetDataDtos == null) return StatusCode(HttpStatusCode.NoContent);
 			
-			if (widgets == null) return StatusCode(HttpStatusCode.NoContent);
-			
-			return Ok(widgets);
+			return Ok(widgetDataDtos);
 		}
 		
 		/// <summary>
@@ -88,16 +92,24 @@ namespace BAR.UI.MVC.Controllers.api
 		public IHttpActionResult MoveWidgetToDashboard(int widgetId)
 		{
 			widgetManager = new WidgetManager();
-
-			Dashboard dash = widgetManager.GetDashboard(User.Identity.GetUserId());
-
-
-			if (widgetManager.GetWidget(widgetId) == null) return StatusCode(HttpStatusCode.Conflict);
+			IDataManager dataManager = new DataManager();
 			
-			Widget widgetToCopy = widgetManager.GetWidget(widgetId);
-			Widget widget = widgetManager.AddWidget(WidgetType.GraphType, 
-				widgetToCopy.Title, widgetToCopy.RowNumber, widgetToCopy.ColumnNumber, proptags: widgetToCopy.PropertyTags.ToList(), rowspan: widgetToCopy.RowSpan,
-				colspan: widgetToCopy.ColumnSpan, dashboardId: dash.DashboardId, datas: widgetToCopy.WidgetDatas.ToList());
+			Dashboard dash = widgetManager.GetDashboard(User.Identity.GetUserId());
+			Widget widget = widgetManager.GetWidgetWithAllData(widgetId);
+			
+			if (widget == null) return StatusCode(HttpStatusCode.Conflict);
+			
+			Widget newWidget = widgetManager.AddWidget(WidgetType.GraphType, widget.Title, widget.RowNumber, 
+				widget.ColumnNumber, proptags: widget.PropertyTags.ToList(), rowspan: widget.RowSpan,
+				colspan: widget.ColumnSpan, dashboardId: dash.DashboardId);
+			
+			//Create a copy of all widgetDatas
+			List<WidgetData> widgetDatas = widget.WidgetDatas.ToList();
+			widgetDatas.ForEach(w => w.Widget = newWidget);
+
+			newWidget.WidgetDatas = widgetDatas;
+			widgetManager.ChangeWidget(newWidget);
+			
 			return StatusCode(HttpStatusCode.NoContent);
 		}
 		

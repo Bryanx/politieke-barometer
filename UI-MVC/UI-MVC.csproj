@@ -261,6 +261,7 @@
     <Compile Include="Models\UserViewModels.cs" />
     <Compile Include="Models\UserWidgetDTO.cs" />
     <Compile Include="ItemDynamicNodeProvider.cs" />
+    <Compile Include="Models\WidgetDataDTO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>

@@ -261,6 +261,9 @@
   <data name="Failed" xml:space="preserve">
     <value>échoué</value>
   </data>
+  <data name="Female" xml:space="preserve">
+    <value>Femme</value>
+  </data>
   <data name="FillTheRemainingFields" xml:space="preserve">
     <value>Indiquer les autres champs relatifs</value>
   </data>
@@ -338,6 +341,9 @@
   </data>
   <data name="Logout" xml:space="preserve">
     <value>Déconnecter</value>
+  </data>
+  <data name="Male" xml:space="preserve">
+    <value>Homme</value>
   </data>
   <data name="Man" xml:space="preserve">
     <value>Homme</value>
