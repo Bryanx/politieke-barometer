@@ -88,6 +88,21 @@ namespace BAR.UI.MVC.Helpers {
                 action = nameof(OrganisationController.Index)
             });
         }
+        
+        public static string OrganisationUrl(this UrlHelper helper, int organisationId) {
+            return helper.RouteUrl("Default", new {
+                controller = "Organisation",
+                action = nameof(OrganisationController.Details),
+                id = organisationId
+            });
+        }        
+        public static string ItemPictureUrl(this UrlHelper helper, int itemId) {
+            return helper.RouteUrl("Default", new {
+                controller = "Person",
+                action = nameof(PersonController.Picture),
+                id = itemId
+            });
+        }
         #endregion
         
         #region AdminUrls
@@ -127,14 +142,7 @@ namespace BAR.UI.MVC.Helpers {
         public static string SourceManagement(this UrlHelper helper) {
             return helper.RouteUrl("Default", new {
                 controller = "SuperAdmin",
-                action = nameof(SuperAdminController.SourceManagement)
-            });
-        }
-        
-        public static string AdminManagement(this UrlHelper helper) {
-            return helper.RouteUrl("Default", new {
-                controller = "SuperAdmin",
-                action = nameof(SuperAdminController.AdminManagement)
+                action = nameof(SuperAdminController.GeneralManagement)
             });
         }
         

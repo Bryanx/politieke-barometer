@@ -19,6 +19,10 @@
   color: var(--primary-color);
 }
 
+.dark-green {
+  color: #00a334;
+}
+
 .aero {
   color: #9CC2CB;
 }
@@ -70,4 +74,12 @@
   background: #E74C3C !important;
   border: 1px solid #E74C3C !important;
   color: var(--white);
+}
+
+.bg-success {
+  @include diagonal-gradient(rgb(32, 163, 105), rgb(39,142,135));
+}
+
+.bg-error {
+  @include diagonal-gradient(rgb(163, 53, 74), rgb(116, 0, 27));
 }

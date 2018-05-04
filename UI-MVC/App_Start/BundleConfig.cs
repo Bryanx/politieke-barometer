@@ -51,8 +51,9 @@ namespace BAR.UI.MVC {
             
         };
         private static readonly string[] CustomScripts = {
-            "~/Content/build/js/custom.js",
-            "~/Content/build/js/searchbar.js"
+            "~/Content/build/js/template.js",
+            "~/Content/build/js/searchbar.js",
+            "~/Content/build/js/custom.js"
         };
         
         /// Style fields
@@ -61,11 +62,7 @@ namespace BAR.UI.MVC {
             "~/Content/build/css/vendor/font-awesome.min.css",
             "~/Content/build/css/vendor/nprogress.css",
             "~/Content/build/css/vendor/bootstrap-progressbar-3.3.4.min.css",
-            "~/Content/build/css/vendor/pnotify.css",
-            "~/Content/build/css/vendor/pnotify.buttons.css",
-            "~/Content/build/css/vendor/pnotify.nonblock.css",
-            "~/Content/build/css/vendor/jqvmap.min.css",
-            "~/Content/build/css/vendor/daterangepicker.css"
+            "~/Content/build/css/vendor/jqvmap.min.css"
         };
         private static readonly string[] DatatablesCss = {
             "~/Scripts/datatables/datatables.net-bs/css/dataTables.bootstrap.min.css",

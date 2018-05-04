@@ -1,5 +1,5 @@
 a {
-  &.btn-success, &.btn-primary, &.btn-warning, &.btn-danger {
+  &.btn-success, &.btn-primary, &.btn-warning {
     color: var(--white);
   }
 }
@@ -72,6 +72,17 @@ a {
   }
 }
 
+.btn-danger {
+  color: var(--font-color) !important;
+  background: white !important;
+  border: 1px solid lightgrey !important; 
+  &:hover, &:focus, &:active, &.active {
+    background: red !important;
+    color: var(--white) !important;
+    border: 1px solid red !important;
+  }
+}
+
 .btn-primary {
   color: var(--white);
   background-color: var(--primary-color) !important;
@@ -80,4 +91,11 @@ a {
     background-color: var(--primary-darker) !important;
     border-color: var(--primary-darkest);
   }
+}
+
+.adminview {
+  position: absolute;
+  right: 32px;
+  z-index: 1;
+  bottom: 20px;
 }

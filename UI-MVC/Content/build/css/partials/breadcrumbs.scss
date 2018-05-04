@@ -4,11 +4,10 @@
   color: var(--white);
   padding-left: 20px;
   border-radius: 0;
-  margin-left: 100px;
   margin-bottom: 0px;
   @include box-shadow(inset 0px 3px 3px -2px rgba(0, 0, 0, 0.05));
   > li > a {
     position: relative;
-    z-index: 15;
+    z-index: 2;
   }
 }

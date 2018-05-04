@@ -1,11 +1,22 @@
+
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Web.Http;
-using BAR.UI.MVC.DAL;
+using AutoMapper;
+using BAR.BL.Domain.Data;
+using BAR.BL.Domain.Widgets;
+using BAR.BL.Managers;
 using BAR.UI.MVC.Models;
+using Microsoft.AspNet.Identity;
+using WebGrease.Css.Extensions;
+using Widget = BAR.BL.Domain.Widgets.Widget;
+using BAR.BL.Domain.Items;
 
-namespace BAR.UI.MVC.Controllers
+
+namespace BAR.UI.MVC.Controllers.api
 {
 	/// <summary>
 	/// This class is used to transfer all widget information from UI to the managers.
@@ -14,18 +25,94 @@ namespace BAR.UI.MVC.Controllers
 
 	public class WidgetController : ApiController
 	{
-		private WidgetManager widgetManager;
+		private IWidgetManager widgetManager;
+		private IItemManager itemManager;
+		private IDataManager dataManager;
 
-		///Reads all widgets and returns them (possibly in json)
+		/// <summary>
+		///Reads all widgets for a user dashboard and returns them
+		/// </summary>
 		public IHttpActionResult Get()
 		{
 			widgetManager = new WidgetManager();
 
-			var responses = widgetManager.Read();
-			if (responses == null || responses.Count() == 0) return StatusCode(HttpStatusCode.NoContent);
-			return Ok(responses);
-		}
+			Dashboard dash = widgetManager.GetDashboard(User.Identity.GetUserId());
 
+			List<UserWidget> widgets = widgetManager.GetWidgetsForDashboard(dash.DashboardId).ToList();
+			
+			if (widgets == null || widgets.Count() == 0) return StatusCode(HttpStatusCode.NoContent);
+
+			return Ok(Mapper.Map(widgets, new List<UserWidgetDTO>()));
+		}
+		
+		/// <summary>
+		///Reads all widgets for an item and returns them.
+		/// </summary>
+		[HttpGet]
+		[Route("api/GetItemWidgets/{itemId}")]
+		public IHttpActionResult GetItemWidgets(int itemId)
+		{
+			widgetManager = new WidgetManager();
+
+			IEnumerable<Widget> widgets = widgetManager.GetWidgetsForItem(itemId);
+			
+			if (widgets == null || widgets.Count() == 0) return StatusCode(HttpStatusCode.NoContent);
+
+			List<UserWidgetDTO> uWidgets = Mapper.Map(widgets, new List<UserWidgetDTO>());
+			foreach (UserWidgetDTO widgetDto in uWidgets) widgetDto.DashboardId = -1;
+
+            return Ok(uWidgets);
+		}
+		
+		/// <summary>
+		/// Temp get graph
+		/// </summary>
+		[HttpGet]
+		[Route("api/GetGraphs/{itemId}/{widgetId}")]
+		public IHttpActionResult GetGraphs(int itemId, int widgetId)
+		{
+			widgetManager = new WidgetManager();
+			IEnumerable<WidgetData> datas = widgetManager
+				.GetAllWidgetsWithAllDataForItem(itemId)
+				.AsEnumerable()
+				.First(w => w.WidgetId == widgetId)
+				.WidgetDatas;
+			IEnumerable<WidgetDataDTO> widgetDataDtos = Mapper.Map(datas, new List<WidgetDataDTO>());
+			if (widgetDataDtos == null) return StatusCode(HttpStatusCode.NoContent);
+			
+			return Ok(widgetDataDtos);
+		}
+		
+		/// <summary>
+		/// Transfers a Widget to the dashboard of a user.
+		/// The given ItemWidget will be copied to a UserWidget.
+		/// </summary>
+		[HttpPost]
+		[Route("api/MoveWidget/{widgetId}")]
+		public IHttpActionResult MoveWidgetToDashboard(int widgetId)
+		{
+			widgetManager = new WidgetManager();
+			IDataManager dataManager = new DataManager();
+			
+			Dashboard dash = widgetManager.GetDashboard(User.Identity.GetUserId());
+			Widget widget = widgetManager.GetWidgetWithAllData(widgetId);
+			
+			if (widget == null) return StatusCode(HttpStatusCode.Conflict);
+			
+			Widget newWidget = widgetManager.AddWidget(WidgetType.GraphType, widget.Title, widget.RowNumber, 
+				widget.ColumnNumber, proptags: widget.PropertyTags.ToList(), rowspan: widget.RowSpan,
+				colspan: widget.ColumnSpan, dashboardId: dash.DashboardId);
+			
+			//Create a copy of all widgetDatas
+			List<WidgetData> widgetDatas = widget.WidgetDatas.ToList();
+			widgetDatas.ForEach(w => w.Widget = newWidget);
+
+			newWidget.WidgetDatas = widgetDatas;
+			widgetManager.ChangeWidget(newWidget);
+			
+			return StatusCode(HttpStatusCode.NoContent);
+		}
+		
 		/// <summary>
 		/// Creates a new Widget from the body of the post request.
 		/// If the widget already exists, returns 409 Conflict
@@ -36,33 +123,37 @@ namespace BAR.UI.MVC.Controllers
 		{
 			widgetManager = new WidgetManager();
 
+			Dashboard dash = widgetManager.GetDashboard(User.Identity.GetUserId());
+
 			if (!ModelState.IsValid) return BadRequest(ModelState);
-			if (widgetManager.Exists(widget.Id)) return StatusCode(HttpStatusCode.Conflict);
-			widgetManager.Insert(widget);
+			if (widgetManager.GetWidget(widget.WidgetId) != null) return StatusCode(HttpStatusCode.Conflict);
+
+			//Copy operation to make a userWidget from an itemWidget
+			//This operation needs to be done because a userWidget has to be from a user
+			//And a user has a dashboard.
+			widgetManager.AddWidget(widget.WidgetType, widget.Title, widget.RowNumber,
+				widget.ColumnNumber, widget.PropertyTags.ToList(), widget.Timestamp, widget.GraphType, widget.RowSpan, widget.ColumnSpan, dash.DashboardId);
+
 			return CreatedAtRoute("DefaultApi"
-				, new { controller = "Widget", id = widget.Id }
+				, new { controller = "Widget", id = widget.WidgetId }
 				, widget);
 		}
 
 		/// <summary>
-		/// Updates an existing widget.
+		/// Updates existing widgets.
 		/// </summary>
-		/// <param name="id"></param>
-		/// <param name="widget"></param>
+		/// <param name="widgets"></param>
 		/// <returns>If all goes well, 204 No Content is returned</returns>
-		public IHttpActionResult Put(int id, [FromBody] Widget widget)
+		public IHttpActionResult Put([FromBody] UserWidgetDTO[] widgets)
 		{
 			widgetManager = new WidgetManager();
-
-			if (widget == null)
-				return BadRequest("No widget given");
-			if (!ModelState.IsValid)
-				return BadRequest(ModelState);
-			if (id != widget.Id)
-				return BadRequest("Id doesn't match");
-			if (!widgetManager.Exists(widget.Id))
-				return NotFound();
-			widgetManager.Update(widget);
+			
+			foreach (UserWidgetDTO widget in widgets) {
+				if (widget == null) return BadRequest("No widget given");
+				if (widgetManager.GetWidget(widget.WidgetId) == null) return NotFound();
+				widgetManager.ChangeWidgetPos(widget.WidgetId, widget.RowNumber, widget.ColumnNumber, widget.RowSpan,
+					widget.ColumnSpan);
+			}
 			return StatusCode(HttpStatusCode.NoContent);
 		}
 
@@ -72,24 +163,24 @@ namespace BAR.UI.MVC.Controllers
 		{
 			widgetManager = new WidgetManager();
 
-			if (!widgetManager.Exists(id))
-			{
-				return NotFound();
-			}
-			widgetManager.Update(id, newTitle);
+			if (widgetManager.GetWidget(id) == null) return NotFound();
+			if (!ModelState.IsValid) return BadRequest(ModelState);
+			
+			widgetManager.ChangeWidgetTitle(id, newTitle);
 			return StatusCode(HttpStatusCode.NoContent);
 		}
-
-		/// Temp delete a widget.
+		
+		/// <summary>
+		/// Deletes a widget
+		/// </summary>
+		[HttpDelete]
+		[Route("api/Widget/Delete/{id}")]
 		public IHttpActionResult Delete(int id)
 		{
 			widgetManager = new WidgetManager();
 
-			if (!widgetManager.Exists(id))
-			{
-				return NotFound();
-			}
-			widgetManager.Delete(id);
+			if (widgetManager.GetWidget(id) == null) return NotFound();
+			widgetManager.RemoveWidget(id);
 			return StatusCode(HttpStatusCode.NoContent);
 		}
 	}

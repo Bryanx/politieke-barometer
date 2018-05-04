@@ -29,7 +29,7 @@ namespace BAR.DAL
 			if (uow == null) ctx = new BarometerDbContext();
 			else ctx = uow.Context;
 		}
-		
+
 		/// <summary>
 		/// Returns the item that matches the itemId.
 		/// </summary>       
@@ -37,10 +37,45 @@ namespace BAR.DAL
 		{
 			return ctx.Items.Find(itemId);
 		}
+		
+		/// <summary>
+		/// Returns the item that matches the itemId.
+		/// </summary>       
+		public Person ReadPersonWithDetails(int itemId)
+		{
+			return ctx.Items.OfType<Person>()
+				.Include(i => i.Area)
+				.Include(i => i.Organisation)
+				.Include(i => i.SocialMediaNames)
+				.Include(i => i.SocialMediaNames.Select(s => s.Source))
+				.Where(i => i.ItemId == itemId && i.Deleted == false)
+				.SingleOrDefault();
+		}
+		
+		/// <summary>
+		/// Returns the item that matches the itemId.
+		/// </summary>       
+		public Organisation ReadOrganisationWithDetails(int itemId)
+		{
+			return ctx.Items.OfType<Organisation>()
+				.Include(i => i.SocialMediaUrls)
+				.Include(i => i.SocialMediaUrls.Select(s => s.Source))
+				.Where(i => i.ItemId == itemId && i.Deleted == false)
+				.SingleOrDefault();
+		}
+
+		/// <summary>
+		/// Returns the item that matches the itemId.
+		/// </summary>       
+		public Item ReadItemWithWidgets(int itemId)
+		{
+			return ctx.Items.Include(item => item.ItemWidgets)
+				.Where(item => item.ItemId == itemId).SingleOrDefault();
+		}
 
 		/// <summary>
 		/// Returns the item that matches the itemId including SubPlatform
-		/// </summary>       
+		/// </summary>
 		public Item ReadItemWithSubPlatform(int itemId)
 		{
 			return ctx.Items
@@ -73,7 +108,8 @@ namespace BAR.DAL
 		/// <returns></returns>
 		public IEnumerable<Item> ReadAllItems()
 		{
-			return ctx.Items.Include(item => item.SubPlatform).AsEnumerable();
+			return ctx.Items.Include(item => item.ItemWidgets)
+				            .Include(item => item.SubPlatform).AsEnumerable();
 		}
 
 		/// <summary>
@@ -158,7 +194,7 @@ namespace BAR.DAL
 		/// </summary>
 		public int UpdateItems(IEnumerable<Item> items)
 		{
-			foreach (Item item in items) ctx.Entry(item).State = EntityState.Modified;	
+			foreach (Item item in items) ctx.Entry(item).State = EntityState.Modified;
 			return ctx.SaveChanges();
 		}
 
@@ -182,9 +218,31 @@ namespace BAR.DAL
 			return ctx.SaveChanges();
 		}
 
-        public Item ReadPerson(string personName)
+		/// <summary>
+		/// Reads a person of a given name.
+		/// </summary>
+		public Person ReadPerson(string personName)
+		{
+			
+			return ctx.Items.OfType<Person>().Where(i => i.Name.Equals(personName)).SingleOrDefault();
+		}
+
+		/// <summary>
+		/// Creates a range of items.
+		/// </summary>
+		public int CreateItems(ICollection<Item> items)
+		{
+			ctx.Items.AddRange(items);
+			return ctx.SaveChanges();
+		}
+
+        /// <summary>
+        /// Reads an organisation with a given name.
+        /// </summary>
+        public Item ReadOrganisation(string organisationName)
         {
-          return ctx.Items.Where(i => i.Name.Equals(personName)).SingleOrDefault();
+          return ctx.Items.Include(org => org.SubPlatform)
+            .Where(x => x.Name.Equals(organisationName)).SingleOrDefault();
         }
   }
 }

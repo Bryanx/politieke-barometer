@@ -8,7 +8,7 @@ namespace BAR.BL.Domain.Widgets
 {
 	public enum DashboardType
 	{
-		Public = 1,
+		Private = 1,
 		General
 	}
 }

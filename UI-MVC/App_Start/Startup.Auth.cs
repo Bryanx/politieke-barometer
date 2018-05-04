@@ -7,6 +7,7 @@ using Microsoft.Owin;
 using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.Facebook;
 using Microsoft.Owin.Security.Google;
+using Microsoft.Owin.Security.OAuth;
 using Owin;
 using System;
 using System.Collections.Generic;
@@ -14,11 +15,15 @@ using System.Configuration;
 using System.Linq;
 using System.Net.Http;
 using System.Web;
+using webapi.Providers;
 
 namespace BAR.UI.MVC
 {
   public partial class Startup
   {
+    public static OAuthAuthorizationServerOptions OAuthOptions { get; private set; }
+    public static string PublicClientId { get; private set; }
+
     public void ConfigureAuth(IAppBuilder app)
     {
       // Configure the db context, user manager and signin manager to use a single instance per request
@@ -74,6 +79,21 @@ namespace BAR.UI.MVC
           }
         }
       });
+
+      //Configure the application for OAuth based flow
+      PublicClientId = "self";
+      OAuthOptions = new OAuthAuthorizationServerOptions
+      {
+        TokenEndpointPath = new PathString("/Token"),
+        Provider = new ApplicationOAuthProvider(PublicClientId),
+        AuthorizeEndpointPath = new PathString("/api/Android/ExternalLogin"),
+        AccessTokenExpireTimeSpan = TimeSpan.FromDays(365),
+        //For development
+        AllowInsecureHttp = true
+      };
+
+      //Enable the application to use bearer tokens to authenticate users
+      app.UseOAuthBearerTokens(OAuthOptions);
     }
   }
 }

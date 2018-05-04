@@ -8,6 +8,7 @@ namespace BAR.BL.Domain.Items
 {
   public class Organisation : Item
   {
-    public List<SocialMediaUrl> SocialMediaUrls { get; set; }
+    public string Site { get; set; }
+    public List<SocialMediaName> SocialMediaUrls { get; set; }
   }
 }

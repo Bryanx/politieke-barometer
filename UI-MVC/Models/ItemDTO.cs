@@ -24,11 +24,15 @@ namespace BAR.UI.MVC.Models {
         
         [Display(Name = "NumberOfMentions", ResourceType = typeof(Resources))]    
         public int NumberOfMentions { get; set; }
+        public double SentimentPositive { get; set; }
+        public double SentimentNegative { get; set; }
         public double Baseline { get; set; }
         public bool? Subscribed { get; set; }
         
         [Display(Name = "Category", ResourceType = typeof(Resources))]    
         public ItemType? ItemType { get; set; }
         public bool Deleted { get; set; }
+
+        public byte[] Picture { get; set; }
     }
 }

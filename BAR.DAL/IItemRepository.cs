@@ -12,18 +12,22 @@ namespace BAR.DAL
 		//Read
 		Item ReadItemWithInformations(int itemId);
 		Item ReadItem(int itemId);
-		Item ReadPerson(string personName);
+		Person ReadPerson(string personName);
+		Person ReadPersonWithDetails(int itemId);
+		Organisation ReadOrganisationWithDetails(int itemId);
 		Item ReadItemWithSubPlatform(int itemId);
-
+    	Item ReadOrganisation(string organisationName);
 		IEnumerable<Item> ReadAllItems();
 		IEnumerable<Person> ReadAllPersons();
 		IEnumerable<Organisation> ReadAllOraginsations();
 		IEnumerable<Theme> ReadAllThemes();
 		IEnumerable<Item> ReadItemsForType(ItemType type);
 		IEnumerable<Item> ReadAllItemsForUpdatedSince(DateTime since);
+		Item ReadItemWithWidgets(int itemId);
 
 		//Create
 		int CreateItem(Item item);
+    	int CreateItems(ICollection<Item> items);
 
 		//Update
 		int UpdateItem(Item item);

@@ -7,6 +7,7 @@ using BAR.BL.Domain.Items;
 using BAR.BL.Domain.Users;
 using BAR.BL.Managers;
 using BAR.UI.MVC.App_GlobalResources;
+using BAR.UI.MVC.Attributes;
 using BAR.UI.MVC.Models;
 using Microsoft.AspNet.Identity;
 using static BAR.UI.MVC.Models.ItemViewModels;
@@ -28,11 +29,14 @@ namespace BAR.UI.MVC.Controllers
 		[AllowAnonymous]
 		public ActionResult Index()
 		{
-			subManager = new SubscriptionManager();
+      //Get hold of subplatformID we received
+      int subPlatformID = (int)RouteData.Values["SubPlatformID"];
+
+      subManager = new SubscriptionManager();
 			itemManager = new ItemManager();
 			userManager = new UserManager();
 
-			IList<ItemDTO> people = Mapper.Map<IList<Item>, IList<ItemDTO>>(itemManager.GetAllOrganisations().ToList());
+			IList<ItemDTO> people = Mapper.Map<IList<Item>, IList<ItemDTO>>(itemManager.GetAllOrganisationsForSubplatform(subPlatformID).ToList());
 			IEnumerable<Subscription> subs = subManager.GetSubscriptionsWithItemsForUser(User.Identity.GetUserId());
 
 			foreach (ItemDTO item in people)
@@ -51,6 +55,33 @@ namespace BAR.UI.MVC.Controllers
 					User = User.Identity.IsAuthenticated ? userManager.GetUser(User.Identity.GetUserId()) : null,
 					Items = people
 				});
+		}
+		
+		/// <summary>
+		/// Detailed organisation page for logged-in and non-logged-in users.
+		/// </summary>
+		[SubPlatformDataCheck]
+		public ActionResult Details(int id)
+		{
+			itemManager = new ItemManager();
+			userManager = new UserManager();
+			subManager = new SubscriptionManager();
+
+			Item item = itemManager.GetOrganisationWithDetails(id);
+
+			if (item == null) return HttpNotFound();
+
+			Item subbedItem = subManager.GetSubscribedItemsForUser(User.Identity.GetUserId())
+				.FirstOrDefault(i => i.ItemId == item.ItemId);
+
+			OrganisationViewModel organisationViewModel = Mapper.Map(item, new OrganisationViewModel());
+			organisationViewModel.PageTitle = item.Name;
+			organisationViewModel.User = User.Identity.IsAuthenticated ? userManager.GetUser(User.Identity.GetUserId()) : null;
+			organisationViewModel.Person = Mapper.Map(item, new ItemDTO());
+			organisationViewModel.Subscribed = subbedItem != null;
+			                             
+			//Assembling the view
+			return View(organisationViewModel);
 		}
 	}
 }

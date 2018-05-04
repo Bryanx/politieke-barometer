@@ -1,0 +1,13 @@
+.social-icon {
+  margin-right: 5px;
+  &:hover {
+    text-decoration: none;
+  }  
+}
+
+.fa-facebook-square:hover::before  { color: #3b5998 }
+.fa-twitter-square:hover::before   { color: #55acee }
+.fa-google-square:hover::before    { color: #dd4b39 }
+.fa-pinterest-square:hover::before { color: #bd081c }
+.fa-instagram-square:hover::before { color: #833ab4 }
+.fa-snapchat-square:hover::before  { color: #fbe00f }

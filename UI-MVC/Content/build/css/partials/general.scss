@@ -21,6 +21,7 @@ body {
   font-size: 15px;
   font-weight: 400;
   line-height: 1.471;
+  margin-top: 50px;
 }
 
 ::selection {
@@ -83,4 +84,25 @@ hr {
   height: 0;
   clear: both;
   visibility: hidden;
+}
+
+#notificationMessage {
+  font-size: 12px;
+  position: fixed;
+  display: block;
+  z-index: 999;
+  padding: 27px 5px;
+  text-align: center;
+  color: white;
+  left: 0;
+  bottom: 23px;
+  width: 100px;
+  height: 72px;
+  vertical-align: middle;
+}
+
+
+/* Main padding on every page */
+.main_padding {
+  padding: 40px 30px ;
 }

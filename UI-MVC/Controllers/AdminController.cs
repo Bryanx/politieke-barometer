@@ -56,6 +56,9 @@ namespace BAR.UI.MVC.Controllers
 		/// </summary>
 		public ActionResult ItemManagement()
 		{
+			//Get hold of subplatformID we received
+			int subPlatformID = (int)RouteData.Values["SubPlatformID"];
+
 			itemManager = new ItemManager();
 			userManager = new UserManager();
 
@@ -64,7 +67,7 @@ namespace BAR.UI.MVC.Controllers
 			{
 				User = userManager.GetUser(User.Identity.GetUserId()),
 				PageTitle = Resources.ItemManagement,
-				Items = Mapper.Map(itemManager.GetAllItems(), new List<ItemDTO>())
+				Items = Mapper.Map(itemManager.GetAllItems().Where(item => item.SubPlatform.SubPlatformId == subPlatformID), new List<ItemDTO>())
 			});
 		}
 
@@ -110,11 +113,28 @@ namespace BAR.UI.MVC.Controllers
 				Text = x.Name,
 			}).OrderBy(x => x.Text);
 			vm.UserRoles = userManager.GetAllRoles().Where(r => r.Name == "Admin" || r.Name == "User")
-			  .Select(x => new SelectListItem
-			  {
-				  Value = x.Id,
-				  Text = x.Name,
-			  }).OrderBy(x => x.Text);
+				.Select(x => new SelectListItem
+				{
+					Value = x.Id,
+					Text = x.Name,
+				}).OrderBy(x => x.Text);
+		}
+
+		[HttpPost]
+		public ActionResult UploadJson([Bind(Exclude = "jsonFile")]ItemViewModels.ItemViewModel model)
+		{
+			//Get hold of subplatformID we received
+			int subPlatformID = (int)RouteData.Values["SubPlatformID"];
+
+			itemManager = new ItemManager();
+
+			if (Request.Files.Count > 0)
+			{
+				HttpPostedFileBase pfb = Request.Files["jsonFile"];
+				string json = itemManager.ConvertPfbToString(pfb);
+				itemManager.ImportJson(json, subPlatformID);
+			}
+			return RedirectToAction("ItemManagement", "Admin");
 		}
 	}
 }

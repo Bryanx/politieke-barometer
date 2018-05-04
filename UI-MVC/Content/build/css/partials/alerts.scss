@@ -113,6 +113,9 @@ div {
       }
     }
   }
+  .msg_list {
+    min-width: 400px;
+  }
 }
 
 .navbar-nav .open .dropdown-menu.msg_list {
@@ -129,7 +132,7 @@ div {
 }
 
 #alertDropdown {
-  padding: 17px 17px 16px;
+  padding: 12px 17px 16px;
 }
 
 .info-number .badge {
