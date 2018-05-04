@@ -195,7 +195,9 @@ namespace BAR.DAL
 		/// </summary>
 		public Customization ReadCustomisation(int platformId)
 		{
-			SubPlatform subplatFrom = ctx.SubPlatforms.Include(platform => platform.Customization).SingleOrDefault();
+			SubPlatform subplatFrom = ctx.SubPlatforms.Include(platform => platform.Customization)
+													  .Where(platform => platform.SubPlatformId == platformId)
+													  .SingleOrDefault();
 			return subplatFrom.Customization;
 		}
 	}

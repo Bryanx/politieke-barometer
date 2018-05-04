@@ -42,7 +42,7 @@ namespace BAR.UI.MVC.Controllers.api
 		public IHttpActionResult GetCustomForPlatform(int platformId)
 		{
 			userManager = new UserManager();
-			Customization custom = new SubplatformManager().GetSubPlatform(platformId).Customization;
+			Customization custom = new SubplatformManager().GetCustomization(platformId);
 
 			if (custom == null)
 				return BadRequest("No customization given");
@@ -57,7 +57,7 @@ namespace BAR.UI.MVC.Controllers.api
 		/// </summary>
 		[HttpPost]
 		[Route("api/Customization/PutColor/{platformId}")]
-		public IHttpActionResult PutColor(int platformId, [FromBody] Customization custom)
+		public IHttpActionResult PutColor(int platformId, [FromBody] CustomizationViewModel custom)
 		{
 			platformManager = new SubplatformManager();
 

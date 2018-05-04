@@ -434,16 +434,25 @@
     //Functions for ajax calls
     //Customization
     function putColor(id, data) {
+      //Update dataforms
+      formdata = $("#form_page_color").serializeArray().reduce(function (a, x) {
+        a[x.name] = x.value;
+        return a;
+      }, {});
+      console.log(formdata);
+      data.PrimaryColor = formdata.PrimaryColor;
+      data.SecondairyColor = formdata.SecondairyColor;
+      data.TertiaryColor = formdata.TertiaryColor;
+      data.BackgroundColor = formdata.BackgroundColor;
+      data.TextColor = formdata.TextColor;
       console.log(data);
-      console.log(id);
-      //$.ajax({
-      //  type: "POST",
-      //  url: "/api/Customization/PutColor/" + id
-      //  data: data,
-      //  contentType: 'application/json; charset=utf-8',
-      //  dataType: "json"
-      //}).fail(() => {/* ok */ })
-      //  .done(() => {/* ok */ })
+
+      $.ajax({
+        type: "POST",
+        url: "/api/Customization/PutColor/" + id,
+        data: data,
+      }).fail(() => {/* ok */ })
+        .done(() => {/* ok */ })
     }
     //function putAlias(id) {
     //  $.ajax({
@@ -514,8 +523,9 @@
     $("#form_page_color").submit(function (event) {
       event.preventDefault();
       getSubplatformId(getCustomData, putColor);
-
     });
+
+    $()
     //$("#form_page_text").submit(function (event) {
     //  event.preventDefault();
     //  getSubplatformId$(getCustomData);
