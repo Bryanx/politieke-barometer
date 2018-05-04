@@ -26,11 +26,11 @@
     <!-- top tiles -->
     <div class="row tile_count">
         @{ int i = 0;}
-        @foreach (var item in Model.Items) {
+        @foreach (var item in Model.Items.OrderByDescending(m => m.NumberOfMentions)) {
             if (i < 6) {
                 <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
                     <span class="count_top"><i class="fa fa-user"></i> @item.Name</span>
-                    <div class="count">123.50</div>
+                    <div class="count">@item.NumberOfMentions</div>
                     <span class="count_bottom">
                         <i class="green">
                             <i

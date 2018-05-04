@@ -12,11 +12,9 @@ function addNodeboxGraph(id) {
     
 }
 
-
 /**
  * Nodebox api
  */
-
 function createNodebox(id) {
     let node = document.getElementById('graph' + id);
     let parent =  node.parentElement;
@@ -96,7 +94,7 @@ function createItemWidget(id, title) {
         "                <div class='x_title'>" +
         "                    <h2 class='graphTitle'>" + title + "</h2>" +
         "                    <ul class='nav navbar-right panel_toolbox'>" +
-        "                   <li><a class='addToDashboard'>" + Resources.Save + "</a></li>" +
+        "                   <li><a data-widget-id=" + id + " class='addToDashboard'>" + Resources.Save + "</a></li>" +
         "                   <li class='dropdown'>" +
         "                       <a href='#' class='dropdown-toggle' data-toggle='dropdown' role='button' aria-expanded='false'><i class='fa fa-gear'></i></a>" +
         "                       <ul class='dropdown-menu' role='menu'>" +
@@ -115,14 +113,14 @@ function createItemWidget(id, title) {
         "                           <li><a data-widget-id=" + id + " class='getPNGImage'>Download PNG image</a></li>" +
         "                       </ul>" +
         "                   </li>" +
-        "                   <li><a data-widget-id=" + id + " class='changeToWeek'>7d</a></li>" +
-        "                   <li><a data-widget-id=" + id + " class='changeToMonth'>1m</a></li>" +
-        "                   <li><a data-widget-id=" + id + " class='changeTo3Month'>3m</a></li>" +
-        "                   <li><a data-widget-id=" + id + " class='changeToYear'>1y</a></li>" +
+        "                   <li><a data-widget-id=" + id + " class='dateChangeChart changeToWeek'>7d</a></li>" +
+        "                   <li><a data-widget-id=" + id + " class='dateChangeChart changeToMonth'>1m</a></li>" +
+        "                   <li><a data-widget-id=" + id + " class='dateChangeChart changeTo3Month'>3m</a></li>" +
+        "                   <li><a data-widget-id=" + id + " class='dateChangeChart changeToYear'>1y</a></li>" +
         "                    </ul>" +
         "                    <div class='clearfix'></div>" +
         "                </div>" +
-        "                <div style='position: relative; height: 80%;'> " +
+        "                <div style='position: relative; height: 75%;'> " +
         "                    <canvas id='graph" + id + "'></canvas>" +
         "                    <h2 class='no-graph-data text-center'>No data available.</h2>" +
         "               </div>" +
@@ -169,26 +167,22 @@ function loadGraphs(itemId, widget) {
     var charts = [];
     var widgetId = widget.WidgetId;
     var COLORS = [
-        '#4dc9f6',
-        '#f67019',
-        '#f53794',
-        '#537bc4',
-        '#acc236',
-        '#166a8f',
-        '#00a950',
-        '#58595b',
-        '#8549ba'
+        'rgb(255, 99, 132)',
+        'rgb(255, 159, 64)',
+        'rgb(255, 205, 86)',
+        'rgb(75, 192, 192)',
+        'rgb(54, 162, 235)',
+        'rgb(153, 102, 255)',
+        'rgb(201, 203, 207)'
     ];
     var DARKCOLORS = [
-        '#3a99e1',
-        '#e25b11',
-        '#e11f70',
-        '#2f4db3',
-        '#8dac1b',
-        '#135a79',
-        '#009547',
-        '#414243',
-        '#7540a4'
+        'rgb(235, 69, 102)',
+        'rgb(235, 129, 34)',
+        'rgb(235, 175, 46)',
+        'rgb(55, 162, 162)',
+        'rgb(34, 132, 205)',
+        'rgb(123, 72, 225)',
+        'rgb(171, 173, 177)'
     ];
     
     //Retrieves a chart by data-id.
@@ -330,20 +324,30 @@ function loadGraphs(itemId, widget) {
         chart.options.legend.display = !chart.options.legend.display;
         chart.update();
     };
-
-    //Adds a linechart to a widget.
-    let addLineChartJS = function (widget, chartData) {
+    
+    //Converts a graphtype to appropriate string
+    let ConvertToChartType = function (graphType) {
+        switch (graphType) {
+            case 1: return "line";
+            case 2: return "bar";
+            case 3: return "pie";
+            case 4: return "doughnut";
+        }
+    };
+    
+    //Create a new chart
+    let AddChart = function (widget, labels, values, borderColor, color, darkColor, chartType) {
         charts.push(new Chart(document.getElementById("graph"+widgetId), {
             id: widgetId,
-            type: "line",
+            type: chartType,
             data: {
-                labels: Object.keys(chartData),
+                labels: labels,
                 datasets: [{
-                    data: Object.values(chartData),
+                    data: values,
                     label: widget.Title,
-                    borderColor: COLORS[0],
-                    backgroundColor: COLORS[0],
-                    hoverBackgroundColor: DARKCOLORS[0],
+                    borderColor: borderColor,
+                    backgroundColor: color,
+                    hoverBackgroundColor: darkColor,
                     fill: false,
                 }],
             },
@@ -354,34 +358,75 @@ function loadGraphs(itemId, widget) {
                     onComplete: function () {
                         AddImageUrl(widgetId);
                     }
-                },
-                scales: {
-                    xAxes: [{
-                        type: 'time',
-                        display: true,
-                        time: {
-                            format: "DD-MM",
-                            // round: 'day'
-                        }
-                    }],
-                },
+                }
             }
         }));
+    };
+    
+    let AddPieChart = function (widget, chartData, chartType="pie") {
+        let labels = chartData[0].GraphValues.map(g => g.Value);
+        let values = chartData[0].GraphValues.map(g => g.NumberOfTimes);
+        let borderColor = "#fff";
+        let color = [];
+        let darkColor = [];
+        let r = Math.floor((Math.random() * 4));
+        $.each(values, () => {
+            color.push(COLORS[r]);
+            darkColor.push(COLORS[r]);
+            r++;
+        });
+        if (chartData[0].KeyValue === "Gender") {
+            labels = [Resources.Male, Resources.Female];
+        }
+        $(".dateChangeChart").each(function () {
+            if ($(this).data("widget-id") == widget.WidgetId) {
+                $(this).hide();
+            }
+        });
+        AddChart(widget, labels, values, borderColor, color, darkColor, chartType);
+    };
+
+    //Settings for a linechart
+    let AddLineChart = function (widget, chartData, chartType="line") {
+        let labels = chartData[0].GraphValues.map(g => g.Value);
+        let values = chartData[0].GraphValues.map(g => g.NumberOfTimes);
+        let colorNumber = Math.floor((Math.random() * 6));
+        let color = COLORS[colorNumber];
+        let darkColor = DARKCOLORS[colorNumber];
+        let borderColor = COLORS[colorNumber];
+        AddChart(widget, labels, values, borderColor, color, darkColor, chartType);
+    };
+
+    let AddBarChart = function (widget, chartData) {
+        AddLineChart(widget,  chartData, "bar");
+    };
+    
+    let AddDoughnutChart = function (widget, chartData) {
+        AddPieChart(widget,  chartData, "doughnut");
+    };
+    
+    //Moves the graph data to the appropriate method.
+    let loadGraphHandler = function (widget, data) {
+        if (data !== undefined) {
+            let chartType = ConvertToChartType(widget.GraphType);
+            switch (chartType) {
+                case "line": AddLineChart(widget, data);break;
+                case "bar": AddBarChart(widget, data);break;
+                case "pie": AddPieChart(widget, data);break;
+                case "doughnut": AddDoughnutChart(widget, data);
+            }
+        } else {
+            displayNoGraphData(widgetId);
+        }
     };
 
     //Retrieves the graph data from api.
     let ajaxLoadGraphs = function (widget) {
         $.ajax({
             type: "GET",
-            url: "/api/GetGraphs/" + itemId + "/" + widgetId,
+            url: "/api/GetGraphs/" + itemId + "/" + widget.WidgetId,
             dataType: "json",
-            success: data2 => {
-                if (data2 !== undefined) {
-                    addLineChartJS(widget, data2);
-                } else {
-                    displayNoGraphData(widgetId);
-                }
-            }
+            success: data => loadGraphHandler(widget, data)
         })
     };
     
@@ -527,7 +572,7 @@ function init() {
 
     //Moves a widget from item page to dashboard page
     let moveWidget = function () {
-        let widgetId = $(".addToDashboard").parents(".chart-container").data("widget-id");
+        let widgetId = $(".addToDashboard").data("widget-id");
         $.ajax({
             type: "POST",
             url: "/api/MoveWidget/" + widgetId,

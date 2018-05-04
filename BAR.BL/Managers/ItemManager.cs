@@ -356,7 +356,7 @@ namespace BAR.BL.Managers
 			{
 				Name = "Gender"
 			});
-			ItemWidget widget2 = (ItemWidget)widgetManager.AddWidget(WidgetType.GraphType, name + " gender comparison ", 1, 1, proptags: proptags, graphType: GraphType.BarChart, rowspan: 6, colspan: 6);
+			ItemWidget widget2 = (ItemWidget)widgetManager.AddWidget(WidgetType.GraphType, name + " gender comparison ", 1, 1, proptags: proptags, graphType: GraphType.PieChart, rowspan: 6, colspan: 6);
 			itemWidgets.Add(widget2);
 			widgetIds.Add(widget2.WidgetId);
 
@@ -366,7 +366,7 @@ namespace BAR.BL.Managers
 			{
 				Name = "Age"
 			});
-			ItemWidget widget3 = (ItemWidget)widgetManager.AddWidget(WidgetType.GraphType, name + " age comparison", 1, 1, proptags: proptags, graphType: GraphType.PieChart, rowspan: 6, colspan: 6);
+			ItemWidget widget3 = (ItemWidget)widgetManager.AddWidget(WidgetType.GraphType, name + " age comparison", 1, 1, proptags: proptags, graphType: GraphType.DonutChart, rowspan: 6, colspan: 6);
 			itemWidgets.Add(widget3);
 			widgetIds.Add(widget3.WidgetId);
 
