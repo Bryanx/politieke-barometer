@@ -17,11 +17,20 @@
 
     <title>@(Model.PageTitle.Length == 0 ? @ViewBag.Title : Model.PageTitle)</title>
 
-    @Styles.Render("~/Content/css")
+    <link href="~/Content/build/css/vendor/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/build/css/vendor/font-awesome.min.css" rel="stylesheet" />
+    <link href="~/Content/build/css/vendor/bootstrap-progressbar-3.3.4.min.css" rel="stylesheet" />
+    <link href="~/Content/build/css/vendor/jqvmap.min.css" rel="stylesheet" />
+    <link href="~/Content/build/css/vendor/daterangepicker.css" rel="stylesheet" />
+
+    <link href="~/Content/build/css/modules/colors.css" rel="stylesheet" />
+    <link href="~/Content/build/css/modules/general.css" rel="stylesheet" />
+    <link href="~/Content/build/css/modules/mediaqueries.css" rel="stylesheet" />
+    <link href="~/Content/build/css/modules/animations.css" rel="stylesheet" />
 
     @if (IsSectionDefined("CustomCSS"))
     {
-    @RenderSection("CustomCSS")
+        @RenderSection("CustomCSS")
     }
 
     <!-- Custom Theme Style -->

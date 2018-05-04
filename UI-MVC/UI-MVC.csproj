@@ -20,7 +20,7 @@
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
     <Use64BitIISExpress />
-    <IISExpressSSLPort>44303</IISExpressSSLPort>
+    <IISExpressSSLPort>44317</IISExpressSSLPort>
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
@@ -552,7 +552,6 @@
     <None Include="Scripts\vue.min.js" />
     <Content Include="Views\Home\GetResources.cshtml" />
     <Content Include="Views\Overview\Index.cshtml" />
-    <None Include="Views\Shared\DisplayTemplates\CanonicalHelperModel.ascx" />
     <None Include="Views\Shared\DisplayTemplates\CanonicalHelperModel.cshtml" />
     <None Include="Views\Shared\DisplayTemplates\MenuHelperModel.cshtml" />
     <None Include="Views\Shared\DisplayTemplates\MetaRobotsHelperModel.cshtml" />
