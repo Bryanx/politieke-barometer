@@ -7,6 +7,8 @@ using System.Web.Http;
 using BAR.BL.Managers;
 using BAR.BL.Domain.Core;
 using BAR.UI.MVC.Models;
+using AutoMapper;
+using BAR.UI.MVC.App_GlobalResources;
 
 namespace BAR.UI.MVC.Controllers.api
 {
@@ -16,6 +18,7 @@ namespace BAR.UI.MVC.Controllers.api
 	public class SubPlatformApiController : ApiController
 	{
 		private ISubplatformManager platformManager;
+		private IUserManager userManager;
 
 		/// <summary>
 		/// Gives back the id of the subdomain related to 
@@ -38,6 +41,7 @@ namespace BAR.UI.MVC.Controllers.api
 		[Route("api/Customization/GetCustomForPlatform/{platformId}")]
 		public IHttpActionResult GetCustomForPlatform(int platformId)
 		{
+			userManager = new UserManager();
 			Customization custom = new SubplatformManager().GetSubPlatform(platformId).Customization;
 
 			if (custom == null)
