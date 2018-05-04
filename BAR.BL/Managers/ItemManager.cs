@@ -300,9 +300,9 @@ namespace BAR.BL.Managers
 					item = new Theme()
 					{
 						Keywords = new List<Keyword>()
-					{
-						
-					}
+						{
+
+						}
 					};
 					break;
 				default:
@@ -593,9 +593,19 @@ namespace BAR.BL.Managers
 
 				Theme theme = null;
 
+				List<Keyword> keywords = new List<Keyword>();
+
+				for (int j = 0; j < deserializedJson[i].keywords.Count; j++)
+				{
+					keywords.Add(new Keyword()
+					{
+						Name = deserializedJson[i].keywords[j]
+					});
+				}
+
 				if (themes
-					.Where(t => t.SubPlatform.SubPlatformId == subPlatformID)
-					.Where(x => x.Name.Equals(name)).SingleOrDefault() == null)
+				.Where(t => t.SubPlatform.SubPlatformId == subPlatformID)
+				.Where(x => x.Name.Equals(name)).SingleOrDefault() == null)
 				{
 					theme = new Theme()
 					{
@@ -609,7 +619,7 @@ namespace BAR.BL.Managers
 						Baseline = 0.0,
 						Informations = new List<Information>(),
 						SubPlatform = subPlatform,
-						Keywords = new List<Keyword>()
+						Keywords = keywords
 					};
 					itemRepo.CreateItem(theme);
 					uowManager.Save();
