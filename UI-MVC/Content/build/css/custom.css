@@ -836,7 +836,7 @@ table.tile_info {
   margin-right: 5px; }
 
 .small-logo {
-  background-image: url("../images/logo-all-white-smaller.png");
+  background-image: url("../images/logo/logo-white.svg");
   background-repeat: no-repeat;
   background-size: contain;
   background-position: center center;
@@ -846,7 +846,7 @@ table.tile_info {
   border-bottom: 1px solid #a5a9ac; }
 
 .small-logo.colored {
-  background-image: url("../images/logo-colored-smaller.png");
+  background-image: url("../images/logo/logo-dark.svg");
   border: none;
   height: 50px;
   position: relative;
