@@ -33,7 +33,7 @@ namespace BAR.BL.Managers
 		/// and links that widget to a dasboard.
 		/// </summary>
 		public Widget AddWidget(WidgetType widgetType, string title, int rowNbr, int colNbr, List<PropertyTag> proptags, DateTime? timestamp = null,
-			GraphType? graphType = null, int rowspan = 1, int colspan = 1, int dashboardId = -1, List<WidgetData> datas = null)
+			GraphType? graphType = null, int rowspan = 1, int colspan = 1, int dashboardId = -1, List<WidgetData> datas = null, List<Item> items = null)
 		{
 			InitRepo();
 			Widget widget;
@@ -52,7 +52,7 @@ namespace BAR.BL.Managers
 			widget.RowSpan = rowspan;
 			widget.ColumnSpan = colspan;
 			widget.Timestamp = timestamp;
-			widget.Items = new List<Item>();
+			widget.Items = items ?? new List<Item>();
 			widget.GraphType = graphType;
 			widget.PropertyTags = proptags;
 

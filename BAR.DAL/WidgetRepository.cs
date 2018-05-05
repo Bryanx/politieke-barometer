@@ -57,7 +57,9 @@ namespace BAR.DAL
 		/// </summary>
 		public Dashboard ReadDashboardWithWidgets(int dashboardId)
 		{
-			return ctx.Dashboards.Include(dash => dash.Widgets)
+			return ctx.Dashboards
+				.Include(dash => dash.Widgets)
+				.Include(dash => dash.Widgets.Select(w => w.Items))
 				.Where(dash => dash.DashboardId == dashboardId).SingleOrDefault();
 		}
 
