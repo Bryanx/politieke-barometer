@@ -19,6 +19,9 @@ using BAR.UI.MVC.Models;
 using BAR.BL.Managers;
 using BAR.UI.MVC;
 using BAR.BL.Domain.Users;
+using BAR.BL.Domain.Widgets;
+using System.Web.Script.Serialization;
+using System.Linq;
 
 namespace webapi.Controllers
 {
@@ -30,7 +33,7 @@ namespace webapi.Controllers
     [AllowAnonymous]
     [HttpPost]
     [Route("Register")]
-    public async Task<IHttpActionResult> Register([FromBody]RegisterBindingModel model)
+    public async Task<IHttpActionResult> PostRegister([FromBody]RegisterAndroidViewModel model)
     {
       if (!ModelState.IsValid)
       {
@@ -52,19 +55,61 @@ namespace webapi.Controllers
 
     // GET api/Android/UserInfo
     [HostAuthentication(DefaultAuthenticationTypes.ExternalBearer)]
+    [HttpGet]
     [Route("UserInfo")]
-    public UserInfoViewModel GetUserInfo()
+    public UserInfoAndroidViewModel GetUserInfo()
     {
-      //ExternalLoginData externalLogin = ExternalLoginData.FromIdentity(User.Identity as ClaimsIdentity);
       IUserManager userManager = new UserManager();
       var user = userManager.GetUser(User.Identity.GetUserId());
 
-      return new UserInfoViewModel
+      return new UserInfoAndroidViewModel
       {
         FirstName = user.FirstName,
         LastName = user.LastName,
         ProfilePicture = user.ProfilePicture != null ? Convert.ToBase64String(user.ProfilePicture) : ""
       };
+    }
+
+    // POST api/Android/UserInfo
+    [HostAuthentication(DefaultAuthenticationTypes.ExternalBearer)]
+    [HttpPost]
+    [Route("UserInfo")]
+    public IHttpActionResult PostUserInfo([FromBody]UserInfoAndroidViewModel model)
+    {
+      if (!ModelState.IsValid)
+      {
+        return BadRequest(ModelState);
+      }
+
+      IUserManager userManager = new UserManager();
+      if (!model.ProfilePicture.Equals(""))
+      {
+        byte[] profilePicture = Convert.FromBase64String(model.ProfilePicture);
+        userManager.ChangeBasicInfoAndroid(User.Identity.GetUserId(), model.FirstName, model.LastName, profilePicture);
+      }
+      else
+      {
+        userManager.ChangeBasicInfoAndroid(User.Identity.GetUserId(), model.FirstName, model.LastName);
+      }
+      
+      return Ok();
+    }
+
+    // GET api/Android/Widgets
+    [HostAuthentication(DefaultAuthenticationTypes.ExternalBearer)]
+    [HttpGet]
+    [Route("Widgets")]
+    public IEnumerable<Widget> GetWidgets()
+    {
+      IWidgetManager widgetManager = new WidgetManager();
+      var dashboard = widgetManager.GetDashboardWithAllDataForUserId(User.Identity.GetUserId());
+      IEnumerable<UserWidget> widgets = dashboard.Widgets;
+      widgets.All(x =>
+      {
+        x.Dashboard = null;
+        return true;
+      });
+      return widgets;
     }
 
     #region Helpers

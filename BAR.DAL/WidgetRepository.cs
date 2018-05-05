@@ -257,7 +257,7 @@ namespace BAR.DAL
 					   .Include(widget => widget.PropertyTags)
 					   .Include(widget => widget.WidgetDatas)
 					   .Include(widget => widget.WidgetDatas.Select(widgetData => widgetData.GraphValues))
-					   .AsEnumerable();
+					   .ToList();
 		}
 
 		/// <summary>

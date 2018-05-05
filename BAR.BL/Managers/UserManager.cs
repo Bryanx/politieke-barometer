@@ -189,5 +189,23 @@ namespace BAR.BL.Managers
 			userRepo.UpdateUser(userToUpdate);
 			return userToUpdate;
 		}
-	}
+
+    public User ChangeBasicInfoAndroid(string userId, string firstname, string lastname, byte[] profilePicture = null)
+    {
+      InitRepo();
+
+      //Get User
+      User userToUpdate = userRepo.ReadUser(userId);
+      if (userToUpdate == null) return null;
+
+      //Change user
+      userToUpdate.FirstName = firstname;
+      userToUpdate.LastName = lastname;
+      userToUpdate.ProfilePicture = profilePicture;
+
+      //Update database
+      userRepo.UpdateUser(userToUpdate);
+      return userToUpdate;
+    }
+  }
 }
