@@ -66,17 +66,9 @@ function createUserWidget(id, title) {
         "                <div class='x_title'>" +
         "                    <h2 class='graphTitle'>" + title + "</h2>" +
         "                    <ul class='nav navbar-right panel_toolbox'>" +
-        "                       <li><a class='collapse-link'><i class='fa fa-chevron-up'></i></a></li>" +
-        "                       <li class='dropdown'>" +
-        "                       <a href='#' class='dropdown-toggle' data-toggle='dropdown' role='button' aria-expanded='false'><i class='fa fa-wrench'></i></a>" +
-        "                       <ul class='dropdown-menu' role='menu'>" +
-        "                           <li><a href='#'>Settings 1</a></li>" +
-        "                           <li><a href='#'>Settings 2</a></li>" +
-        "                       </ul>" +
-        "                       </li>" +
         "                       <li>" +
         "                            <a class='close-widget'>" +
-        "                                <i id=' + id + ' class='fa fa-close'></i>" +
+        "                                <i id=" + id + " class='fa fa-close'></i>" +
         "                            </a>" +
         "                       </li>" +
         "                    </ul>" +
@@ -161,10 +153,11 @@ function noWidgetsAvailable() {
     $(".no-widgets").show();
 }
 
+var charts = [];
+var widgets = [];
+
 function loadGraphs(itemId, widget) {
 
-    //for performance reasons charts are stored in a local variable.
-    var charts = [];
     var widgetId = widget.WidgetId;
     var COLORS = [
         'rgb(255, 99, 132)',
@@ -422,12 +415,20 @@ function loadGraphs(itemId, widget) {
 
     //Retrieves the graph data from api.
     let ajaxLoadGraphs = function (widget) {
+        if (!itemId.length) {
+            itemId = widget.ItemIds[0]
+        }
         $.ajax({
             type: "GET",
             url: "/api/GetGraphs/" + itemId + "/" + widget.WidgetId,
             dataType: "json",
-            success: data => loadGraphHandler(widget, data)
-        })
+            success: data => {
+                if (!widget.ItemIds.includes(""+itemId)) {
+                    widget.ItemIds.push(itemId);
+                }
+                loadGraphHandler(widget, data)
+            }
+        });
     };
     
     //Graph handlers
@@ -516,6 +517,7 @@ function loadWidgets(url, itemId) {
                 if (widget.WidgetType === 0) {
                     loadGraphs(itemId, widget);
                 }
+                widgets.push(widget);
             });
         } else {
             noWidgetsAvailable();
@@ -573,10 +575,11 @@ function init() {
     //Moves a widget from item page to dashboard page
     let moveWidget = function () {
         let widgetId = $(".addToDashboard").data("widget-id");
+        let widget = widgets.find(w => w.WidgetId == widgetId);
         $.ajax({
             type: "POST",
             url: "/api/MoveWidget/" + widgetId,
-            dataType: "json",
+            data:  {itemIds: widget.ItemIds},
             success: () => showSaveMessage()
         }).fail(() => showErrorMessage());
     };
@@ -612,6 +615,7 @@ function init() {
     
     //Removes a widget
     let deleteWidget = function (e) {
+        console.log(e.target.id);
         let el = (e.target).closest(".grid-stack-item");
         gridselector.data("gridstack").removeWidget(el);
         $.ajax({

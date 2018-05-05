@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Web.Http;
+using System.Web.Mvc;
 using AutoMapper;
 using BAR.BL.Domain.Data;
 using BAR.BL.Domain.Widgets;
@@ -48,8 +49,8 @@ namespace BAR.UI.MVC.Controllers.api
 		/// <summary>
 		///Reads all widgets for an item and returns them.
 		/// </summary>
-		[HttpGet]
-		[Route("api/GetItemWidgets/{itemId}")]
+		[System.Web.Http.HttpGet]
+		[System.Web.Http.Route("api/GetItemWidgets/{itemId}")]
 		public IHttpActionResult GetItemWidgets(int itemId)
 		{
 			widgetManager = new WidgetManager();
@@ -67,8 +68,8 @@ namespace BAR.UI.MVC.Controllers.api
 		/// <summary>
 		/// Temp get graph
 		/// </summary>
-		[HttpGet]
-		[Route("api/GetGraphs/{itemId}/{widgetId}")]
+		[System.Web.Http.HttpGet]
+		[System.Web.Http.Route("api/GetGraphs/{itemId}/{widgetId}")]
 		public IHttpActionResult GetGraphs(int itemId, int widgetId)
 		{
 			widgetManager = new WidgetManager();
@@ -87,21 +88,29 @@ namespace BAR.UI.MVC.Controllers.api
 		/// Transfers a Widget to the dashboard of a user.
 		/// The given ItemWidget will be copied to a UserWidget.
 		/// </summary>
-		[HttpPost]
-		[Route("api/MoveWidget/{widgetId}")]
-		public IHttpActionResult MoveWidgetToDashboard(int widgetId)
+		[System.Web.Http.HttpPost]
+		[System.Web.Http.Route("api/MoveWidget/{widgetId}")]
+		public IHttpActionResult MoveWidgetToDashboard(int widgetId, [Bind(Exclude = "ItemIds")] UserWidgetDTO model)
 		{
-			widgetManager = new WidgetManager();
-			IDataManager dataManager = new DataManager();
+			UnitOfWorkManager uowManager = new UnitOfWorkManager();
+			widgetManager = new WidgetManager(uowManager);
+			itemManager = new ItemManager(uowManager);
 			
+			//Get dashboard
 			Dashboard dash = widgetManager.GetDashboard(User.Identity.GetUserId());
+			
+			//Get widget
 			Widget widget = widgetManager.GetWidgetWithAllData(widgetId);
 			
-			if (widget == null) return StatusCode(HttpStatusCode.Conflict);
-			
+			//Convert list<string> to list<int>
+			IEnumerable<int> itemIds = model.ItemIds.Select(i => Int32.Parse(i));
+			//Get all items in widget
+			IEnumerable<Item> items = itemManager.GetAllItems().Where(i => itemIds.Contains(i.ItemId));
+
+			//make new widget and attach items to the new widget
 			Widget newWidget = widgetManager.AddWidget(WidgetType.GraphType, widget.Title, widget.RowNumber, 
 				widget.ColumnNumber, proptags: widget.PropertyTags.ToList(), rowspan: widget.RowSpan,
-				colspan: widget.ColumnSpan, dashboardId: dash.DashboardId);
+				colspan: widget.ColumnSpan, dashboardId: dash.DashboardId, items: items.ToList(), graphType: widget.GraphType);
 			
 			//Create a copy of all widgetDatas
 			List<WidgetData> widgetDatas = widget.WidgetDatas.ToList();
@@ -110,6 +119,7 @@ namespace BAR.UI.MVC.Controllers.api
 			newWidget.WidgetDatas = widgetDatas;
 			widgetManager.ChangeWidget(newWidget);
 			
+			uowManager.Save();
 			return StatusCode(HttpStatusCode.NoContent);
 		}
 		
@@ -158,7 +168,7 @@ namespace BAR.UI.MVC.Controllers.api
 		}
 
 		/// Temp test update to give a widget a new title
-		[Route("api/Widget/{id}/title")]
+		[System.Web.Http.Route("api/Widget/{id}/title")]
 		public IHttpActionResult PutName(int id, [FromBody] string newTitle)
 		{
 			widgetManager = new WidgetManager();
@@ -173,8 +183,8 @@ namespace BAR.UI.MVC.Controllers.api
 		/// <summary>
 		/// Deletes a widget
 		/// </summary>
-		[HttpDelete]
-		[Route("api/Widget/Delete/{id}")]
+		[System.Web.Http.HttpDelete]
+		[System.Web.Http.Route("api/Widget/Delete/{id}")]
 		public IHttpActionResult Delete(int id)
 		{
 			widgetManager = new WidgetManager();
