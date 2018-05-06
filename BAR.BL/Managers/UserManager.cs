@@ -136,7 +136,7 @@ namespace BAR.BL.Managers
 		public IEnumerable<Area> GetAreas()
 		{
 			InitRepo();
-			return userRepo.ReadAreas().AsEnumerable();
+			return userRepo.ReadAllAreas().AsEnumerable();
 		}
 
 		/// <summary>
