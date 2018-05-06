@@ -195,10 +195,15 @@ namespace BAR.BL.Managers
 			return widget;
 		}
 
-		public void MoveWidgetToDashBoard(int widgetId, List<Item> items, string userId) {
-			
+		/// <summary>
+		/// Copies a widget to the dashboard
+		/// All attributes of the given Widget are copied and used to generate a new UserWidget.
+		/// </summary>
+		public void MoveWidgetToDashBoard(int widgetId, List<Item> items, string userId) 
+		{
 			uowManager = new UnitOfWorkManager();
 			InitRepo();
+			
 			//Get dashboard
 			Dashboard dash = GetDashboard(userId);
 			//Get widget
@@ -217,7 +222,8 @@ namespace BAR.BL.Managers
 			
 			//Create a copy of all graphvalues and widgetDatas
 			List<WidgetData> widgetDataCopy = new List<WidgetData>();
-			widget.WidgetDatas.ToList().ForEach(w => {
+			widget.WidgetDatas.ToList().ForEach(w => 
+			{
 				//copy graphvalues
 				List<GraphValue> graphValuesCopy = new List<GraphValue>();
 				w.GraphValues.ToList().ForEach(g => graphValuesCopy.Add(new GraphValue(g)));

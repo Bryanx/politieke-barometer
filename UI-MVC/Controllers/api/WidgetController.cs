@@ -33,23 +33,16 @@ namespace BAR.UI.MVC.Controllers.api
 		/// <summary>
 		///Reads all widgets for a user dashboard and returns them
 		/// </summary>
-		public IHttpActionResult Get()
+		public IHttpActionResult GetUserWidgets()
 		{
 			widgetManager = new WidgetManager();
-			itemManager = new ItemManager();
 
 			Dashboard dash = widgetManager.GetDashboard(User.Identity.GetUserId());
-
 			List<UserWidget> widgets = widgetManager.GetWidgetsForDashboard(dash.DashboardId).ToList();
 			
 			if (widgets == null || widgets.Count() == 0) return StatusCode(HttpStatusCode.NoContent);
 
-			List<UserWidgetDTO> dtos = Mapper.Map(widgets, new List<UserWidgetDTO>());
-			foreach (UserWidgetDTO userWidgetDto in dtos) {
-				userWidgetDto.ItemIds=widgets.SingleOrDefault(w => w.WidgetId == userWidgetDto.WidgetId)
-					?.Items.Select(i => i.ItemId).ToList();
-			}
-			return Ok(dtos);
+			return Ok(Mapper.Map(widgets, new List<UserWidgetDTO>()));
 		}
 		
 		/// <summary>
@@ -72,7 +65,7 @@ namespace BAR.UI.MVC.Controllers.api
 		}
 		
 		/// <summary>
-		/// Temp get graph
+		/// Retrieves the graph data for a given itemId and widget.
 		/// </summary>
 		[System.Web.Http.HttpGet]
 		[System.Web.Http.Route("api/GetGraphs/{itemId}/{widgetId}")]
