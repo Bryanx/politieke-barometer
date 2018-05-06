@@ -20,7 +20,7 @@ namespace BAR.BL.Managers
 		IEnumerable<Item> GetAllItems();
 		IEnumerable<Person> GetAllPersons();
 		IEnumerable<Organisation> GetAllOrganisations();
-		IEnumerable<Item> GetAllThemes();
+		IEnumerable<Theme> GetAllThemes();
 		IEnumerable<Item> GetItemsForType(ItemType type);
 		Person GetPerson(string personName);
 		IEnumerable<Item> GetMostTrendingItems(int numberOfItems = 5);

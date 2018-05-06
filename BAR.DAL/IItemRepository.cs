@@ -16,7 +16,7 @@ namespace BAR.DAL
 		Person ReadPersonWithDetails(int itemId);
 		Organisation ReadOrganisationWithDetails(int itemId);
 		Item ReadItemWithSubPlatform(int itemId);
-    	Item ReadOrganisation(string organisationName);
+    Item ReadOrganisation(string organisationName);
 		IEnumerable<Item> ReadAllItems();
 		IEnumerable<Person> ReadAllPersons();
 		IEnumerable<Organisation> ReadAllOraginsations();
@@ -27,7 +27,7 @@ namespace BAR.DAL
 
 		//Create
 		int CreateItem(Item item);
-    	int CreateItems(ICollection<Item> items);
+    int CreateItems(ICollection<Item> items);
 
 		//Update
 		int UpdateItem(Item item);

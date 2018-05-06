@@ -109,7 +109,8 @@ namespace BAR.DAL
 		public IEnumerable<Item> ReadAllItems()
 		{
 			return ctx.Items.Include(item => item.ItemWidgets)
-				            .Include(item => item.SubPlatform).AsEnumerable();
+				            .Include(item => item.SubPlatform)
+										.AsEnumerable();
 		}
 
 		/// <summary>
@@ -129,11 +130,15 @@ namespace BAR.DAL
 		}
 
 		/// <summary>
-		/// Gives back a list of all the thetms
+		/// Gives back a list of all the themes
 		/// </summary>
 		public IEnumerable<Theme> ReadAllThemes()
 		{
-			return ReadAllItems().OfType<Theme>().AsEnumerable();
+			return ctx.Items
+				.OfType<Theme>().Include(item => item.Keywords)
+				.Include(item => item.ItemWidgets)
+				.Include(item => item.SubPlatform)
+				.AsEnumerable();
 		}
 
 		/// <summary>

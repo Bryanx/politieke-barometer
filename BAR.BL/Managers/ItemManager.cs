@@ -385,7 +385,7 @@ namespace BAR.BL.Managers
 		/// <summary>
 		/// Returns all (undeleted) themes of the whole system
 		/// </summary>
-		public IEnumerable<Item> GetAllThemes()
+		public IEnumerable<Theme> GetAllThemes()
 		{
 			InitRepo();
 			return itemRepo.ReadAllThemes().AsEnumerable();
