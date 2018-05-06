@@ -72,13 +72,20 @@ namespace BAR.UI.MVC.Controllers.api
 		public IHttpActionResult GetGraphs(int itemId, int widgetId)
 		{
 			widgetManager = new WidgetManager();
-			IEnumerable<Widget> d = widgetManager.GetAllWidgetsWithAllDataForItem(itemId);
-			IEnumerable<WidgetData> datas = widgetManager
-				.GetAllWidgetsWithAllDataForItem(itemId)
-				.AsEnumerable()
-				.First(w => w.WidgetId == widgetId)
-				.WidgetDatas;
-			IEnumerable<WidgetDataDTO> widgetDataDtos = Mapper.Map(datas, new List<WidgetDataDTO>());
+			
+			//Get widgets
+			IEnumerable<Widget> widgets = widgetManager.GetAllWidgetsWithAllDataForItem(itemId);
+			
+			IEnumerable<WidgetData> widgetDatas = widgets.FirstOrDefault(w => w.WidgetId == widgetId)?.WidgetDatas;
+			
+			//If widgetdata's is null, either something went wrong or
+			//the user is trying to add another graph to the given widget
+			if (widgetDatas == null) {
+				string keyValue = widgetManager.GetWidgetWithAllData(widgetId)?.WidgetDatas.FirstOrDefault()?.KeyValue;
+				if (keyValue == null) return StatusCode(HttpStatusCode.Conflict);
+				widgetDatas = widgets.SingleOrDefault(w => w.WidgetDatas.Any(wd => wd.KeyValue == keyValue)).WidgetDatas;
+			}
+			IEnumerable<WidgetDataDTO> widgetDataDtos = Mapper.Map(widgetDatas, new List<WidgetDataDTO>());
 			if (widgetDataDtos == null) return StatusCode(HttpStatusCode.NoContent);
 			
 			return Ok(widgetDataDtos);
