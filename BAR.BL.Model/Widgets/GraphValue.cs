@@ -16,9 +16,9 @@ namespace BAR.BL.Domain.Widgets
 		}
 		
 		//Constructor for making a copy of GraphValue
-		public GraphValue(GraphValue g) {
-			Value = g.Value;
-			NumberOfTimes = g.NumberOfTimes;
+		public GraphValue(GraphValue graphValue) {
+			Value = graphValue.Value;
+			NumberOfTimes = graphValue.NumberOfTimes;
 		}
 	}
 }
