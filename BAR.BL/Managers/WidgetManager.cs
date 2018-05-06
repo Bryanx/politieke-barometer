@@ -139,7 +139,7 @@ namespace BAR.BL.Managers
 		{
 			InitRepo();
 			ItemManager itemManager = new ItemManager();
-			return itemManager.GetItemWithWidgets(itemId).ItemWidgets.AsEnumerable();
+			return itemManager.GetItemWithWidgets(itemId).ItemWidgets.OfType<ItemWidget>();
 		}
 
 		/// <summary>

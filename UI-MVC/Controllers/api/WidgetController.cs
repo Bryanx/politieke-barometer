@@ -36,6 +36,7 @@ namespace BAR.UI.MVC.Controllers.api
 		public IHttpActionResult Get()
 		{
 			widgetManager = new WidgetManager();
+			itemManager = new ItemManager();
 
 			Dashboard dash = widgetManager.GetDashboard(User.Identity.GetUserId());
 
@@ -43,7 +44,12 @@ namespace BAR.UI.MVC.Controllers.api
 			
 			if (widgets == null || widgets.Count() == 0) return StatusCode(HttpStatusCode.NoContent);
 
-			return Ok(Mapper.Map(widgets, new List<UserWidgetDTO>()));
+			List<UserWidgetDTO> dtos = Mapper.Map(widgets, new List<UserWidgetDTO>());
+			foreach (UserWidgetDTO userWidgetDto in dtos) {
+				userWidgetDto.ItemIds=widgets.SingleOrDefault(w => w.WidgetId == userWidgetDto.WidgetId)
+					?.Items.Select(i => i.ItemId).ToList();
+			}
+			return Ok(dtos);
 		}
 		
 		/// <summary>
@@ -73,6 +79,7 @@ namespace BAR.UI.MVC.Controllers.api
 		public IHttpActionResult GetGraphs(int itemId, int widgetId)
 		{
 			widgetManager = new WidgetManager();
+			IEnumerable<Widget> d = widgetManager.GetAllWidgetsWithAllDataForItem(itemId);
 			IEnumerable<WidgetData> datas = widgetManager
 				.GetAllWidgetsWithAllDataForItem(itemId)
 				.AsEnumerable()
@@ -90,7 +97,7 @@ namespace BAR.UI.MVC.Controllers.api
 		/// </summary>
 		[System.Web.Http.HttpPost]
 		[System.Web.Http.Route("api/MoveWidget/{widgetId}")]
-		public IHttpActionResult MoveWidgetToDashboard(int widgetId, [Bind(Exclude = "ItemIds")] UserWidgetDTO model)
+		public IHttpActionResult MoveWidgetToDashboard(int widgetId, [Bind(Exclude = "ItwemIds")] UserWidgetDTO model)
 		{
 			UnitOfWorkManager uowManager = new UnitOfWorkManager();
 			widgetManager = new WidgetManager(uowManager);
@@ -98,27 +105,40 @@ namespace BAR.UI.MVC.Controllers.api
 			
 			//Get dashboard
 			Dashboard dash = widgetManager.GetDashboard(User.Identity.GetUserId());
-			
 			//Get widget
 			Widget widget = widgetManager.GetWidgetWithAllData(widgetId);
-			
-			//Convert list<string> to list<int>
-			IEnumerable<int> itemIds = model.ItemIds.Select(i => Int32.Parse(i));
 			//Get all items in widget
-			IEnumerable<Item> items = itemManager.GetAllItems().Where(i => itemIds.Contains(i.ItemId));
+			IEnumerable<Item> items = itemManager.GetAllItems().Where(i => model.ItemIds.Contains(i.ItemId));
 
 			//make new widget and attach items to the new widget
 			Widget newWidget = widgetManager.AddWidget(WidgetType.GraphType, widget.Title, widget.RowNumber, 
-				widget.ColumnNumber, proptags: widget.PropertyTags.ToList(), rowspan: widget.RowSpan,
+				widget.ColumnNumber, proptags: new List<PropertyTag>(), rowspan: widget.RowSpan,
 				colspan: widget.ColumnSpan, dashboardId: dash.DashboardId, items: items.ToList(), graphType: widget.GraphType);
 			
-			//Create a copy of all widgetDatas
-			List<WidgetData> widgetDatas = widget.WidgetDatas.ToList();
-			widgetDatas.ForEach(w => w.Widget = newWidget);
-
-			newWidget.WidgetDatas = widgetDatas;
-			widgetManager.ChangeWidget(newWidget);
+			uowManager.Save();
 			
+			//Copy the property tags.
+			//TODO: widget-PropertyTag should be a Many:Many relationship, that way a copy is not necessary.
+			widget.PropertyTags.ForEach(p => newWidget.PropertyTags.Add(new PropertyTag() {Name = p.Name}));
+			
+			//Create a copy of all graphvalues and widgetDatas
+			List<WidgetData> widgetDataCopy = new List<WidgetData>();
+			widget.WidgetDatas.ToList().ForEach(w => {
+				//copy graphvalues
+				List<GraphValue> graphValuesCopy = new List<GraphValue>();
+				w.GraphValues.ForEach(g => graphValuesCopy.Add(new GraphValue(g)));
+				//copy widgetdata
+				WidgetData newWidgetData = new WidgetData(w);
+				newWidgetData.GraphValues = graphValuesCopy;
+				newWidgetData.Widget = newWidget;
+				widgetManager.AddWidgetData(newWidgetData);
+				
+				widgetDataCopy.Add(newWidgetData);
+			});
+
+			newWidget.WidgetDatas = widgetDataCopy;
+			
+			widgetManager.ChangeWidget(newWidget);
 			uowManager.Save();
 			return StatusCode(HttpStatusCode.NoContent);
 		}

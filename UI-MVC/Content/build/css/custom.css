@@ -238,7 +238,7 @@ hr {
   text-align: center;
   color: white;
   left: 0;
-  bottom: 23px;
+  bottom: 0;
   width: 100px;
   height: 72px;
   vertical-align: middle; }
@@ -827,7 +827,7 @@ table.tile_info {
   background-image: url("../images/user.png");
   background-position: center;
   background-repeat: no-repeat;
-  background-size: cover;
+  background-size: contain;
   width: 35px;
   height: 35px;
   display: inline-block;

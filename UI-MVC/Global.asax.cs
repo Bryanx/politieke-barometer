@@ -47,7 +47,7 @@ namespace BAR.UI.MVC
           .ForMember(w => w.ColumnNumber, opt => opt.MapFrom(src => src.ColumnNumber))
           .ForMember(w => w.RowNumber, opt => opt.MapFrom(src => src.RowNumber))
           .ForMember(w => w.WidgetType, opt => opt.MapFrom(src => src.WidgetType))
-          .ForMember(w => w.ItemIds, opt => opt.MapFrom(src => src.Items.Select(i => i.ItemId)));
+          .ForMember(w => w.ItemIds, opt => opt.MapFrom(src => src.Items.Select(i => i.ItemId).ToList()));
         cfg.CreateMap<Person, ItemViewModels.PersonViewModel>()
           .ForMember(p => p.District, opt => opt.MapFrom(src => src.District))
           .ForMember(p => p.Area, opt => opt.MapFrom(src => src.Area))

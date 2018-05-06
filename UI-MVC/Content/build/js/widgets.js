@@ -86,7 +86,7 @@ function createItemWidget(id, title) {
         "                <div class='x_title'>" +
         "                    <h2 class='graphTitle'>" + title + "</h2>" +
         "                    <ul class='nav navbar-right panel_toolbox'>" +
-        "                   <li><a data-widget-id=" + id + " class='addToDashboard'>" + Resources.Save + "</a></li>" +
+        "                   <li><a id=" + id + " class='addToDashboard'>" + Resources.Save + "</a></li>" +
         "                   <li class='dropdown'>" +
         "                       <a href='#' class='dropdown-toggle' data-toggle='dropdown' role='button' aria-expanded='false'><i class='fa fa-gear'></i></a>" +
         "                       <ul class='dropdown-menu' role='menu'>" +
@@ -415,20 +415,24 @@ function loadGraphs(itemId, widget) {
 
     //Retrieves the graph data from api.
     let ajaxLoadGraphs = function (widget) {
-        if (!itemId.length) {
-            itemId = widget.ItemIds[0]
-        }
-        $.ajax({
-            type: "GET",
-            url: "/api/GetGraphs/" + itemId + "/" + widget.WidgetId,
-            dataType: "json",
-            success: data => {
-                if (!widget.ItemIds.includes(""+itemId)) {
-                    widget.ItemIds.push(itemId);
-                }
-                loadGraphHandler(widget, data)
+        if (widget.ItemIds != null && widget.ItemIds.length) {
+            if (!itemId.length) {
+                itemId = widget.ItemIds[0]
             }
-        });
+            $.ajax({
+                type: "GET",
+                url: "/api/GetGraphs/" + itemId + "/" + widget.WidgetId,
+                dataType: "json",
+                success: data => {
+                    if (!widget.ItemIds.includes("" + itemId)) {
+                        widget.ItemIds.push(itemId);
+                    }
+                    loadGraphHandler(widget, data)
+                }
+            });
+        } else {
+            displayNoGraphData(widget.WidgetId);
+        }
     };
     
     //Graph handlers
@@ -500,6 +504,7 @@ function loadWidgets(url, itemId) {
     
     //Puts the widgets on the grid.
     let loadGrid = function (data, itemId) {
+        var itempage = false;
         if (data != null && data.length) {
             $.each(data, (index, widget) => {
                 //UserWidget
@@ -512,6 +517,7 @@ function loadWidgets(url, itemId) {
                         true, 4, 12, 4, 12, widget.WidgetId);
                     grid.movable(".grid-stack-item", false);
                     grid.resizable(".grid-stack-item", false);
+                    itempage = true;
                 }
                 //if widgettype == graphtype
                 if (widget.WidgetType === 0) {
@@ -522,7 +528,7 @@ function loadWidgets(url, itemId) {
         } else {
             noWidgetsAvailable();
         }
-        loadItemForSocialWidget(itemId);
+        if (itempage) loadItemForSocialWidget(itemId);
     };
     
     //Loads the widgets via api call.
@@ -573,12 +579,11 @@ function init() {
     }
 
     //Moves a widget from item page to dashboard page
-    let moveWidget = function () {
-        let widgetId = $(".addToDashboard").data("widget-id");
-        let widget = widgets.find(w => w.WidgetId == widgetId);
+    let moveWidget = function (e) {
+        let widget = widgets.find(w => w.WidgetId == e.target.id);
         $.ajax({
             type: "POST",
-            url: "/api/MoveWidget/" + widgetId,
+            url: "/api/MoveWidget/" + e.target.id,
             data:  {itemIds: widget.ItemIds},
             success: () => showSaveMessage()
         }).fail(() => showErrorMessage());
@@ -615,7 +620,6 @@ function init() {
     
     //Removes a widget
     let deleteWidget = function (e) {
-        console.log(e.target.id);
         let el = (e.target).closest(".grid-stack-item");
         gridselector.data("gridstack").removeWidget(el);
         $.ajax({
@@ -643,6 +647,6 @@ function init() {
     }
 
     //itempage handlers
-    $(document).on("click", ".addToDashboard", () => moveWidget());
+    $(document).on("click", ".addToDashboard", (e) => moveWidget(e));
 }
 
