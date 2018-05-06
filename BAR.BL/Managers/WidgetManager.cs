@@ -105,7 +105,7 @@ namespace BAR.BL.Managers
 		public void RemoveWidget(int widgetId)
 		{
 			InitRepo();
-			Widget widgetToRemove = GetWidget(widgetId);
+			Widget widgetToRemove = GetWidgetWithAllData(widgetId);
 			if (widgetToRemove != null) widgetRepo.DeleteWidget(widgetToRemove);
 		}
 

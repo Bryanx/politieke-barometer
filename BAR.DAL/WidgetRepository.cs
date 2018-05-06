@@ -204,6 +204,7 @@ namespace BAR.DAL
 		/// </summary>
 		public int DeleteWidget(Widget widget)
 		{
+			if (widget.WidgetDatas != null) ctx.WidgetDatas.RemoveRange(widget.WidgetDatas);
 			ctx.Widgets.Remove(widget);
 			return ctx.SaveChanges();
 		}
