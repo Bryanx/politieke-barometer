@@ -23,5 +23,6 @@ namespace BAR.BL.Managers
 		User ChangeUserAlerts(string userId, bool alertWebsite, bool alertMail, bool alertWeeklyReview);
 		User ChangeUserAccount(string userId);
 		User ChangeProfilePicture(string userId, HttpPostedFileBase poImgFile);
+    User ChangeBasicInfoAndroid(string userId, string firstname, string lastname, byte[] profilePicture = null);
 	}
 }
