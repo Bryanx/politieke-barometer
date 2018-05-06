@@ -231,7 +231,7 @@ namespace BAR.BL.Managers
 			InitRepo();
 			IItemManager itemManager = new ItemManager(uowManager);
 			IEnumerable<Item> items = itemManager.GetAllPersons();
-			IEnumerable<Theme> themes = itemManager.GetAllThemes();
+			List<Theme> themes = itemManager.GetAllThemes().ToList();
 			IEnumerable<Property> properties = dataRepo.ReadAllProperties();
 			IEnumerable<Source> sources = dataRepo.ReadAllSources();
 			dynamic deserializedJson = JsonConvert.DeserializeObject(json);
@@ -378,11 +378,11 @@ namespace BAR.BL.Managers
 
 					foreach (Theme theme in themes)
 					{
-						foreach (Keyword keyword in theme.Keywords)
+						foreach (Keyword keyword in theme.Keywords.ToList())
 						{
 							if(keyword.Name.ToLower().Equals(wordName.ToLower()))
 							{
-								information.Items.Add(items.Where(x => x.Name.Equals(theme.Name)).SingleOrDefault());
+								information.Items.Add(themes.Where(x => x.Name.Equals(theme.Name)).SingleOrDefault());
 							}
 						}
 					}
