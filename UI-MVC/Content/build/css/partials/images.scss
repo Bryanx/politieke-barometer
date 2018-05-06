@@ -6,7 +6,7 @@
   background-image: url("../images/user.png");
   background-position: center;
   background-repeat: no-repeat;
-  background-size: cover;
+  background-size: contain;
   width: 35px;
   height: 35px;
   display: inline-block;
@@ -16,7 +16,7 @@
 }
 
 .small-logo {
-  background-image: url("../images/logo-all-white-smaller.png");
+  background-image: url("../images/logo/logo-white.svg");
   background-repeat: no-repeat;
   background-size: contain;
   background-position: center center;
@@ -27,7 +27,7 @@
 }
 
 .small-logo.colored {
-  background-image: url("../images/logo-colored-smaller.png");
+  background-image: url("../images/logo/logo-dark.svg");
   border: none;
   height: 50px;
   position: relative;
