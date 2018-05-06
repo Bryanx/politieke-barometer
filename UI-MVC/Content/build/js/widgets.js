@@ -620,21 +620,24 @@ function init() {
     
     //Removes a widget
     let deleteWidget = function (e) {
-        let el = (e.target).closest(".grid-stack-item");
-        gridselector.data("gridstack").removeWidget(el);
-        $.ajax({
-            type: "DELETE",
-            url: "/api/Widget/Delete/" + e.target.id,
-            dataType: "json",
-            error: (xhr) => {
-                alert($.parseJSON(xhr.responseText).Message);
-                showErrorMessage();
-            },
-            success: () => {
-                if (!$(".grid-stack-item").length) noWidgetsAvailable();
-                showSaveMessage();
-            }
-        })
+        let widget = (e.target).closest(".grid-stack-item");
+        let widgetId = e.target.id;
+        if (widgetId.length) {
+            $.ajax({
+                type: "DELETE",
+                url: "/api/Widget/Delete/" + widgetId,
+                dataType: "json",
+                error: (xhr) => {
+                    alert($.parseJSON(xhr.responseText).Message);
+                    showErrorMessage();
+                },
+                success: () => {
+                    gridselector.data("gridstack").removeWidget(widget);
+                    if (!$(".grid-stack-item").length) noWidgetsAvailable();
+                    showSaveMessage();
+                }
+            })
+        }
     };
     
     //dashboard handlers
