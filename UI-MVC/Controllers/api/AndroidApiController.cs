@@ -109,8 +109,14 @@ namespace webapi.Controllers
       widgets.All(x =>
       {
         x.Dashboard = null;
+        x.WidgetDatas.All(y =>
+        {
+          y.Widget = null;
+          return true;
+        });
         return true;
       });
+
       return Ok(widgets);
     }
 
