@@ -17,9 +17,9 @@ namespace BAR.BL.Domain.Widgets
 		}
 
 		//Constructor for making a copy of WidgetData
-		public WidgetData(WidgetData o) {
-			KeyValue = o.KeyValue;
-			GraphValues = o.GraphValues;
+		public WidgetData(WidgetData widgetData) {
+			KeyValue = widgetData.KeyValue;
+			GraphValues = widgetData.GraphValues;
 		}
 	}
 }
