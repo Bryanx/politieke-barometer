@@ -34,6 +34,8 @@ namespace BAR.BL.Managers
 
 		void GenerateDataForMwidgets();
 
+		void MoveWidgetToDashBoard(int widgetId, List<Item> items, string userId);
+		
 		//dashboards
 		Dashboard GetDashboard(int dashboardId);
 		Dashboard GetDashboard(string userId);

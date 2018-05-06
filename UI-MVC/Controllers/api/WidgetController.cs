@@ -97,49 +97,12 @@ namespace BAR.UI.MVC.Controllers.api
 		/// </summary>
 		[System.Web.Http.HttpPost]
 		[System.Web.Http.Route("api/MoveWidget/{widgetId}")]
-		public IHttpActionResult MoveWidgetToDashboard(int widgetId, [Bind(Exclude = "ItwemIds")] UserWidgetDTO model)
+		public IHttpActionResult MoveWidgetToDashboard(int widgetId, [Bind(Exclude = "ItemIds")] UserWidgetDTO model)
 		{
-			UnitOfWorkManager uowManager = new UnitOfWorkManager();
-			widgetManager = new WidgetManager(uowManager);
-			itemManager = new ItemManager(uowManager);
-			
-			//Get dashboard
-			Dashboard dash = widgetManager.GetDashboard(User.Identity.GetUserId());
-			//Get widget
-			Widget widget = widgetManager.GetWidgetWithAllData(widgetId);
-			//Get all items in widget
-			IEnumerable<Item> items = itemManager.GetAllItems().Where(i => model.ItemIds.Contains(i.ItemId));
-
-			//make new widget and attach items to the new widget
-			Widget newWidget = widgetManager.AddWidget(WidgetType.GraphType, widget.Title, widget.RowNumber, 
-				widget.ColumnNumber, proptags: new List<PropertyTag>(), rowspan: widget.RowSpan,
-				colspan: widget.ColumnSpan, dashboardId: dash.DashboardId, items: items.ToList(), graphType: widget.GraphType);
-			
-			uowManager.Save();
-			
-			//Copy the property tags.
-			//TODO: widget-PropertyTag should be a Many:Many relationship, that way a copy is not necessary.
-			widget.PropertyTags.ForEach(p => newWidget.PropertyTags.Add(new PropertyTag() {Name = p.Name}));
-			
-			//Create a copy of all graphvalues and widgetDatas
-			List<WidgetData> widgetDataCopy = new List<WidgetData>();
-			widget.WidgetDatas.ToList().ForEach(w => {
-				//copy graphvalues
-				List<GraphValue> graphValuesCopy = new List<GraphValue>();
-				w.GraphValues.ForEach(g => graphValuesCopy.Add(new GraphValue(g)));
-				//copy widgetdata
-				WidgetData newWidgetData = new WidgetData(w);
-				newWidgetData.GraphValues = graphValuesCopy;
-				newWidgetData.Widget = newWidget;
-				widgetManager.AddWidgetData(newWidgetData);
-				
-				widgetDataCopy.Add(newWidgetData);
-			});
-
-			newWidget.WidgetDatas = widgetDataCopy;
-			
-			widgetManager.ChangeWidget(newWidget);
-			uowManager.Save();
+			widgetManager = new WidgetManager();
+			itemManager = new ItemManager();
+			List<Item> items = itemManager.GetAllItems().Where(i => model.ItemIds.Contains(i.ItemId)).ToList();
+			widgetManager.MoveWidgetToDashBoard(widgetId, items, User.Identity.GetUserId());
 			return StatusCode(HttpStatusCode.NoContent);
 		}
 		

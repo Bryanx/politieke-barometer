@@ -195,6 +195,47 @@ namespace BAR.BL.Managers
 			return widget;
 		}
 
+		public void MoveWidgetToDashBoard(int widgetId, List<Item> items, string userId) {
+			
+			uowManager = new UnitOfWorkManager();
+			InitRepo();
+			//Get dashboard
+			Dashboard dash = GetDashboard(userId);
+			//Get widget
+			Widget widget = GetWidgetWithAllData(widgetId);
+
+			//make new widget and attach items to the new widget
+			Widget newWidget = AddWidget(WidgetType.GraphType, widget.Title, widget.RowNumber, 
+				widget.ColumnNumber, proptags: new List<PropertyTag>(), rowspan: widget.RowSpan,
+				colspan: widget.ColumnSpan, dashboardId: dash.DashboardId, items: items, graphType: widget.GraphType);
+			
+			uowManager.Save();
+			
+			//Copy the property tags.
+			//TODO: widget-PropertyTag should be a Many:Many relationship, that way a copy is not necessary.
+			widget.PropertyTags.ToList().ForEach(p => newWidget.PropertyTags.Add(new PropertyTag() {Name = p.Name}));
+			
+			//Create a copy of all graphvalues and widgetDatas
+			List<WidgetData> widgetDataCopy = new List<WidgetData>();
+			widget.WidgetDatas.ToList().ForEach(w => {
+				//copy graphvalues
+				List<GraphValue> graphValuesCopy = new List<GraphValue>();
+				w.GraphValues.ToList().ForEach(g => graphValuesCopy.Add(new GraphValue(g)));
+				//copy widgetdata
+				WidgetData newWidgetData = new WidgetData(w);
+				newWidgetData.GraphValues = graphValuesCopy;
+				newWidgetData.Widget = newWidget;
+				AddWidgetData(newWidgetData);
+				
+				widgetDataCopy.Add(newWidgetData);
+			});
+
+			newWidget.WidgetDatas = widgetDataCopy;
+			
+			ChangeWidget(newWidget);
+			uowManager.Save();
+		}
+
 		/// <summary>
 		/// Gives back a dashboard with their widgets.
 		/// </summary>
