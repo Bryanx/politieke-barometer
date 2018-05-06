@@ -233,18 +233,24 @@ namespace BAR.DAL
 
 		/// <summary>
 		/// Gives back all the properties
+		/// 
+		/// NOTE
+		/// ToList is needed to prevent crash issue with multiple datareaders
 		/// </summary>
-		public IEnumerable<Property> ReadAllProperties()
+		public List<Property> ReadAllProperties()
 		{
-			return ctx.Properties.AsEnumerable();
+			return ctx.Properties.ToList();
 		}
 
 		/// <summary>
 		/// Gives back all the sources
+		/// 
+		/// NOTE
+		/// ToList is needed to prevent crash issue with multiple datareaders
 		/// </summary>
-		public IEnumerable<Source> ReadAllSources()
+		public List<Source> ReadAllSources()
 		{
-			return ctx.Sources.AsEnumerable();
+			return ctx.Sources.ToList();
 		}
 
 		/// <summary>

@@ -17,10 +17,10 @@ namespace BAR.DAL
 		IEnumerable<Information> ReadAllInformations();
 		IEnumerable<Information> ReadInformationsForItemid(int itemId);
 		Property ReadProperty(string propertyName);
-		IEnumerable<Property> ReadAllProperties();
+		List<Property> ReadAllProperties();
 		Source ReadSource(string sourceName);
 		Source ReadSource(int sourceId);
-		IEnumerable<Source> ReadAllSources();
+		List<Source> ReadAllSources();
 		SynchronizeAudit ReadLastAudit();
 		SynchronizeAudit ReadAudit(int auditId);
 		
