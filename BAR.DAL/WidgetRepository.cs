@@ -58,6 +58,7 @@ namespace BAR.DAL
 		public Dashboard ReadDashboardWithWidgets(int dashboardId)
 		{
 			return ctx.Dashboards.Include(dash => dash.Widgets)
+                 .Include(dash => dash.Widgets.Select(widget => widget.Items))
 								 .Where(dash => dash.DashboardId == dashboardId)
 								 .SingleOrDefault();
 		}
@@ -204,6 +205,7 @@ namespace BAR.DAL
 		/// </summary>
 		public int DeleteWidget(Widget widget)
 		{
+			if (widget.WidgetDatas != null) ctx.WidgetDatas.RemoveRange(widget.WidgetDatas);
 			ctx.Widgets.Remove(widget);
 			return ctx.SaveChanges();
 		}
@@ -259,7 +261,7 @@ namespace BAR.DAL
 					   .Include(widget => widget.PropertyTags)
 					   .Include(widget => widget.WidgetDatas)
 					   .Include(widget => widget.WidgetDatas.Select(widgetData => widgetData.GraphValues))
-					   .AsEnumerable();
+					   .ToList();
 		}
 
 		/// <summary>
@@ -323,6 +325,19 @@ namespace BAR.DAL
 		{
 			ctx.WidgetDatas.AddRange(widgetDatas);
 			return ctx.SaveChanges();
+		}
+
+		/// <summary>
+		/// Gives back all data from a dashboard for a
+		/// specific user
+		/// </summary>
+		public Dashboard ReadDashboardWithAllDataForUserId(string userId)
+		{
+			return ctx.Dashboards.Include(dash => dash.User)
+								 .Include(dash => dash.Widgets)
+								 .Include(dash => dash.Widgets.Select(widget => widget.WidgetDatas))
+								 .Include(dash => dash.Widgets.Select(widget => widget.WidgetDatas.Select(data => data.GraphValues)))
+								 .Where(dash => dash.User.Id.ToLower().Equals(userId.ToLower())).SingleOrDefault();
 		}
 	}
 }

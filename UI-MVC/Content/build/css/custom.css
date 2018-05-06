@@ -238,7 +238,7 @@ hr {
   text-align: center;
   color: white;
   left: 0;
-  bottom: 23px;
+  bottom: 0;
   width: 100px;
   height: 72px;
   vertical-align: middle; }
@@ -827,7 +827,7 @@ table.tile_info {
   background-image: url("../images/user.png");
   background-position: center;
   background-repeat: no-repeat;
-  background-size: cover;
+  background-size: contain;
   width: 35px;
   height: 35px;
   display: inline-block;
@@ -836,7 +836,7 @@ table.tile_info {
   margin-right: 5px; }
 
 .small-logo {
-  background-image: url("../images/logo-all-white-smaller.png");
+  background-image: url("../images/logo/logo-white.svg");
   background-repeat: no-repeat;
   background-size: contain;
   background-position: center center;
@@ -846,7 +846,7 @@ table.tile_info {
   border-bottom: 1px solid #a5a9ac; }
 
 .small-logo.colored {
-  background-image: url("../images/logo-colored-smaller.png");
+  background-image: url("../images/logo/logo-dark.svg");
   border: none;
   height: 50px;
   position: relative;
@@ -1325,7 +1325,7 @@ nav {
 .navbar-right li.dropdown:hover > div.dropdown-menu {
   display: block; }
 .navbar-right > li > a {
-  color: #ECF0F1 !important;
+  color: #ECF0F1;
   margin-left: 0 !important;
   line-height: 32px;
   position: relative;
