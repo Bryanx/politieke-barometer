@@ -41,7 +41,7 @@ namespace webapi.Controllers
       }
 
       IdentityUserManager userManager = Request.GetOwinContext().GetUserManager<IdentityUserManager>();
-      var user = new User() { UserName = model.Email, Email = model.Email };
+      User user = new User() { UserName = model.Email, Email = model.Email };
 
       IdentityResult result = await userManager.CreateAsync(user, model.Password);
 
@@ -57,17 +57,19 @@ namespace webapi.Controllers
     [HostAuthentication(DefaultAuthenticationTypes.ExternalBearer)]
     [HttpGet]
     [Route("UserInfo")]
-    public UserInfoAndroidViewModel GetUserInfo()
+    public IHttpActionResult GetUserInfo()
     {
       IUserManager userManager = new UserManager();
-      var user = userManager.GetUser(User.Identity.GetUserId());
+      User user = userManager.GetUser(User.Identity.GetUserId());
 
-      return new UserInfoAndroidViewModel
+      UserInfoAndroidViewModel model = new UserInfoAndroidViewModel
       {
         FirstName = user.FirstName,
         LastName = user.LastName,
         ProfilePicture = user.ProfilePicture != null ? Convert.ToBase64String(user.ProfilePicture) : ""
       };
+
+      return Ok(model);
     }
 
     // POST api/Android/UserInfo
@@ -99,17 +101,17 @@ namespace webapi.Controllers
     [HostAuthentication(DefaultAuthenticationTypes.ExternalBearer)]
     [HttpGet]
     [Route("Widgets")]
-    public IEnumerable<Widget> GetWidgets()
+    public IHttpActionResult GetWidgets()
     {
       IWidgetManager widgetManager = new WidgetManager();
-      var dashboard = widgetManager.GetDashboardWithAllDataForUserId(User.Identity.GetUserId());
+      Dashboard dashboard = widgetManager.GetDashboardWithAllDataForUserId(User.Identity.GetUserId());
       IEnumerable<UserWidget> widgets = dashboard.Widgets;
       widgets.All(x =>
       {
         x.Dashboard = null;
         return true;
       });
-      return widgets;
+      return Ok(widgets);
     }
 
     #region Helpers
