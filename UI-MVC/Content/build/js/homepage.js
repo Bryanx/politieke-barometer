@@ -32,3 +32,56 @@ if ($('.main-header-container').length) {
         checkScroll();
     });
 }
+
+for (var i = 1; i <4 ; i++) {
+    
+    var name = $("#t-name-" + i).text().split(" ").join("");
+    var id = "twitter-feed-" + i;
+    twttr.widgets.createTimeline(
+        {
+            sourceType: "profile",
+            screenName: name
+        },
+        document.getElementById("" + id),
+        {
+            chrome: "noheader, noborder, nofooter",
+            linkColor: primary_color,
+            tweetLimit: 5
+        }
+    );
+    
+    
+}
+
+let AddChart = function (widgetId, labels, values, borderColor="#000", color="#000", darkColor="#000", chartType="line") {
+    new Chart(document.getElementById("trending-graph"), {
+        id: widgetId,
+        type: chartType,
+        data: {
+            labels: labels,
+            datasets: [{
+                data: values,
+                label: "Trending graph",
+                borderColor: borderColor,
+                backgroundColor: color,
+                hoverBackgroundColor: darkColor,
+                fill: false,
+            }],
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+        }
+    });
+};
+
+
+let getGraph = function(itemId, widgetId) {
+    $.ajax({
+        type: "GET",
+        url: "/api/GetGraphs/" + itemId + "/" + widgetId,
+        dataType: "json",
+        success: data => AddChart(data[0].WidgetId, data[0].GraphValues.map(g => g.Value), data[0].GraphValues.map(g => g.NumberOfTimes)),
+        fail: d => console.log(d)
+    })}
+

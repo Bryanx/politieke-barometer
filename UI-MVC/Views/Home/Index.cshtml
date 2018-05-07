@@ -36,11 +36,11 @@
                     </a>
                     <span class="count_bottom">
                         <i class="green">
-                            <i
-                                class="fa fa-sort-asc">
+                            <i class="fa fa-sort-asc">
                             </i>@item.TrendingPercentage%
                         </i> Sinds vorige week
                     </span>
+                    
                 </div>
                 i++;
             }
@@ -51,14 +51,15 @@
 
 <section>
     <!-- top 3 politici (trending) -->
-            <div class="x_panel tile page-section">
+            <div class="x_panel tile">
                 <div class="x_title">
                     <h2>Top 3 trending politici</h2>
                     <div class="clearfix"></div>
                 </div>
                 <div class="x_content row">
-                    <div id="trending-graph" class="col-12">
-                        
+                    <div class="col-12">
+                       <canvas id='trending-graph'></canvas>
+                       <h2 class='no-graph-data text-center'>No data available.</h2>
                     </div>
                     @{ int j = 1;}
                     <table>
@@ -69,15 +70,16 @@
                                 <tr>
                                     <div class="widget_summary col-12 col-md-4">
                                         <div class="w_left w90">
-                                            <h4>@item.Name <i class="fa fa-chevron-up">@item.TrendingPercentage% </i></h4>
+                                        <h4 id="t-name-@j">@item.Name</h4>
+                                            <h4>
+                                            <i class="green">
+                                            <i class="fa fa-sort-asc"></i>
+                                            @item.TrendingPercentage%
+                                            </i></h4>
                                         </div>
-                                        <div class="w_center w_90">
-                                            <div class="progress">
-                                                <div class="progress-bar bg-green" role="progressbar" aria-valuenow="@item.TrendingPercentage"
-                                                     aria-valuemin="0" aria-valuemax="@Model.Items.Max(m => m.TrendingPercentage)" style="width: @(item.TrendingPercentage * 3)%;">
-                                                    <span class="sr-only">@item.TrendingPercentage% Complete</span>
-                                                </div>
-                                            </div>
+                                        <div id="twitter-feed-@j" class="w_center w_90">
+                                            
+                                            
                                         </div>
                                         <div class="clearfix"></div>
                                     </div>
@@ -141,6 +143,36 @@
 </section> <!-- end third page -->
 
 @section CustomJS{
-<script src="../../Content/build/js/homepage.js"></script> 
+    <div id="fb-root"></div>
+    <script>
+        (function(d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) return;
+            js = d.createElement(s);
+            js.id = id;
+            js.src = 'https://connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v2.12';
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+    </script>
+    <script src="~/Scripts/ChartJS/Chart.js"></script>
+    <script src="https://platform.twitter.com/widgets.js"></script>
+    @Scripts.Render("~/bundles/gridstack")
+    <script src="../../Content/build/js/homepage.js"></script> 
+    
+    <script>
+        $(() => {
+            var itemId = @Model.Items.OrderByDescending(m => m.TrendingPercentage).First().ItemId;
+            $.ajax({
+                type: "GET",
+                url: 'api/GetItemWidgets/' + itemId,
+                dataType: "json",
+                success: data => getGraph(itemId, data[0].WidgetId) ,
+                error: (xhr) => alert(xhr.responseText)
+            });
+            
+            
+
+        })(jQuery)
+    </script>
 }
 
