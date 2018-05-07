@@ -17,12 +17,7 @@
     <h1>@Model.PageTitle</h1>
     <hr />
     <div>
-        <button id="btnAddLine" class="btn btn-primary">Add line chart</button>
-        <button id="btnAddPie" class="btn btn-primary">Add donut chart</button>
-        <button id="btnAddBar" class="btn btn-primary">Add bar chart</button>
         <button id="btnAddNodebox" class="btn btn-primary">Add Nodebox</button>
-        <button id="saveWidgets" class="btn btn-primary">Save changes</button>
-
     </div>
     <br>
     <!-- Widgets -->
@@ -63,6 +58,7 @@
     <script src="~/Scripts/vue.min.js"></script>
     <script src="https://unpkg.com/vue-form-wizard/dist/vue-form-wizard.js"></script>
     <script src="https://rawgit.com/icebob/vue-form-generator/master/dist/vfg.js"></script>
+    <script src="~/Scripts/ChartJS/Chart.js"></script>
 
     <script src="~/Scripts/jquery/jquery-ui.js"></script>
     <script src="~/Scripts/underscore.min.js"></script>
@@ -192,7 +188,7 @@
 //        });
 
         (() => {
-            loadWidgets("api/Widget", "");
+            loadWidgets("api/Widget/GetUserWidgets", "");
 
             var wto;
             $('.subscribeItem').click(function () {

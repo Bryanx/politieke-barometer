@@ -64,8 +64,15 @@ namespace BAR.BL.Managers
 				// Calculate the trendingpercentage = baseline / number of days from the last update until now.
 				double trendingPer = Convert.ToDouble(aantalTrending) / baseline;
 
-				itemRepo.UpdateItemTrending(itemId, baseline, trendingPer);
-				itemRepo.UpdateLastUpdated(itemId, DateTime.Now);
+				//Get item
+				Item itemToUpdate = itemRepo.ReadItem(itemId);
+				if (itemToUpdate != null)
+				{
+					itemToUpdate.Baseline = baseline;
+					itemToUpdate.TrendingPercentage = trendingPer;
+					itemToUpdate.LastUpdatedInfo = DateTime.Now;
+					itemRepo.UpdateItem(itemToUpdate);
+				}
 			}
 		}
 
@@ -202,7 +209,7 @@ namespace BAR.BL.Managers
 		public Item GetItemWithSubPlatform(int itemId)
 		{
 			InitRepo();
-			return itemRepo.ReadItemWithSubPlatform(itemId);
+			return itemRepo.ReadItemWithPlatform(itemId);
 		}
 		/// <summary>
 		/// Returns an item with widgets.
@@ -237,7 +244,7 @@ namespace BAR.BL.Managers
 		public IEnumerable<Item> GetAllItems()
 		{
 			InitRepo();
-			return itemRepo.ReadAllItems().AsEnumerable();
+			return itemRepo.ReadAllItemsWithPlatforms().AsEnumerable();
 		}
 
 		/// <summary>
@@ -356,7 +363,7 @@ namespace BAR.BL.Managers
 			{
 				Name = "Gender"
 			});
-			ItemWidget widget2 = (ItemWidget)widgetManager.AddWidget(WidgetType.GraphType, name + " gender comparison ", 1, 1, proptags: proptags, graphType: GraphType.BarChart, rowspan: 6, colspan: 6);
+			ItemWidget widget2 = (ItemWidget)widgetManager.AddWidget(WidgetType.GraphType, name + " gender comparison ", 1, 1, proptags: proptags, graphType: GraphType.PieChart, rowspan: 6, colspan: 6);
 			itemWidgets.Add(widget2);
 			widgetIds.Add(widget2.WidgetId);
 
@@ -366,7 +373,7 @@ namespace BAR.BL.Managers
 			{
 				Name = "Age"
 			});
-			ItemWidget widget3 = (ItemWidget)widgetManager.AddWidget(WidgetType.GraphType, name + " age comparison", 1, 1, proptags: proptags, graphType: GraphType.PieChart, rowspan: 6, colspan: 6);
+			ItemWidget widget3 = (ItemWidget)widgetManager.AddWidget(WidgetType.GraphType, name + " age comparison", 1, 1, proptags: proptags, graphType: GraphType.DonutChart, rowspan: 6, colspan: 6);
 			itemWidgets.Add(widget3);
 			widgetIds.Add(widget3.WidgetId);
 

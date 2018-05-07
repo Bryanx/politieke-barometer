@@ -393,7 +393,7 @@ namespace BAR.BL.Managers
 		public Customization GetCustomization(int platformId)
 		{
 			InitRepo();
-			return platformRepo.ReadSubplatformWithCustomization(platformId).Customization;
+			return platformRepo.ReadCustomisation(platformId);
 		}
 
 		/// <summary>

@@ -8,7 +8,7 @@ nav {
   justify-content: space-between;
   background-color: var(--white);
   width: 100%;
-  @include box-shadow(0px 3px 3px -2px rgba(0, 0, 0, 0.05));
+  @include box-shadow(0px 3px 3px -1px rgba(0, 0, 0, 0.1));
   color: var(--white);
   z-index: 5;
   height: 50px;
@@ -105,7 +105,7 @@ nav {
     }
   }
   > li > a {
-    color: #ECF0F1 !important;
+    color: #ECF0F1;
     margin-left: 0 !important;
     line-height: 32px;
     position: relative;

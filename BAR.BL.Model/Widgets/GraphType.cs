@@ -10,6 +10,7 @@ namespace BAR.BL.Domain.Widgets
 	{
 		LineChart = 1,
 		BarChart,
-		PieChart
+		PieChart,
+		DonutChart
 	}
 }

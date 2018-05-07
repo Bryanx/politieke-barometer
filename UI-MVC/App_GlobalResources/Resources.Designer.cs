@@ -502,7 +502,16 @@ namespace BAR.UI.MVC.App_GlobalResources {
         }
         
         /// <summary>
-        ///   Hiermee zoekt u een vertaalde tekenreeks die vergelijkbaar is met Complete the remaining fields and signup..
+        ///   Looks up a localized string similar to Female.
+        /// </summary>
+        public static string Female {
+            get {
+                return ResourceManager.GetString("Female", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Complete the remaining fields and signup..
         /// </summary>
         public static string FillTheRemainingFields {
             get {
@@ -745,6 +754,16 @@ namespace BAR.UI.MVC.App_GlobalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Male.
+        /// </summary>
+        public static string Male {
+            get {
+                return ResourceManager.GetString("Male", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Man.
         ///   Hiermee zoekt u een vertaalde tekenreeks die vergelijkbaar is met Man.
         /// </summary>
         public static string Man {

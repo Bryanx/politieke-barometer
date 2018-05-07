@@ -39,14 +39,16 @@ namespace BAR.DAL
 			if (!showable)
 			{
 				userSubs = ctx.Subscriptions.Include(sub => sub.Alerts)
-				.Where(sub => sub.SubscribedUser.Id.Equals(userId)).AsEnumerable();
+											.Where(sub => sub.SubscribedUser.Id.Equals(userId))
+											.AsEnumerable();
 			}
 			else
 			{
 				userSubs = ctx.Subscriptions.Include(sub => sub.Alerts)
 											.Include(sub => sub.SubscribedItem)
 											.Include(sub => sub.SubscribedUser)
-				.Where(sub => sub.SubscribedUser.Id.Equals(userId)).AsEnumerable();
+											.Where(sub => sub.SubscribedUser.Id.Equals(userId))
+											.AsEnumerable();
 			}
 
 			List<Alert> alersToRead = new List<Alert>();
@@ -61,14 +63,12 @@ namespace BAR.DAL
 		/// </summary>
 		public Alert ReadAlert(string userId, int alertId) 
 		{
-			foreach (Subscription sub in ReadSubscriptionsWithAlertsForUser(userId).ToList()) {
-				if (sub.Alerts != null) {
-					foreach (Alert alert in sub.Alerts) {
-						if (alert.AlertId == alertId) return alert;
-					}
-				}
-			}
-			return null;
+			Subscription subcription = ReadSubscriptionsWithAlertsForUser(userId)
+													.Where(sub => sub.Alerts.Any(alert => alert.AlertId == alertId))
+													.SingleOrDefault();
+
+			if (subcription != null) return subcription.Alerts.Where(alert => alert.AlertId == alertId).SingleOrDefault();
+			else return null;	
 		}
 
 		/// <summary>
@@ -76,7 +76,8 @@ namespace BAR.DAL
 		/// </summary>
 		public IEnumerable<Subscription> ReadSubscriptionsForItem(int itemId)
 		{
-			return ctx.Subscriptions.Where(sub => sub.SubscribedItem.ItemId == itemId).AsEnumerable();
+			return ctx.Subscriptions.Where(sub => sub.SubscribedItem.ItemId == itemId)
+									.AsEnumerable();
 		}
 
 		/// <summary>
@@ -86,7 +87,8 @@ namespace BAR.DAL
 		public IEnumerable<Subscription> ReadSubscritpionsWithAlerts(int itemId)
 		{
 			return ctx.Subscriptions.Include(sub => sub.Alerts)
-				.Where(sub => sub.SubscribedItem.ItemId == itemId).AsEnumerable();
+									.Where(sub => sub.SubscribedItem.ItemId == itemId)
+									.AsEnumerable();
 		}
 		
 		/// <summary>
@@ -94,7 +96,8 @@ namespace BAR.DAL
 		/// </summary>
 		public IEnumerable<Subscription> ReadSubscriptionsForUser(string userId)
 		{
-			return ctx.Subscriptions.Where(sub => sub.SubscribedUser.Id.Equals(userId)).AsEnumerable();
+			return ctx.Subscriptions.Where(sub => sub.SubscribedUser.Id.Equals(userId))
+									.AsEnumerable();
 		}
 
 		/// <summary>
@@ -102,7 +105,9 @@ namespace BAR.DAL
 		/// </summary>
 		public IEnumerable<Subscription> ReadSubscriptionsWithAlertsForUser(string userId)
 		{
-			return ctx.Subscriptions.Include(sub => sub.Alerts).Where(sub => sub.SubscribedUser.Id.Equals(userId)).AsEnumerable();
+			return ctx.Subscriptions.Include(sub => sub.Alerts)
+									.Where(sub => sub.SubscribedUser.Id.Equals(userId))
+									.AsEnumerable();
 		}
 		
 		/// <summary>
@@ -110,7 +115,9 @@ namespace BAR.DAL
 		/// </summary>
 		public IEnumerable<Subscription> ReadSubscriptionsWithItemsForUser(string userId)
 		{
-			return ctx.Subscriptions.Include(sub => sub.SubscribedItem).Where(sub => sub.SubscribedUser.Id.Equals(userId)).AsEnumerable();
+			return ctx.Subscriptions.Include(sub => sub.SubscribedItem)
+									.Where(sub => sub.SubscribedUser.Id.Equals(userId))
+									.AsEnumerable();
 		}
 
 		/// <summary>
@@ -127,7 +134,8 @@ namespace BAR.DAL
 		public Subscription ReadSubscriptionWithAlerts(int subscriptionId)
 		{
 			return ctx.Subscriptions.Include(sub => sub.Alerts)
-									.Where(sub => sub.SubscriptionId == subscriptionId).SingleOrDefault();
+									.Where(sub => sub.SubscriptionId == subscriptionId)
+									.SingleOrDefault();
 		}
 
 		/// <summary>
@@ -141,7 +149,8 @@ namespace BAR.DAL
 			return ctx.Subscriptions.Include(sub => sub.Alerts)
 									.Include(sub => sub.SubscribedItem)
 									.Include(sub => sub.SubscribedUser)
-									.Where(sub => sub.SubscriptionId == subscriptionId).SingleOrDefault();
+									.Where(sub => sub.SubscriptionId == subscriptionId)
+									.SingleOrDefault();
 		}
 
 		/// <summary>
@@ -156,7 +165,8 @@ namespace BAR.DAL
 			return ctx.Subscriptions.Include(sub => sub.Alerts)
 									.Include(sub => sub.SubscribedItem)
 									.Include(sub => sub.SubscribedUser)
-									.Where(sub => sub.SubscribedItem.ItemId == itemId).AsEnumerable();
+									.Where(sub => sub.SubscribedItem.ItemId == itemId)
+									.AsEnumerable();
 		}
 
 		/// <summary>
@@ -224,8 +234,8 @@ namespace BAR.DAL
 		/// </summary>
 		public int DeleteSubscription(int subId)
 		{
-			Subscription sub = ctx.Subscriptions.Include(s => s.Alerts).SingleOrDefault(s => s.SubscriptionId == subId);
-			if (sub != null) ctx.Subscriptions.Remove(sub);
+			Subscription subscripton = ReadSubscriptionWithAlerts(subId);
+			if (subscripton != null) ctx.Subscriptions.Remove(subscripton);
 			return ctx.SaveChanges();
 		}
 

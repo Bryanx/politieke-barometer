@@ -11,7 +11,7 @@ using System.Linq;
 
 namespace BAR.DAL.EF
 {
-  internal class BarometerInitializer : CreateDatabaseIfNotExists<BarometerDbContext>
+	internal class BarometerInitializer : CreateDatabaseIfNotExists<BarometerDbContext>
 	{
 		/// <summary>
 		/// Dummy data from the json file will be generated
@@ -62,21 +62,62 @@ namespace BAR.DAL.EF
 		{
 			SubPlatform subPlatform1 = new SubPlatform
 			{
-				Name = "politiek",
-				CreationDate = DateTime.Now
+				Name = "k3",
+				CreationDate = DateTime.Now,
+				Customization = AddDefaultCustomization()
 			};
 			ctx.SubPlatforms.Add(subPlatform1);
 
 			SubPlatform subPlatform2 = new SubPlatform
 			{
-				Name = "k3",
-				CreationDate = DateTime.Now
+				Name = "politiek",
+				CreationDate = DateTime.Now,
+				Customization = AddDefaultCustomization()
 			};
 			ctx.SubPlatforms.Add(subPlatform2);
 
 			ctx.SaveChanges();
 		}
 
+		/// <summary>
+		/// Adds a default customization
+		/// </summary>
+		private Customization AddDefaultCustomization()
+		{
+			Customization custom = new Customization()
+			{
+				//Colors
+				PrimaryColor = "#0f8ec4",
+				SecondairyColor = "#303E4D",
+				TertiaryColor = "#278e87",
+				BackgroundColor = "#f7f7f7",
+				TextColor = "#73879C",
+
+				//Navbar and title text
+				PersonAlias = "Persoon",
+				PersonsAlias = "Personen",
+				OrganisationAlias = "Organisation",
+				OrganisationsAlias = "Organisations",
+				ThemeAlias = "Theme",
+				ThemesAlias = "Themes",
+
+				//Privacy
+				PrivacyTitle = "Privacy policy",
+				PrivacyText = "Copyright " + DateTime.Now.Year,
+
+				//FAQ
+				FAQTitle = "Frequently Asked Questions (FAQ)",
+
+				//Contact properties
+				StreetAndHousenumber = "Nationalestraat 24",
+				Zipcode = "2060",
+				City = "Antwerpen",
+				Country = "Belgi�",
+				Email = "contact@politiekebarometer.be"
+			};
+
+			return custom;
+		}
 
     /// <summary>
     /// Generates all of the sources we get our information from.
