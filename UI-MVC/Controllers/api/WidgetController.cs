@@ -100,9 +100,7 @@ namespace BAR.UI.MVC.Controllers.api
 		public IHttpActionResult MoveWidgetToDashboard(int widgetId, [Bind(Exclude = "ItemIds")] UserWidgetDTO model)
 		{
 			widgetManager = new WidgetManager();
-			itemManager = new ItemManager();
-			List<Item> items = itemManager.GetAllItems().Where(i => model.ItemIds.Contains(i.ItemId)).ToList();
-			widgetManager.MoveWidgetToDashBoard(widgetId, items, User.Identity.GetUserId());
+			widgetManager.MoveWidgetToDashBoard(widgetId, model.ItemIds, User.Identity.GetUserId());
 			return StatusCode(HttpStatusCode.NoContent);
 		}
 		
