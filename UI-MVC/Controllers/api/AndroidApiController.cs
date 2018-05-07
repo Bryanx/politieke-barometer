@@ -22,6 +22,7 @@ using BAR.BL.Domain.Users;
 using BAR.BL.Domain.Widgets;
 using System.Web.Script.Serialization;
 using System.Linq;
+using System.Net;
 
 namespace webapi.Controllers
 {
@@ -105,13 +106,23 @@ namespace webapi.Controllers
     {
       IWidgetManager widgetManager = new WidgetManager();
       Dashboard dashboard = widgetManager.GetDashboardWithAllDataForUserId(User.Identity.GetUserId());
-      IEnumerable<UserWidget> widgets = dashboard.Widgets;
-      widgets.All(x =>
+      if (dashboard != null)
       {
-        x.Dashboard = null;
-        return true;
-      });
-      return Ok(widgets);
+        IEnumerable<UserWidget> widgets = dashboard.Widgets;
+        widgets.All(x =>
+        {
+          x.Dashboard = null;
+          x.WidgetDatas.All(y =>
+          {
+            y.Widget = null;
+            return true;
+          });
+          return true;
+        });
+
+        return Ok(widgets);
+      }
+      return StatusCode(HttpStatusCode.NoContent);
     }
 
     #region Helpers
