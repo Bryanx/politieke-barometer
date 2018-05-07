@@ -253,7 +253,7 @@ hr {
 
 /* Main padding on every page */
 .main_padding {
-  padding: 40px 30px; }
+  padding: 20px 30px; }
 
 .right_col {
   background: var(--bg-color); }
@@ -379,7 +379,7 @@ hr {
   padding: 0 !important; }
 
 .col-middle {
-  margin-top: 5%; }
+  magrgin-top: 5%; }
 
 .animate {
   -webkit-animation-delay: 0;
@@ -602,6 +602,7 @@ div .msg_list {
   position: absolute;
   right: 5px;
   top: 8px;
+  color: white !important;
   border: 1px solid rgba(255, 255, 255, 0.5) !important; }
 
 @media (min-width: 900px) {
