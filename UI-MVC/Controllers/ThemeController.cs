@@ -67,18 +67,20 @@ namespace BAR.UI.MVC.Controllers
 			subManager = new SubscriptionManager();
 
 			Item item = itemManager.GetThemeWithDetails(id);
+			Theme theme = itemManager.GetThemeWithDetails(id);
 
 			if (item == null) return HttpNotFound();
 
 			Item subbedItem = subManager.GetSubscribedItemsForUser(User.Identity.GetUserId())
 				.FirstOrDefault(i => i.ItemId == item.ItemId);
 
-			ThemeViewModel themeViewModel = Mapper.Map(item, new ThemeViewModel());
+			ThemeViewModel themeViewModel = Mapper.Map(theme, new ThemeViewModel());
 
-			themeViewModel.PageTitle = item.Name;
+			themeViewModel.PageTitle = theme.Name;
 			themeViewModel.User = User.Identity.IsAuthenticated ? userManager.GetUser(User.Identity.GetUserId()) : null;
-			themeViewModel.Theme = Mapper.Map(item, new ItemDTO());
+			themeViewModel.Theme = Mapper.Map(theme, new ItemDTO());
 			themeViewModel.Subscribed = subbedItem != null;
+			themeViewModel.Keywords = theme.Keywords.ToList();
 
 			//Assembling the view
 			return View(themeViewModel);

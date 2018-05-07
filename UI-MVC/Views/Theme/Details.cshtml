@@ -46,41 +46,22 @@
                         <strong>@Resources.Theme details</strong>
                     </h4>
                     <ul class="list-unstyled user_data">
-                        <li>
-                            <i class="fa fa-map-marker user-profile-icon"></i> Locatie
-                        </li>
-                        <li>
-                            <i class="fa fa-briefcase user-profile-icon"></i> Functie
-                        </li>
-                        <li class="m-top-xs">
-                            <i class="fa fa-globe external-link user-profile-icon"></i>
-                            <a href="http://www.kimlabs.com/profile/" target="_blank">www.kimlabs.com</a>
-                        </li>
+                        @foreach (var keyword in Model.Keywords)
+                        {
+                        <button class="btn btn-default btn-xs">@keyword.Name</button>
+                        }
+
                     </ul>
                 </div>
                 <div class="col-md-3 col-sm-3 col-xs-12">
-                    <h4>
-                        <strong>Laatste verhalen</strong>
-                    </h4>
-                    <ul class="list-unstyled person-data">
-                        <li>
-                            <i class="fa fa-map-marker user-profile-icon"></i> Locatie
-                        </li>
-                        <li>
-                            <i class="fa fa-briefcase user-profile-icon"></i> Functie
-                        </li>
-                        <li class="m-top-xs">
-                            <i class="fa fa-external-link user-profile-icon"></i>
-                            <a href="http://www.kimlabs.com/profile/" target="_blank">www.kimlabs.com</a>
-                        </li>
-                    </ul>
+                    
                 </div>
                 <div class="col-md-3 col-sm-3 col-xs-12">
                     <h4>
                         <strong>Totale vermeldingen</strong>
                     </h4>
                     <h1>
-                        <strong>232</strong>
+                        <strong>@Model.Theme.NumberOfMentions</strong>
                     </h1>
                 </div>
             </div>
