@@ -220,11 +220,20 @@ function loadGraphs(itemId, widget) {
 
     //Add data to graph.
     let AddDataSet = function (chart, name, values) {
-        var newColor = COLORS[chart.config.data.datasets.length];
-        var hoverColor = DARKCOLORS[chart.config.data.datasets.length];
+        let newColor = COLORS[chart.config.data.datasets.length];
+        let borderColor = newColor;
+        let hoverColor = DARKCOLORS[chart.config.data.datasets.length];
+        
+        if (chart.config.type === "doughnut" || chart.config.type === "pie") {
+            let firstDataset = chart.config.data.datasets[0];
+            borderColor = firstDataset.borderColor;
+            newColor = firstDataset.backgroundColor;
+            hoverColor = firstDataset.hoverBackgroundColor;
+        }
+        
         var newDataset = {
             label: name,
-            borderColor: newColor,
+            borderColor: borderColor,
             backgroundColor: newColor,
             hoverBackgroundColor: hoverColor,
             data: values,
@@ -233,7 +242,7 @@ function loadGraphs(itemId, widget) {
         
         chart.config.data.datasets.push(newDataset);
         chart.update();
-    }
+    };
 
     //Load graph data
     let LoadGraphDataSet = function (suggestion, $this) {
@@ -243,11 +252,15 @@ function loadGraphs(itemId, widget) {
         let itemId = suggestion.data;
         $.ajax({
             type: "GET",
-            url: "/api/GetGraphs/" + itemId + "/" + itemId,
+            url: "/api/GetGraphs/" + itemId + "/" + widgetId,
             dataType: "json",
             success: data => {
+                console.log(data);
                 if (data !== undefined) {
-                    AddDataSet(chart, name, Object.values(data));
+                    if (!widget.ItemIds.includes("" + itemId)) {
+                        widget.ItemIds.push(itemId);
+                    }
+                    AddDataSet(chart, name, data[0].GraphValues.map(g => g.NumberOfTimes));
                 }
             },
             fail: d => console.log(d)

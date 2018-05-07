@@ -199,11 +199,15 @@ namespace BAR.BL.Managers
 		/// Copies a widget to the dashboard
 		/// All attributes of the given Widget are copied and used to generate a new UserWidget.
 		/// </summary>
-		public void MoveWidgetToDashBoard(int widgetId, List<Item> items, string userId) 
+		public void MoveWidgetToDashBoard(int widgetId, IEnumerable<int> itemIds, string userId) 
 		{
 			uowManager = new UnitOfWorkManager();
 			InitRepo();
 			
+			ItemManager itemManager = new ItemManager(uowManager);
+			
+			//Get items
+			List<Item> items = itemManager.GetAllItems().Where(i => itemIds.Contains(i.ItemId)).ToList();
 			//Get dashboard
 			Dashboard dash = GetDashboard(userId);
 			//Get widget

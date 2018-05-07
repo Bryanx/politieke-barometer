@@ -36,7 +36,7 @@ nav {
         font-size: 22px;
         color: var(--font-color);
       }
-      .open .dropdown-menu {
+      .dropdown-menu {
         border: none;
         @include box-shadow(0 6px 12px rgba(0, 0, 0, .175) !important);
         position: absolute;
@@ -44,9 +44,10 @@ nav {
         margin-top: 0;
         right: 0;
         left: auto;
-        width: 220px;
         padding: 0;
         z-index: 30;
+        max-height: 500px;
+        overflow-y: auto;
       }
       .dropdown-menu li {
         width: 100%;

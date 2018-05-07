@@ -324,6 +324,9 @@ hr {
 .fixed_height_390 {
   height: 390px; }
 
+.fixed_height_400 {
+  height: 400px; }
+
 .fixed_height_200 {
   height: 200px; }
 
@@ -1273,7 +1276,7 @@ nav {
       nav .navbar-right li i {
         font-size: 22px;
         color: var(--font-color); }
-      nav .navbar-right li .open .dropdown-menu {
+      nav .navbar-right li .dropdown-menu {
         border: none;
         -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175) !important;
         -moz-box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175) !important;
@@ -1284,9 +1287,10 @@ nav {
         margin-top: 0;
         right: 0;
         left: auto;
-        width: 220px;
         padding: 0;
-        z-index: 30; }
+        z-index: 30;
+        max-height: 500px;
+        overflow-y: auto; }
       nav .navbar-right li .dropdown-menu li {
         width: 100%; }
         nav .navbar-right li .dropdown-menu li:hover > ul.dropdown-menu {

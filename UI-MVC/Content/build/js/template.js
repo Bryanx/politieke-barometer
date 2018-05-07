@@ -693,7 +693,8 @@ function submitForm($this, event, message=null) {
 
 //Generic ajax toggle button
 var wto;
-function ajaxToggleSubscribe($this) {
+function ajaxToggleSubscribe(e) {
+	$this = $(e.target);
 	clearTimeout(wto);
 	var id = $this.data('item-id');
 	var text = $this.html();
