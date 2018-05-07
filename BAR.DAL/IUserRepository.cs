@@ -16,15 +16,12 @@ namespace BAR.DAL
 		IEnumerable<User> ReadAllUsers();
 		IEnumerable<User> ReadAllUsersForRole(string roleId);
 		IEnumerable<User> ReadAllUsersForArea(int areaId);
-
 		IEnumerable<Activity> ReadAllActivities();
 		IEnumerable<Activity> ReadActivitiesForUser(string userId);
-
-		IEnumerable<Area> ReadAreas();
 		Area ReadArea(int areaId);
-
-		IEnumerable<IdentityRole> ReadAllRoles();
+		IEnumerable<Area> ReadAllAreas();
 		IdentityRole ReadRole(string userId);
+		IEnumerable<IdentityRole> ReadAllRoles();
 
 		//Create
 		int CreateUser(User user);

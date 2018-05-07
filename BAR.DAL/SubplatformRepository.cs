@@ -59,7 +59,8 @@ namespace BAR.DAL
 		{
 			return ctx.SubPlatforms.Include(platform => platform.Questions)
 								   .Include(platform => platform.Customization)
-								   .Where(platform => platform.SubPlatformId == platformId).SingleOrDefault();
+								   .Where(platform => platform.SubPlatformId == platformId)
+								   .SingleOrDefault();
 		}
 
 		/// <summary>
@@ -75,7 +76,8 @@ namespace BAR.DAL
 		/// </summary>
 		public IEnumerable<Question> ReadQuestions(int platformId)
 		{
-			return ctx.Questions.Where(question => question.SubPlatform.SubPlatformId == platformId).AsEnumerable();
+			return ctx.Questions.Where(question => question.SubPlatform.SubPlatformId == platformId)
+								.AsEnumerable();
 		}
 
 		/// <summary>
@@ -83,7 +85,8 @@ namespace BAR.DAL
 		/// </summary>
 		public IEnumerable<Question> ReadQuestionsForType(QuestionType type)
 		{
-			return ctx.Questions.Where(question => question.QuestionType == type).AsEnumerable();
+			return ctx.Questions.Where(question => question.QuestionType == type)
+								.AsEnumerable();
 		}
 
 		/// <summary>
@@ -92,7 +95,8 @@ namespace BAR.DAL
 		public SubPlatform ReadSubplatformWithCustomization(int platformId)
 		{
 			return ctx.SubPlatforms.Include(platform => platform.Customization)
-									.Where(platform => platform.SubPlatformId == platformId).SingleOrDefault();
+								   .Where(platform => platform.SubPlatformId == platformId)
+								   .SingleOrDefault();
 		}
 
 		/// <summary>;;
@@ -108,7 +112,8 @@ namespace BAR.DAL
 		/// </summary>
 		public SubPlatform ReadSubPlatform(string platformName)
 		{
-			return ctx.SubPlatforms.Where(platform => platform.Name.ToLower().Equals(platformName.ToLower())).SingleOrDefault();
+			return ctx.SubPlatforms.Where(platform => platform.Name.ToLower().Equals(platformName.ToLower()))
+								   .SingleOrDefault();
 		}
 
 		/// <summary>
