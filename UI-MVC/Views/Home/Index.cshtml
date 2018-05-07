@@ -161,18 +161,17 @@
     
     <script>
         $(() => {
-            var itemId = @Model.Items.OrderByDescending(m => m.TrendingPercentage).First().ItemId;
             $.ajax({
                 type: "GET",
-                url: 'api/GetItemWidgets/' + itemId,
+                url: 'api/GetTopTrendingItems',
                 dataType: "json",
-                success: data => getGraph(itemId, data[0].WidgetId) ,
+                success: data => {
+                    TwitterFeed(data);
+                    GetTopTrending(data);
+                },
                 error: (xhr) => alert(xhr.responseText)
             });
-            
-            
-
-        })(jQuery)
+        })($)
     </script>
 }
 
