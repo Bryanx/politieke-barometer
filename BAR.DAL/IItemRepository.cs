@@ -15,6 +15,7 @@ namespace BAR.DAL
 		Person ReadPerson(string personName);
 		Person ReadPersonWithDetails(int itemId);
 		Organisation ReadOrganisationWithDetails(int itemId);
+		Theme ReadThemeWithDetails(int itemId);
 		Item ReadItemWithSubPlatform(int itemId);
     Item ReadOrganisation(string organisationName);
 		IEnumerable<Item> ReadAllItems();

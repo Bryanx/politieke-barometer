@@ -1,5 +1,5 @@
 ﻿@using System.Web.Optimization
-@model BAR.UI.MVC.Models.ItemViewModels.ThemeViewModel
+@model BAR.UI.MVC.Models.ItemDTO
 
 @{
   ViewBag.Title = Model.PageTitle;
@@ -28,7 +28,7 @@
                 <div class="col-md-9 col-sm-9 col-xs-12">
                     @Resources.Theme
                     <h1>
-                        @Model.Theme.Name
+                        <span class="item-name">@Model.Theme.Name</span>
                         @if (User.Identity.IsAuthenticated)
                         {
                             if (Model.Subscribed != true)

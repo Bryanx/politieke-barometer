@@ -198,6 +198,17 @@ namespace BAR.BL.Managers
 		}
 
 		/// <summary>
+		/// Returns a theme with all the Theme keywords
+		/// </summary>
+		/// <param name="itemId"></param>
+		/// <returns></returns>
+		public Theme GetThemeWithDetails(int itemId)
+		{
+			InitRepo();
+			return itemRepo.ReadThemeWithDetails(itemId);
+		}
+
+		/// <summary>
 		/// Returns an item for a specifig itemId including the attached subplatform.
 		/// </summary>
 		/// <returns></returns>

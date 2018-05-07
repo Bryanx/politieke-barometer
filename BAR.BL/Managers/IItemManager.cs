@@ -15,6 +15,7 @@ namespace BAR.BL.Managers
 		Item GetItem(int itemId);
 		Person GetPersonWithDetails(int itemId);
 		Organisation GetOrganisationWithDetails(int itemId);
+		Theme GetThemeWithDetails(int itemId);
 		Item GetItemWithSubPlatform(int itemId);
 		Item GetItemWithAllWidgets(int itemId);
 		IEnumerable<Item> GetAllItems();

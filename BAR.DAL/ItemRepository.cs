@@ -65,6 +65,19 @@ namespace BAR.DAL
 		}
 
 		/// <summary>
+		/// Returns the item that matchkes the itemId.
+		/// </summary>
+		/// <param name="itemId"></param>
+		/// <returns></returns>
+		public Theme ReadThemeWithDetails(int itemId)
+		{
+			return ctx.Items.OfType<Theme>()
+				.Include(i => i.Keywords)
+				.Where(i => i.ItemId == itemId && i.Deleted == false)
+				.SingleOrDefault();
+		}
+
+		/// <summary>
 		/// Returns the item that matches the itemId.
 		/// </summary>       
 		public Item ReadItemWithWidgets(int itemId)
@@ -249,5 +262,6 @@ namespace BAR.DAL
           return ctx.Items.Include(org => org.SubPlatform)
             .Where(x => x.Name.Equals(organisationName)).SingleOrDefault();
         }
-  }
+
+	}
 }
