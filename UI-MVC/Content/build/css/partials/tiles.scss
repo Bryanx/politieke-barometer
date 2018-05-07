@@ -27,6 +27,9 @@
 .tile_count {
   margin-bottom: 20px;
   margin-top: 20px;
+  :first-child{
+    border-left: 0px !important;
+  }
   .tile_stats_count {
     text-overflow: ellipsis;
     overflow: hidden;

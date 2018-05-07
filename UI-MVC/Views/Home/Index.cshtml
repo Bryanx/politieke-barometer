@@ -57,25 +57,26 @@
                     <div class="clearfix"></div>
                 </div>
                 <div class="x_content row">
-                    <div class="col-12">
+                    <div class="col-12" style="max-height: 500px">
                        <canvas id='trending-graph'></canvas>
                        <h2 class='no-graph-data text-center'>No data available.</h2>
                     </div>
                     @{ int j = 1;}
                     <table>
-                        @foreach (var item in Model.Items.OrderByDescending(m => m.TrendingPercentage))
+                        @foreach (var item in Model.Items.OrderByDescending(m => m.TrendingPercentage)
+                            .Take(3))
                         {
                             if (j <= 3)
                             {
                                 <tr>
                                     <div class="widget_summary col-12 col-md-4">
                                         <div class="w_left w90">
-                                        <h4 id="t-name-@j">@item.Name</h4>
-                                            <h4>
+                                        <h4 id="t-name-@j" style="display: inline-block"></h4>
+                                        <h4 style="display: inline-block">
                                             <i class="green">
-                                            <i class="fa fa-sort-asc"></i>
-                                            @item.TrendingPercentage%
-                                            </i></h4>
+                                                <i class="fa fa-sort-asc"></i>
+                                            </i>
+                                        </h4>
                                         </div>
                                         <div id="twitter-feed-@j" class="w_center w_90">
                                             
@@ -166,8 +167,8 @@
                 url: 'api/GetTopTrendingItems',
                 dataType: "json",
                 success: data => {
-                    TwitterFeed(data);
                     GetTopTrending(data);
+                    TwitterFeed(data);
                 },
                 error: (xhr) => alert(xhr.responseText)
             });

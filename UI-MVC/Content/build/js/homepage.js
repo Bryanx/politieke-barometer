@@ -38,8 +38,14 @@ if ($('.main-header-container').length) {
 let TwitterFeed = function (trendings) {
 
     $.each(trendings, (index,  value) => {
+        
+        let nameId = "#t-name-" + (index + 1);
         var id = "twitter-feed-" + (index +1);
         var name = value.Name.split(" ").join("");
+        // putting name above twitter feed
+        $(nameId).append("" + value.Name + " ")
+            .next()
+            .append("" + value.TrendingPercentage + "%");
         twttr.widgets.createTimeline(
             {
                 sourceType: "profile",
@@ -57,7 +63,7 @@ let TwitterFeed = function (trendings) {
 
 /* ---------- Trending chart ----------*/
 var charts = [];
-let AddChart = function (widgetId, labels, values, borderColor="#E02F2F", color="#E02F2F", darkColor="#E02F2F", chartType="line") {
+let AddChart = function (name, widgetId, labels, values, borderColor="#E02F2F", color="#E02F2F", darkColor="#E02F2F", chartType="line") {
     charts.push(new Chart(document.getElementById("trending-graph"), {
         id: widgetId,
         type: chartType,
@@ -65,7 +71,7 @@ let AddChart = function (widgetId, labels, values, borderColor="#E02F2F", color=
             labels: labels,
             datasets: [{
                 data: values,
-                label: "test",
+                label: name,
                 borderColor: borderColor,
                 backgroundColor: color,
                 hoverBackgroundColor: darkColor,
@@ -80,17 +86,16 @@ let AddChart = function (widgetId, labels, values, borderColor="#E02F2F", color=
 };
 
 
-let getGraph = function(itemId, widgetId) {
+let getGraph = function(name, itemId, widgetId) {
     $.ajax({
         type: "GET",
         url: "/api/GetGraphs/" + itemId + "/" + widgetId,
         dataType: "json",
         success: data => {
-            console.log(data)
             if (charts[0] == null) {
-                AddChart(data[0].WidgetId, data[0].GraphValues.map(g => g.Value), data[0].GraphValues.map(g => g.NumberOfTimes));
+                AddChart(name, data[0].WidgetId, data[0].GraphValues.map(g => g.Value), data[0].GraphValues.map(g => g.NumberOfTimes));
             } else {
-                AddDataSet(charts[0], "test", data[0].GraphValues.map(g => g.NumberOfTimes))
+                AddDataSet(charts[0], name, data[0].GraphValues.map(g => g.NumberOfTimes))
             }
         },
         fail: d => console.log(d)
@@ -123,7 +128,7 @@ let GetTopTrending = function (trendings){
             type: "GET",
             url: 'api/GetItemWidgets/' + value.ItemId,
             dataType: "json",
-            success: data => getGraph(value.ItemId, data[0].WidgetId),
+            success: data => getGraph(value.Name,  value.ItemId, data[0].WidgetId),
             error: (xhr) => alert(xhr.responseText)
         });
     });
