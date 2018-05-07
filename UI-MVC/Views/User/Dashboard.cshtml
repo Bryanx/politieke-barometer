@@ -61,124 +61,124 @@
     @Scripts.Render("~/bundles/gridstack")
     <script type="text/javascript">
 
-//        Vue.use(VueFormWizard);
-//        Vue.use(VueFormGenerator);
-//        new Vue({
-//            el: '#app',
-//            data: {
-//                model: {
-//                    baseGraph: '',
-//                    intersectValueBase: '',
-//                    compareGraph: '',
-//                    intersectValueCompare: '',
-//                    graphType: '',
-//                    extraInfo: ''
-//                },
-//                formOptions: {
-//                    validationErrorClass: "has-error",
-//                    validationSuccessClass: "has-success",
-//                    validateAfterChanged: true
-//                },
-//                firstTabSchema: {
-//                    fields: [
-//                        {
-//                            type: "input",
-//                            inputType: "text",
-//                            label: "Basis grafiek*",
-//                            model: "baseGraph",
-//                            placeholder: "Kies een politicus partij of thema",
-//                            required: true,
-//                            validator: VueFormGenerator.validators.string,
-//                            styleClasses: 'col-xs-12'
-//                        },
-//                        {
-//                            type: "select",
-//                            label: "Kruising waarde*",
-//                            model: "intersectValueBase",
-//                            required: true,
-//                            validator: VueFormGenerator.validators.string,
-//                            values: ['United Kingdom', 'Romania', 'Germany'],
-//                            styleClasses: 'col-xs-12'
-//                        },
-//                        {
-//                            type: "input",
-//                            inputType: "text",
-//                            label: "Vergelijkende grafiek (optioneel)",
-//                            model: "compareGraph",
-//                            placeholder: "Kies een politicus partij of thema",
-//                            required: false,
-//                            validator: VueFormGenerator.validators.email,
-//                            styleClasses: 'col-xs-12'
-//                        },
-//                        {
-//                            type: "select",
-//                            label: "Kruising waarde",
-//                            model: "intersectValueCompare",
-//                            required: false,
-//                            validator: VueFormGenerator.validators.string,
-//                            values: ['United Kingdom', 'Romania', 'Germany'],
-//                            styleClasses: 'col-xs-12'
-//                        }
-//                    ]
-//                },
-//                secondTabSchema: {
-//                    fields: [
-//                        {
-//                            type: "select",
-//                            inputType: "text",
-//                            label: "Grafiek type*",
-//                            model: "graphType",
-//                            required: true,
-//                            validator: VueFormGenerator.validators.string,
-//                            values: ['United Kingdom', 'Romania', 'Germany'],
-//                            styleClasses: 'col-xs-12'
-//                        },
-//                        {
-//                            type: "select",
-//                            inputType: "text",
-//                            label: "Extra informatie",
-//                            model: "extraInfo",
-//                            required: false,
-//                            validator: VueFormGenerator.validators.string,
-//                            values: ['United Kingdom', 'Romania', 'Germany'],
-//                            styleClasses: 'col-xs-12'
-//                        }
-//                    ]
-//                }
-//            },
-//            methods: {
-//                onComplete: function () {
-//                    alert('Yay. Done!');
-//                },
-//                validateFirstTab: function () {
-//                    return this.$refs.firstTabForm.validate();
-//                },
-//                validateSecondTab: function () {
-//                    return this.$refs.secondTabForm.validate();
-//                },
-//                prettyJSON: function (json) {
-//                    if (json) {
-//                        json = JSON.stringify(json, undefined, 4);
-//                        json = json.replace(/&/g, '&').replace(/</g, '<').replace(/>/g, '>');
-//                        return json.replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g, function (match) {
-//                            var cls = 'number';
-//                            if (/^"/.test(match)) {
-//                                if (/:$/.test(match)) {
-//                                    cls = 'key';
-//                                } else {
-//                                    cls = 'string';
-//                                }
-//                            } else if (/true|false/.test(match)) {
-//                                cls = 'boolean';
-//                            } else if (/null/.test(match)) {
-//                                cls = 'null';
-//                            }
-//                            return '<span class="' + cls + '">' + match + '</span>';
-//                        });
-//                    }
-//                }
-//            }
-//        });
+        Vue.use(VueFormWizard);
+        Vue.use(VueFormGenerator);
+        new Vue({
+            el: '#app',
+            data: {
+                model: {
+                    baseGraph: '',
+                    intersectValueBase: '',
+                    compareGraph: '',
+                    intersectValueCompare: '',
+                    graphType: '',
+                    extraInfo: ''
+                },
+                formOptions: {
+                    validationErrorClass: "has-error",
+                    validationSuccessClass: "has-success",
+                    validateAfterChanged: true
+                },
+                firstTabSchema: {
+                    fields: [
+                        {
+                            type: "input",
+                            inputType: "text",
+                            label: "Basis grafiek*",
+                            model: "baseGraph",
+                            placeholder: "Kies een politicus partij of thema",
+                            required: true,
+                            validator: VueFormGenerator.validators.string,
+                            styleClasses: 'col-xs-12'
+                        },
+                        {
+                            type: "select",
+                            label: "Kruising waarde*",
+                            model: "intersectValueBase",
+                            required: true,
+                            validator: VueFormGenerator.validators.string,
+                            values: ['United Kingdom', 'Romania', 'Germany'],
+                            styleClasses: 'col-xs-12'
+                        },
+                        {
+                            type: "input",
+                            inputType: "text",
+                            label: "Vergelijkende grafiek (optioneel)",
+                            model: "compareGraph",
+                            placeholder: "Kies een politicus partij of thema",
+                            required: false,
+                            validator: VueFormGenerator.validators.email,
+                            styleClasses: 'col-xs-12'
+                        },
+                        {
+                            type: "select",
+                            label: "Kruising waarde",
+                            model: "intersectValueCompare",
+                            required: false,
+                            validator: VueFormGenerator.validators.string,
+                            values: ['United Kingdom', 'Romania', 'Germany'],
+                            styleClasses: 'col-xs-12'
+                        }
+                    ]
+                },
+                secondTabSchema: {
+                    fields: [
+                        {
+                            type: "select",
+                            inputType: "text",
+                            label: "Grafiek type*",
+                            model: "graphType",
+                            required: true,
+                            validator: VueFormGenerator.validators.string,
+                            values: ['United Kingdom', 'Romania', 'Germany'],
+                            styleClasses: 'col-xs-12'
+                        },
+                        {
+                            type: "select",
+                            inputType: "text",
+                            label: "Extra informatie",
+                            model: "extraInfo",
+                            required: false,
+                            validator: VueFormGenerator.validators.string,
+                            values: ['United Kingdom', 'Romania', 'Germany'],
+                            styleClasses: 'col-xs-12'
+                        }
+                    ]
+                }
+            },
+            methods: {
+                onComplete: function () {
+                    alert('Yay. Done!');
+                },
+                validateFirstTab: function () {
+                    return this.$refs.firstTabForm.validate();
+                },
+                validateSecondTab: function () {
+                    return this.$refs.secondTabForm.validate();
+                },
+                prettyJSON: function (json) {
+                    if (json) {
+                        json = JSON.stringify(json, undefined, 4);
+                        json = json.replace(/&/g, '&').replace(/</g, '<').replace(/>/g, '>');
+                        return json.replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g, function (match) {
+                            var cls = 'number';
+                            if (/^"/.test(match)) {
+                                if (/:$/.test(match)) {
+                                    cls = 'key';
+                                } else {
+                                    cls = 'string';
+                                }
+                            } else if (/true|false/.test(match)) {
+                                cls = 'boolean';
+                            } else if (/null/.test(match)) {
+                                cls = 'null';
+                            }
+                            return '<span class="' + cls + '">' + match + '</span>';
+                        });
+                    }
+                }
+            }
+        });
 
         (() => {
             loadWidgets("api/Widget/GetUserWidgets", "");
