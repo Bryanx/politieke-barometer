@@ -57,6 +57,10 @@ hr {
   border-bottom: 1px solid #d0d0d0;
 }
 
+.container {
+  width: 100%;
+  padding: 0;
+}
 
 .main_container {
   position: relative;
@@ -101,8 +105,12 @@ hr {
   vertical-align: middle;
 }
 
+.container-centered {
+  max-width: $max-site-width;
+  margin: auto;
+}
 
 /* Main padding on every page */
 .main_padding {
-  padding: 40px 30px ;
+  padding: 40px $site-padding;
 }

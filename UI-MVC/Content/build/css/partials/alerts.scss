@@ -58,6 +58,9 @@ ul {
     padding: 3px 5px !important;
     width: auto;
     text-decoration: none;
+    &:hover {
+      background-color: transparent !important;
+    }
     .time {
       font-size: 11px;
       font-style: italic;
@@ -142,7 +145,8 @@ div {
   padding: 2px 6px;
   position: absolute;
   right: 5px;
-  top: 15px;
+  top: 8px;
+  border: 1px solid rgba(255,255,255,.5) !important;
 }
 
 @media (min-width: 900px) {
