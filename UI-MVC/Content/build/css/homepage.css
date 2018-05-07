@@ -149,4 +149,12 @@ nav .searchbar {
   .navbar-right > li > a > span, .navbar-right > li > a > i {
     color: white; }
 
+.widget_summary {
+  padding: 20px 40px; }
+
+#twitter-feed-1, #twitter-feed-2, #twitter-feed-3 {
+  max-height: 400px;
+  overflow-y: auto;
+  margin: 20px 0; }
+
 /*# sourceMappingURL=homepage.css.map */
