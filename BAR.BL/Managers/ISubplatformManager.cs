@@ -48,7 +48,7 @@ namespace BAR.BL.Managers
 		//Activities
 		IEnumerable<UserActivity> GetUserActivities(bool isRegisterdType, DateTime? timestamp = null);
 
-		UserActivity AddUserActitity(double numberOfUsers = 0.0, bool isRegisterActivity = false);
+		UserActivity AddUserActitity(bool isRegisterActivity, double numberOfUsers = 0.0);
 
 		UserActivity ChangeUserActivity(UserActivity activity);
 

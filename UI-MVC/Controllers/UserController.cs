@@ -77,8 +77,8 @@ namespace BAR.UI.MVC.Controllers
 			switch (result)
 			{
 				case SignInStatus.Success:
-					//Log logging activity
-					//TODO
+				//Log logging activity
+				new SubplatformManager().LogActivity(false);
 				return RedirectToLocal(returnUrl);
 				case SignInStatus.LockedOut:
 				return View("Lockout");
@@ -147,7 +147,7 @@ namespace BAR.UI.MVC.Controllers
 					await userManager.AddToRoleAsync(user.Id, "SuperAdmin");
 
 					//Log useractivity
-					new SubplatformManager().LogActivity();
+					new SubplatformManager().LogActivity(true);
 
 					//Login
 					await signInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
@@ -323,8 +323,8 @@ namespace BAR.UI.MVC.Controllers
 			switch (result)
 			{
 				case SignInStatus.Success:
-					//Log logging activity
-					//TODO
+				//Log logging activity
+				new SubplatformManager().LogActivity(false);
 				return RedirectToLocal(returnUrl);
 				case SignInStatus.LockedOut:
 				return View("Lockout");
@@ -392,7 +392,7 @@ namespace BAR.UI.MVC.Controllers
 					await userManager.AddToRoleAsync(user.Id, "SuperAdmin");
 
 					//log activities
-					new SubplatformManager().LogActivity();
+					new SubplatformManager().LogActivity(true);
 
 					if (result.Succeeded)
 					{

@@ -424,7 +424,7 @@ namespace BAR.BL.Managers
 		public IEnumerable<UserActivity> GetUserActivities(bool isRegisterActivity, DateTime? timestamp = null)
 		{
 			InitRepo();
-			IEnumerable<UserActivity> activities = platformRepo.ReadAllActvities();
+			IEnumerable<UserActivity> activities = platformRepo.ReadActivitiesForType(isRegisterActivity);
 			if (activities == null || activities.Count() == 0 || timestamp == null) return activities.AsEnumerable();
 			else return activities.Where(act => act.TimeStamp.Day >= timestamp.Value.Day).AsEnumerable();
 		}
@@ -432,7 +432,7 @@ namespace BAR.BL.Managers
 		/// <summary>
 		/// Adds a new userActitity and persists that to the database
 		/// </summary>
-		public UserActivity AddUserActitity(double numberOfUsers = 0.0, bool isRegisterActivity = false)
+		public UserActivity AddUserActitity(bool isRegisterActivity, double numberOfUsers = 0.0)
 		{
 			InitRepo();
 
@@ -440,7 +440,8 @@ namespace BAR.BL.Managers
 			UserActivity activity = new UserActivity()
 			{
 				TimeStamp = DateTime.Now,
-				NumberOfTimes = numberOfUsers
+				NumberOfTimes = numberOfUsers,
+				IsRegisterActivity = isRegisterActivity
 			};
 
 			//Persist actitivy to database
@@ -468,7 +469,7 @@ namespace BAR.BL.Managers
 				//If an actitivy is not presnet
 				//then a new actitivy shall be created
 			}
-			else AddUserActitity(1);
+			else AddUserActitity(isRegisterActivity, 1);
 		}
 
 		/// <summary>
