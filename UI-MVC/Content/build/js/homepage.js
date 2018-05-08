@@ -38,14 +38,16 @@ if ($('.main-header-container').length) {
 let TwitterFeed = function (trendings) {
 
     $.each(trendings, (index,  value) => {
-        
         let nameId = "#t-name-" + (index + 1);
         var id = "twitter-feed-" + (index +1);
         var name = value.Name.split(" ").join("");
         // putting name above twitter feed
         $(nameId).append("" + value.Name + " ")
             .next()
-            .append("" + value.TrendingPercentage + "%");
+            .append("" + value.TrendingPercentage + "%")
+            .parent()
+            .attr("href", "/Person/Details/" + value.ItemId);
+        
         twttr.widgets.createTimeline(
             {
                 sourceType: "profile",
