@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Web.Http;
+using System.Web.Mvc;
 using AutoMapper;
 using BAR.BL.Domain.Data;
 using BAR.BL.Domain.Widgets;
@@ -32,12 +33,11 @@ namespace BAR.UI.MVC.Controllers.api
 		/// <summary>
 		///Reads all widgets for a user dashboard and returns them
 		/// </summary>
-		public IHttpActionResult Get()
+		public IHttpActionResult GetUserWidgets()
 		{
 			widgetManager = new WidgetManager();
 
 			Dashboard dash = widgetManager.GetDashboard(User.Identity.GetUserId());
-
 			List<UserWidget> widgets = widgetManager.GetWidgetsForDashboard(dash.DashboardId).ToList();
 			
 			if (widgets == null || widgets.Count() == 0) return StatusCode(HttpStatusCode.NoContent);
@@ -48,8 +48,8 @@ namespace BAR.UI.MVC.Controllers.api
 		/// <summary>
 		///Reads all widgets for an item and returns them.
 		/// </summary>
-		[HttpGet]
-		[Route("api/GetItemWidgets/{itemId}")]
+		[System.Web.Http.HttpGet]
+		[System.Web.Http.Route("api/GetItemWidgets/{itemId}")]
 		public IHttpActionResult GetItemWidgets(int itemId)
 		{
 			widgetManager = new WidgetManager();
@@ -65,19 +65,27 @@ namespace BAR.UI.MVC.Controllers.api
 		}
 		
 		/// <summary>
-		/// Temp get graph
+		/// Retrieves the graph data for a given itemId and widget.
 		/// </summary>
-		[HttpGet]
-		[Route("api/GetGraphs/{itemId}/{widgetId}")]
+		[System.Web.Http.HttpGet]
+		[System.Web.Http.Route("api/GetGraphs/{itemId}/{widgetId}")]
 		public IHttpActionResult GetGraphs(int itemId, int widgetId)
 		{
 			widgetManager = new WidgetManager();
-			IEnumerable<WidgetData> datas = widgetManager
-				.GetAllWidgetsWithAllDataForItem(itemId)
-				.AsEnumerable()
-				.First(w => w.WidgetId == widgetId)
-				.WidgetDatas;
-			IEnumerable<WidgetDataDTO> widgetDataDtos = Mapper.Map(datas, new List<WidgetDataDTO>());
+			
+			//Get widgets
+			IEnumerable<Widget> widgets = widgetManager.GetAllWidgetsWithAllDataForItem(itemId);
+			
+			IEnumerable<WidgetData> widgetDatas = widgets.FirstOrDefault(w => w.WidgetId == widgetId)?.WidgetDatas;
+			
+			//If widgetdata's is null, either something went wrong or
+			//the user is trying to add another graph to the given widget
+			if (widgetDatas == null) {
+				string keyValue = widgetManager.GetWidgetWithAllData(widgetId)?.WidgetDatas.FirstOrDefault()?.KeyValue;
+				if (keyValue == null) return StatusCode(HttpStatusCode.Conflict);
+				widgetDatas = widgets.SingleOrDefault(w => w.WidgetDatas.Any(wd => wd.KeyValue == keyValue)).WidgetDatas;
+			}
+			IEnumerable<WidgetDataDTO> widgetDataDtos = Mapper.Map(widgetDatas, new List<WidgetDataDTO>());
 			if (widgetDataDtos == null) return StatusCode(HttpStatusCode.NoContent);
 			
 			return Ok(widgetDataDtos);
@@ -87,29 +95,12 @@ namespace BAR.UI.MVC.Controllers.api
 		/// Transfers a Widget to the dashboard of a user.
 		/// The given ItemWidget will be copied to a UserWidget.
 		/// </summary>
-		[HttpPost]
-		[Route("api/MoveWidget/{widgetId}")]
-		public IHttpActionResult MoveWidgetToDashboard(int widgetId)
+		[System.Web.Http.HttpPost]
+		[System.Web.Http.Route("api/MoveWidget/{widgetId}")]
+		public IHttpActionResult MoveWidgetToDashboard(int widgetId, [Bind(Exclude = "ItemIds")] UserWidgetDTO model)
 		{
 			widgetManager = new WidgetManager();
-			IDataManager dataManager = new DataManager();
-			
-			Dashboard dash = widgetManager.GetDashboard(User.Identity.GetUserId());
-			Widget widget = widgetManager.GetWidgetWithAllData(widgetId);
-			
-			if (widget == null) return StatusCode(HttpStatusCode.Conflict);
-			
-			Widget newWidget = widgetManager.AddWidget(WidgetType.GraphType, widget.Title, widget.RowNumber, 
-				widget.ColumnNumber, proptags: widget.PropertyTags.ToList(), rowspan: widget.RowSpan,
-				colspan: widget.ColumnSpan, dashboardId: dash.DashboardId);
-			
-			//Create a copy of all widgetDatas
-			List<WidgetData> widgetDatas = widget.WidgetDatas.ToList();
-			widgetDatas.ForEach(w => w.Widget = newWidget);
-
-			newWidget.WidgetDatas = widgetDatas;
-			widgetManager.ChangeWidget(newWidget);
-			
+			widgetManager.MoveWidgetToDashBoard(widgetId, model.ItemIds, User.Identity.GetUserId());
 			return StatusCode(HttpStatusCode.NoContent);
 		}
 		
@@ -158,7 +149,7 @@ namespace BAR.UI.MVC.Controllers.api
 		}
 
 		/// Temp test update to give a widget a new title
-		[Route("api/Widget/{id}/title")]
+		[System.Web.Http.Route("api/Widget/{id}/title")]
 		public IHttpActionResult PutName(int id, [FromBody] string newTitle)
 		{
 			widgetManager = new WidgetManager();
@@ -173,8 +164,8 @@ namespace BAR.UI.MVC.Controllers.api
 		/// <summary>
 		/// Deletes a widget
 		/// </summary>
-		[HttpDelete]
-		[Route("api/Widget/Delete/{id}")]
+		[System.Web.Http.HttpDelete]
+		[System.Web.Http.Route("api/Widget/Delete/{id}")]
 		public IHttpActionResult Delete(int id)
 		{
 			widgetManager = new WidgetManager();

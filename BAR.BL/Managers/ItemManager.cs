@@ -64,8 +64,15 @@ namespace BAR.BL.Managers
 				// Calculate the trendingpercentage = baseline / number of days from the last update until now.
 				double trendingPer = Convert.ToDouble(aantalTrending) / baseline;
 
-				itemRepo.UpdateItemTrending(itemId, baseline, trendingPer);
-				itemRepo.UpdateLastUpdated(itemId, DateTime.Now);
+				//Get item
+				Item itemToUpdate = itemRepo.ReadItem(itemId);
+				if (itemToUpdate != null)
+				{
+					itemToUpdate.Baseline = baseline;
+					itemToUpdate.TrendingPercentage = trendingPer;
+					itemToUpdate.LastUpdatedInfo = DateTime.Now;
+					itemRepo.UpdateItem(itemToUpdate);
+				}
 			}
 		}
 
@@ -202,7 +209,7 @@ namespace BAR.BL.Managers
 		public Item GetItemWithSubPlatform(int itemId)
 		{
 			InitRepo();
-			return itemRepo.ReadItemWithSubPlatform(itemId);
+			return itemRepo.ReadItemWithPlatform(itemId);
 		}
 		/// <summary>
 		/// Returns an item with widgets.
@@ -237,7 +244,7 @@ namespace BAR.BL.Managers
 		public IEnumerable<Item> GetAllItems()
 		{
 			InitRepo();
-			return itemRepo.ReadAllItems().AsEnumerable();
+			return itemRepo.ReadAllItemsWithPlatforms().AsEnumerable();
 		}
 
 		/// <summary>

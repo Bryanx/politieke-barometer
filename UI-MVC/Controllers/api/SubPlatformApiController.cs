@@ -6,6 +6,9 @@ using System.Net.Http;
 using System.Web.Http;
 using BAR.BL.Managers;
 using BAR.BL.Domain.Core;
+using BAR.UI.MVC.Models;
+using AutoMapper;
+using BAR.UI.MVC.App_GlobalResources;
 
 namespace BAR.UI.MVC.Controllers.api
 {
@@ -15,6 +18,7 @@ namespace BAR.UI.MVC.Controllers.api
 	public class SubPlatformApiController : ApiController
 	{
 		private ISubplatformManager platformManager;
+		private IUserManager userManager;
 
 		/// <summary>
 		/// Gives back the id of the subdomain related to 
@@ -31,11 +35,29 @@ namespace BAR.UI.MVC.Controllers.api
 		}
 
 		/// <summary>
+		/// Gives back the customization of a specific subplatform
+		/// </summary>
+		[HttpGet]
+		[Route("api/Customization/GetCustomForPlatform/{platformId}")]
+		public IHttpActionResult GetCustomForPlatform(int platformId)
+		{
+			userManager = new UserManager();
+			Customization custom = new SubplatformManager().GetCustomization(platformId);
+
+			if (custom == null)
+				return BadRequest("No customization given");
+			if (!ModelState.IsValid)
+				return BadRequest(ModelState);
+
+			return Ok(custom);
+		}
+
+		/// <summary>
 		/// Changes the webpage colors of a specific subplatform
 		/// </summary>
 		[HttpPost]
 		[Route("api/Customization/PutColor/{platformId}")]
-		public IHttpActionResult PutColor(int platformId, [FromBody] Customization custom)
+		public IHttpActionResult PutColor(int platformId, [FromBody] CustomizationViewModel custom)
 		{
 			platformManager = new SubplatformManager();
 
@@ -55,7 +77,7 @@ namespace BAR.UI.MVC.Controllers.api
 		/// </summary>
 		[HttpPost]
 		[Route("api/Customization/PutAlias/{platformId}")]
-		public IHttpActionResult PutAlias(int platformId, [FromBody] Customization custom)
+		public IHttpActionResult PutAlias(int platformId, [FromBody] CustomizationViewModel custom)
 		{
 			platformManager = new SubplatformManager();
 
@@ -75,7 +97,7 @@ namespace BAR.UI.MVC.Controllers.api
 		/// </summary>
 		[HttpPost]
 		[Route("api/Customization/PutPrivacy/{platformId}")]
-		public IHttpActionResult PutPrivacy(int platformId, [FromBody] Customization custom)
+		public IHttpActionResult PutPrivacy(int platformId, [FromBody] CustomizationViewModel custom)
 		{
 			platformManager = new SubplatformManager();
 
@@ -94,7 +116,7 @@ namespace BAR.UI.MVC.Controllers.api
 		/// </summary>
 		[HttpPost]
 		[Route("api/Customization/PutFAQ/{platformId}")]
-		public IHttpActionResult PutFAQ(int platformId, [FromBody] Customization custom)
+		public IHttpActionResult PutFAQ(int platformId, [FromBody] CustomizationViewModel custom)
 		{
 			platformManager = new SubplatformManager();
 
@@ -113,7 +135,7 @@ namespace BAR.UI.MVC.Controllers.api
 		/// </summary>
 		[HttpPost]
 		[Route("api/Customization/PutContact/{platformId}")]
-		public IHttpActionResult PutContact(int platformId, [FromBody] Customization custom)
+		public IHttpActionResult PutContact(int platformId, [FromBody] CustomizationViewModel custom)
 		{
 			platformManager = new SubplatformManager();
 
