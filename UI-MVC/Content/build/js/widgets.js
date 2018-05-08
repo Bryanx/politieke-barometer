@@ -5,28 +5,155 @@ var secondary_color = window.getComputedStyle(document.documentElement).getPrope
 var tertiary_color = window.getComputedStyle(document.documentElement).getPropertyValue("--tertiary-color");
 
 //user widget element
+var widgetElements = {
+    addNodeboxGraph: function (id) {
+        addCSSgrid(id);
+        createNodebox(id);
 
-function addNodeboxGraph(id) {
-    addCSSgrid(id);
-    createNodebox(id);
-    
-}
+    },
+    //User widget element
+    createUserWidget: function (id, title) {
+        return "<div class='chart-container'>" +
+            "            <div class='x_panel grid-stack-item-content bg-white no-scrollbar'>" +
+            "                <div class='x_title'>" +
+            "                    <h2 class='graphTitle'>" + title + "</h2>" +
+            "                    <ul class='nav navbar-right panel_toolbox'>" +
+            "                       <li>" +
+            "                            <a class='close-widget'>" +
+            "                                <i id=" + id + " class='fa fa-close'></i>" +
+            "                            </a>" +
+            "                       </li>" +
+            "                   <li class='dropdown'>" +
+            "                       <a href='#' class='dropdown-toggle' data-toggle='dropdown' role='button' aria-expanded='false'><i class='fa fa-gear'></i></a>" +
+            "                       <ul class='dropdown-menu' role='menu'>" +
+            "                           <li><a data-widget-id=" + id + " class='chartShowLines'>Lines between points</a></li>" +
+            "                           <li><a data-widget-id=" + id + " class='chartShowXGrid'>X grid lines</a></li>" +
+            "                           <li><a data-widget-id=" + id + " class='chartShowYGrid'>Y grid lines</a></li>" +
+            "                           <li><a data-widget-id=" + id + " class='chartShowLogScale'>Logarithmic y-axes</a></li>" +
+            "                           <li><a data-widget-id=" + id + " class='chartShowLegend'>Legend</a></li>" +
+            "                       </ul>" +
+            "                   </li>" +
+            "                   <li class='dropdown'>" +
+            "                       <a href='#' class='dropdown-toggle' data-toggle='dropdown' role='button' aria-expanded='false'><i class='fa fa-bar-chart'></i></a>" +
+            "                       <ul class='dropdown-menu' role='menu'>" +
+            "                           <li><a data-widget-id=" + id + " class='makeLineChart'>Line chart</a></li>" +
+            "                           <li><a data-widget-id=" + id + " class='makeBarChart'>Bar chart</a></li>" +
+            "                           <li><a data-widget-id=" + id + " class='makePieChart'>Pie chart</a></li>" +
+            "                           <li><a data-widget-id=" + id + " class='makeDonutChart'>Donut chart</a></li>" +
+            "                       </ul>" +
+            "                   </li>" +
+            "                    </ul>" +
+            "                    <div class='clearfix'></div>" +
+            "                </div>" +
+            "                <div style='position: relative; height: 85%;'><canvas id='graph" + id + "'></canvas></div>" +
+            "            </div>" +
+            "        </div>";
+    },
+    //item widget element
+    createItemWidget: function (id, title) {
+        return "<div data-widget-id=" + id + " class='chart-container'>" +
+            "            <div class='x_panel grid-stack-item-content bg-white no-scrollbar'>" +
+            "                <div class='x_title'>" +
+            "                    <h2 class='graphTitle'>" + title + "</h2>" +
+            "                    <ul class='nav navbar-right panel_toolbox'>" +
+            "                   <li><a id=" + id + " class='addToDashboard'>" + Resources.Save + "</a></li>" +
+            "                   <li class='dropdown'>" +
+            "                       <a href='#' class='dropdown-toggle' data-toggle='dropdown' role='button' aria-expanded='false'><i class='fa fa-gear'></i></a>" +
+            "                       <ul class='dropdown-menu' role='menu'>" +
+            "                           <li><a data-widget-id=" + id + " class='chartShowLines'>Lines between points</a></li>" +
+            "                           <li><a data-widget-id=" + id + " class='chartShowXGrid'>X grid lines</a></li>" +
+            "                           <li><a data-widget-id=" + id + " class='chartShowYGrid'>Y grid lines</a></li>" +
+            "                           <li><a data-widget-id=" + id + " class='chartShowLogScale'>Logarithmic y-axes</a></li>" +
+            "                           <li><a data-widget-id=" + id + " class='chartShowLegend'>Legend</a></li>" +
+            "                       </ul>" +
+            "                   </li>" +
+            "                   <li class='dropdown'>" +
+            "                       <a href='#' class='dropdown-toggle' data-toggle='dropdown' role='button' aria-expanded='false'><i class='fa fa-bar-chart'></i></a>" +
+            "                       <ul class='dropdown-menu' role='menu'>" +
+            "                           <li><a data-widget-id=" + id + " class='makeLineChart'>Line chart</a></li>" +
+            "                           <li><a data-widget-id=" + id + " class='makeBarChart'>Bar chart</a></li>" +
+            "                           <li><a data-widget-id=" + id + " class='makePieChart'>Pie chart</a></li>" +
+            "                           <li><a data-widget-id=" + id + " class='makeDonutChart'>Donut chart</a></li>" +
+            "                       </ul>" +
+            "                   </li>" +
+            "                   <li class='dropdown'>" +
+            "                       <a href='#' class='dropdown-toggle' data-toggle='dropdown' role='button' aria-expanded='false'><i class='fa fa-floppy-o'></i></a>" +
+            "                       <ul class='dropdown-menu' role='menu'>" +
+            "                           <li><a data-widget-id=" + id + " class='getJPGImage'>Download JPG image</a></li>" +
+            "                           <li><a data-widget-id=" + id + " class='getPNGImage'>Download PNG image</a></li>" +
+            "                       </ul>" +
+            "                   </li>" +
+            "                   <li><a data-widget-id=" + id + " class='dateChangeChart changeToWeek'>7d</a></li>" +
+            "                   <li><a data-widget-id=" + id + " class='dateChangeChart changeToMonth'>1m</a></li>" +
+            "                   <li><a data-widget-id=" + id + " class='dateChangeChart changeTo3Month'>3m</a></li>" +
+            "                   <li><a data-widget-id=" + id + " class='dateChangeChart changeToYear'>1y</a></li>" +
+            "                    </ul>" +
+            "                    <div class='clearfix'></div>" +
+            "                </div>" +
+            "                <div style='position: relative; height: 75%;'> " +
+            "                    <canvas id='graph" + id + "'></canvas>" +
+            "                    <h2 class='no-graph-data text-center'>No data available.</h2>" +
+            "               </div>" +
+            "               <div class='graph-options'>" +
+            "                   <input id=" + id + " type='text' class='form-control compareSearch' placeholder='Compare data with someone else.'>" +
+            "               </div>" +
+            "            </div>" +
+            "        </div>";
+    },
+    //twitter widget
+    createTwitterWidget: function (title) {
+        return "<div class='chart-container'>" +
+            "            <div class='x_panel grid-stack-item-content bg-white no-scrollbar'>" +
+            "                <div class='x_title'>" +
+            "                    <h2 class='graphTitle'>" + title + "</h2>" +
+            "                    <ul class='nav navbar-right panel_toolbox'>" +
+            "                       <li><a class='addToDashboard'>" + Resources.Save + "</a></li>" +
+            "                    </ul>" +
+            "                    <div class='clearfix'></div>" +
+            "                </div>" +
+            "                <div class='scroll' style='position: relative; height: 88%;'> " +
+            "                    <div id='twitter-feed'></div>" +
+            "               </div>" +
+            "            </div>" +
+            "        </div>";
+    },
+    //related items widget
+    createPeopleWidget: function (title) {
+        return "<div class='chart-container'>" +
+            "            <div class='x_panel grid-stack-item-content bg-white no-scrollbar'>" +
+            "                <div class='x_title'>" +
+            "                    <h2 class='graphTitle'>" + title + "</h2>" +
+            "                    <div class='clearfix'></div>" +
+            "                </div>" +
+            "                <div class='scroll' style='position: relative; height: 88%;'> " +
+            "                    <div id='related-items'></div>" +
+            "               </div>" +
+            "            </div>" +
+            "        </div>";
+    },
+    createPeopleItem: function (itemId, name, mentions) {
+        return "<div class='org-member col-xs-6 col-sm-4 col-md-2'>" +
+            "<img src='/Content/build/images/picture.jpg'>" +
+            "<strong><a href='/Person/Details/" + itemId + "'> " + name + "</a></strong>" +
+            "<div>" + Resources.Mentions + ": " + mentions + "</div>" +
+            "</div>";
+    },
+};
 
-/**
- * Nodebox api
- */
 function createNodebox(id) {
     let node = document.getElementById('graph' + id);
-    let parent =  node.parentElement;
-    
+    let parent = node.parentElement;
+
     parent.removeChild(node);
-    node = document.createElement('canvas'); 
+    node = document.createElement('canvas');
     node.id = 'graph' + id;
     node.width = parent.clientWidth;
     node.height = parent.clientHeight;
     parent.appendChild(node);
-    
-    parent.parentElement.parentElement.onchange = function() {nodeboxSize(node, parent, id)};
+
+    parent.parentElement.parentElement.onchange = function () {
+        nodeboxSize(node, parent, id)
+    };
 
     let canvas = {
         userId: 'AnthonyT',
@@ -37,7 +164,7 @@ function createNodebox(id) {
     };
 
     // Initialize the NodeBox player object
-    ndbx.embed(canvas, function(err, player) {
+    ndbx.embed(canvas, function (err, player) {
         if (err) {
             throw new Error(err);
         } else {
@@ -45,7 +172,7 @@ function createNodebox(id) {
         }
     });
 
-}
+};
 
 function nodeboxSize(node, parent, id) {
     parent.removeChild(node);
@@ -57,139 +184,6 @@ function nodeboxSize(node, parent, id) {
     parent.appendChild(node);
 }
 
-/**
- * The basic HTML structure of a widget
- */
-function createUserWidget(id, title) {
-    return "<div class='chart-container'>" +
-        "            <div class='x_panel grid-stack-item-content bg-white no-scrollbar'>" +
-        "                <div class='x_title'>" +
-        "                    <h2 class='graphTitle'>" + title + "</h2>" +
-        "                    <ul class='nav navbar-right panel_toolbox'>" +
-        "                       <li>" +
-        "                            <a class='close-widget'>" +
-        "                                <i id=" + id + " class='fa fa-close'></i>" +
-        "                            </a>" +
-        "                       </li>" +
-        "                   <li class='dropdown'>" +
-        "                       <a href='#' class='dropdown-toggle' data-toggle='dropdown' role='button' aria-expanded='false'><i class='fa fa-gear'></i></a>" +
-        "                       <ul class='dropdown-menu' role='menu'>" +
-        "                           <li><a data-widget-id=" + id + " class='chartShowLines'>Lines between points</a></li>" +
-        "                           <li><a data-widget-id=" + id + " class='chartShowXGrid'>X grid lines</a></li>" +
-        "                           <li><a data-widget-id=" + id + " class='chartShowYGrid'>Y grid lines</a></li>" +
-        "                           <li><a data-widget-id=" + id + " class='chartShowLogScale'>Logarithmic y-axes</a></li>" +
-        "                           <li><a data-widget-id=" + id + " class='chartShowLegend'>Legend</a></li>" +
-        "                       </ul>" +
-        "                   </li>" +
-        "                   <li class='dropdown'>" +
-        "                       <a href='#' class='dropdown-toggle' data-toggle='dropdown' role='button' aria-expanded='false'><i class='fa fa-bar-chart'></i></a>" +
-        "                       <ul class='dropdown-menu' role='menu'>" +
-        "                           <li><a data-widget-id=" + id + " class='makeLineChart'>Line chart</a></li>" +
-        "                           <li><a data-widget-id=" + id + " class='makeBarChart'>Bar chart</a></li>" +
-        "                           <li><a data-widget-id=" + id + " class='makePieChart'>Pie chart</a></li>" +
-        "                           <li><a data-widget-id=" + id + " class='makeDonutChart'>Donut chart</a></li>" +
-        "                       </ul>" +
-        "                   </li>" +
-        "                    </ul>" +
-        "                    <div class='clearfix'></div>" +
-        "                </div>" +
-        "                <div style='position: relative; height: 85%;'><canvas id='graph" + id + "'></canvas></div>" +
-        "            </div>" +
-        "        </div>";
-}
-
-//item widget element
-function createItemWidget(id, title) {
-    return "<div data-widget-id=" + id + " class='chart-container'>" +
-        "            <div class='x_panel grid-stack-item-content bg-white no-scrollbar'>" +
-        "                <div class='x_title'>" +
-        "                    <h2 class='graphTitle'>" + title + "</h2>" +
-        "                    <ul class='nav navbar-right panel_toolbox'>" +
-        "                   <li><a id=" + id + " class='addToDashboard'>" + Resources.Save + "</a></li>" +
-        "                   <li class='dropdown'>" +
-        "                       <a href='#' class='dropdown-toggle' data-toggle='dropdown' role='button' aria-expanded='false'><i class='fa fa-gear'></i></a>" +
-        "                       <ul class='dropdown-menu' role='menu'>" +
-        "                           <li><a data-widget-id=" + id + " class='chartShowLines'>Lines between points</a></li>" +
-        "                           <li><a data-widget-id=" + id + " class='chartShowXGrid'>X grid lines</a></li>" +
-        "                           <li><a data-widget-id=" + id + " class='chartShowYGrid'>Y grid lines</a></li>" +
-        "                           <li><a data-widget-id=" + id + " class='chartShowLogScale'>Logarithmic y-axes</a></li>" +
-        "                           <li><a data-widget-id=" + id + " class='chartShowLegend'>Legend</a></li>" +
-        "                       </ul>" +
-        "                   </li>" +
-        "                   <li class='dropdown'>" +
-        "                       <a href='#' class='dropdown-toggle' data-toggle='dropdown' role='button' aria-expanded='false'><i class='fa fa-bar-chart'></i></a>" +
-        "                       <ul class='dropdown-menu' role='menu'>" +
-        "                           <li><a data-widget-id=" + id + " class='makeLineChart'>Line chart</a></li>" +
-        "                           <li><a data-widget-id=" + id + " class='makeBarChart'>Bar chart</a></li>" +
-        "                           <li><a data-widget-id=" + id + " class='makePieChart'>Pie chart</a></li>" +
-        "                           <li><a data-widget-id=" + id + " class='makeDonutChart'>Donut chart</a></li>" +
-        "                       </ul>" +
-        "                   </li>" +
-        "                   <li class='dropdown'>" +
-        "                       <a href='#' class='dropdown-toggle' data-toggle='dropdown' role='button' aria-expanded='false'><i class='fa fa-floppy-o'></i></a>" +
-        "                       <ul class='dropdown-menu' role='menu'>" +
-        "                           <li><a data-widget-id=" + id + " class='getJPGImage'>Download JPG image</a></li>" +
-        "                           <li><a data-widget-id=" + id + " class='getPNGImage'>Download PNG image</a></li>" +
-        "                       </ul>" +
-        "                   </li>" +
-        "                   <li><a data-widget-id=" + id + " class='dateChangeChart changeToWeek'>7d</a></li>" +
-        "                   <li><a data-widget-id=" + id + " class='dateChangeChart changeToMonth'>1m</a></li>" +
-        "                   <li><a data-widget-id=" + id + " class='dateChangeChart changeTo3Month'>3m</a></li>" +
-        "                   <li><a data-widget-id=" + id + " class='dateChangeChart changeToYear'>1y</a></li>" +
-        "                    </ul>" +
-        "                    <div class='clearfix'></div>" +
-        "                </div>" +
-        "                <div style='position: relative; height: 75%;'> " +
-        "                    <canvas id='graph" + id + "'></canvas>" +
-        "                    <h2 class='no-graph-data text-center'>No data available.</h2>" +
-        "               </div>" +
-        "               <div class='graph-options'>" +
-        "                   <input id=" + id + " type='text' class='form-control compareSearch' placeholder='Compare data with someone else.'>" +
-        "               </div>" +
-        "            </div>" +
-        "        </div>";
-}
-
-//twitter widget
-function createTwitterWidget(title) {
-    return "<div class='chart-container'>" +
-        "            <div class='x_panel grid-stack-item-content bg-white no-scrollbar'>" +
-        "                <div class='x_title'>" +
-        "                    <h2 class='graphTitle'>" + title + "</h2>" +
-        "                    <ul class='nav navbar-right panel_toolbox'>" +
-        "                       <li><a class='addToDashboard'>" + Resources.Save + "</a></li>" +
-        "                    </ul>"+
-        "                    <div class='clearfix'></div>" +
-        "                </div>" +
-        "                <div class='scroll' style='position: relative; height: 88%;'> " +
-        "                    <div id='twitter-feed'></div>"+
-        "               </div>" +
-        "            </div>" +
-        "        </div>";
-}
-
-//related items widget
-function createPeopleWidget(title) {
-    return "<div class='chart-container'>" +
-        "            <div class='x_panel grid-stack-item-content bg-white no-scrollbar'>" +
-        "                <div class='x_title'>" +
-        "                    <h2 class='graphTitle'>" + title + "</h2>" +
-        "                    <div class='clearfix'></div>" +
-        "                </div>" +
-        "                <div class='scroll' style='position: relative; height: 88%;'> " +
-        "                    <div id='related-items'></div>"+
-        "               </div>" +
-        "            </div>" +
-        "        </div>";
-}
-
-function createPeopleItem(itemId, name, mentions) {
-    return "<div class='org-member col-xs-6 col-sm-4 col-md-2'>" +
-        "<img src='/Content/build/images/picture.jpg'>" +
-        "<strong><a href='/Person/Details/" + itemId + "'> " + name + "</a></strong>" +
-        "<div>" + Resources.Mentions + ": " + mentions + "</div>" +
-        "</div>";
-}
 
 var gridselector = $("#grid");
 gridselector.gridstack({
@@ -549,7 +543,7 @@ function loadWidgets(url, itemId) {
     let loadSocialWidget = function(data) {
         $.each(data.SocialMediaNames, (index, value) => {
             if (value.Source.Name === "Twitter") {
-                grid.addWidget(createTwitterWidget("Twitter feed"), 1, 1, 6, 6, true, 4, 12, 4, 12, 1);
+                grid.addWidget(widgetElements.createTwitterWidget("Twitter feed"), 1, 1, 6, 6, true, 4, 12, 4, 12, 1);
                 grid.movable(".grid-stack-item", false);
                 grid.resizable(".grid-stack-item", false);
                 twttr.widgets.createTimeline(
@@ -579,12 +573,12 @@ function loadWidgets(url, itemId) {
 
     //Loads a MorePeopleFromOrg widget
     let loadPeopleWidget = function (data, title, widgetHeight) {
-        grid.addWidget(createPeopleWidget(title), 1, 1, 12, widgetHeight, true, 4, 12, 4, 12, 1);
+        grid.addWidget(widgetElements.createPeopleWidget(title), 1, 1, 12, widgetHeight, true, 4, 12, 4, 12, 1);
         grid.movable(".grid-stack-item", false);
         grid.resizable(".grid-stack-item", false);
         $.each(data, (index, value) => {
             console.log(value);
-           $("#related-items").append(createPeopleItem(value.ItemId, value.Name, value.NumberOfMentions)); 
+           $("#related-items").append(widgetElements.createPeopleItem(value.ItemId, value.Name, value.NumberOfMentions)); 
         });
     };
     
@@ -606,11 +600,11 @@ function loadWidgets(url, itemId) {
             $.each(data, (index, widget) => {
                 //UserWidget
                 if (widget.DashboardId !== -1) {
-                    grid.addWidget(createUserWidget(widget.WidgetId, widget.Title), widget.RowNumber, widget.ColumnNumber, widget.RowSpan, widget.ColumnSpan,
+                    grid.addWidget(widgetElements.createUserWidget(widget.WidgetId, widget.Title), widget.RowNumber, widget.ColumnNumber, widget.RowSpan, widget.ColumnSpan,
                         false, 4, 12, 4, 12, widget.WidgetId);
                     //ItemWidget
                 } else {
-                    grid.addWidget(createItemWidget(widget.WidgetId, widget.Title), widget.RowNumber, widget.ColumnNumber, widget.RowSpan, widget.ColumnSpan,
+                    grid.addWidget(widgetElements.createItemWidget(widget.WidgetId, widget.Title), widget.RowNumber, widget.ColumnNumber, widget.RowSpan, widget.ColumnSpan,
                         true, 4, 12, 4, 12, widget.WidgetId);
                     grid.movable(".grid-stack-item", false);
                     grid.resizable(".grid-stack-item", false);
@@ -647,8 +641,8 @@ function loadWidgets(url, itemId) {
 function init() {
 
     this.btnAddNodebox = function () {
-        grid.addWidget(createUserWidget('grafiek' + counter), 0, 0, 6, 6, true, 4, 12, 4, 12);
-        addNodeboxGraph('grafiek' + counter);
+        grid.addWidget(widgetElements.createUserWidget('grafiek' + counter), 0, 0, 6, 6, true, 4, 12, 4, 12);
+        widgetElements.addNodeboxGraph('grafiek' + counter);
         counter++;
         return false;
     }.bind(this);
