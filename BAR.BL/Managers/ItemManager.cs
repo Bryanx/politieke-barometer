@@ -292,9 +292,9 @@ namespace BAR.BL.Managers
 		public Item AddItem(ItemType itemType, string name, string description = "", string function = "",
 			string district = null, string level = null, string site = null, Gender gender = Gender.OTHER, string position = null, DateTime? dateOfBirth = null, int subplatformId = -1)
 		{
-			InitRepo();
 
 			uowManager = new UnitOfWorkManager();
+			InitRepo();
 
 			ISubplatformManager subplatformManager = new SubplatformManager(uowManager);
 
