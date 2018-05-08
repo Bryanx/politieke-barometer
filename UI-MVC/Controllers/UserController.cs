@@ -77,6 +77,8 @@ namespace BAR.UI.MVC.Controllers
 			switch (result)
 			{
 				case SignInStatus.Success:
+					//Log logging activity
+					//TODO
 				return RedirectToLocal(returnUrl);
 				case SignInStatus.LockedOut:
 				return View("Lockout");
@@ -321,6 +323,8 @@ namespace BAR.UI.MVC.Controllers
 			switch (result)
 			{
 				case SignInStatus.Success:
+					//Log logging activity
+					//TODO
 				return RedirectToLocal(returnUrl);
 				case SignInStatus.LockedOut:
 				return View("Lockout");

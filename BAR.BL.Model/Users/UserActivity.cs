@@ -10,6 +10,7 @@ namespace BAR.BL.Domain.Users
 	{
 		public int UserActivityId { get; set; }
 		public DateTime TimeStamp { get; set; }
-		public double NumberOfNewUsers { get; set; }
+		public double NumberOfNewTimes { get; set; }
+		public bool IsRegisterActivity { get; set; }
 	}
 }

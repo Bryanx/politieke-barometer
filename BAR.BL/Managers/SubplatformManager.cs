@@ -440,7 +440,7 @@ namespace BAR.BL.Managers
 			UserActivity activity = new UserActivity()
 			{
 				TimeStamp = DateTime.Now,
-				NumberOfNewUsers = numberOfUsers
+				NumberOfNewTimes = numberOfUsers
 			};
 
 			//Persist actitivy to database
@@ -463,7 +463,7 @@ namespace BAR.BL.Managers
 			if (actitivties.Count() == 1)
 			{
 				UserActivity activityToUpdate = actitivties.First();
-				activityToUpdate.NumberOfNewUsers++;
+				activityToUpdate.NumberOfNewTimes++;
 				platformRepo.UpdateUserActivity(activityToUpdate);
 				//If an actitivy is not presnet
 				//then a new actitivy shall be created

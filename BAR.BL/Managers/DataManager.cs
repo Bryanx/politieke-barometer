@@ -504,8 +504,17 @@ namespace BAR.BL.Managers
 			DateTime startdate = DateTime.Now;
 			while (timestamp >= startdate)
 			{
-				//TODO
+				GraphValue graphValue = new GraphValue()
+				{
+					NumberOfTimes = activities.Where(act => act.TimeStamp.Day == startdate.Day).Count(),
+					Value = startdate.ToString("dd-MM")
+				};
+				startdate = startdate.AddDays(-1);
 			}
+
+			//Reverse data
+			widgetData.GraphValues.Reverse();
+			return widgetData;
 		}
 	}
 }
