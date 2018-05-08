@@ -21,12 +21,11 @@ namespace BAR.BL.Domain.Users
 		public Gender Gender { get; set; }
 		public DateTime? DateOfBirth { get; set; }
 		public Area Area { get; set; }
-		public ICollection<UserActivity> Activities { get; set; }
 		public bool Deleted { get; set; }
-    public byte[] ProfilePicture { get; set; }
+		public byte[] ProfilePicture { get; set; }
 
-    //Method for cookie verification (maybe removed later from domain)
-    public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<User> manager, string authenticationType = DefaultAuthenticationTypes.ApplicationCookie)
+		//Method for cookie verification (maybe removed later from domain)
+		public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<User> manager, string authenticationType = DefaultAuthenticationTypes.ApplicationCookie)
 		{
 			//Note the authenticationType must match the one defined in CookieAuthenticationOptions.AuthenticationType
 			var userIdentity = await manager.CreateIdentityAsync(this, authenticationType);
