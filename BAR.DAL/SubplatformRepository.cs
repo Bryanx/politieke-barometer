@@ -5,6 +5,7 @@ using System.Data.Entity;
 using BAR.BL.Domain;
 using BAR.DAL.EF;
 using BAR.BL.Domain.Core;
+using BAR.BL.Domain.Users;
 
 namespace BAR.DAL
 {
@@ -59,7 +60,8 @@ namespace BAR.DAL
 		{
 			return ctx.SubPlatforms.Include(platform => platform.Questions)
 								   .Include(platform => platform.Customization)
-								   .Where(platform => platform.SubPlatformId == platformId).SingleOrDefault();
+								   .Where(platform => platform.SubPlatformId == platformId)
+								   .SingleOrDefault();
 		}
 
 		/// <summary>
@@ -75,7 +77,8 @@ namespace BAR.DAL
 		/// </summary>
 		public IEnumerable<Question> ReadQuestions(int platformId)
 		{
-			return ctx.Questions.Where(question => question.SubPlatform.SubPlatformId == platformId).AsEnumerable();
+			return ctx.Questions.Where(question => question.SubPlatform.SubPlatformId == platformId)
+								.AsEnumerable();
 		}
 
 		/// <summary>
@@ -83,7 +86,8 @@ namespace BAR.DAL
 		/// </summary>
 		public IEnumerable<Question> ReadQuestionsForType(QuestionType type)
 		{
-			return ctx.Questions.Where(question => question.QuestionType == type).AsEnumerable();
+			return ctx.Questions.Where(question => question.QuestionType == type)
+								.AsEnumerable();
 		}
 
 		/// <summary>
@@ -92,7 +96,8 @@ namespace BAR.DAL
 		public SubPlatform ReadSubplatformWithCustomization(int platformId)
 		{
 			return ctx.SubPlatforms.Include(platform => platform.Customization)
-									.Where(platform => platform.SubPlatformId == platformId).SingleOrDefault();
+								   .Where(platform => platform.SubPlatformId == platformId)
+								   .SingleOrDefault();
 		}
 
 		/// <summary>;;
@@ -108,7 +113,8 @@ namespace BAR.DAL
 		/// </summary>
 		public SubPlatform ReadSubPlatform(string platformName)
 		{
-			return ctx.SubPlatforms.Where(platform => platform.Name.ToLower().Equals(platformName.ToLower())).SingleOrDefault();
+			return ctx.SubPlatforms.Where(platform => platform.Name.ToLower().Equals(platformName.ToLower()))
+								   .SingleOrDefault();
 		}
 
 		/// <summary>
@@ -187,6 +193,51 @@ namespace BAR.DAL
 		{
 			foreach (Question question in questions) ctx.Questions.Remove(question);
 			return ctx.SaveChanges();
+		}
+
+		/// <summary>
+		/// Gives back the customisation for a specific subplatform
+		/// </summary>
+		public Customization ReadCustomisation(int platformId)
+		{
+			SubPlatform subplatFrom = ctx.SubPlatforms.Include(platform => platform.Customization)
+													  .Where(platform => platform.SubPlatformId == platformId)
+													  .SingleOrDefault();
+			return subplatFrom.Customization;
+		}
+
+		/// <summary>
+		/// Returnes all the activities
+		/// </summary>
+		public IEnumerable<UserActivity> ReadAllActvities()
+		{
+			return ctx.UserActivities.AsEnumerable();
+		}
+
+		/// <summary>
+		/// Creates a new useractivity in the database
+		/// </summary>
+		public int CreateUserActitivy(UserActivity actitivy)
+		{
+			ctx.UserActivities.Add(actitivy);
+			return ctx.SaveChanges();
+		}
+
+		/// <summary>
+		/// Updates an actitiy in the database
+		/// </summary>
+		public int UpdateUserActivity(UserActivity activity)
+		{
+			ctx.Entry(activity).State = EntityState.Modified;
+			return ctx.SaveChanges();
+		}
+
+		/// <summary>
+		/// Gives back all activities for a specific type
+		/// </summary>
+		public IEnumerable<UserActivity> ReadActivitiesForType(ActivityType type)
+		{
+			return ctx.UserActivities.Where(act => act.ActivityType == type).AsEnumerable();
 		}
 	}
 }

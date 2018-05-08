@@ -77,15 +77,17 @@ namespace BAR.UI.MVC.Controllers
 			switch (result)
 			{
 				case SignInStatus.Success:
-					return RedirectToLocal(returnUrl);
+				//Log logging activity
+				new SubplatformManager().LogActivity(ActivityType.LoginActivity);
+				return RedirectToLocal(returnUrl);
 				case SignInStatus.LockedOut:
-					return View("Lockout");
+				return View("Lockout");
 				case SignInStatus.RequiresVerification:
-					return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
+				return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
 				case SignInStatus.Failure:
 				default:
-					ModelState.AddModelError("", Resources.LoginFailed);
-					return View(model);
+				ModelState.AddModelError("", Resources.LoginFailed);
+				return View(model);
 			}
 		}
 
@@ -109,15 +111,19 @@ namespace BAR.UI.MVC.Controllers
 		[HttpPost]
 		[AllowAnonymous]
 		[ValidateAntiForgeryToken]
-		public async Task<ActionResult> Register(RegisterViewModel model) {
+		public async Task<ActionResult> Register(RegisterViewModel model)
+		{
 			IdentityUserManager userManager = HttpContext.GetOwinContext().GetUserManager<IdentityUserManager>();
 			SignInManager signInManager = HttpContext.GetOwinContext().Get<SignInManager>();
-			if (User.Identity.IsAuthenticated) {
+			if (User.Identity.IsAuthenticated)
+			{
 				return RedirectToAction("Index", "User");
 			}
 
-			if (ModelState.IsValid) {
-				var user = new User {
+			if (ModelState.IsValid)
+			{
+				var user = new User
+				{
 					UserName = model.Email,
 					Email = model.Email,
 					FirstName = model.Firstname,
@@ -129,15 +135,20 @@ namespace BAR.UI.MVC.Controllers
 				};
 				var result = await userManager.CreateAsync(user, model.Password);
 
-				if (result.Succeeded) {
+				if (result.Succeeded)
+				{
 					//Send an email with this link
 					string code = await userManager.GenerateEmailConfirmationTokenAsync(user.Id);
-					var callbackUrl = Url.Action("ConfirmEmail", "User", new {userId = user.Id, code = code},
+					var callbackUrl = Url.Action("ConfirmEmail", "User", new { userId = user.Id, code = code },
 						protocol: Request.Url.Scheme);
 					await userManager.SendEmailAsync(user.Id, Resources.ConfirmAccount,
 						"<a href=\"" + callbackUrl + "\">" + Resources.ConfirmAccountClickingHere + "</a>");
 					//Assign Role to user    
 					await userManager.AddToRoleAsync(user.Id, "SuperAdmin");
+
+					//Log useractivity
+					new SubplatformManager().LogActivity(ActivityType.RegisterActivity);
+
 					//Login
 					await signInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
 
@@ -151,8 +162,8 @@ namespace BAR.UI.MVC.Controllers
 		}
 
 		//
-			// POST: /User/LogOff
-			[HttpPost]
+		// POST: /User/LogOff
+		[HttpPost]
 		[ValidateAntiForgeryToken]
 		public ActionResult LogOff()
 		{
@@ -208,7 +219,7 @@ namespace BAR.UI.MVC.Controllers
 				var callbackUrl = Url.Action("ResetPassword", "User", new { userId = user.Id, code = code },
 					protocol: Request.Url.Scheme);
 				await userManager.SendEmailAsync(user.Id, Resources.ResetPassword,
-					"<a href=\"" + callbackUrl + "\">"+Resources.ResetPasswordByClickingHere+"</a>");
+					"<a href=\"" + callbackUrl + "\">" + Resources.ResetPasswordByClickingHere + "</a>");
 				return RedirectToAction("ForgotPasswordConfirmation", "User");
 			}
 
@@ -286,12 +297,14 @@ namespace BAR.UI.MVC.Controllers
 		//
 		// GET: /User/ExternalLoginCallback
 		[AllowAnonymous]
-		public async Task<ActionResult> ExternalLoginCallback(string returnUrl) {
+		public async Task<ActionResult> ExternalLoginCallback(string returnUrl)
+		{
 			IAuthenticationManager authenticationManager = HttpContext.GetOwinContext().Authentication;
 			SignInManager signInManager = HttpContext.GetOwinContext().Get<SignInManager>();
 
 			var loginInfo = await authenticationManager.GetExternalLoginInfoAsync();
-			if (loginInfo == null) {
+			if (loginInfo == null)
+			{
 				return RedirectToAction("Login");
 			}
 
@@ -300,33 +313,37 @@ namespace BAR.UI.MVC.Controllers
 			var lastname = loginInfo.ExternalIdentity.Claims.First(c => c.Type == "urn:facebook:last_name").Value;
 			var id = loginInfo.ExternalIdentity.Claims.First(c => c.Type == "urn:facebook:id").Value;
 
-      //Get profile picure as byte array
-      var webClient = new WebClient();
-      var photoUrl = String.Format("https://graph.facebook.com/{0}/picture?type=large", id);
-      byte[] imageData = webClient.DownloadData(photoUrl);
+			//Get profile picure as byte array
+			var webClient = new WebClient();
+			var photoUrl = String.Format("https://graph.facebook.com/{0}/picture?type=large", id);
+			byte[] imageData = webClient.DownloadData(photoUrl);
 
-      // Sign in the user with this external login provider if the user already has a login
-      var result = await signInManager.ExternalSignInAsync(loginInfo, isPersistent: false);
-			switch (result) {
+			// Sign in the user with this external login provider if the user already has a login
+			var result = await signInManager.ExternalSignInAsync(loginInfo, isPersistent: false);
+			switch (result)
+			{
 				case SignInStatus.Success:
-					return RedirectToLocal(returnUrl);
+				//Log logging activity
+				new SubplatformManager().LogActivity(ActivityType.LoginActivity);
+				return RedirectToLocal(returnUrl);
 				case SignInStatus.LockedOut:
-					return View("Lockout");
+				return View("Lockout");
 				case SignInStatus.RequiresVerification:
-					return RedirectToAction("SendCode", new {ReturnUrl = returnUrl, RememberMe = false});
+				return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = false });
 				case SignInStatus.Failure:
 				default:
-					// If the user does not have an account, then prompt the user to create an account
-					ViewBag.ReturnUrl = returnUrl;
-					ViewBag.LoginProvider = loginInfo.Login.LoginProvider;
-					return View("ExternalLoginConfirmation",
-						new ExternalLoginConfirmationViewModel {
-							Email = loginInfo.Email,
-							Firstname = firstname,
-							Lastname = lastname,
-							DateOfBirth = DateTime.Now,
-              ImageData = imageData
-            });
+				// If the user does not have an account, then prompt the user to create an account
+				ViewBag.ReturnUrl = returnUrl;
+				ViewBag.LoginProvider = loginInfo.Login.LoginProvider;
+				return View("ExternalLoginConfirmation",
+					new ExternalLoginConfirmationViewModel
+					{
+						Email = loginInfo.Email,
+						Firstname = firstname,
+						Lastname = lastname,
+						DateOfBirth = DateTime.Now,
+						ImageData = imageData
+					});
 			}
 		}
 
@@ -364,17 +381,20 @@ namespace BAR.UI.MVC.Controllers
 					DateOfBirth = model.DateOfBirth,
 					ProfilePicture = model.ImageData
 				};
-          
+
 				var result = await userManager.CreateAsync(user);
 
 				if (result.Succeeded)
 				{
 					result = await userManager.AddLoginAsync(user.Id, info.Login);
-    
-          //Assign Role to user Here      
-          await userManager.AddToRoleAsync(user.Id, "SuperAdmin");
 
-          if (result.Succeeded)
+					//Assign Role to user Here      
+					await userManager.AddToRoleAsync(user.Id, "SuperAdmin");
+
+					//log activities
+					new SubplatformManager().LogActivity(ActivityType.RegisterActivity);
+
+					if (result.Succeeded)
 					{
 						await signInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
 						return RedirectToLocal(returnUrl);

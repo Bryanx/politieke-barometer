@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using BAR.BL.Domain;
 using BAR.DAL;
 using BAR.BL.Domain.Core;
+using BAR.BL.Domain.Users;
 
 namespace BAR.BL.Managers
 {
@@ -393,7 +394,7 @@ namespace BAR.BL.Managers
 		public Customization GetCustomization(int platformId)
 		{
 			InitRepo();
-			return platformRepo.ReadSubplatformWithCustomization(platformId).Customization;
+			return platformRepo.ReadCustomisation(platformId);
 		}
 
 		/// <summary>
@@ -414,6 +415,71 @@ namespace BAR.BL.Managers
 		{
 			if (uowManager == null) platformRepo = new SubplatformRepository();
 			else platformRepo = new SubplatformRepository(uowManager.UnitOfWork);
+		}
+
+		/// <summary>
+		/// Gives back all the userAcitities for a specific timestamp
+		/// If no timestamp was given then all the activities wil be returned
+		/// </summary>
+		public IEnumerable<UserActivity> GetUserActivities(ActivityType type, DateTime? timestamp = null)
+		{
+			InitRepo();
+			IEnumerable<UserActivity> activities = platformRepo.ReadActivitiesForType(type);
+			if (activities == null || activities.Count() == 0 || timestamp == null) return activities.AsEnumerable();
+			else return activities.Where(act => act.TimeStamp.Day >= timestamp.Value.Day).AsEnumerable();
+		}
+
+		/// <summary>
+		/// Adds a new userActitity and persists that to the database
+		/// </summary>
+		public UserActivity AddUserActitity(ActivityType type, double numberOfUsers = 0.0)
+		{
+			InitRepo();
+
+			//Create userActitivy
+			UserActivity activity = new UserActivity()
+			{
+				TimeStamp = DateTime.Now,
+				NumberOfTimes = numberOfUsers,
+				ActivityType = type
+			};
+
+			//Persist actitivy to database
+			platformRepo.CreateUserActitivy(activity);
+
+			return activity;
+		}
+
+		/// <summary>
+		/// Logs a newly registered user for
+		/// later monotoring by the superadmin
+		/// </summary>
+		public void LogActivity(ActivityType type)
+		{
+			IEnumerable<UserActivity> activities = GetUserActivities(type, DateTime.Now);
+			if (activities == null) return;
+
+			//If an actitivy in already present then we just
+			//need to increment the amout of registerd users
+			if (activities.Count() == 1)
+			{
+				UserActivity activityToUpdate = activities.First();
+				activityToUpdate.NumberOfTimes++;
+				platformRepo.UpdateUserActivity(activityToUpdate);
+				//If an actitivy is not presnet
+				//then a new actitivy shall be created
+			}
+			else AddUserActitity(type, 1);
+		}
+
+		/// <summary>
+		/// Changes a userActivity
+		/// </summary>
+		public UserActivity ChangeUserActivity(UserActivity activity)
+		{
+			InitRepo();
+			platformRepo.UpdateUserActivity(activity);
+			return activity;
 		}
 	}
 }

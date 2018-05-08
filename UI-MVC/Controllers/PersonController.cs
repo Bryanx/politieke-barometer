@@ -84,7 +84,10 @@ namespace BAR.UI.MVC.Controllers
 			personViewModel.User = User.Identity.IsAuthenticated ? userManager.GetUser(User.Identity.GetUserId()) : null;
 			personViewModel.Person = Mapper.Map(item, new ItemDTO());
 			personViewModel.Subscribed = subbedItem != null;
-			                             
+
+			//Log visit activity
+			new SubplatformManager().LogActivity(ActivityType.VisitActitiy);
+
 			//Assembling the view
 			return View(personViewModel);
 		}

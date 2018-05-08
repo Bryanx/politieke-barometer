@@ -95,7 +95,7 @@
             });
 
         $(".item-input").on('input propertychange paste',() => $("#itemForm").submit());
-        $('.subscribeItem').click(function() { ajaxToggleSubscribe($(this));});
+        $(document).on("click", ".subscribeItem", (e) => ajaxToggleSubscribe(e));
         $("#fileUpload").on("change",() => $("#formFileUpload").submit());
         $("#uploadPicture").click(() => $("#fileUpload").click());
 

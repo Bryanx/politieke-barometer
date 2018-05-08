@@ -22,7 +22,7 @@ namespace BAR.BL.Managers
 		IEnumerable<Widget> GetAllWidgetsWithAllDataForItem(int itemId);
 
 		Widget AddWidget(WidgetType widgetType, string title, int rowNbr, int colNbr, List<PropertyTag> proptags,
-			DateTime? timestamp = null, GraphType? graphType = null, int rowspan = 1, int colspan = 1, int dashboardId = -1, List<WidgetData> datas = null);
+			DateTime? timestamp = null, GraphType? graphType = null, int rowspan = 1, int colspan = 1, int dashboardId = -1, List<WidgetData> datas = null, List<Item> items = null);
 		Widget AddItemToWidget(int widgetId, int itemId);
 
 		Widget ChangeWidgetPos(int widgetId, int rowNbr, int colNbr, int rowspan = 1, int colspan = 1);
@@ -34,9 +34,12 @@ namespace BAR.BL.Managers
 
 		void GenerateDataForMwidgets();
 
+		void MoveWidgetToDashBoard(int widgetId, IEnumerable<int> itemIds, string userId);
+		
 		//dashboards
 		Dashboard GetDashboard(int dashboardId);
 		Dashboard GetDashboard(string userId);
+		Dashboard GetDashboardWithAllDataForUserId(string userId);
 
 		Dashboard AddDashboard(string userId, DashboardType dashType = DashboardType.Private);
 

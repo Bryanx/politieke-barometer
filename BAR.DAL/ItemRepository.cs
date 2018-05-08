@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using BAR.BL.Domain.Items;
 using BAR.DAL.EF;
-using BAR.BL.Domain.Items;
+using System;
+using System.Collections.Generic;
 using System.Data.Entity;
-using BAR.BL.Domain.Data;
+using System.Linq;
 
 namespace BAR.DAL
 {
@@ -44,12 +42,12 @@ namespace BAR.DAL
 		public Person ReadPersonWithDetails(int itemId)
 		{
 			return ctx.Items.OfType<Person>()
-				.Include(i => i.Area)
-				.Include(i => i.Organisation)
-				.Include(i => i.SocialMediaNames)
-				.Include(i => i.SocialMediaNames.Select(s => s.Source))
-				.Where(i => i.ItemId == itemId && i.Deleted == false)
-				.SingleOrDefault();
+							.Include(item => item.Area)
+							.Include(item => item.Organisation)
+							.Include(item => item.SocialMediaNames)
+							.Include(item => item.SocialMediaNames.Select(social => social.Source))
+							.Where(item => item.ItemId == itemId && !item.Deleted)
+							.SingleOrDefault();
 		}
 		
 		/// <summary>
@@ -58,10 +56,10 @@ namespace BAR.DAL
 		public Organisation ReadOrganisationWithDetails(int itemId)
 		{
 			return ctx.Items.OfType<Organisation>()
-				.Include(i => i.SocialMediaUrls)
-				.Include(i => i.SocialMediaUrls.Select(s => s.Source))
-				.Where(i => i.ItemId == itemId && i.Deleted == false)
-				.SingleOrDefault();
+							.Include(item => item.SocialMediaUrls)
+							.Include(item => item.SocialMediaUrls.Select(social => social.Source))
+							.Where(item => item.ItemId == itemId && !item.Deleted)
+							.SingleOrDefault();
 		}
 
 		/// <summary>
@@ -83,26 +81,18 @@ namespace BAR.DAL
 		public Item ReadItemWithWidgets(int itemId)
 		{
 			return ctx.Items.Include(item => item.ItemWidgets)
-				.Where(item => item.ItemId == itemId).SingleOrDefault();
+							.Where(item => item.ItemId == itemId)
+							.SingleOrDefault();
 		}
 
 		/// <summary>
 		/// Returns the item that matches the itemId including SubPlatform
 		/// </summary>
-		public Item ReadItemWithSubPlatform(int itemId)
+		public Item ReadItemWithPlatform(int itemId)
 		{
-			return ctx.Items
-				.Include(i => i.SubPlatform)
-				.Where(item => item.ItemId == itemId)
-				.SingleOrDefault();
-		}
-
-		/// <summary>
-		/// Gives back a list of all the items for a specific type
-		/// </summary>
-		public IEnumerable<Item> ReadItemsForType(ItemType type)
-		{
-			return ctx.Items.Where(item => item.ItemType == type).AsEnumerable();
+			return ctx.Items.Include(item => item.SubPlatform)
+							.Where(item => item.ItemId == itemId)
+							.SingleOrDefault();
 		}
 
 		/// <summary>
@@ -112,18 +102,19 @@ namespace BAR.DAL
 		public Item ReadItemWithInformations(int itemId)
 		{
 			return ctx.Items.Include(item => item.Informations)
-				.Where(item => item.ItemId == itemId).SingleOrDefault();
+							.Where(item => item.ItemId == itemId)
+							.SingleOrDefault();
 		}
 
 		/// <summary>
 		/// Returns a list of all items.
 		/// </summary>
 		/// <returns></returns>
-		public IEnumerable<Item> ReadAllItems()
+		public IEnumerable<Item> ReadAllItemsWithPlatforms()
 		{
 			return ctx.Items.Include(item => item.ItemWidgets)
 				            .Include(item => item.SubPlatform)
-										.AsEnumerable();
+							.AsEnumerable();
 		}
 
 		/// <summary>
@@ -131,7 +122,7 @@ namespace BAR.DAL
 		/// </summary>
 		public IEnumerable<Person> ReadAllPersons()
 		{
-			return ReadAllItems().OfType<Person>().AsEnumerable();
+			return ReadAllItemsWithPlatforms().OfType<Person>().AsEnumerable();
 		}
 
 		/// <summary>
@@ -141,7 +132,7 @@ namespace BAR.DAL
 		/// <returns></returns>
 		public IEnumerable<Person> ReadAllPersonsForOrganisation(int organisationId)
 		{
-			return ReadAllItems().OfType<Person>()
+			return ReadAllItemsWithPlatforms().OfType<Person>()
 				.Where(item => item.Organisation.ItemId.Equals(organisationId)).AsEnumerable();
 		}
 
@@ -150,7 +141,7 @@ namespace BAR.DAL
 		/// </summary>
 		public IEnumerable<Organisation> ReadAllOraginsations()
 		{
-			return ReadAllItems().OfType<Organisation>().AsEnumerable();
+			return ReadAllItemsWithPlatforms().OfType<Organisation>().AsEnumerable();
 		}
 
 		/// <summary>
@@ -182,29 +173,6 @@ namespace BAR.DAL
 		{
 			ctx.Items.Add(item);
 			return ctx.SaveChanges();
-		}
-
-		/// <summary>
-		/// Updates the Lastupdated field of an Item.
-		/// Returns -1 if SaveChanges() is delayed by unit of work.
-		/// </summary>
-		public int UpdateLastUpdated(int itemId, DateTime lastUpdated)
-		{
-			Item itemToUpdate = ReadItemWithInformations(itemId);
-			itemToUpdate.LastUpdatedInfo = lastUpdated;
-			return UpdateItem(itemToUpdate);
-		}
-
-		/// <summary>
-		/// Updates the baseline and trendingpercentage of a specific item.
-		/// Returns -1 if SaveChanges() is delayed by unit of work.
-		/// </summary>
-		public int UpdateItemTrending(int itemId, double baseline, double trendingeper)
-		{
-			Item itemToUpdate = ReadItem(itemId);
-			itemToUpdate.Baseline = baseline;
-			itemToUpdate.TrendingPercentage = trendingeper;
-			return UpdateItem(itemToUpdate);
 		}
 
 		/// <summary>
@@ -251,15 +219,16 @@ namespace BAR.DAL
 		/// Reads a person of a given name.
 		/// </summary>
 		public Person ReadPerson(string personName)
-		{
-			
-			return ctx.Items.OfType<Person>().Where(i => i.Name.Equals(personName)).SingleOrDefault();
+		{		
+			return ctx.Items.OfType<Person>()
+							.Where(item => item.Name.ToLower().Equals(personName.ToLower()))
+							.SingleOrDefault();
 		}
 
 		/// <summary>
 		/// Creates a range of items.
 		/// </summary>
-		public int CreateItems(ICollection<Item> items)
+		public int CreateItems(IEnumerable<Item> items)
 		{
 			ctx.Items.AddRange(items);
 			return ctx.SaveChanges();
@@ -268,10 +237,12 @@ namespace BAR.DAL
         /// <summary>
         /// Reads an organisation with a given name.
         /// </summary>
-        public Item ReadOrganisation(string organisationName)
+        public Organisation ReadOrganisation(string organisationName)
         {
-          return ctx.Items.Include(org => org.SubPlatform)
-            .Where(x => x.Name.Equals(organisationName)).SingleOrDefault();
+          return ctx.Items.OfType<Organisation>()
+						  .Include(org => org.SubPlatform)
+						  .Where(org => org.Name.ToLower().Equals(organisationName.ToLower()))
+						  .SingleOrDefault();
         }
 	}
 }

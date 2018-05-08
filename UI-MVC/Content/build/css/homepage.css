@@ -43,9 +43,9 @@ body .container.body .main-header-container-parent {
   margin-top: -100px; }
 
 .logo {
-  background-image: url("../images/logo-all-white-smaller.png");
+  background-image: url("../images/logo/logo-white.svg");
   background-repeat: no-repeat;
-  background-size: cover;
+  background-size: contain;
   background-position: center center;
   height: 60px;
   width: 200px;
@@ -148,5 +148,13 @@ nav .searchbar {
   z-index: 999; }
   .navbar-right > li > a > span, .navbar-right > li > a > i {
     color: white; }
+
+.widget_summary {
+  padding: 20px 40px; }
+
+#twitter-feed-1, #twitter-feed-2, #twitter-feed-3 {
+  max-height: 400px;
+  overflow-y: auto;
+  margin: 20px 0; }
 
 /*# sourceMappingURL=homepage.css.map */

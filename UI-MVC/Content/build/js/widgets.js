@@ -66,17 +66,9 @@ function createUserWidget(id, title) {
         "                <div class='x_title'>" +
         "                    <h2 class='graphTitle'>" + title + "</h2>" +
         "                    <ul class='nav navbar-right panel_toolbox'>" +
-        "                       <li><a class='collapse-link'><i class='fa fa-chevron-up'></i></a></li>" +
-        "                       <li class='dropdown'>" +
-        "                       <a href='#' class='dropdown-toggle' data-toggle='dropdown' role='button' aria-expanded='false'><i class='fa fa-wrench'></i></a>" +
-        "                       <ul class='dropdown-menu' role='menu'>" +
-        "                           <li><a href='#'>Settings 1</a></li>" +
-        "                           <li><a href='#'>Settings 2</a></li>" +
-        "                       </ul>" +
-        "                       </li>" +
         "                       <li>" +
         "                            <a class='close-widget'>" +
-        "                                <i id=' + id + ' class='fa fa-close'></i>" +
+        "                                <i id=" + id + " class='fa fa-close'></i>" +
         "                            </a>" +
         "                       </li>" +
         "                    </ul>" +
@@ -94,7 +86,7 @@ function createItemWidget(id, title) {
         "                <div class='x_title'>" +
         "                    <h2 class='graphTitle'>" + title + "</h2>" +
         "                    <ul class='nav navbar-right panel_toolbox'>" +
-        "                   <li><a data-widget-id=" + id + " class='addToDashboard'>" + Resources.Save + "</a></li>" +
+        "                   <li><a id=" + id + " class='addToDashboard'>" + Resources.Save + "</a></li>" +
         "                   <li class='dropdown'>" +
         "                       <a href='#' class='dropdown-toggle' data-toggle='dropdown' role='button' aria-expanded='false'><i class='fa fa-gear'></i></a>" +
         "                       <ul class='dropdown-menu' role='menu'>" +
@@ -161,10 +153,11 @@ function noWidgetsAvailable() {
     $(".no-widgets").show();
 }
 
+var charts = [];
+var widgets = [];
+
 function loadGraphs(itemId, widget) {
 
-    //for performance reasons charts are stored in a local variable.
-    var charts = [];
     var widgetId = widget.WidgetId;
     var COLORS = [
         'rgb(255, 99, 132)',
@@ -227,11 +220,20 @@ function loadGraphs(itemId, widget) {
 
     //Add data to graph.
     let AddDataSet = function (chart, name, values) {
-        var newColor = COLORS[chart.config.data.datasets.length];
-        var hoverColor = DARKCOLORS[chart.config.data.datasets.length];
+        let newColor = COLORS[chart.config.data.datasets.length];
+        let borderColor = newColor;
+        let hoverColor = DARKCOLORS[chart.config.data.datasets.length];
+        
+        if (chart.config.type === "doughnut" || chart.config.type === "pie") {
+            let firstDataset = chart.config.data.datasets[0];
+            borderColor = firstDataset.borderColor;
+            newColor = firstDataset.backgroundColor;
+            hoverColor = firstDataset.hoverBackgroundColor;
+        }
+        
         var newDataset = {
             label: name,
-            borderColor: newColor,
+            borderColor: borderColor,
             backgroundColor: newColor,
             hoverBackgroundColor: hoverColor,
             data: values,
@@ -240,7 +242,7 @@ function loadGraphs(itemId, widget) {
         
         chart.config.data.datasets.push(newDataset);
         chart.update();
-    }
+    };
 
     //Load graph data
     let LoadGraphDataSet = function (suggestion, $this) {
@@ -250,11 +252,15 @@ function loadGraphs(itemId, widget) {
         let itemId = suggestion.data;
         $.ajax({
             type: "GET",
-            url: "/api/GetGraphs/" + itemId + "/" + itemId,
+            url: "/api/GetGraphs/" + itemId + "/" + widgetId,
             dataType: "json",
             success: data => {
+                console.log(data);
                 if (data !== undefined) {
-                    AddDataSet(chart, name, Object.values(data));
+                    if (!widget.ItemIds.includes("" + itemId)) {
+                        widget.ItemIds.push(itemId);
+                    }
+                    AddDataSet(chart, name, data[0].GraphValues.map(g => g.NumberOfTimes));
                 }
             },
             fail: d => console.log(d)
@@ -422,12 +428,24 @@ function loadGraphs(itemId, widget) {
 
     //Retrieves the graph data from api.
     let ajaxLoadGraphs = function (widget) {
-        $.ajax({
-            type: "GET",
-            url: "/api/GetGraphs/" + itemId + "/" + widget.WidgetId,
-            dataType: "json",
-            success: data => loadGraphHandler(widget, data)
-        })
+        if (widget.ItemIds != null && widget.ItemIds.length) {
+            if (!itemId.length) {
+                itemId = widget.ItemIds[0]
+            }
+            $.ajax({
+                type: "GET",
+                url: "/api/GetGraphs/" + itemId + "/" + widget.WidgetId,
+                dataType: "json",
+                success: data => {
+                    if (!widget.ItemIds.includes("" + itemId)) {
+                        widget.ItemIds.push(itemId);
+                    }
+                    loadGraphHandler(widget, data)
+                }
+            });
+        } else {
+            displayNoGraphData(widget.WidgetId);
+        }
     };
     
     //Graph handlers
@@ -499,6 +517,7 @@ function loadWidgets(url, itemId) {
     
     //Puts the widgets on the grid.
     let loadGrid = function (data, itemId) {
+        var itempage = false;
         if (data != null && data.length) {
             $.each(data, (index, widget) => {
                 //UserWidget
@@ -511,16 +530,18 @@ function loadWidgets(url, itemId) {
                         true, 4, 12, 4, 12, widget.WidgetId);
                     grid.movable(".grid-stack-item", false);
                     grid.resizable(".grid-stack-item", false);
+                    itempage = true;
                 }
                 //if widgettype == graphtype
                 if (widget.WidgetType === 0) {
                     loadGraphs(itemId, widget);
                 }
+                widgets.push(widget);
             });
         } else {
             noWidgetsAvailable();
         }
-        loadItemForSocialWidget(itemId);
+        if (itempage) loadItemForSocialWidget(itemId);
     };
     
     //Loads the widgets via api call.
@@ -571,12 +592,12 @@ function init() {
     }
 
     //Moves a widget from item page to dashboard page
-    let moveWidget = function () {
-        let widgetId = $(".addToDashboard").data("widget-id");
+    let moveWidget = function (e) {
+        let widget = widgets.find(w => w.WidgetId == e.target.id);
         $.ajax({
             type: "POST",
-            url: "/api/MoveWidget/" + widgetId,
-            dataType: "json",
+            url: "/api/MoveWidget/" + e.target.id,
+            data:  {itemIds: widget.ItemIds},
             success: () => showSaveMessage()
         }).fail(() => showErrorMessage());
     };
@@ -612,21 +633,24 @@ function init() {
     
     //Removes a widget
     let deleteWidget = function (e) {
-        let el = (e.target).closest(".grid-stack-item");
-        gridselector.data("gridstack").removeWidget(el);
-        $.ajax({
-            type: "DELETE",
-            url: "/api/Widget/Delete/" + e.target.id,
-            dataType: "json",
-            error: (xhr) => {
-                alert($.parseJSON(xhr.responseText).Message);
-                showErrorMessage();
-            },
-            success: () => {
-                if (!$(".grid-stack-item").length) noWidgetsAvailable();
-                showSaveMessage();
-            }
-        })
+        let widget = (e.target).closest(".grid-stack-item");
+        let widgetId = e.target.id;
+        if (widgetId.length) {
+            $.ajax({
+                type: "DELETE",
+                url: "/api/Widget/Delete/" + widgetId,
+                dataType: "json",
+                error: (xhr) => {
+                    alert($.parseJSON(xhr.responseText).Message);
+                    showErrorMessage();
+                },
+                success: () => {
+                    gridselector.data("gridstack").removeWidget(widget);
+                    if (!$(".grid-stack-item").length) noWidgetsAvailable();
+                    showSaveMessage();
+                }
+            })
+        }
     };
     
     //dashboard handlers
@@ -639,6 +663,6 @@ function init() {
     }
 
     //itempage handlers
-    $(document).on("click", ".addToDashboard", () => moveWidget());
+    $(document).on("click", ".addToDashboard", (e) => moveWidget(e));
 }
 

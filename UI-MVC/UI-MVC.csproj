@@ -342,11 +342,9 @@
     <Content Include="Content\build\images\government.jpg" />
     <Content Include="Content\build\images\government2.jpg" />
     <Content Include="Content\build\images\loading.gif" />
-    <Content Include="Content\build\images\logo-all-white-smaller.png" />
-    <Content Include="Content\build\images\logo-all-white.png" />
-    <Content Include="Content\build\images\logo-colored-smaller.png" />
-    <Content Include="Content\build\images\logo-white-img.png" />
-    <Content Include="Content\build\images\logo-white.png" />
+    <Content Include="Content\build\images\logo\logo-black.svg" />
+    <Content Include="Content\build\images\logo\logo-dark.svg" />
+    <Content Include="Content\build\images\logo\logo-white.svg" />
     <Content Include="Content\build\images\mastercard.png" />
     <Content Include="Content\build\images\parlement-smaller.jpg" />
     <Content Include="Content\build\images\paypal.png" />

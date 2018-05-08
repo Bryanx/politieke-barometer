@@ -10,32 +10,35 @@ namespace BAR.DAL
 	public interface IItemRepository
 	{
 		//Read
-		Item ReadItemWithInformations(int itemId);
 		Item ReadItem(int itemId);
-		Person ReadPerson(string personName);
-		Person ReadPersonWithDetails(int itemId);
-		Organisation ReadOrganisationWithDetails(int itemId);
-		Theme ReadThemeWithDetails(int itemId);
-		Item ReadItemWithSubPlatform(int itemId);
-    Item ReadOrganisation(string organisationName);
-		IEnumerable<Item> ReadAllItems();
-		IEnumerable<Person> ReadAllPersons();
-		IEnumerable<Person> ReadAllPersonsForOrganisation(int organisationId);
-		IEnumerable<Organisation> ReadAllOraginsations();
-		IEnumerable<Theme> ReadAllThemes();
-		IEnumerable<Item> ReadItemsForType(ItemType type);
-		IEnumerable<Item> ReadAllItemsForUpdatedSince(DateTime since);
+		Item ReadItemWithInformations(int itemId);
+		Item ReadItemWithPlatform(int itemId);
 		Item ReadItemWithWidgets(int itemId);
 
+		IEnumerable<Item> ReadAllItemsWithPlatforms();
+		IEnumerable<Item> ReadAllItemsForUpdatedSince(DateTime since);
+		
+		Person ReadPerson(string personName);
+		Person ReadPersonWithDetails(int itemId);
+		
+		Theme ReadThemeWithDetails(int itemId);
+		
+		IEnumerable<Person> ReadAllPersonsForOrganisation(int organisationId);
+		
+		Organisation ReadOrganisationWithDetails(int itemId);	
+    	Organisation ReadOrganisation(string organisationName);
+		
+		IEnumerable<Organisation> ReadAllOraginsations();
+		IEnumerable<Person> ReadAllPersons();	
+		IEnumerable<Theme> ReadAllThemes();
+		
 		//Create
 		int CreateItem(Item item);
-    int CreateItems(ICollection<Item> items);
+    	int CreateItems(IEnumerable<Item> items);
 
 		//Update
 		int UpdateItem(Item item);
 		int UpdateItems(IEnumerable<Item> items);
-		int UpdateItemTrending(int itemId, double baseline, double trendingepr);
-		int UpdateLastUpdated(int itemId, DateTime lastUpdated);
 
 		//Delete
 		int DeleteItem(Item item);

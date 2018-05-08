@@ -50,7 +50,8 @@ namespace BAR.DAL
 		/// </summary>
 		public IEnumerable<User> ReadAllUsersForRole(string roleId)
 		{
-			return ctx.Users.Where(x => x.Roles.Any(y => y.RoleId.Equals(roleId))).AsEnumerable();
+			return ctx.Users.Where(user => user.Roles.Any(role => role.RoleId.Equals(roleId)))
+							.AsEnumerable();
 		}
 
 		/// <summary>
@@ -58,37 +59,8 @@ namespace BAR.DAL
 		/// </summary>
 		public User ReadUser(string userId)
 		{
-			return ctx.Users.Include(x => x.Area).Where(x => x.Id.Equals(userId)).SingleOrDefault();
-		}
-
-		/// <summary>
-		/// Returns a user with their activities.
-		/// </summary>
-		public User ReadUserWithActivities(string userId)
-		{
-			return ctx.Users.Include(user => user.Activities)
-				.Where(user => user.Id.Equals(userId)).SingleOrDefault();
-		}
-
-		/// <summary>
-		/// Reads all the activities of all users.
-		/// </summary>
-		public IEnumerable<Activity> ReadAllActivities()
-		{
-			List<Activity> activities = new List<Activity>();
-			IEnumerable<User> userActivities = ctx.Users.Include(user => user.Activities).AsEnumerable();
-
-			foreach (User user in userActivities) activities.AddRange(user.Activities);
-			return activities.AsEnumerable();
-		}
-
-		/// <summary>
-		/// Reads all the activities for a specific user.
-		/// </summary>
-		public IEnumerable<Activity> ReadActivitiesForUser(string userId)
-		{
-			return ctx.Users.Include(user => user.Activities).
-				Where(user => user.Id.Equals(userId)).SingleOrDefault().Activities.AsEnumerable();
+			return ctx.Users.Include(user => user.Area).Where(area => area.Id.Equals(userId))
+							.SingleOrDefault();
 		}
 
 		/// <summary>
@@ -134,8 +106,8 @@ namespace BAR.DAL
 		/// </summary>
 		public int DeleteUser(string userId)
 		{
-			User userToDelete = ReadUserWithActivities(userId);
-			ctx.Users.Remove(userToDelete);
+			User userToDelete = ReadUser(userId);
+			if (userToDelete != null) ctx.Users.Remove(userToDelete);
 			return ctx.SaveChanges();
 		}
 
@@ -154,8 +126,8 @@ namespace BAR.DAL
 		{
 			foreach (string userid in userIds)
 			{
-				User userToDelete = ReadUserWithActivities(userid);
-				ctx.Users.Remove(userToDelete);
+				User userToDelete = ReadUser(userid);
+				if (userToDelete != null) ctx.Users.Remove(userToDelete);
 			}
 			return ctx.SaveChanges();
 		}
@@ -163,7 +135,7 @@ namespace BAR.DAL
 		/// <summary>
 		/// Reads all areas.
 		/// </summary>
-		public IEnumerable<Area> ReadAreas()
+		public IEnumerable<Area> ReadAllAreas()
 		{
 			return ctx.Areas.AsEnumerable();
 		}
@@ -189,7 +161,7 @@ namespace BAR.DAL
 		/// </summary>
 		public IdentityRole ReadRole(string userId)
 		{
-			return ctx.Roles.Where(x => x.Users.Any(y => y.UserId.Equals(userId))).FirstOrDefault();
+			return ctx.Roles.Where(role => role.Users.Any(user => user.UserId.Equals(userId))).FirstOrDefault();
 		}
 	}
 }

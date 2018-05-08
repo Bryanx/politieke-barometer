@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using AutoMapper;
 using BAR.BL.Domain.Items;
 using BAR.BL.Managers;
 using BAR.UI.MVC.Attributes;
@@ -44,6 +46,21 @@ namespace BAR.UI.MVC.Controllers.api
 			return Ok(lijst);
 		}
 
+		/// <summary>
+		/// Gets top 3 trending items
+		/// </summary>
+		[HttpGet]
+		[Route("api/GetTopTrendingItems")]
+		public IHttpActionResult GetTopTrendingItems()
+		{
+			itemManager = new ItemManager();
+			List<Item> lijst = itemManager.GetAllItems()
+				.OrderByDescending(m => m.TrendingPercentage)
+				.Take(3)
+				.ToList();
+			return Ok(Mapper.Map(lijst, new List<ItemDTO>()));
+		}
+		
 		/// <summary>
 		/// Deleted status of an item is toggled.
 		/// </summary>

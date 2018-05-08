@@ -7,7 +7,7 @@
 
 <link href="../../Content/build/css/homepage.css" rel="stylesheet">
 
-
+<section>
 @section Homepage {
     <!-- header start -->
     <div class="main-header-container-parent row header-image-bg">
@@ -23,83 +23,64 @@
     <!-- header end -->
 }
     <a name="nieuws"></a>
-    <!-- top tiles -->
+
+<!-- top tiles -->
     <div class="row tile_count">
         @{ int i = 0;}
         @foreach (var item in Model.Items.OrderByDescending(m => m.NumberOfMentions)) {
             if (i < 6) {
                 <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
+                    <a style="text-decoration: none" href="/Person/Details/@item.ItemId">
                     <span class="count_top"><i class="fa fa-user"></i> @item.Name</span>
                     <div class="count">@item.NumberOfMentions</div>
+                    </a>
                     <span class="count_bottom">
                         <i class="green">
-                            <i
-                                class="fa fa-sort-asc">
+                            <i class="fa fa-sort-asc">
                             </i>@item.TrendingPercentage%
                         </i> Sinds vorige week
                     </span>
+                    
                 </div>
                 i++;
             }
         }
     </div>
-    <!-- /top tiles -->
-    <div class="row">
+<!-- /top tiles -->
+</section>  <!-- end first page -->
 
-        <div class="col-md-8 col-sm-8 col-xs-12">
-            <div class="x_panel tile fixed_height_320">
+<section>
+    <!-- top 3 politici (trending) -->
+            <div class="x_panel tile">
                 <div class="x_title">
-                    <h2>Top 5 politici</h2>
-                    <ul class="nav panel_toolbox">
-                        <li>
-                            <a class="collapse-link">
-                                <i class="fa fa-chevron-up"></i>
-                            </a>
-                        </li>
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
-                               aria-expanded="false">
-                                <i class="fa fa-wrench"></i>
-                            </a>
-                            <ul class="dropdown-menu" role="menu">
-                                <li>
-                                    <a href="#">Settings 1</a>
-                                </li>
-                                <li>
-                                    <a href="#">Settings 2</a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a class="close-link">
-                                <i class="fa fa-close"></i>
-                            </a>
-                        </li>
-                    </ul>
+                    <h2>Top 3 trending politici</h2>
                     <div class="clearfix"></div>
                 </div>
-                <div class="x_content">
-                    <p><strong>Aantal vermeldingen van politici op social media</strong></p>
+                <div class="x_content row">
+                    <div class="col-12" style="max-height: 500px">
+                       <canvas id='trending-graph'></canvas>
+                       <h2 class='no-graph-data text-center'>No data available.</h2>
+                    </div>
                     @{ int j = 1;}
                     <table>
-                        @foreach (var item in Model.Items.OrderByDescending(m => m.TrendingPercentage)) {
-                            if (j <= 5) {
+                        @foreach (var item in Model.Items.OrderByDescending(m => m.TrendingPercentage)
+                            .Take(3))
+                        {
+                            if (j <= 3)
+                            {
                                 <tr>
-                                    <div class="widget_summary">
-                                        <div class="w_left w_25">
-                                            <span style="display: inline" class="badge bg-green">@j</span>
-                                            <h4>@item.Name</h4>
+                                    <div class="widget_summary col-12 col-md-4">
+                                        <div class="w_left w90">
+                                        <h4 id="t-name-@j" style="display: inline-block"></h4>
+                                        <h4 style="display: inline-block">
+                                            <i class="green">
+                                                <i class="fa fa-sort-asc"></i>
+                                            </i>
+                                        </h4>
                                         </div>
-                                        <div class="w_center w_55">
-                                            <div class="progress">
-                                                <div class="progress-bar bg-green" role="progressbar" aria-valuenow="@item.TrendingPercentage"
-                                                     aria-valuemin="0" aria-valuemax="@Model.Items.Max(m => m.TrendingPercentage)" style="width: @(item.TrendingPercentage * 3)%;">
-                                                    <span class="sr-only">@item.TrendingPercentage% Complete</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="w_right w_20">
-                                            <span>@item.TrendingPercentage%</span>
+                                        <div id="twitter-feed-@j" class="w_center w_90">
+                                            
+                                            
                                         </div>
                                         <div class="clearfix"></div>
                                     </div>
@@ -110,366 +91,88 @@
                     </table>
                 </div>
             </div>
-        </div>
+    <!-- /top 3 politici (trending) -->
+</section> <!-- end second page -->
 
-
-        <!-- form color picker -->
-        <div class="col-md-4 col-sm-4 col-xs-12">
-            <div class="x_panel tile fixed_height_320">
-                <div class="x_title">
-                    <h2>Color Picker</h2>
-                    <ul class="nav panel_toolbox">
-                        <li>
-                            <a class="collapse-link">
-                                <i class="fa fa-chevron-up"></i>
-                            </a>
-                        </li>
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
-                               aria-expanded="false">
-                                <i class="fa fa-wrench"></i>
-                            </a>
-                            <ul class="dropdown-menu" role="menu">
-                                <li>
-                                    <a href="#">Settings 1</a>
-                                </li>
-                                <li>
-                                    <a href="#">Settings 2</a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a class="close-link">
-                                <i class="fa fa-close"></i>
-                            </a>
-                        </li>
-                    </ul>
-                    <div class="clearfix"></div>
-                </div>
-                <div class="x_content">
-                    <br/>
-                    <form class="form-horizontal form-label-left">
-                        <div class="form-group">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Primaire kleur</label>
-                            <div class="col-md-9 col-sm-9 col-xs-12">
-                                <div id="cp-d" class="input-group">
-                                    <input id="ip-a" type="text" value="#e01ab5" class="form-control"/>
-                                    <span class="input-group-addon">
-                                        <i></i>
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Secundaire kleur</label>
-                            <div class="col-md-9 col-sm-9 col-xs-12">
-                                <div id="cp-s" class="input-group demo2">
-                                    <input id="ip-d" type="text" value="#e01ab5" class="form-control"/>
-                                    <span class="input-group-addon">
-                                        <i></i>
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Tertiaire kleur</label>
-                            <div class="col-md-9 col-sm-9 col-xs-12">
-                                <div id="cp-a" class="input-group demo2">
-                                    <input id="ip-s" type="text" value="#e01ab5" class="form-control"/>
-                                    <span class="input-group-addon">
-                                        <i></i>
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-        <!-- /form color picker -->
-
-    </div>
-
-
-    <div class="row">
-
-
-
-        <div class="col-md-12 col-sm-12 col-xs-12">
-            <div class="x_panel">
-                <div class="x_title">
-                    <h2>
-                        Populariteit per regio
-                    </h2>
-                    <ul class="nav panel_toolbox">
-                        <li>
-                            <a class="collapse-link">
-                                <i class="fa fa-chevron-up"></i>
-                            </a>
-                        </li>
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
-                               aria-expanded="false">
-                                <i class="fa fa-wrench"></i>
-                            </a>
-                            <ul class="dropdown-menu" role="menu">
-                                <li>
-                                    <a href="#">Settings 1</a>
-                                </li>
-                                <li>
-                                    <a href="#">Settings 2</a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a class="close-link">
-                                <i class="fa fa-close"></i>
-                            </a>
-                        </li>
-                    </ul>
-                    <div class="clearfix"></div>
-                </div>
-                <div class="x_content">
-                    <div class="dashboard-widget-content">
-                        <div id="map-parent">
-                            <div id="world-map-gdp" class="col-md-12 col-sm-12 col-xs-12" style="height: 430px;">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-    </div>
+<section>
 <div class="row">
-
-
-<!-- Start to do list -->
-<div class="col-md-6 col-sm-6 col-xs-12">
-    <div class="x_panel">
-        <div class="x_title">
-            <h2>
-                To Do List
-                <small>Sample tasks</small>
-            </h2>
-            <ul class="nav panel_toolbox">
-                <li>
-                    <a class="collapse-link">
-                        <i class="fa fa-chevron-up"></i>
-                    </a>
-                </li>
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
-                       aria-expanded="false">
-                        <i class="fa fa-wrench"></i>
-                    </a>
-                    <ul class="dropdown-menu" role="menu">
-                        <li>
-                            <a href="#">Settings 1</a>
-                        </li>
-                        <li>
-                            <a href="#">Settings 2</a>
-                        </li>
-                    </ul>
-                </li>
-                <li>
-                    <a class="close-link">
-                        <i class="fa fa-close"></i>
-                    </a>
-                </li>
-            </ul>
-            <div class="clearfix"></div>
-        </div>
-        <div class="x_content">
-
-            <div class="">
-                <ul class="to_do">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>
+                    Populariteit per regio
+                </h2>
+                <ul class="nav panel_toolbox">
                     <li>
-                        <p>
-                            <input type="checkbox" class="flat"> Schedule meeting with new
-                            client
-                        </p>
+                        <a class="collapse-link">
+                            <i class="fa fa-chevron-up"></i>
+                        </a>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                           aria-expanded="false">
+                            <i class="fa fa-wrench"></i>
+                        </a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li>
+                                <a href="#">Settings 1</a>
+                            </li>
+                            <li>
+                                <a href="#">Settings 2</a>
+                            </li>
+                        </ul>
                     </li>
                     <li>
-                        <p>
-                            <input type="checkbox" class="flat"> Create email address for new
-                            intern
-                        </p>
-                    </li>
-                    <li>
-                        <p>
-                            <input type="checkbox" class="flat"> Have IT fix the network printer
-                        </p>
-                    </li>
-                    <li>
-                        <p>
-                            <input type="checkbox" class="flat"> Copy backups to offsite
-                            location
-                        </p>
-                    </li>
-                    <li>
-                        <p>
-                            <input type="checkbox" class="flat"> Food truck fixie locavors
-                            mcsweeney
-                        </p>
-                    </li>
-                    <li>
-                        <p>
-                            <input type="checkbox" class="flat"> Food truck fixie locavors
-                            mcsweeney
-                        </p>
-                    </li>
-                    <li>
-                        <p>
-                            <input type="checkbox" class="flat"> Create email address for new
-                            intern
-                        </p>
-                    </li>
-                    <li>
-                        <p>
-                            <input type="checkbox" class="flat"> Have IT fix the network printer
-                        </p>
-                    </li>
-                    <li>
-                        <p>
-                            <input type="checkbox" class="flat"> Copy backups to offsite
-                            location
-                        </p>
+                        <a class="close-link">
+                            <i class="fa fa-close"></i>
+                        </a>
                     </li>
                 </ul>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- End to do list -->
-
-<!-- start of weather widget -->
-<div class="col-md-6 col-sm-6 col-xs-12">
-    <div class="x_panel">
-        <div class="x_title">
-            <h2>
-                Daily active users
-                <small>Sessions</small>
-            </h2>
-            <ul class="nav panel_toolbox">
-                <li>
-                    <a class="collapse-link">
-                        <i class="fa fa-chevron-up"></i>
-                    </a>
-                </li>
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
-                       aria-expanded="false">
-                        <i class="fa fa-wrench"></i>
-                    </a>
-                    <ul class="dropdown-menu" role="menu">
-                        <li>
-                            <a href="#">Settings 1</a>
-                        </li>
-                        <li>
-                            <a href="#">Settings 2</a>
-                        </li>
-                    </ul>
-                </li>
-                <li>
-                    <a class="close-link">
-                        <i class="fa fa-close"></i>
-                    </a>
-                </li>
-            </ul>
-            <div class="clearfix"></div>
-        </div>
-        <div class="x_content">
-            <div class="row">
-                <div class="col-sm-12">
-                    <div class="temperature">
-                        <b>Monday</b>, 07:30 AM
-                        <span>F</span>
-                        <span>
-                            <b>C</b>
-                        </span>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-sm-4">
-                    <div class="weather-icon">
-                        <canvas height="84" width="84" id="partly-cloudy-day"></canvas>
-                    </div>
-                </div>
-                <div class="col-sm-8">
-                    <div class="weather-text">
-                        <h2>Texas <br><i>Partly Cloudy Day</i></h2>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-12">
-                <div class="weather-text pull-right">
-                    <h3 class="degrees">23</h3>
-                </div>
-            </div>
-
-            <div class="clearfix"></div>
-
-            <div class="row weather-days">
-                <div class="col-sm-2">
-                    <div class="daily-weather">
-                        <h2 class="day">Mon</h2>
-                        <h3 class="degrees">25</h3>
-                        <canvas id="clear-day" width="32" height="32"></canvas>
-                        <h5>15 <i>km/h</i></h5>
-                    </div>
-                </div>
-                <div class="col-sm-2">
-                    <div class="daily-weather">
-                        <h2 class="day">Tue</h2>
-                        <h3 class="degrees">25</h3>
-                        <canvas height="32" width="32" id="rain"></canvas>
-                        <h5>12 <i>km/h</i></h5>
-                    </div>
-                </div>
-                <div class="col-sm-2">
-                    <div class="daily-weather">
-                        <h2 class="day">Wed</h2>
-                        <h3 class="degrees">27</h3>
-                        <canvas height="32" width="32" id="snow"></canvas>
-                        <h5>14 <i>km/h</i></h5>
-                    </div>
-                </div>
-                <div class="col-sm-2">
-                    <div class="daily-weather">
-                        <h2 class="day">Thu</h2>
-                        <h3 class="degrees">28</h3>
-                        <canvas height="32" width="32" id="sleet"></canvas>
-                        <h5>15 <i>km/h</i></h5>
-                    </div>
-                </div>
-                <div class="col-sm-2">
-                    <div class="daily-weather">
-                        <h2 class="day">Fri</h2>
-                        <h3 class="degrees">28</h3>
-                        <canvas height="32" width="32" id="wind"></canvas>
-                        <h5>11 <i>km/h</i></h5>
-                    </div>
-                </div>
-                <div class="col-sm-2">
-                    <div class="daily-weather">
-                        <h2 class="day">Sat</h2>
-                        <h3 class="degrees">26</h3>
-                        <canvas height="32" width="32" id="cloudy"></canvas>
-                        <h5>10 <i>km/h</i></h5>
-                    </div>
-                </div>
                 <div class="clearfix"></div>
             </div>
+            <div class="x_content">
+                <div class="dashboard-widget-content">
+                    <div id="map-parent">
+                        <div id="world-map-gdp" class="col-md-12 col-sm-12 col-xs-12" style="height: 430px;">
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-
 </div>
-<!-- end of weather widget -->
-</div>
+</section> <!-- end third page -->
 
 @section CustomJS{
-<script src="../../Content/build/js/homepage.js"></script> 
+    <div id="fb-root"></div>
+    <script>
+        (function(d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) return;
+            js = d.createElement(s);
+            js.id = id;
+            js.src = 'https://connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v2.12';
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+    </script>
+    <script src="~/Scripts/ChartJS/Chart.js"></script>
+    <script src="https://platform.twitter.com/widgets.js"></script>
+    @Scripts.Render("~/bundles/gridstack")
+    <script src="../../Content/build/js/homepage.js"></script> 
+    
+    <script>
+        $(() => {
+            $.ajax({
+                type: "GET",
+                url: 'api/GetTopTrendingItems',
+                dataType: "json",
+                success: data => {
+                    GetTopTrending(data);
+                    TwitterFeed(data);
+                },
+                error: (xhr) => alert(xhr.responseText)
+            });
+        })($)
+    </script>
 }
 
