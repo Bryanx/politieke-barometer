@@ -42,10 +42,23 @@ var widgetElements = {
             "                           <li><a data-widget-id=" + id + " class='makeDonutChart'>Donut chart</a></li>" +
             "                       </ul>" +
             "                   </li>" +
+            "                   <li class='dropdown'>" +
+            "                       <a href='#' class='dropdown-toggle' data-toggle='dropdown' role='button' aria-expanded='false'><i class='fa fa-floppy-o'></i></a>" +
+            "                       <ul class='dropdown-menu' role='menu'>" +
+            "                           <li><a data-widget-id=" + id + " class='getJPGImage'>Download JPG image</a></li>" +
+            "                           <li><a data-widget-id=" + id + " class='getPNGImage'>Download PNG image</a></li>" +
+            "                       </ul>" +
+            "                   </li>" +
             "                    </ul>" +
             "                    <div class='clearfix'></div>" +
             "                </div>" +
-            "                <div style='position: relative; height: 85%;'><canvas id='graph" + id + "'></canvas></div>" +
+            "                <div style='position: relative; height: 75%;'> " +
+            "                    <canvas id='graph" + id + "'></canvas>" +
+            "                    <h2 class='no-graph-data text-center'>No data available.</h2>" +
+            "               </div>" +
+            "               <div class='graph-options'>" +
+            "                   <input id=" + id + " type='text' class='form-control compareSearch' placeholder='Compare data with someone else.'>" +
+            "               </div>" +
             "            </div>" +
             "        </div>";
     },
@@ -316,11 +329,12 @@ function loadGraphs(itemId, widget) {
                 if (data !== undefined) {
                     if (!widget.ItemIds.includes("" + itemId)) {
                         widget.ItemIds.push(itemId);
+                        if (dashboardpage) updateWidgets(widgets);
                     }
                     AddDataSet(chart, name, data[0].GraphValues.map(g => g.NumberOfTimes));
                 }
             },
-            fail: d => console.log(d)
+            fail: d => alert(d)
         })
     };
     
@@ -693,7 +707,8 @@ function init() {
                 ColumnSpan: widget.height ? widget.height : widget.ColumnSpan,
                 WidgetType: 0,
                 DashboardId: 0,
-                graphType: widget.GraphType ? widget.GraphType : 0
+                GraphType: widget.GraphType ? widget.GraphType : 0,
+                ItemIds: widget.ItemIds ? widget.ItemIds : []
             });
         });
         $.ajax({

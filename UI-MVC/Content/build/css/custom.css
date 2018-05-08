@@ -1508,6 +1508,7 @@ nav {
     float: right;
     cursor: pointer; }
     .panel_toolbox > li > a {
+      line-height: 1.471 !important;
       padding: 5px;
       color: #C5C7CB;
       font-size: 14px; }

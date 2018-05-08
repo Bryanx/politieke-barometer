@@ -25,7 +25,7 @@ namespace BAR.BL.Managers
 			DateTime? timestamp = null, GraphType? graphType = null, int rowspan = 1, int colspan = 1, int dashboardId = -1, List<WidgetData> datas = null, List<Item> items = null);
 		Widget AddItemToWidget(int widgetId, int itemId);
 
-		Widget ChangeWidgetDetails(int widgetId, int rowNbr, int colNbr, int rowspan = 1, int colspan = 1,
+		Widget ChangeWidgetDetails(int widgetId, int rowNbr, int colNbr, List<int> itemIds, int rowspan = 1, int colspan = 1,
 			GraphType graphType = (GraphType) 0);
 		Widget ChangeWidgetTitle(int widgetId, string title);
 		Widget ChangeWidget(Widget widget);

@@ -144,13 +144,8 @@ namespace BAR.UI.MVC.Controllers.api
 			foreach (UserWidgetDTO widget in widgets) {
 				if (widget == null) return BadRequest("No widget given");
 				if (widgetManager.GetWidget(widget.WidgetId) == null) return NotFound();
-				if (widget.GraphType != 0) {
-					widgetManager.ChangeWidgetDetails(widget.WidgetId, widget.RowNumber, widget.ColumnNumber, 
-						widget.RowSpan,
-						widget.ColumnSpan, widget.GraphType);
-				} else {
-					widgetManager.ChangeWidgetDetails(widget.WidgetId, widget.RowNumber, widget.ColumnNumber, widget.RowSpan, widget.ColumnSpan);
-				}
+				widgetManager.ChangeWidgetDetails(widget.WidgetId, widget.RowNumber, widget.ColumnNumber, widget.ItemIds.ToList(),
+						widget.RowSpan, widget.ColumnSpan, widget.GraphType);
 			}
 			return StatusCode(HttpStatusCode.NoContent);
 		}
