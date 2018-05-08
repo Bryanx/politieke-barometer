@@ -238,7 +238,7 @@ hr {
   text-align: center;
   color: white;
   left: 0;
-  bottom: 23px;
+  bottom: 0;
   width: 100px;
   height: 72px;
   vertical-align: middle; }
@@ -323,6 +323,9 @@ hr {
 
 .fixed_height_390 {
   height: 390px; }
+
+.fixed_height_400 {
+  height: 400px; }
 
 .fixed_height_200 {
   height: 200px; }
@@ -827,7 +830,7 @@ table.tile_info {
   background-image: url("../images/user.png");
   background-position: center;
   background-repeat: no-repeat;
-  background-size: cover;
+  background-size: contain;
   width: 35px;
   height: 35px;
   display: inline-block;
@@ -836,7 +839,7 @@ table.tile_info {
   margin-right: 5px; }
 
 .small-logo {
-  background-image: url("../images/logo-all-white-smaller.png");
+  background-image: url("../images/logo/logo-white.svg");
   background-repeat: no-repeat;
   background-size: contain;
   background-position: center center;
@@ -846,7 +849,7 @@ table.tile_info {
   border-bottom: 1px solid #a5a9ac; }
 
 .small-logo.colored {
-  background-image: url("../images/logo-colored-smaller.png");
+  background-image: url("../images/logo/logo-dark.svg");
   border: none;
   height: 50px;
   position: relative;
@@ -1273,7 +1276,7 @@ nav {
       nav .navbar-right li i {
         font-size: 22px;
         color: var(--font-color); }
-      nav .navbar-right li .open .dropdown-menu {
+      nav .navbar-right li .dropdown-menu {
         border: none;
         -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175) !important;
         -moz-box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175) !important;
@@ -1284,9 +1287,10 @@ nav {
         margin-top: 0;
         right: 0;
         left: auto;
-        width: 220px;
         padding: 0;
-        z-index: 30; }
+        z-index: 30;
+        max-height: 500px;
+        overflow-y: auto; }
       nav .navbar-right li .dropdown-menu li {
         width: 100%; }
         nav .navbar-right li .dropdown-menu li:hover > ul.dropdown-menu {
@@ -1325,7 +1329,7 @@ nav {
 .navbar-right li.dropdown:hover > div.dropdown-menu {
   display: block; }
 .navbar-right > li > a {
-  color: #ECF0F1 !important;
+  color: #ECF0F1;
   margin-left: 0 !important;
   line-height: 32px;
   position: relative;

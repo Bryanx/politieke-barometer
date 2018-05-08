@@ -53,9 +53,9 @@ body .container.body .main-header-container-parent {
 }
 
 .logo {
-  background-image: url("../images/logo-all-white-smaller.png");
+  background-image: url("../images/logo/logo-white.svg");
   background-repeat: no-repeat;
-  background-size: cover;
+  background-size: contain;
   background-position: center center;
   height: 60px;
   width: 200px;

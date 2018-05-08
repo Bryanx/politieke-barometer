@@ -23,10 +23,8 @@
                 "bProcessing": true,
                 "info": true
             });
-
-            $('.subscribeItem').click(function() {
-                ajaxToggleSubscribe($(this));
-            });
+            
+            $(document).on("click", ".subscribeItem", (e) => ajaxToggleSubscribe(e));
         })($);
     </script>
 }
