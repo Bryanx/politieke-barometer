@@ -1,3 +1,6 @@
+/* BAD FIX*/
+
+
 /* ************* HOMEPAGE ************** */
 /* Checking how much you have scrolled. if it is past 60% of the screen or 500px then show the navbar otherwise hide it */
 function checkScroll() {
@@ -95,9 +98,9 @@ let getGraph = function(name, itemId, widgetId) {
         dataType: "json",
         success: data => {
             if (charts[0] == null) {
-                AddChart(name, data[0].WidgetId, data[0].GraphValues.map(g => g.Value), data[0].GraphValues.map(g => g.NumberOfTimes));
+                AddChart(name, data[0].WidgetId, data[0].GraphValues.map(g => g.Value).slice(0, 10), data[0].GraphValues.map(g => g.NumberOfTimes).slice(0, 10));
             } else {
-                AddDataSet(charts[0], name, data[0].GraphValues.map(g => g.NumberOfTimes))
+                AddDataSet(charts[0], name, data[0].GraphValues.map(g => g.NumberOfTimes).slice(0, 10))
             }
         },
         fail: d => console.log(d)
