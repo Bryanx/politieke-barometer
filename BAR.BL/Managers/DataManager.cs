@@ -497,7 +497,7 @@ namespace BAR.BL.Managers
 			};
 
 			//Get actitivies
-			IEnumerable<UserActivity> activities = new SubplatformManager().GetUserActitities(timestamp);
+			IEnumerable<UserActivity> activities = new SubplatformManager().GetUserActivities(timestamp);
 			if (activities == null || activities.Count() == 0) return widgetData;
 
 			//Query data

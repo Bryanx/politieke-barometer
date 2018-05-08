@@ -231,5 +231,13 @@ namespace BAR.DAL
 			ctx.Entry(activity).State = EntityState.Modified;
 			return ctx.SaveChanges();
 		}
+
+		/// <summary>
+		/// Gives back all activities for a specific type
+		/// </summary>
+		public IEnumerable<UserActivity> ReadActivitiesForType(bool isRegisterdType)
+		{
+			return ctx.UserActivities.Where(act => act.IsRegisterActivity == isRegisterdType).AsEnumerable();
+		}
 	}
 }

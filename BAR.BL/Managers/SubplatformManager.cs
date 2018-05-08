@@ -421,7 +421,7 @@ namespace BAR.BL.Managers
 		/// Gives back all the userAcitities for a specific timestamp
 		/// If no timestamp was given then all the activities wil be returned
 		/// </summary>
-		public IEnumerable<UserActivity> GetUserActitities(DateTime? timestamp = null)
+		public IEnumerable<UserActivity> GetUserActivities(bool isRegisterActivity, DateTime? timestamp = null)
 		{
 			InitRepo();
 			IEnumerable<UserActivity> activities = platformRepo.ReadAllActvities();
@@ -432,7 +432,7 @@ namespace BAR.BL.Managers
 		/// <summary>
 		/// Adds a new userActitity and persists that to the database
 		/// </summary>
-		public UserActivity AddUserActitity(double numberOfUsers = 0.0)
+		public UserActivity AddUserActitity(double numberOfUsers = 0.0, bool isRegisterActivity = false)
 		{
 			InitRepo();
 
@@ -440,7 +440,7 @@ namespace BAR.BL.Managers
 			UserActivity activity = new UserActivity()
 			{
 				TimeStamp = DateTime.Now,
-				NumberOfNewTimes = numberOfUsers
+				NumberOfTimes = numberOfUsers
 			};
 
 			//Persist actitivy to database
@@ -453,9 +453,9 @@ namespace BAR.BL.Managers
 		/// Logs a newly registered user for
 		/// later monotoring by the superadmin
 		/// </summary>
-		public void LogActivity()
+		public void LogActivity(bool isRegisterActivity = false)
 		{
-			IEnumerable<UserActivity> actitivties = GetUserActitities(DateTime.Now);
+			IEnumerable<UserActivity> actitivties = GetUserActivities(isRegisterActivity, DateTime.Now);
 			if (actitivties == null) return;
 
 			//If an actitivy in already present then we just
@@ -463,7 +463,7 @@ namespace BAR.BL.Managers
 			if (actitivties.Count() == 1)
 			{
 				UserActivity activityToUpdate = actitivties.First();
-				activityToUpdate.NumberOfNewTimes++;
+				activityToUpdate.NumberOfTimes++;
 				platformRepo.UpdateUserActivity(activityToUpdate);
 				//If an actitivy is not presnet
 				//then a new actitivy shall be created

@@ -46,12 +46,12 @@ namespace BAR.BL.Managers
 		bool Exists(int questionid);
 
 		//Activities
-		IEnumerable<UserActivity> GetUserActitities(DateTime? timestamp = null);
+		IEnumerable<UserActivity> GetUserActivities(bool isRegisterdType, DateTime? timestamp = null);
 
-		UserActivity AddUserActitity(double numberOfUsers = 0.0);
+		UserActivity AddUserActitity(double numberOfUsers = 0.0, bool isRegisterActivity = false);
 
 		UserActivity ChangeUserActivity(UserActivity activity);
 
-		void LogActivity();
+		void LogActivity(bool isRegisterActivity = false);
 	}
 }
