@@ -79,7 +79,10 @@ namespace BAR.UI.MVC.Controllers
 			organisationViewModel.User = User.Identity.IsAuthenticated ? userManager.GetUser(User.Identity.GetUserId()) : null;
 			organisationViewModel.Person = Mapper.Map(item, new ItemDTO());
 			organisationViewModel.Subscribed = subbedItem != null;
-			                             
+
+			//Log visit actitivy
+			new SubplatformManager().LogActivity(ActivityType.VisitActitiy);
+
 			//Assembling the view
 			return View(organisationViewModel);
 		}
