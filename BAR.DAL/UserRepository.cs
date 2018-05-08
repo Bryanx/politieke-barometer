@@ -64,39 +64,6 @@ namespace BAR.DAL
 		}
 
 		/// <summary>
-		/// Returns a user with their activities.
-		/// </summary>
-		public User ReadUserWithActivities(string userId)
-		{
-			return ctx.Users.Include(user => user.Activities)
-							.Where(user => user.Id.Equals(userId))
-							.SingleOrDefault();
-		}
-
-		/// <summary>
-		/// Reads all the activities of all users.
-		/// </summary>
-		public IEnumerable<Activity> ReadAllActivities()
-		{
-			List<Activity> activities = new List<Activity>();
-			IEnumerable<User> userActivities = ctx.Users.Include(user => user.Activities).AsEnumerable();
-
-			foreach (User user in userActivities) activities.AddRange(user.Activities);
-			return activities.AsEnumerable();
-		}
-
-		/// <summary>
-		/// Reads all the activities for a specific user.
-		/// </summary>
-		public IEnumerable<Activity> ReadActivitiesForUser(string userId)
-		{
-			return ctx.Users.Include(user => user.Activities)
-							.Where(user => user.Id.Equals(userId))
-							.SingleOrDefault()
-							.Activities.AsEnumerable();
-		}
-
-		/// <summary>
 		/// Creates an instance of a user in the database.
 		/// Returns -1 if SaveChanges() is delayed by unit of work.
 		/// </summary>
@@ -139,7 +106,7 @@ namespace BAR.DAL
 		/// </summary>
 		public int DeleteUser(string userId)
 		{
-			User userToDelete = ReadUserWithActivities(userId);
+			User userToDelete = ReadUser(userId);
 			if (userToDelete != null) ctx.Users.Remove(userToDelete);
 			return ctx.SaveChanges();
 		}
@@ -159,7 +126,7 @@ namespace BAR.DAL
 		{
 			foreach (string userid in userIds)
 			{
-				User userToDelete = ReadUserWithActivities(userid);
+				User userToDelete = ReadUser(userid);
 				if (userToDelete != null) ctx.Users.Remove(userToDelete);
 			}
 			return ctx.SaveChanges();
