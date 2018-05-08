@@ -27,12 +27,14 @@ namespace BAR.DAL
 		//Create
 		int CreateSubplatform(SubPlatform subPlatform);
 		int CreateQuestion(Question question);
+		int CreateUserActitivy(UserActivity actitivy);
 
 		//Update
 		int UpdateSubplatform(SubPlatform subPlatform);
 		int UpdateSubplatforms(IEnumerable<SubPlatform> subPlatforms);
 		int UpdateQuestion(Question question);
 		int UpdateQuestions(IEnumerable<Question> questions);
+		int UpdateUserActivity(UserActivity activity);
 
 		//Delete
 		int DeleteSubplatform(SubPlatform subPlatform);

@@ -213,5 +213,23 @@ namespace BAR.DAL
 		{
 			return ctx.UserActivities.AsEnumerable();
 		}
+
+		/// <summary>
+		/// Creates a new useractivity in the database
+		/// </summary>
+		public int CreateUserActitivy(UserActivity actitivy)
+		{
+			ctx.UserActivities.Add(actitivy);
+			return ctx.SaveChanges();
+		}
+
+		/// <summary>
+		/// Updates an actitiy in the database
+		/// </summary>
+		public int UpdateUserActivity(UserActivity activity)
+		{
+			ctx.Entry(activity).State = EntityState.Modified;
+			return ctx.SaveChanges();
+		}
 	}
 }

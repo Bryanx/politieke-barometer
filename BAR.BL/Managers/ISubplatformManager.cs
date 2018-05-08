@@ -47,5 +47,11 @@ namespace BAR.BL.Managers
 
 		//Activities
 		IEnumerable<UserActivity> GetUserActitities(DateTime? timestamp = null);
+
+		UserActivity AddUserActitity(double numberOfUsers = 0.0);
+
+		UserActivity ChangeUserActivity(UserActivity activity);
+
+		void LogActivity();
 	}
 }

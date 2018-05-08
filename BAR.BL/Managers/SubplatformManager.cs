@@ -423,9 +423,62 @@ namespace BAR.BL.Managers
 		/// </summary>
 		public IEnumerable<UserActivity> GetUserActitities(DateTime? timestamp = null)
 		{
+			InitRepo();
 			IEnumerable<UserActivity> activities = platformRepo.ReadAllActvities();
 			if (activities == null || activities.Count() == 0 || timestamp == null) return activities.AsEnumerable();
 			else return activities.Where(act => act.TimeStamp >= timestamp).AsEnumerable();
+		}
+
+		/// <summary>
+		/// Adds a new userActitity and persists that to the database
+		/// </summary>
+		public UserActivity AddUserActitity(double numberOfUsers = 0.0)
+		{
+			InitRepo();
+
+			//Create userActitivy
+			UserActivity activity = new UserActivity()
+			{
+				TimeStamp = DateTime.Now,
+				NumberOfNewUsers = numberOfUsers
+			};
+
+			//Persist actitivy to database
+			platformRepo.CreateUserActitivy(activity);
+
+			return activity;
+		}
+
+		/// <summary>
+		/// Logs a newly registered user for
+		/// later monotoring by the superadmin
+		/// </summary>
+		public void LogActivity()
+		{
+			IEnumerable<UserActivity> actitivties = GetUserActitities(DateTime.Now);
+			if (actitivties == null) return;
+
+			//If an actitivy in already present then we just
+			//need to increment the amout of registerd users
+			if (actitivties.Count() == 1)
+			{
+				UserActivity activityToUpdate = actitivties.First();
+				activityToUpdate.NumberOfNewUsers++;
+				platformRepo.UpdateUserActivity(activityToUpdate);
+				//If an actitivy is not presnet
+				//then a new actitivy shall be created
+			}
+			else AddUserActitity();
+		}
+
+		/// <summary>
+		/// Changes a userActivity
+		/// </summary>
+		public UserActivity ChangeUserActivity(UserActivity activity)
+		{
+			InitRepo();
+			platformRepo.UpdateUserActivity(activity);
+			return activity;
 		}
 	}
 }
