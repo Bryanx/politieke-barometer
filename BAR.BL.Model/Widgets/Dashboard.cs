@@ -13,7 +13,6 @@ namespace BAR.BL.Domain.Widgets
 		public int DashboardId { get; set; }
 		public DashboardType DashboardType { get; set; }
 		public User User { get; set; }
-		public ICollection<UserActivity> Activities { get; set; }
 		public ICollection<UserWidget> Widgets { get; set; }
 	}
 }

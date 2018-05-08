@@ -426,7 +426,7 @@ namespace BAR.BL.Managers
 			InitRepo();
 			IEnumerable<UserActivity> activities = platformRepo.ReadAllActvities();
 			if (activities == null || activities.Count() == 0 || timestamp == null) return activities.AsEnumerable();
-			else return activities.Where(act => act.TimeStamp >= timestamp).AsEnumerable();
+			else return activities.Where(act => act.TimeStamp.Day >= timestamp.Value.Day).AsEnumerable();
 		}
 
 		/// <summary>
@@ -468,7 +468,7 @@ namespace BAR.BL.Managers
 				//If an actitivy is not presnet
 				//then a new actitivy shall be created
 			}
-			else AddUserActitity();
+			else AddUserActitity(1);
 		}
 
 		/// <summary>

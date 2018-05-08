@@ -145,7 +145,7 @@ namespace BAR.UI.MVC.Controllers
 					await userManager.AddToRoleAsync(user.Id, "SuperAdmin");
 
 					//Log useractivity
-					//TODO
+					new SubplatformManager().LogActivity();
 
 					//Login
 					await signInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
@@ -388,7 +388,7 @@ namespace BAR.UI.MVC.Controllers
 					await userManager.AddToRoleAsync(user.Id, "SuperAdmin");
 
 					//log activities
-					//TODO
+					new SubplatformManager().LogActivity();
 
 					if (result.Succeeded)
 					{
