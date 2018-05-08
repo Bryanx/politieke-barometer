@@ -5,7 +5,8 @@
 <table id="datatable-infinite" class="table" cellspacing="10px" width="100%">
     <colgroup>
         <col style="width: 40px">
-        <col style="width: 35%">
+        <col style="width: 20%">
+        <col style="width: 15%">
         <col style="width: 15%">
         <col style="width: 12%">
         <col style="width: 12%">
@@ -18,6 +19,9 @@
         </th>
         <th>
             @Resources.Name
+        </th>
+        <th>
+            @Resources.Organisation
         </th>
         <th>
             @Resources.Mentions
@@ -54,6 +58,9 @@
             }
             <td>
                 <a href='@Url.PersonUrl(person.Item.ItemId)'> @person.Item.Name</a>
+            </td>
+            <td>
+                <a href='@Url.OrganisationUrl(person.OrganisationId)'> @person.OrganisationName</a>
             </td>
             <td>
                 @person.Item.NumberOfMentions
