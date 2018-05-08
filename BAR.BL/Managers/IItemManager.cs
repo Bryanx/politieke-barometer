@@ -20,6 +20,7 @@ namespace BAR.BL.Managers
 		Item GetItemWithAllWidgets(int itemId);
 		IEnumerable<Item> GetAllItems();
 		IEnumerable<Person> GetAllPersons();
+		IEnumerable<Person> GetAllPersonsForOrganisation(int organisationId);
 		IEnumerable<Organisation> GetAllOrganisations();
 		IEnumerable<Theme> GetAllThemes();
 		IEnumerable<Item> GetItemsForType(ItemType type);

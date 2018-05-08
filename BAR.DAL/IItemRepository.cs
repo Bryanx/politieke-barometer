@@ -20,6 +20,7 @@ namespace BAR.DAL
     Item ReadOrganisation(string organisationName);
 		IEnumerable<Item> ReadAllItems();
 		IEnumerable<Person> ReadAllPersons();
+		IEnumerable<Person> ReadAllPersonsForOrganisation(int organisationId);
 		IEnumerable<Organisation> ReadAllOraginsations();
 		IEnumerable<Theme> ReadAllThemes();
 		IEnumerable<Item> ReadItemsForType(ItemType type);

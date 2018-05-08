@@ -135,6 +135,17 @@ namespace BAR.DAL
 		}
 
 		/// <summary>
+		/// Gives back a list of all the persons associated with a certain organisation
+		/// </summary>
+		/// <param name="organisationId"></param>
+		/// <returns></returns>
+		public IEnumerable<Person> ReadAllPersonsForOrganisation(int organisationId)
+		{
+			return ReadAllItems().OfType<Person>()
+				.Where(item => item.Organisation.ItemId.Equals(organisationId)).AsEnumerable();
+		}
+
+		/// <summary>
 		/// Gives back a list of all the organisations
 		/// </summary>
 		public IEnumerable<Organisation> ReadAllOraginsations()
@@ -262,6 +273,5 @@ namespace BAR.DAL
           return ctx.Items.Include(org => org.SubPlatform)
             .Where(x => x.Name.Equals(organisationName)).SingleOrDefault();
         }
-
 	}
 }

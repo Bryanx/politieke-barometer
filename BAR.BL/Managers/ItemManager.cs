@@ -263,6 +263,17 @@ namespace BAR.BL.Managers
 		}
 
 		/// <summary>
+		/// Returns all (undeleted) people for an organisation
+		/// </summary>
+		/// <param name="organisationId"></param>
+		/// <returns></returns>
+		public IEnumerable<Person> GetAllPersonsForOrganisation(int organisationId)
+		{
+			InitRepo();
+			return itemRepo.ReadAllPersonsForOrganisation(organisationId).AsEnumerable();
+		}
+
+		/// <summary>
 		/// Returns all (undeleted) organisations of the whole system
 		/// </summary>
 		public IEnumerable<Organisation> GetAllOrganisations()
