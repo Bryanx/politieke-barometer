@@ -1,5 +1,23 @@
-/* BAD FIX*/
+/* COLORS*/
+var COLORS = [
+    'rgb(255, 99, 132)',
+    'rgb(255, 159, 64)',
+    'rgb(255, 205, 86)',
+    'rgb(75, 192, 192)',
+    'rgb(54, 162, 235)',
+    'rgb(153, 102, 255)',
+    'rgb(201, 203, 207)'
+];
 
+var DARKCOLORS = [
+    'rgb(235, 69, 102)',
+    'rgb(235, 129, 34)',
+    'rgb(235, 175, 46)',
+    'rgb(55, 162, 162)',
+    'rgb(34, 132, 205)',
+    'rgb(123, 72, 225)',
+    'rgb(171, 173, 177)'
+];
 
 /* ************* HOMEPAGE ************** */
 /* Checking how much you have scrolled. if it is past 60% of the screen or 500px then show the navbar otherwise hide it */
@@ -68,7 +86,7 @@ let TwitterFeed = function (trendings) {
 
 /* ---------- Trending chart ----------*/
 var charts = [];
-let AddChart = function (name, widgetId, labels, values, borderColor="#E02F2F", color="#E02F2F", darkColor="#E02F2F", chartType="line") {
+let AddChart = function (name, widgetId, labels, values, chartType="line") {
     charts.push(new Chart(document.getElementById("trending-graph"), {
         id: widgetId,
         type: chartType,
@@ -77,9 +95,9 @@ let AddChart = function (name, widgetId, labels, values, borderColor="#E02F2F", 
             datasets: [{
                 data: values,
                 label: name,
-                borderColor: borderColor,
-                backgroundColor: color,
-                hoverBackgroundColor: darkColor,
+                borderColor: COLORS[values[0]],
+                backgroundColor: COLORS[values[0]],
+                hoverBackgroundColor: DARKCOLORS[values[0]],
                 fill: false,
             }],
         },
@@ -109,8 +127,8 @@ let getGraph = function(name, itemId, widgetId) {
 /*--------- Adding data for trending chart ----------*/    
 
 let AddDataSet = function (chart, name, values) {
-    var newColor = "#" + values[0] + values[1] + values[2]; // TEMPORARY FIX
-    var hoverColor = "#" + values[0] + values[1] + values[2];
+    var newColor = COLORS[values[0]]; // TEMPORARY FIX
+    var hoverColor = COLORS[values[0]];
     var newDataset = {
         label: name,
         borderColor: newColor,
