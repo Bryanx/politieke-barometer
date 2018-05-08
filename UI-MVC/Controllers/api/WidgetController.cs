@@ -73,22 +73,17 @@ namespace BAR.UI.MVC.Controllers.api
 		{
 			widgetManager = new WidgetManager();
 			
-			//Get widgets
+			//Get widgets for item
 			IEnumerable<Widget> widgets = widgetManager.GetAllWidgetsWithAllDataForItem(itemId);
 			
-			IEnumerable<WidgetData> widgetDatas = widgets.FirstOrDefault(w => w.WidgetId == widgetId)?.WidgetDatas;
+			//Get keyvalue for the widgetid.
+			string keyValue = widgetManager.GetWidgetWithAllData(widgetId)?.WidgetDatas.FirstOrDefault()?.KeyValue;
 			
-			//If widgetdata's is null, either something went wrong or
-			//the user is trying to add another graph to the given widget
-			if (widgetDatas == null) {
-				string keyValue = widgetManager.GetWidgetWithAllData(widgetId)?.WidgetDatas.FirstOrDefault()?.KeyValue;
-				if (keyValue == null) return StatusCode(HttpStatusCode.Conflict);
-				widgetDatas = widgets.SingleOrDefault(w => w.WidgetDatas.Any(wd => wd.KeyValue == keyValue)).WidgetDatas;
-			}
-			IEnumerable<WidgetDataDTO> widgetDataDtos = Mapper.Map(widgetDatas, new List<WidgetDataDTO>());
-			if (widgetDataDtos == null) return StatusCode(HttpStatusCode.NoContent);
+			if (keyValue == null) return StatusCode(HttpStatusCode.Conflict);
 			
-			return Ok(widgetDataDtos);
+			IEnumerable<WidgetData> widgetDatas = widgets.FirstOrDefault(w => w.WidgetDatas.Any(wd => wd.KeyValue == keyValue)).WidgetDatas;
+			
+			return Ok(Mapper.Map(widgetDatas, new List<WidgetDataDTO>()));
 		}
 		
 		/// <summary>

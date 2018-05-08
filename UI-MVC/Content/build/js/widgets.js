@@ -434,7 +434,8 @@ function loadGraphs(itemId, widget) {
             }
         }));
     };
-    
+
+    //Settings for a piechart
     let AddPieChart = function (widget, chartData, chartType="pie") {
         let labels = chartData[0].GraphValues.map(g => g.Value);
         let values = chartData[0].GraphValues.map(g => g.NumberOfTimes);
@@ -469,10 +470,12 @@ function loadGraphs(itemId, widget) {
         AddChart(widget, labels, values, borderColor, color, darkColor, chartType);
     };
 
+    //Settings for a barchart
     let AddBarChart = function (widget, chartData) {
         AddLineChart(widget, chartData, "bar");
     };
-    
+
+    //Settings for a donutchart
     let AddDoughnutChart = function (widget, chartData) {
         AddPieChart(widget,  chartData, "doughnut");
     };
@@ -492,22 +495,41 @@ function loadGraphs(itemId, widget) {
         }
     };
 
+    //Moves the graph data to the appropriate method.
+    let AddDataSetWithName = function(itemId, chart, title, values) {
+        $.ajax({
+            method: "GET",
+            url: "/api/GetItemWithDetails/" + itemId,
+            success: data => AddDataSet(chart, data.Name + " " + title.toLowerCase(), values)
+        });
+    };
+    
     //Retrieves the graph data from api.
     let ajaxLoadGraphs = function (widget) {
         if (widget.ItemIds != null && widget.ItemIds.length) {
+            itemids = [];
             if (!itemId.length) {
-                itemId = widget.ItemIds[0]
+                itemids.push.apply(itemids, widget.ItemIds);
+            } else {
+                itemids.push(itemId);
             }
-            $.ajax({
-                type: "GET",
-                url: "/api/GetGraphs/" + itemId + "/" + widget.WidgetId,
-                dataType: "json",
-                success: data => {
-                    if (!widget.ItemIds.includes("" + itemId)) {
-                        widget.ItemIds.push(itemId);
+            $.each(itemids, (index, itemId) => {
+                $.ajax({
+                    type: "GET",
+                    url: "/api/GetGraphs/" + itemId + "/" + widget.WidgetId,
+                    dataType: "json",
+                    success: data => {
+                        if (!widget.ItemIds.includes("" + itemId)) {
+                            widget.ItemIds.push(itemId);
+                        }
+                        let chart = charts.find(c => c.config.id == widget.WidgetId);
+                        if (chart == undefined) {
+                            loadGraphHandler(widget, data)
+                        } else {
+                            AddDataSetWithName(itemId, chart, data[0].KeyValue, data[0].GraphValues.map(g => g.NumberOfTimes));
+                        }
                     }
-                    loadGraphHandler(widget, data)
-                }
+                });
             });
         } else {
             displayNoGraphData(widget.WidgetId);
@@ -533,6 +555,7 @@ function loadGraphs(itemId, widget) {
     $(() => ajaxLoadGraphs(widget));
 
     //Compare search
+    console.log(searchlist);
     $('.compareSearch').devbridgeAutocomplete({
         width: 400,
         lookup: searchlist,
