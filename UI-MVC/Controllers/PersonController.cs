@@ -59,6 +59,9 @@ namespace BAR.UI.MVC.Controllers
 
 			IEnumerable<Subscription> subs = subManager.GetSubscriptionsWithItemsForUser(User.Identity.GetUserId());
 			personViewModels.Persons.Where(p => subs.Any(s => s.SubscribedItem.ItemId == p.Item.ItemId)).ForEach(i => i.Subscribed = true);
+
+			//By default person pages are ordered by trending percentage.
+			personViewModels.Persons = personViewModels.Persons.OrderByDescending(p => p.Item.TrendingPercentage).ToList();
 			
 			//Assembling the view
 			return View("Index", personViewModels);
