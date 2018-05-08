@@ -56,9 +56,10 @@ ul.msg_list li.noAlertsAvailable {
   border-top: 1px solid #D9DEE4;
   color: var(--font-color);
   text-align: center;
-  padding: 50px 0 65px 0px;
+  padding: 60px 30px 75px 30px;
   margin-bottom: -5px;
-  background: var(--white); }
+  background: var(--white);
+  overflow: hidden; }
   ul.msg_list li.noAlertsAvailable i {
     font-size: 70px;
     padding-bottom: 10px;
@@ -82,11 +83,13 @@ div.alertClose {
     color: #d9dee4; }
     div.alertClose > a > i:hover {
       color: var(--font-color); }
+div .msg_list {
+  min-width: 400px; }
 
 .navbar-nav .open .dropdown-menu.msg_list {
   width: 300px;
   max-height: 400px;
-  overflow-y: scroll;
+  overflow-y: auto;
   overflow-x: hidden; }
   .navbar-nav .open .dropdown-menu.msg_list .alertRead {
     background-color: var(--white);
@@ -94,7 +97,7 @@ div.alertClose {
     color: var(--font-color); }
 
 #alertDropdown {
-  padding: 17px 17px 16px; }
+  padding: 12px 17px 16px; }
 
 .info-number .badge {
   font-size: 10px;

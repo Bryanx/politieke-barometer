@@ -11,8 +11,8 @@ Error: Undefined variable: "$font-default".
 21:   font-size: 15px;
 22:   font-weight: 400;
 23:   line-height: 1.471;
-24: }
-25: 
+24:   margin-top: 50px;
+25: }
 
 Backtrace:
 general.scss:20
@@ -67,4 +67,4 @@ C:/Ruby24-x64/bin/scss:23:in `<main>'
 body:before {
   white-space: pre;
   font-family: monospace;
-  content: "Error: Undefined variable: \"$font-default\".\A         on line 20 of general.scss\A \A 15: }\A 16: \A 17: body {\A 18:   color: var(--font-color);\A 19:   background: var(--bg-color);\A 20:   font-family: $font-default;\A 21:   font-size: 15px;\A 22:   font-weight: 400;\A 23:   line-height: 1.471;\A 24: }\A 25: "; }
+  content: "Error: Undefined variable: \"$font-default\".\A         on line 20 of general.scss\A \A 15: }\A 16: \A 17: body {\A 18:   color: var(--font-color);\A 19:   background: var(--bg-color);\A 20:   font-family: $font-default;\A 21:   font-size: 15px;\A 22:   font-weight: 400;\A 23:   line-height: 1.471;\A 24:   margin-top: 50px;\A 25: }"; }

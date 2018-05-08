@@ -23,6 +23,62 @@ namespace BAR.DAL.EF
 			GenerateSources(ctx);
 			GenerateProperties(ctx);
 			GenerateAreas(ctx);
+			//GenerateThemes(ctx);
+		}
+
+		/// <summary>
+		/// Generates test data themes
+		/// </summary>
+		/// <param name="ctx"></param>
+		private void GenerateThemes(BarometerDbContext ctx)
+		{
+			Theme t1 = new Theme()
+			{
+				Name = "Onderwijs",
+				CreationDate = DateTime.Now,
+				Baseline = 0,
+				TrendingPercentage = 0,
+				SubPlatform = ctx.SubPlatforms.Where(sp => sp.Name.Equals("politiek")).SingleOrDefault(),
+				NumberOfFollowers = 0,
+				NumberOfMentions = 0,
+				LastUpdated = DateTime.Now,
+				LastUpdatedInfo = DateTime.Now,
+				ItemType = ItemType.Theme
+			};
+
+			Theme t2 = new Theme()
+			{
+				Name = "Immigranten",
+				CreationDate = DateTime.Now,
+				Baseline = 0,
+				TrendingPercentage = 0,
+				SubPlatform = ctx.SubPlatforms.Where(sp => sp.Name.Equals("politiek")).SingleOrDefault(),
+				NumberOfFollowers = 0,
+				NumberOfMentions = 0,
+				LastUpdated = DateTime.Now,
+				LastUpdatedInfo = DateTime.Now,
+				ItemType = ItemType.Theme
+			};
+
+			Theme t3 = new Theme()
+			{
+				Name = "Pensioenen",
+				CreationDate = DateTime.Now,
+				Baseline = 0,
+				TrendingPercentage = 0,
+				SubPlatform = ctx.SubPlatforms.Where(sp => sp.Name.Equals("politiek")).SingleOrDefault(),
+				NumberOfFollowers = 0,
+				NumberOfMentions = 0,
+				LastUpdated = DateTime.Now,
+				LastUpdatedInfo = DateTime.Now,
+				ItemType = ItemType.Theme
+			};
+
+			ctx.Items.Add(t1);
+			ctx.Items.Add(t2);
+			ctx.Items.Add(t3);
+			ctx.SaveChanges();
+
 		}
 
 		/// <summary>
@@ -205,6 +261,10 @@ namespace BAR.DAL.EF
       {
         Name = "Retweet"
       };
+			Property theme = new Property
+			{
+				Name = "Theme"
+			};
 
       propertiesList.Add(gender);
       propertiesList.Add(age);
@@ -220,8 +280,10 @@ namespace BAR.DAL.EF
       propertiesList.Add(geo);
       propertiesList.Add(postId);
       propertiesList.Add(retweet);
+			propertiesList.Add(theme);
 
-      ctx.Properties.AddRange(propertiesList);
+
+			ctx.Properties.AddRange(propertiesList);
       ctx.SaveChanges();
     }
 

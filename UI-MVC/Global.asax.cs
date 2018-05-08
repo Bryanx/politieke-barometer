@@ -64,7 +64,9 @@ namespace BAR.UI.MVC
         cfg.CreateMap<Organisation, ItemViewModels.OrganisationViewModel>()
           .ForMember(p => p.Site, opt => opt.MapFrom(src => src.Site))
           .ForMember(p => p.SocialMediaNames, opt => opt.MapFrom(src => src.SocialMediaUrls));
-        cfg.CreateMap<WidgetData, WidgetDataDTO>()
+				cfg.CreateMap<Theme, ItemViewModels.ThemeViewModel>()
+					.ForMember(p => p.Keywords, opt => opt.MapFrom(src => src.Keywords));
+				cfg.CreateMap<WidgetData, WidgetDataDTO>()
           .ForMember(p => p.WidgetDataId, opt => opt.MapFrom(src => src.WidgetDataId))
           .ForMember(p => p.GraphValues, opt => opt.MapFrom(src => src.GraphValues))
           .ForMember(p => p.KeyValue, opt => opt.MapFrom(src => src.KeyValue))

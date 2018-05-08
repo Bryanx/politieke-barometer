@@ -121,7 +121,7 @@ namespace BAR.BL.Managers
 			if (startDate == null) startDate = DateTime.Now;
 			else if (startDate < timestamp) return widgetData;
 
-
+			
 			while (timestamp <= startDate)
 			{
 				//Each grapvalue represents a total number of mentions mapped
@@ -234,6 +234,7 @@ namespace BAR.BL.Managers
 			InitRepo();
 			IItemManager itemManager = new ItemManager(uowManager);
 			IEnumerable<Item> items = itemManager.GetAllPersons();
+			List<Theme> themes = itemManager.GetAllThemes().ToList();
 			IEnumerable<Property> properties = dataRepo.ReadAllProperties();
 			IEnumerable<Source> sources = dataRepo.ReadAllSources();
 			dynamic deserializedJson = JsonConvert.DeserializeObject(json);
@@ -374,6 +375,22 @@ namespace BAR.BL.Managers
 					information.Items.Add(items.Where(x => x.Name.Equals(name)).SingleOrDefault());
 				}
 
+				for (int j = 0; j < deserializedJson[i].words.Count; j++)
+				{
+					string wordName = deserializedJson[i].words[j];
+
+					foreach (Theme theme in themes)
+					{
+						foreach (Keyword keyword in theme.Keywords.ToList())
+						{
+							if(keyword.Name.ToLower().Equals(wordName.ToLower()))
+							{
+								information.Items.Add(themes.Where(x => x.Name.Equals(theme.Name)).SingleOrDefault());
+							}
+						}
+					}
+				}
+
 				//Add other information
 				information.Source = sources.Where(x => x.Name.Equals("Twitter")).SingleOrDefault();
 				string stringDate = Convert.ToString(deserializedJson[i].date);
@@ -386,138 +403,138 @@ namespace BAR.BL.Managers
 			uowManager = null;
 		}
 
-		/// <summary>
-		/// Gets last succesfull audit.
-		/// </summary>
-		public SynchronizeAudit GetLastAudit()
-		{
-			InitRepo();
-			return dataRepo.ReadLastAudit();
-		}
+    /// <summary>
+    /// Gets last succesfull audit.
+    /// </summary>
+	public SynchronizeAudit GetLastAudit()
+    {
+      InitRepo();
+      return dataRepo.ReadLastAudit();
+    }
 
-		/// <summary>
-		/// Adds an audit with boolean false.
-		/// </summary>
-		public SynchronizeAudit AddAudit(DateTime timestamp, bool succes)
-		{
-			InitRepo();
-			SynchronizeAudit synchronizeAudit = new SynchronizeAudit()
-			{
-				TimeStamp = timestamp,
-				Succes = succes
-			};
-			dataRepo.CreateAudit(synchronizeAudit);
-			return synchronizeAudit;
-		}
+    /// <summary>
+    /// Adds an audit with boolean false.
+    /// </summary>
+	public SynchronizeAudit AddAudit(DateTime timestamp, bool succes)
+    {
+      InitRepo();
+      SynchronizeAudit synchronizeAudit = new SynchronizeAudit()
+      {
+        TimeStamp = timestamp,
+        Succes = succes
+      };
+      dataRepo.CreateAudit(synchronizeAudit);
+      return synchronizeAudit;
+    }
 
-		/// <summary>
-		/// Gets audit with given id.
-		/// </summary>
-		public SynchronizeAudit GetAudit(int synchronizeAuditId)
-		{
-			return dataRepo.ReadAudit(synchronizeAuditId);
-		}
+    /// <summary>
+    /// Gets audit with given id.
+    /// </summary>
+    public SynchronizeAudit GetAudit(int synchronizeAuditId)
+    {
+      return dataRepo.ReadAudit(synchronizeAuditId);
+    }
 
-		/// <summary>
-		/// Changes status of audit to true.
-		/// </summary>
-		public SynchronizeAudit ChangeAudit(int synchronizeAuditId)
-		{
-			InitRepo();
-			SynchronizeAudit synchronizeAudit = GetAudit(synchronizeAuditId);
-			synchronizeAudit.Succes = true;
-			dataRepo.UpdateAudit(synchronizeAudit);
-			return synchronizeAudit;
-		}
+    /// <summary>
+    /// Changes status of audit to true.
+    /// </summary>
+    public SynchronizeAudit ChangeAudit(int synchronizeAuditId)
+    {
+      InitRepo();
+      SynchronizeAudit synchronizeAudit = GetAudit(synchronizeAuditId);
+      synchronizeAudit.Succes = true;
+      dataRepo.UpdateAudit(synchronizeAudit);
+      return synchronizeAudit;
+    }
 
-		/// <summary>
-		/// Checks if json is empty.
-		/// </summary>
-		public bool IsJsonEmpty(string json)
-		{
-			dynamic deserializedJson = JsonConvert.DeserializeObject(json);
-			int informationCount = deserializedJson.Count;
+    /// <summary>
+    /// Checks if json is empty.
+    /// </summary>
+    public bool IsJsonEmpty(string json)
+    {
+      dynamic deserializedJson = JsonConvert.DeserializeObject(json);
+      int informationCount = deserializedJson.Count;
 
-			if (informationCount == 0)
-			{
-				return true;
-			}
-			return false;
-		}
+      if (informationCount == 0)
+      {
+        return true;
+      }
+      return false;
+    }
 
-		/// <summary>
-		/// Gets all sources.
-		/// </summary>
-		public IEnumerable<Source> GetAllSources()
-		{
-			InitRepo();
-			return dataRepo.ReadAllSources();
-		}
+    /// <summary>
+    /// Gets all sources.
+    /// </summary>
+    public IEnumerable<Source> GetAllSources()
+    {
+      InitRepo();
+      return dataRepo.ReadAllSources();
+    }
 
-		public Source AddSource(string name, string site)
-		{
-			InitRepo();
-			Source source = new Source()
-			{
-				Name = name,
-				Site = site
-			};
-			dataRepo.CreateSource(source);
-			return source;
-		}
+    public Source AddSource(string name, string site)
+    {
+      InitRepo();
+      Source source = new Source()
+      {
+        Name = name,
+        Site = site
+      };
+      dataRepo.CreateSource(source);
+      return source;
+    }
 
-		public void RemoveSource(string sourceId)
-		{
-			InitRepo();
-			Source source = dataRepo.ReadSource(Convert.ToInt32(sourceId));
-			dataRepo.DeleteSource(source);
-		}
+    public void RemoveSource(string sourceId)
+    {
+      InitRepo();
+      Source source = dataRepo.ReadSource(Convert.ToInt32(sourceId));
+      dataRepo.DeleteSource(source);
+    }
 
-		/// <summary>
-		/// Returns a list of all the informations objects that are
-		/// related to a specific item.
-		/// </summary>
-		public IEnumerable<Information> GetInformationsWithAllInfoForItem(int itemId)
-		{
-			InitRepo();
-			return dataRepo.ReadInformationsWithAllInfoForItem(itemId);
-		}
-
-		/// <summary>
-		/// Gives back all the widgetdata for monitoring the
-		/// registerd users per day
-		/// </summary>
-		public WidgetData GetUserActivitiesData(ActivityType type, DateTime? timestamp = null)
-		{
-			InitRepo();
-
-			//Create widgetdata
-			WidgetData widgetData = new WidgetData()
-			{
-				GraphValues = new List<GraphValue>(),
-				KeyValue = "User Activities"
-			};
-
-			//Get actitivies
-			IEnumerable<UserActivity> activities = new SubplatformManager().GetUserActivities(type, timestamp);
-			if (activities == null || activities.Count() == 0) return widgetData;
-
-			//Query data
-			DateTime startdate = DateTime.Now;
-			while (timestamp >= startdate)
-			{
-				GraphValue graphValue = new GraphValue()
-				{
-					NumberOfTimes = activities.Where(act => act.TimeStamp.Day == startdate.Day).Count(),
-					Value = startdate.ToString("dd-MM")
-				};
-				startdate = startdate.AddDays(-1);
-			}
-
-			//Reverse data
-			widgetData.GraphValues.Reverse();
-			return widgetData;
-		}
+        /// <summary>
+        /// Returns a list of all the informations objects that are
+         /// related to a specific item.
+         /// </summary>
+         public IEnumerable<Information> GetInformationsWithAllInfoForItem(int itemId)
+         {
+             InitRepo();
+             return dataRepo.ReadInformationsWithAllInfoForItem(itemId);
+         }
+     
+         /// <summary>
+         /// Gives back all the widgetdata for monitoring the
+         /// registerd users per day
+         /// </summary>
+         public WidgetData GetUserActivitiesData(ActivityType type, DateTime? timestamp = null)
+         {
+             InitRepo();
+     
+             //Create widgetdata
+             WidgetData widgetData = new WidgetData()
+             {
+                 GraphValues = new List<GraphValue>(),
+                 KeyValue = "User Activities"
+             };
+     
+             //Get actitivies
+             IEnumerable<UserActivity> activities = new SubplatformManager().GetUserActivities(type, timestamp);
+             if (activities == null || activities.Count() == 0) return widgetData;
+     
+             //Query data
+             DateTime startdate = DateTime.Now;
+             while (timestamp >= startdate)
+             {
+                 GraphValue graphValue = new GraphValue()
+                 {
+                     NumberOfTimes = activities.Where(act => act.TimeStamp.Day == startdate.Day).Count(),
+                     Value = startdate.ToString("dd-MM")
+                 };
+                 startdate = startdate.AddDays(-1);
+             }
+     
+             //Reverse data
+             widgetData.GraphValues.Reverse();
+             return widgetData;
+         }
 	}
 }
 

@@ -20,7 +20,7 @@
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
     <Use64BitIISExpress />
-    <IISExpressSSLPort>44303</IISExpressSSLPort>
+    <IISExpressSSLPort>44317</IISExpressSSLPort>
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
@@ -241,6 +241,7 @@
     <Compile Include="Controllers\OverviewController.cs" />
     <Compile Include="Controllers\PersonController.cs" />
     <Compile Include="Controllers\SuperAdminController.cs" />
+    <Compile Include="Controllers\ThemeController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -564,6 +565,10 @@
     <Content Include="Views\Shared\_LayoutSubplatformOverview.cshtml" />
     <Content Include="Views\Shared\Partials\_SourceTable.cshtml" />
     <Content Include="Views\Shared\Partials\_SubPlatformTable.cshtml" />
+    <Content Include="Views\Theme\Index.cshtml" />
+    <Content Include="Views\Theme\Details.cshtml" />
+    <Content Include="Views\Shared\Partials\_ThemeTable.cshtml" />
+    <Content Include="Views\Shared\Partials\_CreateItemModal.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BAR.BL.Model\Domain.csproj">
@@ -618,7 +623,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>5000</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>https://localhost:44303/</IISUrl>
+          <IISUrl>https://localhost:44317/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

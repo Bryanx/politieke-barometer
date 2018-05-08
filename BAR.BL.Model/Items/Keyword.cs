@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace BAR.BL.Domain.Items
 {
-  public class Category
+  public class Keyword
   {
-    public int CategoryId { get; set; }
+    public int KeywordId { get; set; }
     public string Name { get; set; }
   }
 }
