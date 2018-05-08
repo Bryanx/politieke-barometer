@@ -113,16 +113,14 @@ namespace BAR.UI.MVC
         
             static void timer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
             {
-                DateTime MyScheduledRunTime = DateTime.Now;
+                DateTime MyScheduledRunTime = DateTime.Parse("00:00:00");
                 DateTime CurrentSystemTime = DateTime.Now;
                 DateTime LatestRunTime = MyScheduledRunTime.AddMilliseconds(TimerIntervalInMilliseconds);
                 if ((CurrentSystemTime.CompareTo(MyScheduledRunTime) >= 0) && (CurrentSystemTime.CompareTo(LatestRunTime) <= 0))
                 {
-                    Console.WriteLine("sync");
                     DataApiController controller = new DataApiController();
                     controller.Synchronize();
                 }
-            }
-            
+            }            
     }
 }
