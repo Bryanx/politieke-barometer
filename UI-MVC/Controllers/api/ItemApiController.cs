@@ -89,5 +89,27 @@ namespace BAR.UI.MVC.Controllers.api
 			itemManager.ChangePerson(Int32.Parse(itemId), model.DateOfBirth, model.Gender, model.Position, model.District);						
 			return StatusCode(HttpStatusCode.NoContent);
 		}
+
+		/// <summary>
+		/// Creates a person item
+		/// </summary>
+		[HttpPost]
+		[SubPlatformCheckAPI]
+		[Route("api/Admin/CreatePerson")]
+		public IHttpActionResult CreatePerson()
+		{
+			//Get the subplatformID from the SubPlatformCheckAPI attribute
+			object _customObject = null;
+			int suplatformID = -1;
+
+			if (Request.Properties.TryGetValue("SubPlatformID", out _customObject))
+			{
+				suplatformID = (int)_customObject;
+			}
+
+			itemManager = new ItemManager();
+			Person p = (Person)itemManager.AddItem(ItemType.Person, "Maarten Jorens", subplatformId: suplatformID);
+			return StatusCode(HttpStatusCode.NoContent);
+		}
 	}
 }
