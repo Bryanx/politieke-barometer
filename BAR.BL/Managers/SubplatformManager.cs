@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using BAR.BL.Domain;
 using BAR.DAL;
 using BAR.BL.Domain.Core;
+using BAR.BL.Domain.Users;
 
 namespace BAR.BL.Managers
 {
@@ -414,6 +415,17 @@ namespace BAR.BL.Managers
 		{
 			if (uowManager == null) platformRepo = new SubplatformRepository();
 			else platformRepo = new SubplatformRepository(uowManager.UnitOfWork);
+		}
+
+		/// <summary>
+		/// Gives back all the userAcitities for a specific timestamp
+		/// If no timestamp was given then all the activities wil be returned
+		/// </summary>
+		public IEnumerable<UserActivity> GetUserActitities(DateTime? timestamp = null)
+		{
+			IEnumerable<UserActivity> activities = platformRepo.ReadAllActvities();
+			if (activities == null || activities.Count() == 0 || timestamp == null) return activities.AsEnumerable();
+			else return activities.Where(act => act.TimeStamp >= timestamp).AsEnumerable();
 		}
 	}
 }

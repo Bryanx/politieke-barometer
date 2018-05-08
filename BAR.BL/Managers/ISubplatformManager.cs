@@ -1,5 +1,6 @@
 ﻿using BAR.BL.Domain;
 using BAR.BL.Domain.Core;
+using BAR.BL.Domain.Users;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -43,5 +44,8 @@ namespace BAR.BL.Managers
 		void RemoveQuestion(int questionId);
 
 		bool Exists(int questionid);
+
+		//Activities
+		IEnumerable<UserActivity> GetUserActitities(DateTime? timestamp = null);
 	}
 }
