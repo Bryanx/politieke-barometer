@@ -5,6 +5,7 @@ using System.Data.Entity;
 using BAR.BL.Domain;
 using BAR.DAL.EF;
 using BAR.BL.Domain.Core;
+using BAR.BL.Domain.Users;
 
 namespace BAR.DAL
 {
@@ -203,6 +204,14 @@ namespace BAR.DAL
 													  .Where(platform => platform.SubPlatformId == platformId)
 													  .SingleOrDefault();
 			return subplatFrom.Customization;
+		}
+
+		/// <summary>
+		/// Returnes all the activities
+		/// </summary>
+		public IEnumerable<UserActivity> ReadAllActvities()
+		{
+			return ctx.UserActivities.AsEnumerable();
 		}
 	}
 }

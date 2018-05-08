@@ -1,5 +1,6 @@
 ﻿using BAR.BL.Domain;
 using BAR.BL.Domain.Core;
+using BAR.BL.Domain.Users;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,6 +22,7 @@ namespace BAR.DAL
 		IEnumerable<Question> ReadAllQuestions();
 		IEnumerable<Question> ReadQuestions(int platformId);
 		IEnumerable<Question> ReadQuestionsForType(QuestionType type);
+		IEnumerable<UserActivity> ReadAllActvities();
 	
 		//Create
 		int CreateSubplatform(SubPlatform subPlatform);

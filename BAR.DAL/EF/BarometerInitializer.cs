@@ -64,7 +64,8 @@ namespace BAR.DAL.EF
 			{
 				Name = "k3",
 				CreationDate = DateTime.Now,
-				Customization = AddDefaultCustomization()
+				Customization = AddDefaultCustomization(),
+				Questions = new List<Question>(),			
 			};
 			ctx.SubPlatforms.Add(subPlatform1);
 
@@ -72,7 +73,8 @@ namespace BAR.DAL.EF
 			{
 				Name = "politiek",
 				CreationDate = DateTime.Now,
-				Customization = AddDefaultCustomization()
+				Customization = AddDefaultCustomization(),
+				Questions = new List<Question>(),
 			};
 			ctx.SubPlatforms.Add(subPlatform2);
 
