@@ -21,7 +21,7 @@ namespace BAR.BL.Domain.Users
 		public Gender Gender { get; set; }
 		public DateTime? DateOfBirth { get; set; }
 		public Area Area { get; set; }
-		public ICollection<Activity> Activities { get; set; }
+		public ICollection<UserActivity> Activities { get; set; }
 		public bool Deleted { get; set; }
     public byte[] ProfilePicture { get; set; }
 

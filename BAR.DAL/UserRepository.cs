@@ -76,9 +76,9 @@ namespace BAR.DAL
 		/// <summary>
 		/// Reads all the activities of all users.
 		/// </summary>
-		public IEnumerable<Activity> ReadAllActivities()
+		public IEnumerable<UserActivity> ReadAllActivities()
 		{
-			List<Activity> activities = new List<Activity>();
+			List<UserActivity> activities = new List<UserActivity>();
 			IEnumerable<User> userActivities = ctx.Users.Include(user => user.Activities).AsEnumerable();
 
 			foreach (User user in userActivities) activities.AddRange(user.Activities);
@@ -88,7 +88,7 @@ namespace BAR.DAL
 		/// <summary>
 		/// Reads all the activities for a specific user.
 		/// </summary>
-		public IEnumerable<Activity> ReadActivitiesForUser(string userId)
+		public IEnumerable<UserActivity> ReadActivitiesForUser(string userId)
 		{
 			return ctx.Users.Include(user => user.Activities)
 							.Where(user => user.Id.Equals(userId))

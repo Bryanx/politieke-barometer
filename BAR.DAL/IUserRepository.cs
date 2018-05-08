@@ -16,8 +16,8 @@ namespace BAR.DAL
 		IEnumerable<User> ReadAllUsers();
 		IEnumerable<User> ReadAllUsersForRole(string roleId);
 		IEnumerable<User> ReadAllUsersForArea(int areaId);
-		IEnumerable<Activity> ReadAllActivities();
-		IEnumerable<Activity> ReadActivitiesForUser(string userId);
+		IEnumerable<UserActivity> ReadAllActivities();
+		IEnumerable<UserActivity> ReadActivitiesForUser(string userId);
 		Area ReadArea(int areaId);
 		IEnumerable<Area> ReadAllAreas();
 		IdentityRole ReadRole(string userId);
