@@ -456,14 +456,14 @@ namespace BAR.BL.Managers
 		/// </summary>
 		public void LogActivity(ActivityType type)
 		{
-			IEnumerable<UserActivity> actitivties = GetUserActivities(type, DateTime.Now);
-			if (actitivties == null) return;
+			IEnumerable<UserActivity> activities = GetUserActivities(type, DateTime.Now);
+			if (activities == null) return;
 
 			//If an actitivy in already present then we just
 			//need to increment the amout of registerd users
-			if (actitivties.Count() == 1)
+			if (activities.Count() == 1)
 			{
-				UserActivity activityToUpdate = actitivties.First();
+				UserActivity activityToUpdate = activities.First();
 				activityToUpdate.NumberOfTimes++;
 				platformRepo.UpdateUserActivity(activityToUpdate);
 				//If an actitivy is not presnet

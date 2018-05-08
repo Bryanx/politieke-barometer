@@ -493,7 +493,7 @@ namespace BAR.BL.Managers
 			WidgetData widgetData = new WidgetData()
 			{
 				GraphValues = new List<GraphValue>(),
-				KeyValue = "User Actitivities"
+				KeyValue = "User Activities"
 			};
 
 			//Get actitivies
