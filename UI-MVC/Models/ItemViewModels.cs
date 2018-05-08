@@ -23,6 +23,9 @@ namespace BAR.UI.MVC.Models {
             public int OrganisationId { get; set; }
             public string OrganisationName { get; set; }
             public List<SocialMediaName> SocialMediaNames { get; set; }
+            public int RankNumberOfMentions  { get; set; }
+            public int RankTrendingPercentage  { get; set; }
+            
         }
         
         public class PersonViewModels : BaseViewModel {

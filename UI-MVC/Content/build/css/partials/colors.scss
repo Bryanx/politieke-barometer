@@ -32,7 +32,7 @@
 }
 
 .gold {
-  color: gold;
+  color: goldenrod;
 }
 
 .silver {
@@ -79,6 +79,24 @@
 .bg-green {
   background: var(--primary-color) !important;
   border: 1px solid var(--primary-color) !important;
+  color: var(--white);
+}
+
+.bg-gold {
+  background: goldenrod !important;
+  border: 1px solid goldenrod !important;
+  color: var(--white);
+}
+
+.bg-silver {
+  background: silver !important;
+  border: 1px solid silver !important;
+  color: white;
+}
+
+.bg-bronze {
+  background: #a5644f !important;
+  border: 1px solid #a5644f !important;
   color: var(--white);
 }
 

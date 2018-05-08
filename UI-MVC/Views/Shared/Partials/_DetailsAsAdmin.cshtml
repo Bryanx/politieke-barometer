@@ -51,6 +51,14 @@
     </div>
     <div class="col-md-3 col-sm-3 col-xs-12">
         <h4>
+            <strong>@Resources.NumberOfMentions</strong>
+        </h4>
+        <h1>
+            <strong class="totalNumberOfMentions">@Model.Item.NumberOfMentions</strong>
+        </h1>
+    </div>
+    <div class="col-md-3 col-sm-3 col-xs-12">
+        <h4>
             <strong>@Resources.SocialMedia</strong>
         </h4>
         @foreach (var item in Model.SocialMediaNames) {
@@ -65,13 +73,5 @@
                 ;
             }
         }
-    </div>
-    <div class="col-md-3 col-sm-3 col-xs-12">
-        <h4>
-            <strong>@Resources.NumberOfMentions</strong>
-        </h4>
-        <h1>
-            <strong class="totalNumberOfMentions">@Model.Item.NumberOfMentions</strong>
-        </h1>
     </div>
 </div>

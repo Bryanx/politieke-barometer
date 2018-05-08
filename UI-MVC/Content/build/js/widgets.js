@@ -313,7 +313,6 @@ function loadGraphs(itemId, widget) {
             url: "/api/GetGraphs/" + itemId + "/" + widgetId,
             dataType: "json",
             success: data => {
-                console.log(data);
                 if (data !== undefined) {
                     if (!widget.ItemIds.includes("" + itemId)) {
                         widget.ItemIds.push(itemId);
@@ -577,7 +576,6 @@ function loadWidgets(url, itemId) {
         grid.movable(".grid-stack-item", false);
         grid.resizable(".grid-stack-item", false);
         $.each(data, (index, value) => {
-            console.log(value);
            $("#related-items").append(widgetElements.createPeopleItem(value.ItemId, value.Name, value.NumberOfMentions)); 
         });
     };
@@ -685,7 +683,6 @@ function init() {
     //Updates given widgets on resize
     updateWidgets = function (widgets) {
         let serializedItems = [];
-        console.log(widgets);
         $.each(widgets, function (index, widget) {
             serializedItems.push({
                 WidgetId: widget.id ? widget.id : widget.WidgetId,

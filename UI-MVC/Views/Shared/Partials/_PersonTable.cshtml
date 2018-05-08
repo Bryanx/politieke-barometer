@@ -2,7 +2,6 @@
 @using BAR.UI.MVC.Helpers
 @model BAR.UI.MVC.Models.ItemViewModels.PersonViewModels
 
-@{ var TopNumberOfMentions = @Model.Persons.OrderByDescending(p => p.Item.NumberOfMentions);}
 @{ var TopTrending = @Model.Persons.OrderByDescending(p => p.Item.TrendingPercentage);}
 
 <table id="datatable-infinite" class="table" cellspacing="10px" width="100%">
@@ -60,25 +59,21 @@
                 <img src='/Content/build/images/picture.jpg' class="img-circle person-image"/>
             }
             <td>
-                <a href='@Url.PersonUrl(person.Item.ItemId)'> @person.Item.Name</a>
+                <a href='@Url.PersonUrl(person.Item.ItemId)'>@person.Item.Name</a>
             </td>
             <td>
                 <a href='@Url.OrganisationUrl(person.OrganisationId)'> @person.OrganisationName</a>
             </td>
             <td>
                 @person.Item.NumberOfMentions
-                @if (Model.PageTitle != Resources.Dashboard) {
-                    if (TopNumberOfMentions.First().Item.NumberOfMentions == @person.Item.NumberOfMentions) {
-                        <div class="fa fa-trophy gold"></div>
-                    }
-
-                    if (TopNumberOfMentions.ElementAt(1).Item.NumberOfMentions == @person.Item.NumberOfMentions) {
-                        <div class="fa fa-trophy silver"></div>
-                    }
-
-                    if (TopNumberOfMentions.ElementAt(2).Item.NumberOfMentions == @person.Item.NumberOfMentions) {
-                        <div class="fa fa-trophy bronze"></div>
-                    }
+                @if (person.RankNumberOfMentions == 1) {
+                    <i class="fa fa-trophy gold"></i>
+                }
+                @if (person.RankNumberOfMentions == 2) {
+                    <i class="fa fa-trophy silver"></i>
+                }
+                @if (person.RankNumberOfMentions == 3) {
+                    <i class="fa fa-trophy bronze"></i>
                 }
             </td>
             <td class="green">
@@ -90,19 +85,15 @@
                 <i class="glyphicon glyphicon-arrow-down"></i>
             </td>
             <td>
-                @Html.DisplayFor(modelItem => person.Item.TrendingPercentage) % 
-                @if (Model.PageTitle != Resources.Dashboard) {
-                    if (TopTrending.First().Item.TrendingPercentage == @person.Item.TrendingPercentage) {
-                         <div class="fa fa-trophy gold"></div>
-                     }
-
-                    if (TopTrending.ElementAt(1).Item.TrendingPercentage == @person.Item.TrendingPercentage) {
-                         <div class="fa fa-trophy silver"></div>
-                     }
-
-                    if (TopTrending.ElementAt(2).Item.TrendingPercentage == @person.Item.TrendingPercentage) {
-                         <div class="fa fa-trophy bronze"></div>
-                     }
+                @Html.DisplayFor(modelItem => person.Item.TrendingPercentage)%
+                @if (person.RankTrendingPercentage == 1) {
+                    <i class="fa fa-trophy gold"></i>
+                }
+                @if (person.RankTrendingPercentage == 2) {
+                    <i class="fa fa-trophy silver"></i>
+                }
+                @if (person.RankTrendingPercentage == 3) {
+                    <i class="fa fa-trophy bronze"></i>
                 }
             </td>
             @if (User.Identity.IsAuthenticated) {
