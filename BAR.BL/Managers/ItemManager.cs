@@ -290,12 +290,9 @@ namespace BAR.BL.Managers
 		/// THIS METHOD USES UNIT OF WORK
 		/// </summary>
 		public Item AddItem(ItemType itemType, string name, string description = "", string function = "",
-			string district = null, string level = null, string site = null, Gender gender = Gender.OTHER, string position = null, DateTime? dateOfBirth = null, int subplatformId = -1)
+			string district = null, string level = null, string site = null, Gender gender = Gender.OTHER, string position = null, DateTime? dateOfBirth = null)
 		{
-			uowManager = new UnitOfWorkManager();
 			InitRepo();
-
-			ISubplatformManager subplatformManager = new SubplatformManager(uowManager);
 
 			//the switch statement will determine if we need to make a
 			//Organisation, person or theme.
@@ -347,14 +344,8 @@ namespace BAR.BL.Managers
 			item.Deleted = false;
 			item.Informations = new List<Information>();
 			item.ItemWidgets = new List<Widget>();
-			if(subplatformId != -1)
-			{
-				item.SubPlatform = subplatformManager.GetSubPlatform(subplatformId);
-			}
-			itemRepo.CreateItem(item);
 
-			uowManager.Save();
-			uowManager = null;
+			itemRepo.CreateItem(item);
 
 			return item;
 		}

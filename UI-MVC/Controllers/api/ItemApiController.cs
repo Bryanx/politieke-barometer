@@ -7,6 +7,7 @@ using BAR.BL.Domain.Items;
 using BAR.BL.Managers;
 using BAR.UI.MVC.Attributes;
 using BAR.UI.MVC.Models;
+using BAR.BL.Domain.Core;
 
 namespace BAR.UI.MVC.Controllers.api
 {
@@ -16,7 +17,8 @@ namespace BAR.UI.MVC.Controllers.api
 	public class ItemApiController : ApiController
 	{
 		private IItemManager itemManager;
-		
+		private ISubplatformManager subplatformManager;
+
 		/// <summary>
 		/// Returns all items for search suggestions.
 		/// </summary>
@@ -108,7 +110,12 @@ namespace BAR.UI.MVC.Controllers.api
 			}
 
 			itemManager = new ItemManager();
-			Person p = (Person)itemManager.AddItem(ItemType.Person, "Maarten Jorens",  subplatformId: suplatformID);
+			subplatformManager = new SubplatformManager();
+			SubPlatform subplatform = subplatformManager.GetSubPlatform(suplatformID);
+
+			Person p = (Person)itemManager.AddItem(ItemType.Person, "Maarten Jorens");
+			p.SubPlatform = subplatform;
+
 			return StatusCode(HttpStatusCode.NoContent);
 		}
 	}
