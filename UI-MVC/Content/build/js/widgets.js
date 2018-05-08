@@ -494,15 +494,6 @@ function loadGraphs(itemId, widget) {
             displayNoGraphData(widgetId);
         }
     };
-
-    //Moves the graph data to the appropriate method.
-    let AddDataSetWithName = function(itemId, chart, title, values) {
-        $.ajax({
-            method: "GET",
-            url: "/api/GetItemWithDetails/" + itemId,
-            success: data => AddDataSet(chart, data.Name + " " + title.toLowerCase(), values)
-        });
-    };
     
     //Retrieves the graph data from api.
     let ajaxLoadGraphs = function (widget) {
@@ -526,7 +517,7 @@ function loadGraphs(itemId, widget) {
                         if (chart == undefined) {
                             loadGraphHandler(widget, data)
                         } else {
-                            AddDataSetWithName(itemId, chart, data[0].KeyValue, data[0].GraphValues.map(g => g.NumberOfTimes));
+                            AddDataSet(chart, data[0].ItemName + " " + data[0].KeyValue, data[0].GraphValues.map(g => g.NumberOfTimes));
                         }
                     }
                 });

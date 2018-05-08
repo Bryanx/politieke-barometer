@@ -72,18 +72,23 @@ namespace BAR.UI.MVC.Controllers.api
 		public IHttpActionResult GetGraphs(int itemId, int widgetId)
 		{
 			widgetManager = new WidgetManager();
+			itemManager = new ItemManager();
 			
 			//Get widgets for item
 			IEnumerable<Widget> widgets = widgetManager.GetAllWidgetsWithAllDataForItem(itemId);
-			
+
 			//Get keyvalue for the widgetid.
 			string keyValue = widgetManager.GetWidgetWithAllData(widgetId)?.WidgetDatas.FirstOrDefault()?.KeyValue;
 			
 			if (keyValue == null) return StatusCode(HttpStatusCode.Conflict);
 			
 			IEnumerable<WidgetData> widgetDatas = widgets.FirstOrDefault(w => w.WidgetDatas.Any(wd => wd.KeyValue == keyValue)).WidgetDatas;
+			IEnumerable<WidgetDataDTO> widgetDataDtos = Mapper.Map(widgetDatas, new List<WidgetDataDTO>());
 			
-			return Ok(Mapper.Map(widgetDatas, new List<WidgetDataDTO>()));
+			//Get item name
+			widgetDataDtos.First().ItemName = itemManager.GetItem(itemId).Name;
+			
+			return Ok(widgetDataDtos);
 		}
 		
 		/// <summary>
