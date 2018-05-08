@@ -554,20 +554,29 @@ function loadGraphs(itemId, widget) {
     //Loads the graph data.
     $(() => ajaxLoadGraphs(widget));
 
-    //Compare search
-    console.log(searchlist);
-    $('.compareSearch').devbridgeAutocomplete({
-        width: 400,
-        lookup: searchlist,
-        triggerSelectOnValidInput: false,
-        maxHeight: 200,
-        formatResult: function (suggestion) {
-            return "<div class='compareSuggestion'>" + suggestion.value + "</div>";
-        },
-        onSelect: function (suggestion) {
-            LoadGraphDataSet(suggestion, $(this))
+    //Compare search.
+    function addAutocomplete(){
+        if (searchlist.length > 0){
+            $('.compareSearch').devbridgeAutocomplete({
+                width: 400,
+                lookup: searchlist,
+                triggerSelectOnValidInput: false,
+                maxHeight: 200,
+                formatResult: function (suggestion) {
+                    return "<div class='compareSuggestion'>" + suggestion.value + "</div>";
+                },
+                onSelect: function (suggestion) {
+                    LoadGraphDataSet(suggestion, $(this))
+                }
+            });
+        } else {
+            //Keep trying to get the searchlist 
+            setTimeout(addAutocomplete, 100);
         }
-    });
+    }
+    
+    addAutocomplete();
+    
     $('.compareSearch').keyup(()=> {
         $($('.compareSuggestion')[0]).parent().parent().css("margin-left", "0");
     });
