@@ -123,7 +123,6 @@ function loadAlerts() {
         //There are alerts available
         if (data != undefined) {
             var alertData = data;
-            console.log(alertData);
             InsertAlerts(data);
             $('#alertMenu').append(
                 "<li id=\"seeAllAlerts\"><div class=\"text-center\"><a><strong>"+Resources.ShowAllAlerts+"</strong></a></div></li>");
