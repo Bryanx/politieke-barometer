@@ -292,7 +292,6 @@ namespace BAR.BL.Managers
 		public Item AddItem(ItemType itemType, string name, string description = "", string function = "",
 			string district = null, string level = null, string site = null, Gender gender = Gender.OTHER, string position = null, DateTime? dateOfBirth = null, int subplatformId = -1)
 		{
-
 			uowManager = new UnitOfWorkManager();
 			InitRepo();
 
@@ -348,8 +347,10 @@ namespace BAR.BL.Managers
 			item.Deleted = false;
 			item.Informations = new List<Information>();
 			item.ItemWidgets = new List<Widget>();
-			item.SubPlatform = subplatformManager.GetSubPlatform(subplatformId);
-
+			if(subplatformId != -1)
+			{
+				item.SubPlatform = subplatformManager.GetSubPlatform(subplatformId);
+			}
 			itemRepo.CreateItem(item);
 
 			uowManager.Save();

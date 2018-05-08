@@ -108,7 +108,7 @@ namespace BAR.UI.MVC.Controllers.api
 			}
 
 			itemManager = new ItemManager();
-			Person p = (Person)itemManager.AddItem(ItemType.Person, "Maarten Jorens", subplatformId: suplatformID);
+			Person p = (Person)itemManager.AddItem(ItemType.Person, "Maarten Jorens",  subplatformId: suplatformID);
 			return StatusCode(HttpStatusCode.NoContent);
 		}
 	}
