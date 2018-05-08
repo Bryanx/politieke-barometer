@@ -11,6 +11,6 @@ namespace BAR.BL.Domain.Users
 		public int UserActivityId { get; set; }
 		public DateTime TimeStamp { get; set; }
 		public double NumberOfTimes { get; set; }
-		public bool IsRegisterActivity { get; set; }
+		public ActivityType ActivityType { get; set; }
 	}
 }

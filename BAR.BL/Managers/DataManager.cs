@@ -485,7 +485,7 @@ namespace BAR.BL.Managers
 		/// Gives back all the widgetdata for monitoring the
 		/// registerd users per day
 		/// </summary>
-		public WidgetData GetUserActivitiesData(bool isRegisterdType, DateTime? timestamp = null)
+		public WidgetData GetUserActivitiesData(ActivityType type, DateTime? timestamp = null)
 		{
 			InitRepo();
 
@@ -497,7 +497,7 @@ namespace BAR.BL.Managers
 			};
 
 			//Get actitivies
-			IEnumerable<UserActivity> activities = new SubplatformManager().GetUserActivities(isRegisterdType, timestamp);
+			IEnumerable<UserActivity> activities = new SubplatformManager().GetUserActivities(type, timestamp);
 			if (activities == null || activities.Count() == 0) return widgetData;
 
 			//Query data

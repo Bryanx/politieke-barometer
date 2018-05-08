@@ -421,10 +421,10 @@ namespace BAR.BL.Managers
 		/// Gives back all the userAcitities for a specific timestamp
 		/// If no timestamp was given then all the activities wil be returned
 		/// </summary>
-		public IEnumerable<UserActivity> GetUserActivities(bool isRegisterActivity, DateTime? timestamp = null)
+		public IEnumerable<UserActivity> GetUserActivities(ActivityType type, DateTime? timestamp = null)
 		{
 			InitRepo();
-			IEnumerable<UserActivity> activities = platformRepo.ReadActivitiesForType(isRegisterActivity);
+			IEnumerable<UserActivity> activities = platformRepo.ReadActivitiesForType(type);
 			if (activities == null || activities.Count() == 0 || timestamp == null) return activities.AsEnumerable();
 			else return activities.Where(act => act.TimeStamp.Day >= timestamp.Value.Day).AsEnumerable();
 		}
@@ -432,7 +432,7 @@ namespace BAR.BL.Managers
 		/// <summary>
 		/// Adds a new userActitity and persists that to the database
 		/// </summary>
-		public UserActivity AddUserActitity(bool isRegisterActivity, double numberOfUsers = 0.0)
+		public UserActivity AddUserActitity(ActivityType type, double numberOfUsers = 0.0)
 		{
 			InitRepo();
 
@@ -441,7 +441,7 @@ namespace BAR.BL.Managers
 			{
 				TimeStamp = DateTime.Now,
 				NumberOfTimes = numberOfUsers,
-				IsRegisterActivity = isRegisterActivity
+				ActivityType = type
 			};
 
 			//Persist actitivy to database
@@ -454,9 +454,9 @@ namespace BAR.BL.Managers
 		/// Logs a newly registered user for
 		/// later monotoring by the superadmin
 		/// </summary>
-		public void LogActivity(bool isRegisterActivity = false)
+		public void LogActivity(ActivityType type)
 		{
-			IEnumerable<UserActivity> actitivties = GetUserActivities(isRegisterActivity, DateTime.Now);
+			IEnumerable<UserActivity> actitivties = GetUserActivities(type, DateTime.Now);
 			if (actitivties == null) return;
 
 			//If an actitivy in already present then we just
@@ -469,7 +469,7 @@ namespace BAR.BL.Managers
 				//If an actitivy is not presnet
 				//then a new actitivy shall be created
 			}
-			else AddUserActitity(isRegisterActivity, 1);
+			else AddUserActitity(type, 1);
 		}
 
 		/// <summary>

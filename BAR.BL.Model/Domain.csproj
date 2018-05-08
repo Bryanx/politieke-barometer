@@ -71,6 +71,7 @@
     <Compile Include="Items\SocialMediaName.cs" />
     <Compile Include="Items\Theme.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Users\ActivityType.cs" />
     <Compile Include="Users\UserActivity.cs" />
     <Compile Include="Users\Alert.cs" />
     <Compile Include="Users\AlertType.cs" />

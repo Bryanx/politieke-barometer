@@ -235,9 +235,9 @@ namespace BAR.DAL
 		/// <summary>
 		/// Gives back all activities for a specific type
 		/// </summary>
-		public IEnumerable<UserActivity> ReadActivitiesForType(bool isRegisterdType)
+		public IEnumerable<UserActivity> ReadActivitiesForType(ActivityType type)
 		{
-			return ctx.UserActivities.Where(act => act.IsRegisterActivity == isRegisterdType).AsEnumerable();
+			return ctx.UserActivities.Where(act => act.ActivityType == type).AsEnumerable();
 		}
 	}
 }

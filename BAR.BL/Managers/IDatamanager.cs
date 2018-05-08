@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BAR.BL.Domain.Users;
 
 namespace BAR.BL.Managers
 {
@@ -21,7 +22,7 @@ namespace BAR.BL.Managers
 
 		WidgetData GetNumberOfMentionsForItem(int itemId, int widgetId, string dateFormat, DateTime? startDate = null);
 		WidgetData GetPropvaluesForWidget(int itemid, int widgetId, string proptag, DateTime? startDate = null);
-		WidgetData GetUserActivitiesData(bool isRegisterdType, DateTime? timestamp = null);
+		WidgetData GetUserActivitiesData(ActivityType type, DateTime? timestamp = null);
 
 		//Items
 		bool SynchronizeData(string json);

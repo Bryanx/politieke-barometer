@@ -23,7 +23,7 @@ namespace BAR.DAL
 		IEnumerable<Question> ReadQuestions(int platformId);
 		IEnumerable<Question> ReadQuestionsForType(QuestionType type);
 		IEnumerable<UserActivity> ReadAllActvities();
-		IEnumerable<UserActivity> ReadActivitiesForType(bool isRegisterdType);
+		IEnumerable<UserActivity> ReadActivitiesForType(ActivityType type);
 	
 		//Create
 		int CreateSubplatform(SubPlatform subPlatform);
