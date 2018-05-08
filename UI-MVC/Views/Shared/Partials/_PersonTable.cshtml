@@ -1,6 +1,10 @@
 ﻿@using BAR.BL.Domain.Items
 @using BAR.UI.MVC.Helpers
+@using Microsoft.Ajax.Utilities
 @model BAR.UI.MVC.Models.ItemViewModels.PersonViewModels
+
+@{ var TopNumberOfMentions = @Model.Persons.OrderByDescending(p => p.Item.NumberOfMentions);}
+@{ var TopTrending = @Model.Persons.OrderByDescending(p => p.Item.TrendingPercentage);}
 
 <table id="datatable-infinite" class="table" cellspacing="10px" width="100%">
     <colgroup>
@@ -63,7 +67,18 @@
                 <a href='@Url.OrganisationUrl(person.OrganisationId)'> @person.OrganisationName</a>
             </td>
             <td>
-                @person.Item.NumberOfMentions
+                @person.Item.NumberOfMentions 
+                @if (TopNumberOfMentions.First().Item.NumberOfMentions == @person.Item.NumberOfMentions) {
+                    <div class="fa fa-trophy gold"></div>
+                }
+                
+                @if (TopNumberOfMentions.ElementAt(1).Item.NumberOfMentions == @person.Item.NumberOfMentions) {
+                    <div class="fa fa-trophy silver"></div>
+                }
+                
+                @if (TopNumberOfMentions.ElementAt(2).Item.NumberOfMentions == @person.Item.NumberOfMentions) {
+                    <div class="fa fa-trophy bronze"></div>
+                }
             </td>
             <td class="green">
                 @person.Item.SentimentPositive%
@@ -74,7 +89,19 @@
                 <i class="glyphicon glyphicon-arrow-down"></i>
             </td>
             <td>
-                @Html.DisplayFor(modelItem => person.Item.TrendingPercentage) %
+                @Html.DisplayFor(modelItem => person.Item.TrendingPercentage) % 
+                
+                @if (TopTrending.First().Item.TrendingPercentage == @person.Item.TrendingPercentage) {
+                    <div class="fa fa-trophy gold"></div>
+                }
+                
+                @if (TopTrending.ElementAt(1).Item.TrendingPercentage == @person.Item.TrendingPercentage) {
+                    <div class="fa fa-trophy silver"></div>
+                }
+                
+                @if (TopTrending.ElementAt(2).Item.TrendingPercentage == @person.Item.TrendingPercentage) {
+                    <div class="fa fa-trophy bronze"></div>
+                }
             </td>
             @if (User.Identity.IsAuthenticated) {
                 <td>

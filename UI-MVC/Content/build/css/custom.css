@@ -934,6 +934,15 @@ table.tile_info {
 .red {
   color: #E74C3C; }
 
+.gold {
+  color: gold; }
+
+.silver {
+  color: silver; }
+
+.bronze {
+  color: #a5644f; }
+
 .dark {
   color: var(--secondary-color); }
 
