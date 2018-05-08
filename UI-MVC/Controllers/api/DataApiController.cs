@@ -29,7 +29,7 @@ namespace BAR.UI.MVC.Controllers.api
 				//content = "{}";
 
 				//Test with fewer data 
-				content = "{\"since\":\"2018-02-27 00:00\"}";
+				content = "{\"since\":\"2018-04-25 00:00\"}";
 			}
 			else
 			{

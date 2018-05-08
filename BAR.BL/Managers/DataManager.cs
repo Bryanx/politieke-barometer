@@ -134,6 +134,8 @@ namespace BAR.BL.Managers
 				startDate = startDate.Value.AddDays(-1);
 			}
 
+			//Reverse order of graphvalues
+			widgetData.GraphValues.Reverse();
 			return widgetData;
 		}
 
