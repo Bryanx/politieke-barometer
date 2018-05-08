@@ -300,6 +300,12 @@
   <data name="ImportContent" xml:space="preserve">
     <value>Content importeren</value>
   </data>
+  <data name="InNumberOfMentions" xml:space="preserve">
+    <value>In aantal vermeldingen.</value>
+  </data>
+  <data name="InTrendingPercentage" xml:space="preserve">
+    <value>In trending percentage.</value>
+  </data>
   <data name="In_Time" xml:space="preserve">
     <value>Over</value>
   </data>
