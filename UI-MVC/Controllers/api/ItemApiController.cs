@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using AutoMapper;
 using BAR.BL.Domain.Items;
 using BAR.BL.Managers;
 using BAR.UI.MVC.Attributes;
@@ -88,6 +90,35 @@ namespace BAR.UI.MVC.Controllers.api
 			itemManager = new ItemManager();
 			itemManager.ChangePerson(Int32.Parse(itemId), model.DateOfBirth, model.Gender, model.Position, model.District);						
 			return StatusCode(HttpStatusCode.NoContent);
+		}
+		
+		/// <summary>
+		/// Retrieves more people from the same organisation.
+		/// </summary>
+		[HttpGet]
+		[Route("api/GetMorePeopleFromOrg/{itemId}")]
+		public IHttpActionResult GetMorePeopleFromOrg(string itemId)
+		{
+			itemManager = new ItemManager();
+			int orgId = itemManager.GetPersonWithDetails(Int32.Parse(itemId)).Organisation.ItemId;
+			List<Person> items = itemManager.GetAllPersons()
+				.Where(p => p.Organisation.ItemId == orgId)
+				.OrderByDescending(p => p.NumberOfMentions)
+				.Take(6).ToList();
+			return Ok(Mapper.Map(items, new List<ItemDTO>()));
+		}
+		
+		/// <summary>
+		/// Retrieves more people from the same organisation.
+		/// </summary>
+		[HttpGet]
+		[Route("api/GetPeopleFromOrg/{itemId}")]
+		public IHttpActionResult GetPeopleFromOrg(string itemId)
+		{
+			itemManager = new ItemManager();
+			int orgId = Int32.Parse(itemId);
+			List<Person> items = itemManager.GetAllPersons().Where(p => p.Organisation.ItemId == orgId).ToList();
+			return Ok(Mapper.Map(items, new List<ItemDTO>()));
 		}
 	}
 }

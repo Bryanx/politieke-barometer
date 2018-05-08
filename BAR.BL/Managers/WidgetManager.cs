@@ -143,9 +143,9 @@ namespace BAR.BL.Managers
 		}
 
 		/// <summary>
-		/// Updates the position of the widget.
+		/// Updates the details of the widget.
 		/// </summary>
-		public Widget ChangeWidgetPos(int widgetId, int rowNbr, int colNbr, int rowspan = 1, int colspan = 1)
+		public Widget ChangeWidgetDetails(int widgetId, int rowNbr, int colNbr, int rowspan = 1, int colspan = 1, GraphType graphType = (GraphType) 0)
 		{
 			InitRepo();
 
@@ -158,6 +158,7 @@ namespace BAR.BL.Managers
 			widgetToUpdate.ColumnNumber = colNbr;
 			widgetToUpdate.RowSpan = rowspan;
 			widgetToUpdate.ColumnSpan = colspan;
+			if (graphType != 0) widgetToUpdate.GraphType = graphType;
 
 			//update database
 			widgetRepo.UpdateWidget(widgetToUpdate);

@@ -135,15 +135,22 @@ namespace BAR.UI.MVC.Controllers.api
 		/// </summary>
 		/// <param name="widgets"></param>
 		/// <returns>If all goes well, 204 No Content is returned</returns>
-		public IHttpActionResult Put([FromBody] UserWidgetDTO[] widgets)
+		[System.Web.Http.HttpPost]
+		[System.Web.Http.Route("api/UpdateWidget/")]
+		public IHttpActionResult UpdateWidget([FromBody] UserWidgetDTO[] widgets)
 		{
 			widgetManager = new WidgetManager();
 			
 			foreach (UserWidgetDTO widget in widgets) {
 				if (widget == null) return BadRequest("No widget given");
 				if (widgetManager.GetWidget(widget.WidgetId) == null) return NotFound();
-				widgetManager.ChangeWidgetPos(widget.WidgetId, widget.RowNumber, widget.ColumnNumber, widget.RowSpan,
-					widget.ColumnSpan);
+				if (widget.GraphType != 0) {
+					widgetManager.ChangeWidgetDetails(widget.WidgetId, widget.RowNumber, widget.ColumnNumber, 
+						widget.RowSpan,
+						widget.ColumnSpan, widget.GraphType);
+				} else {
+					widgetManager.ChangeWidgetDetails(widget.WidgetId, widget.RowNumber, widget.ColumnNumber, widget.RowSpan, widget.ColumnSpan);
+				}
 			}
 			return StatusCode(HttpStatusCode.NoContent);
 		}

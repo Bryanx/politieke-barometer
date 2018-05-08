@@ -248,12 +248,12 @@ namespace BAR.BL.Managers
 		}
 
 		/// <summary>
-		/// Returns all (undeleted) people of the whole system
+		/// Returns all people of the whole system
 		/// </summary>
 		public IEnumerable<Person> GetAllPersons()
 		{
 			InitRepo();
-			return itemRepo.ReadAllPersons().AsEnumerable();
+			return itemRepo.ReadAllPersonsWithPlatforms();
 		}
 
 		/// <summary>
@@ -397,7 +397,7 @@ namespace BAR.BL.Managers
 		/// Returns all people for specific subplatform
 		/// </summary>
 		/// <returns></returns>
-		public IEnumerable<Item> GetAllPersonsForSubplatform(int subPlatformID)
+		public IEnumerable<Person> GetAllPersonsForSubplatform(int subPlatformID)
 		{
 			return GetAllPersons()
 				.Where(item => item.Deleted == false)

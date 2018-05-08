@@ -21,7 +21,7 @@ namespace BAR.DAL
 		Organisation ReadOrganisationWithDetails(int itemId);	
     	Organisation ReadOrganisation(string organisationName);
 		IEnumerable<Organisation> ReadAllOraginsations();
-		IEnumerable<Person> ReadAllPersons();	
+		IEnumerable<Person> ReadAllPersonsWithPlatforms();	
 		IEnumerable<Theme> ReadAllThemes();
 		
 		//Create

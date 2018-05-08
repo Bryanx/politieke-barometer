@@ -71,6 +71,25 @@ function createUserWidget(id, title) {
         "                                <i id=" + id + " class='fa fa-close'></i>" +
         "                            </a>" +
         "                       </li>" +
+        "                   <li class='dropdown'>" +
+        "                       <a href='#' class='dropdown-toggle' data-toggle='dropdown' role='button' aria-expanded='false'><i class='fa fa-gear'></i></a>" +
+        "                       <ul class='dropdown-menu' role='menu'>" +
+        "                           <li><a data-widget-id=" + id + " class='chartShowLines'>Lines between points</a></li>" +
+        "                           <li><a data-widget-id=" + id + " class='chartShowXGrid'>X grid lines</a></li>" +
+        "                           <li><a data-widget-id=" + id + " class='chartShowYGrid'>Y grid lines</a></li>" +
+        "                           <li><a data-widget-id=" + id + " class='chartShowLogScale'>Logarithmic y-axes</a></li>" +
+        "                           <li><a data-widget-id=" + id + " class='chartShowLegend'>Legend</a></li>" +
+        "                       </ul>" +
+        "                   </li>" +
+        "                   <li class='dropdown'>" +
+        "                       <a href='#' class='dropdown-toggle' data-toggle='dropdown' role='button' aria-expanded='false'><i class='fa fa-bar-chart'></i></a>" +
+        "                       <ul class='dropdown-menu' role='menu'>" +
+        "                           <li><a data-widget-id=" + id + " class='makeLineChart'>Line chart</a></li>" +
+        "                           <li><a data-widget-id=" + id + " class='makeBarChart'>Bar chart</a></li>" +
+        "                           <li><a data-widget-id=" + id + " class='makePieChart'>Pie chart</a></li>" +
+        "                           <li><a data-widget-id=" + id + " class='makeDonutChart'>Donut chart</a></li>" +
+        "                       </ul>" +
+        "                   </li>" +
         "                    </ul>" +
         "                    <div class='clearfix'></div>" +
         "                </div>" +
@@ -90,12 +109,20 @@ function createItemWidget(id, title) {
         "                   <li class='dropdown'>" +
         "                       <a href='#' class='dropdown-toggle' data-toggle='dropdown' role='button' aria-expanded='false'><i class='fa fa-gear'></i></a>" +
         "                       <ul class='dropdown-menu' role='menu'>" +
-        "                           <li><a data-widget-id=" + id + " class='toggleChartType'>Bar chart</a></li>" +
         "                           <li><a data-widget-id=" + id + " class='chartShowLines'>Lines between points</a></li>" +
         "                           <li><a data-widget-id=" + id + " class='chartShowXGrid'>X grid lines</a></li>" +
         "                           <li><a data-widget-id=" + id + " class='chartShowYGrid'>Y grid lines</a></li>" +
         "                           <li><a data-widget-id=" + id + " class='chartShowLogScale'>Logarithmic y-axes</a></li>" +
         "                           <li><a data-widget-id=" + id + " class='chartShowLegend'>Legend</a></li>" +
+        "                       </ul>" +
+        "                   </li>" +
+        "                   <li class='dropdown'>" +
+        "                       <a href='#' class='dropdown-toggle' data-toggle='dropdown' role='button' aria-expanded='false'><i class='fa fa-bar-chart'></i></a>" +
+        "                       <ul class='dropdown-menu' role='menu'>" +
+        "                           <li><a data-widget-id=" + id + " class='makeLineChart'>Line chart</a></li>" +
+        "                           <li><a data-widget-id=" + id + " class='makeBarChart'>Bar chart</a></li>" +
+        "                           <li><a data-widget-id=" + id + " class='makePieChart'>Pie chart</a></li>" +
+        "                           <li><a data-widget-id=" + id + " class='makeDonutChart'>Donut chart</a></li>" +
         "                       </ul>" +
         "                   </li>" +
         "                   <li class='dropdown'>" +
@@ -141,6 +168,29 @@ function createTwitterWidget(title) {
         "        </div>";
 }
 
+//related items widget
+function createPeopleWidget(title) {
+    return "<div class='chart-container'>" +
+        "            <div class='x_panel grid-stack-item-content bg-white no-scrollbar'>" +
+        "                <div class='x_title'>" +
+        "                    <h2 class='graphTitle'>" + title + "</h2>" +
+        "                    <div class='clearfix'></div>" +
+        "                </div>" +
+        "                <div class='scroll' style='position: relative; height: 88%;'> " +
+        "                    <div id='related-items'></div>"+
+        "               </div>" +
+        "            </div>" +
+        "        </div>";
+}
+
+function createPeopleItem(itemId, name, mentions) {
+    return "<div class='org-member col-xs-6 col-sm-4 col-md-2'>" +
+        "<img src='/Content/build/images/picture.jpg'>" +
+        "<strong><a href='/Person/Details/" + itemId + "'> " + name + "</a></strong>" +
+        "<div>" + Resources.Mentions + ": " + mentions + "</div>" +
+        "</div>";
+}
+
 var gridselector = $("#grid");
 gridselector.gridstack({
     resizable: {
@@ -153,8 +203,22 @@ function noWidgetsAvailable() {
     $(".no-widgets").show();
 }
 
+let convertChartTypeToGraphType = function(chartType) {
+    switch (chartType) {
+        case "line": return 1;
+        case "bar": return 2;
+        case "pie": return 3;
+        case "donut": return 4;
+        case "doughnut": return 4;
+    }
+};
+
 var charts = [];
 var widgets = [];
+var itempage = false;
+var orgpage = false;
+var dashboardpage = false;
+var updateWidgets;
 
 function loadGraphs(itemId, widget) {
 
@@ -268,15 +332,12 @@ function loadGraphs(itemId, widget) {
     };
     
     //Toggles the charttype: bar/line chart
-    let ToggleChartType = function (e) {
+    let ChangeChartType = function (e, type) {
         let widgetId = $(e.target).data("widget-id");
         let chart = charts.find(c => c.config.id == widgetId);
+
         var ctx = document.getElementById("graph"+widgetId).getContext("2d");
         var temp = jQuery.extend(true, {}, chart.config);
-
-        //change chart type
-        let type = chart.config.type;
-        type = type === "line" ? "bar" : "line";
 
         //Remove chart from charts and delete it.
         charts.splice(charts.findIndex(c => c.config.id == widgetId), 1);
@@ -284,11 +345,10 @@ function loadGraphs(itemId, widget) {
 
         temp.type = type; // The new chart type
         charts.push(new Chart(ctx, temp));
-
+        
         //change text on button
-        let text = $(".toggleChartType").html();
-        text = text === "Bar chart" ? "Line chart" : "Bar chart";
-        $(".toggleChartType").html(text);
+        widgets.filter(w => w.WidgetId === widgetId)[0].GraphType = convertChartTypeToGraphType(type);
+        if (dashboardpage) updateWidgets(widgets);
     };
 
     //Toggles lines between points on a line graph.
@@ -353,7 +413,6 @@ function loadGraphs(itemId, widget) {
                     label: widget.Title,
                     borderColor: borderColor,
                     backgroundColor: color,
-                    hoverBackgroundColor: darkColor,
                     fill: false,
                 }],
             },
@@ -404,7 +463,7 @@ function loadGraphs(itemId, widget) {
     };
 
     let AddBarChart = function (widget, chartData) {
-        AddLineChart(widget,  chartData, "bar");
+        AddLineChart(widget, chartData, "bar");
     };
     
     let AddDoughnutChart = function (widget, chartData) {
@@ -449,7 +508,10 @@ function loadGraphs(itemId, widget) {
     };
     
     //Graph handlers
-    $(document).on("click", ".toggleChartType", (e) => ToggleChartType(e));
+    $(document).on("click", ".makeLineChart", (e) => ChangeChartType(e, "line"));
+    $(document).on("click", ".makeBarChart", (e) => ChangeChartType(e, "bar"));
+    $(document).on("click", ".makePieChart", (e) => ChangeChartType(e, "pie"));
+    $(document).on("click", ".makeDonutChart", (e) => ChangeChartType(e, "doughnut"));
     $(document).on("click", ".chartShowLines", (e) => ShowLines(e));
     $(document).on("click", ".chartShowXGrid", (e) => ShowXGrid(e));
     $(document).on("click", ".chartShowYGrid", (e) => ShowYGrid(e));
@@ -514,10 +576,32 @@ function loadWidgets(url, itemId) {
             success: data => loadSocialWidget(data)
         });
     };
+
+    //Loads a MorePeopleFromOrg widget
+    let loadPeopleWidget = function (data, title, widgetHeight) {
+        grid.addWidget(createPeopleWidget(title), 1, 1, 12, widgetHeight, true, 4, 12, 4, 12, 1);
+        grid.movable(".grid-stack-item", false);
+        grid.resizable(".grid-stack-item", false);
+        $.each(data, (index, value) => {
+            console.log(value);
+           $("#related-items").append(createPeopleItem(value.ItemId, value.Name, value.NumberOfMentions)); 
+        });
+    };
+    
+    //Loads more people from the same organisation
+    let loadPeopleFromOrg = function (itemId, url, title, widgetHeight) {
+        $.ajax({
+            method: "GET",
+            url: url + itemId,
+            success: data => loadPeopleWidget(data, title, widgetHeight)
+        });
+    };
     
     //Puts the widgets on the grid.
     let loadGrid = function (data, itemId) {
-        var itempage = false;
+        itempage = false;
+        orgpage = $(".organisation-page").length;
+        dashboardpage = $(".dashboard-page").length;
         if (data != null && data.length) {
             $.each(data, (index, widget) => {
                 //UserWidget
@@ -541,7 +625,9 @@ function loadWidgets(url, itemId) {
         } else {
             noWidgetsAvailable();
         }
-        if (itempage) loadItemForSocialWidget(itemId);
+        if (itempage && !orgpage) loadItemForSocialWidget(itemId);
+        if (orgpage) loadPeopleFromOrg(itemId,"/api/GetPeopleFromOrg/", "Members", 6);
+        if (itempage) loadPeopleFromOrg(itemId,"/api/GetMorePeopleFromOrg/", "People from the same organisation", 4);
     };
     
     //Loads the widgets via api call.
@@ -601,25 +687,27 @@ function init() {
             success: () => showSaveMessage()
         }).fail(() => showErrorMessage());
     };
-
+    
     //Updates given widgets on resize
-    let updateWidgets = function (items) {
+    updateWidgets = function (widgets) {
         let serializedItems = [];
-        $.each(items, function (index, item) {
+        console.log(widgets);
+        $.each(widgets, function (index, widget) {
             serializedItems.push({
-                WidgetId: item.id,
+                WidgetId: widget.id ? widget.id : widget.WidgetId,
                 Title: "widget", //unused title
-                RowNumber: item.x,
-                ColumnNumber: item.y,
-                RowSpan: item.width,
-                ColumnSpan: item.height,
+                RowNumber: widget.x ? widget.x : widget.RowNumber,
+                ColumnNumber: widget.y ? widget.y : widget.ColumnNumber,
+                RowSpan: widget.width ? widget.width : widget.RowSpan,
+                ColumnSpan: widget.height ? widget.height : widget.ColumnSpan,
                 WidgetType: 0,
-                DashboardId: 0
+                DashboardId: 0,
+                graphType: widget.GraphType ? widget.GraphType : 0
             });
         });
         $.ajax({
-            type: "PUT",
-            url: "/api/Widget/",
+            type: "POST",
+            url: "/api/UpdateWidget/",
             data: JSON.stringify(serializedItems),
             dataType: "application/json",
             contentType: "application/json",
@@ -658,9 +746,9 @@ function init() {
     $('#btnAddNodebox').click(this.btnAddNodebox);
 
     //persist widget state if changed. (only for dashboard widgets)
-    if ($("." + Resources.Dashboard).length) { 
-        $(".grid-stack").on("change", (event, items) => updateWidgets(items));
-    }
+        $(".grid-stack").on("change", (event, items) => {
+            if (dashboardpage) updateWidgets(items);
+        });
 
     //itempage handlers
     $(document).on("click", ".addToDashboard", (e) => moveWidget(e));

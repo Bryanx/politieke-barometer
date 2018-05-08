@@ -18,6 +18,7 @@ using System.Configuration;
 using System.Security.Claims;
 using AutoMapper;
 using BAR.BL;
+using WebGrease.Css.Extensions;
 using static BAR.UI.MVC.Models.ItemViewModels;
 
 namespace BAR.UI.MVC.Controllers
@@ -137,7 +138,7 @@ namespace BAR.UI.MVC.Controllers
 					await userManager.SendEmailAsync(user.Id, Resources.ConfirmAccount,
 						"<a href=\"" + callbackUrl + "\">" + Resources.ConfirmAccountClickingHere + "</a>");
 					//Assign Role to user    
-					await userManager.AddToRoleAsync(user.Id, "SuperAdmin");
+					await userManager.AddToRoleAsync(user.Id, "User");
 					//Login
 					await signInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
 
@@ -404,7 +405,7 @@ namespace BAR.UI.MVC.Controllers
 		public ActionResult Index()
 		{
 			string userId = User.Identity.GetUserId();
-			ItemViewModel itemViewModel = GetPersonViewModel(userId);
+			PersonViewModels itemViewModel = GetPersonViewModel(userId);
 			itemViewModel.PageTitle = Resources.Dashboard;
 
 			//Assebling the view
@@ -475,21 +476,29 @@ namespace BAR.UI.MVC.Controllers
 		/// <summary>
 		/// Gets user model with all his subscribed items.
 		/// </summary>
-		private ItemViewModel GetPersonViewModel(string id)
+		private PersonViewModels GetPersonViewModel(string id)
 		{
+			ItemManager itemManager = new ItemManager();
 			subManager = new SubscriptionManager();
 			userManager = new UserManager();
+			
+			int subPlatformID = (int) RouteData.Values["SubPlatformID"];
 
-			IEnumerable<Item> items = subManager.GetSubscribedItemsForUser(id);
-			List<ItemDTO> itemDtos = Mapper.Map(items, new List<ItemDTO>());
-			foreach (ItemDTO dto in itemDtos) dto.Subscribed = true;
+			PersonViewModels personViewModels = new PersonViewModels();
+			personViewModels.Persons = Mapper.Map(itemManager.GetAllPersonsForSubplatform(subPlatformID), personViewModels.Persons);
+			personViewModels.PageTitle = Resources.AllPoliticians;
+			personViewModels.User = User.Identity.IsAuthenticated ? userManager.GetUser(User.Identity.GetUserId()) : null;
 
-			//Assembling the view
-			return new ItemViewModel()
-			{
-				User = userManager.GetUser(id),
-				Items = itemDtos
-			};
+			List<ItemDTO> items = Mapper.Map(itemManager.GetAllPersonsForSubplatform(subPlatformID), new List<ItemDTO>());
+			for(int i = 0; i < items.Count; i++) {
+				personViewModels.Persons[i].Item = items[i];
+			}
+
+			IEnumerable<Subscription> subs = subManager.GetSubscriptionsWithItemsForUser(User.Identity.GetUserId());
+			personViewModels.Persons = personViewModels.Persons.Where(p => subs.Any(s => s.SubscribedItem.ItemId == p.Item.ItemId)).ToList();
+			personViewModels.Persons.ForEach(i => i.Subscribed = true);
+
+			return personViewModels;
 		}
 
 		#region Helpers

@@ -1,6 +1,6 @@
 ﻿@using BAR.BL.Domain.Items
 @using BAR.UI.MVC.Helpers
-@model BAR.UI.MVC.Models.ItemViewModels.ItemViewModel
+@model BAR.UI.MVC.Models.ItemViewModels.PersonViewModels
 
 <table id="datatable-infinite" class="table" cellspacing="10px" width="100%">
     <colgroup>
@@ -38,34 +38,43 @@
     </tr>
     </thead>
     <tbody>
-    @foreach (var item in Model.Items) {
+    @foreach (var person in Model.Persons) {
         <tr class="subscription">
             <td>
-                <div class="img-circle person-image"></div>
+            @if (person.Item.Picture != null) {
+                @Html.ImageHelper(@Url.Action("Picture", "Person", new {itemId=person.Item.ItemId}), htmlAttributes: new {@class = "img-circle person-image",                      
+                    onerror = "this.onload = null; this.src='https://twitter.com/"+@person.SocialMediaNames.First(s => s.Source.Name == "Twitter").Username+"/profile_image?size=normal';"
+                });
+            } else if (person.SocialMediaNames.FirstOrDefault(s => s.Source.Name == "Twitter") != null) {
+                <img src='https://twitter.com/@person.SocialMediaNames.First(s => s.Source.Name == "Twitter").Username/profile_image?size=normal'
+                     class="img-circle person-image"
+                     onerror = "this.onload = null; this.src='/Content/build/images/picture.jpg';"/>
+            } else {
+                <img src='/Content/build/images/picture.jpg' class="img-circle person-image"/>
+            }
+            <td>
+                <a href='@Url.PersonUrl(person.Item.ItemId)'> @person.Item.Name</a>
             </td>
             <td>
-                <a href='@Url.PersonUrl(item.ItemId)'> @item.Name</a>
-            </td>
-            <td>
-                @item.NumberOfMentions
+                @person.Item.NumberOfMentions
             </td>
             <td class="green">
-                @item.SentimentPositive%
+                @person.Item.SentimentPositive%
                 <i class="glyphicon glyphicon-arrow-up"></i>
             </td>
             <td class="red">
-                @item.SentimentNegative%
+                @person.Item.SentimentNegative%
                 <i class="glyphicon glyphicon-arrow-down"></i>
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.TrendingPercentage) %
+                @Html.DisplayFor(modelItem => person.Item.TrendingPercentage) %
             </td>
             @if (User.Identity.IsAuthenticated) {
                 <td>
-                    @if (item.Subscribed != true) {
-                    <a class="subscribeItem btn btn-success btn-xs" data-item-id="@item.ItemId" title=@Resources.FollowThisPerson>@Resources.Subscribe</a>
+                    @if (@person.Subscribed) {
+                        <a class="subscribeItem btn btn-danger btn-xs" data-item-id="@person.Item.ItemId" title=@Resources.Unsubscribe>@Resources.Unsubscribe</a>
                     } else {
-                    <a class="subscribeItem btn btn-danger btn-xs" data-item-id="@item.ItemId" title=@Resources.Unsubscribe>@Resources.Unsubscribe</a>
+                        <a class="subscribeItem btn btn-success btn-xs" data-item-id="@person.Item.ItemId" title=@Resources.FollowThisPerson>@Resources.Subscribe</a>
                     }
                 </td>
             }

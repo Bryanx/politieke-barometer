@@ -1,6 +1,6 @@
 ﻿@using System.Web.Optimization
 @using BAR.UI.MVC.App_GlobalResources
-@model BAR.UI.MVC.Models.ItemViewModels.ItemViewModel
+@model BAR.UI.MVC.Models.ItemViewModels.PersonViewModels
 @{
     ViewBag.Title = Model.PageTitle;
 }
@@ -13,7 +13,7 @@
 <script src="https://nodebox.live/api/v1/ndbx.js"></script>
 
 
-<section>
+<section class="dashboard-page">
     <h1>@Model.PageTitle</h1>
     <hr />
     <div>
@@ -39,7 +39,7 @@
 <div style="visibility: hidden">space</div>
 
 <!-- Subscriptions -->
-@if (Model.Items.Any())
+@if (Model.Persons.Any())
 {
     <section class="subscriptions">
         <br />

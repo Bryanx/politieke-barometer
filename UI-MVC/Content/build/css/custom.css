@@ -1771,8 +1771,6 @@ span.right {
   position: relative;
   margin-left: -10px !important;
   margin-right: -10px !important; }
-  .grid-stack > .grid-stack-item {
-    z-index: 2; }
 
 .subscription > td > a:hover {
   text-decoration: none; }
@@ -1795,6 +1793,21 @@ span.right {
 canvas {
   width: 100% !important;
   height: auto !important; }
+
+.org-member {
+  padding: 0 10px 15px 10px;
+  cursor: pointer; }
+  .org-member strong {
+    display: block;
+    margin-top: 10px;
+    white-space: nowrap; }
+  .org-member img {
+    width: 85%; }
+  .org-member:hover strong {
+    text-decoration: underline; }
+
+.grid-stack-item-content {
+  overflow: visible !important; }
 
 .modal-lg {
   max-width: 600px;

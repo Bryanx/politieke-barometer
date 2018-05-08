@@ -43,21 +43,25 @@ namespace BAR.UI.MVC.Controllers
 			userManager = new UserManager();
 			subManager = new SubscriptionManager();
 
+			List<Person> persons = itemManager.GetAllPersonsForSubplatform(subPlatformID).ToList();
+			
 			//Return platformspecific data
-			IList<ItemDTO> people = null;
-			people = Mapper.Map(itemManager.GetAllPersonsForSubplatform(subPlatformID), new List<ItemDTO>());
+			PersonViewModels personViewModels = new PersonViewModels();
+			personViewModels.Persons = Mapper.Map(persons, personViewModels.Persons);
+			personViewModels.PageTitle = Resources.AllPoliticians;
+			personViewModels.User = User.Identity.IsAuthenticated ? userManager.GetUser(User.Identity.GetUserId()) : null;
+
+			List<ItemDTO> items = Mapper.Map(itemManager.GetAllPersonsForSubplatform(subPlatformID), new List<ItemDTO>());
+			for(int i = 0; i < items.Count; i++) {
+				personViewModels.Persons[i].Item = items[i];
+				personViewModels.Persons[i].Item.Picture = persons[i].Picture;
+			}
 
 			IEnumerable<Subscription> subs = subManager.GetSubscriptionsWithItemsForUser(User.Identity.GetUserId());
-			people.Where(p => subs.Any(s => s.SubscribedItem.ItemId == p.ItemId)).ForEach(dto => dto.Subscribed = true);
-
+			personViewModels.Persons.Where(p => subs.Any(s => s.SubscribedItem.ItemId == p.Item.ItemId)).ForEach(i => i.Subscribed = true);
+			
 			//Assembling the view
-			return View("Index",
-				new ItemViewModel()
-				{
-					PageTitle = Resources.AllPoliticians,
-					User = User.Identity.IsAuthenticated ? userManager.GetUser(User.Identity.GetUserId()) : null,
-					Items = people
-				});
+			return View("Index", personViewModels);
 
 		}
 
@@ -82,9 +86,9 @@ namespace BAR.UI.MVC.Controllers
 			
 			personViewModel.PageTitle = item.Name;
 			personViewModel.User = User.Identity.IsAuthenticated ? userManager.GetUser(User.Identity.GetUserId()) : null;
-			personViewModel.Person = Mapper.Map(item, new ItemDTO());
+			personViewModel.Item = Mapper.Map(item, new ItemDTO());
 			personViewModel.Subscribed = subbedItem != null;
-			                             
+			
 			//Assembling the view
 			return View(personViewModel);
 		}
