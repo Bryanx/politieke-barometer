@@ -6,6 +6,7 @@ using BAR.DAL;
 using Newtonsoft.Json;
 using BAR.BL.Domain.Items;
 using BAR.BL.Domain.Widgets;
+using BAR.BL.Domain.Users;
 
 namespace BAR.BL.Managers
 {
@@ -120,7 +121,7 @@ namespace BAR.BL.Managers
 			if (startDate == null) startDate = DateTime.Now;
 			else if (startDate < timestamp) return widgetData;
 
-			
+
 			while (timestamp <= startDate)
 			{
 				//Each grapvalue represents a total number of mentions mapped
@@ -387,99 +388,126 @@ namespace BAR.BL.Managers
 		/// Gets last succesfull audit.
 		/// </summary>
 		public SynchronizeAudit GetLastAudit()
-    {
-      InitRepo();
-      return dataRepo.ReadLastAudit();
-    }
+		{
+			InitRepo();
+			return dataRepo.ReadLastAudit();
+		}
 
-    /// <summary>
-    /// Adds an audit with boolean false.
-    /// </summary>
+		/// <summary>
+		/// Adds an audit with boolean false.
+		/// </summary>
 		public SynchronizeAudit AddAudit(DateTime timestamp, bool succes)
-    {
-      InitRepo();
-      SynchronizeAudit synchronizeAudit = new SynchronizeAudit()
-      {
-        TimeStamp = timestamp,
-        Succes = succes
-      };
-      dataRepo.CreateAudit(synchronizeAudit);
-      return synchronizeAudit;
-    }
+		{
+			InitRepo();
+			SynchronizeAudit synchronizeAudit = new SynchronizeAudit()
+			{
+				TimeStamp = timestamp,
+				Succes = succes
+			};
+			dataRepo.CreateAudit(synchronizeAudit);
+			return synchronizeAudit;
+		}
 
-    /// <summary>
-    /// Gets audit with given id.
-    /// </summary>
-    public SynchronizeAudit GetAudit(int synchronizeAuditId)
-    {
-      return dataRepo.ReadAudit(synchronizeAuditId);
-    }
+		/// <summary>
+		/// Gets audit with given id.
+		/// </summary>
+		public SynchronizeAudit GetAudit(int synchronizeAuditId)
+		{
+			return dataRepo.ReadAudit(synchronizeAuditId);
+		}
 
-    /// <summary>
-    /// Changes status of audit to true.
-    /// </summary>
-    public SynchronizeAudit ChangeAudit(int synchronizeAuditId)
-    {
-      InitRepo();
-      SynchronizeAudit synchronizeAudit = GetAudit(synchronizeAuditId);
-      synchronizeAudit.Succes = true;
-      dataRepo.UpdateAudit(synchronizeAudit);
-      return synchronizeAudit;
-    }
+		/// <summary>
+		/// Changes status of audit to true.
+		/// </summary>
+		public SynchronizeAudit ChangeAudit(int synchronizeAuditId)
+		{
+			InitRepo();
+			SynchronizeAudit synchronizeAudit = GetAudit(synchronizeAuditId);
+			synchronizeAudit.Succes = true;
+			dataRepo.UpdateAudit(synchronizeAudit);
+			return synchronizeAudit;
+		}
 
-    /// <summary>
-    /// Checks if json is empty.
-    /// </summary>
-    public bool IsJsonEmpty(string json)
-    {
-      dynamic deserializedJson = JsonConvert.DeserializeObject(json);
-      int informationCount = deserializedJson.Count;
+		/// <summary>
+		/// Checks if json is empty.
+		/// </summary>
+		public bool IsJsonEmpty(string json)
+		{
+			dynamic deserializedJson = JsonConvert.DeserializeObject(json);
+			int informationCount = deserializedJson.Count;
 
-      if (informationCount == 0)
-      {
-        return true;
-      }
-      return false;
-    }
+			if (informationCount == 0)
+			{
+				return true;
+			}
+			return false;
+		}
 
-    /// <summary>
-    /// Gets all sources.
-    /// </summary>
-    public IEnumerable<Source> GetAllSources()
-    {
-      InitRepo();
-      return dataRepo.ReadAllSources();
-    }
+		/// <summary>
+		/// Gets all sources.
+		/// </summary>
+		public IEnumerable<Source> GetAllSources()
+		{
+			InitRepo();
+			return dataRepo.ReadAllSources();
+		}
 
-    public Source AddSource(string name, string site)
-    {
-      InitRepo();
-      Source source = new Source()
-      {
-        Name = name,
-        Site = site
-      };
-      dataRepo.CreateSource(source);
-      return source;
-    }
+		public Source AddSource(string name, string site)
+		{
+			InitRepo();
+			Source source = new Source()
+			{
+				Name = name,
+				Site = site
+			};
+			dataRepo.CreateSource(source);
+			return source;
+		}
 
-    public void RemoveSource(string sourceId)
-    {
-      InitRepo();
-      Source source = dataRepo.ReadSource(Convert.ToInt32(sourceId));
-      dataRepo.DeleteSource(source);
-    }
+		public void RemoveSource(string sourceId)
+		{
+			InitRepo();
+			Source source = dataRepo.ReadSource(Convert.ToInt32(sourceId));
+			dataRepo.DeleteSource(source);
+		}
 
-    /// <summary>
+		/// <summary>
 		/// Returns a list of all the informations objects that are
 		/// related to a specific item.
 		/// </summary>
 		public IEnumerable<Information> GetInformationsWithAllInfoForItem(int itemId)
-    {
-      InitRepo();
-      return dataRepo.ReadInformationsWithAllInfoForItem(itemId);
-    }
- }
+		{
+			InitRepo();
+			return dataRepo.ReadInformationsWithAllInfoForItem(itemId);
+		}
+
+		/// <summary>
+		/// Gives back all the widgetdata for monitoring the
+		/// registerd users per day
+		/// </summary>
+		public WidgetData GetUserActivitiesData(DateTime? timestamp = null)
+		{
+			InitRepo();
+
+			//Create widgetdata
+			WidgetData widgetData = new WidgetData()
+			{
+				GraphValues = new List<GraphValue>(),
+				KeyValue = "User Actitivities"
+			};
+
+			//Get actitivies
+			IEnumerable<UserActivity> activities = new SubplatformManager().GetUserActitities(timestamp);
+			if (activities == null || activities.Count() == 0) return widgetData;
+
+			//Query data
+			DateTime startdate = DateTime.Now;
+			while (timestamp >= startdate)
+			{
+				//TODO
+			}
+		}
+	}
 }
 
 
