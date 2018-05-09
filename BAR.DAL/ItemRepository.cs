@@ -42,6 +42,7 @@ namespace BAR.DAL
 		public Person ReadPersonWithDetails(int itemId)
 		{
 			return ctx.Items.OfType<Person>()
+							.Include(item => item.SubPlatform)
 							.Include(item => item.Area)
 							.Include(item => item.Organisation)
 							.Include(item => item.SocialMediaNames)

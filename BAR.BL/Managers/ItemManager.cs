@@ -488,6 +488,9 @@ namespace BAR.BL.Managers
 
 			//Update database
 			itemRepo.UpdateItem(personToUpdate);
+
+			uowManager.Save();
+			uowManager = null;
 			return personToUpdate;
 		}
 
@@ -537,8 +540,6 @@ namespace BAR.BL.Managers
 			//Update database
 			itemRepo.UpdateItem(personToUpdate);
 
-			uowManager.Save();
-			uowManager = null;
 			return personToUpdate;
 		}
 
