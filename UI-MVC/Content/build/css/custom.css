@@ -556,7 +556,7 @@ ul.msg_list li.noAlertsAvailable {
   background: var(--white);
   overflow: hidden; }
   ul.msg_list li.noAlertsAvailable i {
-    font-size: 70px;
+    font-size: 70px !important;
     padding-bottom: 10px;
     color: var(--font-color);
     text-align: center; }
@@ -1101,6 +1101,8 @@ footer.joinus {
 .tile_count {
   margin-bottom: 20px;
   margin-top: 20px; }
+  .tile_count :first-child {
+    border-left: 0 !important; }
   .tile_count .tile_stats_count {
     text-overflow: ellipsis;
     overflow: hidden;
