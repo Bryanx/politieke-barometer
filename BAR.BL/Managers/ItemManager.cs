@@ -89,7 +89,10 @@ namespace BAR.BL.Managers
 
 			//Get the first items out of the list
 			List<Item> itemsOrderdMostPopulair = new List<Item>();
-			for (int i = 0; i < numberOfItems; i++) itemsOrderdMostPopulair.Add(itemsOrderd.ElementAt(i));
+			for (int i = 0; i < numberOfItems; i++)
+			{
+				if (i <= itemsOrderd.Count()) itemsOrderdMostPopulair.Add(itemsOrderd.ElementAt(i));
+			}
 
 			return itemsOrderdMostPopulair.AsEnumerable();
 		}
@@ -107,15 +110,18 @@ namespace BAR.BL.Managers
 
 			//Get the first items out of the list
 			List<Item> itemsOrderdMostPopulair = new List<Item>();
-			for (int i = 0; i < numberOfItems; i++) itemsOrderdMostPopulair.Add(itemsOrderd.ElementAt(i));
-			
+			for (int i = 0; i < numberOfItems; i++)
+			{
+				if (i <= itemsOrderd.Count()) itemsOrderdMostPopulair.Add(itemsOrderd.ElementAt(i));
+			}
+
 			return itemsOrderdMostPopulair.AsEnumerable();
 		}
 
 		/// <summary>
 		/// Gives back a list of the most trending items
 		/// based on the userId.
-		/// </summary
+		/// </summary>
 		public IEnumerable<Item> GetMostTredningItemsForUser(string userId, int numberOfItems = 5)
 		{
 			//Get items for userId and order items from user
@@ -133,7 +139,10 @@ namespace BAR.BL.Managers
 
 			//Get the first items out of the list
 			List<Item> itemsOrderdMostPopulair = new List<Item>();
-			for (int i = 0; i < numberOfItems; i++) itemsOrderdMostPopulair.Add(itemsOrderd.ElementAt(i));
+			for (int i = 0; i < numberOfItems; i++)
+			{
+				if (i <= itemsOrderd.Count()) itemsOrderdMostPopulair.Add(itemsOrderd.ElementAt(i));
+			}
 
 			return itemsOrderd;
 		}
@@ -160,7 +169,10 @@ namespace BAR.BL.Managers
 
 			//Get the first items out of the list
 			List<Item> itemsOrderdMostPopulair = new List<Item>();
-			for (int i = 0; i < numberOfItems; i++) itemsOrderdMostPopulair.Add(itemsOrderd.ElementAt(i));
+			for (int i = 0; i < numberOfItems; i++)
+			{
+				if (i <= itemsOrderd.Count()) itemsOrderdMostPopulair.Add(itemsOrderd.ElementAt(i));
+			}
 
 			return itemsOrderd;
 		}
