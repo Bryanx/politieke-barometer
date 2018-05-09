@@ -535,6 +535,29 @@ namespace BAR.BL.Managers
              widgetData.GraphValues.Reverse();
              return widgetData;
          }
+
+		/// <summary>
+		/// Gives back all the urls from a specific item
+		/// </summary>
+		public IEnumerable<string> GetUrlsForItem(int itemId)
+		{
+			List<string> urls = null; 
+
+			//Get informations for item
+			IEnumerable<Information> infos = GetInformationsWithAllInfoForItem(itemId);
+			if (infos == null || infos.Count() == 0) return urls;
+
+			//Extract urls
+			foreach (Information info in infos)
+			{
+				foreach (PropertyValue propval in info.PropertieValues)
+				{
+					if (propval.Property.Name.ToLower().Equals("url")) urls.Add(propval.Value);
+				}
+			}
+
+			return urls.AsEnumerable();
+		}
 	}
 }
 
