@@ -91,3 +91,11 @@
     background: rgb(255, 255, 255);
   }
 }
+
+.avatar-view {
+  @include border-radius;
+}
+.profile_left {
+  padding-left: 0;
+  margin-left: -5px;
+}

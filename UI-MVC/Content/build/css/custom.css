@@ -918,6 +918,15 @@ table.tile_info {
   .text-over-image:hover {
     background: white; }
 
+.avatar-view {
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px; }
+
+.profile_left {
+  padding-left: 0;
+  margin-left: -5px; }
+
 .c-primary {
   color: var(--primary-color); }
 
@@ -1195,13 +1204,6 @@ nav .nav-container .searchbar .search-field, form.navbar-form .input-group {
 
 .dropdown-search {
   right: auto !important; }
-
-.compareSearch {
-  margin-top: 10px;
-  max-width: 400px;
-  height: 34px;
-  vertical-align: top;
-  display: inline-block; }
 
 .navbar-search .input-group .input-group-btn {
   width: 1% !important; }
@@ -1792,13 +1794,6 @@ span.right {
 .subscription > td > a:hover {
   text-decoration: none; }
 
-.addToDashboard {
-  display: inline-block;
-  vertical-align: top; }
-
-.graph-options {
-  text-align: center; }
-
 .timeline-Header, .timeline-footer {
   display: none; }
 
@@ -1825,6 +1820,23 @@ canvas {
 
 .grid-stack-item-content {
   overflow: visible !important; }
+
+.removeData {
+  margin-top: 10px;
+  float: right;
+  vertical-align: top; }
+
+.compareSearch {
+  margin-top: 10px;
+  max-width: 400px;
+  height: 34px;
+  vertical-align: top;
+  display: inline-block; }
+
+.addToDashboard {
+  display: inline-block;
+  vertical-align: top;
+  float: left; }
 
 .modal-lg {
   max-width: 600px;
@@ -1866,13 +1878,6 @@ nav .nav-container .searchbar .search-field, form.navbar-form .input-group {
 
 .dropdown-search {
   right: auto !important; }
-
-.compareSearch {
-  margin-top: 10px;
-  max-width: 400px;
-  height: 34px;
-  vertical-align: top;
-  display: inline-block; }
 
 .navbar-search .input-group .input-group-btn {
   width: 1% !important; }

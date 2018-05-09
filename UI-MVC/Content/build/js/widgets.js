@@ -59,6 +59,7 @@ var widgetElements = {
             "               </div>" +
             "               <div class='graph-options'>" +
             "                   <input id=" + id + " type='text' class='form-control compareSearch' placeholder='Compare data with someone else.'>" +
+            "                   <button class='btn btn-danger removeData' data-widget-id=" + id + " >Remove data</button>" +
             "               </div>" +
             "            </div>" +
             "        </div>";
@@ -110,6 +111,7 @@ var widgetElements = {
             "               </div>" +
             "               <div class='graph-options'>" +
             "                   <input id=" + id + " type='text' class='form-control compareSearch' placeholder='Compare data with someone else.'>" +
+            "                   <button class='btn btn-danger removeData' data-widget-id=" + id + " >Remove data</button>" +
             "               </div>" +
             "            </div>" +
             "        </div>";
@@ -249,11 +251,18 @@ function loadGraphs(itemId, widget) {
         'rgb(123, 72, 225)',
         'rgb(171, 173, 177)'
     ];
-    
+
     //Retrieves a chart by data-id.
     let FindChartByEvent = function(e) {
         let widgetId = $(e.target).data("widget-id");
         return charts.find(c => c.config.id == widgetId);
+    };
+    
+    //Removes the last added dataset
+    let RemoveData = function (e) {
+        let chart = FindChartByEvent(e);
+        chart.config.data.datasets.splice(0,1);
+        chart.update();
     };
     
     //Retrieves an image of the graph
@@ -543,6 +552,7 @@ function loadGraphs(itemId, widget) {
     $(document).on("click", ".changeToMonth", (e) => ChangeTime(e, -1, 'month'));
     $(document).on("click", ".changeTo3Month", (e) => ChangeTime(e, -3, 'month'));
     $(document).on("click", ".changeToYear", (e) => ChangeTime(e, -12, 'month'));
+    $(document).on("click", ".removeData", (e) => RemoveData(e).unbind()); //unbind may give an error. this can be ignored.
 
     //Loads the graph data.
     $(() => ajaxLoadGraphs(widget));

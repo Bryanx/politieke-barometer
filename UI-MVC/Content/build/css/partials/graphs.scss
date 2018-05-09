@@ -26,3 +26,26 @@ canvas{
 .grid-stack-item-content {
   overflow: visible !important;
 }
+
+.removeData {
+  margin-top: 10px;
+  float: right;
+  vertical-align: top;
+}
+
+.compareSearch {
+  margin-top: 10px;
+  max-width: 400px;
+  height: 34px;
+  vertical-align: top;
+  display: inline-block;
+}
+
+.addToDashboard {
+  display: inline-block;
+  vertical-align: top;
+  float: left;
+}
+
+.graph-options {
+}
