@@ -25,24 +25,24 @@ namespace BAR.UI.MVC.Controllers.api
 		/// Returns all items for search suggestions.
 		/// </summary>
 		[HttpGet]
-    [SubPlatformCheckAPI]
+		[SubPlatformCheckAPI]
 		[Route("api/GetSearchItems")]
 		public IHttpActionResult GetSearchItems()
 		{
-      //Get the subplatformID from the SubPlatformCheckAPI attribute
-      object _customObject = null;
-      int suplatformID = -1;
+			//Get the subplatformID from the SubPlatformCheckAPI attribute
+			object _customObject = null;
+			int suplatformID = -1;
 
-      if (Request.Properties.TryGetValue("SubPlatformID", out _customObject))
-      {
-        suplatformID = (int)_customObject;
-      }
+			if (Request.Properties.TryGetValue("SubPlatformID", out _customObject))
+			{
+				suplatformID = (int)_customObject;
+			}
 
 
-      itemManager = new ItemManager();
+			itemManager = new ItemManager();
 			var lijst = itemManager.GetAllItems()
-        .Where(item => item.SubPlatform.SubPlatformId == suplatformID)
-        .Select(i => new {value=i.Name, data=i.ItemId});
+				.Where(item => item.SubPlatform.SubPlatformId == suplatformID)
+				.Select(i => new {value=i.Name, data=i.ItemId});
 			return Ok(lijst);
 		}
 
@@ -115,7 +115,7 @@ namespace BAR.UI.MVC.Controllers.api
 		[HttpPost]
 		[SubPlatformCheckAPI]
 		[Route("api/Admin/CreatePerson")]
-		public HttpResponseMessage CreatePerson()
+		public IHttpActionResult CreatePerson()
 		{
 			//Get the subplatformID from the SubPlatformCheckAPI attribute
 			object _customObject = null;
@@ -128,21 +128,10 @@ namespace BAR.UI.MVC.Controllers.api
 
 			itemManager = new ItemManager();
 
-			Person p = (Person)itemManager.AddItem(ItemType.Person, "Maarten Jorens");
-
-			itemManager.ChangePerson(p.ItemId, "google.com");
+			Person p = (Person)itemManager.AddItem(ItemType.Person, "Maarten Jorens", site: "www.kdg.be");
 			itemManager.ChangeItemPlatform(p.ItemId, subplatformID);
 
-			// Create a 201 response.
-			var response = new HttpResponseMessage(HttpStatusCode.Created)
-			{
-				Content = new StringContent(p.ItemId.ToString())
-			};
-
-			response.Headers.Location =
-			new Uri(Url.Link("Item", new { action = "Deatails", id = p.ItemId }));
-			return response;
-
+			return StatusCode(HttpStatusCode.NoContent);
 		}
 
 		/// <summary>
@@ -164,12 +153,10 @@ namespace BAR.UI.MVC.Controllers.api
 
 			itemManager = new ItemManager();
 
-			Organisation p = (Organisation)itemManager.AddItem(ItemType.Organisation, "De bosklappers");
-
-			itemManager.ChangeOrganisation(p.ItemId, "www.google.com");
+			Organisation p = (Organisation)itemManager.AddItem(ItemType.Organisation, "De bosklappers", site : "www.kdg.be");
 			itemManager.ChangeItemPlatform(p.ItemId, subplatformID);
 
-			return StatusCode(HttpStatusCode.OK);
+			return StatusCode(HttpStatusCode.NoContent);
 		}
 
 		/// <summary>
@@ -191,7 +178,22 @@ namespace BAR.UI.MVC.Controllers.api
 
 			itemManager = new ItemManager();
 
-			Person p = (Person)itemManager.AddItem(ItemType.Person, "Maarten Jorens");
+			List<Keyword> keywords = new List<Keyword>();
+
+			Keyword k1 = new Keyword()
+			{
+				Name = "Drugs"
+			};
+			Keyword k2 = new Keyword()
+			{
+				Name = "ASO"
+			};
+			Keyword k3 = new Keyword()
+			{
+				Name = "KdG"
+			};
+
+			Theme p = (Theme)itemManager.AddItem(ItemType.Theme, "Karel de Grote Hogeschool");
 
 			itemManager.ChangePerson(p.ItemId, "google.com");
 			itemManager.ChangeItemPlatform(p.ItemId, subplatformID);

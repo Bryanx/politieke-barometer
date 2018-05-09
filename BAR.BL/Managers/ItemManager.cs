@@ -297,7 +297,7 @@ namespace BAR.BL.Managers
 		/// THIS METHOD USES UNIT OF WORK
 		/// </summary>
 		public Item AddItem(ItemType itemType, string name, string description = "", string function = "",
-			string district = null, string level = null, string site = null, Gender gender = Gender.OTHER, string position = null, DateTime? dateOfBirth = null)
+			string district = null, string level = null, string site = null, Gender gender = Gender.OTHER, string position = null, DateTime? dateOfBirth = null, List<Keyword> keywords = null)
 		{
 			InitRepo();
 
@@ -326,13 +326,23 @@ namespace BAR.BL.Managers
 					};
 					break;
 				case ItemType.Theme:
-					item = new Theme()
+					if(keywords != null)
 					{
-						Keywords = new List<Keyword>()
+						item = new Theme()
 						{
+							Keywords = keywords
+						};
+					} else
+					{
+						item = new Theme()
+						{
+							Keywords = new List<Keyword>()
+							{
 
-						}
-					};
+							}
+						};
+					}
+					
 					break;
 				default:
 					item = null;
@@ -478,20 +488,20 @@ namespace BAR.BL.Managers
 
 			SubPlatform subPlatform = subManager.GetSubPlatform(subplatformId);
 			//Get item
-			Item personToUpdate = GetPersonWithDetails(itemId);
+			Item itemToUpdate = GetItemWithSubPlatform(itemId);
 
-			if (personToUpdate == null) return null;
+			if (itemToUpdate == null) return null;
 
 			//Update item
-			personToUpdate.SubPlatform = subPlatform;
-			personToUpdate.LastUpdated = DateTime.Now;
+			itemToUpdate.SubPlatform = subPlatform;
+			itemToUpdate.LastUpdated = DateTime.Now;
 
 			//Update database
-			itemRepo.UpdateItem(personToUpdate);
+			itemRepo.UpdateItem(itemToUpdate);
 
 			uowManager.Save();
 			uowManager = null;
-			return personToUpdate;
+			return itemToUpdate;
 		}
 
 		/// <summary>
