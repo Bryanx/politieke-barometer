@@ -1,0 +1,59 @@
+﻿@model BAR.UI.MVC.Models.ItemViewModels.ItemViewModel
+
+
+<a class="btn btn-dark" href="#" data-toggle="modal" data-target=".bs-example-modal-lg">Create Item</a>
+<div class="modal bs-example-modal-lg fade" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="accordion" id="accordion" role="tablist" aria-multiselectable="true">
+                    <div class="panel">
+                        <a class="panel-heading" role="tab" id="headingOne" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                            <h4 class="panel-title">Persoon</h4>
+                        </a>
+                        <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                            <div class="panel-body">
+                                <form method="post" action="/api/Admin/CreatePerson" id="createPersonForm" class="form-horizontal">
+                                    <div class="form-group">
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">
+                                            @Resources.Name
+                                        </label>
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                            <input class="form-control col-md-7 col-xs-12" id="createPersonName" name="CreatePersonName" type="text" value="">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+                                            <button type="submit" class="btn btn-dark">@Resources.Save</button>
+                                            <div id="createPersonMessage" style="display: inline"></div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel">
+                        <a class="panel-heading collapsed" role="tab" id="headingTwo" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                            <h4 class="panel-title">Organisatie</h4>
+                        </a>
+                        <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+                            <div class="panel-body">
+                                PANEL 2
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel">
+                        <a class="panel-heading collapsed" role="tab" id="headingThree" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                            <h4 class="panel-title">Thema</h4>
+                        </a>
+                        <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+                            <div class="panel-body">
+                                PANEL 2
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

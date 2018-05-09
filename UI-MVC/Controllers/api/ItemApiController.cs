@@ -9,6 +9,7 @@ using BAR.BL.Domain.Items;
 using BAR.BL.Managers;
 using BAR.UI.MVC.Attributes;
 using BAR.UI.MVC.Models;
+using BAR.BL.Domain.Core;
 
 namespace BAR.UI.MVC.Controllers.api
 {
@@ -18,7 +19,8 @@ namespace BAR.UI.MVC.Controllers.api
 	public class ItemApiController : ApiController
 	{
 		private IItemManager itemManager;
-		
+		private ISubplatformManager subplatformManager;
+
 		/// <summary>
 		/// Returns all items for search suggestions.
 		/// </summary>
@@ -44,6 +46,21 @@ namespace BAR.UI.MVC.Controllers.api
 			return Ok(lijst);
 		}
 
+		/// <summary>
+		/// Gets top 3 trending items
+		/// </summary>
+		[HttpGet]
+		[Route("api/GetTopTrendingItems")]
+		public IHttpActionResult GetTopTrendingItems()
+		{
+			itemManager = new ItemManager();
+			List<Item> lijst = itemManager.GetAllItems()
+				.OrderByDescending(m => m.TrendingPercentage)
+				.Take(3)
+				.ToList();
+			return Ok(Mapper.Map(lijst, new List<ItemDTO>()));
+		}
+		
 		/// <summary>
 		/// Deleted status of an item is toggled.
 		/// </summary>
@@ -89,6 +106,33 @@ namespace BAR.UI.MVC.Controllers.api
 		{
 			itemManager = new ItemManager();
 			itemManager.ChangePerson(Int32.Parse(itemId), model.DateOfBirth, model.Gender, model.Position, model.District);						
+			return StatusCode(HttpStatusCode.NoContent);
+		}
+
+		/// <summary>
+		/// Creates a person item
+		/// </summary>
+		[HttpPost]
+		[SubPlatformCheckAPI]
+		[Route("api/Admin/CreatePerson")]
+		public IHttpActionResult CreatePerson()
+		{
+			//Get the subplatformID from the SubPlatformCheckAPI attribute
+			object _customObject = null;
+			int suplatformID = -1;
+
+			if (Request.Properties.TryGetValue("SubPlatformID", out _customObject))
+			{
+				suplatformID = (int)_customObject;
+			}
+
+			itemManager = new ItemManager();
+			subplatformManager = new SubplatformManager();
+			SubPlatform subplatform = subplatformManager.GetSubPlatform(suplatformID);
+
+			Person p = (Person)itemManager.AddItem(ItemType.Person, "Maarten Jorens");
+			p.SubPlatform = subplatform;
+
 			return StatusCode(HttpStatusCode.NoContent);
 		}
 		

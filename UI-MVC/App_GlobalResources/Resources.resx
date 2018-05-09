@@ -594,4 +594,7 @@
   <data name="InTrendingPercentage" xml:space="preserve">
     <value>in trending percentage.</value>
   </data>
+  <data name="Theme" xml:space="preserve">
+    <value>Theme</value>
+  </data>
 </root>

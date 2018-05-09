@@ -189,17 +189,30 @@ namespace BAR.BL.Managers
 		/// <summary>
 		/// Returns a person with all personal details.
 		/// </summary>
-		public Person GetPersonWithDetails(int itemId) {
+		public Person GetPersonWithDetails(int itemId)
+		{
 			InitRepo();
 			return itemRepo.ReadPersonWithDetails(itemId);
 		}
-		
+
 		/// <summary>
 		/// Returns an organisation with all personal details.
 		/// </summary>
-		public Organisation GetOrganisationWithDetails(int itemId) {
+		public Organisation GetOrganisationWithDetails(int itemId)
+		{
 			InitRepo();
 			return itemRepo.ReadOrganisationWithDetails(itemId);
+		}
+
+		/// <summary>
+		/// Returns a theme with all the Theme keywords
+		/// </summary>
+		/// <param name="itemId"></param>
+		/// <returns></returns>
+		public Theme GetThemeWithDetails(int itemId)
+		{
+			InitRepo();
+			return itemRepo.ReadThemeWithDetails(itemId);
 		}
 
 		/// <summary>
@@ -220,10 +233,10 @@ namespace BAR.BL.Managers
 			return itemRepo.ReadItemWithWidgets(itemId);
 		}
 
-				/// <summary>
-				/// Gives back all the items of a specific type
-				/// </summary>
-				public IEnumerable<Item> GetItemsForType(ItemType type)
+		/// <summary>
+		/// Gives back all the items of a specific type
+		/// </summary>
+		public IEnumerable<Item> GetItemsForType(ItemType type)
 		{
 			IEnumerable<Item> items = GetAllItems();
 			return items.Where(item => item.ItemType == type).AsEnumerable();
@@ -257,6 +270,17 @@ namespace BAR.BL.Managers
 		}
 
 		/// <summary>
+		/// Returns all (undeleted) people for an organisation
+		/// </summary>
+		/// <param name="organisationId"></param>
+		/// <returns></returns>
+		public IEnumerable<Person> GetAllPersonsForOrganisation(int organisationId)
+		{
+			InitRepo();
+			return itemRepo.ReadAllPersonsForOrganisation(organisationId).AsEnumerable();
+		}
+
+		/// <summary>
 		/// Returns all (undeleted) organisations of the whole system
 		/// </summary>
 		public IEnumerable<Organisation> GetAllOrganisations()
@@ -272,7 +296,7 @@ namespace BAR.BL.Managers
 		/// NOTE
 		/// THIS METHOD USES UNIT OF WORK
 		/// </summary>
-		public Item AddItem(ItemType itemType, string name, string description = "", string function = "", Category category = null,
+		public Item AddItem(ItemType itemType, string name, string description = "", string function = "",
 			string district = null, string level = null, string site = null, Gender gender = Gender.OTHER, string position = null, DateTime? dateOfBirth = null)
 		{
 			InitRepo();
@@ -291,7 +315,7 @@ namespace BAR.BL.Managers
 						Site = site,
 						DateOfBirth = dateOfBirth,
 						Position = position,
-						SocialMediaNames = new List<SocialMediaName>(),
+						SocialMediaNames = new List<SocialMediaName>()
 					};
 					break;
 				case ItemType.Organisation:
@@ -304,7 +328,10 @@ namespace BAR.BL.Managers
 				case ItemType.Theme:
 					item = new Theme()
 					{
-						Category = category
+						Keywords = new List<Keyword>()
+						{
+
+						}
 					};
 					break;
 				default:
@@ -387,7 +414,7 @@ namespace BAR.BL.Managers
 		/// <summary>
 		/// Returns all (undeleted) themes of the whole system
 		/// </summary>
-		public IEnumerable<Item> GetAllThemes()
+		public IEnumerable<Theme> GetAllThemes()
 		{
 			InitRepo();
 			return itemRepo.ReadAllThemes().AsEnumerable();
@@ -396,6 +423,7 @@ namespace BAR.BL.Managers
 		/// <summary>
 		/// Returns all people for specific subplatform
 		/// </summary>
+		/// <param name="subPlatformName"></param>
 		/// <returns></returns>
 		public IEnumerable<Person> GetAllPersonsForSubplatform(int subPlatformID)
 		{
@@ -403,7 +431,7 @@ namespace BAR.BL.Managers
 				.Where(item => item.Deleted == false)
 				.Where(item => item.SubPlatform.SubPlatformId.Equals(subPlatformID));
 		}
-		
+
 		/// <summary>
 		/// Returns all organisations for specific subplatform
 		/// </summary>
@@ -434,7 +462,7 @@ namespace BAR.BL.Managers
 			itemRepo.UpdateItem(itemToUpdate);
 			return itemToUpdate;
 		}
-		
+
 		/// <summary>
 		/// Updates a person.
 		/// </summary>
@@ -444,7 +472,7 @@ namespace BAR.BL.Managers
 
 			//Get item
 			Person personToUpdate = GetPersonWithDetails(itemId);
-			
+
 			if (personToUpdate == null) return null;
 
 			//Update item
@@ -557,6 +585,82 @@ namespace BAR.BL.Managers
 		{
 			CheckOrganisations(json, subPlatformID);
 			return AddItemsFromJson(json, subPlatformID);
+		}
+
+		/// <summary>
+		/// Import all the themes from the json file
+		/// </summary>
+		/// <param name="json"></param>
+		/// <param name="subPlatformID"></param>
+		/// <returns></returns>
+		public bool ImportThemes(string json, int subPlatformID)
+		{
+			return AddThemesFromJson(json, subPlatformID);
+		}
+
+		/// <summary>
+		/// Check if theme exists, if not add it to the Database
+		/// </summary>
+		/// <param name="json"></param>
+		/// <param name="subPlatformID"></param>
+		private bool AddThemesFromJson(string json, int subPlatformID)
+		{
+			uowManager = new UnitOfWorkManager();
+
+			InitRepo();
+
+			ISubplatformManager subplatformManager = new SubplatformManager(uowManager);
+			SubPlatform subPlatform = subplatformManager.GetSubPlatform(subPlatformID);
+			IEnumerable<Item> themes = GetAllThemes();
+			List<Item> newThemes = new List<Item>();
+
+			dynamic deserializedJson = JsonConvert.DeserializeObject(json);
+
+			for (int i = 0; i < deserializedJson.Count; i++)
+			{
+				string name = deserializedJson[i].name;
+
+				Theme theme = null;
+
+				List<Keyword> keywords = new List<Keyword>();
+
+				for (int j = 0; j < deserializedJson[i].keywords.Count; j++)
+				{
+					keywords.Add(new Keyword()
+					{
+						Name = deserializedJson[i].keywords[j]
+					});
+				}
+
+				if (themes
+				.Where(t => t.SubPlatform.SubPlatformId == subPlatformID)
+				.Where(x => x.Name.Equals(name)).SingleOrDefault() == null)
+				{
+					theme = new Theme()
+					{
+						ItemType = ItemType.Theme,
+						Name = name,
+						CreationDate = DateTime.Now,
+						LastUpdatedInfo = DateTime.Now,
+						LastUpdated = DateTime.Now,
+						NumberOfFollowers = 0,
+						TrendingPercentage = 0.0,
+						Baseline = 0.0,
+						Informations = new List<Information>(),
+						SubPlatform = subPlatform,
+						Keywords = keywords
+					};
+					itemRepo.CreateItem(theme);
+					uowManager.Save();
+					newThemes.Add(theme);
+				}
+			}
+
+			//Generate default widgets for items
+			foreach (Item item in newThemes) GenerateDefaultItemWidgets(item.Name, item.ItemId);
+			uowManager = null;
+
+			return true;
 		}
 
 		/// <summary>
@@ -705,15 +809,15 @@ namespace BAR.BL.Managers
 				double sentiment = 0.0;
 				int counter = 0;
 				IEnumerable<Information> informations = dataManager.GetInformationsWithAllInfoForItem(item.ItemId)
-																   .Where(info => info.CreationDate >= DateTime.Now.AddMonths(-1))
-																   .AsEnumerable();
+																	 .Where(info => info.CreationDate >= DateTime.Now.AddMonths(-1))
+																	 .AsEnumerable();
 				foreach (Information info in informations)
 				{
 					foreach (PropertyValue propvalue in info.PropertieValues)
 					{
 						if (propvalue.Property.Name.ToLower().Equals("sentiment"))
 						{
-							double propSen =+ Double.Parse(propvalue.Value);
+							double propSen = +Double.Parse(propvalue.Value);
 							if (propSen != 0) sentiment += propSen / 100;
 							counter++;
 						}
@@ -721,11 +825,12 @@ namespace BAR.BL.Managers
 				}
 
 				//Determine sentiment
-				if (sentiment != 0) {
+				if (sentiment != 0)
+				{
 					sentiment = Math.Round((sentiment / counter) * 100, 2);
 					if (sentiment >= 0) item.SentimentPositve = sentiment;
 					else item.SentimentNegative = Math.Abs(sentiment);
-				}				
+				}
 			}
 
 			//Persist changes
@@ -751,7 +856,7 @@ namespace BAR.BL.Managers
 			IEnumerable<Item> itemsToRemove = GetAllItems().Where(item => item.SubPlatform == null).AsEnumerable();
 			itemRepo.DeleteItems(itemsToRemove);
 		}
-	
+
 		/// <summary>
 		/// Changes profile picture of given user.
 		/// </summary>

@@ -40,5 +40,11 @@ namespace BAR.UI.MVC.Models {
             public List<SocialMediaName> SocialMediaNames { get; set; }
         }
         
+        public class ThemeViewModel : BaseViewModel
+        {
+            public ItemDTO Theme { get; set; }
+            public bool Subscribed { get; set; }
+            public List<Keyword> Keywords { get; set; }
+        }
     }
 }

@@ -81,6 +81,25 @@ namespace BAR.UI.MVC.Helpers {
                 id = personId
             });
         }
+        
+        public static string ThemeUrl(this UrlHelper helper)
+        {
+            return helper.RouteUrl("Default", new
+            {
+                controller = "Theme",
+                action = nameof(ThemeController.Index)
+            });
+        }
+        
+        public static string ThemeUrl(this UrlHelper helper, int personId)
+        {
+            return helper.RouteUrl("Default", new
+            {
+                controller = "Theme",
+                action = nameof(ThemeController.Details),
+                id = personId
+            });
+        }
 
         public static string OrganisationUrl(this UrlHelper helper) {
             return helper.RouteUrl("Default", new {

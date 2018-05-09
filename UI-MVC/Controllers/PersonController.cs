@@ -115,6 +115,8 @@ namespace BAR.UI.MVC.Controllers
 			personViewModel.RankNumberOfMentions = CalculateRankNumberOfMentions(personViewModel.Item.NumberOfMentions);
 			personViewModel.RankTrendingPercentage = CalculateRankTrendingPercentage(personViewModel.Item.ItemId);
 
+			//Log visit activity
+			new SubplatformManager().LogActivity(ActivityType.VisitActitiy);
 			
 			//Assembling the view
 			return View(personViewModel);

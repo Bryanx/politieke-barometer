@@ -12,12 +12,9 @@ namespace BAR.DAL
 	{
 		//Read
 		User ReadUser(string userId);
-		User ReadUserWithActivities(string userId);
 		IEnumerable<User> ReadAllUsers();
 		IEnumerable<User> ReadAllUsersForRole(string roleId);
 		IEnumerable<User> ReadAllUsersForArea(int areaId);
-		IEnumerable<Activity> ReadAllActivities();
-		IEnumerable<Activity> ReadActivitiesForUser(string userId);
 		Area ReadArea(int areaId);
 		IEnumerable<Area> ReadAllAreas();
 		IdentityRole ReadRole(string userId);

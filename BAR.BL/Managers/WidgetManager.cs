@@ -296,7 +296,6 @@ namespace BAR.BL.Managers
 			{
 				DashboardType = dashType,
 				Widgets = new List<UserWidget>(),
-				Activities = new List<Activity>()
 			};
 
 			//Get user if not general dashboard

@@ -63,6 +63,19 @@ namespace BAR.DAL
 		}
 
 		/// <summary>
+		/// Returns the item that matchkes the itemId.
+		/// </summary>
+		/// <param name="itemId"></param>
+		/// <returns></returns>
+		public Theme ReadThemeWithDetails(int itemId)
+		{
+			return ctx.Items.OfType<Theme>()
+				.Include(i => i.Keywords)
+				.Where(i => i.ItemId == itemId && i.Deleted == false)
+				.SingleOrDefault();
+		}
+
+		/// <summary>
 		/// Returns the item that matches the itemId.
 		/// </summary>       
 		public Item ReadItemWithWidgets(int itemId)
@@ -129,6 +142,17 @@ namespace BAR.DAL
 		}
 
 		/// <summary>
+		/// Gives back a list of all the persons associated with a certain organisation
+		/// </summary>
+		/// <param name="organisationId"></param>
+		/// <returns></returns>
+		public IEnumerable<Person> ReadAllPersonsForOrganisation(int organisationId)
+		{
+			return ReadAllItemsWithPlatforms().OfType<Person>()
+				.Where(item => item.Organisation.ItemId.Equals(organisationId)).AsEnumerable();
+		}
+
+		/// <summary>
 		/// Gives back a list of all the organisations
 		/// </summary>
 		public IEnumerable<Organisation> ReadAllOraginsations()
@@ -137,11 +161,15 @@ namespace BAR.DAL
 		}
 
 		/// <summary>
-		/// Gives back a list of all the thetms
+		/// Gives back a list of all the themes
 		/// </summary>
 		public IEnumerable<Theme> ReadAllThemes()
 		{
-			return ReadAllItemsWithPlatforms().OfType<Theme>().AsEnumerable();
+			return ctx.Items
+				.OfType<Theme>().Include(item => item.Keywords)
+				.Include(item => item.ItemWidgets)
+				.Include(item => item.SubPlatform)
+				.AsEnumerable();
 		}
 
 		/// <summary>
@@ -232,5 +260,5 @@ namespace BAR.DAL
 						  .Where(org => org.Name.ToLower().Equals(organisationName.ToLower()))
 						  .SingleOrDefault();
         }
-  }
+	}
 }

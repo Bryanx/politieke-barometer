@@ -15,12 +15,14 @@ namespace BAR.BL.Managers
 		Item GetItem(int itemId);
 		Person GetPersonWithDetails(int itemId);
 		Organisation GetOrganisationWithDetails(int itemId);
+		Theme GetThemeWithDetails(int itemId);
 		Item GetItemWithSubPlatform(int itemId);
 		Item GetItemWithAllWidgets(int itemId);
 		IEnumerable<Item> GetAllItems();
 		IEnumerable<Person> GetAllPersons();
+		IEnumerable<Person> GetAllPersonsForOrganisation(int organisationId);
 		IEnumerable<Organisation> GetAllOrganisations();
-		IEnumerable<Item> GetAllThemes();
+		IEnumerable<Theme> GetAllThemes();
 		IEnumerable<Item> GetItemsForType(ItemType type);
 		Person GetPerson(string personName);
 		IEnumerable<Item> GetMostTrendingItems(int numberOfItems = 5);
@@ -31,19 +33,20 @@ namespace BAR.BL.Managers
 		IEnumerable<Person> GetAllPersonsForSubplatform(int subPlatformID);
 		IEnumerable<Item> GetAllOrganisationsForSubplatform(int subPlatformID);
 
-		Item AddItem(ItemType itemType, string name, string description = "", string function = "", Category category = null,
+		Item AddItem(ItemType itemType, string name, string description = "", string function = "",
 			string district = null, string level = null, string site = null, Gender gender = Gender.OTHER, string position = null, DateTime? dateOfBirth = null);
+
+		bool ImportJson(string json, int subPlatformID);
+		bool ImportThemes(string json, int subPlatformID);
 		
 		Item ChangeItemName(int itemId, string name);
 		Item ChangeItemActivity(int itemId);
-    Person ChangePerson(int itemId, DateTime birthday, Gender gender, string position, string district);
+		Person ChangePerson(int itemId, DateTime birthday, Gender gender, string position, string district);
 		Item ChangePicture(int itemId, HttpPostedFileBase poImgFile);
     
 		IEnumerable<Item> ChangeItems(IEnumerable<Item> items);
 		void RemoveItem(int itemId);
 		void RemoveOverflowingItems();
-	
-    bool ImportJson(string json, int subPlatformID);
 		void FillItems();
 		void DetermineTrending(int itemId);
 		double GetTrendingPer(int itemId);

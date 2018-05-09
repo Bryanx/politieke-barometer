@@ -14,6 +14,16 @@ nav {
   transition: 1.2s ease-in-out;
 }
 
+.widget_summary {
+  padding: 20px 40px;
+}
+
+#twitter-feed-1, #twitter-feed-2, #twitter-feed-3  {
+  max-height: 400px;
+  overflow-y: auto;
+  margin: 20px 0;
+}
+
 .btn-search-submit:hover {
   background-color: var(--primary-darkest);
 }
@@ -183,3 +193,12 @@ nav .searchbar {
   }
 }
 
+.widget_summary {
+  padding: 20px 40px;
+}
+
+#twitter-feed-1, #twitter-feed-2, #twitter-feed-3  {
+  max-height: 400px;
+  overflow-y: auto;
+  margin: 20px 0;
+}

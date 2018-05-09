@@ -54,6 +54,7 @@ namespace BAR.DAL.EF
 		//Core
 		public DbSet<SubPlatform> SubPlatforms { get; set; }
 		public DbSet<Question> Questions { get; set; }
+		public DbSet<UserActivity> UserActivities { get; set; }
 
 		//Static method for creating and returning a BarometerDbContext (used as in Singleton pattern)
 		public static BarometerDbContext Create()

@@ -32,3 +32,104 @@ if ($('.main-header-container').length) {
         checkScroll();
     });
 }
+
+/* ---------- Twitter feed ----------*/
+
+let TwitterFeed = function (trendings) {
+
+    $.each(trendings, (index,  value) => {
+        
+        let nameId = "#t-name-" + (index + 1);
+        var id = "twitter-feed-" + (index +1);
+        var name = value.Name.split(" ").join("");
+        // putting name above twitter feed
+        $(nameId).append("" + value.Name + " ")
+            .next()
+            .append("" + value.TrendingPercentage + "%");
+        twttr.widgets.createTimeline(
+            {
+                sourceType: "profile",
+                screenName: name
+            },
+            document.getElementById("" + id),
+            {
+                chrome: "noheader, noborder, nofooter",
+                linkColor: primary_color,
+                tweetLimit: 5
+            }
+        );
+    });
+}
+
+/* ---------- Trending chart ----------*/
+var charts = [];
+let AddChart = function (name, widgetId, labels, values, borderColor="#E02F2F", color="#E02F2F", darkColor="#E02F2F", chartType="line") {
+    charts.push(new Chart(document.getElementById("trending-graph"), {
+        id: widgetId,
+        type: chartType,
+        data: {
+            labels: labels,
+            datasets: [{
+                data: values,
+                label: name,
+                borderColor: borderColor,
+                backgroundColor: color,
+                hoverBackgroundColor: darkColor,
+                fill: false,
+            }],
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+        }
+    }));
+};
+
+
+let getGraph = function(name, itemId, widgetId) {
+    $.ajax({
+        type: "GET",
+        url: "/api/GetGraphs/" + itemId + "/" + widgetId,
+        dataType: "json",
+        success: data => {
+            if (charts[0] == null) {
+                AddChart(name, data[0].WidgetId, data[0].GraphValues.map(g => g.Value), data[0].GraphValues.map(g => g.NumberOfTimes));
+            } else {
+                AddDataSet(charts[0], name, data[0].GraphValues.map(g => g.NumberOfTimes))
+            }
+        },
+        fail: d => console.log(d)
+    })};
+    
+/*--------- Adding data for trending chart ----------*/    
+
+let AddDataSet = function (chart, name, values) {
+    var newColor = "#" + values[0] + values[1] + values[2]; // TEMPORARY FIX
+    var hoverColor = "#" + values[0] + values[1] + values[2];
+    var newDataset = {
+        label: name,
+        borderColor: newColor,
+        backgroundColor: newColor,
+        hoverBackgroundColor: hoverColor,
+        data: values,
+        fill: false
+    };
+
+    chart.config.data.datasets.push(newDataset);
+    chart.update();
+};
+
+/*---------- getting top 3 trending ----------*/
+
+var GetTopTrending = function (trendings){
+    
+    $.each(trendings, (index,  value) => {
+        $.ajax({
+            type: "GET",
+            url: 'api/GetItemWidgets/' + value.ItemId,
+            dataType: "json",
+            success: data => getGraph(value.Name,  value.ItemId, data[0].WidgetId),
+            error: (xhr) => alert(xhr.responseText)
+        });
+    });
+};
