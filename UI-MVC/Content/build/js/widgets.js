@@ -710,10 +710,25 @@ function init() {
     //Moves a widget from item page to dashboard page
     let moveWidget = function (e) {
         let widget = widgets.find(w => w.WidgetId == e.target.id);
+        let serializedWidget = {
+            WidgetId: widget.id ? widget.id : widget.WidgetId,
+            Title: "widget", //unused title
+            RowNumber: widget.x ? widget.x : widget.RowNumber,
+            ColumnNumber: widget.y ? widget.y : widget.ColumnNumber,
+            RowSpan: widget.width ? widget.width : widget.RowSpan,
+            ColumnSpan: widget.height ? widget.height : widget.ColumnSpan,
+            WidgetType: 0,
+            DashboardId: 0,
+            GraphType: widget.GraphType ? widget.GraphType : 0,
+            ItemIds: widget.ItemIds ? widget.ItemIds : []
+        };
+        console.log(widget);
         $.ajax({
             type: "POST",
-            url: "/api/MoveWidget/" + e.target.id,
-            data:  {itemIds: widget.ItemIds},
+            url: "/api/MoveWidget/",
+            data:  JSON.stringify(serializedWidget),
+            dataType: "application/json",
+            contentType: "application/json",
             success: () => showSaveMessage()
         }).fail(() => showErrorMessage());
     };

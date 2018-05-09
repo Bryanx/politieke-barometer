@@ -96,11 +96,11 @@ namespace BAR.UI.MVC.Controllers.api
 		/// The given ItemWidget will be copied to a UserWidget.
 		/// </summary>
 		[System.Web.Http.HttpPost]
-		[System.Web.Http.Route("api/MoveWidget/{widgetId}")]
-		public IHttpActionResult MoveWidgetToDashboard(int widgetId, [Bind(Exclude = "ItemIds")] UserWidgetDTO model)
+		[System.Web.Http.Route("api/MoveWidget/")]
+		public IHttpActionResult MoveWidgetToDashboard([FromBody] UserWidgetDTO model)
 		{
 			widgetManager = new WidgetManager();
-			widgetManager.MoveWidgetToDashBoard(widgetId, model.ItemIds, User.Identity.GetUserId());
+			widgetManager.MoveWidgetToDashBoard(model.WidgetId, model.GraphType, model.ItemIds, User.Identity.GetUserId());
 			return StatusCode(HttpStatusCode.NoContent);
 		}
 		

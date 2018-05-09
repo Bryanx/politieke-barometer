@@ -53,7 +53,7 @@ namespace BAR.BL.Managers
 			widget.ColumnSpan = colspan;
 			widget.Timestamp = timestamp;
 			widget.Items = items ?? new List<Item>();
-			widget.GraphType = graphType;
+			if (graphType != 0) widget.GraphType = graphType;
 			widget.PropertyTags = proptags;
 
 			//Check for adding widgetData
@@ -213,7 +213,7 @@ namespace BAR.BL.Managers
 		/// Copies a widget to the dashboard
 		/// All attributes of the given Widget are copied and used to generate a new UserWidget.
 		/// </summary>
-		public void MoveWidgetToDashBoard(int widgetId, IEnumerable<int> itemIds, string userId) 
+		public void MoveWidgetToDashBoard(int widgetId, GraphType graphType, IEnumerable<int> itemIds, string userId) 
 		{
 			uowManager = new UnitOfWorkManager();
 			InitRepo();
@@ -227,10 +227,10 @@ namespace BAR.BL.Managers
 			//Get widget
 			Widget widget = GetWidgetWithAllData(widgetId);
 
-			//make new widget and attach items to the new widget
+			//make new widget and attach items to the new widgetwidget.GraphType
 			Widget newWidget = AddWidget(WidgetType.GraphType, widget.Title, widget.RowNumber, 
 				widget.ColumnNumber, proptags: new List<PropertyTag>(), rowspan: widget.RowSpan,
-				colspan: widget.ColumnSpan, dashboardId: dash.DashboardId, items: items, graphType: widget.GraphType);
+				colspan: widget.ColumnSpan, dashboardId: dash.DashboardId, items: items, graphType: graphType);
 			
 			uowManager.Save();
 			
