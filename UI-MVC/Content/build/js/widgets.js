@@ -1,5 +1,6 @@
 $(document).ready(init);
 
+//colors
 var primary_color = window.getComputedStyle(document.documentElement).getPropertyValue("--primary-color");
 var secondary_color = window.getComputedStyle(document.documentElement).getPropertyValue("--secondary-color");
 var tertiary_color = window.getComputedStyle(document.documentElement).getPropertyValue("--tertiary-color");
@@ -153,6 +154,22 @@ var widgetElements = {
     },
 };
 
+//gridstack
+var gridselector = $("#grid");
+gridselector.gridstack({
+    resizable: {
+        handles: "e, se, s, sw, w"
+    }
+});
+var grid = gridselector.data("gridstack");
+
+var charts = [];
+var widgets = [];
+var itempage = false;
+var orgpage = false;
+var dashboardpage = false;
+var updateWidgets;
+
 function createNodebox(id) {
     let node = document.getElementById('graph' + id);
     let parent = node.parentElement;
@@ -197,15 +214,6 @@ function nodeboxSize(node, parent, id) {
     parent.appendChild(node);
 }
 
-
-var gridselector = $("#grid");
-gridselector.gridstack({
-    resizable: {
-        handles: "e, se, s, sw, w"
-    }
-});
-var grid = gridselector.data("gridstack");
-
 function noWidgetsAvailable() {
     $(".no-widgets").show();
 }
@@ -219,13 +227,6 @@ let convertChartTypeToGraphType = function(chartType) {
         case "doughnut": return 4;
     }
 };
-
-var charts = [];
-var widgets = [];
-var itempage = false;
-var orgpage = false;
-var dashboardpage = false;
-var updateWidgets;
 
 function loadGraphs(itemId, widget) {
 
