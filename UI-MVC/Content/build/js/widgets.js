@@ -322,14 +322,15 @@ function loadGraphs(itemId, widget) {
         let widgetId = $this[0].id;
         let chart = charts.find(c => c.config.id == widgetId);
         let itemId = suggestion.data;
+        let widgetToUpdate = widgets.find(w => w.WidgetId == widgetId);
         $.ajax({
             type: "GET",
             url: "/api/GetGraphs/" + itemId + "/" + widgetId,
             dataType: "json",
             success: data => {
                 if (data !== undefined) {
-                    if (!widget.ItemIds.includes("" + itemId)) {
-                        widget.ItemIds.push(itemId);
+                    if (!widgetToUpdate.ItemIds.includes(itemId)) {
+                        widgetToUpdate.ItemIds.push(itemId);
                         if (dashboardpage) updateWidgets(widgets);
                     }
                     AddDataSet(chart, name, data[0].GraphValues.map(g => g.NumberOfTimes));
@@ -511,7 +512,7 @@ function loadGraphs(itemId, widget) {
                     url: "/api/GetGraphs/" + itemId + "/" + widget.WidgetId,
                     dataType: "json",
                     success: data => {
-                        if (!widget.ItemIds.includes("" + itemId)) {
+                        if (!widget.ItemIds.includes(itemId)) {
                             widget.ItemIds.push(itemId);
                         }
                         let chart = charts.find(c => c.config.id == widget.WidgetId);
@@ -712,13 +713,6 @@ function init() {
         let widget = widgets.find(w => w.WidgetId == e.target.id);
         let serializedWidget = {
             WidgetId: widget.id ? widget.id : widget.WidgetId,
-            Title: "widget", //unused title
-            RowNumber: widget.x ? widget.x : widget.RowNumber,
-            ColumnNumber: widget.y ? widget.y : widget.ColumnNumber,
-            RowSpan: widget.width ? widget.width : widget.RowSpan,
-            ColumnSpan: widget.height ? widget.height : widget.ColumnSpan,
-            WidgetType: 0,
-            DashboardId: 0,
             GraphType: widget.GraphType ? widget.GraphType : 0,
             ItemIds: widget.ItemIds ? widget.ItemIds : []
         };

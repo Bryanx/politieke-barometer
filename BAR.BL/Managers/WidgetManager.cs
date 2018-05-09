@@ -228,8 +228,8 @@ namespace BAR.BL.Managers
 			Widget widget = GetWidgetWithAllData(widgetId);
 
 			//make new widget and attach items to the new widgetwidget.GraphType
-			Widget newWidget = AddWidget(WidgetType.GraphType, widget.Title, widget.RowNumber, 
-				widget.ColumnNumber, proptags: new List<PropertyTag>(), rowspan: widget.RowSpan,
+			Widget newWidget = AddWidget(WidgetType.GraphType, widget.Title, 0, 
+				0, proptags: new List<PropertyTag>(), rowspan: widget.RowSpan,
 				colspan: widget.ColumnSpan, dashboardId: dash.DashboardId, items: items, graphType: graphType);
 			
 			uowManager.Save();
