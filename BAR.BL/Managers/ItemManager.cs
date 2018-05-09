@@ -803,6 +803,7 @@ namespace BAR.BL.Managers
 			foreach (Item item in items)
 			{
 				DetermineTrending(item.ItemId);
+				new SubscriptionManager().GenerateAlerts(item.ItemId);
 				item.NumberOfMentions = dataManager.GetInformationsForItemid(item.ItemId).Count();
 
 				//Gather sentiment

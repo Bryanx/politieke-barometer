@@ -147,7 +147,7 @@ namespace BAR.UI.MVC.Controllers
 					//Assign Role to user    
 					await userManager.AddToRoleAsync(user.Id, "SuperAdmin");
 
-					//Log useractivity
+					//Log activity
 					new SubplatformManager().LogActivity(ActivityType.RegisterActivity);
 
 					//Login
@@ -392,7 +392,7 @@ namespace BAR.UI.MVC.Controllers
 					//Assign Role to user Here      
 					await userManager.AddToRoleAsync(user.Id, "SuperAdmin");
 
-					//log activities
+					//log activity
 					new SubplatformManager().LogActivity(ActivityType.RegisterActivity);
 
 					if (result.Succeeded)
