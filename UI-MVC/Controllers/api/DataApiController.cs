@@ -29,7 +29,7 @@ namespace BAR.UI.MVC.Controllers.api
 				//content = "{}";
 
 				//Test with fewer data 
-				content = "{\"since\":\"2018-05-01 00:00\"}";
+				content = "{\"since\":\"2018-05-06 00:00\"}";
 			}
 			else
 			{
@@ -41,7 +41,7 @@ namespace BAR.UI.MVC.Controllers.api
 			using (HttpClient client = new HttpClient())
 			{
 				//Make request
-				HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, "http://kdg.textgain.com/query");
+				HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, "https://kdg.textgain.com/query");
 				request.Headers.Add("Accept", "application/json");
 				request.Headers.Add("X-API-Key", "aEN3K6VJPEoh3sMp9ZVA73kkr");
 
