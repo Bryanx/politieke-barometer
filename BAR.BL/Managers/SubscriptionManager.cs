@@ -104,6 +104,14 @@ namespace BAR.BL.Managers
 
 			}
 			subRepo.UpdateSubscriptions(subsToUpdate);
+
+			//Send emails
+			IEnumerable<Subscription> usersToSendEmail = subs.Where(sub => sub.SubscribedUser.AlertsViaEmail).AsEnumerable();
+			SendTrendingEmails(itemId, usersToSendEmail);
+		}
+
+		/// <summary>
+		/// Sends an email to the users who wants te receive an email via
 		/// if a person is trending
 		/// </summary>
 		private async void SendTrendingEmails(int itemId, IEnumerable<Subscription> subs)
