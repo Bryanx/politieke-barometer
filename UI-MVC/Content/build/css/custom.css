@@ -836,11 +836,19 @@ table.tile_info {
 /*
     The urls may give an error (when compiled the urls are correct)
  */
-.person-image, .person-image-top {
+.person-image-top {
   background-image: url("../images/user.png");
   background-position: center;
   background-repeat: no-repeat;
   background-size: contain;
+  width: 35px;
+  height: 35px;
+  display: inline-block;
+  margin-top: -20px;
+  margin-bottom: -20px;
+  margin-right: 5px; }
+
+.person-image {
   width: 35px;
   height: 35px;
   display: inline-block;

@@ -1,5 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net;
+using System.Security.Policy;
 using System.Web.Mvc;
+using BAR.BL.Domain.Items;
+using BAR.UI.MVC.Models;
 using MvcSiteMapProvider.Collections.Specialized;
 
 namespace BAR.UI.MVC.Helpers {
@@ -21,6 +27,43 @@ namespace BAR.UI.MVC.Helpers {
             }
 
             return MvcHtmlString.Create(imgTag.ToString(TagRenderMode.Normal));
+        }
+
+        public static MvcHtmlString LoadProfilePicture(this HtmlHelper helper, ItemViewModels.PersonViewModel model,
+            string size, object htmlAttributes = null) {
+            string src = "/Person/Picture?itemId=" + model.Item.ItemId;
+            string errorUrl = GetOnErrorUrl(model, size);
+            string onerror = "this.onload = null; this.src='" + errorUrl + "';";
+
+            var imgTag = new TagBuilder("img");
+            if (model.Item.Picture == null) imgTag.Attributes.Add("src", errorUrl);
+            else imgTag.Attributes.Add("src", src);
+            imgTag.Attributes.Add("onerror", onerror);
+
+            if (htmlAttributes != null) {
+                var attributes = HtmlHelper.AnonymousObjectToHtmlAttributes(htmlAttributes);
+                imgTag.MergeAttributes(attributes);
+            }
+
+            return MvcHtmlString.Create(imgTag.ToString(TagRenderMode.Normal));
+        }
+
+        private static string GetOnErrorUrl(ItemViewModels.PersonViewModel model, string size) {
+            try {
+                SocialMediaName socialMediaName = model.SocialMediaNames.FirstOrDefault(s => s.Source.Name == "Twitter");
+                string imageUrl = "https://twitter.com/" + socialMediaName.Username + "/profile_image?size="+size;
+                
+                HttpWebRequest request = (HttpWebRequest) WebRequest.Create(imageUrl);
+                using (HttpWebResponse response = (HttpWebResponse) request.GetResponse()) {
+                    if (response.StatusCode == HttpStatusCode.OK) {
+                        return imageUrl;
+                    } else {
+                        return "/Content/build/images/picture.jpg";
+                    }
+                }
+            } catch (Exception e) {
+                return "/Content/build/images/picture.jpg";
+            }
         }
     }
 }
