@@ -8,11 +8,11 @@
         <div class="profile_img">
             <div id="crop-avatar">
                 <!-- Current avatar -->
-                @using (Html.BeginForm("ChangePicture", "Person", new {itemId=@Model.Person.ItemId}, FormMethod.Post, new { id="formFileUpload", role = "form", enctype = "multipart/form-data" }))
+                @using (Html.BeginForm("ChangePicture", "Person", new {itemId=@Model.Item.ItemId}, FormMethod.Post, new { id="formFileUpload", role = "form", enctype = "multipart/form-data" }))
                 {
                     @Html.AntiForgeryToken()
                     <div class="form-group">
-                        @Html.ImageHelper(@Url.Action("Picture", "Person", new {itemId = @Model.Person.ItemId}), htmlAttributes: new { @class = "img-responsive avatar-view half-brightness", onerror = "this.onload = null; this.src='/Content/build/images/picture.jpg';"})
+                        @Html.ImageHelper(@Url.Action("Picture", "Person", new {itemId = @Model.Item.ItemId}), htmlAttributes: new { @class = "img-responsive avatar-view half-brightness", onerror = "this.onload = null; this.src='/Content/build/images/picture.jpg';"})
                         <div id="uploadPicture" class="text-over-image">Upload picture</div>
                         <input type="file" name="Picture" id="fileUpload" accept=".png,.jpg,.jpeg,.gif,.tif" style="display: none;"/>
                     </div>
@@ -24,7 +24,7 @@
     <div class="col-md-9 col-sm-9 col-xs-12">
         <button onclick="window.location = '@Url.OrganisationUrl(@Model.OrganisationId)';" class="btn btn-default btn-xs">@Model.OrganisationName</button>
         <h1>
-            @Html.TextBoxFor(i => @Model.Person.Name, new {@class = "renameItem form-control width-auto inline", data_item_id = @Model.Person.ItemId})
+            @Html.TextBoxFor(i => @Model.Item.Name, new {@class = "renameItem form-control width-auto inline", data_item_id = @Model.Item.ItemId})
         </h1>
         <hr/>
     </div>
@@ -33,7 +33,7 @@
             <strong>@Resources.Politician @Resources.Details</strong>
         </h4>
         <ul class="list-unstyled user_data">
-            <form method="post" action="/api/Admin/UpdateItem/@Model.Person.ItemId" id="itemForm" data-item-id="@Model.Person.ItemId">
+            <form method="post" action="/api/Admin/UpdateItem/@Model.Item.ItemId" id="itemForm" data-item-id="@Model.Item.ItemId">
                 <li>
                     <i class="fa fa-map-marker user-profile-icon"></i> @Html.TextBoxFor(i => @Model.District, new {@class = "item-input form-control form-control-xs width-auto inline"})
                 </li>
@@ -51,27 +51,27 @@
     </div>
     <div class="col-md-3 col-sm-3 col-xs-12">
         <h4>
+            <strong>@Resources.NumberOfMentions</strong>
+        </h4>
+        <h1>
+            <strong class="totalNumberOfMentions">@Model.Item.NumberOfMentions</strong>
+        </h1>
+    </div>
+    <div class="col-md-3 col-sm-3 col-xs-12">
+        <h4>
             <strong>@Resources.SocialMedia</strong>
         </h4>
         @foreach (var item in Model.SocialMediaNames) {
             if (item.Source.Name == "Twitter") {
                 <div>Twitter: </div>
-                @Html.TextBoxFor(i => item.Username, new {@class = "renameItem form-control form-control-xs width-auto inline", data_item_id = @Model.Person.ItemId})
+                @Html.TextBoxFor(i => item.Username, new {@class = "renameItem form-control form-control-xs width-auto inline", data_item_id = @Model.Item.ItemId})
                 ;
             }
             if (item.Source.Name == "Facebook") {
                 <div>Facebook: </div>
-                @Html.TextBoxFor(i => item.Username, new {@class = "renameItem form-control form-control-xs width-auto inline", data_item_id = @Model.Person.ItemId})
+                @Html.TextBoxFor(i => item.Username, new {@class = "renameItem form-control form-control-xs width-auto inline", data_item_id = @Model.Item.ItemId})
                 ;
             }
         }
-    </div>
-    <div class="col-md-3 col-sm-3 col-xs-12">
-        <h4>
-            <strong>@Resources.NumberOfMentions</strong>
-        </h4>
-        <h1>
-            <strong class="totalNumberOfMentions">@Model.Person.NumberOfMentions</strong>
-        </h1>
     </div>
 </div>

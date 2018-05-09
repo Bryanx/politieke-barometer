@@ -135,5 +135,34 @@ namespace BAR.UI.MVC.Controllers.api
 
 			return StatusCode(HttpStatusCode.NoContent);
 		}
+		
+		/// <summary>
+		/// Retrieves more people from the same organisation.
+		/// </summary>
+		[HttpGet]
+		[Route("api/GetMorePeopleFromOrg/{itemId}")]
+		public IHttpActionResult GetMorePeopleFromOrg(string itemId)
+		{
+			itemManager = new ItemManager();
+			int orgId = itemManager.GetPersonWithDetails(Int32.Parse(itemId)).Organisation.ItemId;
+			List<Person> items = itemManager.GetAllPersons()
+				.Where(p => p.Organisation.ItemId == orgId)
+				.OrderByDescending(p => p.NumberOfMentions)
+				.Take(6).ToList();
+			return Ok(Mapper.Map(items, new List<ItemDTO>()));
+		}
+		
+		/// <summary>
+		/// Retrieves more people from the same organisation.
+		/// </summary>
+		[HttpGet]
+		[Route("api/GetPeopleFromOrg/{itemId}")]
+		public IHttpActionResult GetPeopleFromOrg(string itemId)
+		{
+			itemManager = new ItemManager();
+			int orgId = Int32.Parse(itemId);
+			List<Person> items = itemManager.GetAllPersons().Where(p => p.Organisation.ItemId == orgId).ToList();
+			return Ok(Mapper.Map(items, new List<ItemDTO>()));
+		}
 	}
 }

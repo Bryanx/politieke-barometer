@@ -72,21 +72,21 @@ namespace BAR.UI.MVC.Controllers.api
 		public IHttpActionResult GetGraphs(int itemId, int widgetId)
 		{
 			widgetManager = new WidgetManager();
+			itemManager = new ItemManager();
 			
-			//Get widgets
+			//Get widgets for item
 			IEnumerable<Widget> widgets = widgetManager.GetAllWidgetsWithAllDataForItem(itemId);
+
+			//Get keyvalue for the widgetid.
+			string keyValue = widgetManager.GetWidgetWithAllData(widgetId)?.WidgetDatas.FirstOrDefault()?.KeyValue;
 			
-			IEnumerable<WidgetData> widgetDatas = widgets.FirstOrDefault(w => w.WidgetId == widgetId)?.WidgetDatas;
+			if (keyValue == null) return StatusCode(HttpStatusCode.Conflict);
 			
-			//If widgetdata's is null, either something went wrong or
-			//the user is trying to add another graph to the given widget
-			if (widgetDatas == null) {
-				string keyValue = widgetManager.GetWidgetWithAllData(widgetId)?.WidgetDatas.FirstOrDefault()?.KeyValue;
-				if (keyValue == null) return StatusCode(HttpStatusCode.Conflict);
-				widgetDatas = widgets.SingleOrDefault(w => w.WidgetDatas.Any(wd => wd.KeyValue == keyValue)).WidgetDatas;
-			}
+			IEnumerable<WidgetData> widgetDatas = widgets.FirstOrDefault(w => w.WidgetDatas.Any(wd => wd.KeyValue == keyValue)).WidgetDatas;
 			IEnumerable<WidgetDataDTO> widgetDataDtos = Mapper.Map(widgetDatas, new List<WidgetDataDTO>());
-			if (widgetDataDtos == null) return StatusCode(HttpStatusCode.NoContent);
+			
+			//Get item name
+			widgetDataDtos.First().ItemName = itemManager.GetItem(itemId).Name;
 			
 			return Ok(widgetDataDtos);
 		}
@@ -135,15 +135,17 @@ namespace BAR.UI.MVC.Controllers.api
 		/// </summary>
 		/// <param name="widgets"></param>
 		/// <returns>If all goes well, 204 No Content is returned</returns>
-		public IHttpActionResult Put([FromBody] UserWidgetDTO[] widgets)
+		[System.Web.Http.HttpPost]
+		[System.Web.Http.Route("api/UpdateWidget/")]
+		public IHttpActionResult UpdateWidget([FromBody] UserWidgetDTO[] widgets)
 		{
 			widgetManager = new WidgetManager();
 			
 			foreach (UserWidgetDTO widget in widgets) {
 				if (widget == null) return BadRequest("No widget given");
 				if (widgetManager.GetWidget(widget.WidgetId) == null) return NotFound();
-				widgetManager.ChangeWidgetPos(widget.WidgetId, widget.RowNumber, widget.ColumnNumber, widget.RowSpan,
-					widget.ColumnSpan);
+				widgetManager.ChangeWidgetDetails(widget.WidgetId, widget.RowNumber, widget.ColumnNumber, widget.ItemIds.ToList(),
+						widget.RowSpan, widget.ColumnSpan, widget.GraphType);
 			}
 			return StatusCode(HttpStatusCode.NoContent);
 		}

@@ -100,7 +100,7 @@
         $("#uploadPicture").click(() => $("#fileUpload").click());
 
         (() => {
-            loadWidgets("/api/GetItemWidgets/", @Model.Person.ItemId);
+            loadWidgets("/api/GetItemWidgets/", @Model.Item.ItemId);
 
             $("#viewAsUser").click(function() {
                 $("#userview").toggle();

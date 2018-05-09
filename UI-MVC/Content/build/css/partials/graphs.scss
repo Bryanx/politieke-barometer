@@ -4,3 +4,25 @@ canvas{
   width: 100% !important;
   height: auto !important;
 }
+
+.org-member {
+  padding: 0 10px 15px 10px;
+  cursor: pointer;
+  strong {
+    display: block;
+    margin-top: 10px;
+    white-space: nowrap;
+  }
+  img {
+    width: 85%;
+  }
+  &:hover {
+    strong {
+      text-decoration: underline;
+    }
+  }
+}
+
+.grid-stack-item-content {
+  overflow: visible !important;
+}

@@ -588,6 +588,12 @@
   <data name="Male" xml:space="preserve">
     <value>Male</value>
   </data>
+  <data name="InNumberOfMentions" xml:space="preserve">
+    <value>In number of mentions.</value>
+  </data>
+  <data name="InTrendingPercentage" xml:space="preserve">
+    <value>in trending percentage.</value>
+  </data>
   <data name="Theme" xml:space="preserve">
     <value>Theme</value>
   </data>

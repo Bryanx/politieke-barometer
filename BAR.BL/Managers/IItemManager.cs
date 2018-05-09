@@ -30,7 +30,7 @@ namespace BAR.BL.Managers
 		IEnumerable<Item> GetMostTredningItemsForUser(string userId, int numberOfItems = 5);
 		IEnumerable<Item> GetMostTredningItemsForUserAndItemType(string userId, ItemType type, int numberOfItems = 5);
 
-		IEnumerable<Item> GetAllPersonsForSubplatform(int subPlatformID);
+		IEnumerable<Person> GetAllPersonsForSubplatform(int subPlatformID);
 		IEnumerable<Item> GetAllOrganisationsForSubplatform(int subPlatformID);
 
 		Item AddItem(ItemType itemType, string name, string description = "", string function = "",

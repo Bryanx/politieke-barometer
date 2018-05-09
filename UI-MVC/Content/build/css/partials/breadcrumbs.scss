@@ -1,13 +1,19 @@
-.breadcrumb {
-  position: relative;
+
+.breadcrumb-container {
+  width:100%;
   background-color: hsla(0, 0%, 94%, 1);
-  color: var(--white);
-  padding-left: 20px;
-  border-radius: 0;
-  margin-bottom: 0px;
-  @include box-shadow(inset 0px 3px 3px -2px rgba(0, 0, 0, 0.05));
-  > li > a {
+  .breadcrumb {
+    background: transparent;
+    margin: auto;
+    max-width: $max-site-width;
     position: relative;
-    z-index: 2;
+    color: var(--white);
+    padding: 8px $site-padding;
+    border-radius: 0;
+    margin-bottom: 0px;
+    > li > a {
+      position: relative;
+      z-index: 2;
+    }
   }
 }

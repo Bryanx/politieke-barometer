@@ -8,20 +8,19 @@
         <div class="profile_img">
             <div id="crop-avatar">
                 <!-- Current avatar -->
-                @Html.ImageHelper(@Url.Action("Picture", "Person", new {itemId=@Model.Person.ItemId}), htmlAttributes: new {@class = "img-responsive avatar-view", onerror = "this.onload = null; this.src='/Content/build/images/picture.jpg';"})
+                @Html.LoadProfilePicture(Model, "original", new {@class = "img-responsive avatar-view"})
             </div>
         </div>
-
     </div>
     <div class="col-md-9 col-sm-9 col-xs-12">
         <button onclick="window.location = '@Url.OrganisationUrl(@Model.OrganisationId)';" class="btn btn-default btn-xs">@Model.OrganisationName</button>
         <h1>
-            <span class="item-name">@Model.Person.Name</span>
+            <span class="item-name">@Model.Item.Name <span class="badge bg-default">@(Model.Item.TrendingPercentage)% trending</span></span>
             @if (User.Identity.IsAuthenticated) {
-                if (Model.Subscribed != true) {
-                    <a class="w-100px subscribeItem btn btn-success pull-right" data-item-id="@Model.Person.ItemId" title="Deze persoon volgen">@Resources.Subscribe</a>
+               if (Model.Subscribed != true) {
+                    <a class="w-100px subscribeItem btn btn-success pull-right" data-item-id="@Model.Item.ItemId" title="Deze persoon volgen">@Resources.Subscribe</a>
                 } else {
-                    <a class="w-100px subscribeItem btn btn-danger pull-right" data-item-id="@Model.Person.ItemId" title="Uitschrijven">@Resources.Unsubscribe</a>
+                    <a class="w-100px subscribeItem btn btn-danger pull-right" data-item-id="@Model.Item.ItemId" title="Uitschrijven">@Resources.Unsubscribe</a>
                 }
             }
         </h1>
@@ -48,6 +47,32 @@
     </div>
     <div class="col-md-3 col-sm-3 col-xs-12">
         <h4>
+            <strong>@Resources.NumberOfMentions</strong>
+        </h4>
+        <h1>
+            <div><strong class="totalNumberOfMentions">@Model.Item.NumberOfMentions</strong></div>
+            @if (Model.RankNumberOfMentions == 1) {
+                <div class="badge bg-gold">#@Model.RankNumberOfMentions @Resources.InNumberOfMentions.ToLower()</div>
+            } else if (Model.RankNumberOfMentions == 2) {
+                <div class="badge bg-silver">#@Model.RankNumberOfMentions @Resources.InNumberOfMentions.ToLower()</div>
+            } else if (Model.RankNumberOfMentions == 3) {
+                <div class="badge bg-bronze">#@Model.RankNumberOfMentions @Resources.InNumberOfMentions.ToLower()</div>
+            } else {
+                <div class="badge bg-green">#@Model.RankNumberOfMentions @Resources.InNumberOfMentions.ToLower()</div>
+            }
+            @if (Model.RankTrendingPercentage == 1) {
+                <div class="badge bg-gold">#@Model.RankTrendingPercentage @Resources.InTrendingPercentage.ToLower()</div>
+            } else if (Model.RankTrendingPercentage == 2) {
+                <div class="badge bg-silver">#@Model.RankTrendingPercentage @Resources.InTrendingPercentage.ToLower()</div>
+            } else if (Model.RankTrendingPercentage == 3) {
+                <div class="badge bg-bronze">#@Model.RankTrendingPercentage @Resources.InTrendingPercentage.ToLower()</div>
+            } else {
+                <div class="badge bg-green">#@Model.RankTrendingPercentage @Resources.InTrendingPercentage.ToLower()</div>
+            }
+        </h1>
+    </div>
+    <div class="col-md-3 col-sm-3 col-xs-12">
+        <h4>
             <strong>@Resources.SocialMedia</strong>
         </h4>
         @foreach (var item in Model.SocialMediaNames) {
@@ -66,13 +91,5 @@
                 }
             }
         }
-    </div>
-    <div class="col-md-3 col-sm-3 col-xs-12">
-        <h4>
-            <strong>@Resources.NumberOfMentions</strong>
-        </h4>
-        <h1>
-            <strong class="totalNumberOfMentions">@Model.Person.NumberOfMentions</strong>
-        </h1>
     </div>
 </div>
