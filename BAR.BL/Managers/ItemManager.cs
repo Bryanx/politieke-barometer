@@ -80,7 +80,7 @@ namespace BAR.BL.Managers
 		/// <summary>
 		/// Sent emails to the people who want to receive an email
 		/// </summary>
-		public async void SendWeekyReviewEmails(IEnumerable<User> users)
+		public async void SendWeeklyReviewEmails(IEnumerable<User> users)
 		{
 			IEnumerable<Item> items;
 			
