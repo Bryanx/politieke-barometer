@@ -1491,7 +1491,8 @@ nav {
     display: block;
     text-overflow: ellipsis;
     overflow: hidden;
-    white-space: nowrap; }
+    white-space: nowrap;
+    max-width: 100%; }
     .x_title h2 small {
       margin-left: 10px; }
   .x_title span {
@@ -1534,7 +1535,6 @@ nav {
 
 @media (max-width: 1200px) {
   .x_title h2 {
-    width: 62%;
     font-size: 17px; }
 
   .tile, .graph {

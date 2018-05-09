@@ -69,7 +69,7 @@ var widgetElements = {
             "                <div class='x_title'>" +
             "                    <h2 class='graphTitle'>" + title + "</h2>" +
             "                    <ul class='nav navbar-right panel_toolbox'>" +
-            "                   <li><a id=" + id + " class='addToDashboard'>" + Resources.Save + "</a></li>" +
+            "                   <li><a id=" + id + " class='addToDashboard'>" + Resources.Save +" to "+ Resources.Dashboard + "</a></li>" +
             "                   <li class='dropdown'>" +
             "                       <a href='#' class='dropdown-toggle' data-toggle='dropdown' role='button' aria-expanded='false'><i class='fa fa-gear'></i></a>" +
             "                       <ul class='dropdown-menu' role='menu'>" +
