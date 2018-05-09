@@ -401,6 +401,10 @@
     </Content>
     <Content Include="Scripts\bootstrap-wysiwyg\bootstrap-wysiwyg.min.js" />
     <Content Include="Scripts\ChartJS\Chart.js" />
+    <Content Include="Scripts\DataExport\buttons.html5.min.js" />
+    <Content Include="Scripts\DataExport\jszip.min.js" />
+    <Content Include="Scripts\DataExport\pdfmake.min.js" />
+    <Content Include="Scripts\DataExport\vfs_fonts.js" />
     <Content Include="Scripts\datatables\datatables.net-buttons-bs\css\buttons.bootstrap.css" />
     <Content Include="Scripts\datatables\datatables.net-buttons-bs\css\buttons.bootstrap.min.css" />
     <Content Include="Scripts\datatables\datatables.net-buttons-bs\js\buttons.bootstrap.js" />
