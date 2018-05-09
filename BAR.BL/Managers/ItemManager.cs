@@ -11,6 +11,7 @@ using System.IO;
 using System.Text.RegularExpressions;
 using BAR.BL.Domain.Core;
 using BAR.BL.Domain.Widgets;
+using Microsoft.AspNet.Identity;
 
 namespace BAR.BL.Managers
 {
@@ -74,6 +75,37 @@ namespace BAR.BL.Managers
 					itemRepo.UpdateItem(itemToUpdate);
 				}
 			}
+		}
+
+		/// <summary>
+		/// Sent emails to the people who want to receive an email
+		/// </summary>
+		public async void SendWeekyReviewEmails(IEnumerable<User> users)
+		{
+			IEnumerable<Item> items;
+			
+			foreach (User user in users)
+			{
+				//Get 5 most trending items of
+				items = GetMostTredningItemsForUser(user.Id);
+
+				//Send email
+				IdentityMessage message = new IdentityMessage()
+				{
+					Destination = user.Email,
+					Subject = "Nieuwe weekly review is nu beschikbaar",
+					Body = "Beste " + user.FirstName + "</br></br>" + 
+						"Een nieuwe weekly review is nu beschikbaar!</br></br>" +
+						"De 5 meest trending items van deze week zijn:</br>" +
+						"- " + items.ElementAt(0).Name + " (" + items.ElementAt(0).TrendingPercentage + "% trending)</br>" +
+						"- " + items.ElementAt(1).Name + " (" + items.ElementAt(1).TrendingPercentage + "% trending)</br>" +
+						"- " + items.ElementAt(2).Name + " (" + items.ElementAt(2).TrendingPercentage + "% trending)</br>" +
+						"- " + items.ElementAt(3).Name + " (" + items.ElementAt(3).TrendingPercentage + "% trending)</br>" +
+						"- " + items.ElementAt(4).Name + " (" + items.ElementAt(4).TrendingPercentage + "% trending)</br>" +
+						"Ga nu naar onze website om je nieuwe weekly review te bekijken!"
+				};
+				await new EmailService().SendAsync(message);
+			}		
 		}
 
 		/// <summary>
