@@ -40,8 +40,10 @@ namespace BAR.BL.Managers
 		bool ImportThemes(string json, int subPlatformID);
 		
 		Item ChangeItemName(int itemId, string name);
+		Item ChangeItemPlatform(int itemId, int subplatformId);
 		Item ChangeItemActivity(int itemId);
 		Person ChangePerson(int itemId, DateTime birthday, Gender gender, string position, string district);
+		Person ChangePerson(int itemId, string site);
 		Item ChangePicture(int itemId, HttpPostedFileBase poImgFile);
     
 		IEnumerable<Item> ChangeItems(IEnumerable<Item> items);

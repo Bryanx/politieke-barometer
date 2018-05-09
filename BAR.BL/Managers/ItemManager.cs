@@ -464,6 +464,58 @@ namespace BAR.BL.Managers
 		}
 
 		/// <summary>
+		/// Updates the subplatform of a given item
+		/// </summary>
+		/// <param name="itemId"></param>
+		/// <param name="suplatformId"></param>
+		/// <returns></returns>
+		public Item ChangeItemPlatform(int itemId, int subplatformId)
+		{
+			uowManager = new UnitOfWorkManager();
+			ISubplatformManager subManager = new SubplatformManager(uowManager);
+			
+			InitRepo();
+
+			SubPlatform subPlatform = subManager.GetSubPlatform(subplatformId);
+			//Get item
+			Item personToUpdate = GetPersonWithDetails(itemId);
+
+			if (personToUpdate == null) return null;
+
+			//Update item
+			personToUpdate.SubPlatform = subPlatform;
+			personToUpdate.LastUpdated = DateTime.Now;
+
+			//Update database
+			itemRepo.UpdateItem(personToUpdate);
+			return personToUpdate;
+		}
+
+		/// <summary>
+		/// Updates the site of a given item
+		/// </summary>
+		/// <param name="itemId"></param>
+		/// <param name="site"></param>
+		/// <returns></returns>
+		public Person ChangePerson(int itemId, string site)
+		{
+			InitRepo();
+
+			//Get item
+			Person personToUpdate = GetPersonWithDetails(itemId);
+
+			if (personToUpdate == null) return null;
+
+			//Update item
+			personToUpdate.Site = site;
+			personToUpdate.LastUpdated = DateTime.Now;
+
+			//Update database
+			itemRepo.UpdateItem(personToUpdate);
+			return personToUpdate;
+		}
+
+		/// <summary>
 		/// Updates a person.
 		/// </summary>
 		public Person ChangePerson(int itemId, DateTime birthday, Gender gender, string position, string district)
@@ -484,6 +536,9 @@ namespace BAR.BL.Managers
 
 			//Update database
 			itemRepo.UpdateItem(personToUpdate);
+
+			uowManager.Save();
+			uowManager = null;
 			return personToUpdate;
 		}
 

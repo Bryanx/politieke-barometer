@@ -119,19 +119,19 @@ namespace BAR.UI.MVC.Controllers.api
 		{
 			//Get the subplatformID from the SubPlatformCheckAPI attribute
 			object _customObject = null;
-			int suplatformID = -1;
+			int subplatformID = -1;
 
 			if (Request.Properties.TryGetValue("SubPlatformID", out _customObject))
 			{
-				suplatformID = (int)_customObject;
+				subplatformID = (int)_customObject;
 			}
 
 			itemManager = new ItemManager();
-			subplatformManager = new SubplatformManager();
-			SubPlatform subplatform = subplatformManager.GetSubPlatform(suplatformID);
 
 			Person p = (Person)itemManager.AddItem(ItemType.Person, "Maarten Jorens");
-			p.SubPlatform = subplatform;
+
+			itemManager.ChangePerson(p.ItemId, "google.com");
+			itemManager.ChangeItemPlatform(p.ItemId, subplatformID);
 
 			return StatusCode(HttpStatusCode.NoContent);
 		}
