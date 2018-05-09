@@ -495,7 +495,31 @@ namespace BAR.BL.Managers
 		}
 
 		/// <summary>
-		/// Updates the site of a given item
+		/// Updates the site of a given Organisation
+		/// </summary>
+		/// <param name="itemId"></param>
+		/// <param name="site"></param>
+		/// <returns></returns>
+		public Organisation ChangeOrganisation(int itemId, string site)
+		{
+			InitRepo();
+
+			//Get item
+			Organisation orgToUpdate = GetOrganisationWithDetails(itemId);
+
+			if (orgToUpdate == null) return null;
+
+			//Update item
+			orgToUpdate.Site = site;
+			orgToUpdate.LastUpdated = DateTime.Now;
+
+			//Update database
+			itemRepo.UpdateItem(orgToUpdate);
+			return orgToUpdate;
+		}
+
+		/// <summary>
+		/// Updates the site of a given person
 		/// </summary>
 		/// <param name="itemId"></param>
 		/// <param name="site"></param>

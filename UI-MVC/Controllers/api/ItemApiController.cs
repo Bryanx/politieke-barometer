@@ -115,7 +115,7 @@ namespace BAR.UI.MVC.Controllers.api
 		[HttpPost]
 		[SubPlatformCheckAPI]
 		[Route("api/Admin/CreatePerson")]
-		public IHttpActionResult CreatePerson()
+		public HttpResponseMessage CreatePerson()
 		{
 			//Get the subplatformID from the SubPlatformCheckAPI attribute
 			object _customObject = null;
@@ -133,9 +133,73 @@ namespace BAR.UI.MVC.Controllers.api
 			itemManager.ChangePerson(p.ItemId, "google.com");
 			itemManager.ChangeItemPlatform(p.ItemId, subplatformID);
 
+			// Create a 201 response.
+			var response = new HttpResponseMessage(HttpStatusCode.Created)
+			{
+				Content = new StringContent(p.ItemId.ToString())
+			};
+
+			response.Headers.Location =
+			new Uri(Url.Link("Item", new { action = "Deatails", id = p.ItemId }));
+			return response;
+
+		}
+
+		/// <summary>
+		/// Creates a person item
+		/// </summary>
+		[HttpPost]
+		[SubPlatformCheckAPI]
+		[Route("api/Admin/CreateOrganisation")]
+		public IHttpActionResult CreateOrganisation()
+		{
+			//Get the subplatformID from the SubPlatformCheckAPI attribute
+			object _customObject = null;
+			int subplatformID = -1;
+
+			if (Request.Properties.TryGetValue("SubPlatformID", out _customObject))
+			{
+				subplatformID = (int)_customObject;
+			}
+
+			itemManager = new ItemManager();
+
+			Organisation p = (Organisation)itemManager.AddItem(ItemType.Organisation, "De bosklappers");
+
+			itemManager.ChangeOrganisation(p.ItemId, "www.google.com");
+			itemManager.ChangeItemPlatform(p.ItemId, subplatformID);
+
+			return StatusCode(HttpStatusCode.OK);
+		}
+
+		/// <summary>
+		/// Creates a person item
+		/// </summary>
+		[HttpPost]
+		[SubPlatformCheckAPI]
+		[Route("api/Admin/CreateTheme")]
+		public IHttpActionResult CreateTheme()
+		{
+			//Get the subplatformID from the SubPlatformCheckAPI attribute
+			object _customObject = null;
+			int subplatformID = -1;
+
+			if (Request.Properties.TryGetValue("SubPlatformID", out _customObject))
+			{
+				subplatformID = (int)_customObject;
+			}
+
+			itemManager = new ItemManager();
+
+			Person p = (Person)itemManager.AddItem(ItemType.Person, "Maarten Jorens");
+
+			itemManager.ChangePerson(p.ItemId, "google.com");
+			itemManager.ChangeItemPlatform(p.ItemId, subplatformID);
+
+			Person updatesPerson = itemManager.GetPersonWithDetails(p.ItemId);
 			return StatusCode(HttpStatusCode.NoContent);
 		}
-		
+
 		/// <summary>
 		/// Retrieves more people from the same organisation.
 		/// </summary>
