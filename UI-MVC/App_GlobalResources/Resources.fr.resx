@@ -394,7 +394,7 @@
     <value>Nombre d'abonnés</value>
   </data>
   <data name="NumberOfMentions" xml:space="preserve">
-    <value>Nombre de mentions</value>
+    <value>Mentions</value>
   </data>
   <data name="OnSocialMedia" xml:space="preserve">
     <value>Sur les résaux sociaux</value>
@@ -591,5 +591,26 @@ Thème</value>
   </data>
   <data name="InTrendingPercentage" xml:space="preserve">
     <value>En pourcentage de tendance.</value>
+  </data>
+  <data name="Age" xml:space="preserve">
+    <value>Âge</value>
+  </data>
+  <data name="AgeDistributionOfMentions" xml:space="preserve">
+    <value>Répartition par âge des mentions</value>
+  </data>
+  <data name="GenderDistributionOfMentions" xml:space="preserve">
+    <value>Répartition par sexe des mentions</value>
+  </data>
+  <data name="NumberOfMentionsFull" xml:space="preserve">
+    <value>Nombre de mentions</value>
+  </data>
+  <data name="To" xml:space="preserve">
+    <value>Sur</value>
+  </data>
+  <data name="Members" xml:space="preserve">
+    <value>Membres</value>
+  </data>
+  <data name="MorePeopleFrom" xml:space="preserve">
+    <value>Plus de gens de</value>
   </data>
 </root>

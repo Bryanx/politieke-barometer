@@ -156,6 +156,12 @@
   <data name="AdminManagement" xml:space="preserve">
     <value>Admins beheren</value>
   </data>
+  <data name="Age" xml:space="preserve">
+    <value>Leeftijd</value>
+  </data>
+  <data name="AgeDistributionOfMentions" xml:space="preserve">
+    <value>Leeftijdsverdeling van vermeldingen</value>
+  </data>
   <data name="Ago" xml:space="preserve">
     <value>Geleden</value>
   </data>
@@ -285,6 +291,9 @@
   <data name="Gender" xml:space="preserve">
     <value>Geslacht</value>
   </data>
+  <data name="GenderDistributionOfMentions" xml:space="preserve">
+    <value>Geslachtsverdeling van vermeldingen</value>
+  </data>
   <data name="Home" xml:space="preserve">
     <value>Home</value>
   </data>
@@ -357,6 +366,9 @@
   <data name="Man" xml:space="preserve">
     <value>Man</value>
   </data>
+  <data name="Members" xml:space="preserve">
+    <value>Leden</value>
+  </data>
   <data name="Mentions" xml:space="preserve">
     <value>Vermeldingen</value>
   </data>
@@ -368,6 +380,9 @@
   </data>
   <data name="MoreInfo" xml:space="preserve">
     <value>Meer info</value>
+  </data>
+  <data name="MorePeopleFrom" xml:space="preserve">
+    <value>Meer mensen van</value>
   </data>
   <data name="NA" xml:space="preserve">
     <value>N/B</value>
@@ -398,6 +413,9 @@
   </data>
   <data name="NumberOfMentions" xml:space="preserve">
     <value>Vermeldingen</value>
+  </data>
+  <data name="NumberOfMentionsFull" xml:space="preserve">
+    <value>Aantal vermeldingen</value>
   </data>
   <data name="OnSocialMedia" xml:space="preserve">
     <value>Op sociale media</value>
@@ -545,6 +563,9 @@
   </data>
   <data name="Theme" xml:space="preserve">
     <value>Thema</value>
+  </data>
+  <data name="To" xml:space="preserve">
+    <value>Op</value>
   </data>
   <data name="Topics" xml:space="preserve">
     <value>Thema's</value>
