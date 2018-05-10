@@ -7,14 +7,10 @@ canvas{
 
 .org-member {
   padding: 0 10px 15px 10px;
-  cursor: pointer;
   strong {
     display: block;
     margin-top: 10px;
     white-space: nowrap;
-  }
-  img {
-    width: 85%;
   }
   &:hover {
     strong {
@@ -48,4 +44,6 @@ canvas{
 }
 
 .graph-options {
+  display: flex;
+  justify-content: space-evenly;
 }

@@ -338,6 +338,9 @@ hr {
 .fixed_height_200 {
   height: 200px; }
 
+.max_height_460 {
+  max-height: 460px; }
+
 .overflow_hidden {
   overflow: hidden; }
 
@@ -918,7 +921,9 @@ table.tile_info {
   .text-over-image:hover {
     background: white; }
 
-.avatar-view {
+.avatar-view, .related-img-view {
+  object-fit: cover;
+  width: 100% !important;
   -webkit-border-radius: 5px;
   -moz-border-radius: 5px;
   border-radius: 5px; }
@@ -1807,14 +1812,11 @@ canvas {
   height: auto !important; }
 
 .org-member {
-  padding: 0 10px 15px 10px;
-  cursor: pointer; }
+  padding: 0 10px 15px 10px; }
   .org-member strong {
     display: block;
     margin-top: 10px;
     white-space: nowrap; }
-  .org-member img {
-    width: 85%; }
   .org-member:hover strong {
     text-decoration: underline; }
 
@@ -1837,6 +1839,10 @@ canvas {
   display: inline-block;
   vertical-align: top;
   float: left; }
+
+.graph-options {
+  display: flex;
+  justify-content: space-evenly; }
 
 .modal-lg {
   max-width: 600px;

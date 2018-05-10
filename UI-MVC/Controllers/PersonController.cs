@@ -114,12 +114,28 @@ namespace BAR.UI.MVC.Controllers
 			
 			personViewModel.RankNumberOfMentions = CalculateRankNumberOfMentions(personViewModel.Item.NumberOfMentions);
 			personViewModel.RankTrendingPercentage = CalculateRankTrendingPercentage(personViewModel.Item.ItemId);
+			personViewModel.PeopleFromSameOrg = GetPeopleFromSameOrg(personViewModel.Item.ItemId);
 
 			//Log visit activity
 			new SubplatformManager().LogActivity(ActivityType.VisitActitiy);
 			
 			//Assembling the view
 			return View(personViewModel);
+		}
+
+		private List<PersonViewModel> GetPeopleFromSameOrg(int itemId) 
+		{
+			int orgId = itemManager.GetPersonWithDetails(itemId).Organisation.ItemId;
+			List<Person> persons = itemManager.GetAllPersons()
+				.Where(p => p.Organisation.ItemId == orgId)
+				.Where(p => p.ItemId != itemId) //except the current person
+				.OrderByDescending(p => p.NumberOfMentions)
+				.Take(6).ToList();
+			List<PersonViewModel> personViewModels = Mapper.Map(persons, new List<PersonViewModel>());
+			for (int i = 0; i < persons.Count; i++) {
+				personViewModels[i].Item = Mapper.Map(persons[i], new ItemDTO());
+			}
+			return personViewModels;
 		}
 
 		/// <summary>

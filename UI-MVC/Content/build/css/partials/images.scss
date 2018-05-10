@@ -92,9 +92,12 @@
   }
 }
 
-.avatar-view {
+.avatar-view, .related-img-view {
+  object-fit: cover;
+  width: 100% !important;
   @include border-radius;
 }
+
 .profile_left {
   padding-left: 0;
   margin-left: -5px;

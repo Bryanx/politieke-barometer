@@ -69,9 +69,9 @@ var widgetElements = {
         return "<div data-widget-id=" + id + " class='chart-container'>" +
             "            <div class='x_panel grid-stack-item-content bg-white no-scrollbar'>" +
             "                <div class='x_title'>" +
-            "                    <h2 class='graphTitle'>" + title + "</h2>" +
+            "                    <h2 data-widget-id=" + id + " class='graphTitle'>" + title + "</h2>" +
             "                    <ul class='nav navbar-right panel_toolbox'>" +
-            "                   <li><a id=" + id + " class='addToDashboard'>" + Resources.Save +" to "+ Resources.Dashboard + "</a></li>" +
+            "                   <li><a id=" + id + " class='addToDashboard'>" + Resources.Save +" "+ Resources.To.toString().toLowerCase() +" "+ Resources.Dashboard.toString().toLowerCase() + "</a></li>" +
             "                   <li class='dropdown'>" +
             "                       <a href='#' class='dropdown-toggle' data-toggle='dropdown' role='button' aria-expanded='false'><i class='fa fa-gear'></i></a>" +
             "                       <ul class='dropdown-menu' role='menu'>" +
@@ -132,27 +132,6 @@ var widgetElements = {
             "               </div>" +
             "            </div>" +
             "        </div>";
-    },
-    //related items widget
-    createPeopleWidget: function (title) {
-        return "<div class='chart-container'>" +
-            "            <div class='x_panel grid-stack-item-content bg-white no-scrollbar'>" +
-            "                <div class='x_title'>" +
-            "                    <h2 class='graphTitle'>" + title + "</h2>" +
-            "                    <div class='clearfix'></div>" +
-            "                </div>" +
-            "                <div class='scroll' style='position: relative; height: 88%;'> " +
-            "                    <div id='related-items'></div>" +
-            "               </div>" +
-            "            </div>" +
-            "        </div>";
-    },
-    createPeopleItem: function (itemId, name, mentions) {
-        return "<div class='org-member col-xs-6 col-sm-4 col-md-2'>" +
-            "<img src='/Content/build/images/picture.jpg'>" +
-            "<strong><a href='/Person/Details/" + itemId + "'> " + name + "</a></strong>" +
-            "<div>" + Resources.Mentions + ": " + mentions + "</div>" +
-            "</div>";
     },
 };
 
@@ -253,27 +232,27 @@ function loadGraphs(itemId, widget) {
     ];
 
     //Retrieves a chart by data-id.
-    let FindChartByEvent = function(e) {
+    let FindChartByEvent = function (e) {
         let widgetId = $(e.target).data("widget-id");
         return charts.find(c => c.config.id == widgetId);
     };
-    
+
     //Removes the last added dataset
     let RemoveData = function (e) {
         let chart = FindChartByEvent(e);
-        chart.config.data.datasets.splice(0,1);
+        chart.config.data.datasets.splice(0, 1);
         chart.update();
     };
-    
+
     //Retrieves an image of the graph
     let AddImageUrl = function (id) {
         let chart = charts.find(c => c.config.id == id);
         $(".getPNGImage").attr("href", chart.toBase64Image())
-            .attr("download","graph.png");        
+            .attr("download", "graph.png");
         $(".getJPGImage").attr("href", chart.toBase64Image())
-            .attr("download","graph.jpg");
+            .attr("download", "graph.jpg");
     };
-    
+
     //Time is changed on the x-axes accordingly.
     let ChangeTime = function (e, value, date) {
         let chart = FindChartByEvent(e);
@@ -289,14 +268,14 @@ function loadGraphs(itemId, widget) {
         };
         chart.update();
     };
-    
+
     //When no data is available this function shows a message.
     let displayNoGraphData = function (WidgetId) {
         $(".no-graph-data").css("display", "flex");
-        let widget = $("#graph"+WidgetId).parents(".grid-stack-item-content");
+        let widget = $("#graph" + WidgetId).parents(".grid-stack-item-content");
         $(widget).find(".graph-options").hide();
         $(widget).find(".panel_toolbox").hide();
-        $("#graph"+WidgetId).hide();
+        $("#graph" + WidgetId).hide();
     };
 
     //Add data to graph.
@@ -304,14 +283,14 @@ function loadGraphs(itemId, widget) {
         let newColor = COLORS[chart.config.data.datasets.length];
         let borderColor = newColor;
         let hoverColor = DARKCOLORS[chart.config.data.datasets.length];
-        
+
         if (chart.config.type === "doughnut" || chart.config.type === "pie") {
             let firstDataset = chart.config.data.datasets[0];
             borderColor = firstDataset.borderColor;
             newColor = firstDataset.backgroundColor;
             hoverColor = firstDataset.hoverBackgroundColor;
         }
-        
+
         var newDataset = {
             label: name,
             borderColor: borderColor,
@@ -320,7 +299,7 @@ function loadGraphs(itemId, widget) {
             data: values,
             fill: false
         };
-        
+
         chart.config.data.datasets.push(newDataset);
         chart.update();
     };
@@ -348,13 +327,13 @@ function loadGraphs(itemId, widget) {
             fail: d => alert(d)
         })
     };
-    
+
     //Toggles the charttype: bar/line chart
     let ChangeChartType = function (e, type) {
         let widgetId = $(e.target).data("widget-id");
         let chart = charts.find(c => c.config.id == widgetId);
 
-        var ctx = document.getElementById("graph"+widgetId).getContext("2d");
+        var ctx = document.getElementById("graph" + widgetId).getContext("2d");
         var temp = jQuery.extend(true, {}, chart.config);
 
         //Remove chart from charts and delete it.
@@ -363,7 +342,7 @@ function loadGraphs(itemId, widget) {
 
         temp.type = type; // The new chart type
         charts.push(new Chart(ctx, temp));
-        
+
         //change text on button
         widgets.filter(w => w.WidgetId === widgetId)[0].GraphType = convertChartTypeToGraphType(type);
         if (dashboardpage) updateWidgets(widgets);
@@ -408,20 +387,24 @@ function loadGraphs(itemId, widget) {
         chart.options.legend.display = !chart.options.legend.display;
         chart.update();
     };
-    
+
     //Converts a graphtype to appropriate string
     let ConvertToChartType = function (graphType) {
         switch (graphType) {
-            case 1: return "line";
-            case 2: return "bar";
-            case 3: return "pie";
-            case 4: return "doughnut";
+            case 1:
+                return "line";
+            case 2:
+                return "bar";
+            case 3:
+                return "pie";
+            case 4:
+                return "doughnut";
         }
     };
-    
+
     //Create a new chart
     let AddChart = function (widget, labels, values, borderColor, color, darkColor, chartType) {
-        charts.push(new Chart(document.getElementById("graph"+widgetId), {
+        charts.push(new Chart(document.getElementById("graph" + widgetId), {
             id: widgetId,
             type: chartType,
             data: {
@@ -447,7 +430,7 @@ function loadGraphs(itemId, widget) {
     };
 
     //Settings for a piechart
-    let AddPieChart = function (widget, chartData, chartType="pie") {
+    let AddPieChart = function (widget, chartData, chartType = "pie") {
         let labels = chartData[0].GraphValues.map(g => g.Value);
         let values = chartData[0].GraphValues.map(g => g.NumberOfTimes);
         let borderColor = "#fff";
@@ -471,7 +454,7 @@ function loadGraphs(itemId, widget) {
     };
 
     //Settings for a linechart
-    let AddLineChart = function (widget, chartData, chartType="line") {
+    let AddLineChart = function (widget, chartData, chartType = "line") {
         let labels = chartData[0].GraphValues.map(g => g.Value);
         let values = chartData[0].GraphValues.map(g => g.NumberOfTimes);
         let colorNumber = Math.floor((Math.random() * 6));
@@ -488,22 +471,45 @@ function loadGraphs(itemId, widget) {
 
     //Settings for a donutchart
     let AddDoughnutChart = function (widget, chartData) {
-        AddPieChart(widget,  chartData, "doughnut");
+        AddPieChart(widget, chartData, "doughnut");
     };
-    
+
     //Moves the graph data to the appropriate method.
     let loadGraphHandler = function (widget, data) {
         if (data !== undefined) {
             let chartType = ConvertToChartType(widget.GraphType);
             switch (chartType) {
-                case "line": AddLineChart(widget, data);break;
-                case "bar": AddBarChart(widget, data);break;
-                case "pie": AddPieChart(widget, data);break;
-                case "doughnut": AddDoughnutChart(widget, data);
+                case "line":
+                    AddLineChart(widget, data);
+                    break;
+                case "bar":
+                    AddBarChart(widget, data);
+                    break;
+                case "pie":
+                    AddPieChart(widget, data);
+                    break;
+                case "doughnut":
+                    AddDoughnutChart(widget, data);
             }
         } else {
             displayNoGraphData(widgetId);
         }
+    };
+
+    //change graph title
+    let changeWidgetTitle = function (data, title = null) {
+        $(".graphTitle").each(function () {
+            let widgetId = $(this).data("widget-id");
+            if (widgetId === data.WidgetId) {
+                if (title == null) {
+                    if (data.KeyValue === "Number of mentions") title = Resources.NumberOfMentionsFull;
+                    else if (data.KeyValue === "Age") title = Resources.AgeDistributionOfMentions;
+                    else if (data.KeyValue === "Gender") title = Resources.GenderDistributionOfMentions;
+                    $(this).html(title);
+                }
+                $(this).html(title);
+            }
+        });
     };
     
     //Retrieves the graph data from api.
@@ -521,12 +527,11 @@ function loadGraphs(itemId, widget) {
                     url: "/api/GetGraphs/" + itemId + "/" + widget.WidgetId,
                     dataType: "json",
                     success: data => {
-                        if (!widget.ItemIds.includes(itemId)) {
-                            widget.ItemIds.push(itemId);
-                        }
+                        if (!widget.ItemIds.includes(itemId)) widget.ItemIds.push(itemId);
                         let chart = charts.find(c => c.config.id == widget.WidgetId);
                         if (chart == undefined) {
-                            loadGraphHandler(widget, data)
+                            if (itempage) changeWidgetTitle(data[0]);
+                            loadGraphHandler(widget, data);
                         } else {
                             AddDataSet(chart, data[0].ItemName + " " + data[0].KeyValue, data[0].GraphValues.map(g => g.NumberOfTimes));
                         }
@@ -619,25 +624,6 @@ function loadWidgets(url, itemId) {
         });
     };
 
-    //Loads a MorePeopleFromOrg widget
-    let loadPeopleWidget = function (data, title, widgetHeight) {
-        grid.addWidget(widgetElements.createPeopleWidget(title), 1, 1, 12, widgetHeight, true, 4, 12, 4, 12, 1);
-        grid.movable(".grid-stack-item", false);
-        grid.resizable(".grid-stack-item", false);
-        $.each(data, (index, value) => {
-           $("#related-items").append(widgetElements.createPeopleItem(value.ItemId, value.Name, value.NumberOfMentions)); 
-        });
-    };
-    
-    //Loads more people from the same organisation
-    let loadPeopleFromOrg = function (itemId, url, title, widgetHeight) {
-        $.ajax({
-            method: "GET",
-            url: url + itemId,
-            success: data => loadPeopleWidget(data, title, widgetHeight)
-        });
-    };
-    
     //Puts the widgets on the grid.
     let loadGrid = function (data, itemId) {
         itempage = false;
@@ -647,11 +633,11 @@ function loadWidgets(url, itemId) {
             $.each(data, (index, widget) => {
                 //UserWidget
                 if (widget.DashboardId !== -1) {
-                    grid.addWidget(widgetElements.createUserWidget(widget.WidgetId, widget.Title), widget.RowNumber, widget.ColumnNumber, widget.RowSpan, widget.ColumnSpan,
+                    grid.addWidget(widgetElements.createUserWidget(widget.WidgetId, "Give your graph a title"), widget.RowNumber, widget.ColumnNumber, widget.RowSpan, widget.ColumnSpan,
                         false, 4, 12, 4, 12, widget.WidgetId);
                     //ItemWidget
                 } else {
-                    grid.addWidget(widgetElements.createItemWidget(widget.WidgetId, widget.Title), widget.RowNumber, widget.ColumnNumber, widget.RowSpan, widget.ColumnSpan,
+                    grid.addWidget(widgetElements.createItemWidget(widget.WidgetId, ""), widget.RowNumber, widget.ColumnNumber, widget.RowSpan, widget.ColumnSpan,
                         true, 4, 12, 4, 12, widget.WidgetId);
                     grid.movable(".grid-stack-item", false);
                     grid.resizable(".grid-stack-item", false);
@@ -667,8 +653,6 @@ function loadWidgets(url, itemId) {
             noWidgetsAvailable();
         }
         if (itempage && !orgpage) loadItemForSocialWidget(itemId);
-        if (orgpage) loadPeopleFromOrg(itemId,"/api/GetPeopleFromOrg/", "Members", 6);
-        if (itempage) loadPeopleFromOrg(itemId,"/api/GetMorePeopleFromOrg/", "People from the same organisation", 4);
     };
     
     //Loads the widgets via api call.
