@@ -132,6 +132,9 @@
   <data name="About_Time" xml:space="preserve">
     <value>Ongeveer</value>
   </data>
+  <data name="Above25" xml:space="preserve">
+    <value>Boven 25</value>
+  </data>
   <data name="Account" xml:space="preserve">
     <value>Account</value>
   </data>
@@ -182,6 +185,9 @@
   </data>
   <data name="BarChart" xml:space="preserve">
     <value>Staafgrafiek</value>
+  </data>
+  <data name="Below25" xml:space="preserve">
+    <value>Onder 25</value>
   </data>
   <data name="CalculatedByAmountOfTweets" xml:space="preserve">
     <value>Berekend volgens het aantal tweets.</value>

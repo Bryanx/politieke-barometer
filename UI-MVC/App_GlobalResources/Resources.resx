@@ -618,8 +618,14 @@
   <data name="MorePeopleFrom" xml:space="preserve">
     <value>More people from</value>
   </data>
+  <data name="Above25" xml:space="preserve">
+    <value>Above 25</value>
+  </data>
   <data name="BarChart" xml:space="preserve">
     <value>Bar chart</value>
+  </data>
+  <data name="Below25" xml:space="preserve">
+    <value>Below 25</value>
   </data>
   <data name="CompareDataPlaceholder" xml:space="preserve">
     <value>Compare data with another person, organisation or topic.</value>

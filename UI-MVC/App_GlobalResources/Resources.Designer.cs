@@ -106,6 +106,15 @@ namespace BAR.UI.MVC.App_GlobalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Above 25.
+        /// </summary>
+        public static string Above25 {
+            get {
+                return ResourceManager.GetString("Above25", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Account.
         /// </summary>
         public static string Account {
@@ -255,6 +264,15 @@ namespace BAR.UI.MVC.App_GlobalResources {
         public static string BarChart {
             get {
                 return ResourceManager.GetString("BarChart", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Below 25.
+        /// </summary>
+        public static string Below25 {
+            get {
+                return ResourceManager.GetString("Below25", resourceCulture);
             }
         }
         

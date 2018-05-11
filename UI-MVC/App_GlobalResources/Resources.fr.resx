@@ -613,8 +613,14 @@ Thème</value>
   <data name="MorePeopleFrom" xml:space="preserve">
     <value>Plus de gens de</value>
   </data>
+  <data name="Above25" xml:space="preserve">
+    <value>Plus de 25</value>
+  </data>
   <data name="BarChart" xml:space="preserve">
     <value>Graphique à barres</value>
+  </data>
+  <data name="Below25" xml:space="preserve">
+    <value>Moins de 25</value>
   </data>
   <data name="CompareDataPlaceholder" xml:space="preserve">
     <value>Comparer des données avec une autre personne, organisation ou sujet.</value>
