@@ -7,5 +7,6 @@ namespace BAR.UI.MVC.Models {
         public string KeyValue { get; set; }
         public ICollection<GraphValue> GraphValues { get; set; }
         public int WidgetId { get; set; }
+        public string ItemName { get; set; }
     }
 }

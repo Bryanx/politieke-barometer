@@ -537,6 +537,10 @@
   <data name="ThanksEmailConfirm" xml:space="preserve">
     <value>Merci pour confirmer votre e-mail.</value>
   </data>
+  <data name="Theme" xml:space="preserve">
+    <value>5/5000
+Thème</value>
+  </data>
   <data name="Topics" xml:space="preserve">
     <value>Sujets</value>
   </data>
@@ -581,5 +585,11 @@
   </data>
   <data name="YourPasswordHasBeenReset" xml:space="preserve">
     <value>Votre mot de passe est réinitialisé.</value>
+  </data>
+  <data name="InNumberOfMentions" xml:space="preserve">
+    <value>En nombre de mentions.</value>
+  </data>
+  <data name="InTrendingPercentage" xml:space="preserve">
+    <value>En pourcentage de tendance.</value>
   </data>
 </root>

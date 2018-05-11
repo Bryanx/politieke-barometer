@@ -143,24 +143,38 @@ namespace BAR.BL.Managers
 		}
 
 		/// <summary>
-		/// Updates the position of the widget.
+		/// Updates the details of the widget.
 		/// </summary>
-		public Widget ChangeWidgetPos(int widgetId, int rowNbr, int colNbr, int rowspan = 1, int colspan = 1)
+		public Widget ChangeWidgetDetails(int widgetId, int rowNbr, int colNbr, List<int> itemIds, int rowspan = 1, int colspan = 1, GraphType graphType = (GraphType) 0)
 		{
+			uowManager = new UnitOfWorkManager();
 			InitRepo();
+			
+			ItemManager itemManager = new ItemManager(uowManager);
+				
+			//Set to remove duplicates
+			HashSet<int> set = new HashSet<int>();
+			itemIds.ForEach(i => set.Add(i));
+			List<Item> items = new List<Item>();
+				
+			if (set.Count > 1) items = itemManager.GetAllItems().Where(i => set.Contains(i.ItemId)).ToList();
 
 			//get widget
-			Widget widgetToUpdate = GetWidget(widgetId);
+			Widget widgetToUpdate = GetWidgetWithAllItems(widgetId);
 			if (widgetToUpdate == null) return null;
 
 			//update widget
 			widgetToUpdate.RowNumber = rowNbr;
 			widgetToUpdate.ColumnNumber = colNbr;
+			if (items.Count > 1) widgetToUpdate.Items = items;
 			widgetToUpdate.RowSpan = rowspan;
 			widgetToUpdate.ColumnSpan = colspan;
+			if (graphType != 0) widgetToUpdate.GraphType = graphType;
 
 			//update database
 			widgetRepo.UpdateWidget(widgetToUpdate);
+
+			uowManager.Save();
 
 			return widgetToUpdate;
 		}
@@ -282,7 +296,6 @@ namespace BAR.BL.Managers
 			{
 				DashboardType = dashType,
 				Widgets = new List<UserWidget>(),
-				Activities = new List<Activity>()
 			};
 
 			//Get user if not general dashboard

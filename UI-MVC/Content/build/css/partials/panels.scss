@@ -37,6 +37,7 @@
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
+    max-width: 100%;
     small {
       margin-left: 10px;
     }
@@ -67,6 +68,7 @@
     float: right;
     cursor: pointer;
     > a {
+      line-height: 1.471 !important;
       padding: 5px;
       color: #C5C7CB;
       font-size: 14px;
@@ -91,7 +93,6 @@
 
 @media (max-width: 1200px) {
   .x_title h2 {
-    width: 62%;
     font-size: 17px;
   }
   .tile, .graph {

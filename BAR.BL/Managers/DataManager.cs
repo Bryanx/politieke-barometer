@@ -6,6 +6,7 @@ using BAR.DAL;
 using Newtonsoft.Json;
 using BAR.BL.Domain.Items;
 using BAR.BL.Domain.Widgets;
+using BAR.BL.Domain.Users;
 
 namespace BAR.BL.Managers
 {
@@ -233,6 +234,7 @@ namespace BAR.BL.Managers
 			InitRepo();
 			IItemManager itemManager = new ItemManager(uowManager);
 			IEnumerable<Item> items = itemManager.GetAllPersons();
+			List<Theme> themes = itemManager.GetAllThemes().ToList();
 			IEnumerable<Property> properties = dataRepo.ReadAllProperties();
 			IEnumerable<Source> sources = dataRepo.ReadAllSources();
 			dynamic deserializedJson = JsonConvert.DeserializeObject(json);
@@ -373,6 +375,22 @@ namespace BAR.BL.Managers
 					information.Items.Add(items.Where(x => x.Name.Equals(name)).SingleOrDefault());
 				}
 
+				for (int j = 0; j < deserializedJson[i].words.Count; j++)
+				{
+					string wordName = deserializedJson[i].words[j];
+
+					foreach (Theme theme in themes)
+					{
+						foreach (Keyword keyword in theme.Keywords.ToList())
+						{
+							if(keyword.Name.ToLower().Equals(wordName.ToLower()))
+							{
+								information.Items.Add(themes.Where(x => x.Name.Equals(theme.Name)).SingleOrDefault());
+							}
+						}
+					}
+				}
+
 				//Add other information
 				information.Source = sources.Where(x => x.Name.Equals("Twitter")).SingleOrDefault();
 				string stringDate = Convert.ToString(deserializedJson[i].date);
@@ -385,10 +403,10 @@ namespace BAR.BL.Managers
 			uowManager = null;
 		}
 
-		/// <summary>
-		/// Gets last succesfull audit.
-		/// </summary>
-		public SynchronizeAudit GetLastAudit()
+    /// <summary>
+    /// Gets last succesfull audit.
+    /// </summary>
+	public SynchronizeAudit GetLastAudit()
     {
       InitRepo();
       return dataRepo.ReadLastAudit();
@@ -397,7 +415,7 @@ namespace BAR.BL.Managers
     /// <summary>
     /// Adds an audit with boolean false.
     /// </summary>
-		public SynchronizeAudit AddAudit(DateTime timestamp, bool succes)
+	public SynchronizeAudit AddAudit(DateTime timestamp, bool succes)
     {
       InitRepo();
       SynchronizeAudit synchronizeAudit = new SynchronizeAudit()
@@ -472,16 +490,75 @@ namespace BAR.BL.Managers
       dataRepo.DeleteSource(source);
     }
 
-    /// <summary>
-		/// Returns a list of all the informations objects that are
-		/// related to a specific item.
+        /// <summary>
+        /// Returns a list of all the informations objects that are
+         /// related to a specific item.
+         /// </summary>
+         public IEnumerable<Information> GetInformationsWithAllInfoForItem(int itemId)
+         {
+             InitRepo();
+             return dataRepo.ReadInformationsWithAllInfoForItem(itemId);
+         }
+     
+         /// <summary>
+         /// Gives back all the widgetdata for monitoring the
+         /// registerd users per day
+         /// </summary>
+         public WidgetData GetUserActivitiesData(ActivityType type, DateTime? timestamp = null)
+         {
+             InitRepo();
+     
+             //Create widgetdata
+             WidgetData widgetData = new WidgetData()
+             {
+                 GraphValues = new List<GraphValue>(),
+                 KeyValue = "User Activities"
+             };
+     
+             //Get actitivies
+             IEnumerable<UserActivity> activities = new SubplatformManager().GetUserActivities(type, timestamp);
+             if (activities == null || activities.Count() == 0) return widgetData;
+     
+             //Query data
+             DateTime startdate = DateTime.Now;
+             while (timestamp >= startdate)
+             {
+                 GraphValue graphValue = new GraphValue()
+                 {
+                     NumberOfTimes = activities.Where(act => act.TimeStamp.Day == startdate.Day).Count(),
+                     Value = startdate.ToString("dd-MM")
+                 };
+                 startdate = startdate.AddDays(-1);
+             }
+     
+             //Reverse data
+             widgetData.GraphValues.Reverse();
+             return widgetData;
+         }
+
+		/// <summary>
+		/// Gives back all the urls from a specific item
 		/// </summary>
-		public IEnumerable<Information> GetInformationsWithAllInfoForItem(int itemId)
-    {
-      InitRepo();
-      return dataRepo.ReadInformationsWithAllInfoForItem(itemId);
-    }
- }
+		public IEnumerable<string> GetUrlsForItem(int itemId)
+		{
+			List<string> urls = null; 
+
+			//Get informations for item
+			IEnumerable<Information> infos = GetInformationsWithAllInfoForItem(itemId);
+			if (infos == null || infos.Count() == 0) return urls;
+
+			//Extract urls
+			foreach (Information info in infos)
+			{
+				foreach (PropertyValue propval in info.PropertieValues)
+				{
+					if (propval.Property.Name.ToLower().Equals("url")) urls.Add(propval.Value);
+				}
+			}
+
+			return urls.AsEnumerable();
+		}
+	}
 }
 
 

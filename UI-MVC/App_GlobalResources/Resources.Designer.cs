@@ -502,7 +502,7 @@ namespace BAR.UI.MVC.App_GlobalResources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Female.
+        ///   Hiermee zoekt u een vertaalde tekenreeks die vergelijkbaar is met Female.
         /// </summary>
         public static string Female {
             get {
@@ -511,7 +511,7 @@ namespace BAR.UI.MVC.App_GlobalResources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Complete the remaining fields and signup..
+        ///   Hiermee zoekt u een vertaalde tekenreeks die vergelijkbaar is met Complete the remaining fields and signup..
         /// </summary>
         public static string FillTheRemainingFields {
             get {
@@ -624,6 +624,24 @@ namespace BAR.UI.MVC.App_GlobalResources {
         public static string In_Time {
             get {
                 return ResourceManager.GetString("In_Time", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Hiermee zoekt u een vertaalde tekenreeks die vergelijkbaar is met In number of mentions..
+        /// </summary>
+        public static string InNumberOfMentions {
+            get {
+                return ResourceManager.GetString("InNumberOfMentions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Hiermee zoekt u een vertaalde tekenreeks die vergelijkbaar is met in trending percentage..
+        /// </summary>
+        public static string InTrendingPercentage {
+            get {
+                return ResourceManager.GetString("InTrendingPercentage", resourceCulture);
             }
         }
         
@@ -754,7 +772,7 @@ namespace BAR.UI.MVC.App_GlobalResources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Male.
+        ///   Hiermee zoekt u een vertaalde tekenreeks die vergelijkbaar is met Male.
         /// </summary>
         public static string Male {
             get {
@@ -763,7 +781,6 @@ namespace BAR.UI.MVC.App_GlobalResources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Man.
         ///   Hiermee zoekt u een vertaalde tekenreeks die vergelijkbaar is met Man.
         /// </summary>
         public static string Man {
@@ -1336,6 +1353,15 @@ namespace BAR.UI.MVC.App_GlobalResources {
         public static string ThanksEmailConfirm {
             get {
                 return ResourceManager.GetString("ThanksEmailConfirm", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Hiermee zoekt u een vertaalde tekenreeks die vergelijkbaar is met Theme.
+        /// </summary>
+        public static string Theme {
+            get {
+                return ResourceManager.GetString("Theme", resourceCulture);
             }
         }
         

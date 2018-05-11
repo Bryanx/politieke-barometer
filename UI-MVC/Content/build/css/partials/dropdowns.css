@@ -1,22 +1,23 @@
 /*
 Error: Undefined mixin 'animation'.
-        on line 39 of dropdowns.scss, in `animation'
-        from line 39 of dropdowns.scss
+        on line 42 of dropdowns.scss, in `animation'
+        from line 42 of dropdowns.scss
 
-34:       color: #262626;
-35:       text-decoration: none;
-36:       background-color: #f5f5f5;
-37:       > i {
-38:         display: inline-block;
-39:         @include animation(0, .2s, ease-in-out, fadeLeft);
-40:       }
-41:     }
-42:   }
-43: }
+37:       color: #262626;
+38:       text-decoration: none;
+39:       background-color: #f5f5f5;
+40:       > i {
+41:         display: inline-block;
+42:         @include animation(0, .2s, ease-in-out, pop);
+43:       }
+44:     }
+45:   }
+46: }
+47: 
 
 Backtrace:
-dropdowns.scss:39:in `animation'
-dropdowns.scss:39
+dropdowns.scss:42:in `animation'
+dropdowns.scss:42
 C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/sass-3.5.6/lib/sass/tree/visitors/perform.rb:352:in `block in visit_mixin'
 C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/sass-3.5.6/lib/sass/stack.rb:98:in `block in with_mixin'
 C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/sass-3.5.6/lib/sass/stack.rb:135:in `with_frame'
@@ -103,4 +104,4 @@ C:/Ruby24-x64/bin/scss:23:in `<main>'
 body:before {
   white-space: pre;
   font-family: monospace;
-  content: "Error: Undefined mixin 'animation'.\A         on line 39 of dropdowns.scss, in `animation'\A         from line 39 of dropdowns.scss\A \A 34:       color: #262626;\A 35:       text-decoration: none;\A 36:       background-color: #f5f5f5;\A 37:       > i {\A 38:         display: inline-block;\A 39:         @include animation(0, .2s, ease-in-out, fadeLeft);\A 40:       }\A 41:     }\A 42:   }\A 43: }"; }
+  content: "Error: Undefined mixin 'animation'.\A         on line 42 of dropdowns.scss, in `animation'\A         from line 42 of dropdowns.scss\A \A 37:       color: #262626;\A 38:       text-decoration: none;\A 39:       background-color: #f5f5f5;\A 40:       > i {\A 41:         display: inline-block;\A 42:         @include animation(0, .2s, ease-in-out, pop);\A 43:       }\A 44:     }\A 45:   }\A 46: }\A 47: "; }

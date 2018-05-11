@@ -179,8 +179,8 @@ body .container.body .main-header-container-parent {
 nav .searchbar {
   width: 700px;
   max-width: 700px;
-  margin-top: 4px;
-  margin-bottom: 50px;
+  margin-top: -50px;
+  margin-bottom: 0px;
   transition: 1s ease-in-out;
   overflow: hidden;
 }

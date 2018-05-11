@@ -34,7 +34,7 @@ function checkScroll() {
             .css("box-shadow", "0px 3px 3px -2px rgba(0, 0, 0, 0.05)");
         $('.navbar-right > li > a > i').css("color", "#73879C");
         $('.navbar-right > li > a > span').css("color", "#73879C");
-        $('nav .searchbar').css('margin-bottom', '0');
+        $('nav .searchbar').css('margin-top', '4px');
         $('.nav-home').css('display', 'block');
         $('.nav.navbar-nav > li > a.signup').css("background-color", "#73879C")
     } else {
@@ -42,7 +42,7 @@ function checkScroll() {
             .css("box-shadow", "0px 1px 2px 2px rgba(0, 0, 0, 0)");
         $('.navbar-right > li > a > i').css("color", "white");
         $('.navbar-right > li > a > span').css("color", "white");
-        $('nav .searchbar').css('margin-bottom', '50px');
+        $('nav .searchbar').css('margin-top', '-50px');
         $('.nav-home').css('display', 'none');
         $('.nav.navbar-nav > li > a.signup').css("background-color", "rgba(0, 0, 0, 0.1)")
     }
@@ -144,7 +144,7 @@ let AddDataSet = function (chart, name, values) {
 
 /*---------- getting top 3 trending ----------*/
 
-let GetTopTrending = function (trendings){
+var GetTopTrending = function (trendings){
     
     $.each(trendings, (index,  value) => {
         $.ajax({

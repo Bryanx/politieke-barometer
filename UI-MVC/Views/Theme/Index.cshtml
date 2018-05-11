@@ -1,13 +1,13 @@
-@using System.Web.Optimization
-@model BAR.UI.MVC.Models.ItemViewModels.PersonViewModels
+﻿@using System.Web.Optimization
+@model BAR.UI.MVC.Models.ItemViewModels.ItemViewModel
 
 @section CustomCSS{
     @Styles.Render("~/bundles/datatables-css")
 }
 
 <h1>@Model.PageTitle</h1>
-<hr/>
-@Html.Partial("Partials/_PersonTable", Model)
+<hr />
+@Html.Partial("Partials/_ThemeTable", Model)
 <div style="visibility: hidden">space</div>
 
 @section CustomJS{
@@ -18,13 +18,15 @@
                 "searching": true,
                 "bScrollInfinite": true,
                 "bScrollCollapse": true,
-                "sScrollY": "760px",
+                "sScrollY": "750px",
                 "paging": true,
                 "bProcessing": true,
                 "info": true
             });
-            
-            $(document).on("click", ".subscribeItem", (e) => ajaxToggleSubscribe(e));
+
+            $('.subscribeItem').click(function() {
+                ajaxToggleSubscribe($(this));
+            });
         })($);
     </script>
 }
