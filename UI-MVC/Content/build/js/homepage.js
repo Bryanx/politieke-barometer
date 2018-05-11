@@ -57,11 +57,11 @@ if ($('.main-header-container').length) {
 /* ---------- Twitter feed ----------*/
 
 let TwitterFeed = function (trendings) {
-
     $.each(trendings, (index,  value) => {
+
+        let name = value.SocialMediaNames[0].Username[0] === "@" ? value.SocialMediaNames[0].Username.slice(1) : value.SocialMediaNames[0].Username;
         let nameId = "#t-name-" + (index + 1);
-        var id = "twitter-feed-" + (index +1);
-        var name = value.Name.split(" ").join("");
+        let id = "twitter-feed-" + (index +1);
         // putting name above twitter feed
         $(nameId).append("" + value.Name + " ")
             .next()

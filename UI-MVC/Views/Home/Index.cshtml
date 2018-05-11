@@ -49,68 +49,60 @@
 <!-- /top tiles -->
 </section>  <!-- end first page -->
 
-<section>
-    <!-- top 3 politici (trending) -->
-            <div class="x_panel">
-                <div class="x_title">
-                    <h2 style="float: none !important">Top 3 trending politici</h2>
-                </div>
-                <div class="x_content row">
-                    <div class="col-12" style="max-height: 400px">
-                        <canvas id='trending-graph'></canvas>
-                        <h2 class='no-graph-data text-center'>No data available.</h2>
-                    </div>
-                    <div class='x_panel no-scrollbar x_nested_panel'>
-                        <div class='x_title'>
-                            <h2 class='graphTitle'>Twitter feed</h2>
-                            <ul class='nav navbar-right panel_toolbox'>
-                                <li>
-                                    <a class="collapse-link">
-                                        <i class="fa fa-chevron-up"></i>
-                                    </a>
-                                </li>
-                            </ul>
-                            <div class='clearfix'></div>
-                        </div>
-                    <div class="x_content">
-                    @{ int j = 1;}
-                        <table>
-                            @foreach (var item in Model.Items.OrderByDescending(m => m.TrendingPercentage)
-                                .Take(3))
-                            {
-                                if (j <= 3)
-                                {
-                                    <tr>
-                                        <div class="widget_summary col-12 col-md-4">
-                                            <div class="w_left w90">
-                                                <a style="text-decoration: none">
-                                                    <h4 id="t-name-@j" style="display: inline-block"></h4>
-                                                    <b><h4 style="display: inline-block">
-                                                        <i class="green">
-                                                            <i class="fa fa-sort-asc"></i>
-                                                        </i>
-                                                    </h4></b>
-                                                </a>
-                                            </div>
-                                            <div id="twitter-feed-@j" class="w_center w_90">
-                                            
-                                            
-                                            </div>
-                                            <div class="clearfix"></div>
-                                        </div>
-                                    </tr>
-                                    j++;
-                                }
-                            }
-                        </table>
-                      </div> 
-                    </div>
-                </div>
+<section>     <!-- top 3 politici (trending) -->
+    <div class="x_panel">
+        <div class="x_title">
+            <h2 style="float: none !important">Top 3 trending politici</h2>
+        </div>
+        <div class="x_content row">
+            <div class="col-12" style="max-height: 400px">
+                <canvas id='trending-graph'></canvas>
+                <h2 class='no-graph-data text-center'>No data available.</h2>
             </div>
-    <!-- /top 3 politici (trending) -->
-</section> <!-- end second page -->
+            <div class='x_panel no-scrollbar x_nested_panel'>
+                <div class='x_title'>
+                    <h2 class='graphTitle'>Twitter feed</h2>
+                    <ul class='nav navbar-right panel_toolbox'>
+                        <li>
+                            <a class="collapse-link">
+                                <i class="fa fa-chevron-up"></i>
+                            </a>
+                        </li>
+                    </ul>
+                    <div class='clearfix'></div>
+                </div>
+            <div class="x_content">
+                <table>
+                    @for (int j = 1; j <= 3; j++)
+                    {
+                            <tr>
+                                <div class="widget_summary col-12 col-md-4">
+                                    <div class="w_left w90">
+                                        <a style="text-decoration: none">
+                                            <h4 id="t-name-@j" style="display: inline-block"></h4>
+                                            <b><h4 style="display: inline-block">
+                                                <i class="green">
+                                                    <i class="fa fa-sort-asc"></i>
+                                                </i>
+                                            </h4></b>
+                                        </a>
+                                    </div>
+                                    <div id="twitter-feed-@j" class="w_center w_90">
+                                    
+                                    
+                                    </div>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </tr>
+                    }
+                </table>
+              </div> 
+            </div>
+        </div>
+    </div>
+</section>  <!-- /top 3 politici (trending) -->
 
-<section>
+<section>  <!-- Kaart -->
 <div class="row">
     <div class="col-md-12 col-sm-12 col-xs-12">
         <div class="x_panel">

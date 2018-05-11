@@ -9,6 +9,7 @@ using BAR.BL.Domain.Items;
 using BAR.BL.Managers;
 using BAR.UI.MVC.Attributes;
 using BAR.UI.MVC.Models;
+using WebGrease.Css.Extensions;
 
 namespace BAR.UI.MVC.Controllers.api
 {
@@ -52,11 +53,12 @@ namespace BAR.UI.MVC.Controllers.api
 		public IHttpActionResult GetTopTrendingItems()
 		{
 			itemManager = new ItemManager();
-			List<Item> lijst = itemManager.GetAllItems()
+			List<Person> lijst = new List<Person>();
+			itemManager.GetAllPersons()
 				.OrderByDescending(m => m.TrendingPercentage)
 				.Take(3)
-				.ToList();
-			return Ok(Mapper.Map(lijst, new List<ItemDTO>()));
+				.ForEach(p => lijst.Add(itemManager.GetPersonWithDetails(p.ItemId)));
+			return Ok(Mapper.Map(lijst, new List<Person>()));
 		}
 		
 		/// <summary>
