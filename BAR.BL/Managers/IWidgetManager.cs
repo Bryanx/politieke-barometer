@@ -20,6 +20,7 @@ namespace BAR.BL.Managers
 		IEnumerable<Widget> GetAllWidgetsWithAllData();
 		IEnumerable<Widget> GetWidgetsForItem(int itemId);
 		IEnumerable<Widget> GetAllWidgetsWithAllDataForItem(int itemId);
+		IEnumerable<Widget> GetWidgetsForWeeklyReview(string userId = null);
 
 		Widget AddWidget(WidgetType widgetType, string title, int rowNbr, int colNbr, List<PropertyTag> proptags,
 			DateTime? timestamp = null, GraphType? graphType = null, int rowspan = 1, int colspan = 1, int dashboardId = -1, List<WidgetData> datas = null, List<Item> items = null);

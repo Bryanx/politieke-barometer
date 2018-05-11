@@ -450,7 +450,7 @@ namespace BAR.BL.Managers
 		public IEnumerable<Widget> GetAllWidgetsWithAllDataForItem(int itemId)
 		{
 			InitRepo();
-			return widgetRepo.ReadAllWidgetsWithAllDataForItem(itemId).AsEnumerable();
+			return widgetRepo.ReadWidgetsWithAllDataForItem(itemId).AsEnumerable();
 		}
 
 		/// <summary>
@@ -479,6 +479,37 @@ namespace BAR.BL.Managers
 		{
 			InitRepo();
 			return widgetRepo.ReadDashboardWithAllDataForUserId(userId);
+		}
+
+		/// <summary>
+		/// Gives back all the widgets for the generic dashboard or
+		/// for a specific user
+		/// For now, this method will only return the widgets "number of metnions" because these are the most logical.
+		/// </summary>
+		public IEnumerable<Widget> GetWidgetsForWeeklyReview(string userId = null)
+		{
+			InitRepo();
+			List<Widget> widgets = new List<Widget>();
+
+			//Get trending items
+			ItemManager itemManager = new ItemManager();
+			IEnumerable<Item> items = null;
+			if (userId == null) items = itemManager.GetMostTrendingItems();
+			else items = itemManager.GetMostTredningItemsForUser(userId);
+
+			if (items == null || items.Count() == 0) return widgets;
+
+			//Query widgets
+			foreach (Item item in items)
+			{
+				Widget widgetToAdd = widgetRepo.ReadWidgetsWithAllDataForItem(item.ItemId)
+											   .Where(widget => widget.PropertyTags
+											   .Any(proptag => proptag.Name.ToLower().Equals("mentions")))
+											   .SingleOrDefault();
+				if (widgetToAdd != null) widgets.Add(widgetToAdd);
+			}
+
+			return widgets.AsEnumerable();
 		}
 	}
 }
