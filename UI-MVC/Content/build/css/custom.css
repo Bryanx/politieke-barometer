@@ -1107,6 +1107,8 @@ footer.joinus {
     white-space: nowrap;
     position: relative;
     text-align: center; }
+    .tile_count .tile_stats_count:first-of-type::before {
+      border-left: none !important; }
     .tile_count .tile_stats_count:before {
       content: "";
       position: absolute;

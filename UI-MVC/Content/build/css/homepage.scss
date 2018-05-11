@@ -16,6 +16,10 @@ nav {
 
 .widget_summary {
   padding: 20px 40px;
+  border-right: 1px solid rgba(0,0,0,0.1);
+  &:last-of-type {
+    border: 0 !important;
+  }
 }
 
 #twitter-feed-1, #twitter-feed-2, #twitter-feed-3  {

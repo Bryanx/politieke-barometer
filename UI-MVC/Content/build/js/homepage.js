@@ -65,7 +65,7 @@ let TwitterFeed = function (trendings) {
         // putting name above twitter feed
         $(nameId).append("" + value.Name + " ")
             .next()
-            .append("" + value.TrendingPercentage + "%")
+            .append("" + value.TrendingPercentage.toFixed(2) + "%")
             .parent()
             .attr("href", "/Person/Details/" + value.ItemId);
         
@@ -95,9 +95,9 @@ let AddChart = function (name, widgetId, labels, values, chartType="line") {
             datasets: [{
                 data: values,
                 label: name,
-                borderColor: COLORS[values[0]],
-                backgroundColor: COLORS[values[0]],
-                hoverBackgroundColor: DARKCOLORS[values[0]],
+                borderColor: COLORS[values[2]],
+                backgroundColor: COLORS[values[2]],
+                hoverBackgroundColor: DARKCOLORS[values[2]],
                 fill: false,
             }],
         },
@@ -127,8 +127,8 @@ let getGraph = function(name, itemId, widgetId) {
 /*--------- Adding data for trending chart ----------*/    
 
 let AddDataSet = function (chart, name, values) {
-    var newColor = COLORS[values[0]]; // TEMPORARY FIX
-    var hoverColor = COLORS[values[0]];
+    var newColor = COLORS[values[3]]; // TEMPORARY FIX
+    var hoverColor = DARKCOLORS[values[3]];
     var newDataset = {
         label: name,
         borderColor: newColor,
