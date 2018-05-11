@@ -34,6 +34,7 @@ namespace BAR.BL.Managers
 		void RemoveWidget(int widgetId);
 
 		void GenerateDataForMwidgets();
+		void GenerateWidgetsForWeeklyReview();
 
 		void MoveWidgetToDashBoard(int widgetId, IEnumerable<int> itemIds, string userId);
 		
