@@ -1,8 +1,10 @@
 ﻿using AutoMapper;
 using BAR.BL.Domain.Core;
+using BAR.BL.Domain.Items;
 using BAR.BL.Domain.Users;
 using BAR.BL.Managers;
 using BAR.UI.MVC.App_GlobalResources;
+using BAR.UI.MVC.Attributes;
 using BAR.UI.MVC.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
@@ -137,6 +139,7 @@ namespace BAR.UI.MVC.Controllers
 			return RedirectToAction("ItemManagement", "Admin");
 		}
 
+
 		[HttpPost]
 		public ActionResult UploadJson([Bind(Exclude = "jsonFile")]ItemViewModels.ItemViewModel model)
 		{
@@ -152,6 +155,21 @@ namespace BAR.UI.MVC.Controllers
 				itemManager.ImportJson(json, subPlatformID);
 			}
 			return RedirectToAction("ItemManagement", "Admin");
+		}
+
+		[HttpPost]
+		public ActionResult CreatePerson()
+		{
+			int subPlatformID = (int)RouteData.Values["SubPlatformID"];
+
+			itemManager = new ItemManager();
+			platformManager = new SubplatformManager();
+			SubPlatform subplatform = platformManager.GetSubPlatform(subPlatformID);
+
+			Person p = (Person)itemManager.AddItem(ItemType.Person, "Maarten Jorens");
+			p.SubPlatform = subplatform;
+
+			return RedirectToAction("Details", "Person", new { id = p.ItemId });
 		}
 
 		

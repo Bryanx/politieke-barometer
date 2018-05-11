@@ -38,11 +38,18 @@ namespace BAR.UI.MVC.Controllers.api
 			widgetManager = new WidgetManager();
 
 			Dashboard dash = widgetManager.GetDashboard(User.Identity.GetUserId());
-			List<UserWidget> widgets = widgetManager.GetWidgetsForDashboard(dash.DashboardId).ToList();
-			
-			if (widgets == null || widgets.Count() == 0) return StatusCode(HttpStatusCode.NoContent);
 
-			return Ok(Mapper.Map(widgets, new List<UserWidgetDTO>()));
+			try
+			{
+				List<UserWidget> widgets = widgetManager.GetWidgetsForDashboard(dash.DashboardId).ToList();
+				if (widgets == null || widgets.Count() == 0) return StatusCode(HttpStatusCode.NoContent);
+
+				return Ok(Mapper.Map(widgets, new List<UserWidgetDTO>()));
+
+			} catch (Exception e)
+			{
+				return StatusCode(HttpStatusCode.BadRequest);
+			}
 		}
 		
 		/// <summary>
