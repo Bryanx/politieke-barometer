@@ -217,6 +217,7 @@ function loadGraphs(itemId, widget) {
         'rgb(255, 99, 132)',
         'rgb(255, 159, 64)',
         'rgb(255, 205, 86)',
+        'rgb(131, 255, 123)',
         'rgb(75, 192, 192)',
         'rgb(54, 162, 235)',
         'rgb(153, 102, 255)',
@@ -226,12 +227,21 @@ function loadGraphs(itemId, widget) {
         'rgb(235, 69, 102)',
         'rgb(235, 129, 34)',
         'rgb(235, 175, 46)',
+        'rgb(116, 225, 109)',
         'rgb(55, 162, 162)',
         'rgb(34, 132, 205)',
         'rgb(123, 72, 225)',
         'rgb(171, 173, 177)'
     ];
 
+    //Converts a keyvalue to a translated string
+    function ConvertKeyValueToResource(KeyValue) {
+        if (KeyValue === "Number of mentions") return Resources.NumberOfMentionsFull;
+        else if (KeyValue === "Age") return Resources.AgeDistributionOfMentions;
+        else if (KeyValue === "Gender") return Resources.GenderDistributionOfMentions;
+        else return Resources.Unknown;
+    }
+    
     //Retrieves a chart by data-id.
     let FindChartByEvent = function (e) {
         let widgetId = $(e.target).data("widget-id");
@@ -324,12 +334,10 @@ function loadGraphs(itemId, widget) {
             url: "/api/GetGraphs/" + itemId + "/" + widgetId,
             dataType: "json",
             success: data => {
-                if (data !== undefined) {
-                    if (!widgetToUpdate.ItemIds.includes(itemId)) {
-                        widgetToUpdate.ItemIds.push(itemId);
-                        AddDataSet(chart, name, data[0].GraphValues.map(g => g.NumberOfTimes), widgetId);
-                        if (dashboardpage) updateWidgets(widgets);
-                    }
+                if (data !== undefined && !widgetToUpdate.ItemIds.includes(itemId)) {
+                    widgetToUpdate.ItemIds.push(itemId);
+                    AddDataSet(chart, name + " - " + ConvertKeyValueToResource(data[0].KeyValue), data[0].GraphValues.map(g => g.NumberOfTimes), widgetId);
+                    if (dashboardpage) updateWidgets(widgets);
                 }
             },
             fail: d => alert(d)
@@ -412,7 +420,7 @@ function loadGraphs(itemId, widget) {
     };
 
     //Create a new chart
-    let AddChart = function (widget, labels, values, borderColor, color, darkColor, chartType) {
+    let AddChart = function (widget, labels, label, values, borderColor, color, darkColor, chartType) {
         charts.push(new Chart(document.getElementById("graph" + widgetId), {
             id: widgetId,
             type: chartType,
@@ -420,7 +428,7 @@ function loadGraphs(itemId, widget) {
                 labels: labels,
                 datasets: [{
                     data: values,
-                    label: widget.Title,
+                    label: label,
                     borderColor: borderColor,
                     backgroundColor: color,
                     fill: false,
@@ -430,6 +438,7 @@ function loadGraphs(itemId, widget) {
                 responsive: true,
                 maintainAspectRatio: false,
                 animation: {
+                    //when the graph is done loading, JPG/PNG download is possible:
                     onComplete: function () {
                         AddImageUrl(widgetId);
                     }
@@ -459,7 +468,7 @@ function loadGraphs(itemId, widget) {
                 $(this).hide();
             }
         });
-        AddChart(widget, labels, values, borderColor, color, darkColor, chartType);
+        AddChart(widget, labels, chartData[0].labelTitle, values, borderColor, color, darkColor, chartType);
     };
 
     //Settings for a linechart
@@ -470,7 +479,7 @@ function loadGraphs(itemId, widget) {
         let color = COLORS[colorNumber];
         let darkColor = DARKCOLORS[colorNumber];
         let borderColor = COLORS[colorNumber];
-        AddChart(widget, labels, values, borderColor, color, darkColor, chartType);
+        AddChart(widget, labels, chartData[0].labelTitle, values, borderColor, color, darkColor, chartType);
     };
 
     //Settings for a barchart
@@ -511,9 +520,7 @@ function loadGraphs(itemId, widget) {
             let widgetId = $(this).data("widget-id");
             if (widgetId === data.WidgetId) {
                 if (title == null) {
-                    if (data.KeyValue === "Number of mentions") title = Resources.NumberOfMentionsFull;
-                    else if (data.KeyValue === "Age") title = Resources.AgeDistributionOfMentions;
-                    else if (data.KeyValue === "Gender") title = Resources.GenderDistributionOfMentions;
+                    title = ConvertKeyValueToResource(data.KeyValue);
                     $(this).html(title);
                 }
                 $(this).html(title);
@@ -538,11 +545,12 @@ function loadGraphs(itemId, widget) {
                     success: data => {
                         if (!widget.ItemIds.includes(itemId)) widget.ItemIds.push(itemId);
                         let chart = charts.find(c => c.config.id == widget.WidgetId);
+                        data[0].labelTitle = data[0].ItemName + " - " + ConvertKeyValueToResource(data[0].KeyValue);
                         if (chart == undefined) {
                             if (itempage) changeWidgetTitle(data[0]);
                             loadGraphHandler(widget, data);
                         } else {
-                            AddDataSet(chart, data[0].ItemName + " " + data[0].KeyValue, data[0].GraphValues.map(g => g.NumberOfTimes), widget.WidgetId);
+                            AddDataSet(chart, data[0].labelTitle, data[0].GraphValues.map(g => g.NumberOfTimes), widget.WidgetId);
                         }
                     }
                 });
