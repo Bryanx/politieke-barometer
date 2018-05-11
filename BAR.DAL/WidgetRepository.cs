@@ -289,6 +289,7 @@ namespace BAR.DAL
 		public IEnumerable<Widget> ReadWidgetsWithAllDataForItem(int itemId)
 		{
 			Item itemToReturn =  ctx.Items.Include(item => item.ItemWidgets)
+										  .Include(item => item.ItemWidgets.Select(widget => widget.PropertyTags))
 										  .Include(item => item.ItemWidgets.Select(widget => widget.WidgetDatas))
 									      .Include(item => item.ItemWidgets.Select(widget => widget.WidgetDatas.Select(data => data.GraphValues)))
 										  .Where(item => item.ItemId == itemId).SingleOrDefault();

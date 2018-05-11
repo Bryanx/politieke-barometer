@@ -502,11 +502,11 @@ namespace BAR.BL.Managers
 			//Query widgets
 			foreach (Item item in items)
 			{
-				Widget widgetToAdd = widgetRepo.ReadWidgetsWithAllDataForItem(item.ItemId)
-											   .Where(widget => widget.PropertyTags
-											   .Any(proptag => proptag.Name.ToLower().Equals("mentions")))
-											   .SingleOrDefault();
-				if (widgetToAdd != null) widgets.Add(widgetToAdd);
+				IEnumerable<Widget> widgetsToAdd = widgetRepo.ReadWidgetsWithAllDataForItem(item.ItemId)
+															 .Where(widget => widget.PropertyTags
+															 .Any(proptag => proptag.Name.ToLower().Equals("mentions")))
+															 .AsEnumerable();
+				if (widgetsToAdd != null) widgets.AddRange(widgetsToAdd);
 			}
 
 			return widgets.AsEnumerable();

@@ -117,7 +117,7 @@ namespace BAR.BL.Managers
 		{
 			//Order the items by populairity
 			IEnumerable<Item> itemsOrderd = GetAllItems()
-				.OrderBy(item => item.TrendingPercentage).AsEnumerable();
+				.OrderBy(item => item.NumberOfMentions).AsEnumerable();
 
 			//Get the first items out of the list
 			List<Item> itemsOrderdMostPopulair = new List<Item>();
@@ -138,7 +138,7 @@ namespace BAR.BL.Managers
 		{
 			//order the items by populairity
 			IEnumerable<Item> itemsOrderd = GetAllItems().Where(item => item.ItemType == type)
-				.OrderBy(item => item.TrendingPercentage).AsEnumerable();
+				.OrderBy(item => item.NumberOfMentions).AsEnumerable();
 
 			//Get the first items out of the list
 			List<Item> itemsOrderdMostPopulair = new List<Item>();
@@ -167,7 +167,7 @@ namespace BAR.BL.Managers
 
 			//Order items
 			IEnumerable<Item> itemsOrderd = itemsFromUser
-				.OrderBy(item => item.TrendingPercentage).AsEnumerable();
+				.OrderBy(item => item.NumberOfMentions).AsEnumerable();
 
 			//Get the first items out of the list
 			List<Item> itemsOrderdMostPopulair = new List<Item>();
@@ -197,7 +197,7 @@ namespace BAR.BL.Managers
 
 			//Order items
 			IEnumerable<Item> itemsOrderd = itemsFromUser.Where(item => item.ItemType == type)
-				.OrderBy(item => item.TrendingPercentage).AsEnumerable();
+				.OrderBy(item => item.NumberOfMentions).AsEnumerable();
 
 			//Get the first items out of the list
 			List<Item> itemsOrderdMostPopulair = new List<Item>();
@@ -207,6 +207,14 @@ namespace BAR.BL.Managers
 			}
 
 			return itemsOrderd;
+		}
+
+		/// <summary>
+		/// Updates the weekly review information if needed.
+		/// </summary>
+		private void UpdateWeeklyReviewData()
+		{
+			//TODO
 		}
 
 		/// <summary>
