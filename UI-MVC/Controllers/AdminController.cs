@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using BAR.BL.Domain.Core;
+using BAR.BL.Domain.Items;
 using BAR.BL.Domain.Users;
 using BAR.BL.Managers;
 using BAR.UI.MVC.App_GlobalResources;
@@ -154,6 +155,44 @@ namespace BAR.UI.MVC.Controllers
 			return RedirectToAction("ItemManagement", "Admin");
 		}
 
-		
+		[HttpPost]
+		public ActionResult CreatePerson(CreateItemModels.CreatePersonModel model)
+		{
+			int subPlatformID = (int)RouteData.Values["SubPlatformID"];
+
+			itemManager = new ItemManager();
+			platformManager = new SubplatformManager();
+			SubPlatform subplatform = platformManager.GetSubPlatform(subPlatformID);
+
+			Person person = (Person)itemManager.AddItem(ItemType.Person, model.Name, site: "www.kdg.be");
+			itemManager.ChangeItemPlatform(person.ItemId, subplatform.SubPlatformId);
+
+			return RedirectToAction("Details", "Person", new { id = person.ItemId });
+		}
+
+		[HttpPost]
+		public ActionResult CreateTheme(CreateItemModels.CreateThemeModel model)
+		{
+			int subPlatformID = (int)RouteData.Values["SubPlatformID"];
+
+			itemManager = new ItemManager();
+			platformManager = new SubplatformManager();
+
+			List<string> keywordStrings = model.Keywords.Split(',').ToList();
+			List<Keyword> keywords = new List<Keyword>();
+
+			foreach(string keywordString in keywordStrings)
+			{
+				keywords.Add(new Keyword
+				{
+					Name = keywordString
+				});
+			}
+
+			Theme theme = (Theme)itemManager.AddItem(ItemType.Theme, model.Name, keywords: keywords);
+			itemManager.ChangeItemPlatform(theme.ItemId, subPlatformID);
+
+			return RedirectToAction("Details", "Theme", new { id = theme.ItemId });
+		}
 	}
 }
