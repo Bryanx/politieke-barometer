@@ -450,7 +450,7 @@ namespace BAR.BL.Managers
 		public IEnumerable<Widget> GetAllWidgetsWithAllDataForItem(int itemId)
 		{
 			InitRepo();
-			return widgetRepo.ReadWidgetsWithAllDataForItem(itemId).AsEnumerable();
+			return widgetRepo.ReadAllWidgetsWithAllDataForItem(itemId).AsEnumerable();
 		}
 
 		/// <summary>
@@ -479,17 +479,6 @@ namespace BAR.BL.Managers
 		{
 			InitRepo();
 			return widgetRepo.ReadDashboardWithAllDataForUserId(userId);
-		}
-
-		/// <summary>
-		/// Generates the widgets for the default weekly review
-		/// </summary>
-		public void GenerateWidgetsForWeeklyReview()
-		{
-			InitRepo();
-
-			//Remove old widgets for weekly review
-			//TODO
 		}
 	}
 }

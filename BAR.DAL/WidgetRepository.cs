@@ -235,11 +235,7 @@ namespace BAR.DAL
 		/// </summary>
 		public int DeleteWidgets(IEnumerable<Widget> widgets)
 		{
-			foreach (UserWidget widget in widgets)
-			{
-				if (widget.WidgetDatas != null) ctx.WidgetDatas.RemoveRange(widget.WidgetDatas);
-			}
-			ctx.Widgets.RemoveRange(widgets);
+			foreach (UserWidget widget in widgets) ctx.Widgets.Remove(widget);
 			return ctx.SaveChanges();
 		}
 
@@ -290,7 +286,7 @@ namespace BAR.DAL
 		/// Gives back all widgets for a specific item id
 		/// The widget contains all the data needed to construct a graph
 		/// </summary>
-		public IEnumerable<Widget> ReadWidgetsWithAllDataForItem(int itemId)
+		public IEnumerable<Widget> ReadAllWidgetsWithAllDataForItem(int itemId)
 		{
 			Item itemToReturn =  ctx.Items.Include(item => item.ItemWidgets)
 										  .Include(item => item.ItemWidgets.Select(widget => widget.WidgetDatas))
@@ -342,16 +338,6 @@ namespace BAR.DAL
 								 .Include(dash => dash.Widgets.Select(widget => widget.WidgetDatas))
 								 .Include(dash => dash.Widgets.Select(widget => widget.WidgetDatas.Select(data => data.GraphValues)))
 								 .Where(dash => dash.User.Id.ToLower().Equals(userId.ToLower())).SingleOrDefault();
-		}
-
-		/// <summary>
-		/// Gives back all the widgets for a specific keyvalue
-		/// </summary>
-		public IEnumerable<Widget> ReadWidgetsWithAllDataForKeyvalue(string value)
-		{
-			return ReadAllWidgetsWithAllData().Where(widget => widget.WidgetDatas
-											  .Any(data => data.KeyValue.ToLower().Equals(value.ToLower())))
-											  .AsEnumerable();
 		}
 	}
 }
