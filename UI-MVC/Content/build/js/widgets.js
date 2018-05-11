@@ -220,7 +220,7 @@ function loadGraphs(itemId, widget) {
         'rgb(75, 192, 192)',
         'rgb(54, 162, 235)',
         'rgb(153, 102, 255)',
-        'rgb(201, 203, 207)'
+        'rgb(207, 81, 171)'
     ];
     var DARKCOLORS = [
         'rgb(235, 69, 102)',
@@ -229,9 +229,24 @@ function loadGraphs(itemId, widget) {
         'rgb(55, 162, 162)',
         'rgb(34, 132, 205)',
         'rgb(123, 72, 225)',
-        'rgb(171, 173, 177)'
+        'rgb(177, 51, 151)'
     ];
 
+    //Converts possible labels to resource items
+    function convertLabelsToResource(labels, itemName) {
+        labels.forEach((label, index, labels) => {
+            switch (label) {
+                case "m": label = Resources.Male; break;
+                case "f": label = Resources.Female; break;
+                case "25+": label = Resources.Above25; break;
+                case "25-": label = Resources.Below25; break;
+                default: label = Resources.Unknown; break;
+            }
+            labels[index] = itemName + " - " + label;
+        });
+        return labels;
+    }
+    
     //Converts a keyvalue to a translated string
     function ConvertKeyValueToResource(KeyValue) {
         if (KeyValue === "Number of mentions") return Resources.NumberOfMentionsFull;
@@ -306,17 +321,26 @@ function loadGraphs(itemId, widget) {
     }
 
     //Add data to graph.
-    let AddDataSet = function (chart, name, values, widgetId) {
+    let AddDataSet = function (chart, name, values, widgetId, keyValue = null) {
         let colorNumber = getRandomColor(chart.config.data.datasets);
         let newColor = COLORS[colorNumber];
         let borderColor = newColor;
         let hoverColor = DARKCOLORS[colorNumber];
-
         if (chart.config.type === "doughnut" || chart.config.type === "pie") {
             let firstDataset = chart.config.data.datasets[0];
             borderColor = firstDataset.borderColor;
             newColor = firstDataset.backgroundColor;
             hoverColor = firstDataset.hoverBackgroundColor;
+            chart.config.options.tooltips.callbacks.label = function (tooltipItem,data) {
+                let dslabels = data.labels[tooltipItem.index];
+                let dataset = data.datasets[tooltipItem.datasetIndex];
+                let dslabelamt = dataset.data[tooltipItem.index];
+                if (tooltipItem.datasetIndex === 0) return dslabels + data.datasets[tooltipItem.datasetIndex].label + ': ' + dslabelamt;
+                return data.datasets[tooltipItem.datasetIndex].label + ' : ' + dslabelamt;
+            };
+            // name = convertLabelsToResource(labels, name.split(" - ")[0]);
+        } else {
+            name = name + " - " + ConvertKeyValueToResource(keyValue);
         }
 
         var newDataset = {
@@ -327,7 +351,7 @@ function loadGraphs(itemId, widget) {
             data: values,
             fill: false
         };
-
+        
         chart.config.data.datasets.push(newDataset);
         chart.update();
         $("#removeData"+widgetId).show();
@@ -347,7 +371,7 @@ function loadGraphs(itemId, widget) {
             success: data => {
                 if (data !== undefined && !widgetToUpdate.ItemIds.includes(itemId)) {
                     widgetToUpdate.ItemIds.push(itemId);
-                    AddDataSet(chart, name + " - " + ConvertKeyValueToResource(data[0].KeyValue), data[0].GraphValues.map(g => g.NumberOfTimes), widgetId);
+                    AddDataSet(chart, name, data[0].GraphValues.map(g => g.NumberOfTimes), widgetId, data[0].KeyValue);
                     if (dashboardpage) updateWidgets(widgets);
                 }
             },
@@ -462,6 +486,7 @@ function loadGraphs(itemId, widget) {
     let AddCircleChart = function (widget, chartData, chartType = "pie") {
         let labels = chartData[0].GraphValues.map(g => g.Value);
         let values = chartData[0].GraphValues.map(g => g.NumberOfTimes);
+        labels = convertLabelsToResource(labels, chartData[0].ItemName);
         let borderColor = "#fff";
         let color = [];
         let darkColor = [];
@@ -471,15 +496,12 @@ function loadGraphs(itemId, widget) {
             darkColor.push(COLORS[r]);
             r++;
         });
-        if (chartData[0].KeyValue === "Gender") {
-            labels = [Resources.Male, Resources.Female];
-        }
         $(".dateChangeChart").each(function () {
             if ($(this).data("widget-id") == widget.WidgetId) {
                 $(this).hide();
             }
         });
-        AddChart(widget, labels, chartData[0].labelTitle, values, borderColor, color, darkColor, chartType);
+        AddChart(widget, labels, "", values, borderColor, color, darkColor, chartType);
     };
 
     //Settings for a line/bar chart
@@ -490,25 +512,18 @@ function loadGraphs(itemId, widget) {
         let color = COLORS[colorNumber];
         let darkColor = DARKCOLORS[colorNumber];
         let borderColor = COLORS[colorNumber];
-        AddChart(widget, labels, chartData[0].labelTitle, values, borderColor, color, darkColor, chartType);
+        let legendLabel = chartData[0].ItemName + " - " + ConvertKeyValueToResource(chartData[0].KeyValue);
+        AddChart(widget, labels, legendLabel, values, borderColor, color, darkColor, chartType);
     };
 
     //Moves the graph data to the appropriate method.
     let loadGraphHandler = function (widget, data) {
         if (data !== undefined) {
             let chartType = ConvertToChartType(widget.GraphType);
-            switch (chartType) {
-                case "line":
-                    AddAreaChart(widget, data, "line");
-                    break;
-                case "bar":
-                    AddBarChart(widget, data, "bar");
-                    break;
-                case "pie":
-                    AddCircleChart(widget, data, "pie");
-                    break;
-                case "doughnut":
-                    AddDoughnutChart(widget, data, "doughnut");
+            if (chartType === "line" || chartType === "bar") {
+                AddAreaChart(widget, data, chartType);
+            } else if (chartType === "pie" || chartType === "doughnut") {
+                AddCircleChart(widget, data, chartType);
             }
         } else {
             displayNoGraphData(widgetId);
@@ -538,20 +553,21 @@ function loadGraphs(itemId, widget) {
             } else {
                 itemids.push(itemId);
             }
+            let widgetId = widget.WidgetId;
             $.each(itemids, (index, itemId) => {
                 $.ajax({
                     type: "GET",
-                    url: "/api/GetGraphs/" + itemId + "/" + widget.WidgetId,
+                    url: "/api/GetGraphs/" + itemId + "/" + widgetId,
                     dataType: "json",
                     success: data => {
                         if (!widget.ItemIds.includes(itemId)) widget.ItemIds.push(itemId);
-                        let chart = charts.find(c => c.config.id == widget.WidgetId);
-                        data[0].labelTitle = data[0].ItemName + " - " + ConvertKeyValueToResource(data[0].KeyValue);
+                        let chart = charts.find(c => c.config.id == widgetId);
                         if (chart == undefined) {
                             if (itempage) changeWidgetTitle(data[0]);
                             loadGraphHandler(widget, data);
                         } else {
-                            AddDataSet(chart, data[0].labelTitle, data[0].GraphValues.map(g => g.NumberOfTimes), widget.WidgetId);
+                            let values = data[0].GraphValues.map(g => g.NumberOfTimes);
+                            AddDataSet(chart, data[0].ItemName, values, widgetId, data[0].KeyValue);
                         }
                     }
                 });
