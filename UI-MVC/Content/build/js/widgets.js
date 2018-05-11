@@ -217,7 +217,6 @@ function loadGraphs(itemId, widget) {
         'rgb(255, 99, 132)',
         'rgb(255, 159, 64)',
         'rgb(255, 205, 86)',
-        'rgb(101, 184, 79)',
         'rgb(75, 192, 192)',
         'rgb(54, 162, 235)',
         'rgb(153, 102, 255)',
@@ -227,7 +226,6 @@ function loadGraphs(itemId, widget) {
         'rgb(235, 69, 102)',
         'rgb(235, 129, 34)',
         'rgb(235, 175, 46)',
-        'rgb(44, 164, 56)',
         'rgb(55, 162, 162)',
         'rgb(34, 132, 205)',
         'rgb(123, 72, 225)',
@@ -460,8 +458,8 @@ function loadGraphs(itemId, widget) {
         }));
     };
 
-    //Settings for a piechart
-    let AddPieChart = function (widget, chartData, chartType = "pie") {
+    //Settings for a pie/donut chart
+    let AddCircleChart = function (widget, chartData, chartType = "pie") {
         let labels = chartData[0].GraphValues.map(g => g.Value);
         let values = chartData[0].GraphValues.map(g => g.NumberOfTimes);
         let borderColor = "#fff";
@@ -484,8 +482,8 @@ function loadGraphs(itemId, widget) {
         AddChart(widget, labels, chartData[0].labelTitle, values, borderColor, color, darkColor, chartType);
     };
 
-    //Settings for a linechart
-    let AddLineChart = function (widget, chartData, chartType = "line") {
+    //Settings for a line/bar chart
+    let AddAreaChart = function (widget, chartData, chartType = "line") {
         let labels = chartData[0].GraphValues.map(g => g.Value);
         let values = chartData[0].GraphValues.map(g => g.NumberOfTimes);
         let colorNumber = Math.floor((Math.random() * COLORS.length));
@@ -495,32 +493,22 @@ function loadGraphs(itemId, widget) {
         AddChart(widget, labels, chartData[0].labelTitle, values, borderColor, color, darkColor, chartType);
     };
 
-    //Settings for a barchart
-    let AddBarChart = function (widget, chartData) {
-        AddLineChart(widget, chartData, "bar");
-    };
-
-    //Settings for a donutchart
-    let AddDoughnutChart = function (widget, chartData) {
-        AddPieChart(widget, chartData, "doughnut");
-    };
-
     //Moves the graph data to the appropriate method.
     let loadGraphHandler = function (widget, data) {
         if (data !== undefined) {
             let chartType = ConvertToChartType(widget.GraphType);
             switch (chartType) {
                 case "line":
-                    AddLineChart(widget, data);
+                    AddAreaChart(widget, data, "line");
                     break;
                 case "bar":
-                    AddBarChart(widget, data);
+                    AddBarChart(widget, data, "bar");
                     break;
                 case "pie":
-                    AddPieChart(widget, data);
+                    AddCircleChart(widget, data, "pie");
                     break;
                 case "doughnut":
-                    AddDoughnutChart(widget, data);
+                    AddDoughnutChart(widget, data, "doughnut");
             }
         } else {
             displayNoGraphData(widgetId);
@@ -750,8 +738,8 @@ function init() {
     };
     
     //Updates given widgets on resize
+    //TODO: only update if widget has changes.
     updateWidgets = function (widgets) {
-        console.log(widgets);
         let serializedItems = [];
         $.each(widgets, function (index, widget) {
             serializedItems.push({
