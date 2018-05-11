@@ -15,5 +15,16 @@ namespace BAR.UI.MVC.Models
 			[Display(Name = "Name", ResourceType = typeof(Resources))]
 			public string Name { get; set; }
 		}
+
+		public class CreateThemeModel : BaseViewModel
+		{
+			[Required]
+			[Display(Name = "Name", ResourceType = typeof(Resources))]
+			public string Name { get; set; }
+
+			[Required]
+			[Display(Name = "Keywords", ResourceType = typeof(Resources))]
+			public string Keywords { get; set; }
+		}
 	}
 }
