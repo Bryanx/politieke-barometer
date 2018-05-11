@@ -11,7 +11,7 @@
     <div class="col-md-9 col-sm-9 col-xs-12">
         <button onclick="window.location = '@Url.OrganisationUrl(@Model.OrganisationId)';" class="btn btn-default btn-xs">@Model.OrganisationName</button>
         <h1>
-            <span class="item-name">@Model.Item.Name <span class="badge bg-default">@(Model.Item.TrendingPercentage)% trending</span></span>
+            <span class="item-name">@Model.Item.Name <span class="badge bg-default">@(Model.Item.TrendingPercentage)% @Resources.Trending.ToLower()</span></span>
             @if (User.Identity.IsAuthenticated) {
                if (Model.Subscribed != true) {
                     <a class="w-100px subscribeItem btn btn-success pull-right" data-item-id="@Model.Item.ItemId" title="Deze persoon volgen">@Resources.Subscribe</a>

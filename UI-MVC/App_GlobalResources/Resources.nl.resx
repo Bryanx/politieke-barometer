@@ -180,6 +180,9 @@
   <data name="AllPoliticians" xml:space="preserve">
     <value>Politici-overzicht</value>
   </data>
+  <data name="BarChart" xml:space="preserve">
+    <value>Staafgrafiek</value>
+  </data>
   <data name="CalculatedByAmountOfTweets" xml:space="preserve">
     <value>Berekend volgens het aantal tweets.</value>
   </data>
@@ -194,6 +197,9 @@
   </data>
   <data name="City" xml:space="preserve">
     <value>Woonplaats</value>
+  </data>
+  <data name="CompareDataPlaceholder" xml:space="preserve">
+    <value>Vergelijk data met een ander persoon, organisatie of thema.</value>
   </data>
   <data name="ConfirmAccount" xml:space="preserve">
     <value>Bevestig je account</value>
@@ -248,6 +254,15 @@
   </data>
   <data name="Details" xml:space="preserve">
     <value>Details</value>
+  </data>
+  <data name="DonutChart" xml:space="preserve">
+    <value>Donutdiagram</value>
+  </data>
+  <data name="DownloadJPGImage" xml:space="preserve">
+    <value>Download JPG afbeelding</value>
+  </data>
+  <data name="DownloadPNGImage" xml:space="preserve">
+    <value>Download PNG afbeelding</value>
   </data>
   <data name="Email" xml:space="preserve">
     <value>E-mailadres</value>
@@ -336,6 +351,9 @@
   <data name="LessThenOneMinute" xml:space="preserve">
     <value>Minder dan een minuut geleden</value>
   </data>
+  <data name="LineChart" xml:space="preserve">
+    <value>Lijngrafiek</value>
+  </data>
   <data name="Link" xml:space="preserve">
     <value>Link</value>
   </data>
@@ -405,6 +423,9 @@
   <data name="NoChartsYet" xml:space="preserve">
     <value>Je hebt nog geen grafieken.</value>
   </data>
+  <data name="NoDataAvailable" xml:space="preserve">
+    <value>Geen data beschikbaar.</value>
+  </data>
   <data name="NowYouCan" xml:space="preserve">
     <value>Nu kan je</value>
   </data>
@@ -440,6 +461,9 @@
   </data>
   <data name="Photo" xml:space="preserve">
     <value>Foto</value>
+  </data>
+  <data name="PieChart" xml:space="preserve">
+    <value>Taartdiagram</value>
   </data>
   <data name="Politician" xml:space="preserve">
     <value>Politicus</value>
@@ -479,6 +503,9 @@
   </data>
   <data name="RemoveAlert" xml:space="preserve">
     <value>Verwijder alert</value>
+  </data>
+  <data name="RemoveData" xml:space="preserve">
+    <value>Data verwijderen</value>
   </data>
   <data name="RemoveItem" xml:space="preserve">
     <value>Verwijder item</value>

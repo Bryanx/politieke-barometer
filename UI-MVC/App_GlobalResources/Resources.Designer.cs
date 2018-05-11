@@ -250,6 +250,15 @@ namespace BAR.UI.MVC.App_GlobalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Bar chart.
+        /// </summary>
+        public static string BarChart {
+            get {
+                return ResourceManager.GetString("BarChart", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Calculated via the amount of tweets..
         /// </summary>
         public static string CalculatedByAmountOfTweets {
@@ -291,6 +300,15 @@ namespace BAR.UI.MVC.App_GlobalResources {
         public static string City {
             get {
                 return ResourceManager.GetString("City", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Compare data with another person, organisation or topic..
+        /// </summary>
+        public static string CompareDataPlaceholder {
+            get {
+                return ResourceManager.GetString("CompareDataPlaceholder", resourceCulture);
             }
         }
         
@@ -453,6 +471,33 @@ namespace BAR.UI.MVC.App_GlobalResources {
         public static string Details {
             get {
                 return ResourceManager.GetString("Details", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Donut chart.
+        /// </summary>
+        public static string DonutChart {
+            get {
+                return ResourceManager.GetString("DonutChart", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Download JPG image.
+        /// </summary>
+        public static string DownloadJPGImage {
+            get {
+                return ResourceManager.GetString("DownloadJPGImage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Download PNG image.
+        /// </summary>
+        public static string DownloadPNGImage {
+            get {
+                return ResourceManager.GetString("DownloadPNGImage", resourceCulture);
             }
         }
         
@@ -727,6 +772,15 @@ namespace BAR.UI.MVC.App_GlobalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Line chart.
+        /// </summary>
+        public static string LineChart {
+            get {
+                return ResourceManager.GetString("LineChart", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Link.
         /// </summary>
         public static string Link {
@@ -934,6 +988,15 @@ namespace BAR.UI.MVC.App_GlobalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to No data available..
+        /// </summary>
+        public static string NoDataAvailable {
+            get {
+                return ResourceManager.GetString("NoDataAvailable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Now you can.
         /// </summary>
         public static string NowYouCan {
@@ -1038,6 +1101,15 @@ namespace BAR.UI.MVC.App_GlobalResources {
         public static string Photo {
             get {
                 return ResourceManager.GetString("Photo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pie chart.
+        /// </summary>
+        public static string PieChart {
+            get {
+                return ResourceManager.GetString("PieChart", resourceCulture);
             }
         }
         
@@ -1155,6 +1227,15 @@ namespace BAR.UI.MVC.App_GlobalResources {
         public static string RemoveAlert {
             get {
                 return ResourceManager.GetString("RemoveAlert", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remove data.
+        /// </summary>
+        public static string RemoveData {
+            get {
+                return ResourceManager.GetString("RemoveData", resourceCulture);
             }
         }
         

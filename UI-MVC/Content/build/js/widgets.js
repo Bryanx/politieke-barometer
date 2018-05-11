@@ -45,17 +45,17 @@ var widgetElements = {
             "                   <li class='dropdown'>" +
             "                       <a href='#' class='dropdown-toggle' data-toggle='dropdown' role='button' aria-expanded='false'><i class='fa fa-bar-chart'></i></a>" +
             "                       <ul class='dropdown-menu' role='menu'>" +
-            "                           <li><a data-widget-id=" + id + " class='makeLineChart'>Line chart</a></li>" +
-            "                           <li><a data-widget-id=" + id + " class='makeBarChart'>Bar chart</a></li>" +
-            "                           <li><a data-widget-id=" + id + " class='makePieChart'>Pie chart</a></li>" +
-            "                           <li><a data-widget-id=" + id + " class='makeDonutChart'>Donut chart</a></li>" +
+            "                           <li><a data-widget-id=" + id + " class='makeLineChart'>"+Resources.LineChart+"</a></li>" +
+            "                           <li><a data-widget-id=" + id + " class='makeBarChart'>"+Resources.BarChart+"</a></li>" +
+            "                           <li><a data-widget-id=" + id + " class='makePieChart'>"+Resources.PieChart+"</a></li>" +
+            "                           <li><a data-widget-id=" + id + " class='makeDonutChart'>"+Resources.DonutChart+"</a></li>" +
             "                       </ul>" +
             "                   </li>" +
             "                   <li class='dropdown'>" +
             "                       <a href='#' class='dropdown-toggle' data-toggle='dropdown' role='button' aria-expanded='false'><i class='fa fa-floppy-o'></i></a>" +
             "                       <ul class='dropdown-menu' role='menu'>" +
-            "                           <li><a data-widget-id=" + id + " class='getJPGImage'>Download JPG image</a></li>" +
-            "                           <li><a data-widget-id=" + id + " class='getPNGImage'>Download PNG image</a></li>" +
+            "                           <li><a data-widget-id=" + id + " class='getJPGImage'>"+Resources.DownloadJPGImage+"</a></li>" +
+            "                           <li><a data-widget-id=" + id + " class='getPNGImage'>"+Resources.DownloadPNGImage+"</a></li>" +
             "                       </ul>" +
             "                   </li>" +
             "                    </ul>" +
@@ -63,11 +63,11 @@ var widgetElements = {
             "                </div>" +
             "                <div style='position: relative; height: 75%;'> " +
             "                    <canvas id='graph" + id + "'></canvas>" +
-            "                    <h2 class='no-graph-data text-center'>No data available.</h2>" +
+            "                    <h2 class='no-graph-data text-center'>"+Resources.NoDataAvailable+"</h2>" +
             "               </div>" +
             "               <div class='graph-options'>" +
-            "                   <input id=" + id + " type='text' class='form-control compareSearch' placeholder='Compare data with someone else.'>" +
-            "                   <button data-widget-id=" + id + " class='btn btn-danger removeData' id='removeData"+id+"'>Remove data</button>" +
+            "                   <input id=" + id + " type='text' class='form-control compareSearch' placeholder='"+Resources.CompareDataPlaceholder+"'>" +
+            "                   <button data-widget-id=" + id + " class='btn btn-danger removeData' id='removeData"+id+"'>"+Resources.RemoveData+"</button>" +
             "               </div>" +
             "            </div>" +
             "        </div>";
@@ -93,17 +93,17 @@ var widgetElements = {
             "                   <li class='dropdown'>" +
             "                       <a href='#' class='dropdown-toggle' data-toggle='dropdown' role='button' aria-expanded='false'><i class='fa fa-bar-chart'></i></a>" +
             "                       <ul class='dropdown-menu' role='menu'>" +
-            "                           <li><a data-widget-id=" + id + " class='makeLineChart'>Line chart</a></li>" +
-            "                           <li><a data-widget-id=" + id + " class='makeBarChart'>Bar chart</a></li>" +
-            "                           <li><a data-widget-id=" + id + " class='makePieChart'>Pie chart</a></li>" +
-            "                           <li><a data-widget-id=" + id + " class='makeDonutChart'>Donut chart</a></li>" +
+            "                           <li><a data-widget-id=" + id + " class='makeLineChart'>"+Resources.LineChart+"</a></li>" +
+            "                           <li><a data-widget-id=" + id + " class='makeBarChart'>"+Resources.BarChart+"</a></li>" +
+            "                           <li><a data-widget-id=" + id + " class='makePieChart'>"+Resources.PieChart+"</a></li>" +
+            "                           <li><a data-widget-id=" + id + " class='makeDonutChart'>"+Resources.DonutChart+"</a></li>" +
             "                       </ul>" +
             "                   </li>" +
             "                   <li class='dropdown'>" +
             "                       <a href='#' class='dropdown-toggle' data-toggle='dropdown' role='button' aria-expanded='false'><i class='fa fa-floppy-o'></i></a>" +
             "                       <ul class='dropdown-menu' role='menu'>" +
-            "                           <li><a data-widget-id=" + id + " class='getJPGImage'>Download JPG image</a></li>" +
-            "                           <li><a data-widget-id=" + id + " class='getPNGImage'>Download PNG image</a></li>" +
+            "                           <li><a data-widget-id=" + id + " class='getJPGImage'>"+Resources.DownloadJPGImage+"</a></li>" +
+            "                           <li><a data-widget-id=" + id + " class='getPNGImage'>"+Resources.DownloadPNGImage+"</a></li>" +
             "                       </ul>" +
             "                   </li>" +
             "                   <li><a data-widget-id=" + id + " class='dateChangeChart changeToWeek'>7d</a></li>" +
@@ -115,11 +115,11 @@ var widgetElements = {
             "                </div>" +
             "                <div style='position: relative; height: 75%;'> " +
             "                    <canvas id='graph" + id + "'></canvas>" +
-            "                    <h2 class='no-graph-data text-center'>No data available.</h2>" +
+            "                    <h2 class='no-graph-data text-center'>"+Resources.NoDataAvailable+"</h2>" +
             "               </div>" +
             "               <div class='graph-options'>" +
-            "                   <input id=" + id + " type='text' class='form-control compareSearch' placeholder='Compare data with someone else.'>" +
-            "                   <button data-widget-id=" + id + " class='btn btn-danger removeData' id='removeData"+id+"'>Remove data</button>" +
+            "                   <input id=" + id + " type='text' class='form-control compareSearch' placeholder='"+Resources.CompareDataPlaceholder+"'>" +
+            "                   <button data-widget-id=" + id + " class='btn btn-danger removeData' id='removeData"+id+"'>"+Resources.RemoveData+"</button>" +
             "               </div>" +
             "            </div>" +
             "        </div>";
