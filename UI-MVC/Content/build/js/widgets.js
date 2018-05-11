@@ -67,7 +67,7 @@ var widgetElements = {
             "               </div>" +
             "               <div class='graph-options'>" +
             "                   <input id=" + id + " type='text' class='form-control compareSearch' placeholder='Compare data with someone else.'>" +
-            "                   <button class='btn btn-danger removeData' data-widget-id=" + id + " >Remove data</button>" +
+            "                   <button data-widget-id=" + id + " class='btn btn-danger removeData' id='removeData"+id+"'>Remove data</button>" +
             "               </div>" +
             "            </div>" +
             "        </div>";
@@ -119,7 +119,7 @@ var widgetElements = {
             "               </div>" +
             "               <div class='graph-options'>" +
             "                   <input id=" + id + " type='text' class='form-control compareSearch' placeholder='Compare data with someone else.'>" +
-            "                   <a class='btn btn-danger removeData' data-widget-id=" + id + " >Remove data</a>" +
+            "                   <button data-widget-id=" + id + " class='btn btn-danger removeData' id='removeData"+id+"'>Remove data</button>" +
             "               </div>" +
             "            </div>" +
             "        </div>";
@@ -246,7 +246,7 @@ function loadGraphs(itemId, widget) {
             chart.config.data.datasets.splice(widget.ItemIds.length-1, 1);
             chart.update();
             widget.ItemIds.splice(widget.ItemIds.length-1, 1);
-            if (widget.ItemIds.length < 2) $(".removeData").hide();
+            if (widget.ItemIds.length < 2) $("#removeData"+widget.WidgetId).hide();
             if (dashboardpage) updateWidgets(widgets);
         }
     };
@@ -286,8 +286,7 @@ function loadGraphs(itemId, widget) {
     };
 
     //Add data to graph.
-    let AddDataSet = function (chart, name, values) {
-        $(".removeData").show();
+    let AddDataSet = function (chart, name, values, widgetId) {
         let newColor = COLORS[chart.config.data.datasets.length];
         let borderColor = newColor;
         let hoverColor = DARKCOLORS[chart.config.data.datasets.length];
@@ -310,14 +309,15 @@ function loadGraphs(itemId, widget) {
 
         chart.config.data.datasets.push(newDataset);
         chart.update();
+        $("#removeData"+widgetId).show();
     };
 
     //Load graph data
     let LoadGraphDataSet = function (suggestion, $this) {
         let name = suggestion.value;
+        let itemId = suggestion.data;
         let widgetId = $this[0].id;
         let chart = charts.find(c => c.config.id == widgetId);
-        let itemId = suggestion.data;
         let widgetToUpdate = widgets.find(w => w.WidgetId == widgetId);
         $.ajax({
             type: "GET",
@@ -327,7 +327,7 @@ function loadGraphs(itemId, widget) {
                 if (data !== undefined) {
                     if (!widgetToUpdate.ItemIds.includes(itemId)) {
                         widgetToUpdate.ItemIds.push(itemId);
-                        AddDataSet(chart, name, data[0].GraphValues.map(g => g.NumberOfTimes));
+                        AddDataSet(chart, name, data[0].GraphValues.map(g => g.NumberOfTimes), widgetId);
                         if (dashboardpage) updateWidgets(widgets);
                     }
                 }
@@ -542,7 +542,7 @@ function loadGraphs(itemId, widget) {
                             if (itempage) changeWidgetTitle(data[0]);
                             loadGraphHandler(widget, data);
                         } else {
-                            AddDataSet(chart, data[0].ItemName + " " + data[0].KeyValue, data[0].GraphValues.map(g => g.NumberOfTimes));
+                            AddDataSet(chart, data[0].ItemName + " " + data[0].KeyValue, data[0].GraphValues.map(g => g.NumberOfTimes), widget.WidgetId);
                         }
                     }
                 });
