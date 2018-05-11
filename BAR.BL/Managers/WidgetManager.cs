@@ -152,12 +152,8 @@ namespace BAR.BL.Managers
 			
 			ItemManager itemManager = new ItemManager(uowManager);
 				
-			//Set to remove duplicates
-			HashSet<int> set = new HashSet<int>();
-			itemIds.ForEach(i => set.Add(i));
-			List<Item> items = new List<Item>();
-				
-			if (set.Count > 1) items = itemManager.GetAllItems().Where(i => set.Contains(i.ItemId)).ToList();
+			//Get items
+			List<Item> items = itemManager.GetAllItems().Where(i => itemIds.Contains(i.ItemId)).ToList();
 
 			//get widget
 			Widget widgetToUpdate = GetWidgetWithAllItems(widgetId);
@@ -166,7 +162,7 @@ namespace BAR.BL.Managers
 			//update widget
 			widgetToUpdate.RowNumber = rowNbr;
 			widgetToUpdate.ColumnNumber = colNbr;
-			if (items.Count > 1) widgetToUpdate.Items = items;
+			if (items.Count > 0) widgetToUpdate.Items = items;
 			widgetToUpdate.RowSpan = rowspan;
 			widgetToUpdate.ColumnSpan = colspan;
 			if (graphType != 0) widgetToUpdate.GraphType = graphType;

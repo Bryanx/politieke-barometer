@@ -5,6 +5,14 @@ var primary_color = window.getComputedStyle(document.documentElement).getPropert
 var secondary_color = window.getComputedStyle(document.documentElement).getPropertyValue("--secondary-color");
 var tertiary_color = window.getComputedStyle(document.documentElement).getPropertyValue("--tertiary-color");
 
+var charts = [];
+var widgets = [];
+var itempage = false;
+var orgpage = false;
+var dashboardpage = false;
+var updateWidgets;
+var deleteWidget;
+
 //user widget element
 var widgetElements = {
     addNodeboxGraph: function (id) {
@@ -111,7 +119,7 @@ var widgetElements = {
             "               </div>" +
             "               <div class='graph-options'>" +
             "                   <input id=" + id + " type='text' class='form-control compareSearch' placeholder='Compare data with someone else.'>" +
-            "                   <button class='btn btn-danger removeData' data-widget-id=" + id + " >Remove data</button>" +
+            "                   <a class='btn btn-danger removeData' data-widget-id=" + id + " >Remove data</a>" +
             "               </div>" +
             "            </div>" +
             "        </div>";
@@ -143,13 +151,6 @@ gridselector.gridstack({
     }
 });
 var grid = gridselector.data("gridstack");
-
-var charts = [];
-var widgets = [];
-var itempage = false;
-var orgpage = false;
-var dashboardpage = false;
-var updateWidgets;
 
 function createNodebox(id) {
     let node = document.getElementById('graph' + id);
@@ -239,11 +240,17 @@ function loadGraphs(itemId, widget) {
 
     //Removes the last added dataset
     let RemoveData = function (e) {
-        let chart = FindChartByEvent(e);
-        chart.config.data.datasets.splice(0, 1);
-        chart.update();
+        let widget = widgets.find(w => w.WidgetId === $(e.target).data("widget-id"));
+        if (widget.ItemIds.length !== 1) {
+            let chart = FindChartByEvent(e);
+            chart.config.data.datasets.splice(widget.ItemIds.length-1, 1);
+            chart.update();
+            widget.ItemIds.splice(widget.ItemIds.length-1, 1);
+            if (widget.ItemIds.length < 2) $(".removeData").hide();
+            if (dashboardpage) updateWidgets(widgets);
+        }
     };
-
+    
     //Retrieves an image of the graph
     let AddImageUrl = function (id) {
         let chart = charts.find(c => c.config.id == id);
@@ -280,6 +287,7 @@ function loadGraphs(itemId, widget) {
 
     //Add data to graph.
     let AddDataSet = function (chart, name, values) {
+        $(".removeData").show();
         let newColor = COLORS[chart.config.data.datasets.length];
         let borderColor = newColor;
         let hoverColor = DARKCOLORS[chart.config.data.datasets.length];
@@ -319,9 +327,9 @@ function loadGraphs(itemId, widget) {
                 if (data !== undefined) {
                     if (!widgetToUpdate.ItemIds.includes(itemId)) {
                         widgetToUpdate.ItemIds.push(itemId);
+                        AddDataSet(chart, name, data[0].GraphValues.map(g => g.NumberOfTimes));
                         if (dashboardpage) updateWidgets(widgets);
                     }
-                    AddDataSet(chart, name, data[0].GraphValues.map(g => g.NumberOfTimes));
                 }
             },
             fail: d => alert(d)
@@ -330,6 +338,7 @@ function loadGraphs(itemId, widget) {
 
     //Toggles the charttype: bar/line chart
     let ChangeChartType = function (e, type) {
+        console.log(widgets);
         let widgetId = $(e.target).data("widget-id");
         let chart = charts.find(c => c.config.id == widgetId);
 
@@ -539,7 +548,7 @@ function loadGraphs(itemId, widget) {
                 });
             });
         } else {
-            displayNoGraphData(widget.WidgetId);
+            if (!dashboardpage) displayNoGraphData(widget.WidgetId);
         }
     };
     
@@ -558,7 +567,7 @@ function loadGraphs(itemId, widget) {
     $(document).on("click", ".changeTo3Month", (e) => ChangeTime(e, -3, 'month'));
     $(document).on("click", ".changeToYear", (e) => ChangeTime(e, -12, 'month'));
     $(document).on("click", ".removeData", (e) => RemoveData(e).unbind()); //unbind may give an error. this can be ignored.
-
+    
     //Loads the graph data.
     $(() => ajaxLoadGraphs(widget));
 
@@ -588,7 +597,6 @@ function loadGraphs(itemId, widget) {
     $('.compareSearch').keyup(()=> {
         $($('.compareSuggestion')[0]).parent().parent().css("margin-left", "0");
     });
-
 }
 
 function loadWidgets(url, itemId) {
@@ -710,7 +718,6 @@ function init() {
             GraphType: widget.GraphType ? widget.GraphType : 0,
             ItemIds: widget.ItemIds ? widget.ItemIds : []
         };
-        console.log(widget);
         $.ajax({
             type: "POST",
             url: "/api/MoveWidget/",
@@ -723,6 +730,7 @@ function init() {
     
     //Updates given widgets on resize
     updateWidgets = function (widgets) {
+        console.log(widgets);
         let serializedItems = [];
         $.each(widgets, function (index, widget) {
             serializedItems.push({
@@ -753,7 +761,7 @@ function init() {
     };
     
     //Removes a widget
-    let deleteWidget = function (e) {
+    deleteWidget = function (e) {
         let widget = (e.target).closest(".grid-stack-item");
         let widgetId = e.target.id;
         if (widgetId.length) {
@@ -779,7 +787,7 @@ function init() {
     $('#btnAddNodebox').click(this.btnAddNodebox);
 
     //persist widget state if changed. (only for dashboard widgets)
-        $(".grid-stack").on("change", (event, items) => {
+    $(".grid-stack").on("change", (event, items) => {
             if (dashboardpage) updateWidgets(items);
         });
 

@@ -1826,7 +1826,8 @@ canvas {
 .removeData {
   margin-top: 10px;
   float: right;
-  vertical-align: top; }
+  vertical-align: top;
+  display: none; }
 
 .compareSearch {
   margin-top: 10px;
