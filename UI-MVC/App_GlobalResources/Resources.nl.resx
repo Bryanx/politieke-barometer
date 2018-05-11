@@ -318,6 +318,9 @@
   <data name="JustNow" xml:space="preserve">
     <value>Zojuist</value>
   </data>
+  <data name="Keywords" xml:space="preserve">
+    <value>Kernwoorden</value>
+  </data>
   <data name="Languages" xml:space="preserve">
     <value>Talen</value>
   </data>

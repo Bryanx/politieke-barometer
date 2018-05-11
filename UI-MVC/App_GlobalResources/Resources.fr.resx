@@ -592,4 +592,7 @@ Thème</value>
   <data name="InTrendingPercentage" xml:space="preserve">
     <value>En pourcentage de tendance.</value>
   </data>
+  <data name="Keywords" xml:space="preserve">
+    <value>Mots de cle</value>
+  </data>
 </root>
