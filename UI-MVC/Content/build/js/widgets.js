@@ -217,7 +217,7 @@ function loadGraphs(itemId, widget) {
         'rgb(255, 99, 132)',
         'rgb(255, 159, 64)',
         'rgb(255, 205, 86)',
-        'rgb(131, 255, 123)',
+        'rgb(101, 184, 79)',
         'rgb(75, 192, 192)',
         'rgb(54, 162, 235)',
         'rgb(153, 102, 255)',
@@ -227,7 +227,7 @@ function loadGraphs(itemId, widget) {
         'rgb(235, 69, 102)',
         'rgb(235, 129, 34)',
         'rgb(235, 175, 46)',
-        'rgb(116, 225, 109)',
+        'rgb(44, 164, 56)',
         'rgb(55, 162, 162)',
         'rgb(34, 132, 205)',
         'rgb(123, 72, 225)',
@@ -295,11 +295,24 @@ function loadGraphs(itemId, widget) {
         $("#graph" + WidgetId).hide();
     };
 
+    //Get a new color that has not yet been added to the graph
+    function getRandomColor(datasets) {
+        if (datasets.length >= COLORS.length) return COLORS.length-1;
+        setColors = [];
+        datasets.forEach(d => setColors.push(COLORS.indexOf(d.backgroundColor)));
+        let newColor = setColors[0];
+        while (setColors.includes(newColor)) {
+            newColor = Math.floor((Math.random() * COLORS.length));
+        }
+        return newColor;
+    }
+
     //Add data to graph.
     let AddDataSet = function (chart, name, values, widgetId) {
-        let newColor = COLORS[chart.config.data.datasets.length];
+        let colorNumber = getRandomColor(chart.config.data.datasets);
+        let newColor = COLORS[colorNumber];
         let borderColor = newColor;
-        let hoverColor = DARKCOLORS[chart.config.data.datasets.length];
+        let hoverColor = DARKCOLORS[colorNumber];
 
         if (chart.config.type === "doughnut" || chart.config.type === "pie") {
             let firstDataset = chart.config.data.datasets[0];
@@ -475,7 +488,7 @@ function loadGraphs(itemId, widget) {
     let AddLineChart = function (widget, chartData, chartType = "line") {
         let labels = chartData[0].GraphValues.map(g => g.Value);
         let values = chartData[0].GraphValues.map(g => g.NumberOfTimes);
-        let colorNumber = Math.floor((Math.random() * 6));
+        let colorNumber = Math.floor((Math.random() * COLORS.length));
         let color = COLORS[colorNumber];
         let darkColor = DARKCOLORS[colorNumber];
         let borderColor = COLORS[colorNumber];
