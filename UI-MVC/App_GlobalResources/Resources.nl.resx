@@ -321,6 +321,9 @@
   <data name="HomepageHeaderTitle" xml:space="preserve">
     <value>Bekijk welke politici trending zijn</value>
   </data>
+  <data name="HorizontalBarChart" xml:space="preserve">
+    <value>Horizontale staafgrafiek</value>
+  </data>
   <data name="Hours" xml:space="preserve">
     <value>Uur</value>
   </data>

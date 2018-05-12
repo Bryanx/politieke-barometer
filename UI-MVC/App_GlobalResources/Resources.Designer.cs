@@ -682,6 +682,15 @@ namespace BAR.UI.MVC.App_GlobalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Horizontal bar chart.
+        /// </summary>
+        public static string HorizontalBarChart {
+            get {
+                return ResourceManager.GetString("HorizontalBarChart", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Hours.
         /// </summary>
         public static string Hours {

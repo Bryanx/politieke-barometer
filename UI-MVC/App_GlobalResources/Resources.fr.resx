@@ -634,6 +634,9 @@ Thème</value>
   <data name="DownloadPNGImage" xml:space="preserve">
     <value>Télécharger l'image PNG</value>
   </data>
+  <data name="HorizontalBarChart" xml:space="preserve">
+    <value>Graphique à barres horizontal</value>
+  </data>
   <data name="LineChart" xml:space="preserve">
     <value>Graphique linéaire</value>
   </data>

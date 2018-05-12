@@ -639,6 +639,9 @@
   <data name="DownloadPNGImage" xml:space="preserve">
     <value>Download PNG image</value>
   </data>
+  <data name="HorizontalBarChart" xml:space="preserve">
+    <value>Horizontal bar chart</value>
+  </data>
   <data name="LineChart" xml:space="preserve">
     <value>Line chart</value>
   </data>
