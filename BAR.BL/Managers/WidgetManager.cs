@@ -494,8 +494,8 @@ namespace BAR.BL.Managers
 			//Get trending items
 			ItemManager itemManager = new ItemManager();
 			IEnumerable<Item> items = null;
-			if (userId == null) items = itemManager.GetMostTrendingItems();
-			else items = itemManager.GetMostTrendingItemsForUser(userId);
+			if (userId == null) items = itemManager.GetMostTrendingItems(useWithOldData: true);
+			else items = itemManager.GetMostTrendingItemsForUser(userId, useWithOldData: true);
 
 			if (items == null || items.Count() == 0) return widgets;
 
