@@ -87,7 +87,7 @@ namespace BAR.BL.Managers
 			foreach (User user in users)
 			{
 				//Get 5 most trending items of
-				items = GetMostTredningItemsForUser(user.Id);
+				items = GetMostTrendingItemsForUser(user.Id);
 
 				//Send email
 				IdentityMessage message = new IdentityMessage()
@@ -113,7 +113,7 @@ namespace BAR.BL.Managers
 		/// the number of trending items depends on the
 		/// number that you give via the parameter
 		/// </summary>
-		public IEnumerable<Item> GetMostTrendingItems(int numberOfItems = 5)
+		public IEnumerable<Item> GetMostTrendingItems(int numberOfItems = 5, bool userWithOldData = false)
 		{
 			//Order the items by populairity
 			IEnumerable<Item> itemsOrderd = GetAllItems()
@@ -134,7 +134,7 @@ namespace BAR.BL.Managers
 		/// for a specific type
 		/// the number of items depends on the parameter "numberOfItems"
 		/// </summary>
-		public IEnumerable<Item> GetMostTrendingItemsForType(ItemType type, int numberOfItems = 5)
+		public IEnumerable<Item> GetMostTrendingItemsForType(ItemType type, int numberOfItems = 5, bool userWithOldData = false)
 		{
 			//order the items by populairity
 			IEnumerable<Item> itemsOrderd = GetAllItems().Where(item => item.ItemType == type)
@@ -154,7 +154,7 @@ namespace BAR.BL.Managers
 		/// Gives back a list of the most trending items
 		/// based on the userId.
 		/// </summary>
-		public IEnumerable<Item> GetMostTredningItemsForUser(string userId, int numberOfItems = 5)
+		public IEnumerable<Item> GetMostTrendingItemsForUser(string userId, int numberOfItems = 5, bool userWithOldData = false)
 		{
 			//Get items for userId and order items from user
 			//We need to get every item of the subscription of a specefic user
@@ -184,7 +184,7 @@ namespace BAR.BL.Managers
 		/// for a specific type and user
 		/// the number of items depends on the parameter "numberOfItems"
 		/// </summary>
-		public IEnumerable<Item> GetMostTredningItemsForUserAndItemType(string userId, ItemType type, int numberOfItems = 5)
+		public IEnumerable<Item> GetMostTrendingItemsForUserAndItemType(string userId, ItemType type, int numberOfItems = 5, bool userWithOldData = false)
 		{
 			//Get items for userId and order items from user
 			//We need to get every item of the subscription of a specefic user
@@ -384,9 +384,11 @@ namespace BAR.BL.Managers
 			item.Name = name;
 			item.CreationDate = DateTime.Now;
 			item.LastUpdatedInfo = DateTime.Now;
-			item.LastUpdated = DateTime.Now;
+			//needs to be null to do a check later on: see updateItemTrending in itemManager for details
+			item.LastUpdated = null; 
 			item.NumberOfFollowers = 0;
 			item.TrendingPercentage = 0.0;
+			item.TrendingPercentageOld = 0.0;
 			item.Baseline = 0.0;
 			item.Deleted = false;
 			item.Informations = new List<Information>();
@@ -496,7 +498,6 @@ namespace BAR.BL.Managers
 
 			//Update item
 			itemToUpdate.Name = name;
-			itemToUpdate.LastUpdated = DateTime.Now;
 
 			//Update database
 			itemRepo.UpdateItem(itemToUpdate);
@@ -520,7 +521,6 @@ namespace BAR.BL.Managers
 			personToUpdate.Gender = gender;
 			personToUpdate.Position = position;
 			personToUpdate.District = district;
-			personToUpdate.LastUpdated = DateTime.Now;
 
 			//Update database
 			itemRepo.UpdateItem(personToUpdate);
@@ -682,7 +682,6 @@ namespace BAR.BL.Managers
 						Name = name,
 						CreationDate = DateTime.Now,
 						LastUpdatedInfo = DateTime.Now,
-						LastUpdated = DateTime.Now,
 						NumberOfFollowers = 0,
 						TrendingPercentage = 0.0,
 						Baseline = 0.0,
@@ -731,7 +730,6 @@ namespace BAR.BL.Managers
 						Name = name,
 						CreationDate = DateTime.Now,
 						LastUpdatedInfo = DateTime.Now,
-						LastUpdated = DateTime.Now,
 						NumberOfFollowers = 0,
 						TrendingPercentage = 0.0,
 						Baseline = 0.0,
