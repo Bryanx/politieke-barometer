@@ -150,9 +150,6 @@ namespace BAR.UI.MVC.Controllers
 					//Log activity
 					new SubplatformManager().LogActivity(ActivityType.RegisterActivity);
 
-					//** TESTING **//
-					new WidgetManager().GetWidgetsForWeeklyReview(user.Id);
-
 					//Login
 					await signInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
 
