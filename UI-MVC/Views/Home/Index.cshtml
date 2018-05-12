@@ -53,25 +53,48 @@
     <div class="x_panel">
         <div class="x_title">
             <h2 style="float: none !important">Top 3 trending politici</h2>
+            <!-- panel toolbox
+            <ul class='nav navbar-right panel_toolbox'>
+                <li><a id=" + id + " class='addToDashboard'>" + Resources.Save +" to "+ Resources.Dashboard + "</a></li>
+                <li class='dropdown'>
+                    <a href='#' class='dropdown-toggle' data-toggle='dropdown' role='button' aria-expanded='false'><i class='fa fa-bar-chart'></i></a>
+                    <ul class='dropdown-menu' role='menu'>" +
+                        <li><a data-widget-id=" + id + " class='makeLineChart'>Line chart</a></li>
+                        <li><a data-widget-id=" + id + " class='makeBarChart'>Bar chart</a></li>
+                    </ul>
+                </li>
+                <li class='dropdown'>
+                    <a href='#' class='dropdown-toggle' data-toggle='dropdown' role='button' aria-expanded='false'><i class='fa fa-floppy-o'></i></a>
+                    <ul class='dropdown-menu' role='menu'>
+                        <li><a data-widget-id=" + id + " class='getJPGImage'>Download JPG image</a></li>
+                        <li><a data-widget-id=" + id + " class='getPNGImage'>Download PNG image</a></li>
+                    </ul>
+                </li>
+                <li><a data-widget-id=" + id + " class='dateChangeChart changeToWeek'>7d</a></li>
+                <li><a data-widget-id=" + id + " class='dateChangeChart changeToMonth'>1m</a></li>
+            </ul>
+            <div class='clearfix'></div>
+            UNTIL HERE -->
+            
         </div>
         <div class="x_content row">
             <div class="col-12" style="max-height: 400px">
-                <canvas id='trending-graph'></canvas>
+                <canvas id='trending-1-graph'></canvas>
                 <h2 class='no-graph-data text-center'>No data available.</h2>
             </div>
             <div class='x_panel no-scrollbar x_nested_panel'>
                 <div class='x_title'>
                     <h2 class='graphTitle'>Twitter feed</h2>
-                    <ul class='nav navbar-right panel_toolbox'>
+                    <ul class='nav panel_toolbox'>
                         <li>
                             <a class="collapse-link">
-                                <i class="fa fa-chevron-up"></i>
+                                <i class="fa fa-chevron-down"></i>
                             </a>
                         </li>
                     </ul>
                     <div class='clearfix'></div>
                 </div>
-            <div class="x_content">
+            <div class="x_content" style="display: none">
                 <table>
                     @for (int j = 1; j <= 3; j++)
                     {
@@ -82,7 +105,7 @@
                                             <h4 id="t-name-@j" style="display: inline-block"></h4>
                                             <b><h4 style="display: inline-block">
                                                 <i class="green">
-                                                    <i class="fa fa-sort-asc"></i>
+                                                    <i class="fa fa-sort-asc">&nbsp;</i>
                                                 </i>
                                             </h4></b>
                                         </a>
@@ -101,6 +124,21 @@
         </div>
     </div>
 </section>  <!-- /top 3 politici (trending) -->
+
+
+<section>     <!-- top 3 Themas (trending) -->
+    <div class="x_panel">
+        <div class="x_title">
+            <h2 style="float: none !important">Top 3 trending Thema's</h2> 
+        </div>
+        <div class="x_content row">
+            <div class="col-12" style="max-height: 400px">
+                <canvas id='trending-3-graph'></canvas>
+                <h2 class='no-graph-data text-center'>No data available.</h2>
+            </div>
+        </div>
+    </div>
+</section>  <!-- /top 3 Themas (trending) -->
 
 <section>  <!-- Kaart -->
 <div class="row">
@@ -172,11 +210,21 @@
         $(() => {
             $.ajax({
                 type: "GET",
-                url: 'api/GetTopTrendingItems',
+                url: '/api/GetTopTrendingItems/1',
                 dataType: "json",
                 success: data => {
                     GetTopTrending(data);
                     TwitterFeed(data);
+                },
+                error: (xhr) => alert(xhr.responseText)
+            });
+            
+            $.ajax({
+                type: "GET",
+                url: '/api/GetTopTrendingItems/3',
+                dataType: "json",
+                success: data => {
+                    GetTopTrending(data);
                 },
                 error: (xhr) => alert(xhr.responseText)
             });

@@ -48,19 +48,28 @@ namespace BAR.UI.MVC.Controllers.api
 		}
 
 		/// <summary>
-		/// Gets top 3 trending items
+		/// Gets top 3 trending items with details for specific type 
 		/// </summary>
 		[HttpGet]
-		[Route("api/GetTopTrendingItems")]
-		public IHttpActionResult GetTopTrendingItems()
+		[Route("api/GetTopTrendingItems/{itemType}")]
+		public IHttpActionResult GetTopTrendingItems(int itemType)
 		{
+			ItemType type = (ItemType) itemType;
 			itemManager = new ItemManager();
-			List<Person> lijst = new List<Person>();
-			itemManager.GetAllPersons()
-				.OrderByDescending(m => m.TrendingPercentage)
-				.Take(3)
-				.ForEach(p => lijst.Add(itemManager.GetPersonWithDetails(p.ItemId)));
-			return Ok(Mapper.Map(lijst, new List<Person>()));
+			List<Item> lijst = new List<Item>();
+
+			if (type == ItemType.Person){
+				itemManager.GetMostTrendingItemsForType(ItemType.Person, 3)
+					.ForEach(i => lijst.Add(itemManager.GetPersonWithDetails(i.ItemId)));
+			} else if (type == ItemType.Organisation){
+				itemManager.GetMostTrendingItemsForType(ItemType.Organisation, 3)
+					.ForEach(i => lijst.Add(itemManager.GetOrganisationWithDetails(i.ItemId)));
+			} else {
+				itemManager.GetMostTrendingItemsForType(ItemType.Theme, 3)
+					.ForEach(i => lijst.Add(itemManager.GetThemeWithDetails(i.ItemId)));
+			}
+
+			return Ok(Mapper.Map(lijst, new List<Item>()));
 		}
 		
 		/// <summary>

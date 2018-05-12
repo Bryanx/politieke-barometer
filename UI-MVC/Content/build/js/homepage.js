@@ -85,9 +85,12 @@ let TwitterFeed = function (trendings) {
 }
 
 /* ---------- Trending chart ----------*/
-var charts = [];
-let AddChart = function (name, widgetId, labels, values, chartType="line") {
-    charts.push(new Chart(document.getElementById("trending-graph"), {
+var charts1 = []
+var charts2 = []
+var charts3 = [];
+let AddChart = function (name, widgetId, labels, values, itemType, chartType="line") {
+    let el = "trending-" + itemType + "-graph";
+    let c = new Chart(document.getElementById(el), {
         id: widgetId,
         type: chartType,
         data: {
@@ -95,9 +98,9 @@ let AddChart = function (name, widgetId, labels, values, chartType="line") {
             datasets: [{
                 data: values,
                 label: name,
-                borderColor: COLORS[values[2]],
-                backgroundColor: COLORS[values[2]],
-                hoverBackgroundColor: DARKCOLORS[values[2]],
+                borderColor: "rgb(30, 143, 190)",
+                backgroundColor: "rgb(30, 143, 190)",
+                hoverBackgroundColor: "rgb(116, 135, 155)",
                 fill: false,
             }],
         },
@@ -105,20 +108,34 @@ let AddChart = function (name, widgetId, labels, values, chartType="line") {
             responsive: true,
             maintainAspectRatio: false,
         }
-    }));
+    });
+    if (itemType === 1) {
+        charts1.push(c);
+    } else if (itemType === 2) {
+        charts2.push(c);
+    } else {
+        charts3.push(c);
+    }
+        
 };
 
 
-let getGraph = function(name, itemId, widgetId) {
+let getGraph = function(name, itemId, widgetId, itemType) {
     $.ajax({
         type: "GET",
         url: "/api/GetGraphs/" + itemId + "/" + widgetId,
         dataType: "json",
         success: data => {
-            if (charts[0] == null) {
-                AddChart(name, data[0].WidgetId, data[0].GraphValues.map(g => g.Value).slice(0, 10), data[0].GraphValues.map(g => g.NumberOfTimes).slice(0, 10));
-            } else {
-                AddDataSet(charts[0], name, data[0].GraphValues.map(g => g.NumberOfTimes).slice(0, 10))
+            switch (itemType){
+                case 1:
+                    charts1[0] == null ? AddChart(name, data[0].WidgetId, data[0].GraphValues.map(g => g.Value), data[0].GraphValues.map(g => g.NumberOfTimes), itemType) : AddDataSet(charts1[0], name, data[0].GraphValues.map(g => g.NumberOfTimes), itemType);
+                    break;
+                case 2:
+                    charts2[0] == null ? AddChart(name, data[0].WidgetId, data[0].GraphValues.map(g => g.Value), data[0].GraphValues.map(g => g.NumberOfTimes), itemType) : AddDataSet(charts2[0], name, data[0].GraphValues.map(g => g.NumberOfTimes), itemType);
+                    break;
+                case 3:
+                    charts3[0] == null ? AddChart(name, data[0].WidgetId, data[0].GraphValues.map(g => g.Value), data[0].GraphValues.map(g => g.NumberOfTimes), itemType) : AddDataSet(charts3[0], name, data[0].GraphValues.map(g => g.NumberOfTimes), itemType);
+                    break;
             }
         },
         fail: d => console.log(d)
@@ -127,13 +144,12 @@ let getGraph = function(name, itemId, widgetId) {
 /*--------- Adding data for trending chart ----------*/    
 
 let AddDataSet = function (chart, name, values) {
-    var newColor = COLORS[values[3]]; // TEMPORARY FIX
-    var hoverColor = DARKCOLORS[values[3]];
-    var newDataset = {
+    let random = Math.floor(Math.random()*(COLORS.length -1)); // Gets random color
+    let newDataset = {
         label: name,
-        borderColor: newColor,
-        backgroundColor: newColor,
-        hoverBackgroundColor: hoverColor,
+        borderColor: COLORS[random],
+        backgroundColor: COLORS[random],
+        hoverBackgroundColor: DARKCOLORS[random],
         data: values,
         fill: false
     };
@@ -151,7 +167,7 @@ var GetTopTrending = function (trendings){
             type: "GET",
             url: 'api/GetItemWidgets/' + value.ItemId,
             dataType: "json",
-            success: data => getGraph(value.Name,  value.ItemId, data[0].WidgetId),
+            success: data => getGraph((value.Name + " " + value.TrendingPercentage.toFixed(2) + "%"),  value.ItemId, data[0].WidgetId, value.ItemType),
             error: (xhr) => alert(xhr.responseText)
         });
     });
