@@ -127,14 +127,7 @@ namespace BAR.BL.Managers
 				itemsOrderd = itemsOrderd.OrderBy(item => item.NumberOfMentions).AsEnumerable();
 			}
 
-			//Get the first items out of the list
-			List<Item> itemsOrderdMostPopulair = new List<Item>();
-			for (int i = 0; i < numberOfItems; i++)
-			{
-				if (i <= itemsOrderd.Count()) itemsOrderdMostPopulair.Add(itemsOrderd.ElementAt(i));
-			}
-
-			return itemsOrderdMostPopulair.AsEnumerable();
+			return itemsOrderd.Take(numberOfItems).AsEnumerable();
 		}
 
 		/// <summary>
@@ -158,14 +151,7 @@ namespace BAR.BL.Managers
 				.OrderBy(item => item.NumberOfMentions).AsEnumerable();
 			}
 
-			//Get the first items out of the list
-			List<Item> itemsOrderdMostPopulair = new List<Item>();
-			for (int i = 0; i < numberOfItems; i++)
-			{
-				if (i <= itemsOrderd.Count()) itemsOrderdMostPopulair.Add(itemsOrderd.ElementAt(i));
-			}
-
-			return itemsOrderdMostPopulair.AsEnumerable();
+			return itemsOrderd.Take(numberOfItems).AsEnumerable();
 		}
 
 		/// <summary>
@@ -192,13 +178,6 @@ namespace BAR.BL.Managers
 			{
 				UpdateTrendingItem(itemsFromUser);
 				itemsOrderd = itemsFromUser.OrderBy(item => item.NumberOfMentions).AsEnumerable();
-			}
-
-			//Get the first items out of the list
-			List<Item> itemsOrderdMostPopulair = new List<Item>();
-			for (int i = 0; i < numberOfItems; i++)
-			{
-				if (i <= itemsOrderd.Count()) itemsOrderdMostPopulair.Add(itemsOrderd.ElementAt(i));
 			}
 
 			return itemsOrderd.Take(numberOfItems).AsEnumerable();
@@ -232,16 +211,8 @@ namespace BAR.BL.Managers
 				itemsOrderd = itemsFromUser.Where(item => item.ItemType == type)
 				.OrderBy(item => item.NumberOfMentions).AsEnumerable();
 			}
-			
 
-			//Get the first items out of the list
-			List<Item> itemsOrderdMostPopulair = new List<Item>();
-			for (int i = 0; i < numberOfItems; i++)
-			{
-				if (i <= itemsOrderd.Count()) itemsOrderdMostPopulair.Add(itemsOrderd.ElementAt(i));
-			}
-
-			return itemsOrderd;
+			return itemsOrderd.Take(numberOfItems).AsEnumerable();
 		}
 
 		/// <summary>

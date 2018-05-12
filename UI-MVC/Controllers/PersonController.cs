@@ -94,9 +94,6 @@ namespace BAR.UI.MVC.Controllers
 		[SubPlatformDataCheck]
 		public ActionResult Details(int id)
 		{
-			//** TESTING **//
-			new WidgetManager().GetWidgetsForWeeklyReview();
-
 			itemManager = new ItemManager();
 			userManager = new UserManager();
 			subManager = new SubscriptionManager();
