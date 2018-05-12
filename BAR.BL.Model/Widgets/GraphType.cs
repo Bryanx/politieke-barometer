@@ -11,6 +11,13 @@ namespace BAR.BL.Domain.Widgets
 		LineChart = 1,
 		BarChart,
 		PieChart,
-		DonutChart
+		DonutChart,
+		ScatterChart,
+		BubbleChart,
+		PolarChart,
+		LinearBarChart,
+		RadarChart,
+		StackedBarChart,
+		MixedChart
 	}
 }
