@@ -753,36 +753,40 @@ function init() {
         }).fail(() => showErrorMessage());
     };
     
-    //Updates given widgets on resize
+    //Updates given widgets (wto works as a buffer for a lot
     //TODO: only update if widget has changes.
+    var wto;
     updateWidgets = function (widgets) {
-        let serializedItems = [];
-        $.each(widgets, function (index, widget) {
-            serializedItems.push({
-                WidgetId: widget.id ? widget.id : widget.WidgetId,
-                Title: "widget", //unused title
-                RowNumber: widget.x ? widget.x : widget.RowNumber,
-                ColumnNumber: widget.y ? widget.y : widget.ColumnNumber,
-                RowSpan: widget.width ? widget.width : widget.RowSpan,
-                ColumnSpan: widget.height ? widget.height : widget.ColumnSpan,
-                WidgetType: 0,
-                DashboardId: 0,
-                GraphType: widget.GraphType ? widget.GraphType : 0,
-                ItemIds: widget.ItemIds ? widget.ItemIds : []
+        clearTimeout(wto);
+        wto = setTimeout(function () {
+            let serializedItems = [];
+            $.each(widgets, function (index, widget) {
+                serializedItems.push({
+                    WidgetId: widget.id ? widget.id : widget.WidgetId,
+                    Title: "widget", //unused title
+                    RowNumber: widget.x ? widget.x : widget.RowNumber,
+                    ColumnNumber: widget.y ? widget.y : widget.ColumnNumber,
+                    RowSpan: widget.width ? widget.width : widget.RowSpan,
+                    ColumnSpan: widget.height ? widget.height : widget.ColumnSpan,
+                    WidgetType: 0,
+                    DashboardId: 0,
+                    GraphType: widget.GraphType ? widget.GraphType : 0,
+                    ItemIds: widget.ItemIds ? widget.ItemIds : []
+                });
             });
-        });
-        $.ajax({
-            type: "POST",
-            url: "/api/UpdateWidget/",
-            data: JSON.stringify(serializedItems),
-            dataType: "application/json",
-            contentType: "application/json",
-            success: () => showSaveMessage(),
-            error: (xhr) => {
-                alert($.parseJSON(xhr.responseText).Message);
-                showErrorMessage();
-            }
-        })
+            $.ajax({
+                type: "POST",
+                url: "/api/UpdateWidget/",
+                data: JSON.stringify(serializedItems),
+                dataType: "application/json",
+                contentType: "application/json",
+                success: () => showSaveMessage(),
+                error: (xhr) => {
+                    alert($.parseJSON(xhr.responseText).Message);
+                    showErrorMessage();
+                }
+            })
+        }, 1000);
     };
     
     //Removes a widget
