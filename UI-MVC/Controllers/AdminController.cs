@@ -121,6 +121,11 @@ namespace BAR.UI.MVC.Controllers
 				}).OrderBy(x => x.Text);
 		}
 
+		/// <summary>
+		/// Method that processes a json file with themes and associated keywords
+		/// </summary>
+		/// <param name="model"></param>
+		/// <returns></returns>
 		[HttpPost]
 		public ActionResult UploadThemes([Bind(Exclude = "jsonFileThemes")]ItemViewModels.ItemViewModel model)
 		{
@@ -138,6 +143,11 @@ namespace BAR.UI.MVC.Controllers
 			return RedirectToAction("ItemManagement", "Admin");
 		}
 
+		/// <summary>
+		/// Method that processes a json file with persons and organisations
+		/// </summary>
+		/// <param name="model"></param>
+		/// <returns></returns>
 		[HttpPost]
 		public ActionResult UploadJson([Bind(Exclude = "jsonFile")]ItemViewModels.ItemViewModel model)
 		{
@@ -155,6 +165,11 @@ namespace BAR.UI.MVC.Controllers
 			return RedirectToAction("ItemManagement", "Admin");
 		}
 
+		/// <summary>
+		/// Creates a person based on model in HttpPost
+		/// </summary>
+		/// <param name="model"></param>
+		/// <returns></returns>
 		[HttpPost]
 		public ActionResult CreatePerson(CreateItemModels.CreatePersonModel model)
 		{
@@ -170,6 +185,11 @@ namespace BAR.UI.MVC.Controllers
 			return RedirectToAction("Details", "Person", new { id = person.ItemId });
 		}
 
+		/// <summary>
+		/// Creates an organisation based on model in HttpPost
+		/// </summary>
+		/// <param name="model"></param>
+		/// <returns></returns>
 		[HttpPost]
 		public ActionResult CreateOrganisation(CreateItemModels.CreateOrganisationModel model)
 		{
@@ -185,6 +205,11 @@ namespace BAR.UI.MVC.Controllers
 			return RedirectToAction("Details", "Organisation", new { id = org.ItemId });
 		}
 
+		/// <summary>
+		/// Creates a theme based on model in HttpPost
+		/// </summary>
+		/// <param name="model"></param>
+		/// <returns></returns>
 		[HttpPost]
 		public ActionResult CreateTheme(CreateItemModels.CreateThemeModel model)
 		{
