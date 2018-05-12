@@ -171,6 +171,21 @@ namespace BAR.UI.MVC.Controllers
 		}
 
 		[HttpPost]
+		public ActionResult CreateOrganisation(CreateItemModels.CreateOrganisationModel model)
+		{
+			int subPlatformID = (int)RouteData.Values["SubPlatformID"];
+
+			itemManager = new ItemManager();
+			platformManager = new SubplatformManager();
+			SubPlatform subplatform = platformManager.GetSubPlatform(subPlatformID);
+
+			Organisation org = (Organisation)itemManager.AddItem(ItemType.Organisation, model.Name, site: "www.kdg.be");
+			itemManager.ChangeItemPlatform(org.ItemId, subplatform.SubPlatformId);
+
+			return RedirectToAction("Details", "Organisation", new { id = org.ItemId });
+		}
+
+		[HttpPost]
 		public ActionResult CreateTheme(CreateItemModels.CreateThemeModel model)
 		{
 			int subPlatformID = (int)RouteData.Values["SubPlatformID"];

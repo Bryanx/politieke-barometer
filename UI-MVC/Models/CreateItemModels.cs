@@ -16,6 +16,13 @@ namespace BAR.UI.MVC.Models
 			public string Name { get; set; }
 		}
 
+		public class CreateOrganisationModel : BaseViewModel
+		{
+			[Required]
+			[Display(Name = "Name", ResourceType = typeof(Resources))]
+			public string Name { get; set; }
+		}
+
 		public class CreateThemeModel : BaseViewModel
 		{
 			[Required]

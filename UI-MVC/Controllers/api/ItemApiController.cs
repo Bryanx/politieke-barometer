@@ -227,8 +227,15 @@ namespace BAR.UI.MVC.Controllers.api
 		{
 			itemManager = new ItemManager();
 			int orgId = Int32.Parse(itemId);
-			List<Person> items = itemManager.GetAllPersons().Where(p => p.Organisation.ItemId == orgId).ToList();
-			return Ok(Mapper.Map(items, new List<ItemDTO>()));
+			try
+			{
+				List<Person> items = itemManager.GetAllPersons().Where(p => p.Organisation.ItemId == orgId).ToList();
+				return Ok(Mapper.Map(items, new List<ItemDTO>()));
+			} catch(Exception e)
+			{
+				return Ok(Mapper.Map(new List<Person>(), new List<ItemDTO>()));
+			}
+			
 		}
 	}
 }
