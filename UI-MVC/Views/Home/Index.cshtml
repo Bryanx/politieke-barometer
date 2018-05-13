@@ -82,7 +82,6 @@
             <!-- CARDS -->
             <div class="row">
             @foreach(var item in Model.Items.Where(p => p.ItemType == ItemType.Person).OrderBy(p => p.TrendingPercentage).Reverse().Take(3)){
-            
                 <div class="col-xs-12 col-sm-4">
                     @Html.Partial("Partials/_Card", item)
                 </div>

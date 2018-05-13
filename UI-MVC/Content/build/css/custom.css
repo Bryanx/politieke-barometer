@@ -1923,8 +1923,10 @@ nav .nav-container .searchbar .search-field, form.navbar-form .input-group {
 
 .card-nom {
   position: absolute;
-  top: 20px;
+  top: 10px;
   right: 10px; }
+  .card-nom .totalNumberOfMentions {
+    font-size: 30px; }
 
 .card-link {
   position: absolute;

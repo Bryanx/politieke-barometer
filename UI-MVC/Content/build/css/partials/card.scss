@@ -21,9 +21,12 @@
 }
 .card-nom {
   position: absolute;
-  top: 20px;
+  top: 10px;
   right: 10px;
-}
+  .totalNumberOfMentions{
+    font-size: 30px;
+  }
+} 
 
 .card-link {
   position: absolute;

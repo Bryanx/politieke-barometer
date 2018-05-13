@@ -78,7 +78,7 @@ let TwitterFeed = function (trendings) {
             {
                 chrome: "noheader, noborder, nofooter",
                 linkColor: primary_color,
-                tweetLimit: 5
+                tweetLimit: 20
             }
         );
     });
