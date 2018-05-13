@@ -216,7 +216,7 @@ namespace BAR.BL.Managers
 		}
 
 		/// <summary>
-		/// If the las time that the old trending percentage of the item was updated 7 days ago,
+		/// If the last time that the old trending percentage of the item was updated 7 days ago,
 		/// then the old trending percentage will be updated.
 		/// </summary>
 		private void UpdateTrendingItem(IEnumerable<Item> items)
