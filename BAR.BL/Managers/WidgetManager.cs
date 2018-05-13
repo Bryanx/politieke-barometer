@@ -53,7 +53,7 @@ namespace BAR.BL.Managers
 			widget.ColumnSpan = colspan;
 			widget.Timestamp = timestamp;
 			widget.Items = items ?? new List<Item>();
-			widget.GraphType = graphType;
+			if (graphType != 0) widget.GraphType = graphType;
 			widget.PropertyTags = proptags;
 
 			//Check for adding widgetData
@@ -152,12 +152,8 @@ namespace BAR.BL.Managers
 			
 			ItemManager itemManager = new ItemManager(uowManager);
 				
-			//Set to remove duplicates
-			HashSet<int> set = new HashSet<int>();
-			itemIds.ForEach(i => set.Add(i));
-			List<Item> items = new List<Item>();
-				
-			if (set.Count > 1) items = itemManager.GetAllItems().Where(i => set.Contains(i.ItemId)).ToList();
+			//Get items
+			List<Item> items = itemManager.GetAllItems().Where(i => itemIds.Contains(i.ItemId)).ToList();
 
 			//get widget
 			Widget widgetToUpdate = GetWidgetWithAllItems(widgetId);
@@ -166,7 +162,7 @@ namespace BAR.BL.Managers
 			//update widget
 			widgetToUpdate.RowNumber = rowNbr;
 			widgetToUpdate.ColumnNumber = colNbr;
-			if (items.Count > 1) widgetToUpdate.Items = items;
+			if (items.Count > 0) widgetToUpdate.Items = items;
 			widgetToUpdate.RowSpan = rowspan;
 			widgetToUpdate.ColumnSpan = colspan;
 			if (graphType != 0) widgetToUpdate.GraphType = graphType;
@@ -213,7 +209,7 @@ namespace BAR.BL.Managers
 		/// Copies a widget to the dashboard
 		/// All attributes of the given Widget are copied and used to generate a new UserWidget.
 		/// </summary>
-		public void MoveWidgetToDashBoard(int widgetId, IEnumerable<int> itemIds, string userId) 
+		public void MoveWidgetToDashBoard(int widgetId, GraphType graphType, IEnumerable<int> itemIds, string userId) 
 		{
 			uowManager = new UnitOfWorkManager();
 			InitRepo();
@@ -227,10 +223,10 @@ namespace BAR.BL.Managers
 			//Get widget
 			Widget widget = GetWidgetWithAllData(widgetId);
 
-			//make new widget and attach items to the new widget
-			Widget newWidget = AddWidget(WidgetType.GraphType, widget.Title, widget.RowNumber, 
-				widget.ColumnNumber, proptags: new List<PropertyTag>(), rowspan: widget.RowSpan,
-				colspan: widget.ColumnSpan, dashboardId: dash.DashboardId, items: items, graphType: widget.GraphType);
+			//make new widget and attach items to the new widgetwidget.GraphType
+			Widget newWidget = AddWidget(WidgetType.GraphType, widget.Title, 0, 
+				0, proptags: new List<PropertyTag>(), rowspan: widget.RowSpan,
+				colspan: widget.ColumnSpan, dashboardId: dash.DashboardId, items: items, graphType: graphType);
 			
 			uowManager.Save();
 			
@@ -450,7 +446,7 @@ namespace BAR.BL.Managers
 		public IEnumerable<Widget> GetAllWidgetsWithAllDataForItem(int itemId)
 		{
 			InitRepo();
-			return widgetRepo.ReadAllWidgetsWithAllDataForItem(itemId).AsEnumerable();
+			return widgetRepo.ReadWidgetsWithAllDataForItem(itemId).AsEnumerable();
 		}
 
 		/// <summary>
@@ -479,6 +475,37 @@ namespace BAR.BL.Managers
 		{
 			InitRepo();
 			return widgetRepo.ReadDashboardWithAllDataForUserId(userId);
+		}
+
+		/// <summary>
+		/// Gives back all the widgets for the generic dashboard or
+		/// for a specific user
+		/// For now, this method will only return the widgets "number of metnions" because these are the most logical.
+		/// </summary>
+		public IEnumerable<Widget> GetWidgetsForWeeklyReview(string userId = null)
+		{
+			InitRepo();
+			List<Widget> widgets = new List<Widget>();
+
+			//Get trending items
+			ItemManager itemManager = new ItemManager();
+			IEnumerable<Item> items = null;
+			if (userId == null) items = itemManager.GetMostTrendingItems(useWithOldData: true);
+			else items = itemManager.GetMostTrendingItemsForUser(userId, useWithOldData: true);
+
+			if (items == null || items.Count() == 0) return widgets;
+
+			//Query widgets
+			foreach (Item item in items)
+			{
+				IEnumerable<Widget> widgetsToAdd = widgetRepo.ReadWidgetsWithAllDataForItem(item.ItemId)
+															 .Where(widget => widget.PropertyTags
+															 .Any(proptag => proptag.Name.ToLower().Equals("mentions")))
+															 .AsEnumerable();
+				if (widgetsToAdd != null) widgets.AddRange(widgetsToAdd);
+			}
+
+			return widgets.AsEnumerable();
 		}
 	}
 }

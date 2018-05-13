@@ -338,6 +338,9 @@ hr {
 .fixed_height_200 {
   height: 200px; }
 
+.max_height_460 {
+  max-height: 460px; }
+
 .overflow_hidden {
   overflow: hidden; }
 
@@ -556,7 +559,7 @@ ul.msg_list li.noAlertsAvailable {
   background: var(--white);
   overflow: hidden; }
   ul.msg_list li.noAlertsAvailable i {
-    font-size: 70px;
+    font-size: 70px !important;
     padding-bottom: 10px;
     color: var(--font-color);
     text-align: center; }
@@ -918,6 +921,17 @@ table.tile_info {
   .text-over-image:hover {
     background: white; }
 
+.avatar-view, .related-img-view {
+  object-fit: cover;
+  width: 90% !important;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px; }
+
+.profile_left {
+  padding-left: 0;
+  margin-left: -5px; }
+
 .c-primary {
   color: var(--primary-color); }
 
@@ -1101,6 +1115,8 @@ footer.joinus {
 .tile_count {
   margin-bottom: 20px;
   margin-top: 20px; }
+  .tile_count :first-child {
+    border-left: 0 !important; }
   .tile_count .tile_stats_count {
     text-overflow: ellipsis;
     overflow: hidden;
@@ -1195,13 +1211,6 @@ nav .nav-container .searchbar .search-field, form.navbar-form .input-group {
 
 .dropdown-search {
   right: auto !important; }
-
-.compareSearch {
-  margin-top: 10px;
-  max-width: 400px;
-  height: 34px;
-  vertical-align: top;
-  display: inline-block; }
 
 .navbar-search .input-group .input-group-btn {
   width: 1% !important; }
@@ -1792,13 +1801,6 @@ span.right {
 .subscription > td > a:hover {
   text-decoration: none; }
 
-.addToDashboard {
-  display: inline-block;
-  vertical-align: top; }
-
-.graph-options {
-  text-align: center; }
-
 .timeline-Header, .timeline-footer {
   display: none; }
 
@@ -1812,19 +1814,47 @@ canvas {
   height: auto !important; }
 
 .org-member {
-  padding: 0 10px 15px 10px;
-  cursor: pointer; }
+  padding: 0 10px 15px 10px; }
   .org-member strong {
     display: block;
     margin-top: 10px;
     white-space: nowrap; }
-  .org-member img {
-    width: 85%; }
   .org-member:hover strong {
     text-decoration: underline; }
 
 .grid-stack-item-content {
   overflow: visible !important; }
+
+.addToDashboard {
+  display: inline-block;
+  vertical-align: top;
+  float: left; }
+
+.edit-title {
+  display: none;
+  font-size: 14px;
+  cursor: pointer;
+  padding-left: 10px; }
+
+.title-input {
+  display: none;
+  width: auto;
+  height: 30px; }
+
+.graph-options {
+  display: flex;
+  justify-content: space-evenly; }
+  .graph-options .removeData {
+    margin-top: 10px;
+    float: right;
+    vertical-align: top;
+    display: none; }
+  .graph-options .compareSearch {
+    margin-top: 10px;
+    max-width: 400px;
+    height: 34px;
+    vertical-align: top;
+    display: inline-block; }
 
 .modal-lg {
   max-width: 600px;
@@ -1866,13 +1896,6 @@ nav .nav-container .searchbar .search-field, form.navbar-form .input-group {
 
 .dropdown-search {
   right: auto !important; }
-
-.compareSearch {
-  margin-top: 10px;
-  max-width: 400px;
-  height: 34px;
-  vertical-align: top;
-  display: inline-block; }
 
 .navbar-search .input-group .input-group-btn {
   width: 1% !important; }

@@ -286,9 +286,10 @@ namespace BAR.DAL
 		/// Gives back all widgets for a specific item id
 		/// The widget contains all the data needed to construct a graph
 		/// </summary>
-		public IEnumerable<Widget> ReadAllWidgetsWithAllDataForItem(int itemId)
+		public IEnumerable<Widget> ReadWidgetsWithAllDataForItem(int itemId)
 		{
 			Item itemToReturn =  ctx.Items.Include(item => item.ItemWidgets)
+										  .Include(item => item.ItemWidgets.Select(widget => widget.PropertyTags))
 										  .Include(item => item.ItemWidgets.Select(widget => widget.WidgetDatas))
 									      .Include(item => item.ItemWidgets.Select(widget => widget.WidgetDatas.Select(data => data.GraphValues)))
 										  .Where(item => item.ItemId == itemId).SingleOrDefault();
