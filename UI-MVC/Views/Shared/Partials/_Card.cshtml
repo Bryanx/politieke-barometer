@@ -1,0 +1,18 @@
+﻿@using BAR.UI.MVC.Helpers
+@model BAR.UI.MVC.Models.ItemDTO
+
+<div class="card">
+    <div class="card-user">
+        <img src='/Content/build/images/picture.jpg' class="img-circle card-image"/>
+    </div>
+    <div class="card-category">
+        @Model.Name
+        <p>
+        <i class="fa fa-sort-asc green">&nbsp;@Model.TrendingPercentage%</i>
+        </p>
+    </div>
+    <div class="card-nom">
+        @Model.NumberOfMentions
+    </div>
+    <a class="card-link" href="/@Model.ItemType.Value/Details/@Model.ItemId" ></a>
+</div>
