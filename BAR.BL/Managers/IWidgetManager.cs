@@ -36,7 +36,7 @@ namespace BAR.BL.Managers
 
 		void GenerateDataForMwidgets();
 
-		void MoveWidgetToDashBoard(int widgetId, IEnumerable<int> itemIds, string userId);
+		void MoveWidgetToDashBoard(int widgetId, GraphType graphType, IEnumerable<int> itemIds, string userId);
 		
 		//dashboards
 		Dashboard GetDashboard(int dashboardId);
