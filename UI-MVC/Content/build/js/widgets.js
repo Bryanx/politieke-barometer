@@ -25,7 +25,8 @@ var widgetElements = {
         return "<div class='chart-container'>" +
             "            <div class='x_panel grid-stack-item-content bg-white no-scrollbar'>" +
             "                <div class='x_title'>" +
-            "                    <h2 class='graphTitle'>" + title + "</h2>" +
+            "                    <h2 class='graphTitle userWidgetTitle'>" + title + "<i class='fa fa-edit edit-title'></i></h2>" +
+            "                    <input class='form-control title-input' data-widget-id=" + id + " type='text' value='"+title+"' placeholder='Give your graph a title.'>" +
             "                    <ul class='nav navbar-right panel_toolbox'>" +
             "                       <li>" +
             "                            <a class='close-widget'>" +
@@ -261,6 +262,46 @@ function loadGraphs(itemId, widget) {
         return charts.find(c => c.config.id == widgetId);
     };
 
+    //Change widget title
+    let changeItemWidgetTitle = function (data, title = null) {
+        $(".graphTitle").each(function () {
+            let widgetId = $(this).data("widget-id");
+            if (widgetId === data.WidgetId) {
+                if (title == null) {
+                    title = ConvertKeyValueToResource(data.KeyValue);
+                    $(this).html(title);
+                }
+                $(this).html(title);
+            }
+        });
+    };
+
+    //Change widget title by user
+    function ChangeUserWidgetTitle(e) {
+        $this = $(e.target);
+        let newTitle = $this.val();
+        let widgetId = $this.data('widget-id');
+        $userWidgetTitle = $this.parent().find(".userWidgetTitle");
+        $this.addClass("loadMessage");
+        $.ajax({
+            type: "POST",
+            url: "api/Widget/" + widgetId + "/" + newTitle,
+            success: () => {
+                $this.removeClass("loadMessage");
+                $userWidgetTitle.html(newTitle + "<i class='fa fa-edit edit-title'></i></h2>");
+                $userWidgetTitle.show();
+                $this.hide();
+            },
+        })
+    }
+
+    //Shows title input tag and hides title tag
+    let ShowTitleInput = function (e) {
+        $titleinput = $(e.target).parent().parent().find(".title-input");
+        $(e.target).parents(".userWidgetTitle").hide();
+        $titleinput.show();
+        $titleinput.focus();
+    };
     //Removes the last added dataset
     let RemoveData = function (e) {
         let widget = widgets.find(w => w.WidgetId === $(e.target).data("widget-id"));
@@ -529,20 +570,6 @@ function loadGraphs(itemId, widget) {
             displayNoGraphData(widgetId);
         }
     };
-
-    //change graph title
-    let changeWidgetTitle = function (data, title = null) {
-        $(".graphTitle").each(function () {
-            let widgetId = $(this).data("widget-id");
-            if (widgetId === data.WidgetId) {
-                if (title == null) {
-                    title = ConvertKeyValueToResource(data.KeyValue);
-                    $(this).html(title);
-                }
-                $(this).html(title);
-            }
-        });
-    };
     
     //Retrieves the graph data from api.
     let ajaxLoadGraphs = function (widget) {
@@ -563,7 +590,7 @@ function loadGraphs(itemId, widget) {
                         if (!widget.ItemIds.includes(itemId)) widget.ItemIds.push(itemId);
                         let chart = charts.find(c => c.config.id == widgetId);
                         if (chart == undefined) {
-                            if (itempage) changeWidgetTitle(data[0]);
+                            if (itempage) changeItemWidgetTitle(data[0]);
                             loadGraphHandler(widget, data);
                         } else {
                             let values = data[0].GraphValues.map(g => g.NumberOfTimes);
@@ -576,23 +603,7 @@ function loadGraphs(itemId, widget) {
             if (!dashboardpage) displayNoGraphData(widget.WidgetId);
         }
     };
-    
-    //Graph handlers
-    $(document).on("click", ".makeLineChart", (e) => ChangeChartType(e, "line"));
-    $(document).on("click", ".makeBarChart", (e) => ChangeChartType(e, "bar"));
-    $(document).on("click", ".makePieChart", (e) => ChangeChartType(e, "pie"));
-    $(document).on("click", ".makeDonutChart", (e) => ChangeChartType(e, "doughnut"));
-    $(document).on("click", ".chartShowLines", (e) => ShowLines(e));
-    $(document).on("click", ".chartShowXGrid", (e) => ShowXGrid(e));
-    $(document).on("click", ".chartShowYGrid", (e) => ShowYGrid(e));
-    $(document).on("click", ".chartShowLogScale", (e) => ShowLogScale(e));
-    $(document).on("click", ".chartShowLegend", (e) => ShowLegend(e));
-    $(document).on("click", ".changeToWeek", (e) => ChangeTime(e, -7, 'day'));
-    $(document).on("click", ".changeToMonth", (e) => ChangeTime(e, -1, 'month'));
-    $(document).on("click", ".changeTo3Month", (e) => ChangeTime(e, -3, 'month'));
-    $(document).on("click", ".changeToYear", (e) => ChangeTime(e, -12, 'month'));
-    $(document).on("click", ".removeData", (e) => RemoveData(e).unbind()); //unbind may give an error. this can be ignored.
-    
+
     //Loads the graph data.
     $(() => ajaxLoadGraphs(widget));
 
@@ -616,12 +627,33 @@ function loadGraphs(itemId, widget) {
             setTimeout(addAutocomplete, 100);
         }
     }
-    
+
     addAutocomplete();
+
+    $('.compareSearch').keyup(() => $($('.compareSuggestion')[0]).parent().parent().css("margin-left", "0"));
     
-    $('.compareSearch').keyup(()=> {
-        $($('.compareSuggestion')[0]).parent().parent().css("margin-left", "0");
-    });
+    //Change widget title
+    $(document).on("mouseenter", ".userWidgetTitle", (e) => $(e.target).children(".edit-title").show());
+    $(document).on("mouseleave", ".userWidgetTitle", (e) => $(e.target).children(".edit-title").hide());
+    $(document).on("mouseleave", ".edit-title", (e) => $(e.target).hide());
+    $(document).on("click", ".edit-title", (e) => ShowTitleInput(e));
+    $(document).on("keypress", ".title-input", (e) => {if (e.which === 13) ChangeUserWidgetTitle(e)});
+    //Graph handlers
+    $(document).on("click", ".makeLineChart", (e) => ChangeChartType(e, "line"));
+    $(document).on("click", ".makeBarChart", (e) => ChangeChartType(e, "bar"));
+    $(document).on("click", ".makePieChart", (e) => ChangeChartType(e, "pie"));
+    $(document).on("click", ".makeDonutChart", (e) => ChangeChartType(e, "doughnut"));
+    $(document).on("click", ".makeDonutChart", (e) => ChangeChartType(e, "doughnut"));
+    $(document).on("click", ".chartShowLines", (e) => ShowLines(e));
+    $(document).on("click", ".chartShowXGrid", (e) => ShowXGrid(e));
+    $(document).on("click", ".chartShowYGrid", (e) => ShowYGrid(e));
+    $(document).on("click", ".chartShowLogScale", (e) => ShowLogScale(e));
+    $(document).on("click", ".chartShowLegend", (e) => ShowLegend(e));
+    $(document).on("click", ".changeToWeek", (e) => ChangeTime(e, -7, 'day'));
+    $(document).on("click", ".changeToMonth", (e) => ChangeTime(e, -1, 'month'));
+    $(document).on("click", ".changeTo3Month", (e) => ChangeTime(e, -3, 'month'));
+    $(document).on("click", ".changeToYear", (e) => ChangeTime(e, -12, 'month'));
+    $(document).on("click", ".removeData", (e) => RemoveData(e).unbind()); //unbind may give an error. this can be ignored.
 }
 
 function loadWidgets(url, itemId) {
@@ -666,7 +698,7 @@ function loadWidgets(url, itemId) {
             $.each(data, (index, widget) => {
                 //UserWidget
                 if (widget.DashboardId !== -1) {
-                    grid.addWidget(widgetElements.createUserWidget(widget.WidgetId, "Give your graph a title"), widget.RowNumber, widget.ColumnNumber, widget.RowSpan, widget.ColumnSpan,
+                    grid.addWidget(widgetElements.createUserWidget(widget.WidgetId, widget.Title), widget.RowNumber, widget.ColumnNumber, widget.RowSpan, widget.ColumnSpan,
                         false, 4, 12, 4, 12, widget.WidgetId);
                     //ItemWidget
                 } else {

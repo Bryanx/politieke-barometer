@@ -23,28 +23,40 @@ canvas{
   overflow: visible !important;
 }
 
-.removeData {
-  margin-top: 10px;
-  float: right;
-  vertical-align: top;
-  display: none;
-}
-
-.compareSearch {
-  margin-top: 10px;
-  max-width: 400px;
-  height: 34px;
-  vertical-align: top;
-  display: inline-block;
-}
-
 .addToDashboard {
   display: inline-block;
   vertical-align: top;
   float: left;
 }
 
+.edit-title {
+  display: none;
+  font-size: 14px;
+  cursor: pointer;
+  padding-left: 10px;
+}
+
+.title-input {
+  display: none;
+  width: auto;
+  height: 30px;
+}
+
 .graph-options {
   display: flex;
   justify-content: space-evenly;
+  .removeData {
+    margin-top: 10px;
+    float: right;
+    vertical-align: top;
+    display: none;
+  }
+
+  .compareSearch {
+    margin-top: 10px;
+    max-width: 400px;
+    height: 34px;
+    vertical-align: top;
+    display: inline-block;
+  }
 }

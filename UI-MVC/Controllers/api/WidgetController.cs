@@ -150,16 +150,19 @@ namespace BAR.UI.MVC.Controllers.api
 			return StatusCode(HttpStatusCode.NoContent);
 		}
 
-		/// Temp test update to give a widget a new title
-		[System.Web.Http.Route("api/Widget/{id}/title")]
-		public IHttpActionResult PutName(int id, [FromBody] string newTitle)
+		/// <summary>
+		/// Change the title of a widget
+		/// </summary>
+		[System.Web.Http.HttpPost]
+		[System.Web.Http.Route("api/Widget/{id}/{title}")]
+		public IHttpActionResult PutName(int id, string title)
 		{
 			widgetManager = new WidgetManager();
 
 			if (widgetManager.GetWidget(id) == null) return NotFound();
 			if (!ModelState.IsValid) return BadRequest(ModelState);
 			
-			widgetManager.ChangeWidgetTitle(id, newTitle);
+			widgetManager.ChangeWidgetTitle(id, title);
 			return StatusCode(HttpStatusCode.NoContent);
 		}
 		
