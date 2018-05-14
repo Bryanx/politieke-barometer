@@ -1,6 +1,6 @@
 ﻿﻿@model BAR.UI.MVC.Models.EditUserViewModel
 
-<table id="datatable-responsive" class="table" cellspacing="10px" width="100%">
+<table id="datatable-buttons" class="table" cellspacing="10px" width="100%">
 
     <colgroup>
         <col style="width: 40px;">
@@ -45,7 +45,8 @@
     <tbody>
         @for (int i = 0; i < Model.Users.Count(); i++)
         {
-            
+            if (@ViewBag.CurrentRoles[i] != "SuperAdmin")
+            {
                 <tr class="subscription @(@Model.Users.ElementAt(i).Deleted ? "greyed-out" : "")">
                     <td>
                         <div class="img-circle person-image"></div>
@@ -59,45 +60,57 @@
                         <span style="display:none">@Model.Users.ElementAt(i).LastName</span>
 
                     </td>
-                    @if (Model.Users.ElementAt(i).Gender == BAR.BL.Domain.Users.Gender.MAN) {
+                    @if (Model.Users.ElementAt(i).Gender == BAR.BL.Domain.Users.Gender.MAN)
+                    {
                         <td>
                             @Resources.Man
                         </td>
-                    } else if (Model.Users.ElementAt(i).Gender == BAR.BL.Domain.Users.Gender.WOMAN) {
+}
+                    else if (Model.Users.ElementAt(i).Gender == BAR.BL.Domain.Users.Gender.WOMAN)
+                    {
                         <td>
                             @Resources.Woman
                         </td>
-                    } else {
+}
+                    else
+                    {
                         <td>
                             @Resources.Unknown
                         </td>
-                    }
-                    @if (Model.Users.ElementAt(i).DateOfBirth != null) {
+}
+                    @if (Model.Users.ElementAt(i).DateOfBirth != null)
+                    {
                         <td>
                             @Model.Users.ElementAt(i).DateOfBirth.Value.ToShortDateString()
                         </td>
-                    } else {
+}
+                    else
+                    {
                         <td>
                             @Resources.NA
                         </td>
-                    }
+}
                     <td>
                         @Model.Users.ElementAt(i).Email
                     </td>
                     <td>
-                        @if (Model.Users.ElementAt(i).Deleted) {
+                        @if (Model.Users.ElementAt(i).Deleted)
+                        {
                         <a class="accountActivityChange btn btn-success btn-xs" data-item-id="@Model.Users.ElementAt(i).Id" title=@Resources.RecoverDeletedUser>@Resources.Recover</a>
-                        } else {
+}
+                        else
+                        {
                         <a class="accountActivityChange btn btn-danger btn-xs" data-item-id="@Model.Users.ElementAt(i).Id" title=@Resources.DeleteUser>@Resources.Delete</a>
-                        }
+}
                     </td>
                     <td id=@String.Format("td2{0}", i)>
                         @ViewBag.CurrentRoles[i]
                     </td>
                     <td>
-                        @Html.DropDownListFor(model => model.User.Roles, Model.UserRoles, @Resources.ChangeRole, new {@class = "form-control input-sm", @onchange = $"changeRole('{Model.Users.ElementAt(i).Id}', '{i}')", id = $"dd{i}"})
+                        @Html.DropDownListFor(model => model.User.Roles, Model.UserRoles, @Resources.ChangeRole, new { @class = "form-control input-sm", @onchange = $"changeRole('{Model.Users.ElementAt(i).Id}', '{i}')", id = $"dd{i}" })
                     </td>
                 </tr>
+            }
         }
     </tbody>
 </table>

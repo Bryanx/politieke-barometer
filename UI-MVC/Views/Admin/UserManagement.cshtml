@@ -2,7 +2,7 @@
 @model BAR.UI.MVC.Models.EditUserViewModel
 
 @section CustomCSS{
-    @Styles.Render("~/bundles/datatables")
+    @Styles.Render("~/bundles/datatables-css", "~/bundles/datatables-buttons-css")
 }
 
 <h1>@Model.PageTitle</h1>
@@ -16,7 +16,39 @@
 
 @section CustomJS{
     @Scripts.Render("~/bundles/datatables")
+    @Scripts.Render("~/bundles/datatables-buttons", "~/bundles/datatables-buttons-bs")
+
+    <script src="~/Scripts/DataExport/jszip.min.js"></script>
+    <script src="~/Scripts/DataExport/pdfmake.min.js"></script>
+    <script src="~/Scripts/DataExport/vfs_fonts.js"></script>
+    <script src="~/Scripts/DataExport/buttons.html5.min.js"></script>
+
+
     <script type="text/javascript">
+            (() => {
+                $('#datatable-buttons').dataTable({
+                    "sScrollY": "700px",
+                    "paging": true,
+                    dom: "lBfrtip",
+                    buttons: [
+                        'copy', 'excelHtml5', 'pdfHtml5', 'csvHtml5'
+                    ]
+                });
+
+            })($);
+    </script>
+
+    <script type="text/javascript">
+        (() => {
+            $('#datatable-buttons').dataTable({
+                "sScrollY": "700px",
+                "paging": true,
+                dom: "lBfrtip",
+                buttons: [
+                    'copy', 'excelHtml5', 'pdfHtml5', 'csvHtml5'
+                ]
+            });
+        });
 
         $('.accountActivityChange').click(function() {
             var $this = $(this);
