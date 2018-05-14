@@ -23,6 +23,7 @@ using BAR.BL.Domain.Widgets;
 using System.Web.Script.Serialization;
 using System.Linq;
 using System.Net;
+using AutoMapper;
 
 namespace webapi.Controllers
 {
@@ -105,25 +106,78 @@ namespace webapi.Controllers
     public IHttpActionResult GetWidgets()
     {
       IWidgetManager widgetManager = new WidgetManager();
-      Dashboard dashboard = widgetManager.GetDashboardWithAllDataForUserId(User.Identity.GetUserId());
-      if (dashboard != null)
-      {
-        IEnumerable<UserWidget> widgets = dashboard.Widgets;
-        widgets.All(x =>
-        {
-          x.Dashboard = null;
-          x.WidgetDatas.All(y =>
-          {
-            y.Widget = null;
-            return true;
-          });
-          return true;
-        });
+      ItemManager itemManager = new ItemManager();
 
-        return Ok(widgets);
+      Dashboard dashboard = widgetManager.GetDashboardWithAllDataForUserId(User.Identity.GetUserId());
+      if (dashboard == null) return NotFound();
+
+      //Get all widgets for user
+      List<UserWidget> userWidgets = widgetManager.GetWidgetsForDashboard(dashboard.DashboardId).ToList();
+      if (userWidgets == null || userWidgets.Count() == 0) return StatusCode(HttpStatusCode.NoContent);
+
+      //Convert all widget to userWidgets (DTO's).
+      List<UserWidgetViewModel> userWidgetDtos = Mapper.Map(userWidgets, new List<UserWidgetViewModel>());
+
+      foreach (UserWidgetViewModel userWidgetVM in userWidgetDtos)
+      {
+        foreach (int itemId in userWidgetVM.ItemIds)
+        {
+          //Get the topic of the graph of the userwidget.
+          string keyValue = widgetManager.GetWidgetWithAllData(userWidgetVM.WidgetId)?.WidgetDatas.FirstOrDefault()?.KeyValue;
+
+          //Get all widgets for each item in userWidgets.
+          IEnumerable<Widget> widgetsForItem = widgetManager.GetAllWidgetsWithAllDataForItem(itemId);
+
+          //Check if these widgets have graph data (WidgetData) on this topic, if they do add this data to the userWidget.
+          IEnumerable<WidgetData> widgetDatas = widgetsForItem.FirstOrDefault(w => w.WidgetDatas.Any(wd => wd.KeyValue == keyValue)).WidgetDatas;
+
+          //Convert the graphdata to a DTO.
+          List<WidgetDataDTO> widgetDataDtos = Mapper.Map(widgetDatas, new List<WidgetDataDTO>());
+
+          //Link the graphdata to the corresponding item.
+          widgetDataDtos.First().ItemName = itemManager.GetItem(itemId).Name;
+
+          if (userWidgetVM.WidgetDataDtos == null)
+          {
+            userWidgetVM.WidgetDataDtos = widgetDataDtos;
+          }
+          else
+          {
+            userWidgetVM.WidgetDataDtos.AddRange(widgetDataDtos);
+          }
+        }
       }
-      return StatusCode(HttpStatusCode.NoContent);
+
+      return Ok(userWidgetDtos);
     }
+
+    // GET api/Android/Alerts
+    [HostAuthentication(DefaultAuthenticationTypes.ExternalBearer)]
+    [HttpGet]
+    [Route("Alerts")]
+    public IHttpActionResult GetAlerts()
+    {
+      Alert alertOne = new Alert()
+      {
+        AlertId = 1,
+        Subject = "Test",
+        Message = "Dit is een test"
+      };
+      Alert alertTwo = new Alert()
+      {
+        AlertId = 2,
+        Subject = "Test 2",
+        Message = "Dit is nog een test"
+      };
+
+      ICollection<Alert> alerts = new List<Alert>
+      {
+        alertOne,
+        alertTwo
+      };
+
+      return Ok(alerts);
+      }
 
     #region Helpers
 

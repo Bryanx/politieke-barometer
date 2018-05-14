@@ -14,6 +14,20 @@ namespace BAR.UI.MVC.Models
 			[Required]
 			[Display(Name = "Name", ResourceType = typeof(Resources))]
 			public string Name { get; set; }
+
+			[Required]
+			[Display(Name = "DateOfBirth", ResourceType = typeof(Resources))]
+			public DateTime DateOfBirth { get; set; }
+
+			[Required]
+			[Display(Name = "Website", ResourceType = typeof(Resources))]
+			public string Website { get; set; }
+
+			[Required]
+			public string Twitter { get; set; }
+
+			[Required]
+			public string Facebook { get; set; }
 		}
 
 		public class CreateOrganisationModel : BaseViewModel

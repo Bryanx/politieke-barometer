@@ -11,8 +11,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DAL", "BAR.DAL\DAL.csproj",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UI-MVC", "UI-MVC\UI-MVC.csproj", "{1290B286-3178-4680-BEAE-E113FED05EF3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UI-CA", "UI-CA\UI-CA.csproj", "{10D141A9-6F98-49F7-97D8-CD6A4C417679}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,10 +33,6 @@ Global
 		{1290B286-3178-4680-BEAE-E113FED05EF3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1290B286-3178-4680-BEAE-E113FED05EF3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1290B286-3178-4680-BEAE-E113FED05EF3}.Release|Any CPU.Build.0 = Release|Any CPU
-		{10D141A9-6F98-49F7-97D8-CD6A4C417679}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{10D141A9-6F98-49F7-97D8-CD6A4C417679}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{10D141A9-6F98-49F7-97D8-CD6A4C417679}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{10D141A9-6F98-49F7-97D8-CD6A4C417679}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

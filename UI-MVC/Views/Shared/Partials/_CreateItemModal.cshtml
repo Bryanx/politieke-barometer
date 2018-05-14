@@ -1,7 +1,7 @@
 ﻿@model BAR.UI.MVC.Models.ItemViewModels.ItemViewModel
 
 
-<a class="btn btn-dark" href="#" data-toggle="modal" data-target=".bs-example-modal-lg">Create Item</a>
+<a class="btn btn-dark " data-toggle="modal" data-target=".bs-example-modal-lg" >Create Item</a>
 <div class="modal bs-example-modal-lg fade" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
@@ -17,7 +17,12 @@
                                 {
                                 @Html.AntiForgeryToken()
                                 <div class="form-group">
-                                    <input class="form-control" id="Name" name="Name" placeholder="Name" type="text" value="">
+                                    <input class="form-control login-input" id="Name" name="Name" placeholder="Name" type="text" value="">
+                                    <input class="form-control login-input" id="Website" name="Website" placeholder="Website" type="text" value="">
+                                    <input class="form-control login-input" id="Facebook" name="Facebook" placeholder="Facebook" type="text" value="">
+                                    <input class="form-control login-input" id="Twitter" name="Twitter" placeholder="Twitter" type="text" value="">
+                                    <input class="form-control login-input" id="Twitter" name="Twitter" placeholder="Twitter" type="date" value="">
+
                                     <div class="form-check">
                                         <button type="submit" class="btn btn-primary w-100 h-40">@Resources.Signup</button>
                                     </div>
@@ -35,10 +40,10 @@
                                 {
                                 @Html.AntiForgeryToken()
                                 <div class="form-group">
-                                    <input class="form-control" id="Name" name="Name" placeholder="Name" type="text" value="">
-                                    <input class="form-control" id="Website" name="Website" placeholder="Website" type="text" value="">
+                                    <input class="form-control login-input" id="Name" name="Name" placeholder="Name" type="text" value="">
+                                    <input class="form-control login-input" id="Website" name="Website" placeholder="Website" type="text" value="">
                                     <div class="form-check">
-                                        <button type="submit" class="btn btn-primary w-100 h-40">@Resources.Signup</button>
+                                        <button type="submit" class="btn btn-primary w-100 h-40 login-input">@Resources.Signup</button>
                                     </div>
                                 </div>}
                             </div>

@@ -38,11 +38,18 @@ namespace BAR.UI.MVC.Controllers.api
 			widgetManager = new WidgetManager();
 
 			Dashboard dash = widgetManager.GetDashboard(User.Identity.GetUserId());
-			List<UserWidget> widgets = widgetManager.GetWidgetsForDashboard(dash.DashboardId).ToList();
-			
-			if (widgets == null || widgets.Count() == 0) return StatusCode(HttpStatusCode.NoContent);
 
-			return Ok(Mapper.Map(widgets, new List<UserWidgetDTO>()));
+			try
+			{
+				List<UserWidget> widgets = widgetManager.GetWidgetsForDashboard(dash.DashboardId).ToList();
+				if (widgets == null || widgets.Count() == 0) return StatusCode(HttpStatusCode.NoContent);
+
+				return Ok(Mapper.Map(widgets, new List<UserWidgetDTO>()));
+
+			} catch (Exception e)
+			{
+				return StatusCode(HttpStatusCode.BadRequest);
+			}
 		}
 		
 		/// <summary>
@@ -96,11 +103,11 @@ namespace BAR.UI.MVC.Controllers.api
 		/// The given ItemWidget will be copied to a UserWidget.
 		/// </summary>
 		[System.Web.Http.HttpPost]
-		[System.Web.Http.Route("api/MoveWidget/{widgetId}")]
-		public IHttpActionResult MoveWidgetToDashboard(int widgetId, [Bind(Exclude = "ItemIds")] UserWidgetDTO model)
+		[System.Web.Http.Route("api/MoveWidget/")]
+		public IHttpActionResult MoveWidgetToDashboard([FromBody] UserWidgetDTO model)
 		{
 			widgetManager = new WidgetManager();
-			widgetManager.MoveWidgetToDashBoard(widgetId, model.ItemIds, User.Identity.GetUserId());
+			widgetManager.MoveWidgetToDashBoard(model.WidgetId, model.GraphType, model.ItemIds, User.Identity.GetUserId());
 			return StatusCode(HttpStatusCode.NoContent);
 		}
 		
@@ -150,16 +157,19 @@ namespace BAR.UI.MVC.Controllers.api
 			return StatusCode(HttpStatusCode.NoContent);
 		}
 
-		/// Temp test update to give a widget a new title
-		[System.Web.Http.Route("api/Widget/{id}/title")]
-		public IHttpActionResult PutName(int id, [FromBody] string newTitle)
+		/// <summary>
+		/// Change the title of a widget
+		/// </summary>
+		[System.Web.Http.HttpPost]
+		[System.Web.Http.Route("api/Widget/{id}/{title}")]
+		public IHttpActionResult PutName(int id, string title)
 		{
 			widgetManager = new WidgetManager();
 
 			if (widgetManager.GetWidget(id) == null) return NotFound();
 			if (!ModelState.IsValid) return BadRequest(ModelState);
 			
-			widgetManager.ChangeWidgetTitle(id, newTitle);
+			widgetManager.ChangeWidgetTitle(id, title);
 			return StatusCode(HttpStatusCode.NoContent);
 		}
 		

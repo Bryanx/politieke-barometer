@@ -4,6 +4,7 @@ using BAR.BL.Domain.Users;
 using System.Collections.Generic;
 using System.Linq;
 using BAR.BL.Domain.Items;
+using Microsoft.AspNet.Identity;
 
 namespace BAR.BL.Managers
 {
@@ -103,6 +104,34 @@ namespace BAR.BL.Managers
 
 			}
 			subRepo.UpdateSubscriptions(subsToUpdate);
+
+			//Send emails
+			IEnumerable<Subscription> usersToSendEmail = subs.Where(sub => sub.SubscribedUser.AlertsViaEmail).AsEnumerable();
+			SendTrendingEmails(itemId, usersToSendEmail);
+		}
+
+		/// <summary>
+		/// Sends an email to the users who wants te receive an email via
+		/// if a person is trending
+		/// </summary>
+		private async void SendTrendingEmails(int itemId, IEnumerable<Subscription> subs)
+		{
+			//Get item
+			Item item = new ItemManager().GetItem(itemId);
+			if (item == null) return;
+
+			//Send email
+			foreach (Subscription sub in subs)
+			{
+				IdentityMessage message = new IdentityMessage()
+				{
+					Destination = sub.SubscribedUser.Email,
+					Subject = item.Name + " is nu trending!",
+					Body = item.Name + " is nu trending met een trendingspercentage van " + item.TrendingPercentage + "%!<\br>" +
+					"Ga nu naar de website en ontdenk waarom ze trending is!"
+				};
+				await new EmailService().SendAsync(message);
+			}		
 		}
 
 		/// <summary>

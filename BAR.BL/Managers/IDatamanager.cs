@@ -33,9 +33,13 @@ namespace BAR.BL.Managers
 		SynchronizeAudit GetLastAudit();
 		SynchronizeAudit ChangeAudit(int synchronizeAuditId);
 
-		bool IsJsonEmpty(string json);
+		//Sources		
 		IEnumerable<Source> GetAllSources();
 		Source AddSource(string name, string site);
 		void RemoveSource(string sourceId);
+
+		//Other
+		bool IsJsonEmpty(string json);
+		IEnumerable<string> GetUrlsForItem(int itemId);
 	}
 }

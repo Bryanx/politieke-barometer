@@ -106,6 +106,15 @@ namespace BAR.UI.MVC.App_GlobalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Above 25.
+        /// </summary>
+        public static string Above25 {
+            get {
+                return ResourceManager.GetString("Above25", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Account.
         /// </summary>
         public static string Account {
@@ -178,6 +187,24 @@ namespace BAR.UI.MVC.App_GlobalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Age.
+        /// </summary>
+        public static string Age {
+            get {
+                return ResourceManager.GetString("Age", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Age distribution of mentions.
+        /// </summary>
+        public static string AgeDistributionOfMentions {
+            get {
+                return ResourceManager.GetString("AgeDistributionOfMentions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ago.
         /// </summary>
         public static string Ago {
@@ -232,6 +259,24 @@ namespace BAR.UI.MVC.App_GlobalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Bar chart.
+        /// </summary>
+        public static string BarChart {
+            get {
+                return ResourceManager.GetString("BarChart", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Below 25.
+        /// </summary>
+        public static string Below25 {
+            get {
+                return ResourceManager.GetString("Below25", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Calculated via the amount of tweets..
         /// </summary>
         public static string CalculatedByAmountOfTweets {
@@ -273,6 +318,15 @@ namespace BAR.UI.MVC.App_GlobalResources {
         public static string City {
             get {
                 return ResourceManager.GetString("City", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Compare data with another person, organisation or topic..
+        /// </summary>
+        public static string CompareDataPlaceholder {
+            get {
+                return ResourceManager.GetString("CompareDataPlaceholder", resourceCulture);
             }
         }
         
@@ -439,6 +493,33 @@ namespace BAR.UI.MVC.App_GlobalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Donut chart.
+        /// </summary>
+        public static string DonutChart {
+            get {
+                return ResourceManager.GetString("DonutChart", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Download JPG image.
+        /// </summary>
+        public static string DownloadJPGImage {
+            get {
+                return ResourceManager.GetString("DownloadJPGImage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Download PNG image.
+        /// </summary>
+        public static string DownloadPNGImage {
+            get {
+                return ResourceManager.GetString("DownloadPNGImage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Email.
         /// </summary>
         public static string Email {
@@ -565,6 +646,15 @@ namespace BAR.UI.MVC.App_GlobalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Gender distribution of mentions.
+        /// </summary>
+        public static string GenderDistributionOfMentions {
+            get {
+                return ResourceManager.GetString("GenderDistributionOfMentions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to General management.
         /// </summary>
         public static string GeneralManagement {
@@ -588,6 +678,15 @@ namespace BAR.UI.MVC.App_GlobalResources {
         public static string HomepageHeaderTitle {
             get {
                 return ResourceManager.GetString("HomepageHeaderTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Horizontal bar chart.
+        /// </summary>
+        public static string HorizontalBarChart {
+            get {
+                return ResourceManager.GetString("HorizontalBarChart", resourceCulture);
             }
         }
         
@@ -673,15 +772,6 @@ namespace BAR.UI.MVC.App_GlobalResources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Keywords.
-        /// </summary>
-        public static string Keywords {
-            get {
-                return ResourceManager.GetString("Keywords", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Languages.
         /// </summary>
         public static string Languages {
@@ -705,6 +795,15 @@ namespace BAR.UI.MVC.App_GlobalResources {
         public static string LessThenOneMinute {
             get {
                 return ResourceManager.GetString("LessThenOneMinute", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Line chart.
+        /// </summary>
+        public static string LineChart {
+            get {
+                return ResourceManager.GetString("LineChart", resourceCulture);
             }
         }
         
@@ -799,6 +898,15 @@ namespace BAR.UI.MVC.App_GlobalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Members.
+        /// </summary>
+        public static string Members {
+            get {
+                return ResourceManager.GetString("Members", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Mentions.
         /// </summary>
         public static string Mentions {
@@ -831,6 +939,15 @@ namespace BAR.UI.MVC.App_GlobalResources {
         public static string MoreInfo {
             get {
                 return ResourceManager.GetString("MoreInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to More people from.
+        /// </summary>
+        public static string MorePeopleFrom {
+            get {
+                return ResourceManager.GetString("MorePeopleFrom", resourceCulture);
             }
         }
         
@@ -898,6 +1015,15 @@ namespace BAR.UI.MVC.App_GlobalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to No data available..
+        /// </summary>
+        public static string NoDataAvailable {
+            get {
+                return ResourceManager.GetString("NoDataAvailable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Now you can.
         /// </summary>
         public static string NowYouCan {
@@ -921,6 +1047,15 @@ namespace BAR.UI.MVC.App_GlobalResources {
         public static string NumberOfMentions {
             get {
                 return ResourceManager.GetString("NumberOfMentions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Number of mentions.
+        /// </summary>
+        public static string NumberOfMentionsFull {
+            get {
+                return ResourceManager.GetString("NumberOfMentionsFull", resourceCulture);
             }
         }
         
@@ -993,6 +1128,15 @@ namespace BAR.UI.MVC.App_GlobalResources {
         public static string Photo {
             get {
                 return ResourceManager.GetString("Photo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pie chart.
+        /// </summary>
+        public static string PieChart {
+            get {
+                return ResourceManager.GetString("PieChart", resourceCulture);
             }
         }
         
@@ -1110,6 +1254,15 @@ namespace BAR.UI.MVC.App_GlobalResources {
         public static string RemoveAlert {
             get {
                 return ResourceManager.GetString("RemoveAlert", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remove data.
+        /// </summary>
+        public static string RemoveData {
+            get {
+                return ResourceManager.GetString("RemoveData", resourceCulture);
             }
         }
         
@@ -1371,6 +1524,15 @@ namespace BAR.UI.MVC.App_GlobalResources {
         public static string Theme {
             get {
                 return ResourceManager.GetString("Theme", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to To.
+        /// </summary>
+        public static string To {
+            get {
+                return ResourceManager.GetString("To", resourceCulture);
             }
         }
         
