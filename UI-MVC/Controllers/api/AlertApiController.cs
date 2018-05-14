@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Web.Http;
-using BAR.BL.Controllers;
 using BAR.BL.Domain.Users;
 using BAR.BL.Managers;
 using BAR.UI.MVC.Models;
@@ -17,8 +16,6 @@ namespace BAR.UI.MVC.Controllers.api
 	public class AlertApiController : ApiController
 	{
 		private ISubscriptionManager subManager;
-		private SysController sys;
-		private static bool firstRun = true;
 
 		/// <summary>
 		/// Get Request for alerts of a specific user (id)
@@ -28,17 +25,6 @@ namespace BAR.UI.MVC.Controllers.api
 		[Route("api/User/GetAlerts")]
 		public IHttpActionResult GetAlerts()
 		{
-			subManager = new SubscriptionManager();
-
-			//TODO: Remove counter, temporary solution because db is rebuild on every load.
-			if (firstRun)
-			{
-				firstRun = false;
-				sys = new SysController();
-				sys.DetermineTrending();
-				sys.GenerateAlerts();
-			}
-
 			IEnumerable<Alert> alertsToShow = subManager.GetAllAlerts(User.Identity.GetUserId());
 			if (alertsToShow == null || !alertsToShow.Any()) return StatusCode(HttpStatusCode.NoContent);
 

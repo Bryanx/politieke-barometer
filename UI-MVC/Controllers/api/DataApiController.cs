@@ -1,5 +1,4 @@
-﻿using BAR.BL.Controllers;
-using BAR.BL.Domain.Items;
+﻿using BAR.BL.Domain.Items;
 using BAR.BL.Managers;
 using BAR.UI.MVC.Attributes;
 using System;
