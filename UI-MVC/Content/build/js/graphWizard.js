@@ -2,6 +2,17 @@ var jsonResult;
 
 Vue.use(VueFormWizard);
 Vue.use(VueFormGenerator);
+
+function convertWizardGraphTypeToChartType(GraphType) {
+    switch (GraphType) {
+        case 'Line chart' : return "line";
+        case 'Bar chart' : return "bar";
+        case 'Pie chart' : return "pie";
+        case 'Donut chart' : return "donut";
+        default : return "line";
+    }
+}
+
 new Vue({
     el: '#app',
     data: {
@@ -22,28 +33,31 @@ new Vue({
                 {
                     type: "input",
                     inputType: "text",
-                    label: "Basis grafiek*",
+                    id: "basegraph",
+                    label: Resources.BasicGraph + "*",
                     model: "ItemName",
-                    placeholder: "Kies een politicus partij of thema",
+                    placeholder: Resources.ChoosePersonOrgTopic,
                     required: true,
                     validator: VueFormGenerator.validators.string,
                     styleClasses: 'col-xs-12'
                 },
                 { 
                     type: "select",
-                    label: "Kruising waarde*",
+                    label: Resources.IntersectValue + "*",
                     model: "PropertyTag",
                     required: true,
                     validator: VueFormGenerator.validators.string,
                     values: ['Number of mentions', 'Age', 'Gender'],
-                    styleClasses: 'col-xs-12'
+                    styleClasses: 'col-xs-12',
+                    default: 'Number of mentions',
                 },
                 {
                     type: "input",
                     inputType: "text",
-                    label: "Vergelijkende grafiek (optioneel)",
+                    id: "comparinggraph",
+                    label: Resources.ComparingGraph + " (" + Resources.Optional + ")",
                     model: "SecondItemName",
-                    placeholder: "Kies een politicus partij of thema",
+                    placeholder: Resources.ChoosePersonOrgTopic,
                     required: false,
                     validator: VueFormGenerator.validators.string,
                     styleClasses: 'col-xs-12'
@@ -55,13 +69,17 @@ new Vue({
                 {
                     type: "select",
                     inputType: "text",
-                    label: "Grafiek type*",
+                    label: Resources.GraphType + "*",
                     model: "GraphType",
                     required: true,
                     validator: VueFormGenerator.validators.string,
-                    values: ['line', 'bar', 'pie', 'donut'],
+                    values: ['Line chart', 'Bar chart', 'Pie chart', 'Donut chart'],
                     styleClasses: 'col-xs-12'
-                },
+                }
+            ]
+        },
+        thirdTabSchema: {
+            fields: [
                 {
                     type: "input",
                     inputType: "text",
@@ -80,6 +98,7 @@ new Vue({
             jsonResult.ItemIds = [];
             jsonResult.ItemIds.push($(".wizardItemId1").html());
             jsonResult.ItemIds.push($(".wizardItemId2").html());
+            jsonResult.GraphType = convertWizardGraphTypeToChartType(jsonResult.GraphType);
             addWidgetToDashboard(jsonResult);
         },
         validateFirstTab: function () {
@@ -87,6 +106,9 @@ new Vue({
         },
         validateSecondTab: function () {
             return this.$refs.secondTabForm.validate();
+        },
+        validateThirdTab: function () {
+            return this.$refs.thirdTabForm.validate();
         },
         prettyJSON: function (result) {
             jsonResult = result;
@@ -99,7 +121,7 @@ new Vue({
     //Search function in wizard
     function addAutocomplete() {
         if (searchlist.length > 0) {
-            $('#vergelijkende-grafiek-optioneel').devbridgeAutocomplete({
+            $('#comparinggraph').devbridgeAutocomplete({
                 width: 400,
                 lookup: searchlist,
                 triggerSelectOnValidInput: false,
@@ -111,7 +133,7 @@ new Vue({
                     $(".wizardItemId2").html(suggestion.data);
                 }
             });
-            $('#basis-grafiek').devbridgeAutocomplete({
+            $('#basegraph').devbridgeAutocomplete({
                 width: 400,
                 lookup: searchlist,
                 triggerSelectOnValidInput: false,
@@ -131,7 +153,7 @@ new Vue({
 
     addAutocomplete();
 
-    $(document).on("keyup", "#basis-grafiek", (e) => $($('.compareSuggestion')[0]).parent().parent().css("margin-left", "0"));
-    $(document).on("keyup", "#vergelijkende-grafiek-optioneel", (e) => $($('.compareSuggestion')[0]).parent().parent().css("margin-left", "0"));
+    $(document).on("keyup", "#basegraph", (e) => $($('.compareSuggestion')[0]).parent().parent().css("margin-left", "0"));
+    $(document).on("keyup", "#comparinggraph", (e) => $($('.compareSuggestion')[0]).parent().parent().css("margin-left", "0"));
 
 })(jQuery);

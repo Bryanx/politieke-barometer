@@ -16,6 +16,7 @@ using WebGrease.Css.Extensions;
 using Widget = BAR.BL.Domain.Widgets.Widget;
 using BAR.BL.Domain.Items;
 using BAR.BL.Domain.Users;
+using BAR.UI.MVC.App_GlobalResources;
 
 
 namespace BAR.UI.MVC.Controllers.api
@@ -130,7 +131,9 @@ namespace BAR.UI.MVC.Controllers.api
 
 			List<Item> items = itemManager.GetAllItems().Where(i => model.ItemIds.Contains(i.ItemId)).ToList();
 
-			widgetManager.AddWidget(WidgetType.GraphType, "Give your graph a title.", 0,
+			if (string.IsNullOrEmpty(model.Title)) model.Title = Resources.Title;
+			
+			widgetManager.AddWidget(WidgetType.GraphType, model.Title, 0,
 				0, propertyTags, graphType: model.GraphType, dashboardId:dash.DashboardId, items:items);
 			
 			uowManager.Save();

@@ -692,9 +692,6 @@ function loadWidgets(url, itemId) {
 
     //Puts the widgets on the grid.
     let loadGrid = function (data, itemId) {
-        itempage = false;
-        orgpage = $(".organisation-page").length;
-        dashboardpage = $(".dashboard-page").length;
         if (data != null && data.length) {
             $.each(data, (index, widget) => {
                 //UserWidget
@@ -707,7 +704,6 @@ function loadWidgets(url, itemId) {
                         true, 4, 12, 4, 12, widget.WidgetId);
                     grid.movable(".grid-stack-item", false);
                     grid.resizable(".grid-stack-item", false);
-                    itempage = true;
                 }
                 //if widgettype == graphtype
                 if (widget.WidgetType === 0) {
@@ -736,6 +732,9 @@ function loadWidgets(url, itemId) {
 }
 
 function init() {
+    itempage = $(".item-page").length;
+    orgpage = $(".organisation-page").length;
+    dashboardpage = $(".dashboard-page").length;
 
     this.btnAddNodebox = function () {
         grid.addWidget(widgetElements.createUserWidget('grafiek' + counter), 0, 0, 6, 6, true, 4, 12, 4, 12);
@@ -786,6 +785,7 @@ function init() {
         }).fail(() => showErrorMessage());
     };
     
+    //Adds a new widget to the current dashboard.
     addWidgetToDashboard = function (json) {
         json.GraphType = convertChartTypeToGraphType(json.GraphType);
         json = JSON.stringify(json);
@@ -795,7 +795,12 @@ function init() {
             data: json,
             dataType: "application/json",
             contentType: "application/json",
-            success: () => showSaveMessage(),
+            success: () => {
+                if ($(".makeGraphModal").length) $(".makeGraphModal").modal("hide");
+                if ($(".no-widgets").length) $(".no-widgets").hide();
+                if (dashboardpage) loadWidgets("api/Widget/GetUserWidgets", "");
+                showSaveMessage();
+            },
             error: (xhr) => {
                 alert($.parseJSON(xhr.responseText).Message);
                 showErrorMessage();
