@@ -123,7 +123,7 @@ namespace BAR.BL.Managers
 			}
 			else
 			{
-				UpdateTrendingItem(itemsOrderd);
+				UpdateWeeklyReviewData(itemsOrderd);
 				itemsOrderd = itemsOrderd.OrderBy(item => item.NumberOfMentions).AsEnumerable();
 			}
 
@@ -146,7 +146,7 @@ namespace BAR.BL.Managers
 			}
 			else
 			{
-				UpdateTrendingItem(itemsOrderd);
+				UpdateWeeklyReviewData(itemsOrderd);
 				itemsOrderd = itemsOrderd.Where(item => item.ItemType == type)
 				.OrderBy(item => item.NumberOfMentions).AsEnumerable();
 			}
@@ -176,7 +176,7 @@ namespace BAR.BL.Managers
 				itemsOrderd = itemsFromUser.OrderBy(item => item.NumberOfMentions).AsEnumerable();
 			} else
 			{
-				UpdateTrendingItem(itemsFromUser);
+				UpdateWeeklyReviewData(itemsFromUser);
 				itemsOrderd = itemsFromUser.OrderBy(item => item.NumberOfMentions).AsEnumerable();
 			}
 
@@ -207,7 +207,7 @@ namespace BAR.BL.Managers
 				.OrderBy(item => item.NumberOfMentions).AsEnumerable();
 			} else
 			{
-				UpdateTrendingItem(itemsFromUser);
+				UpdateWeeklyReviewData(itemsFromUser);
 				itemsOrderd = itemsFromUser.Where(item => item.ItemType == type)
 				.OrderBy(item => item.NumberOfMentions).AsEnumerable();
 			}
@@ -219,7 +219,7 @@ namespace BAR.BL.Managers
 		/// If the last time that the old trending percentage of the item was updated 7 days ago,
 		/// then the old trending percentage will be updated.
 		/// </summary>
-		private void UpdateTrendingItem(IEnumerable<Item> items)
+		private void UpdateWeeklyReviewData(IEnumerable<Item> items)
 		{
 			foreach (Item item in items)
 			{
@@ -229,14 +229,6 @@ namespace BAR.BL.Managers
 					item.LastUpdated = DateTime.Now;
 				}
 			}		
-		}
-
-		/// <summary>
-		/// Updates the weekly review information if needed.
-		/// </summary>
-		private void UpdateWeeklyReviewData()
-		{
-			//TODO
 		}
 
 		/// <summary>
