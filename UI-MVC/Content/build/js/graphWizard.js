@@ -9,7 +9,6 @@ new Vue({
             ItemName: '',
             PropertyTag: '',
             SecondItemName: '',
-            SecondPropertyTag: '',
             GraphType: '',
             Title: ''
         },
@@ -30,7 +29,7 @@ new Vue({
                     validator: VueFormGenerator.validators.string,
                     styleClasses: 'col-xs-12'
                 },
-                {
+                { 
                     type: "select",
                     label: "Kruising waarde*",
                     model: "PropertyTag",
@@ -47,15 +46,6 @@ new Vue({
                     placeholder: "Kies een politicus partij of thema",
                     required: false,
                     validator: VueFormGenerator.validators.string,
-                    styleClasses: 'col-xs-12'
-                },
-                {
-                    type: "select",
-                    label: "Kruising waarde",
-                    model: "SecondPropertyTag",
-                    required: false,
-                    validator: VueFormGenerator.validators.string,
-                    values: ['United Kingdom', 'Romania', 'Germany'],
                     styleClasses: 'col-xs-12'
                 }
             ]
@@ -87,6 +77,9 @@ new Vue({
     },
     methods: {
         onComplete: function () {
+            jsonResult.ItemIds = [];
+            jsonResult.ItemIds.push($(".wizardItemId1").html());
+            jsonResult.ItemIds.push($(".wizardItemId2").html());
             addWidgetToDashboard(jsonResult);
         },
         validateFirstTab: function () {
@@ -115,7 +108,7 @@ new Vue({
                     return "<div class='compareSuggestion'>" + suggestion.value + "</div>";
                 },
                 onSelect: function (suggestion) {
-                    // OK
+                    $(".wizardItemId2").html(suggestion.data);
                 }
             });
             $('#basis-grafiek').devbridgeAutocomplete({
@@ -127,7 +120,7 @@ new Vue({
                     return "<div class='compareSuggestion'>" + suggestion.value + "</div>";
                 },
                 onSelect: function (suggestion) {
-                    // OK
+                    $(".wizardItemId1").html(suggestion.data);
                 }
             });
         } else {

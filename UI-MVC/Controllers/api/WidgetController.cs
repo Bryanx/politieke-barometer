@@ -128,12 +128,7 @@ namespace BAR.UI.MVC.Controllers.api
 
 			List<PropertyTag> propertyTags = new List<PropertyTag> {new PropertyTag() {Name = model.PropertyTag}};
 
-			List<Item> items = new List<Item>();
-			if (model.ItemIds != null) {
-				items.AddRange(itemManager.GetAllItems().Where(i => model.ItemIds.Contains(i.ItemId)).ToList());
-			} else {
-				items.Add(itemManager.GetItemByName(model.ItemName));
-			}
+			List<Item> items = itemManager.GetAllItems().Where(i => model.ItemIds.Contains(i.ItemId)).ToList();
 
 			widgetManager.AddWidget(WidgetType.GraphType, "Give your graph a title.", 0,
 				0, propertyTags, graphType: model.GraphType, dashboardId:dash.DashboardId, items:items);

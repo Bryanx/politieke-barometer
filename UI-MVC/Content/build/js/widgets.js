@@ -700,7 +700,7 @@ function loadWidgets(url, itemId) {
                 //UserWidget
                 if (widget.DashboardId !== -1) {
                     grid.addWidget(widgetElements.createUserWidget(widget.WidgetId, widget.Title), widget.RowNumber, widget.ColumnNumber, widget.RowSpan, widget.ColumnSpan,
-                        false, 4, 12, 4, 12, widget.WidgetId);
+                        false, 4, 12, 5, 12, widget.WidgetId);
                     //ItemWidget
                 } else {
                     grid.addWidget(widgetElements.createItemWidget(widget.WidgetId, ""), widget.RowNumber, widget.ColumnNumber, widget.RowSpan, widget.ColumnSpan,
