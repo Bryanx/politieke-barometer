@@ -81,7 +81,7 @@
             
             <!-- CARDS -->
             <div class="row">
-            @foreach(var item in Model.Items.Where(p => p.ItemType == ItemType.Person).OrderBy(p => p.TrendingPercentage).Reverse().Take(3)){
+            @foreach(var item in Model.Items.Where(p => p.ItemType == ItemType.Person).OrderBy(p => p.NumberOfMentions).Reverse().Take(3)){
                 <div class="col-xs-12 col-sm-4">
                     @Html.Partial("Partials/_Card", item)
                 </div>
@@ -149,7 +149,7 @@
             
             <!-- CARDS -->
             <div class="row">
-                @foreach(var item in Model.Items.Where(p => p.ItemType == ItemType.Theme).OrderBy(p => p.TrendingPercentage).Reverse().Take(3)){
+                @foreach(var item in Model.Items.Where(p => p.ItemType == ItemType.Theme).OrderBy(p => p.NumberOfMentions).Reverse().Take(3)){
                     <div class="col-xs-12 col-sm-4">
                         @Html.Partial("Partials/_Card", item)
                     </div>
@@ -160,7 +160,7 @@
                 <div class="col-12" style="max-height: 400px">
                     <canvas id='trending-3-graph'></canvas>
                     <h2 class='no-graph-data text-center'>No data available.</h2>
-                </div>²
+                </div>
             </div>
         </div>
     </div>
