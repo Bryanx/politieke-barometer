@@ -10,6 +10,7 @@ var widgets = [];
 var itempage = false;
 var orgpage = false;
 var dashboardpage = false;
+var addWidgetToDashboard;
 var updateWidgets;
 var deleteWidget;
 
@@ -783,6 +784,23 @@ function init() {
             contentType: "application/json",
             success: () => showSaveMessage()
         }).fail(() => showErrorMessage());
+    };
+    
+    addWidgetToDashboard = function (json) {
+        json.GraphType = convertChartTypeToGraphType(json.GraphType);
+        json = JSON.stringify(json);
+        $.ajax({
+            type: "POST",
+            url: "/api/newWidget/",
+            data: json,
+            dataType: "application/json",
+            contentType: "application/json",
+            success: () => showSaveMessage(),
+            error: (xhr) => {
+                alert($.parseJSON(xhr.responseText).Message);
+                showErrorMessage();
+            }
+        })
     };
     
     //Updates given widgets (wto works as a buffer for a lot
