@@ -617,13 +617,13 @@ namespace BAR.BL.Managers
 			InitRepo();
 			return itemRepo.ReadItemWithWidgets(itemId);
 		}
+
 		/// <summary>
 		/// Gets person with given name.
 		/// </summary>
-		public Person GetPerson(string personName)
-		{
+		public Item GetItemByName(string name) {
 			InitRepo();
-			return itemRepo.ReadPerson(personName);
+			return itemRepo.ReadItemByName(name);
 		}
 
 		/// <summary>
