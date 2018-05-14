@@ -40,8 +40,18 @@
     <script src="~/Scripts/DataExport/pdfmake.min.js"></script>
     <script src="~/Scripts/DataExport/vfs_fonts.js"></script>
     <script src="~/Scripts/DataExport/buttons.html5.min.js"></script>
+
     <script type="text/javascript">
         (() => {
+            $('#datatable-buttons').dataTable({
+                "sScrollY": "700px",
+                "paging": true,
+                dom: "lBfrtip",
+                buttons: [
+                    'copy', 'excelHtml5', 'pdfHtml5', 'csvHtml5'
+                ]
+            });
+
             var wto;
             $(".removeItem").click(function() {
                 clearTimeout(wto);
@@ -80,15 +90,6 @@
                         },
                         1000);
                 });
-            $('#datatable-buttons').dataTable({
-                "sScrollY": "700px",
-                "paging": true,
-                dom: "lBfrtip",
-                buttons: [
-                    'copy', 'excelHtml5', 'pdfHtml5', 'csvHtml5'
-                ]
-            });
-
         })($);
     </script>
     <script>
