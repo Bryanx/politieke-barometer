@@ -41,6 +41,7 @@ namespace BAR.DAL.EF
 				SubPlatform = ctx.SubPlatforms.Where(sp => sp.Name.Equals("politiek")).SingleOrDefault(),
 				NumberOfFollowers = 0,
 				NumberOfMentions = 0,
+				LastUpdated = DateTime.Now,
 				LastUpdatedInfo = DateTime.Now,
 				ItemType = ItemType.Theme
 			};
@@ -54,6 +55,7 @@ namespace BAR.DAL.EF
 				SubPlatform = ctx.SubPlatforms.Where(sp => sp.Name.Equals("politiek")).SingleOrDefault(),
 				NumberOfFollowers = 0,
 				NumberOfMentions = 0,
+				LastUpdated = DateTime.Now,
 				LastUpdatedInfo = DateTime.Now,
 				ItemType = ItemType.Theme
 			};
@@ -67,6 +69,7 @@ namespace BAR.DAL.EF
 				SubPlatform = ctx.SubPlatforms.Where(sp => sp.Name.Equals("politiek")).SingleOrDefault(),
 				NumberOfFollowers = 0,
 				NumberOfMentions = 0,
+				LastUpdated = DateTime.Now,
 				LastUpdatedInfo = DateTime.Now,
 				ItemType = ItemType.Theme
 			};

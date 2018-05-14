@@ -286,10 +286,9 @@ namespace BAR.DAL
 		/// Gives back all widgets for a specific item id
 		/// The widget contains all the data needed to construct a graph
 		/// </summary>
-		public IEnumerable<Widget> ReadWidgetsWithAllDataForItem(int itemId)
+		public IEnumerable<Widget> ReadAllWidgetsWithAllDataForItem(int itemId)
 		{
 			Item itemToReturn =  ctx.Items.Include(item => item.ItemWidgets)
-										  .Include(item => item.ItemWidgets.Select(widget => widget.PropertyTags))
 										  .Include(item => item.ItemWidgets.Select(widget => widget.WidgetDatas))
 									      .Include(item => item.ItemWidgets.Select(widget => widget.WidgetDatas.Select(data => data.GraphValues)))
 										  .Where(item => item.ItemId == itemId).SingleOrDefault();
@@ -339,17 +338,6 @@ namespace BAR.DAL
 								 .Include(dash => dash.Widgets.Select(widget => widget.WidgetDatas))
 								 .Include(dash => dash.Widgets.Select(widget => widget.WidgetDatas.Select(data => data.GraphValues)))
 								 .Where(dash => dash.User.Id.ToLower().Equals(userId.ToLower())).SingleOrDefault();
-		}
-
-		/// <summary>
-		/// Deletes the given widgetdatas from the database
-		/// </summary>
-		public int DeleteWidgetDatas(IEnumerable<WidgetData> datas)
-		{
-			if (datas != null && datas.Count() > 0) {
-				ctx.WidgetDatas.RemoveRange(datas);
-			}
-			return ctx.SaveChanges();
 		}
 	}
 }

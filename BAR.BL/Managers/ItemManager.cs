@@ -87,7 +87,7 @@ namespace BAR.BL.Managers
 			foreach (User user in users)
 			{
 				//Get 5 most trending items of
-				items = GetMostTrendingItemsForUser(user.Id);
+				items = GetMostTredningItemsForUser(user.Id);
 
 				//Send email
 				IdentityMessage message = new IdentityMessage()
@@ -113,21 +113,20 @@ namespace BAR.BL.Managers
 		/// the number of trending items depends on the
 		/// number that you give via the parameter
 		/// </summary>
-		public IEnumerable<Item> GetMostTrendingItems(int numberOfItems = 5, bool useWithOldData = false)
+		public IEnumerable<Item> GetMostTrendingItems(int numberOfItems = 5)
 		{
 			//Order the items by populairity
-			IEnumerable<Item> itemsOrderd = GetAllItems();
-			if (!useWithOldData)
+			IEnumerable<Item> itemsOrderd = GetAllItems()
+				.OrderBy(item => item.TrendingPercentage).AsEnumerable();
+
+			//Get the first items out of the list
+			List<Item> itemsOrderdMostPopulair = new List<Item>();
+			for (int i = 0; i < numberOfItems; i++)
 			{
-				itemsOrderd = itemsOrderd .OrderBy(item => item.NumberOfMentions).AsEnumerable();
-			}
-			else
-			{
-				UpdateTrendingItem(itemsOrderd);
-				itemsOrderd = itemsOrderd.OrderBy(item => item.NumberOfMentions).AsEnumerable();
+				if (i <= itemsOrderd.Count()) itemsOrderdMostPopulair.Add(itemsOrderd.ElementAt(i));
 			}
 
-			return itemsOrderd.Take(numberOfItems).AsEnumerable();
+			return itemsOrderdMostPopulair.AsEnumerable();
 		}
 
 		/// <summary>
@@ -135,30 +134,27 @@ namespace BAR.BL.Managers
 		/// for a specific type
 		/// the number of items depends on the parameter "numberOfItems"
 		/// </summary>
-		public IEnumerable<Item> GetMostTrendingItemsForType(ItemType type, int numberOfItems = 5, bool useWithOldData = false)
+		public IEnumerable<Item> GetMostTrendingItemsForType(ItemType type, int numberOfItems = 5)
 		{
 			//order the items by populairity
-			IEnumerable<Item> itemsOrderd = GetAllItems();
-			if (!useWithOldData)
+			IEnumerable<Item> itemsOrderd = GetAllItems().Where(item => item.ItemType == type)
+				.OrderBy(item => item.TrendingPercentage).AsEnumerable();
+
+			//Get the first items out of the list
+			List<Item> itemsOrderdMostPopulair = new List<Item>();
+			for (int i = 0; i < numberOfItems; i++)
 			{
-				itemsOrderd = itemsOrderd.Where(item => item.ItemType == type)
-				.OrderBy(item => item.NumberOfMentions).AsEnumerable();
-			}
-			else
-			{
-				UpdateTrendingItem(itemsOrderd);
-				itemsOrderd = itemsOrderd.Where(item => item.ItemType == type)
-				.OrderBy(item => item.NumberOfMentions).AsEnumerable();
+				if (i <= itemsOrderd.Count()) itemsOrderdMostPopulair.Add(itemsOrderd.ElementAt(i));
 			}
 
-			return itemsOrderd.Take(numberOfItems).AsEnumerable();
+			return itemsOrderdMostPopulair.AsEnumerable();
 		}
 
 		/// <summary>
 		/// Gives back a list of the most trending items
 		/// based on the userId.
 		/// </summary>
-		public IEnumerable<Item> GetMostTrendingItemsForUser(string userId, int numberOfItems = 5, bool useWithOldData = false)
+		public IEnumerable<Item> GetMostTredningItemsForUser(string userId, int numberOfItems = 5)
 		{
 			//Get items for userId and order items from user
 			//We need to get every item of the subscription of a specefic user
@@ -170,17 +166,17 @@ namespace BAR.BL.Managers
 			}
 
 			//Order items
-			IEnumerable<Item> itemsOrderd;
-			if (!useWithOldData)
+			IEnumerable<Item> itemsOrderd = itemsFromUser
+				.OrderBy(item => item.TrendingPercentage).AsEnumerable();
+
+			//Get the first items out of the list
+			List<Item> itemsOrderdMostPopulair = new List<Item>();
+			for (int i = 0; i < numberOfItems; i++)
 			{
-				itemsOrderd = itemsFromUser.OrderBy(item => item.NumberOfMentions).AsEnumerable();
-			} else
-			{
-				UpdateTrendingItem(itemsFromUser);
-				itemsOrderd = itemsFromUser.OrderBy(item => item.NumberOfMentions).AsEnumerable();
+				if (i <= itemsOrderd.Count()) itemsOrderdMostPopulair.Add(itemsOrderd.ElementAt(i));
 			}
 
-			return itemsOrderd.Take(numberOfItems).AsEnumerable();
+			return itemsOrderd;
 		}
 
 		/// <summary>
@@ -188,7 +184,7 @@ namespace BAR.BL.Managers
 		/// for a specific type and user
 		/// the number of items depends on the parameter "numberOfItems"
 		/// </summary>
-		public IEnumerable<Item> GetMostTrendingItemsForUserAndItemType(string userId, ItemType type, int numberOfItems = 5, bool useWithOldData = false)
+		public IEnumerable<Item> GetMostTredningItemsForUserAndItemType(string userId, ItemType type, int numberOfItems = 5)
 		{
 			//Get items for userId and order items from user
 			//We need to get every item of the subscription of a specefic user
@@ -200,43 +196,17 @@ namespace BAR.BL.Managers
 			}
 
 			//Order items
-			IEnumerable<Item> itemsOrderd;
-			if (!useWithOldData)
+			IEnumerable<Item> itemsOrderd = itemsFromUser.Where(item => item.ItemType == type)
+				.OrderBy(item => item.TrendingPercentage).AsEnumerable();
+
+			//Get the first items out of the list
+			List<Item> itemsOrderdMostPopulair = new List<Item>();
+			for (int i = 0; i < numberOfItems; i++)
 			{
-				itemsOrderd = itemsFromUser.Where(item => item.ItemType == type)
-				.OrderBy(item => item.NumberOfMentions).AsEnumerable();
-			} else
-			{
-				UpdateTrendingItem(itemsFromUser);
-				itemsOrderd = itemsFromUser.Where(item => item.ItemType == type)
-				.OrderBy(item => item.NumberOfMentions).AsEnumerable();
+				if (i <= itemsOrderd.Count()) itemsOrderdMostPopulair.Add(itemsOrderd.ElementAt(i));
 			}
 
-			return itemsOrderd.Take(numberOfItems).AsEnumerable();
-		}
-
-		/// <summary>
-		/// If the last time that the old trending percentage of the item was updated 7 days ago,
-		/// then the old trending percentage will be updated.
-		/// </summary>
-		private void UpdateTrendingItem(IEnumerable<Item> items)
-		{
-			foreach (Item item in items)
-			{
-				if (item.LastUpdated <= DateTime.Now.AddDays(-7))
-				{
-					item.NumberOfMentionsOld = item.NumberOfMentions;
-					item.LastUpdated = DateTime.Now;
-				}
-			}		
-		}
-
-		/// <summary>
-		/// Updates the weekly review information if needed.
-		/// </summary>
-		private void UpdateWeeklyReviewData()
-		{
-			//TODO
+			return itemsOrderd;
 		}
 
 		/// <summary>
@@ -406,12 +376,9 @@ namespace BAR.BL.Managers
 			item.Name = name;
 			item.CreationDate = DateTime.Now;
 			item.LastUpdatedInfo = DateTime.Now;
-			//needs to be null to do a check later on: see updateItemTrending in itemManager for details
-			item.LastUpdated = null; 
+			item.LastUpdated = DateTime.Now;
 			item.NumberOfFollowers = 0;
 			item.TrendingPercentage = 0.0;
-			item.NumberOfMentions = 0;
-			item.NumberOfMentionsOld = 0;
 			item.Baseline = 0.0;
 			item.Deleted = false;
 			item.Informations = new List<Information>();
@@ -521,6 +488,7 @@ namespace BAR.BL.Managers
 
 			//Update item
 			itemToUpdate.Name = name;
+			itemToUpdate.LastUpdated = DateTime.Now;
 
 			//Update database
 			itemRepo.UpdateItem(itemToUpdate);
@@ -544,6 +512,7 @@ namespace BAR.BL.Managers
 			personToUpdate.Gender = gender;
 			personToUpdate.Position = position;
 			personToUpdate.District = district;
+			personToUpdate.LastUpdated = DateTime.Now;
 
 			//Update database
 			itemRepo.UpdateItem(personToUpdate);
@@ -705,6 +674,7 @@ namespace BAR.BL.Managers
 						Name = name,
 						CreationDate = DateTime.Now,
 						LastUpdatedInfo = DateTime.Now,
+						LastUpdated = DateTime.Now,
 						NumberOfFollowers = 0,
 						TrendingPercentage = 0.0,
 						Baseline = 0.0,
@@ -753,6 +723,7 @@ namespace BAR.BL.Managers
 						Name = name,
 						CreationDate = DateTime.Now,
 						LastUpdatedInfo = DateTime.Now,
+						LastUpdated = DateTime.Now,
 						NumberOfFollowers = 0,
 						TrendingPercentage = 0.0,
 						Baseline = 0.0,
@@ -866,11 +837,6 @@ namespace BAR.BL.Managers
 				DetermineTrending(item.ItemId);
 				new SubscriptionManager().GenerateAlerts(item.ItemId);
 				item.NumberOfMentions = dataManager.GetInformationsForItemid(item.ItemId).Count();
-				if (item.LastUpdated == null)
-				{			
-					item.NumberOfMentionsOld = item.NumberOfMentions;
-					item.LastUpdated = DateTime.Now;
-				}
 
 				//Gather sentiment
 				double sentiment = 0.0;

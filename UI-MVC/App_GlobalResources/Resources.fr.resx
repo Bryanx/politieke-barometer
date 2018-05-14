@@ -394,7 +394,7 @@
     <value>Nombre d'abonnés</value>
   </data>
   <data name="NumberOfMentions" xml:space="preserve">
-    <value>Mentions</value>
+    <value>Nombre de mentions</value>
   </data>
   <data name="OnSocialMedia" xml:space="preserve">
     <value>Sur les résaux sociaux</value>
@@ -591,62 +591,5 @@ Thème</value>
   </data>
   <data name="InTrendingPercentage" xml:space="preserve">
     <value>En pourcentage de tendance.</value>
-  </data>
-  <data name="Age" xml:space="preserve">
-    <value>Âge</value>
-  </data>
-  <data name="AgeDistributionOfMentions" xml:space="preserve">
-    <value>Répartition par âge des mentions</value>
-  </data>
-  <data name="GenderDistributionOfMentions" xml:space="preserve">
-    <value>Répartition par sexe des mentions</value>
-  </data>
-  <data name="NumberOfMentionsFull" xml:space="preserve">
-    <value>Nombre de mentions</value>
-  </data>
-  <data name="To" xml:space="preserve">
-    <value>Sur</value>
-  </data>
-  <data name="Members" xml:space="preserve">
-    <value>Membres</value>
-  </data>
-  <data name="MorePeopleFrom" xml:space="preserve">
-    <value>Plus de gens de</value>
-  </data>
-  <data name="Above25" xml:space="preserve">
-    <value>Plus de 25</value>
-  </data>
-  <data name="BarChart" xml:space="preserve">
-    <value>Graphique à barres</value>
-  </data>
-  <data name="Below25" xml:space="preserve">
-    <value>Moins de 25</value>
-  </data>
-  <data name="CompareDataPlaceholder" xml:space="preserve">
-    <value>Comparer des données avec une autre personne, organisation ou sujet.</value>
-  </data>
-  <data name="DonutChart" xml:space="preserve">
-    <value>Graphique de donut</value>
-  </data>
-  <data name="DownloadJPGImage" xml:space="preserve">
-    <value>Télécharger l'image JPG</value>
-  </data>
-  <data name="DownloadPNGImage" xml:space="preserve">
-    <value>Télécharger l'image PNG</value>
-  </data>
-  <data name="HorizontalBarChart" xml:space="preserve">
-    <value>Graphique à barres horizontal</value>
-  </data>
-  <data name="LineChart" xml:space="preserve">
-    <value>Graphique linéaire</value>
-  </data>
-  <data name="NoDataAvailable" xml:space="preserve">
-    <value>Pas de données disponibles.</value>
-  </data>
-  <data name="PieChart" xml:space="preserve">
-    <value>Graphique camembert</value>
-  </data>
-  <data name="RemoveData" xml:space="preserve">
-    <value>Supprimer des données</value>
   </data>
 </root>

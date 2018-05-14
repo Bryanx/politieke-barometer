@@ -25,10 +25,10 @@ namespace BAR.BL.Managers
 		IEnumerable<Theme> GetAllThemes();
 		IEnumerable<Item> GetItemsForType(ItemType type);
 		Person GetPerson(string personName);
-		IEnumerable<Item> GetMostTrendingItems(int numberOfItems = 5, bool useWithOldData = false);
-		IEnumerable<Item> GetMostTrendingItemsForType(ItemType type, int numberOfItems = 5, bool useWithOldData = false);
-		IEnumerable<Item> GetMostTrendingItemsForUser(string userId, int numberOfItems = 5, bool useWithOldData = false);
-		IEnumerable<Item> GetMostTrendingItemsForUserAndItemType(string userId, ItemType type, int numberOfItems = 5, bool useWithOldData = false);
+		IEnumerable<Item> GetMostTrendingItems(int numberOfItems = 5);
+		IEnumerable<Item> GetMostTrendingItemsForType(ItemType type, int numberOfItems = 5);
+		IEnumerable<Item> GetMostTredningItemsForUser(string userId, int numberOfItems = 5);
+		IEnumerable<Item> GetMostTredningItemsForUserAndItemType(string userId, ItemType type, int numberOfItems = 5);
 
 		IEnumerable<Person> GetAllPersonsForSubplatform(int subPlatformID);
 		IEnumerable<Item> GetAllOrganisationsForSubplatform(int subPlatformID);

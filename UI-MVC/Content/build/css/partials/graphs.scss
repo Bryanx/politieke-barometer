@@ -7,10 +7,14 @@ canvas{
 
 .org-member {
   padding: 0 10px 15px 10px;
+  cursor: pointer;
   strong {
     display: block;
     margin-top: 10px;
     white-space: nowrap;
+  }
+  img {
+    width: 85%;
   }
   &:hover {
     strong {
@@ -21,42 +25,4 @@ canvas{
 
 .grid-stack-item-content {
   overflow: visible !important;
-}
-
-.addToDashboard {
-  display: inline-block;
-  vertical-align: top;
-  float: left;
-}
-
-.edit-title {
-  display: none;
-  font-size: 14px;
-  cursor: pointer;
-  padding-left: 10px;
-}
-
-.title-input {
-  display: none;
-  width: auto;
-  height: 30px;
-}
-
-.graph-options {
-  display: flex;
-  justify-content: space-evenly;
-  .removeData {
-    margin-top: 10px;
-    float: right;
-    vertical-align: top;
-    display: none;
-  }
-
-  .compareSearch {
-    margin-top: 10px;
-    max-width: 400px;
-    height: 34px;
-    vertical-align: top;
-    display: inline-block;
-  }
 }
