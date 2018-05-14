@@ -99,6 +99,16 @@ namespace BAR.UI.MVC
 					.ForMember(m => m.City, opt => opt.MapFrom(src => src.City))
 					.ForMember(m => m.Country, opt => opt.MapFrom(src => src.Country))
 					.ForMember(m => m.Email, opt => opt.MapFrom(src => src.Email));
+        cfg.CreateMap<UserWidget, UserWidgetViewModel>()
+          .ForMember(w => w.WidgetId, opt => opt.MapFrom(src => src.WidgetId))
+          .ForMember(w => w.Title, opt => opt.MapFrom(src => src.Title))
+          .ForMember(w => w.ColumnSpan, opt => opt.MapFrom(src => src.ColumnSpan))
+          .ForMember(w => w.RowSpan, opt => opt.MapFrom(src => src.RowSpan))
+          .ForMember(w => w.ColumnNumber, opt => opt.MapFrom(src => src.ColumnNumber))
+          .ForMember(w => w.RowNumber, opt => opt.MapFrom(src => src.RowNumber))
+          .ForMember(w => w.WidgetType, opt => opt.MapFrom(src => src.WidgetType))
+          .ForMember(w => w.DashboardId, opt => opt.MapFrom(src => src.Dashboard.DashboardId))
+          .ForMember(w => w.ItemIds, opt => opt.MapFrom(src => src.Items.Select(i => i.ItemId).ToList()));
       });
     }
   }
