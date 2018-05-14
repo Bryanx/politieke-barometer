@@ -1859,7 +1859,7 @@ canvas {
   margin: 30px auto; }
 
 .modal-backdrop.in {
-  z-index: 1; }
+  z-index: 6; }
 
 .searchbar {
   display: block !important;
