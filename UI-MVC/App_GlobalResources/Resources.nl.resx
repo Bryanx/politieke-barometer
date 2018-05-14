@@ -570,6 +570,9 @@
   <data name="UserManagement" xml:space="preserve">
     <value>Gebruikers beheren</value>
   </data>
+  <data name="Website" xml:space="preserve">
+    <value>Website</value>
+  </data>
   <data name="WeeklyReview" xml:space="preserve">
     <value>Weekly review</value>
   </data>

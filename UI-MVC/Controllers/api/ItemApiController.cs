@@ -210,12 +210,20 @@ namespace BAR.UI.MVC.Controllers.api
 		public IHttpActionResult GetMorePeopleFromOrg(string itemId)
 		{
 			itemManager = new ItemManager();
-			int orgId = itemManager.GetPersonWithDetails(Int32.Parse(itemId)).Organisation.ItemId;
-			List<Person> items = itemManager.GetAllPersons()
-				.Where(p => p.Organisation.ItemId == orgId)
-				.OrderByDescending(p => p.NumberOfMentions)
-				.Take(6).ToList();
-			return Ok(Mapper.Map(items, new List<ItemDTO>()));
+
+			Person person = itemManager.GetPersonWithDetails(Int32.Parse(itemId));
+			if(person == null)
+			{
+				return Ok(Mapper.Map(new List<Person>(), new List<ItemDTO>()));
+			} else
+			{
+				int orgId = person.Organisation.ItemId;
+				List<Person> items = itemManager.GetAllPersons()
+					.Where(p => p.Organisation.ItemId == orgId)
+					.OrderByDescending(p => p.NumberOfMentions)
+					.Take(6).ToList();
+				return Ok(Mapper.Map(items, new List<ItemDTO>()));
+			}
 		}
 		
 		/// <summary>

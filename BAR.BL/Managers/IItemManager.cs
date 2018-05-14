@@ -36,6 +36,8 @@ namespace BAR.BL.Managers
 		Item AddItem(ItemType itemType, string name, string description = "", string function = "",
 			string district = null, string level = null, string site = null, Gender gender = Gender.OTHER, string position = null, DateTime? dateOfBirth = null, List < Keyword > keywords = null);
 
+		void GenerateDefaultItemWidgets(string name, int itemId);
+
 		bool ImportJson(string json, int subPlatformID);
 		bool ImportThemes(string json, int subPlatformID);
 		

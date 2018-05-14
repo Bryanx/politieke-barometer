@@ -370,7 +370,7 @@ namespace BAR.BL.Managers
 		/// <summary>
 		/// Generates dafault widgets based on the itemid
 		/// </summary>
-		private void GenerateDefaultItemWidgets(string name, int itemId)
+		public void GenerateDefaultItemWidgets(string name, int itemId)
 		{
 			uowManager = new UnitOfWorkManager();
 			InitRepo();

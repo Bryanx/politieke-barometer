@@ -202,6 +202,8 @@ namespace BAR.UI.MVC.Controllers
 			Organisation org = (Organisation)itemManager.AddItem(ItemType.Organisation, model.Name, site: "www.kdg.be");
 			itemManager.ChangeItemPlatform(org.ItemId, subplatform.SubPlatformId);
 
+			itemManager.GenerateDefaultItemWidgets(org.Name, org.ItemId);
+
 			return RedirectToAction("Details", "Organisation", new { id = org.ItemId });
 		}
 
