@@ -186,6 +186,9 @@
   <data name="BarChart" xml:space="preserve">
     <value>Staafgrafiek</value>
   </data>
+  <data name="BasicGraph" xml:space="preserve">
+    <value>Basis grafiek</value>
+  </data>
   <data name="Below25" xml:space="preserve">
     <value>Onder 25</value>
   </data>
@@ -201,11 +204,29 @@
   <data name="ChangeRole" xml:space="preserve">
     <value>Verander rol</value>
   </data>
+  <data name="ChooseData" xml:space="preserve">
+    <value>Data kiezen</value>
+  </data>
+  <data name="ChooseDataSubText" xml:space="preserve">
+    <value>Welke data wil u op uw grafiek laten zien?</value>
+  </data>
+  <data name="ChooseGraph" xml:space="preserve">
+    <value>Grafiek kiezen</value>
+  </data>
+  <data name="ChooseGraphSubText" xml:space="preserve">
+    <value>Welk type grafiek wilt u laten zien?</value>
+  </data>
+  <data name="ChoosePersonOrgTopic" xml:space="preserve">
+    <value>Kies een persoon, organisatie of thema.</value>
+  </data>
   <data name="City" xml:space="preserve">
     <value>Woonplaats</value>
   </data>
   <data name="CompareDataPlaceholder" xml:space="preserve">
     <value>Vergelijk data met een ander persoon, organisatie of thema.</value>
+  </data>
+  <data name="ComparingGraph" xml:space="preserve">
+    <value>Vergelijkende grafiek</value>
   </data>
   <data name="ConfirmAccount" xml:space="preserve">
     <value>Bevestig je account</value>
@@ -315,6 +336,9 @@
   <data name="GenderDistributionOfMentions" xml:space="preserve">
     <value>Geslachtsverdeling van vermeldingen</value>
   </data>
+  <data name="GraphType" xml:space="preserve">
+    <value>Grafiek type</value>
+  </data>
   <data name="Home" xml:space="preserve">
     <value>Home</value>
   </data>
@@ -335,6 +359,9 @@
   </data>
   <data name="InNumberOfMentions" xml:space="preserve">
     <value>In aantal vermeldingen.</value>
+  </data>
+  <data name="IntersectValue" xml:space="preserve">
+    <value>Kruising waarde</value>
   </data>
   <data name="InTrendingPercentage" xml:space="preserve">
     <value>In trending percentage.</value>
@@ -450,11 +477,20 @@
   <data name="OnSocialMedia" xml:space="preserve">
     <value>Op sociale media</value>
   </data>
+  <data name="Optional" xml:space="preserve">
+    <value>Optioneel</value>
+  </data>
   <data name="Or" xml:space="preserve">
     <value>Of</value>
   </data>
   <data name="Organisation" xml:space="preserve">
     <value>Organisatie</value>
+  </data>
+  <data name="OtherSettings" xml:space="preserve">
+    <value>Overige instellingen</value>
+  </data>
+  <data name="OtherSettingsSubText" xml:space="preserve">
+    <value>Kies optioneel enkele overige instellingen.</value>
   </data>
   <data name="PageManagement" xml:space="preserve">
     <value>Pagina's beheren</value>
@@ -599,6 +635,9 @@
   </data>
   <data name="Theme" xml:space="preserve">
     <value>Thema</value>
+  </data>
+  <data name="Title" xml:space="preserve">
+    <value>Titel</value>
   </data>
   <data name="To" xml:space="preserve">
     <value>Op</value>

@@ -649,4 +649,43 @@ Thème</value>
   <data name="RemoveData" xml:space="preserve">
     <value>Supprimer des données</value>
   </data>
+  <data name="BasicGraph" xml:space="preserve">
+    <value>Graphique de base</value>
+  </data>
+  <data name="ChooseData" xml:space="preserve">
+    <value>Choisir des données</value>
+  </data>
+  <data name="ChooseDataSubText" xml:space="preserve">
+    <value>Quelles données souhaitez-vous afficher sur votre graphique?</value>
+  </data>
+  <data name="ChooseGraph" xml:space="preserve">
+    <value>Choisir un graphique</value>
+  </data>
+  <data name="ChooseGraphSubText" xml:space="preserve">
+    <value>Quel type de graphique souhaitez-vous afficher?</value>
+  </data>
+  <data name="ChoosePersonOrgTopic" xml:space="preserve">
+    <value>Choisissez une personne, une organisation ou un sujet.</value>
+  </data>
+  <data name="ComparingGraph" xml:space="preserve">
+    <value>Graphique de comparaison</value>
+  </data>
+  <data name="GraphType" xml:space="preserve">
+    <value>Type de graphique</value>
+  </data>
+  <data name="IntersectValue" xml:space="preserve">
+    <value>Valeur d'intersection</value>
+  </data>
+  <data name="Optional" xml:space="preserve">
+    <value>Optionnel</value>
+  </data>
+  <data name="OtherSettings" xml:space="preserve">
+    <value>Autres réglages</value>
+  </data>
+  <data name="OtherSettingsSubText" xml:space="preserve">
+    <value>Choisissez d'autres paramètres graphiques optionnels.</value>
+  </data>
+  <data name="Title" xml:space="preserve">
+    <value>Titre</value>
+  </data>
 </root>
