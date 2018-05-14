@@ -78,7 +78,9 @@
 <div id="notificationMessage"></div>
 
 <!-- modals -->
-@Html.Partial("Partials/_LoginModal", new LoginViewModel())
+@if (Model.User == null) {
+    @Html.Partial("Partials/_LoginModal", new LoginViewModel())
+}
 
 <!-- Scripts -->
     <script src="/Home/GetResources"></script> 
