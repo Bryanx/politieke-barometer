@@ -17,7 +17,7 @@ namespace BAR.UI.MVC.Helpers {
         
         public static MvcHtmlString ShowNavLogin(this HtmlHelper helper, BaseViewModel model) {
             if (model.User != null) return helper.Partial("Partials/_LoggedInNavbar", model);
-            return helper.Partial("Partials/_LoginModal", new LoginViewModel());
+            return helper.Partial("Partials/_LoginNavbar", new LoginViewModel());
         }
 
         public static MvcHtmlString FooterHelper(this HtmlHelper helper, BaseViewModel model) {
