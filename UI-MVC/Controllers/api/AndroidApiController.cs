@@ -127,6 +127,7 @@ namespace webapi.Controllers
 
           //Get all widgets for each item in userWidgets.
           IEnumerable<Widget> widgetsForItem = widgetManager.GetAllWidgetsWithAllDataForItem(itemId);
+
           //Check if these widgets have graph data (WidgetData) on this topic, if they do add this data to the userWidget.
           IEnumerable<WidgetData> widgetDatas = widgetsForItem.FirstOrDefault(w => w.WidgetDatas.Any(wd => wd.KeyValue == keyValue)).WidgetDatas;
 
