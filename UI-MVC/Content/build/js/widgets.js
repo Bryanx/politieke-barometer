@@ -142,7 +142,7 @@ var widgetElements = {
             "               </div>" +
             "            </div>" +
             "        </div>";
-    },
+    }
 };
 
 //gridstack
@@ -657,7 +657,7 @@ function loadGraphs(itemId, widget) {
     $(document).on("click", ".removeData", (e) => RemoveData(e).unbind()); //unbind may give an error. this can be ignored.
 }
 
-function loadWidgets(url, itemId) {
+function loadWidgets(url, itemId, onlyLoadLastWidget = false) {
     //Loads a social widget.
     let loadSocialWidget = function(data) {
         $.each(data.SocialMediaNames, (index, value) => {
@@ -690,26 +690,30 @@ function loadWidgets(url, itemId) {
         });
     };
 
-    //Puts the widgets on the grid.
+    //Adds a widget to the gridstack grid.
+    let addWidgetToGrid = function(widget, itemId) {
+        //UserWidget
+        if (widget.DashboardId !== -1) {
+            grid.addWidget(widgetElements.createUserWidget(widget.WidgetId, widget.Title), widget.RowNumber, widget.ColumnNumber, widget.RowSpan, widget.ColumnSpan,
+                true, 4, 12, 5, 12, widget.WidgetId);
+            //ItemWidget
+        } else {
+            grid.addWidget(widgetElements.createItemWidget(widget.WidgetId, ""), widget.RowNumber, widget.ColumnNumber, widget.RowSpan, widget.ColumnSpan,
+                true, 4, 12, 4, 12, widget.WidgetId);
+            grid.movable(".grid-stack-item", false);
+            grid.resizable(".grid-stack-item", false);
+        }
+        //if widgettype == graphtype
+        if (widget.WidgetType === 0) loadGraphs(itemId, widget);
+        widgets.push(widget);
+    };
+
+    //Puts all the widgets on the grid.
     let loadGrid = function (data, itemId) {
         if (data != null && data.length) {
             $.each(data, (index, widget) => {
-                //UserWidget
-                if (widget.DashboardId !== -1) {
-                    grid.addWidget(widgetElements.createUserWidget(widget.WidgetId, widget.Title), widget.RowNumber, widget.ColumnNumber, widget.RowSpan, widget.ColumnSpan,
-                        false, 4, 12, 5, 12, widget.WidgetId);
-                    //ItemWidget
-                } else {
-                    grid.addWidget(widgetElements.createItemWidget(widget.WidgetId, ""), widget.RowNumber, widget.ColumnNumber, widget.RowSpan, widget.ColumnSpan,
-                        true, 4, 12, 4, 12, widget.WidgetId);
-                    grid.movable(".grid-stack-item", false);
-                    grid.resizable(".grid-stack-item", false);
-                }
-                //if widgettype == graphtype
-                if (widget.WidgetType === 0) {
-                    loadGraphs(itemId, widget);
-                }
-                widgets.push(widget);
+                if (!onlyLoadLastWidget) addWidgetToGrid(widget, itemId);
+                else if (index === data.length-1) addWidgetToGrid(widget, itemId);
             });
         } else {
             noWidgetsAvailable();
@@ -789,6 +793,8 @@ function init() {
     addWidgetToDashboard = function (json) {
         json.GraphType = convertChartTypeToGraphType(json.GraphType);
         json = JSON.stringify(json);
+        $modal = $(".makeGraphModal");
+        $nowidgets = $(".no-widgets");
         $.ajax({
             type: "POST",
             url: "/api/newWidget/",
@@ -796,15 +802,15 @@ function init() {
             dataType: "application/json",
             contentType: "application/json",
             success: () => {
-                if ($(".makeGraphModal").length) $(".makeGraphModal").modal("hide");
-                if ($(".no-widgets").length) $(".no-widgets").hide();
-                if (dashboardpage) loadWidgets("api/Widget/GetUserWidgets", "");
+                if ($modal.length) $modal.modal("hide");
+                if ($nowidgets.length) $nowidgets.hide();
+                if (dashboardpage) {
+                    if (widgets.length < 1) loadWidgets("api/Widget/GetUserWidgets", "");
+                    else loadWidgets("api/Widget/GetUserWidgets", "", true);
+                }
                 showSaveMessage();
             },
-            error: (xhr) => {
-                alert($.parseJSON(xhr.responseText).Message);
-                showErrorMessage();
-            }
+            error: (xhr) => showErrorMessage()
         })
     };
     
