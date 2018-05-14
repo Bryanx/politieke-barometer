@@ -492,9 +492,9 @@
     <Content Include="Views\Shared\Partials\_OrganisationTable.cshtml" />
     <Content Include="Views\Shared\Partials\_PersonTable.cshtml" />
     <Content Include="Views\Shared\Partials\_RegisterModal.cshtml" />
+    <Content Include="Views\Shared\Partials\_RelatedItems.cshtml" />
     <Content Include="Views\Shared\Partials\_SearchBar.cshtml" />
     <Content Include="Views\Shared\Partials\_SocialIcons.cshtml" />
-    <Content Include="Views\Shared\Partials\_VisitorLeftNavBarLinks.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\SuperAdmin\PlatformManagement.cshtml" />
     <Content Include="Views\SuperAdmin\GeneralManagement.cshtml" />

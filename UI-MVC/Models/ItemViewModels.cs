@@ -12,6 +12,7 @@ namespace BAR.UI.MVC.Models {
         
         public class PersonViewModel : BaseViewModel {
             public ItemDTO Item { get; set; }
+            public List<PersonViewModel> PeopleFromSameOrg { get; set; }
             public bool Subscribed { get; set; }
             public string District { get; set; }
             public string Level { get; set; }
@@ -34,10 +35,12 @@ namespace BAR.UI.MVC.Models {
         }
         
         public class OrganisationViewModel : BaseViewModel {
-            public ItemDTO Person { get; set; }
+            public ItemDTO Organisation { get; set; }
             public bool Subscribed { get; set; }
             public string Site { get; set; }
             public List<SocialMediaName> SocialMediaNames { get; set; }
+            public List<PersonViewModel> MemberList { get; set; }
+            
         }
         
         public class ThemeViewModel : BaseViewModel

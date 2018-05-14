@@ -11,10 +11,13 @@
         <mvcSiteMapNode title="$resources:Resources,Settings" controller="User" action="Settings"/>
     </mvcSiteMapNode>
     <mvcSiteMapNode title="$resources:Resources,AllPoliticians" controller="Person" action="Index">
-        <mvcSiteMapNode title="Person" action="Details" dynamicNodeProvider="BAR.UI.MVC.ItemDynamicNodeProvider, BAR.UI.MVC" />
+        <mvcSiteMapNode title="Person" controller="Person" action="Details" dynamicNodeProvider="BAR.UI.MVC.ItemDynamicNodeProvider, BAR.UI.MVC" />
     </mvcSiteMapNode>
     <mvcSiteMapNode title="$resources:Resources,AllParties" controller="Organisation" action="Index">
-            <mvcSiteMapNode title="Organisation" action="Details" dynamicNodeProvider="BAR.UI.MVC.ItemDynamicNodeProvider, BAR.UI.MVC" />
+            <mvcSiteMapNode title="Organisation" controller="Organisation" action="Details" dynamicNodeProvider="BAR.UI.MVC.ItemDynamicNodeProvider, BAR.UI.MVC" />
+    </mvcSiteMapNode>
+    <mvcSiteMapNode title="$resources:Resources,Topics" controller="Theme" action="Index">
+        <mvcSiteMapNode title="Topic" controller="Theme" action="Details" dynamicNodeProvider="BAR.UI.MVC.ItemDynamicNodeProvider, BAR.UI.MVC"/>
     </mvcSiteMapNode>
     <mvcSiteMapNode title="$resources:Resources,AdminDashboard" controller="Admin" action="Index">
         <mvcSiteMapNode title="$resources:Resources,PageManagement" controller="Admin" action="PageManagement"/>
