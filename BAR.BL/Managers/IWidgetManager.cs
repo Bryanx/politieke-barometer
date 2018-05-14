@@ -54,5 +54,7 @@ namespace BAR.BL.Managers
 		WidgetData AddWidgetData(WidgetData widgetData);
 
 		WidgetData ChangeWidgetData(WidgetData widgetData);
+
+		void RemoveWidgetDatas(IEnumerable<WidgetData> datas);
 	}
 }
