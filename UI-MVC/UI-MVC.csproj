@@ -250,6 +250,7 @@
     <Compile Include="Helpers\LanguageHelper.cs" />
     <Compile Include="Helpers\NavBarHelpers.cs" />
     <Compile Include="Helpers\UrlExtensions.cs" />
+    <Compile Include="Models\AddWidgetDTO.cs" />
     <Compile Include="Models\AlertDTO.cs" />
     <Compile Include="Models\BaseViewModel.cs" />
     <Compile Include="Models\AdminViewModels.cs" />
@@ -353,6 +354,7 @@
     <Content Include="Content\build\images\user.png" />
     <Content Include="Content\build\js\alerts.js" />
     <Content Include="Content\build\js\custom.js" />
+    <Content Include="Content\build\js\graphWizard.js" />
     <Content Include="Content\build\js\homepage.js" />
     <Content Include="Content\build\js\template.js" />
     <Content Include="Content\build\js\template.min.js" />
@@ -467,6 +469,10 @@
     <Content Include="Scripts\nprogress.js" />
     <Content Include="Scripts\site.js" />
     <Content Include="Scripts\underscore.min.js" />
+    <Content Include="Scripts\vue\vue-form-generator.js" />
+    <Content Include="Scripts\vue\vue-form-wizard.css" />
+    <Content Include="Scripts\vue\vue-form-wizard.js" />
+    <Content Include="Scripts\vue\vue-form-wizard.scss" />
     <Content Include="Views\Admin\Index.cshtml" />
     <Content Include="Views\Admin\ItemManagement.cshtml" />
     <Content Include="Views\Admin\PageManagement.cshtml" />
@@ -545,14 +551,14 @@
     <None Include="Scripts\jquery\jquery.validate-vsdoc.js" />
     <None Include="Scripts\jquery\jquery.validate.js" />
     <None Include="Scripts\jquery\jquery.validate.min.js" />
-    <None Include="Scripts\vue-resource.common.js" />
-    <None Include="Scripts\vue-resource.es2015.js" />
-    <None Include="Scripts\vue-resource.js" />
-    <None Include="Scripts\vue-resource.min.js" />
-    <None Include="Scripts\vue.js" />
-    <None Include="Scripts\vue.min.js" />
     <Content Include="Views\Home\GetResources.cshtml" />
     <Content Include="Views\Overview\Index.cshtml" />
+    <None Include="Scripts\vue\vue-resource.common.js" />
+    <None Include="Scripts\vue\vue-resource.es2015.js" />
+    <None Include="Scripts\vue\vue-resource.js" />
+    <None Include="Scripts\vue\vue-resource.min.js" />
+    <None Include="Scripts\vue\vue.js" />
+    <None Include="Scripts\vue\vue.min.js" />
     <None Include="Views\Shared\DisplayTemplates\CanonicalHelperModel.ascx" />
     <None Include="Views\Shared\DisplayTemplates\CanonicalHelperModel.cshtml" />
     <None Include="Views\Shared\DisplayTemplates\MenuHelperModel.cshtml" />
