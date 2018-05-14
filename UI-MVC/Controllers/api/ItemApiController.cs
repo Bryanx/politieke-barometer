@@ -165,6 +165,10 @@ namespace BAR.UI.MVC.Controllers.api
 			return Ok(Mapper.Map(items, new List<ItemDTO>()));
 		}
 
+		/// <summary>
+		/// Determines the type of an item
+		/// needed to determine the url.
+		/// </summary>
 		[HttpGet]
 		[Route("api/checkItemType/{itemId}")]
 		public string GetItemType(int itemId)
