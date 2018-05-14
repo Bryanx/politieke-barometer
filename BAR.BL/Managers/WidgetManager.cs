@@ -405,6 +405,10 @@ namespace BAR.BL.Managers
 		{
 			InitRepo();
 
+			//Remove old widgetdatas
+			RemoveWidgetDatas(GetAllWidgetDatas());
+
+			//Fill widgets with new widgetdata
 			DataManager dataManager = new DataManager();
 			List<Widget> widgets = GetAllWidgetsWithAllData().ToList();
 			int widgetCount = widgets.Count();
@@ -506,6 +510,15 @@ namespace BAR.BL.Managers
 			}
 
 			return widgets.AsEnumerable();
+		}
+
+		/// <summary>
+		/// Removes all the the given widgetdata from the database
+		/// </summary>
+		public void RemoveWidgetDatas(IEnumerable<WidgetData> datas)
+		{
+			InitRepo();
+			widgetRepo.DeleteWidgetDatas(datas);
 		}
 	}
 }
