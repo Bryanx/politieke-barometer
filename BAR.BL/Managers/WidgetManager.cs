@@ -495,22 +495,23 @@ namespace BAR.BL.Managers
 			ItemManager itemManager = new ItemManager();
 			IEnumerable<Item> items = null;
 			if (userId == null) items = itemManager.GetMostTrendingItems(useWithOldData: true);
-			else items = itemManager.GetMostTrendingItemsForUser(userId, useWithOldData: true);
-
+			else items = itemManager.GetMostTrendingItemsForUser(userId, useWithOldData: true); 
+			
 			if (items == null || items.Count() == 0) return widgets;
 
 			//Query widgets
-			foreach (Item item in items)
-			{
+			foreach (Item item in items) {
 				IEnumerable<Widget> widgetsToAdd = widgetRepo.ReadWidgetsWithAllDataForItem(item.ItemId)
-															 .Where(widget => widget.PropertyTags
-															 .Any(proptag => proptag.Name.ToLower().Equals("mentions")))
-															 .AsEnumerable();
+					.Where(widget => widget.PropertyTags
+						.Any(proptag => proptag.Name.ToLower().Equals("mentions")))
+					.AsEnumerable();
 				if (widgetsToAdd != null) widgets.AddRange(widgetsToAdd);
 			}
 
 			return widgets.AsEnumerable();
 		}
+	
+
 
 		/// <summary>
 		/// Removes all the the given widgetdata from the database

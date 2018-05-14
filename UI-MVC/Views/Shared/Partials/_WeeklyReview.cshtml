@@ -1,0 +1,109 @@
+﻿@using BAR.UI.MVC.Models
+
+<div class='x_panel no-scrollbar x_nested_panel'>
+    <div class='x_title'>
+        <h2 class='graphTitle'>Person</h2>
+        <ul class='nav panel_toolbox'>
+            <li>
+                <a class="collapse-link">
+                    <i class="fa fa-chevron-down"></i>
+                </a>
+            </li>
+        </ul>
+        <div class='clearfix'></div>
+    </div>
+    <div class="x_content" style="display: none">
+        <div class="row">
+            <div class="col-12" style="max-height: 400px">
+                <canvas id='weeklyReview-person-1'></canvas>
+                <h2 class='no-graph-data text-center'>No data available.</h2>
+            </div>
+            <div class="col-6" style="max-height: 400px">
+                <canvas id='weeklyReview-person-2'></canvas>
+                <h2 class='no-graph-data text-center'>No data available.</h2>
+            </div>
+            <div class="col-6" style="max-height: 400px">
+                <canvas id='weeklyReview-person-3'></canvas>
+                <h2 class='no-graph-data text-center'>No data available.</h2>
+            </div>
+            @for (int j = 0; j < 3; j++)
+            {
+                <div class="col-4">
+                    <p>Card @j</p>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+<div class='x_panel no-scrollbar x_nested_panel'>
+    <div class='x_title'>
+        <h2 class='graphTitle'>Organisation</h2>
+        <ul class='nav panel_toolbox'>
+            <li>
+                <a class="collapse-link">
+                    <i class="fa fa-chevron-down"></i>
+                </a>
+            </li>
+        </ul>
+        <div class='clearfix'></div>
+    </div>
+    <div class="x_content" style="display: none">
+        <div class="row">
+            <div class="col-12" style="max-height: 400px">
+                <canvas id='weeklyReview-organisation-1'></canvas>
+                <h2 class='no-graph-data text-center'>No data available.</h2>
+            </div>
+            <div class="col-6" style="max-height: 400px">
+                <canvas id='weeklyReview-organisation-2'></canvas>
+                <h2 class='no-graph-data text-center'>No data available.</h2>
+            </div>
+            <div class="col-6" style="max-height: 400px">
+                <canvas id='weeklyReview-organisation-3'></canvas>
+                <h2 class='no-graph-data text-center'>No data available.</h2>
+            </div>
+            @for (int j = 0; j < 3; j++)
+            {
+                <div class="col-4">
+                    <p>Card @j</p>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+<div class='x_panel no-scrollbar x_nested_panel'>
+    <div class='x_title'>
+        <h2 class='graphTitle'>Theme</h2>
+        <ul class='nav panel_toolbox'>
+            <li>
+                <a class="collapse-link">
+                    <i class="fa fa-chevron-down"></i>
+                </a>
+            </li>
+        </ul>
+        <div class='clearfix'></div>
+    </div>
+    <div class="x_content" style="display: none">
+        <div class="row">
+            <div class="col-12" style="max-height: 400px">
+                <canvas id='weeklyReview-theme-1'></canvas>
+                <h2 class='no-graph-data text-center'>No data available.</h2>
+            </div>
+            <div class="col-6" style="max-height: 400px">
+                <canvas id='weeklyReview-theme-2'></canvas>
+                <h2 class='no-graph-data text-center'>No data available.</h2>
+            </div>
+            <div class="col-6" style="max-height: 400px">
+                <canvas id='weeklyReview-theme-3'></canvas>
+                <h2 class='no-graph-data text-center'>No data available.</h2>
+            </div>
+            @for (int j = 0; j < 3; j++)
+            {
+                <div class="col-4">
+                    <p>Card @j</p>
+                </div>
+            }
+        </div>
+    </div>
+</div>

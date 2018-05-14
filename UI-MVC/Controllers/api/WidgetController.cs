@@ -192,5 +192,21 @@ namespace BAR.UI.MVC.Controllers.api
 			widgetManager.RemoveWidget(id);
 			return StatusCode(HttpStatusCode.NoContent);
 		}
+		
+		/// <summary>
+		///Gets weeklyReview
+		/// </summary>
+		[System.Web.Http.HttpGet]
+		[System.Web.Http.Route("api/Widget/GetWeeklyReview/{id}")]
+		public IHttpActionResult GetWeeklyReview(string id)
+		{
+			if (id.Equals("0")){
+				id = null;
+			}
+			widgetManager = new WidgetManager();
+			IEnumerable<Widget> widgets = widgetManager.GetWidgetsForWeeklyReview(id);
+
+			return Ok(Mapper.Map(widgets, new List<UserWidgetDTO>()));
+		}
 	}
 }

@@ -503,6 +503,7 @@
     <Content Include="Views\Shared\Partials\_RelatedItems.cshtml" />
     <Content Include="Views\Shared\Partials\_SearchBar.cshtml" />
     <Content Include="Views\Shared\Partials\_SocialIcons.cshtml" />
+    <Content Include="Views\Shared\Partials\_WeeklyReview.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\SuperAdmin\PlatformManagement.cshtml" />
     <Content Include="Views\SuperAdmin\GeneralManagement.cshtml" />
