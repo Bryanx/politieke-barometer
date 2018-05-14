@@ -38,6 +38,6 @@ namespace BAR.UI.MVC.Models
     public int DashboardId { get; set; }
     public GraphType GraphType { get; set; }
     public ICollection<int> ItemIds { get; set; }
-    public IEnumerable<WidgetDataDTO> WidgetDataDtos { get; set; }
+    public List<WidgetDataDTO> WidgetDataDtos { get; set; }
   }
 }

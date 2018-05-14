@@ -127,16 +127,24 @@ namespace webapi.Controllers
 
           //Get all widgets for each item in userWidgets.
           IEnumerable<Widget> widgetsForItem = widgetManager.GetAllWidgetsWithAllDataForItem(itemId);
+
           //Check if these widgets have graph data (WidgetData) on this topic, if they do add this data to the userWidget.
           IEnumerable<WidgetData> widgetDatas = widgetsForItem.FirstOrDefault(w => w.WidgetDatas.Any(wd => wd.KeyValue == keyValue)).WidgetDatas;
 
           //Convert the graphdata to a DTO.
-          IEnumerable<WidgetDataDTO> widgetDataDtos = Mapper.Map(widgetDatas, new List<WidgetDataDTO>());
+          List<WidgetDataDTO> widgetDataDtos = Mapper.Map(widgetDatas, new List<WidgetDataDTO>());
 
           //Link the graphdata to the corresponding item.
           widgetDataDtos.First().ItemName = itemManager.GetItem(itemId).Name;
 
-          userWidgetVM.WidgetDataDtos = widgetDataDtos;
+          if (userWidgetVM.WidgetDataDtos == null)
+          {
+            userWidgetVM.WidgetDataDtos = widgetDataDtos;
+          }
+          else
+          {
+            userWidgetVM.WidgetDataDtos.AddRange(widgetDataDtos);
+          }
         }
       }
 
