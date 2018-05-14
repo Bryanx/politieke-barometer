@@ -22,7 +22,7 @@ namespace BAR.DAL
 		IEnumerable<Widget> ReadAllWidgets();
 		IEnumerable<Widget> ReadAllWidgetsWithAllItems();
 		IEnumerable<Widget> ReadAllWidgetsWithAllData();
-		IEnumerable<Widget> ReadAllWidgetsWithAllDataForItem(int itemId);
+		IEnumerable<Widget> ReadWidgetsWithAllDataForItem(int itemId);
 		IEnumerable<UserWidget> ReadWidgetsForDashboard(int dashboardId);
 		IEnumerable<WidgetData> ReadAllWidgetDatas();
 		IEnumerable<WidgetData> ReadWidgetDatasForitemid(int itemId);
@@ -44,6 +44,7 @@ namespace BAR.DAL
 		int DeleteDashboard(int dashboardId);
 		int DeleteDashboards(IEnumerable<int> dashboardIds);
 		int DeleteWidget(Widget widgetId);
-		int DeleteWidgets(IEnumerable<Widget> widgets);		
+		int DeleteWidgets(IEnumerable<Widget> widgets);
+		int DeleteWidgetDatas(IEnumerable<WidgetData> datas);
 	}
 }

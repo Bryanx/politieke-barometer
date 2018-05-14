@@ -125,6 +125,34 @@ namespace webapi.Controllers
       return StatusCode(HttpStatusCode.NoContent);
     }
 
+    // GET api/Android/Alerts
+    [HostAuthentication(DefaultAuthenticationTypes.ExternalBearer)]
+    [HttpGet]
+    [Route("Alerts")]
+    public IHttpActionResult GetAlerts()
+    {
+      Alert alertOne = new Alert()
+      {
+        AlertId = 1,
+        Subject = "Test",
+        Message = "Dit is een test"
+      };
+      Alert alertTwo = new Alert()
+      {
+        AlertId = 2,
+        Subject = "Test 2",
+        Message = "Dit is nog een test"
+      };
+
+      ICollection<Alert> alerts = new List<Alert>
+      {
+        alertOne,
+        alertTwo
+      };
+
+      return Ok(alerts);
+      }
+
     #region Helpers
 
     private IHttpActionResult GetErrorResult(IdentityResult result)
