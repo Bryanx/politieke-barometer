@@ -29,7 +29,7 @@
         @{ int i = 0;}
         @foreach (var item in Model.Items.OrderByDescending(m => m.NumberOfMentions)) {
             if (i < 6) {
-                <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
+                <div class="tile_stats_count col-md-2 col-sm-4 col-xs-6">
                     <a style="text-decoration: none" href="/Person/Details/@item.ItemId">
                     <span class="count_top"><i class="fa fa-user"></i> @item.Name</span>
                     <div class="count">@item.NumberOfMentions</div>
@@ -49,52 +49,124 @@
 <!-- /top tiles -->
 </section>  <!-- end first page -->
 
-<section>
-    <!-- top 3 politici (trending) -->
-            <div class="x_panel tile">
-                <div class="x_title">
-                    <h2>Top 3 trending politici</h2>
-                    <div class="clearfix"></div>
+<section>     <!-- top 3 politici (trending) -->
+    <div class="x_panel">
+        <div class="x_title">
+            <h2 style="float: none !important">Top 3 trending politici</h2>
+            <!-- panel toolbox
+            <ul class='nav navbar-right panel_toolbox'>
+                <li><a id=" + id + " class='addToDashboard'>" + Resources.Save +" to "+ Resources.Dashboard + "</a></li>
+                <li class='dropdown'>
+                    <a href='#' class='dropdown-toggle' data-toggle='dropdown' role='button' aria-expanded='false'><i class='fa fa-bar-chart'></i></a>
+                    <ul class='dropdown-menu' role='menu'>" +
+                        <li><a data-widget-id=" + id + " class='makeLineChart'>Line chart</a></li>
+                        <li><a data-widget-id=" + id + " class='makeBarChart'>Bar chart</a></li>
+                    </ul>
+                </li>
+                <li class='dropdown'>
+                    <a href='#' class='dropdown-toggle' data-toggle='dropdown' role='button' aria-expanded='false'><i class='fa fa-floppy-o'></i></a>
+                    <ul class='dropdown-menu' role='menu'>
+                        <li><a data-widget-id=" + id + " class='getJPGImage'>Download JPG image</a></li>
+                        <li><a data-widget-id=" + id + " class='getPNGImage'>Download PNG image</a></li>
+                    </ul>
+                </li>
+                <li><a data-widget-id=" + id + " class='dateChangeChart changeToWeek'>7d</a></li>
+                <li><a data-widget-id=" + id + " class='dateChangeChart changeToMonth'>1m</a></li>
+            </ul>
+            <div class='clearfix'></div>
+            UNTIL HERE -->
+            
+        </div>
+        <div class="x_content">
+            
+            <!-- CARDS -->
+            <div class="row">
+            @foreach(var item in Model.Items.Where(p => p.ItemType == ItemType.Person).OrderBy(p => p.NumberOfMentions).Reverse().Take(3)){
+                <div class="col-xs-12 col-sm-4">
+                    @Html.Partial("Partials/_Card", item)
                 </div>
-                <div class="x_content row">
-                    <div class="col-12" style="max-height: 500px">
-                       <canvas id='trending-graph'></canvas>
-                       <h2 class='no-graph-data text-center'>No data available.</h2>
+            }
+            </div>
+            <!-- /CARDS -->
+
+            <div class="row">
+                <div class="col-12" style="max-height: 400px">
+                    <canvas id='trending-1-graph'></canvas>
+                    <h2 class='no-graph-data text-center'>No data available.</h2>
+                </div>
+                <div class='x_panel no-scrollbar x_nested_panel'>
+                    <div class='x_title'>
+                        <h2 class='graphTitle'>Twitter feed</h2>
+                        <ul class='nav panel_toolbox'>
+                            <li>
+                                <a class="collapse-link">
+                                    <i class="fa fa-chevron-down"></i>
+                                </a>
+                            </li>
+                        </ul>
+                        <div class='clearfix'></div>
                     </div>
-                    @{ int j = 1;}
-                    <table>
-                        @foreach (var item in Model.Items.OrderByDescending(m => m.TrendingPercentage)
-                            .Take(3))
-                        {
-                            if (j <= 3)
+                    <div class="x_content" style="display: none">
+                        <table>
+                            @for (int j = 1; j <= 3; j++)
                             {
                                 <tr>
                                     <div class="widget_summary col-12 col-md-4">
                                         <div class="w_left w90">
-                                        <h4 id="t-name-@j" style="display: inline-block"></h4>
-                                        <h4 style="display: inline-block">
-                                            <i class="green">
-                                                <i class="fa fa-sort-asc"></i>
-                                            </i>
-                                        </h4>
+                                            <a style="text-decoration: none">
+                                                <h4 id="t-name-@j" style="display: inline-block"></h4>
+                                                <b>
+                                                    <h4 style="display: inline-block">
+                                                        <i class="green">
+                                                            <i class="fa fa-sort-asc">&nbsp;</i>
+                                                        </i>
+                                                    </h4></b>
+                                            </a>
                                         </div>
                                         <div id="twitter-feed-@j" class="w_center w_90">
-                                            
-                                            
+
+
                                         </div>
                                         <div class="clearfix"></div>
                                     </div>
                                 </tr>
-                                j++;
                             }
-                        }
-                    </table>
+                        </table>
+                    </div>
                 </div>
             </div>
-    <!-- /top 3 politici (trending) -->
-</section> <!-- end second page -->
+        </div>
+    </div>
+</section>  <!-- /top 3 politici (trending) -->
 
-<section>
+
+<section>     <!-- top 3 Themas (trending) -->
+    <div class="x_panel">
+        <div class="x_title">
+            <h2 style="float: none !important">Top 3 trending Thema's</h2> 
+        </div>
+        <div class="x_content">
+            
+            <!-- CARDS -->
+            <div class="row">
+                @foreach(var item in Model.Items.Where(p => p.ItemType == ItemType.Theme).OrderBy(p => p.NumberOfMentions).Reverse().Take(3)){
+                    <div class="col-xs-12 col-sm-4">
+                        @Html.Partial("Partials/_Card", item)
+                    </div>
+                }
+            </div>
+            <!-- /CARDS -->
+            <div class="row">
+                <div class="col-12" style="max-height: 400px">
+                    <canvas id='trending-3-graph'></canvas>
+                    <h2 class='no-graph-data text-center'>No data available.</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>  <!-- /top 3 Themas (trending) -->
+
+<section>  <!-- Kaart -->
 <div class="row">
     <div class="col-md-12 col-sm-12 col-xs-12">
         <div class="x_panel">
@@ -164,11 +236,21 @@
         $(() => {
             $.ajax({
                 type: "GET",
-                url: 'api/GetTopTrendingItems',
+                url: '/api/GetTopTrendingItems/1',
                 dataType: "json",
                 success: data => {
                     GetTopTrending(data);
                     TwitterFeed(data);
+                },
+                error: (xhr) => alert(xhr.responseText)
+            });
+            
+            $.ajax({
+                type: "GET",
+                url: '/api/GetTopTrendingItems/3',
+                dataType: "json",
+                success: data => {
+                    GetTopTrending(data);
                 },
                 error: (xhr) => alert(xhr.responseText)
             });
