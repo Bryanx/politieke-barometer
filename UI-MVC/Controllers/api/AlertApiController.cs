@@ -25,8 +25,12 @@ namespace BAR.UI.MVC.Controllers.api
 		[Route("api/User/GetAlerts")]
 		public IHttpActionResult GetAlerts()
 		{
-			IEnumerable<Alert> alertsToShow = subManager.GetAllAlerts(User.Identity.GetUserId());
-			if (alertsToShow == null || !alertsToShow.Any()) return StatusCode(HttpStatusCode.NoContent);
+			//Checks if a user is logged in
+			string userId = User.Identity.GetUserId();
+			if (userId == null) return StatusCode(HttpStatusCode.NoContent);
+
+			IEnumerable<Alert> alertsToShow = subManager.GetAllAlerts(userId);
+			if (alertsToShow == null || alertsToShow.Count() == 0) return StatusCode(HttpStatusCode.NoContent);
 
 			//Made DTO class to prevent circular references
 			List<AlertDTO> lijst = new List<AlertDTO>();
