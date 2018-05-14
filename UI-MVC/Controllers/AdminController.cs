@@ -222,6 +222,10 @@ namespace BAR.UI.MVC.Controllers
 			platformManager = new SubplatformManager();
 
 			List<string> keywordStrings = model.Keywords.Split(',').ToList();
+			foreach(string word in keywordStrings)
+			{
+				word.Replace(" ", string.Empty);
+			}
 			List<Keyword> keywords = new List<Keyword>();
 
 			foreach(string keywordString in keywordStrings)
@@ -234,6 +238,9 @@ namespace BAR.UI.MVC.Controllers
 
 			Theme theme = (Theme)itemManager.AddItem(ItemType.Theme, model.Name, keywords: keywords);
 			itemManager.ChangeItemPlatform(theme.ItemId, subPlatformID);
+
+			itemManager.GenerateDefaultItemWidgets(theme.Name, theme.ItemId);
+
 
 			return RedirectToAction("Details", "Theme", new { id = theme.ItemId });
 		}
