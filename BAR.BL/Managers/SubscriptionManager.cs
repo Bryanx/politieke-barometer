@@ -73,21 +73,20 @@ namespace BAR.BL.Managers
 
 		/// <summary>
 		/// Generates new alerts for a specific item.
-		/// When a user's threshold is met, an alert will be generated.
 		/// </summary>
 		public void GenerateAlerts(int itemId)
 		{
 			InitRepo();
 
-			IItemManager itemManager = new ItemManager();
-			double per = (itemManager.GetTrendingPer(itemId) * 100) - 100;
-
+			//Get subscriptions
 			List<Subscription> subsToUpdate = new List<Subscription>();
 			IEnumerable<Subscription> subs = subRepo.ReadEditableSubscriptionsForItem(itemId);
+			if (subs == null || subs.Count() == 0) return;
+
+			//Generate alerts
 			foreach (Subscription sub in subs)
 			{
-				double thresh = sub.Threshold;
-				if (per >= thresh && sub.SubscribedUser.AlertsViaWebsite && sub.SubscribedUser.IsActive)
+				if (sub.SubscribedUser.AlertsViaWebsite && sub.SubscribedUser.IsActive)
 				{
 					sub.Alerts.Add(new Alert()
 					{
@@ -101,13 +100,12 @@ namespace BAR.BL.Managers
 					});
 					subsToUpdate.Add(sub);
 				}
-
 			}
 			subRepo.UpdateSubscriptions(subsToUpdate);
 
 			//Send emails
-			IEnumerable<Subscription> usersToSendEmail = subs.Where(sub => sub.SubscribedUser.AlertsViaEmail).AsEnumerable();
-			SendTrendingEmails(itemId, usersToSendEmail);
+			//IEnumerable<Subscription> usersToSendEmail = subs.Where(sub => sub.SubscribedUser.AlertsViaEmail).AsEnumerable();
+			//SendTrendingEmails(itemId, usersToSendEmail);
 		}
 
 		/// <summary>
