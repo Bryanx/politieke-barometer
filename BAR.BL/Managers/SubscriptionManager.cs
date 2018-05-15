@@ -141,55 +141,44 @@ namespace BAR.BL.Managers
 		/// <summary>
 		/// Retrieves a single alert for a specific user.
 		/// </summary>
-		public Alert GetAlert(string userId, int alertId, bool userAlert) 
+		public Alert GetAlert(int alertId) 
 		{
 			InitRepo();
-			return subRepo.ReadAlert(userId, alertId, userAlert);
+			return subRepo.ReadAlert(alertId);
 		}
 
 		/// <summary>
 		/// Changed the isRead property of an Alert to true.
 		/// </summary>
-		public Alert ChangeAlertToRead(string userId, int alertId, bool userAlert) 
-		{		
-			if (userAlert)
-			{
-				UserAlert alert = GetUserAlert(userId, alertId);
-				if (alert == null) return null;
-				alert.IsRead = true;
-				new UserManager().ChangeUser(alert.User);
-				return alert;
-			} else
-			{
-				SubAlert alert = GetSubAlert(userId, alertId);
-				if (alert == null) return null;
-				alert.IsRead = true;
-				InitRepo();
-				subRepo.UpdateSubScription(alert.Subscription);
-				return alert;
-			}		
+		public Alert ChangeAlertToRead(int alertId) 
+		{
+			InitRepo();
+
+			//Get alert
+			Alert alertToUpdate = subRepo.ReadAlert(alertId);
+			if (alertToUpdate == null) return null;
+
+			//Change alert
+			alertToUpdate.IsRead = true;
+
+			//Update alert
+			subRepo.UpdateAlert(alertToUpdate);
+			return alertToUpdate;
 		}
 
 		/// <summary>
 		/// Removes a specific alert for a specific user.
 		/// </summary>
-		public void RemoveAlert(string userId, int alertId, bool userAlert)
+		public void RemoveAlert(int alertId)
 		{
-			if (userAlert)
-			{
-				UserAlert alert = GetUserAlert(userId, alertId);
-				if (alert == null) return;
-				alert.User.Alerts.Remove(alert);
-				new UserManager().ChangeUser(alert.User);
-			}
-			else
-			{
-				SubAlert alert = GetSubAlert(userId, alertId);
-				if (alert == null) return;
-				alert.Subscription.Alerts.Remove(alert);
-				InitRepo();
-				subRepo.UpdateSubScription(alert.Subscription);
-			}
+			InitRepo();
+
+			//Get alert
+			Alert alertToRemove = subRepo.ReadAlert(alertId);
+			if (alertToRemove == null) return;
+
+			//Delete alert
+			subRepo.DeleteAlert(alertToRemove);
 		}
 
 		/// <summary>

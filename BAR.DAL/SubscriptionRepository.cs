@@ -301,5 +301,14 @@ namespace BAR.DAL
 		{
 			return ctx.Alerts.Find(alertId);
 		}
+
+		/// <summary>
+		/// Updates an alert
+		/// </summary>
+		public int UpdateAlert(Alert alert)
+		{
+			ctx.Entry(alert).State = EntityState.Modified;
+			return ctx.SaveChanges();
+		}
 	}
 }

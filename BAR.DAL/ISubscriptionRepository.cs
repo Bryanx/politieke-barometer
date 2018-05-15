@@ -31,6 +31,7 @@ namespace BAR.DAL
 		int CreateSubscription(Subscription sub);
 
 		//Update
+		int UpdateAlert(Alert alert);
 		int UpdateSubScription(Subscription sub);
 		int UpdateSubscriptions(IEnumerable<Subscription> subs);
 		int UpdateSubscriptionsForUser(string userId);
