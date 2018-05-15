@@ -7,6 +7,8 @@ using System.Web;
 using System.IO;
 using System.Linq;
 using BAR.BL.Domain.Core;
+using BAR.BL.Domain.Items;
+using Microsoft.AspNet.Identity;
 
 namespace BAR.BL.Managers
 {
@@ -252,8 +254,40 @@ namespace BAR.BL.Managers
 				user.Alerts.Add(alert);
 			}
 
-			//Update database
+			//Update database & send emails
+			SendWeeklyReviewEmails(users.Where(user => user.AlertsViaEmail));
 			userRepo.UpdateUsers(users);
+		}
+
+		/// <summary>
+		/// Sent emails to the people who want to receive an email
+		/// </summary>
+		private void SendWeeklyReviewEmails(IEnumerable<User> users)
+		{
+			ItemManager itemManager = new ItemManager();
+			IEnumerable<Item> items;
+
+			foreach (User user in users)
+			{
+				//Get 5 most trending items of
+				items = itemManager.GetMostTrendingItemsForUser(user.Id, useWithOldData: true);
+
+				string content = "";
+				foreach (Item item in items.OrderBy(item => item.TrendingPercentage)) content += "- " + item.Name + " (" + item.TrendingPercentage + "% trending)</br>";
+
+				//Send email
+				IdentityMessage message = new IdentityMessage()
+				{
+					Destination = user.Email,
+					Subject = "Nieuwe Weekly Review is nu beschikbaar",
+					Body = "Beste " + user.FirstName + "</br></br>" +
+						"Een nieuwe weekly review is nu beschikbaar!</br></br>" +
+						"De <strong>meest trending items</strong> van deze week zijn:</br>" +
+						content +
+						"</br>Ga nu naar onze website om je nieuwe weekly review te bekijken!"
+				};
+				new EmailService().SendAsync(message);
+			}
 		}
 	}
 }

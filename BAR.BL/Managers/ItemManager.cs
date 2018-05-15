@@ -77,37 +77,6 @@ namespace BAR.BL.Managers
 		}
 
 		/// <summary>
-		/// Sent emails to the people who want to receive an email
-		/// </summary>
-		public async void SendWeeklyReviewEmails(IEnumerable<User> users)
-		{
-			IEnumerable<Item> items;
-
-			foreach (User user in users)
-			{
-				//Get 5 most trending items of
-				items = GetMostTrendingItemsForUser(user.Id);
-
-				//Send email
-				IdentityMessage message = new IdentityMessage()
-				{
-					Destination = user.Email,
-					Subject = "Nieuwe weekly review is nu beschikbaar",
-					Body = "Beste " + user.FirstName + "</br></br>" +
-						"Een nieuwe weekly review is nu beschikbaar!</br></br>" +
-						"De 5 meest trending items van deze week zijn:</br>" +
-						"- " + items.ElementAt(0).Name + " (" + items.ElementAt(0).TrendingPercentage + "% trending)</br>" +
-						"- " + items.ElementAt(1).Name + " (" + items.ElementAt(1).TrendingPercentage + "% trending)</br>" +
-						"- " + items.ElementAt(2).Name + " (" + items.ElementAt(2).TrendingPercentage + "% trending)</br>" +
-						"- " + items.ElementAt(3).Name + " (" + items.ElementAt(3).TrendingPercentage + "% trending)</br>" +
-						"- " + items.ElementAt(4).Name + " (" + items.ElementAt(4).TrendingPercentage + "% trending)</br>" +
-						"Ga nu naar onze website om je nieuwe weekly review te bekijken!"
-				};
-				await new EmailService().SendAsync(message);
-			}
-		}
-
-		/// <summary>
 		/// Gives back te most trending items
 		/// the number of trending items depends on the
 		/// number that you give via the parameter
@@ -118,11 +87,11 @@ namespace BAR.BL.Managers
 			IEnumerable<Item> itemsOrderd = GetAllItems();
 			if (!useWithOldData)
 			{
-				itemsOrderd = itemsOrderd.OrderBy(item => item.NumberOfMentions).AsEnumerable();
+				itemsOrderd = itemsOrderd.OrderBy(item => item.TrendingPercentage).AsEnumerable();
 			}
 			else
 			{
-				itemsOrderd = itemsOrderd.OrderBy(item => item.NumberOfMentions).AsEnumerable();
+				itemsOrderd = itemsOrderd.OrderBy(item => item.TrendingPercentage).AsEnumerable();
 			}
 
 			return itemsOrderd.Take(numberOfItems).AsEnumerable();
@@ -140,12 +109,12 @@ namespace BAR.BL.Managers
 			if (!useWithOldData)
 			{
 				itemsOrderd = itemsOrderd.Where(item => item.ItemType == type)
-				.OrderBy(item => item.NumberOfMentions).AsEnumerable();
+				.OrderBy(item => item.TrendingPercentage).AsEnumerable();
 			}
 			else
 			{
 				itemsOrderd = itemsOrderd.Where(item => item.ItemType == type)
-				.OrderBy(item => item.NumberOfMentions).AsEnumerable();
+				.OrderBy(item => item.TrendingPercentage).AsEnumerable();
 			}
 
 			return itemsOrderd.Take(numberOfItems).AsEnumerable();
@@ -170,11 +139,11 @@ namespace BAR.BL.Managers
 			IEnumerable<Item> itemsOrderd;
 			if (!useWithOldData)
 			{
-				itemsOrderd = itemsFromUser.OrderBy(item => item.NumberOfMentions).AsEnumerable();
+				itemsOrderd = itemsFromUser.OrderBy(item => item.TrendingPercentage).AsEnumerable();
 			}
 			else
 			{
-				itemsOrderd = itemsFromUser.OrderBy(item => item.NumberOfMentions).AsEnumerable();
+				itemsOrderd = itemsFromUser.OrderBy(item => item.TrendingPercentage).AsEnumerable();
 			}
 
 			return itemsOrderd.Take(numberOfItems).AsEnumerable();
@@ -201,12 +170,12 @@ namespace BAR.BL.Managers
 			if (!useWithOldData)
 			{
 				itemsOrderd = itemsFromUser.Where(item => item.ItemType == type)
-				.OrderBy(item => item.NumberOfMentions).AsEnumerable();
+				.OrderBy(item => item.TrendingPercentage).AsEnumerable();
 			}
 			else
 			{
 				itemsOrderd = itemsFromUser.Where(item => item.ItemType == type)
-				.OrderBy(item => item.NumberOfMentions).AsEnumerable();
+				.OrderBy(item => item.TrendingPercentage).AsEnumerable();
 			}
 
 			return itemsOrderd.Take(numberOfItems).AsEnumerable();
