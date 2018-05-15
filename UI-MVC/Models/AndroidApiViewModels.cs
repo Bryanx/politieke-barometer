@@ -40,4 +40,10 @@ namespace BAR.UI.MVC.Models
     public ICollection<int> ItemIds { get; set; }
     public List<WidgetDataDTO> WidgetDataDtos { get; set; }
   }
+
+  public class AlertViewModel
+  {
+    public int AlertId { get; set; }
+    public String ItemName { get; set; }
+  }
 }

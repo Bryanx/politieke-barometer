@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Web.Http;
-using BAR.BL.Controllers;
 using BAR.BL.Domain.Users;
 using BAR.BL.Managers;
 using BAR.UI.MVC.Models;
@@ -17,8 +16,6 @@ namespace BAR.UI.MVC.Controllers.api
 	public class AlertApiController : ApiController
 	{
 		private ISubscriptionManager subManager;
-		private SysController sys;
-		private static bool firstRun = true;
 
 		/// <summary>
 		/// Get Request for alerts of a specific user (id)
@@ -29,18 +26,8 @@ namespace BAR.UI.MVC.Controllers.api
 		public IHttpActionResult GetAlerts()
 		{
 			subManager = new SubscriptionManager();
-
-			//TODO: Remove counter, temporary solution because db is rebuild on every load.
-			if (firstRun)
-			{
-				firstRun = false;
-				sys = new SysController();
-				sys.DetermineTrending();
-				sys.GenerateAlerts();
-			}
-
 			IEnumerable<Alert> alertsToShow = subManager.GetAllAlerts(User.Identity.GetUserId());
-			if (alertsToShow == null || !alertsToShow.Any()) return StatusCode(HttpStatusCode.NoContent);
+			if (alertsToShow == null || alertsToShow.Count() == 0) return StatusCode(HttpStatusCode.NoContent);
 
 			//Made DTO class to prevent circular references
 			List<AlertDTO> lijst = new List<AlertDTO>();
@@ -51,7 +38,9 @@ namespace BAR.UI.MVC.Controllers.api
 					AlertId = alert.AlertId,
 					Name = alert.Subscription.SubscribedItem.Name,
 					TimeStamp = alert.TimeStamp,
-					IsRead = alert.IsRead
+					IsRead = alert.IsRead,
+					itemId = alert.Subscription.SubscribedItem.ItemId
+
 				});
 			}
 			return Ok(lijst.AsEnumerable());
