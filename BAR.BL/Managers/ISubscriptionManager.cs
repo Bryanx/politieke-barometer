@@ -8,7 +8,6 @@ namespace BAR.BL.Managers
 	{
 		//Subscriptions
 		Subscription GetSubscription(int subId);
-		IEnumerable<Subscription> GetSubscriptionsWithAlertsForUser(string userId);
 		IEnumerable<Subscription> GetSubscriptionsWithItemsForUser(string userId);
 		IEnumerable<Item> GetSubscribedItemsForUser(string userId);
 
@@ -19,12 +18,14 @@ namespace BAR.BL.Managers
 		void RemoveSubscription(int subId);
 
 		//Alerts
-		Alert GetAlert(string userId, int alertId);
-		IEnumerable<Alert> GetAllAlerts(string userId);
+		Alert GetAlert(int alertId);
+		SubAlert GetSubAlert(string userId, int alertId);
+		UserAlert GetUserAlert(string userId, int alertId);
+		IEnumerable<Alert> GetAllAlerts();
 
-		Alert ChangeAlertToRead(string id, int alertId);
+		Alert ChangeAlertToRead(int alertId);
 
-		void RemoveAlert(string userId, int alertId);
+		void RemoveAlert(int alertId);
 
 		void GenerateAlerts(int itemId);
 	}

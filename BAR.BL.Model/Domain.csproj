@@ -73,12 +73,14 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Users\ActivityType.cs" />
     <Compile Include="Users\AlertType.cs" />
+    <Compile Include="Users\SubAlert.cs" />
     <Compile Include="Users\UserActivity.cs" />
     <Compile Include="Users\Alert.cs" />
     <Compile Include="Users\Area.cs" />
     <Compile Include="Users\Gender.cs" />
     <Compile Include="Users\Subscription.cs" />
     <Compile Include="Users\User.cs" />
+    <Compile Include="Users\UserAlert.cs" />
     <Compile Include="Widgets\Dashboard.cs" />
     <Compile Include="Widgets\DashboardType.cs" />
     <Compile Include="Widgets\GraphType.cs" />

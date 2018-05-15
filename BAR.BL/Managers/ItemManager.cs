@@ -888,7 +888,7 @@ namespace BAR.BL.Managers
 				//Determine sentiment
 				if (sentiment != 0)
 				{
-					sentiment = Math.Round((sentiment / counter) * 100, 2);
+					sentiment = Math.Round((sentiment / counter), 2);
 					if (sentiment >= 0) item.SentimentPositve = sentiment;
 					else item.SentimentNegative = Math.Abs(sentiment);
 				}
