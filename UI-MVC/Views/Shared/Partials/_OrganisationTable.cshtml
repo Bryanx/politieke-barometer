@@ -41,7 +41,7 @@
     @foreach (var item in Model.Items) {
         <tr class="subscription">
             <td>
-                <div class="img-circle person-image"></div>
+                <img src='/Content/build/images/organisation.png' class="img-circle person-image"/>
             </td>
             <td>
                 <a href='@Url.OrganisationUrl(item.ItemId)'> @item.Name</a>

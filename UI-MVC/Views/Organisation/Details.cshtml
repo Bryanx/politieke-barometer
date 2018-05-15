@@ -22,7 +22,7 @@
                     <div class="profile_img">
                         <div id="crop-avatar">
                             <!-- Current avatar -->
-                            <img class="img-responsive avatar-view" src="../../Content/build/images/picture.jpg" alt="Avatar" title="Change the avatar">
+                            <img class="img-responsive avatar-view" src="../../Content/build/images/organisation.png" alt="Avatar" title="Change the avatar">
                         </div>
                     </div>
 
@@ -114,10 +114,8 @@
     @Scripts.Render("~/bundles/gridstack")
     <script type="text/javascript" defer>
 
-        $('.subscribeItem').click(function() {
-            ajaxToggleSubscribe($(this));
-        });
-
+        $(document).on("click", ".subscribeItem", (e) => ajaxToggleSubscribe(e));
+        
         function loadNumberOfMentions() {
             $.ajax({
                 method: "GET",

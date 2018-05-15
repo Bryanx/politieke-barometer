@@ -505,14 +505,28 @@ namespace BAR.UI.MVC.Controllers
 			int subPlatformID = (int) RouteData.Values["SubPlatformID"];
 
 			PersonViewModels personViewModels = new PersonViewModels();
-			personViewModels.Persons = Mapper.Map(itemManager.GetAllPersonsForSubplatform(subPlatformID), personViewModels.Persons);
-			personViewModels.PageTitle = Resources.AllPoliticians;
+			IEnumerable<Person> allPersons = itemManager.GetAllPersonsForSubplatform(subPlatformID);
+			
+			personViewModels.Persons = Mapper.Map(allPersons, personViewModels.Persons);
 			personViewModels.User = User.Identity.IsAuthenticated ? userManager.GetUser(User.Identity.GetUserId()) : null;
 
-			List<ItemDTO> items = Mapper.Map(itemManager.GetAllPersonsForSubplatform(subPlatformID), new List<ItemDTO>());
+			List<ItemDTO> items = Mapper.Map(allPersons, new List<ItemDTO>());
 			for(int i = 0; i < items.Count; i++) {
 				personViewModels.Persons[i].Item = items[i];
 			}
+			
+			itemManager.GetAllOrganisationsForSubplatform(subPlatformID).ForEach(item => {
+				personViewModels.Persons.Add(new PersonViewModel() {
+					Item = Mapper.Map(item, new ItemDTO())
+				});
+			});
+			
+			itemManager.GetAllThemes().ForEach(item => {
+				personViewModels.Persons.Add(new PersonViewModel() {
+					Item = Mapper.Map(item, new ItemDTO()),
+					OrganisationId = -1
+				});
+			});
 
 			IEnumerable<Subscription> subs = subManager.GetSubscriptionsWithItemsForUser(User.Identity.GetUserId());
 			personViewModels.Persons = personViewModels.Persons.Where(p => subs.Any(s => s.SubscribedItem.ItemId == p.Item.ItemId)).ToList();
