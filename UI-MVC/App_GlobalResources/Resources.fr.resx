@@ -538,8 +538,7 @@
     <value>Merci pour confirmer votre e-mail.</value>
   </data>
   <data name="Theme" xml:space="preserve">
-    <value>5/5000
-Thème</value>
+    <value>Thème</value>
   </data>
   <data name="Topics" xml:space="preserve">
     <value>Sujets</value>
@@ -660,5 +659,8 @@ Thème</value>
   </data>
   <data name="SelectOrganisation" xml:space="preserve">
     <value>Sélectionnez l'organisation associée</value>
+  </data>
+  <data name="Required" xml:space="preserve">
+    <value>obligatoire</value>
   </data>
 </root>

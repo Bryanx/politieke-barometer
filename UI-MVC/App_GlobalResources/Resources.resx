@@ -666,4 +666,7 @@
   <data name="SelectOrganisation" xml:space="preserve">
     <value>Select the associated organisation</value>
   </data>
+  <data name="Required" xml:space="preserve">
+    <value>Required</value>
+  </data>
 </root>

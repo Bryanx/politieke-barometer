@@ -528,6 +528,9 @@
   <data name="RemoveSource" xml:space="preserve">
     <value>Bron verwijderen</value>
   </data>
+  <data name="Required" xml:space="preserve">
+    <value>Verplicht</value>
+  </data>
   <data name="Reset" xml:space="preserve">
     <value>Reset</value>
   </data>

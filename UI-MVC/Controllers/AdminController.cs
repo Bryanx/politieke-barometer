@@ -11,6 +11,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Mvc;
 using static BAR.UI.MVC.Models.ItemViewModels;
@@ -193,7 +194,22 @@ namespace BAR.UI.MVC.Controllers
 			dataManager = new DataManager();
 			SubPlatform subplatform = platformManager.GetSubPlatform(subPlatformID);
 
-			Person person = (Person)itemManager.AddItem(ItemType.Person, model.Name, site: model.Website);
+			if (model.Name == null || model.Website == null || model.OrganisationId == 0)
+			{
+				return RedirectToAction("ItemManagement", "Admin");
+			}
+			else
+			{
+				string themeName = Regex.Replace(model.Name, @"\s+", "");
+				string themeWordlist = Regex.Replace(model.Website, @"\s+", "");
+
+				if (themeName.Count() == 0 || themeWordlist.Count() == 0)
+				{
+					return RedirectToAction("ItemManagement", "Admin");
+				}
+			}
+
+			Person person = (Person)itemManager.AddItem(ItemType.Person, model.Name, site: model.Website, dateOfBirth: new System.DateTime(1900, 1, 1));
 			itemManager.ChangeItemPlatform(person.ItemId, subplatform.SubPlatformId);
 			itemManager.ChangePersonOrganisation(person.ItemId, model.OrganisationId);
 
@@ -212,6 +228,21 @@ namespace BAR.UI.MVC.Controllers
 		{
 			int subPlatformID = (int)RouteData.Values["SubPlatformID"];
 
+			if (model.Name == null || model.Website == null)
+			{
+				return RedirectToAction("ItemManagement", "Admin");
+			}
+			else
+			{
+				string themeName = Regex.Replace(model.Name, @"\s+", "");
+				string themeWordlist = Regex.Replace(model.Website, @"\s+", "");
+
+				if (themeName.Count() == 0 || themeWordlist.Count() == 0)
+				{
+					return RedirectToAction("ItemManagement", "Admin");
+				}
+			}
+
 			itemManager = new ItemManager();
 			platformManager = new SubplatformManager();
 			SubPlatform subplatform = platformManager.GetSubPlatform(subPlatformID);
@@ -220,7 +251,6 @@ namespace BAR.UI.MVC.Controllers
 			itemManager.ChangeItemPlatform(org.ItemId, subplatform.SubPlatformId);
 
 			itemManager.GenerateDefaultItemWidgets(org.Name, org.ItemId);
-
 			return RedirectToAction("Details", "Organisation", new { id = org.ItemId });
 		}
 
@@ -237,6 +267,21 @@ namespace BAR.UI.MVC.Controllers
 			itemManager = new ItemManager();
 			platformManager = new SubplatformManager();
 
+			if(model.Name == null || model.Keywords == null)
+			{
+				return RedirectToAction("ItemManagement", "Admin");
+			}
+			else
+			{
+				string themeName = Regex.Replace(model.Name, @"\s+", "");
+				string themeWordlist = Regex.Replace(model.Keywords, @"\s+", "");
+
+				if (themeName.Count() == 0 || themeWordlist.Count() == 0)
+				{
+					return RedirectToAction("ItemManagement", "Admin");
+				}
+			}
+			
 			List<string> keywordStrings = model.Keywords.Split(',').ToList();
 			foreach(string word in keywordStrings)
 			{

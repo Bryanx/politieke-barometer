@@ -17,11 +17,10 @@
                                 {
                                 @Html.AntiForgeryToken()
                                 <div class="form-group">
-                                    <input class="form-control login-input" id="Name" name="Name" placeholder="Name" type="text" value="">
-                                    <input class="form-control login-input" id="Website" name="Website" placeholder="Website" type="text" value="">
+                                    <input class="form-control login-input" id="Name" name="Name" placeholder="@Resources.Name @Resources.Required" type="text" value="">
+                                    <input class="form-control login-input" id="Website" name="Website" placeholder="@Resources.Website @Resources.Required" type="text" value="">
                                     <input class="form-control login-input" id="Facebook" name="Facebook" placeholder="Facebook" type="text" value="">
                                     <input class="form-control login-input" id="Twitter" name="Twitter" placeholder="Twitter" type="text" value="">
-                                    <input class="form-control login-input" id="DateOfBirth" name="DateOfBirth" placeholder="DateOfBirth" type="date" value="">
 
                                     @Html.DropDownListFor(model => model.OrganisationId, Model.Organisations, @Resources.SelectOrganisation, new { @class = "form-control login-input", @id = "OrganisationId", @name = "OrganisationId" })
                                     <div class="form-check">
@@ -41,8 +40,8 @@
                                 {
                                 @Html.AntiForgeryToken()
                                 <div class="form-group">
-                                    <input class="form-control login-input" id="Name" name="Name" placeholder="Name" type="text" value="">
-                                    <input class="form-control login-input" id="Website" name="Website" placeholder="Website" type="text" value="">
+                                    <input class="form-control login-input" id="Name" name="Name" placeholder="@Resources.Name @Resources.Required" type="text" value="">
+                                    <input class="form-control login-input" id="Website" name="Website" placeholder="@Resources.Website @Resources.Required"type="text" value="">
                                     <div class="form-check">
                                         <button type="submit" class="btn btn-primary w-100 h-40 login-input">@Resources.AddItem</button>
                                     </div>
@@ -60,8 +59,8 @@
                                 {
                                 @Html.AntiForgeryToken()
                                 <div class="form-group">
-                                    <input class="form-control login-input" id="Name" name="Name" placeholder="Name" type="text" value="">
-                                    <input class="form-control login-input" id="Keywords" name="Keywords" placeholder="Keywords gescheiden door een komma" type="text" value="">
+                                    <input class="form-control login-input" id="Name" name="Name" placeholder="@Resources.Name @Resources.Required" type="text" value="">
+                                    <input class="form-control login-input" id="Keywords" name="Keywords" placeholder="@Resources.Keywords @Resources.Required" type="text" value="">
                                     <div class="form-check">
                                         <button type="submit" class="btn btn-primary login-input w-100 h-40">@Resources.AddItem</button>
                                     </div>

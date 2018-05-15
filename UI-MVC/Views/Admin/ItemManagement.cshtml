@@ -9,15 +9,14 @@
 
 @using (Html.BeginForm("UploadJson", "Admin", FormMethod.Post, new { role = "form", enctype = "multipart/form-data" }))
 {
-
-<label for="fileUpload" class="btn btn-dark btn-xs" style="display: inline;">@Resources.ImportContent</label>
+<label for="fileUpload" style="visibility:hidden; width:0px"></label>
 <input type="file" style="display:none;" class="btn btn-dark" name="jsonFile" id="fileUpload" accept=".json" />
-<button type="submit" id="btnSubmit" style="visibility:hidden;" class="btn btn-dark">@Resources.Save</button>
+<button type="submit" id="btnSubmit" style="display: inline-block;" class="btn btn-dark">@Resources.ImportContent</button>
 }
 
 @using (Html.BeginForm("UploadThemes", "Admin", FormMethod.Post, new { role = "form", enctype = "multipart/form-data" }))
 {
-    <label for="themeFileUpload" class="btn btn-dark btn-xs" style="display: inline;">Import Themes</label>
+    <label for="themeFileUpload" class="btn btn-dark btn-xs" style="display: inline-block;">Import Themes</label>
     <input type="file" style="display:none;" class="btn btn-dark" name="jsonFileThemes" id="themeFileUpload" accept=".json" />
     <button type="submit" id="btnThemeSubmit" style="visibility:hidden;" class="btn btn-dark">@Resources.Save</button>
 }
