@@ -493,6 +493,7 @@
     <Content Include="Views\Shared\Partials\_LanguagePreferences.cshtml" />
     <Content Include="Views\Shared\Partials\_LoggedInNavbar.cshtml" />
     <Content Include="Views\Shared\Partials\_LoginModal.cshtml" />
+    <Content Include="Views\Shared\Partials\_LoginNavbar.cshtml" />
     <Content Include="Views\Shared\Partials\_NavBarAdminLinks.cshtml" />
     <Content Include="Views\Shared\Partials\_NavBarSuperAdminLinks.cshtml" />
     <Content Include="Views\Shared\Partials\_OrganisationTable.cshtml" />

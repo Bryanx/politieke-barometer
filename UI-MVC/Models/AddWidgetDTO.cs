@@ -6,8 +6,6 @@ namespace BAR.UI.MVC.Models {
         public ICollection<int> ItemIds { get; set; }
         public string ItemName { get; set; }
         public string PropertyTag { get; set; }
-        public string SecondItemName { get; set; }
-        public string SecondPropertyTag { get; set; }
         public string Title { get; set; }
         public GraphType GraphType { get; set; }
     }

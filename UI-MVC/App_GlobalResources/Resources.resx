@@ -654,4 +654,43 @@
   <data name="RemoveData" xml:space="preserve">
     <value>Remove data</value>
   </data>
+  <data name="BasicGraph" xml:space="preserve">
+    <value>Basic graph</value>
+  </data>
+  <data name="ChooseData" xml:space="preserve">
+    <value>Choose data</value>
+  </data>
+  <data name="ChooseDataSubText" xml:space="preserve">
+    <value>What data do you want to show on your graph?</value>
+  </data>
+  <data name="ChooseGraph" xml:space="preserve">
+    <value>Choose graph</value>
+  </data>
+  <data name="ChooseGraphSubText" xml:space="preserve">
+    <value>What type of graph would you like to display?</value>
+  </data>
+  <data name="ChoosePersonOrgTopic" xml:space="preserve">
+    <value>Choose person, organisation or topic.</value>
+  </data>
+  <data name="ComparingGraph" xml:space="preserve">
+    <value>Comparing graph</value>
+  </data>
+  <data name="GraphType" xml:space="preserve">
+    <value>Graph type</value>
+  </data>
+  <data name="IntersectValue" xml:space="preserve">
+    <value>Intersect value</value>
+  </data>
+  <data name="Optional" xml:space="preserve">
+    <value>Optional</value>
+  </data>
+  <data name="OtherSettings" xml:space="preserve">
+    <value>Other settings</value>
+  </data>
+  <data name="OtherSettingsSubText" xml:space="preserve">
+    <value>Choose other optional graph settings.</value>
+  </data>
+  <data name="Title" xml:space="preserve">
+    <value>Title</value>
+  </data>
 </root>

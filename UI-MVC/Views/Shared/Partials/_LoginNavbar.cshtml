@@ -1,0 +1,29 @@
+﻿@using BAR.UI.MVC.Helpers
+@using BAR.UI.MVC.Models
+@model BAR.UI.MVC.Models.LoginViewModel
+
+<!-- login -->
+<ul class="nav navbar-nav navbar-right">
+    <!-- Items -->
+    <li class="dropdown navbar-left">
+        <a href="" class="dropdown-toggle item-menu" data-toggle="dropdown"
+           aria-expanded="false">
+            <i class="fa fa-users"></i>
+        </a>
+        <ul class="dropdown-menu pull-right">
+            <li>
+                <a href="@Url.PersonUrl()"><i class="fa fa-users"></i>@Resources.Politicians</a>
+            </li>
+            <li>
+                <a href="@Url.OrganisationUrl()"><i class="fa fa-briefcase"></i>@Resources.Parties</a>
+            </li>
+            <li>
+                <a href='@Url.ThemeUrl()'><i class="fa fa-tag"></i>@Resources.Topics</a>
+            </li>
+        </ul>
+    </li>
+    <!-- /Items -->
+    <li class="c-primary">
+        <a class="signup" href="#" data-toggle="modal" data-target=".bs-example-modal-lg">@Resources.Login</a>
+    </li>
+</ul>
