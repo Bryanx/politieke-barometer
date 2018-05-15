@@ -562,6 +562,7 @@
     <None Include="Scripts\vue\vue.js" />
     <None Include="Scripts\vue\vue.min.js" />
     <Content Include="Views\Error\NotFound.cshtml" />
+    <Content Include="Views\Error\Index.cshtml" />
     <None Include="Views\Shared\DisplayTemplates\CanonicalHelperModel.ascx" />
     <None Include="Views\Shared\DisplayTemplates\CanonicalHelperModel.cshtml" />
     <None Include="Views\Shared\DisplayTemplates\MenuHelperModel.cshtml" />
