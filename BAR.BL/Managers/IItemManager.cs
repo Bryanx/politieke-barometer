@@ -51,5 +51,6 @@ namespace BAR.BL.Managers
 		void DetermineTrending(int itemId);
 		double GetTrendingPer(int itemId);
     	string ConvertPfbToString(HttpPostedFileBase pfb);
+		void UpdateWeeklyReviewData(int platformId);
   }
 }

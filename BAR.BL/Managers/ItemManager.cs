@@ -122,7 +122,6 @@ namespace BAR.BL.Managers
 			}
 			else
 			{
-				UpdateWeeklyReviewData(itemsOrderd);
 				itemsOrderd = itemsOrderd.OrderBy(item => item.NumberOfMentions).AsEnumerable();
 			}
 
@@ -145,7 +144,6 @@ namespace BAR.BL.Managers
 			}
 			else
 			{
-				UpdateWeeklyReviewData(itemsOrderd);
 				itemsOrderd = itemsOrderd.Where(item => item.ItemType == type)
 				.OrderBy(item => item.NumberOfMentions).AsEnumerable();
 			}
@@ -176,7 +174,6 @@ namespace BAR.BL.Managers
 			}
 			else
 			{
-				UpdateWeeklyReviewData(itemsFromUser);
 				itemsOrderd = itemsFromUser.OrderBy(item => item.NumberOfMentions).AsEnumerable();
 			}
 
@@ -208,7 +205,6 @@ namespace BAR.BL.Managers
 			}
 			else
 			{
-				UpdateWeeklyReviewData(itemsFromUser);
 				itemsOrderd = itemsFromUser.Where(item => item.ItemType == type)
 				.OrderBy(item => item.NumberOfMentions).AsEnumerable();
 			}
@@ -220,16 +216,23 @@ namespace BAR.BL.Managers
 		/// If the last time that the old trending percentage of the item was updated 7 days ago,
 		/// then the old trending percentage will be updated.
 		/// </summary>
-		private void UpdateWeeklyReviewData(IEnumerable<Item> items)
+		public void UpdateWeeklyReviewData(int platformId)
 		{
-			foreach (Item item in items)
+			//Get timestamp
+			DateTime? lastUpdated = new SubplatformManager().GetSubPlatform(platformId).LastUpdatedWeeklyReview;
+
+			//Get all items
+			IEnumerable<Item> items = itemRepo.ReadAllItemsWithPlatforms();
+			if (items == null || items.Count() == 0) return;
+
+			//Refresh old data
+			if (lastUpdated == null || lastUpdated < DateTime.Now.AddDays(-7))
 			{
-				if (item.LastUpdated <= DateTime.Now.AddDays(-7))
-				{
-					item.NumberOfMentionsOld = item.NumberOfMentions;
-					item.LastUpdated = DateTime.Now;
-				}
+				foreach (Item item in items) item.NumberOfMentionsOld = item.NumberOfMentions;
 			}
+
+			//Update database
+			itemRepo.UpdateItems(items);
 		}
 
 		/// <summary>
@@ -400,7 +403,6 @@ namespace BAR.BL.Managers
 			item.CreationDate = DateTime.Now;
 			item.LastUpdatedInfo = DateTime.Now;
 			//needs to be null to do a check later on: see updateItemTrending in itemManager for details
-			item.LastUpdated = null;
 			item.NumberOfFollowers = 0;
 			item.TrendingPercentage = 0.0;
 			item.NumberOfMentions = 0;
@@ -860,11 +862,6 @@ namespace BAR.BL.Managers
 			{
 				//Number of mentions from the last 30 days
 				item.NumberOfMentions = dataManager.GetInformationsForItemid(item.ItemId).Where(info => info.CreationDate >= DateTime.Now.AddDays(-30)).Count();
-				if (item.LastUpdated == null)
-				{
-					item.NumberOfMentionsOld = item.NumberOfMentions;
-					item.LastUpdated = DateTime.Now;
-				}
 
 				//Gather sentiment
 				double sentiment = 0.0;
