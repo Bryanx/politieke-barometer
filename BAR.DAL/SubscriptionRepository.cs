@@ -57,18 +57,12 @@ namespace BAR.DAL
 		}
 
 		/// <summary>
-		/// Returns the alert from a specific user.
-		/// Because a user can have multiple subscriptions, we look for the alert in each subscription
-		/// To update the alert you have to update its Subscription (alerts have no DbSet)
+		/// Returns an a alert of a specific origin
 		/// </summary>
-		public Alert ReadAlert(string userId, int alertId) 
+		public Alert ReadAlert(string userId, int alertId, bool readUserAlert) 
 		{
-			Subscription subcription = ReadSubscriptionsWithAlertsForUser(userId)
-													.Where(sub => sub.Alerts.Any(alert => alert.AlertId == alertId))
-													.SingleOrDefault();
-
-			if (subcription != null) return subcription.Alerts.Where(alert => alert.AlertId == alertId).SingleOrDefault();
-			else return null;	
+			if (readUserAlert) return ReadUserAlert(userId, alertId);
+			else return ReadSubAlert(userId, alertId);
 		}
 
 		/// <summary>
@@ -100,16 +94,6 @@ namespace BAR.DAL
 									.AsEnumerable();
 		}
 
-		/// <summary>
-		/// Returns a list of subscriptions with their alerts.
-		/// </summary>
-		public IEnumerable<Subscription> ReadSubscriptionsWithAlertsForUser(string userId)
-		{
-			return ctx.Subscriptions.Include(sub => sub.Alerts)
-									.Where(sub => sub.SubscribedUser.Id.Equals(userId))
-									.AsEnumerable();
-		}
-		
 		/// <summary>
 		/// Returns a list of subscriptions with their items.
 		/// </summary>
@@ -267,6 +251,55 @@ namespace BAR.DAL
 		{
 			IEnumerable<Subscription> subs = ReadSubscriptionsForItem(itemId);
 			return DeleteSubscriptions(subs);
-		}		
+		}
+
+		/// <summary>
+		/// Gives back a subalert based on the user -and alert Id
+		/// </summary>
+		public SubAlert ReadSubAlert(string userId, int alertId)
+		{
+			return ctx.Alerts.OfType<SubAlert>().Where(alert => alert.AlertId == alertId).SingleOrDefault();
+		}
+
+		/// <summary>
+		/// Gives back a useralert based on the user -and alert Id
+		/// </summary>
+		public UserAlert ReadUserAlert(string userId, int alertId)
+		{
+			return ctx.Alerts.OfType<UserAlert>().Where(alert => alert.AlertId == alertId).SingleOrDefault();
+		}
+
+		/// <summary>
+		/// Gives back all the subalerts
+		/// </summary>
+		public IEnumerable<SubAlert> ReadAllSubAlerts()
+		{
+			return ctx.Alerts.OfType<SubAlert>().AsEnumerable();
+		}
+
+		/// <summary>
+		/// Gives back all the useralerts
+		/// </summary>
+		public IEnumerable<UserAlert> ReadAllUserAlerts()
+		{
+			return ctx.Alerts.OfType<UserAlert>().AsEnumerable();
+		}
+		
+		/// <summary>
+		/// Deletes a specific alert from the database
+		/// </summary>
+		public int DeleteAlert(Alert alert)
+		{
+			ctx.Alerts.Remove(alert);
+			return ctx.SaveChanges();
+		}
+
+		/// <summary>
+		/// Gives back an alert for a spefic alertId
+		/// </summary>
+		public Alert ReadAlert(int alertId)
+		{
+			return ctx.Alerts.Find(alertId);
+		}
 	}
 }

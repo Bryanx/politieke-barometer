@@ -41,6 +41,7 @@ namespace BAR.DAL.EF
 
 		//User package
 		public DbSet<Subscription> Subscriptions { get; set; }
+		public DbSet<Alert> Alerts { get; set; }
 		public DbSet<Area> Areas { get; set; }
 
 		//Item package

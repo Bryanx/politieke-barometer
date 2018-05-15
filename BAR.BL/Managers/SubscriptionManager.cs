@@ -61,7 +61,7 @@ namespace BAR.BL.Managers
 				SubscribedItem = item,
 				Threshold = threshold,
 				DateSubscribed = DateTime.Now,
-				Alerts = new List<Alert>()
+				Alerts = new List<SubAlert>()
 			};
 			item.NumberOfFollowers++;
 			subRepo.CreateSubscription(subscription);
@@ -88,7 +88,7 @@ namespace BAR.BL.Managers
 			{
 				if (sub.SubscribedUser.AlertsViaWebsite && sub.SubscribedUser.IsActive)
 				{
-					sub.Alerts.Add(new Alert()
+					sub.Alerts.Add(new SubAlert()
 					{
 						Subscription = sub,
 						AlertType = AlertType.Trending,
@@ -141,58 +141,55 @@ namespace BAR.BL.Managers
 		/// <summary>
 		/// Retrieves a single alert for a specific user.
 		/// </summary>
-		public Alert GetAlert(string userId, int alertId) 
+		public Alert GetAlert(string userId, int alertId, bool userAlert) 
 		{
 			InitRepo();
-			return subRepo.ReadAlert(userId, alertId);
+			return subRepo.ReadAlert(userId, alertId, userAlert);
 		}
 
 		/// <summary>
 		/// Changed the isRead property of an Alert to true.
 		/// </summary>
-		public Alert ChangeAlertToRead(string userId, int alertId) 
-		{
-			InitRepo();
-
-			//Get Alert
-			Alert alertToUpdate = GetAlert(userId, alertId);
-			if (alertToUpdate == null) return null;
-
-			//Change alert
-			alertToUpdate.IsRead = true;
-
-			//Update database
-			subRepo.UpdateSubScription(alertToUpdate.Subscription);
-
-			return alertToUpdate;
+		public Alert ChangeAlertToRead(string userId, int alertId, bool userAlert) 
+		{		
+			if (userAlert)
+			{
+				UserAlert alert = GetUserAlert(userId, alertId);
+				if (alert == null) return null;
+				alert.IsRead = true;
+				new UserManager().ChangeUser(alert.User);
+				return alert;
+			} else
+			{
+				SubAlert alert = GetSubAlert(userId, alertId);
+				if (alert == null) return null;
+				alert.IsRead = true;
+				InitRepo();
+				subRepo.UpdateSubScription(alert.Subscription);
+				return alert;
+			}		
 		}
 
 		/// <summary>
 		/// Removes a specific alert for a specific user.
 		/// </summary>
-		public void RemoveAlert(string userId, int alertId)
+		public void RemoveAlert(string userId, int alertId, bool userAlert)
 		{
-			InitRepo();
-
-			//Get alert
-			Alert alertToRemove = GetAlert(userId, alertId);
-			if (alertToRemove == null) return;
-
-			//Remove alert
-			Subscription sub = alertToRemove.Subscription;
-			sub.Alerts.Remove(alertToRemove);
-
-			//Update database
-			subRepo.UpdateSubScription(sub);
-		}
-
-		/// <summary>
-		/// Gets the subscription of a specific user, with alerts.
-		/// </summary>
-		public IEnumerable<Subscription> GetSubscriptionsWithAlertsForUser(string userId) 
-		{
-			InitRepo();
-			return subRepo.ReadSubscriptionsWithAlertsForUser(userId).AsEnumerable();
+			if (userAlert)
+			{
+				UserAlert alert = GetUserAlert(userId, alertId);
+				if (alert == null) return;
+				alert.User.Alerts.Remove(alert);
+				new UserManager().ChangeUser(alert.User);
+			}
+			else
+			{
+				SubAlert alert = GetSubAlert(userId, alertId);
+				if (alert == null) return;
+				alert.Subscription.Alerts.Remove(alert);
+				InitRepo();
+				subRepo.UpdateSubScription(alert.Subscription);
+			}
 		}
 
 		/// <summary>
@@ -278,6 +275,24 @@ namespace BAR.BL.Managers
 		{
 			if (uowManager == null) subRepo = new SubscriptionRepository();
 			else subRepo = new SubscriptionRepository(uowManager.UnitOfWork);
+		}
+
+		/// <summary>
+		/// Gives back a subalert based on the user -and alert Id
+		/// </summary>
+		public SubAlert GetSubAlert(string userId, int alertId)
+		{
+			InitRepo();
+			return subRepo.ReadSubAlert(userId, alertId);
+		}
+
+		/// <summary>
+		/// Gives back a subalert based on the user -and alert Id
+		/// </summary>
+		public UserAlert GetUserAlert(string userId, int alertId)
+		{
+			InitRepo();
+			return subRepo.ReadUserAlert(userId, alertId);
 		}
 	}
 }

@@ -19,10 +19,13 @@ namespace BAR.BL.Managers
 		IEnumerable<IdentityRole> GetAllRoles();
 		IdentityRole GetRole(string userId);
 
+		User ChangeUser(User user);
 		User ChangeUserBasicInfo(string userId, string firstname, string lastname, Gender gender, DateTime dateOfBrith, Area area);
 		User ChangeUserAlerts(string userId, bool alertWebsite, bool alertMail, bool alertWeeklyReview);
 		User ChangeUserAccount(string userId);
 		User ChangeProfilePicture(string userId, HttpPostedFileBase poImgFile);
-    User ChangeBasicInfoAndroid(string userId, string firstname, string lastname, byte[] profilePicture = null);
+		User ChangeBasicInfoAndroid(string userId, string firstname, string lastname, byte[] profilePicture = null);
+
+		void GenerateAlertsForWeeklyReview();
 	}
 }

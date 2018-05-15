@@ -166,7 +166,8 @@ namespace webapi.Controllers
         alertViewModel = new AlertViewModel()
         {
           AlertId = alert.AlertId,
-          ItemName = alert.Subscription.SubscribedItem.Name
+		  //Needs to be fixed by remi
+          //ItemName = alert.Subscription.SubscribedItem.Name
         };
         alerts.Add(alertViewModel);
       }

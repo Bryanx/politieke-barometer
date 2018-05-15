@@ -25,25 +25,33 @@ namespace BAR.UI.MVC.Controllers.api
 		[Route("api/User/GetAlerts")]
 		public IHttpActionResult GetAlerts()
 		{
-			subManager = new SubscriptionManager();
-			IEnumerable<Alert> alertsToShow = subManager.GetAllAlerts(User.Identity.GetUserId());
-			if (alertsToShow == null || alertsToShow.Count() == 0) return StatusCode(HttpStatusCode.NoContent);
+			//TODO
 
-			//Made DTO class to prevent circular references
-			List<AlertDTO> lijst = new List<AlertDTO>();
-			foreach (Alert alert in alertsToShow)
-			{
-				lijst.Add(new AlertDTO()
-				{
-					AlertId = alert.AlertId,
-					Name = alert.Subscription.SubscribedItem.Name,
-					TimeStamp = alert.TimeStamp,
-					IsRead = alert.IsRead,
-					itemId = alert.Subscription.SubscribedItem.ItemId
+			//subManager = new SubscriptionManager();
+			//IEnumerable<Alert> alertsToShow = subManager.GetAllAlerts(User.Identity.GetUserId());
+			//if (alertsToShow == null || alertsToShow.Count() == 0) return StatusCode(HttpStatusCode.NoContent);
 
-				});
-			}
-			return Ok(lijst.AsEnumerable());
+			////Made DTO class to prevent circular references
+			//List<AlertDTO> lijst = new List<AlertDTO>();
+			//foreach (Alert alert in alertsToShow)
+			//{
+			//	AlertDTO alertDto = new AlertDTO()
+			//	{
+			//		AlertId = alert.AlertId,
+			//		Name = alert.Subscription.SubscribedItem.Name,
+			//		TimeStamp = alert.TimeStamp,
+			//		IsRead = alert.IsRead,
+			//		itemId = alert.Subscription.SubscribedItem.ItemId
+
+			//	};
+			//	if (alert is UserAlert)
+			//	{
+			//		alertDto.Name = 
+			//	}
+
+			//}
+			//return Ok(lijst.AsEnumerable());
+			return Ok();
 		}
 
 		/// <summary>
@@ -66,6 +74,7 @@ namespace BAR.UI.MVC.Controllers.api
 		public IHttpActionResult DeleteAlert(int alertId)
 		{
 			subManager = new SubscriptionManager();
+			Alert alert = subManager.GetAlert()
 			subManager.RemoveAlert(User.Identity.GetUserId(), alertId);
 			return StatusCode(HttpStatusCode.NoContent);
 		}

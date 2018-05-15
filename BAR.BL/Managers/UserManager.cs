@@ -190,22 +190,40 @@ namespace BAR.BL.Managers
 			return userToUpdate;
 		}
 
-    public User ChangeBasicInfoAndroid(string userId, string firstname, string lastname, byte[] profilePicture = null)
-    {
-      InitRepo();
+		public User ChangeBasicInfoAndroid(string userId, string firstname, string lastname, byte[] profilePicture = null)
+		{
+			InitRepo();
 
-      //Get User
-      User userToUpdate = userRepo.ReadUser(userId);
-      if (userToUpdate == null) return null;
+			//Get User
+			User userToUpdate = userRepo.ReadUser(userId);
+			if (userToUpdate == null) return null;
 
-      //Change user
-      userToUpdate.FirstName = firstname;
-      userToUpdate.LastName = lastname;
-      userToUpdate.ProfilePicture = profilePicture;
+			//Change user
+			userToUpdate.FirstName = firstname;
+			userToUpdate.LastName = lastname;
+			userToUpdate.ProfilePicture = profilePicture;
 
-      //Update database
-      userRepo.UpdateUser(userToUpdate);
-      return userToUpdate;
-    }
-  }
+			//Update database
+			userRepo.UpdateUser(userToUpdate);
+			return userToUpdate;
+		}
+
+		/// <summary>
+		/// Changes a user in the database
+		/// </summary>
+		public User ChangeUser(User user)
+		{
+			InitRepo();
+			userRepo.UpdateUser(user);
+			return user;
+		}
+
+		/// <summary>
+		/// Generate alerts for the weekly review
+		/// </summary>
+		public void GenerateAlertsForWeeklyReview()
+		{
+			//TODO
+		}
+	}
 }
