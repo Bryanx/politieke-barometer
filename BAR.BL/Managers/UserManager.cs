@@ -235,7 +235,7 @@ namespace BAR.BL.Managers
 			platformManager.ChangeSubplatform(platform);
 
 			//Get all users
-			IEnumerable<User> users = userRepo.ReadAllUsers();
+			IEnumerable<User> users = userRepo.ReadAllUsersWithAlerts();
 			if (users == null || users.Count() == 0) return;
 
 			//Generate weekly review alerts

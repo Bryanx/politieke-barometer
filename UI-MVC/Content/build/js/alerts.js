@@ -45,7 +45,7 @@ function markAsRead(id) {
 }
 
 //Generates the HTML for one alert item in the dropdown alert menu
-function generateAlertHTML(alert) {
+function generateAlertHTML(alert, type) {
   var read = "";
   if (alert.IsRead) {
     read = "alertRead";
@@ -93,26 +93,13 @@ function generateAlertHTML(alert) {
   return alertItem;
 }
 
-
+var counter = 0;
 //Inserts the HTML for the alerts inside the alert dropdownlist in the top-navbar
 function InsertAlerts(alertData) {
   $('#alertMenu').empty();
-  var counter = 0;
   $.each(alertData,
     (key, value) => {
-      console.log(key);
-      console.log(value);
-
-      checkAlertType()
-
-      var alertItem = generateAlertHTML(value);
-
-      //Add alert to alert dropdownlist
-      $('#alertMenu').append(alertItem);
-
-      if (!value.IsRead) {
-        counter++;
-      }
+      checkAlertType(value)
     });
 
   //Update the alertCounter
@@ -155,17 +142,22 @@ function loadAlerts() {
   });
 }
 
-function checkAlertType(id) {
-  console.log("Hello from checker");
-  //$.ajax({
-  //  type: "GET",
-  //  url: "api/User/Alert/CheckAlert/" + id.data,
-  //  contentType: 'application/json; charset=utf-8',
-  //  dataType: "json",
-  //}).fail(() => {/* ok */ })
-  //  .done(function (data) {
-  //    window.location.href = "/" + data + "/Details/" + id.data;
-  //  })
+//Checks the alert type
+function checkAlertType(value) {
+  $.ajax({
+    type: "GET",
+    url: "api/User/Alert/CheckAlert/" + value.AlertId,
+    contentType: 'application/json; charset=utf-8',
+    dataType: "json",
+  }).fail(() => {/* ok */ })
+    .done(function (data) {
+      var alertItem = generateAlertHTML(value, data);
+
+      //Add alert to alert dropdownlist
+      $('#alertMenu').append(alertItem);
+
+      if (!value.IsRead) counter++;  
+    })
 };
 
 (() => {

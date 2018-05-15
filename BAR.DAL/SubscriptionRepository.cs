@@ -253,7 +253,10 @@ namespace BAR.DAL
 		/// </summary>
 		public IEnumerable<SubAlert> ReadAllSubAlerts()
 		{
-			return ctx.Alerts.OfType<SubAlert>().AsEnumerable();
+			return ctx.Alerts.OfType<SubAlert>()
+							 .Include(alert => alert.Subscription)
+							 .Include(alert => alert.Subscription.SubscribedItem)
+							 .AsEnumerable();
 		}
 
 		/// <summary>
@@ -261,7 +264,9 @@ namespace BAR.DAL
 		/// </summary>
 		public IEnumerable<UserAlert> ReadAllUserAlerts()
 		{
-			return ctx.Alerts.OfType<UserAlert>().AsEnumerable();
+			return ctx.Alerts.OfType<UserAlert>()
+							 .Include(alert => alert.User)
+							 .AsEnumerable();
 		}
 		
 		/// <summary>
