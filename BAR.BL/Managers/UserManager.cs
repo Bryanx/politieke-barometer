@@ -279,7 +279,7 @@ namespace BAR.BL.Managers
 				IdentityMessage message = new IdentityMessage()
 				{
 					Destination = user.Email,
-					Subject = "Nieuwe Weekly Review is nu beschikbaar",
+					Subject = "Nieuwe Weekly Review is nu beschikbaar!",
 					Body = "Beste " + user.FirstName + "</br></br>" +
 						"Een nieuwe weekly review is nu beschikbaar!</br></br>" +
 						"De <strong>meest trending items</strong> van deze week zijn:</br>" +
