@@ -197,22 +197,7 @@ namespace BAR.UI.MVC.Controllers
 			itemManager.ChangeItemPlatform(person.ItemId, subplatform.SubPlatformId);
 			itemManager.ChangePersonOrganisation(person.ItemId, model.OrganisationId);
 
-
-			Source s = dataManager.GetSource("twitter");
-
-			List<SocialMediaName> socialMediaNames = new List<SocialMediaName>();
-			socialMediaNames.Add(new SocialMediaName()
-			{
-				Source = dataManager.GetSource("twitter"),
-				Username = model.Twitter
-			});
-
-			socialMediaNames.Add(new SocialMediaName()
-			{
-				Source = dataManager.GetSource("facebook"),
-				Username = model.Facebook
-			});
-
+			itemManager.ChangePersonSocialMedia(person.ItemId, model.Twitter, model.Facebook);
 
 			return RedirectToAction("Details", "Person", new { id = person.ItemId });
 		}

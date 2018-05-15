@@ -566,6 +566,47 @@ namespace BAR.BL.Managers
 			return personToUpdate;
 		}
 
+
+		/// <summary>
+		/// Adds socialmedia names to person
+		/// </summary>
+		/// <param name="person"></param>
+		/// <returns></returns>
+		public Person ChangePersonSocialMedia(int personId, string twitter, string facebook)
+		{
+			uowManager = new UnitOfWorkManager();
+			IDataManager dataManager = new DataManager(uowManager);
+			InitRepo();
+
+			Source twitterSource = dataManager.GetSource("Twitter");
+			Source facebookSource = dataManager.GetSource("Facebook");
+
+			//Get item
+			Person personToUpdate = GetPersonWithDetails(personId);
+
+			if (personToUpdate == null) return null;
+
+			//Update person with twitter and facebook url's
+			personToUpdate.SocialMediaNames.Add(new SocialMediaName()
+			{
+				Source = twitterSource,
+				Username = twitter
+			});
+
+			personToUpdate.SocialMediaNames.Add(new SocialMediaName()
+			{
+				Source = facebookSource,
+				Username = facebook
+			});
+
+			//Update database
+			itemRepo.UpdatePerson(personToUpdate);
+
+			uowManager.Save();
+			uowManager = null;
+			return personToUpdate;
+		}
+
 		/// <summary>
 		/// Updates the subplatform of a given item
 		/// </summary>

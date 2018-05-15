@@ -44,6 +44,7 @@ namespace BAR.BL.Managers
 		Item ChangeItemName(int itemId, string name);
 		Item ChangeItemPlatform(int itemId, int subplatformId);
 		Item ChangeItemActivity(int itemId);
+		Person ChangePersonSocialMedia(int personId, string twitter, string facebook);
 		Person ChangePerson(int itemId, DateTime birthday, Gender gender, string position, string district);
 		Person ChangePerson(int itemId, string site);
 		Person ChangePersonOrganisation(int itemId, int organisationId);
