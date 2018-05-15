@@ -687,4 +687,7 @@
   <data name="YourPasswordHasBeenReset" xml:space="preserve">
     <value>Uw wachtwoord is gereset.</value>
   </data>
+  <data name="IsNowAvailable" xml:space="preserve">
+    <value>is nu beschikbaar!</value>
+  </data>
 </root>

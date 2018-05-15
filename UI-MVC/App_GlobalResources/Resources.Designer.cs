@@ -826,6 +826,15 @@ namespace BAR.UI.MVC.App_GlobalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to is now available!.
+        /// </summary>
+        public static string IsNowAvailable {
+            get {
+                return ResourceManager.GetString("IsNowAvailable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to is now trending!.
         /// </summary>
         public static string IsNowTrending {

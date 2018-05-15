@@ -46,6 +46,13 @@ function markAsRead(id) {
 
 //Generates the HTML for one alert item in the dropdown alert menu
 function generateAlertHTML(alert, type) {
+  //Construct alert content
+  var content;
+  if (type === "sub alert") content = `<strong>${alert.Name}</strong> ${Resources.IsNowTrending}`
+  else if (type === "user alert") content = `<strong>${alert.Name}</strong> ${Resources.IsNowAvailable}`
+  console.log(content);
+
+  //Construct alert message
   var read = "";
   if (alert.IsRead) {
     read = "alertRead";
@@ -93,13 +100,15 @@ function generateAlertHTML(alert, type) {
   return alertItem;
 }
 
-var counter = 0;
 //Inserts the HTML for the alerts inside the alert dropdownlist in the top-navbar
 function InsertAlerts(alertData) {
   $('#alertMenu').empty();
+  var counter = 0;
   $.each(alertData,
     (key, value) => {
       checkAlertType(value)
+
+      if (!value.IsRead) counter++;  
     });
 
   //Update the alertCounter
@@ -132,7 +141,6 @@ function loadAlerts() {
     url: '/api/User/GetAlerts',
     dataType: 'json',
     success: data => {
-      console.log(data);
       loadAlertsHandler(data);
     },
     error: function (xhr, status, error) {
@@ -155,8 +163,6 @@ function checkAlertType(value) {
 
       //Add alert to alert dropdownlist
       $('#alertMenu').append(alertItem);
-
-      if (!value.IsRead) counter++;  
     })
 };
 
