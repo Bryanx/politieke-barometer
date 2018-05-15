@@ -105,7 +105,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Controllers\SysController.cs" />
     <Compile Include="Managers\WidgetManager.cs" />
     <Compile Include="Managers\DataManager.cs" />
     <Compile Include="Managers\IWidgetManager.cs" />

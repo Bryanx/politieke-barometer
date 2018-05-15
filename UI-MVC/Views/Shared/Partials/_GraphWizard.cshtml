@@ -1,5 +1,7 @@
 ﻿<div class="modal makeGraphModal fade" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-lg">
+        <div class="hidden wizardItemId1"></div>
+        <div class="hidden wizardItemId2"></div>
         <div class="modal-content">
             <div class="modal-body">
                 <div id="app">
@@ -15,8 +17,8 @@
                                      color="#0f8ec4">
                             <!-- Stap 1 -->
                             <tab-content title="Element kiezen" icon="fa fa-user" :before-change="validateFirstTab">
-                                <h1 class="text-center">Element kiezen</h1>
-                                <h2 class="text-center">Bepaal welke data er op uw grafiek moet komen.</h2>
+                                <h1 class="text-center">@Resources.ChooseData</h1>
+                                <h2 class="text-center">@Resources.ChooseDataSubText</h2>
                                 <vue-form-generator :model="model"
                                                     :schema="firstTabSchema"
                                                     :options="formOptions"
@@ -26,8 +28,8 @@
 
                             <!-- Stap 2 -->
                             <tab-content title="Grafiek kiezen" icon="fa fa-pie-chart" :before-change="validateSecondTab">
-                                <h1 class="text-center">Kies een grafiek type.</h1>
-                                <h2 class="text-center">Kies ook optionele verwante informatie</h2>
+                                <h1 class="text-center">@Resources.ChooseGraph</h1>
+                                <h2 class="text-center">@Resources.ChooseGraphSubText</h2>
                                 <vue-form-generator :model="model"
                                                     :schema="secondTabSchema"
                                                     :options="formOptions"
@@ -36,11 +38,15 @@
                             </tab-content>
 
                             <!-- Stap 3 -->
-                            <tab-content title="Verwante informatie" icon="fa fa-check">
-                                <h4>Json (post naar apicontroller)</h4>
-                                <div class="panel-body">
-                                    <pre v-if="model" v-html="prettyJSON(model)"></pre>
-                                </div>
+                            <tab-content title="Overige instellingen" icon="fa fa-pie-chart" :before-change="validateSecondTab">
+                                <h1 class="text-center">@Resources.OtherSettings</h1>
+                                <h2 class="text-center">@Resources.OtherSettingsSubText</h2>
+                                <vue-form-generator :model="model"
+                                                    :schema="thirdTabSchema"
+                                                    :options="formOptions"
+                                                    ref="thirdTabForm">
+                                </vue-form-generator>
+                                <pre class="hidden" v-if="model" v-html="prettyJSON(model)"></pre>
                             </tab-content>
                         </form-wizard>
                     </div>

@@ -15,6 +15,8 @@ using Microsoft.AspNet.Identity;
 using WebGrease.Css.Extensions;
 using Widget = BAR.BL.Domain.Widgets.Widget;
 using BAR.BL.Domain.Items;
+using BAR.BL.Domain.Users;
+using BAR.UI.MVC.App_GlobalResources;
 
 
 namespace BAR.UI.MVC.Controllers.api
@@ -39,15 +41,13 @@ namespace BAR.UI.MVC.Controllers.api
 
 			Dashboard dash = widgetManager.GetDashboard(User.Identity.GetUserId());
 
-			try
-			{
+			try {
 				List<UserWidget> widgets = widgetManager.GetWidgetsForDashboard(dash.DashboardId).ToList();
 				if (widgets == null || widgets.Count() == 0) return StatusCode(HttpStatusCode.NoContent);
 
 				return Ok(Mapper.Map(widgets, new List<UserWidgetDTO>()));
 
-			} catch (Exception e)
-			{
+			} catch (Exception e) {
 				return StatusCode(HttpStatusCode.BadRequest);
 			}
 		}
@@ -86,8 +86,8 @@ namespace BAR.UI.MVC.Controllers.api
 
 			//Get keyvalue for the widgetid.
 			string keyValue = widgetManager.GetWidgetWithAllData(widgetId)?.WidgetDatas.FirstOrDefault()?.KeyValue;
-			
-			if (keyValue == null) return StatusCode(HttpStatusCode.Conflict);
+
+			if (keyValue == null) keyValue = widgetManager.GetWidgetWithAllData(widgetId)?.PropertyTags.FirstOrDefault()?.Name;
 			
 			IEnumerable<WidgetData> widgetDatas = widgets.FirstOrDefault(w => w.WidgetDatas.Any(wd => wd.KeyValue == keyValue)).WidgetDatas;
 			IEnumerable<WidgetDataDTO> widgetDataDtos = Mapper.Map(widgetDatas, new List<WidgetDataDTO>());
@@ -97,7 +97,7 @@ namespace BAR.UI.MVC.Controllers.api
 			
 			return Ok(widgetDataDtos);
 		}
-		
+
 		/// <summary>
 		/// Transfers a Widget to the dashboard of a user.
 		/// The given ItemWidget will be copied to a UserWidget.
@@ -115,26 +115,28 @@ namespace BAR.UI.MVC.Controllers.api
 		/// Creates a new Widget from the body of the post request.
 		/// If the widget already exists, returns 409 Conflict
 		/// </summary>
-		/// <param name="widget"></param>
-		/// <returns>The URL on which the created object can be requested</returns>
-		public IHttpActionResult Post([FromBody] Widget widget)
+		[System.Web.Http.HttpPost]
+		[System.Web.Http.Route("api/NewWidget/")]
+		public IHttpActionResult AddNewWidgetToDashboard([FromBody] AddWidgetDTO model)
 		{
-			widgetManager = new WidgetManager();
+			UnitOfWorkManager uowManager = new UnitOfWorkManager();
+			widgetManager = new WidgetManager(uowManager);
+			itemManager = new ItemManager(uowManager);
 
 			Dashboard dash = widgetManager.GetDashboard(User.Identity.GetUserId());
 
-			if (!ModelState.IsValid) return BadRequest(ModelState);
-			if (widgetManager.GetWidget(widget.WidgetId) != null) return StatusCode(HttpStatusCode.Conflict);
+			List<PropertyTag> propertyTags = new List<PropertyTag> {new PropertyTag() {Name = model.PropertyTag}};
 
-			//Copy operation to make a userWidget from an itemWidget
-			//This operation needs to be done because a userWidget has to be from a user
-			//And a user has a dashboard.
-			widgetManager.AddWidget(widget.WidgetType, widget.Title, widget.RowNumber,
-				widget.ColumnNumber, widget.PropertyTags.ToList(), widget.Timestamp, widget.GraphType, widget.RowSpan, widget.ColumnSpan, dash.DashboardId);
+			List<Item> items = itemManager.GetAllItems().Where(i => model.ItemIds.Contains(i.ItemId)).ToList();
 
-			return CreatedAtRoute("DefaultApi"
-				, new { controller = "Widget", id = widget.WidgetId }
-				, widget);
+			if (string.IsNullOrEmpty(model.Title)) model.Title = Resources.Title;
+			
+			widgetManager.AddWidget(WidgetType.GraphType, model.Title, 0,
+				0, propertyTags, graphType: model.GraphType, dashboardId:dash.DashboardId, items:items);
+			
+			uowManager.Save();
+
+			return StatusCode(HttpStatusCode.NoContent);
 		}
 
 		/// <summary>

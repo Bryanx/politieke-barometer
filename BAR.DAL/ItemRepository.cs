@@ -245,10 +245,9 @@ namespace BAR.DAL
 		/// <summary>
 		/// Reads a person of a given name.
 		/// </summary>
-		public Person ReadPerson(string personName)
+		public Item ReadItemByName(string name)
 		{		
-			return ctx.Items.OfType<Person>()
-							.Where(item => item.Name.ToLower().Equals(personName.ToLower()))
+			return ctx.Items.Where(item => item.Name.ToLower().Equals(name.ToLower()))
 							.SingleOrDefault();
 		}
 

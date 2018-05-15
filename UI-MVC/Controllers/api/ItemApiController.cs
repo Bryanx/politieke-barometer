@@ -245,5 +245,26 @@ namespace BAR.UI.MVC.Controllers.api
 			}
 			
 		}
+
+		/// <summary>
+		/// Determines the type of an item
+		/// needed to determine the url.
+		/// </summary>
+		[HttpGet]
+		[Route("api/checkItemType/{itemId}")]
+		public string GetItemType(int itemId)
+		{
+			if (itemId < 0) return null;
+
+			//Get item
+			itemManager = new ItemManager();
+			Item item = itemManager.GetItem(itemId);
+
+			//return correct type
+			if (item is Person) return "Person";
+			else if (item is Organisation) return "Organisation";
+			else if (item is Theme) return "Theme";
+			else return null;
+		}
 	}
 }
