@@ -6,6 +6,7 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using System.Web;
 using System.IO;
 using System.Linq;
+using BAR.BL.Domain.Core;
 
 namespace BAR.BL.Managers
 {
@@ -221,9 +222,38 @@ namespace BAR.BL.Managers
 		/// <summary>
 		/// Generate alerts for the weekly review
 		/// </summary>
-		public void GenerateAlertsForWeeklyReview()
+		public void GenerateAlertsForWeeklyReview(int platformId)
 		{
-			//TODO
+			InitRepo();
+
+			//Get timepstam for weekly review
+			SubplatformManager platformManager = new SubplatformManager();
+			SubPlatform platform = platformManager.GetSubPlatform(platformId);
+			if (platform.LastUpdatedWeeklyReview != null && platform.LastUpdatedWeeklyReview > DateTime.Now.AddDays(-7)) return;
+
+			platform.LastUpdatedWeeklyReview = DateTime.Now;
+			platformManager.ChangeSubplatform(platform);
+
+			//Get all users
+			IEnumerable<User> users = userRepo.ReadAllUsers();
+			if (users == null || users.Count() == 0) return;
+
+			//Generate weekly review alerts
+			foreach (User user in users)
+			{
+				UserAlert alert = new UserAlert()
+				{
+					User = user,
+					Subject = "Nieuwe Weekly Review",
+					IsRead = false,
+					TimeStamp = DateTime.Now,
+					AlertType = AlertType.Weekly_Review
+				};
+				user.Alerts.Add(alert);
+			}
+
+			//Update database
+			userRepo.UpdateUsers(users);
 		}
 	}
 }

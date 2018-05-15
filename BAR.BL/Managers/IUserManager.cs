@@ -26,6 +26,6 @@ namespace BAR.BL.Managers
 		User ChangeProfilePicture(string userId, HttpPostedFileBase poImgFile);
 		User ChangeBasicInfoAndroid(string userId, string firstname, string lastname, byte[] profilePicture = null);
 
-		void GenerateAlertsForWeeklyReview();
+		void GenerateAlertsForWeeklyReview(int platformId);
 	}
 }

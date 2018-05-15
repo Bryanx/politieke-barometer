@@ -283,5 +283,23 @@ namespace BAR.BL.Managers
 			InitRepo();
 			return subRepo.ReadUserAlert(userId, alertId);
 		}
+
+		/// <summary>
+		/// Gives back all the subalerts
+		/// </summary>
+		public IEnumerable<SubAlert> GetAllSubAlerts()
+		{
+			InitRepo();
+			return subRepo.ReadAllSubAlerts().AsEnumerable();
+		}
+
+		/// <summary>
+		/// Gives back all the useralerts
+		/// </summary>
+		public IEnumerable<UserAlert> GetAllUserAlerts()
+		{
+			InitRepo();
+			return subRepo.ReadAllUserAlerts().AsEnumerable();
+		}
 	}
 }

@@ -22,6 +22,8 @@ namespace BAR.BL.Managers
 		SubAlert GetSubAlert(string userId, int alertId);
 		UserAlert GetUserAlert(string userId, int alertId);
 		IEnumerable<Alert> GetAllAlerts();
+		IEnumerable<SubAlert> GetAllSubAlerts();
+		IEnumerable<UserAlert> GetAllUserAlerts();
 
 		Alert ChangeAlertToRead(int alertId);
 

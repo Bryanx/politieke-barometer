@@ -15,5 +15,6 @@ namespace BAR.BL.Domain.Core
 		public DateTime CreationDate { get; set; }
 		public ICollection<Question> Questions { get; set; }
 		public Customization Customization { get; set; }
+		public DateTime? LastUpdatedWeeklyReview { get; set; }
 	}
 }
