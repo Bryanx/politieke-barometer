@@ -16,6 +16,7 @@ using WebGrease.Css.Extensions;
 using Widget = BAR.BL.Domain.Widgets.Widget;
 using BAR.BL.Domain.Items;
 using BAR.BL.Domain.Users;
+using BAR.UI.MVC.App_GlobalResources;
 
 
 namespace BAR.UI.MVC.Controllers.api
@@ -40,15 +41,13 @@ namespace BAR.UI.MVC.Controllers.api
 
 			Dashboard dash = widgetManager.GetDashboard(User.Identity.GetUserId());
 
-			try
-			{
+			try {
 				List<UserWidget> widgets = widgetManager.GetWidgetsForDashboard(dash.DashboardId).ToList();
 				if (widgets == null || widgets.Count() == 0) return StatusCode(HttpStatusCode.NoContent);
 
 				return Ok(Mapper.Map(widgets, new List<UserWidgetDTO>()));
 
-			} catch (Exception e)
-			{
+			} catch (Exception e) {
 				return StatusCode(HttpStatusCode.BadRequest);
 			}
 		}
@@ -128,14 +127,11 @@ namespace BAR.UI.MVC.Controllers.api
 
 			List<PropertyTag> propertyTags = new List<PropertyTag> {new PropertyTag() {Name = model.PropertyTag}};
 
-			List<Item> items = new List<Item>();
-			if (model.ItemIds != null) {
-				items.AddRange(itemManager.GetAllItems().Where(i => model.ItemIds.Contains(i.ItemId)).ToList());
-			} else {
-				items.Add(itemManager.GetItemByName(model.ItemName));
-			}
+			List<Item> items = itemManager.GetAllItems().Where(i => model.ItemIds.Contains(i.ItemId)).ToList();
 
-			widgetManager.AddWidget(WidgetType.GraphType, "Give your graph a title.", 0,
+			if (string.IsNullOrEmpty(model.Title)) model.Title = Resources.Title;
+			
+			widgetManager.AddWidget(WidgetType.GraphType, model.Title, 0,
 				0, propertyTags, graphType: model.GraphType, dashboardId:dash.DashboardId, items:items);
 			
 			uowManager.Save();

@@ -113,17 +113,21 @@ namespace BAR.BL.Managers
 		/// the number of trending items depends on the
 		/// number that you give via the parameter
 		/// </summary>
-		public IEnumerable<Item> GetMostTrendingItems(int numberOfItems = 4, bool useWithOldData = false)
+		public IEnumerable<Item> GetMostTrendingItems(int numberOfItems = 5, bool useWithOldData = false)
 		{
 			//Order the items by populairity
-			List<Item> items = new List<Item>();
+			IEnumerable<Item> itemsOrderd = GetAllItems();
+			if (!useWithOldData)
+			{
+				itemsOrderd = itemsOrderd .OrderBy(item => item.NumberOfMentions).AsEnumerable();
+			}
+			else
+			{
+				UpdateTrendingItem(itemsOrderd);
+				itemsOrderd = itemsOrderd.OrderBy(item => item.NumberOfMentions).AsEnumerable();
+			}
 
-			foreach (Item item in GetMostTrendingItemsForType(ItemType.Person, numberOfItems, useWithOldData)) items.Add(item);
-			foreach (Item item in GetMostTrendingItemsForType(ItemType.Organisation, numberOfItems, useWithOldData)) items.Add(item);
-			foreach (Item item in GetMostTrendingItemsForType(ItemType.Theme, numberOfItems, useWithOldData)) items.Add(item);
-
-			IEnumerable<Item> itemsOrderd = items;
-			return itemsOrderd.AsEnumerable();
+			return itemsOrderd.Take(numberOfItems).AsEnumerable();
 		}
 
 		/// <summary>
@@ -142,7 +146,7 @@ namespace BAR.BL.Managers
 			}
 			else
 			{
-				UpdateTrendingItem(itemsOrderd);
+				UpdateWeeklyReviewData(itemsOrderd);
 				itemsOrderd = itemsOrderd.Where(item => item.ItemType == type)
 				.OrderBy(item => item.NumberOfMentions).AsEnumerable();
 			}
@@ -172,7 +176,7 @@ namespace BAR.BL.Managers
 				itemsOrderd = itemsFromUser.OrderBy(item => item.NumberOfMentions).AsEnumerable();
 			} else
 			{
-				UpdateTrendingItem(itemsFromUser);
+				UpdateWeeklyReviewData(itemsFromUser);
 				itemsOrderd = itemsFromUser.OrderBy(item => item.NumberOfMentions).AsEnumerable();
 			}
 
@@ -203,7 +207,7 @@ namespace BAR.BL.Managers
 				.OrderBy(item => item.NumberOfMentions).AsEnumerable();
 			} else
 			{
-				UpdateTrendingItem(itemsFromUser);
+				UpdateWeeklyReviewData(itemsFromUser);
 				itemsOrderd = itemsFromUser.Where(item => item.ItemType == type)
 				.OrderBy(item => item.NumberOfMentions).AsEnumerable();
 			}
@@ -215,7 +219,7 @@ namespace BAR.BL.Managers
 		/// If the last time that the old trending percentage of the item was updated 7 days ago,
 		/// then the old trending percentage will be updated.
 		/// </summary>
-		private void UpdateTrendingItem(IEnumerable<Item> items)
+		private void UpdateWeeklyReviewData(IEnumerable<Item> items)
 		{
 			foreach (Item item in items)
 			{
@@ -225,14 +229,6 @@ namespace BAR.BL.Managers
 					item.LastUpdated = DateTime.Now;
 				}
 			}		
-		}
-
-		/// <summary>
-		/// Updates the weekly review information if needed.
-		/// </summary>
-		private void UpdateWeeklyReviewData()
-		{
-			//TODO
 		}
 
 		/// <summary>

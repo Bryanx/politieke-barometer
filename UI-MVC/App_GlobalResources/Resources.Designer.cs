@@ -268,6 +268,15 @@ namespace BAR.UI.MVC.App_GlobalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Basic graph.
+        /// </summary>
+        public static string BasicGraph {
+            get {
+                return ResourceManager.GetString("BasicGraph", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Below 25.
         /// </summary>
         public static string Below25 {
@@ -313,6 +322,51 @@ namespace BAR.UI.MVC.App_GlobalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Choose data.
+        /// </summary>
+        public static string ChooseData {
+            get {
+                return ResourceManager.GetString("ChooseData", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to What data do you want to show on your graph?.
+        /// </summary>
+        public static string ChooseDataSubText {
+            get {
+                return ResourceManager.GetString("ChooseDataSubText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Choose graph.
+        /// </summary>
+        public static string ChooseGraph {
+            get {
+                return ResourceManager.GetString("ChooseGraph", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to What type of graph would you like to display?.
+        /// </summary>
+        public static string ChooseGraphSubText {
+            get {
+                return ResourceManager.GetString("ChooseGraphSubText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Choose person, organisation or topic..
+        /// </summary>
+        public static string ChoosePersonOrgTopic {
+            get {
+                return ResourceManager.GetString("ChoosePersonOrgTopic", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to City.
         /// </summary>
         public static string City {
@@ -327,6 +381,15 @@ namespace BAR.UI.MVC.App_GlobalResources {
         public static string CompareDataPlaceholder {
             get {
                 return ResourceManager.GetString("CompareDataPlaceholder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Comparing graph.
+        /// </summary>
+        public static string ComparingGraph {
+            get {
+                return ResourceManager.GetString("ComparingGraph", resourceCulture);
             }
         }
         
@@ -664,6 +727,15 @@ namespace BAR.UI.MVC.App_GlobalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Graph type.
+        /// </summary>
+        public static string GraphType {
+            get {
+                return ResourceManager.GetString("GraphType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Home.
         /// </summary>
         public static string Home {
@@ -732,6 +804,15 @@ namespace BAR.UI.MVC.App_GlobalResources {
         public static string InNumberOfMentions {
             get {
                 return ResourceManager.GetString("InNumberOfMentions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Intersect value.
+        /// </summary>
+        public static string IntersectValue {
+            get {
+                return ResourceManager.GetString("IntersectValue", resourceCulture);
             }
         }
         
@@ -1069,6 +1150,15 @@ namespace BAR.UI.MVC.App_GlobalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Optional.
+        /// </summary>
+        public static string Optional {
+            get {
+                return ResourceManager.GetString("Optional", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Or.
         /// </summary>
         public static string Or {
@@ -1083,6 +1173,24 @@ namespace BAR.UI.MVC.App_GlobalResources {
         public static string Organisation {
             get {
                 return ResourceManager.GetString("Organisation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Other settings.
+        /// </summary>
+        public static string OtherSettings {
+            get {
+                return ResourceManager.GetString("OtherSettings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Choose other optional graph settings..
+        /// </summary>
+        public static string OtherSettingsSubText {
+            get {
+                return ResourceManager.GetString("OtherSettingsSubText", resourceCulture);
             }
         }
         
@@ -1524,6 +1632,15 @@ namespace BAR.UI.MVC.App_GlobalResources {
         public static string Theme {
             get {
                 return ResourceManager.GetString("Theme", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Title.
+        /// </summary>
+        public static string Title {
+            get {
+                return ResourceManager.GetString("Title", resourceCulture);
             }
         }
         

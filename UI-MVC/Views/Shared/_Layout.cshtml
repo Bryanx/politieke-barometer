@@ -77,7 +77,12 @@
     </div>
 <div id="notificationMessage"></div>
 
-    <!-- Scripts -->
+<!-- modals -->
+@if (Model.User == null) {
+    @Html.Partial("Partials/_LoginModal", new LoginViewModel())
+}
+
+<!-- Scripts -->
     <script src="/Home/GetResources"></script> 
     @Scripts.Render("~/bundles/jquery","~/Content/build/js/searchbar.js", "~/bundles/bootstrap", "~/bundles/dates", "~/bundles/timeago", "~/bundles/custom")
     @Scripts.Render("~/Content/build/js/alerts.js")
