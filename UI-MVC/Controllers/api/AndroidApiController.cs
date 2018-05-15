@@ -157,24 +157,19 @@ namespace webapi.Controllers
     [Route("Alerts")]
     public IHttpActionResult GetAlerts()
     {
-      Alert alertOne = new Alert()
+      ISubscriptionManager subscriptionManager = new SubscriptionManager();
+      List<AlertViewModel> alerts = new List<AlertViewModel>();
+      AlertViewModel alertViewModel;
+      
+      foreach (var alert in subscriptionManager.GetAllAlerts(User.Identity.GetUserId()))
       {
-        AlertId = 1,
-        Subject = "Test",
-        Message = "Dit is een test"
-      };
-      Alert alertTwo = new Alert()
-      {
-        AlertId = 2,
-        Subject = "Test 2",
-        Message = "Dit is nog een test"
-      };
-
-      ICollection<Alert> alerts = new List<Alert>
-      {
-        alertOne,
-        alertTwo
-      };
+        alertViewModel = new AlertViewModel()
+        {
+          AlertId = alert.AlertId,
+          ItemName = alert.Subscription.SubscribedItem.Name
+        };
+        alerts.Add(alertViewModel);
+      }
 
       return Ok(alerts);
       }
