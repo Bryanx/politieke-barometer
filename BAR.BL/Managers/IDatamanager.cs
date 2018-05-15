@@ -38,6 +38,11 @@ namespace BAR.BL.Managers
 		Source AddSource(string name, string site);
 		void RemoveSource(string sourceId);
 
+        //DataSources
+        IEnumerable<DataSource> GetAllDataSources();
+        DataSource GetDataSource(int dataSourceId);
+        void RemoveDataSource(int dataSourceId);
+        void ChangeDataSource(int dataSourceId);
 		//Other
 		bool IsJsonEmpty(string json);
 		IEnumerable<string> GetUrlsForItem(int itemId);
