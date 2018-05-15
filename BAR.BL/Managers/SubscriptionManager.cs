@@ -123,7 +123,7 @@ namespace BAR.BL.Managers
 					Destination = sub.SubscribedUser.Email,
 					Subject = item.Name + " is nu trending!",
 					Body = "<strong>" + item.Name + " is nu trending</strong> met  " + item.NumberOfMentions + " vermeldingen!</br>" +
-					"Ga nu naar de website en ontdenk waarom ze trending is!"
+					"Ga nu naar de website en ontdenk waarom het item trending is!"
 				};
 				new EmailService().SendAsync(message);
 			}		

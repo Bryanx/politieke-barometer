@@ -284,7 +284,7 @@ namespace BAR.BL.Managers
 						"Een nieuwe weekly review is nu beschikbaar!</br></br>" +
 						"De <strong>meest trending items</strong> van deze week zijn:</br>" +
 						content +
-						"</br>Ga nu naar onze website om je nieuwe weekly review te bekijken!"
+						"</br>Ga nu naar onze website om uw nieuwe Weekly Review te bekijken!"
 				};
 				new EmailService().SendAsync(message);
 			}
