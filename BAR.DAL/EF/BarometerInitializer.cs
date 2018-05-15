@@ -193,7 +193,6 @@ namespace BAR.DAL.EF
       ctx.Sources.Add(facebook);
       DataSource textgain = new DataSource
       {
-        DataSourceId = 1,
         Name = "Textgain",
         Url = "https://kdg.textgain.com/query"
       };
