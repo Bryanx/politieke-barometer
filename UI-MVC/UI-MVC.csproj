@@ -20,7 +20,7 @@
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
     <Use64BitIISExpress />
-    <IISExpressSSLPort>44317</IISExpressSSLPort>
+    <IISExpressSSLPort>44303</IISExpressSSLPort>
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
@@ -235,6 +235,7 @@
     <Compile Include="Controllers\api\SuperAdminApiController.cs" />
     <Compile Include="Controllers\api\UserApiController.cs" />
     <Compile Include="Controllers\api\WidgetController.cs" />
+    <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LanguageController.cs" />
     <Compile Include="Controllers\OrganisationController.cs" />
@@ -519,7 +520,6 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Person\Details.cshtml" />
     <Content Include="Views\Person\Index.cshtml" />
-    <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Web.config" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\User\Register.cshtml" />
@@ -534,6 +534,7 @@
     <Content Include="Views\Lockout.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\build\css\partials\error.scss" />
     <None Include="Mvc.sitemap" />
     <None Include="MvcSiteMapSchema.xsd" />
     <None Include="packages.config" />
@@ -560,6 +561,7 @@
     <None Include="Scripts\vue\vue-resource.min.js" />
     <None Include="Scripts\vue\vue.js" />
     <None Include="Scripts\vue\vue.min.js" />
+    <Content Include="Views\Error\NotFound.cshtml" />
     <None Include="Views\Shared\DisplayTemplates\CanonicalHelperModel.ascx" />
     <None Include="Views\Shared\DisplayTemplates\CanonicalHelperModel.cshtml" />
     <None Include="Views\Shared\DisplayTemplates\MenuHelperModel.cshtml" />
