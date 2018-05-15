@@ -46,6 +46,7 @@ namespace BAR.BL.Managers
 		Item ChangeItemActivity(int itemId);
 		Person ChangePerson(int itemId, DateTime birthday, Gender gender, string position, string district);
 		Person ChangePerson(int itemId, string site);
+		Person ChangePersonOrganisation(int itemId, int organisationId);
 		Organisation ChangeOrganisation(int itemId, string site);
 		Item ChangePicture(int itemId, HttpPostedFileBase poImgFile);
     

@@ -538,6 +538,35 @@ namespace BAR.BL.Managers
 		}
 
 		/// <summary>
+		/// Updates the organisation of a given person
+		/// </summary>
+		/// <param name="itemId"></param>
+		/// <param name="organisationId"></param>
+		/// <returns></returns>
+		public Person ChangePersonOrganisation(int personId, int organisationId)
+		{
+			uowManager = new UnitOfWorkManager();
+
+			InitRepo();
+
+			Organisation org = this.GetOrganisationWithDetails(organisationId);
+			//Get item
+			Person personToUpdate = GetPersonWithDetails(personId);
+
+			if (personToUpdate == null) return null;
+
+			//Update item
+			personToUpdate.Organisation = org;
+
+			//Update database
+			itemRepo.UpdatePerson(personToUpdate);
+
+			uowManager.Save();
+			uowManager = null;
+			return personToUpdate;
+		}
+
+		/// <summary>
 		/// Updates the subplatform of a given item
 		/// </summary>
 		/// <param name="itemId"></param>

@@ -213,6 +213,16 @@ namespace BAR.DAL
 		}
 
 		/// <summary>
+		/// Updates a person and persists changes to the database
+		/// Returns -1 if SaveChanges() is delayed by unit of work.
+		/// </summary>
+		public int UpdatePerson(Person person)
+		{
+			ctx.Entry(person).State = EntityState.Modified;
+			return ctx.SaveChanges();
+		}
+
+		/// <summary>
 		/// Deletes an item from the database.
 		/// Returns -1 if SaveChanges() is delayed by unit of work.
 		/// </summary>
@@ -251,15 +261,15 @@ namespace BAR.DAL
 			return ctx.SaveChanges();
 		}
 
-        /// <summary>
-        /// Reads an organisation with a given name.
-        /// </summary>
-        public Organisation ReadOrganisation(string organisationName)
-        {
-          return ctx.Items.OfType<Organisation>()
-						  .Include(org => org.SubPlatform)
-						  .Where(org => org.Name.ToLower().Equals(organisationName.ToLower()))
-						  .SingleOrDefault();
-        }
+    /// <summary>
+    /// Reads an organisation with a given name.
+    /// </summary>
+    public Organisation ReadOrganisation(string organisationName)
+    {
+      return ctx.Items.OfType<Organisation>()
+					.Include(org => org.SubPlatform)
+					.Where(org => org.Name.ToLower().Equals(organisationName.ToLower()))
+					.SingleOrDefault();
+    }
 	}
 }
