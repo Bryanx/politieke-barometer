@@ -113,21 +113,17 @@ namespace BAR.BL.Managers
 		/// the number of trending items depends on the
 		/// number that you give via the parameter
 		/// </summary>
-		public IEnumerable<Item> GetMostTrendingItems(int numberOfItems = 5, bool useWithOldData = false)
+		public IEnumerable<Item> GetMostTrendingItems(int numberOfItems = 4, bool useWithOldData = false)
 		{
 			//Order the items by populairity
-			IEnumerable<Item> itemsOrderd = GetAllItems();
-			if (!useWithOldData)
-			{
-				itemsOrderd = itemsOrderd .OrderBy(item => item.NumberOfMentions).AsEnumerable();
-			}
-			else
-			{
-				UpdateTrendingItem(itemsOrderd);
-				itemsOrderd = itemsOrderd.OrderBy(item => item.NumberOfMentions).AsEnumerable();
-			}
+			List<Item> items = new List<Item>();
 
-			return itemsOrderd.Take(numberOfItems).AsEnumerable();
+			foreach (Item item in GetMostTrendingItemsForType(ItemType.Person, numberOfItems, useWithOldData)) items.Add(item);
+			foreach (Item item in GetMostTrendingItemsForType(ItemType.Organisation, numberOfItems, useWithOldData)) items.Add(item);
+			foreach (Item item in GetMostTrendingItemsForType(ItemType.Theme, numberOfItems, useWithOldData)) items.Add(item);
+
+			IEnumerable<Item> itemsOrderd = items;
+			return itemsOrderd.AsEnumerable();
 		}
 
 		/// <summary>

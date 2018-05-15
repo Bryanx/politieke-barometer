@@ -2,17 +2,6 @@ var jsonResult;
 
 Vue.use(VueFormWizard);
 Vue.use(VueFormGenerator);
-
-function convertWizardGraphTypeToChartType(GraphType) {
-    switch (GraphType) {
-        case 'Line chart' : return "line";
-        case 'Bar chart' : return "bar";
-        case 'Pie chart' : return "pie";
-        case 'Donut chart' : return "donut";
-        default : return "line";
-    }
-}
-
 new Vue({
     el: '#app',
     data: {

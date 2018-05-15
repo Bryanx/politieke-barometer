@@ -222,10 +222,15 @@ let getChart = function (id) {
 /*----- Saving widget to dashboard -----*/
 let makingJSON = function (e){
     let c = getChart(e.target.id);
-    let json = {
-        ItemIds: $('#' + e.target.id).data("widgetId").toString().split(" ").shift(), 
+    let list = $('#' + e.target.id).data("widgetId").toString().split(" ");
+    let ids = [];
+        $.each(list, function( index, value ) {
+        if (value !== "") ids.push(parseInt(value)  ) 
+    });
+       let json = {
+        ItemIds: ids, 
         GraphType: c[0].config.type,
-        PropertyTag: "Mentions"
+        PropertyTag: "Number of mentions"
     };
     addWidgetToDashboard(json);
     

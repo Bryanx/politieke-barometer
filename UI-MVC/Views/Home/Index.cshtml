@@ -135,7 +135,7 @@
                         <i class="fa fa-chevron-down"></i>
                     </a>
                 </li>
-                <li><a id=" + id + " class='makeJSON'> @Resources.Save</a></li>
+                <li><a id="2" class='makeJSON' data-widget-id=""> @Resources.Save</a></li>
             </ul>
             <div class='clearfix'></div>
         </div>
@@ -170,7 +170,7 @@
                         <i class="fa fa-chevron-down"></i>
                     </a>
                 </li>
-                <li><a id=" + id + " class='makeJSON'> @Resources.Save</a></li>
+                <li><a id="3" class='makeJSON' data-widget-id=""> @Resources.Save</a></li>
             </ul>
             <div class='clearfix'></div>
         </div>
@@ -210,12 +210,6 @@
         </div>
         <div class="x_content">
             @Html.Partial("Partials/_WeeklyReview")
-            @{
-                string input;
-                using(var reader = new StreamReader(Request.InputStream)){
-                    input = reader.ReadToEnd();
-                }
-            }
         </div>
     </div>
 </section>
