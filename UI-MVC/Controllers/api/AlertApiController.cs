@@ -1,12 +1,10 @@
-﻿using System;
+﻿using BAR.BL.Domain.Users;
+using BAR.BL.Managers;
+using BAR.UI.MVC.Models;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Web.Http;
-using BAR.BL.Domain.Users;
-using BAR.BL.Managers;
-using BAR.UI.MVC.Models;
-using Microsoft.AspNet.Identity;
 
 namespace BAR.UI.MVC.Controllers.api
 {
@@ -26,23 +24,36 @@ namespace BAR.UI.MVC.Controllers.api
 		public IHttpActionResult GetAlerts()
 		{
 			subManager = new SubscriptionManager();
-			IEnumerable<Alert> alertsToShow = subManager.GetAllAlerts(User.Identity.GetUserId());
-			if (alertsToShow == null || alertsToShow.Count() == 0) return StatusCode(HttpStatusCode.NoContent);
+			IEnumerable<UserAlert> userAlerts = subManager.GetAllUserAlerts();
+			IEnumerable<SubAlert> subAlerts = subManager.GetAllSubAlerts();
+			if (userAlerts == null || subAlerts == null || (userAlerts.Count() == 0 && subAlerts.Count() == 0)) return StatusCode(HttpStatusCode.NoContent);
 
 			//Made DTO class to prevent circular references
 			List<AlertDTO> lijst = new List<AlertDTO>();
-			foreach (Alert alert in alertsToShow)
+			foreach (SubAlert alert in subAlerts)
 			{
-				lijst.Add(new AlertDTO()
+				AlertDTO alertDTO = new AlertDTO()
 				{
 					AlertId = alert.AlertId,
 					Name = alert.Subscription.SubscribedItem.Name,
 					TimeStamp = alert.TimeStamp,
 					IsRead = alert.IsRead,
 					itemId = alert.Subscription.SubscribedItem.ItemId
-
-				});
+				};
+				lijst.Add(alertDTO);
 			}
+			foreach (UserAlert alert in userAlerts)
+			{
+				AlertDTO alertDTO = new AlertDTO()
+				{
+					AlertId = alert.AlertId,
+					Name = alert.Subject,
+					TimeStamp = alert.TimeStamp,
+					IsRead = alert.IsRead,
+				};
+				lijst.Add(alertDTO);
+			}
+				 
 			return Ok(lijst.AsEnumerable());
 		}
 
@@ -54,7 +65,7 @@ namespace BAR.UI.MVC.Controllers.api
 		public IHttpActionResult MarkAlertAsRead(int alertId)
 		{
 			subManager = new SubscriptionManager();
-			subManager.ChangeAlertToRead(User.Identity.GetUserId(), alertId);
+			subManager.ChangeAlertToRead(alertId);
 			return StatusCode(HttpStatusCode.NoContent);
 		}
 
@@ -65,9 +76,26 @@ namespace BAR.UI.MVC.Controllers.api
 		[Route("api/User/Alert/{alertId}/Delete")]
 		public IHttpActionResult DeleteAlert(int alertId)
 		{
-			subManager = new SubscriptionManager();
-			subManager.RemoveAlert(User.Identity.GetUserId(), alertId);
+			subManager = new SubscriptionManager();	
+			subManager.RemoveAlert(alertId);
 			return StatusCode(HttpStatusCode.NoContent);
+		}
+
+		/// <summary>
+		/// Gives the alerttype to the front-end
+		/// </summary>
+		[HttpGet]
+		[Route("api/User/Alert/CheckAlert/{alertId}")]
+		public string CheckAlertType(int alertId)
+		{
+			//Get alert
+			subManager = new SubscriptionManager();
+			Alert alert = subManager.GetAlert(alertId);
+			if (alert == null) return null;
+
+			//Retreive type
+			if (alert is UserAlert) return "user alert";
+			else return "sub alert";
 		}
 	}
 }

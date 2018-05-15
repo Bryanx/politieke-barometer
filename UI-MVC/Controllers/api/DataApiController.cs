@@ -17,11 +17,11 @@ namespace BAR.UI.MVC.Controllers.api
 
 		[HttpGet]
 		[Route("api/Data/Synchronize")]
+		[SubPlatformCheckAPI]
 		public IHttpActionResult Synchronize()
 		{
 			dataManager = new DataManager();
 			
-
 			string content;
 			if (dataManager.GetLastAudit() == null)
 			{
@@ -64,6 +64,15 @@ namespace BAR.UI.MVC.Controllers.api
 							new WidgetManager().GenerateDataForMwidgets();
 							//Update all items with recent data
 							new ItemManager().FillItems();
+							//Update weekly review alerts
+							//Get the subplatformID from the SubPlatformCheckAPI attribute
+							object _customObject = null;
+							int suplatformID = -1;
+							if (Request.Properties.TryGetValue("SubPlatformID", out _customObject))
+							{
+								suplatformID = (int)_customObject;
+							}
+							new UserManager().GenerateAlertsForWeeklyReview(suplatformID);
 
 
 							return StatusCode(HttpStatusCode.OK);

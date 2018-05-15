@@ -486,7 +486,7 @@ namespace BAR.BL.Managers
 		/// for a specific user
 		/// For now, this method will only return the widgets "number of metnions" because these are the most logical.
 		/// </summary>
-		public IEnumerable<Widget> GetWidgetsForWeeklyReview(string userId = null)
+		public IEnumerable<Widget> GetWidgetsForWeeklyReview(int platformId = 2, string userId = null)
 		{
 			InitRepo();
 			List<Widget> widgets = new List<Widget>();
@@ -494,6 +494,7 @@ namespace BAR.BL.Managers
 			//Get trending items
 			ItemManager itemManager = new ItemManager();
 			IEnumerable<Item> items = null;
+			itemManager.UpdateWeeklyReviewData(platformId);
 			if (userId == null) items = itemManager.GetMostTrendingItems(useWithOldData: true);
 			else items = itemManager.GetMostTrendingItemsForUser(userId, useWithOldData: true);
 
