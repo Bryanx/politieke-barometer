@@ -663,4 +663,10 @@
   <data name="Required" xml:space="preserve">
     <value>obligatoire</value>
   </data>
+  <data name="ImportThemes" xml:space="preserve">
+    <value>Importe themes</value>
+  </data>
+  <data name="CreateItem" xml:space="preserve">
+    <value>Creeer Item</value>
+  </data>
 </root>

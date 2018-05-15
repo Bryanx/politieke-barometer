@@ -234,6 +234,9 @@
   <data name="Contact" xml:space="preserve">
     <value>Contact</value>
   </data>
+  <data name="CreateItem" xml:space="preserve">
+    <value>Creeer Item</value>
+  </data>
   <data name="CreationDate" xml:space="preserve">
     <value>Aanmaak datum</value>
   </data>
@@ -335,6 +338,9 @@
   </data>
   <data name="ImportContent" xml:space="preserve">
     <value>Content importeren</value>
+  </data>
+  <data name="ImportThemes" xml:space="preserve">
+    <value>Importeer themas</value>
   </data>
   <data name="InNumberOfMentions" xml:space="preserve">
     <value>In aantal vermeldingen.</value>

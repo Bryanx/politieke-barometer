@@ -412,6 +412,15 @@ namespace BAR.UI.MVC.App_GlobalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Create Item.
+        /// </summary>
+        public static string CreateItem {
+            get {
+                return ResourceManager.GetString("CreateItem", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Creation date.
         /// </summary>
         public static string CreationDate {
@@ -723,6 +732,15 @@ namespace BAR.UI.MVC.App_GlobalResources {
         public static string ImportContent {
             get {
                 return ResourceManager.GetString("ImportContent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Import themes.
+        /// </summary>
+        public static string ImportThemes {
+            get {
+                return ResourceManager.GetString("ImportThemes", resourceCulture);
             }
         }
         

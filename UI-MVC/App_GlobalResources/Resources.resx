@@ -669,4 +669,10 @@
   <data name="Required" xml:space="preserve">
     <value>Required</value>
   </data>
+  <data name="ImportThemes" xml:space="preserve">
+    <value>Import themes</value>
+  </data>
+  <data name="CreateItem" xml:space="preserve">
+    <value>Create Item</value>
+  </data>
 </root>
