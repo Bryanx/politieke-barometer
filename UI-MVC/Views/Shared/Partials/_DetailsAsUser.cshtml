@@ -36,7 +36,7 @@
             @if (@Model.Site.Any()) {
                 <li class="m-top-xs">
                     <i class="fa fa-globe external-link user-profile-icon"></i>
-                    <a href="@Model.Site" target="_blank">@Model.Site.Replace("http://", "").Replace("www.", "")</a>
+                    <a href="https://@Model.Site" target="_blank">@Model.Site.Replace("http://", "").Replace("www.", "")</a>
                 </li>
             }
         </ul>

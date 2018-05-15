@@ -1,4 +1,4 @@
-﻿@model BAR.UI.MVC.Models.ItemViewModels.ItemViewModel
+﻿@model BAR.UI.MVC.Models.ItemViewModels.ItemCreateViewModel
 
 
 <a class="btn btn-dark " data-toggle="modal" data-target=".bs-example-modal-lg" >Create Item</a>
@@ -21,10 +21,11 @@
                                     <input class="form-control login-input" id="Website" name="Website" placeholder="Website" type="text" value="">
                                     <input class="form-control login-input" id="Facebook" name="Facebook" placeholder="Facebook" type="text" value="">
                                     <input class="form-control login-input" id="Twitter" name="Twitter" placeholder="Twitter" type="text" value="">
-                                    <input class="form-control login-input" id="Twitter" name="Twitter" placeholder="Twitter" type="date" value="">
+                                    <input class="form-control login-input" id="DateOfBirth" name="DateOfBirth" placeholder="DateOfBirth" type="date" value="">
 
+                                    @Html.DropDownListFor(model => model.OrganisationId, Model.Organisations, @Resources.SelectOrganisation, new { @class = "form-control login-input", @id = "OrganisationId", @name = "OrganisationId" })
                                     <div class="form-check">
-                                        <button type="submit" class="btn btn-primary w-100 h-40">@Resources.Signup</button>
+                                        <button type="submit" class="btn btn-primary login-input w-100 h-40">@Resources.AddItem</button>
                                     </div>
                                 </div>}
                             </div>
@@ -43,7 +44,7 @@
                                     <input class="form-control login-input" id="Name" name="Name" placeholder="Name" type="text" value="">
                                     <input class="form-control login-input" id="Website" name="Website" placeholder="Website" type="text" value="">
                                     <div class="form-check">
-                                        <button type="submit" class="btn btn-primary w-100 h-40 login-input">@Resources.Signup</button>
+                                        <button type="submit" class="btn btn-primary w-100 h-40 login-input">@Resources.AddItem</button>
                                     </div>
                                 </div>}
                             </div>
@@ -62,7 +63,7 @@
                                     <input class="form-control login-input" id="Name" name="Name" placeholder="Name" type="text" value="">
                                     <input class="form-control login-input" id="Keywords" name="Keywords" placeholder="Keywords gescheiden door een komma" type="text" value="">
                                     <div class="form-check">
-                                        <button type="submit" class="btn btn-primary login-input w-100 h-40">@Resources.Signup</button>
+                                        <button type="submit" class="btn btn-primary login-input w-100 h-40">@Resources.AddItem</button>
                                     </div>
                                 </div>}
                             </div>

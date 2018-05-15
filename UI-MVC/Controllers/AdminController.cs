@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using BAR.BL.Domain.Core;
+using BAR.BL.Domain.Data;
 using BAR.BL.Domain.Items;
 using BAR.BL.Domain.Users;
 using BAR.BL.Managers;
@@ -12,6 +13,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using static BAR.UI.MVC.Models.ItemViewModels;
 
 namespace BAR.UI.MVC.Controllers
 {
@@ -24,6 +26,7 @@ namespace BAR.UI.MVC.Controllers
 		private IUserManager userManager;
 		private IItemManager itemManager;
 		private ISubplatformManager platformManager;
+		private IDataManager dataManager;
 
 		/// <summary>
 		/// Dashboard page of admin.
@@ -54,7 +57,7 @@ namespace BAR.UI.MVC.Controllers
 		}
 
 		/// <summary>
-		/// Item management page of admin.
+		/// Item management page for admin.
 		/// </summary>
 		public ActionResult ItemManagement()
 		{
@@ -65,12 +68,21 @@ namespace BAR.UI.MVC.Controllers
 			userManager = new UserManager();
 
 			//Assembling the view
-			return View(new ItemViewModels.ItemViewModel()
+			ItemCreateViewModel vm = new ItemViewModels.ItemCreateViewModel()
 			{
 				User = userManager.GetUser(User.Identity.GetUserId()),
 				PageTitle = Resources.ItemManagement,
 				Items = Mapper.Map(itemManager.GetAllItems().Where(item => item.SubPlatform.SubPlatformId == subPlatformID), new List<ItemDTO>())
-			});
+			};
+
+			int count = itemManager.GetAllOrganisationsForSubplatform(subPlatformID).Count();
+			vm.Organisations = itemManager.GetAllOrganisationsForSubplatform(subPlatformID).Select(x => new SelectListItem
+			{
+				Value = System.Convert.ToString(x.ItemId),
+				Text = x.Name,
+			}).OrderBy(x => x.Text);
+
+			return View(vm);
 		}
 
 		/// <summary>
@@ -178,10 +190,29 @@ namespace BAR.UI.MVC.Controllers
 
 			itemManager = new ItemManager();
 			platformManager = new SubplatformManager();
+			dataManager = new DataManager();
 			SubPlatform subplatform = platformManager.GetSubPlatform(subPlatformID);
 
-			Person person = (Person)itemManager.AddItem(ItemType.Person, model.Name, site: "www.kdg.be");
+			Person person = (Person)itemManager.AddItem(ItemType.Person, model.Name, site: model.Website);
 			itemManager.ChangeItemPlatform(person.ItemId, subplatform.SubPlatformId);
+			itemManager.ChangePersonOrganisation(person.ItemId, model.OrganisationId);
+
+
+			Source s = dataManager.GetSource("twitter");
+
+			List<SocialMediaName> socialMediaNames = new List<SocialMediaName>();
+			socialMediaNames.Add(new SocialMediaName()
+			{
+				Source = dataManager.GetSource("twitter"),
+				Username = model.Twitter
+			});
+
+			socialMediaNames.Add(new SocialMediaName()
+			{
+				Source = dataManager.GetSource("facebook"),
+				Username = model.Facebook
+			});
+
 
 			return RedirectToAction("Details", "Person", new { id = person.ItemId });
 		}
