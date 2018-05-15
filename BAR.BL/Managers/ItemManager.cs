@@ -52,19 +52,22 @@ namespace BAR.BL.Managers
 			if (infos == null || infos.Count() == 0) return;
 	
 			//Calculate new baseline
-			DateTime startdate = DateTime.Now.AddDays(-3);
-			DateTime endDate = DateTime.Now.AddDays(-33);
-			int infosOld = infos.Where(info => info.CreationDate >= endDate && info.CreationDate < startdate).Count();
-			if (infosOld != 0) itemToUpdate.Baseline = (double) Math.Round((decimal) (infosOld / 30),  2);
+			int infosOld = infos.Where(info => !info.CreationDate.Value.ToString("dd-MM-yy").Equals(DateTime.Now.ToString("dd-MM-yy"))).Count();
+			if (infosOld != 0) itemToUpdate.Baseline = Math.Round((double) (infosOld / 30));
 
 			//Determine trending percentage
 			int infosNew = infos.Where(info => info.CreationDate.Value.ToString("dd-MM-yy").Equals(DateTime.Now.ToString("dd-MM-yy"))).Count();
 			if (infosNew != 0)
 			{
-				double trendingPer = (infosNew / itemToUpdate.Baseline) - 1;
+				//If trendingper is 0 then it will be devided by 1
+				//Bescause deviding by zero gives back an error
+				double trendingPer;
+				if (itemToUpdate.Baseline == 0) trendingPer = infosNew / 1;
+				else trendingPer = infosNew / itemToUpdate.Baseline;
+
 				if (trendingPer > 0)
 				{
-					itemToUpdate.TrendingPercentage = (double) Math.Round((decimal) (trendingPer * 100), 2);
+					itemToUpdate.TrendingPercentage = Math.Round((trendingPer * 100), 2);
 					new SubscriptionManager().GenerateAlerts(itemToUpdate.ItemId);
 				}
 			}
@@ -754,7 +757,7 @@ namespace BAR.BL.Managers
 						LastUpdatedInfo = DateTime.Now,
 						NumberOfFollowers = 0,
 						TrendingPercentage = 0.0,
-						Baseline = 0.0,
+						Baseline = 10.0,
 						Informations = new List<Information>(),
 						SocialMediaUrls = new List<SocialMediaName>(),
 						SubPlatform = subPlatform
@@ -863,7 +866,8 @@ namespace BAR.BL.Managers
 			//Update sentiment & number of mentions
 			foreach (Item item in items)
 			{
-				item.NumberOfMentions = dataManager.GetInformationsForItemid(item.ItemId).Count();
+				//Number of mentions from the last 30 days
+				item.NumberOfMentions = dataManager.GetInformationsForItemid(item.ItemId).Where(info => info.CreationDate >= DateTime.Now.AddDays(-30)).Count();
 				if (item.LastUpdated == null)
 				{
 					item.NumberOfMentionsOld = item.NumberOfMentions;

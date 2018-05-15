@@ -69,7 +69,7 @@ function generateAlertHTML(alert) {
         }));
     var alertBody = $("<a />",
         {
-            href: `/Person/Details/${alert.AlertId}`
+            href: `/Person/Details/${alert.itemId}`
         });
     var alertIcon = $("<div />",
         {
@@ -139,12 +139,15 @@ function loadAlerts() {
         type: 'GET',
         url: '/api/User/GetAlerts',
         dataType: 'json',
+        success: data => {
+          console.log(data);
+          loadAlertsHandler(data);
+        },
         error: function(xhr, status, error) {
             var err = eval("(" + xhr.responseText + ")");
             alert(err.Message);
         }
-    })
-        .done(data => loadAlertsHandler(data));
+    });
 }
 
 

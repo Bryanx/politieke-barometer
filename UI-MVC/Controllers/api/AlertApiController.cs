@@ -38,7 +38,9 @@ namespace BAR.UI.MVC.Controllers.api
 					AlertId = alert.AlertId,
 					Name = alert.Subscription.SubscribedItem.Name,
 					TimeStamp = alert.TimeStamp,
-					IsRead = alert.IsRead
+					IsRead = alert.IsRead,
+					itemId = alert.Subscription.SubscribedItem.ItemId
+
 				});
 			}
 			return Ok(lijst.AsEnumerable());
