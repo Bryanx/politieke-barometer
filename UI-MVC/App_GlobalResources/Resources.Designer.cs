@@ -871,6 +871,15 @@ namespace BAR.UI.MVC.App_GlobalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Latest stories.
+        /// </summary>
+        public static string LatestStories {
+            get {
+                return ResourceManager.GetString("LatestStories", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Less then on minute.
         /// </summary>
         public static string LessThenOneMinute {

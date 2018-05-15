@@ -768,7 +768,7 @@ function loadWidgets(url, itemId, onlyLoadLastWidget = false) {
 
     //Creates a widget with stories for item page
     function loadStories(itemId) {
-        grid.addWidget(widgetElements.createStoriesWidget("Latest stories"), 0, 0, 6, 6, true, 4, 12, 5, 12, -2);
+        grid.addWidget(widgetElements.createStoriesWidget(Resources.LatestStories), 0, 0, 6, 6, true, 4, 12, 5, 12, -2);
         grid.movable(".grid-stack-item", false);
         grid.resizable(".grid-stack-item", false);
         $.ajax({
@@ -777,7 +777,7 @@ function loadWidgets(url, itemId, onlyLoadLastWidget = false) {
             success : data => {
                 console.log(data);
                 $.each(data,  (index, url) => {
-                    $("#stories").append("<li class='story-url'><i class='fa fa-caret-right'> </i><a href='"+url+"'>" + url + "</a></li>");
+                    $("#stories").append("<li class='story-url'><i class='fa fa-caret-right'></i><a href='"+url+"'>" + url + "</a></li>");
                 });
             }
         });
