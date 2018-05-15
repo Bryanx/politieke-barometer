@@ -1115,8 +1115,6 @@ footer.joinus {
 .tile_count {
   margin-bottom: 20px;
   margin-top: 20px; }
-  .tile_count :first-child {
-    border-left: 0 !important; }
   .tile_count .tile_stats_count {
     text-overflow: ellipsis;
     overflow: hidden;
@@ -1923,6 +1921,30 @@ nav .nav-container .searchbar .search-field, form.navbar-form .input-group {
 .fa-snapchat-square:hover::before {
   color: #fbe00f; }
 
+.small-card .card-user {
+  position: absolute;
+  left: 5px;
+  top: 5px;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%; }
+.small-card .card-category {
+  position: absolute;
+  top: 5px;
+  left: 40px;
+  font-size: 12px;
+  font-weight: bold;
+  letter-spacing: 1px; }
+.small-card .card-nom {
+  position: absolute;
+  top: 45px;
+  left: 5px; }
+  .small-card .card-nom .totalNumberOfMentions {
+    font-size: 12px; }
+.small-card .card-image {
+  width: 30px;
+  height: 30px; }
+
 .card {
   height: 100px;
   color: var(--font-color);
@@ -1967,5 +1989,38 @@ nav .nav-container .searchbar .search-field, form.navbar-form .input-group {
 .card-image {
   width: 50px;
   height: 50px; }
+
+.weeklyReview-top-card {
+  position: relative; }
+
+.weeklyReview-avatar {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  width: 200px; }
+  .weeklyReview-avatar img {
+    width: 100% !important;
+    height: 100% !important; }
+
+.weeklyReview-name {
+  position: absolute;
+  top: 40px;
+  left: 220px;
+  letter-spacing: 1px;
+  font-size: 20px;
+  font-weight: bold; }
+
+.weeklyReview-organisation {
+  position: absolute;
+  top: 10px;
+  left: 220px; }
+
+.weeklyReview-nom {
+  position: absolute;
+  left: 220px;
+  top: 110px;
+  letter-spacing: 1px;
+  font-size: 20px;
+  font-weight: bold; }
 
 /*# sourceMappingURL=custom.css.map */

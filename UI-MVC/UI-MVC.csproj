@@ -303,6 +303,7 @@
     <Content Include="Content\build\css\partials\texteditor.scss" />
     <Content Include="Content\build\css\partials\tiles.scss" />
     <Content Include="Content\build\css\partials\dashboard.scss" />
+    <Content Include="Content\build\css\partials\weeklyReview.scss" />
     <Content Include="Content\build\css\vendor\bootstrap-progressbar-3.3.4.css" />
     <Content Include="Content\build\css\vendor\bootstrap-progressbar-3.3.4.min.css" />
     <Content Include="Content\build\css\vendor\bootstrap.css" />

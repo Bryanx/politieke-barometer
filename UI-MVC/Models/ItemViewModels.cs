@@ -8,6 +8,7 @@ namespace BAR.UI.MVC.Models {
         public class ItemViewModel : BaseViewModel {
             public IEnumerable<ItemDTO> Items { get; set; }
             public string Json { get; set; }
+            public WeeklyReviewModel WeeklyReviewModel { get; set; }
         }
         
         public class PersonViewModel : BaseViewModel {
@@ -27,6 +28,11 @@ namespace BAR.UI.MVC.Models {
             public int RankNumberOfMentions  { get; set; }
             public int RankTrendingPercentage  { get; set; }
             
+        }
+
+        public class WeeklyReviewModel : BaseViewModel {
+            public ICollection<ItemDTO> WeeklyItems { get; set; }
+            public ICollection<PersonViewModel> PersonViewModel { get; set; }
         }
         
         public class PersonViewModels : BaseViewModel {

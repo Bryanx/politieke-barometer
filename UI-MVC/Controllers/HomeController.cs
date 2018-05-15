@@ -11,6 +11,7 @@ using BAR.UI.MVC.App_GlobalResources;
 using BAR.UI.MVC.Helpers;
 using BAR.UI.MVC.Models;
 using Microsoft.AspNet.Identity;
+using WebGrease.Css.Extensions;
 using static BAR.UI.MVC.Models.ItemViewModels;
 
 namespace BAR.UI.MVC.Controllers
@@ -34,12 +35,22 @@ namespace BAR.UI.MVC.Controllers
       userManager = new UserManager();
       itemManager = new ItemManager();
 
+      List<Person> persons = new List<Person>();
+      itemManager.GetMostTrendingItemsForType(ItemType.Person, 4, true)
+        .Take(4).ForEach(i => persons.Add(itemManager.GetPersonWithDetails(i.ItemId)));
+      
+
       //Assembling the view
-      return View(new ItemViewModel()
+      return View(new ItemViewModel
       {
         PageTitle = INDEX_PAGE_TITLE,
         User = User.Identity.IsAuthenticated ? userManager.GetUser(User.Identity.GetUserId()) : null,
-        Items = Mapper.Map<IList<Item>, IList<ItemDTO>>(itemManager.GetAllItems().ToList())
+        Items = Mapper.Map<IList<Item>, IList<ItemDTO>>(itemManager.GetAllItems().ToList()),
+        WeeklyReviewModel = new WeeklyReviewModel
+        {
+          WeeklyItems = Mapper.Map(itemManager.GetMostTrendingItems(4, true), new List<ItemDTO>()),
+          PersonViewModel = Mapper.Map(persons, new List<PersonViewModel>())
+        }
       });
     }
     /// <summary>

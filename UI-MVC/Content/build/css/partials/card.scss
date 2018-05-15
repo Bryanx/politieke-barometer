@@ -1,3 +1,38 @@
+.small-card {
+  .card-user {
+    position: absolute;
+    left: 5px;
+    top: 5px;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+  }
+  .card-category {
+    position: absolute;
+    top: 5px;
+    left: 40px;
+    font-size: 12px;
+    font-weight: bold;
+    letter-spacing: 1px;
+  }
+  .card-nom {
+    position: absolute;
+    top: 45px;
+    left: 5px;
+    .totalNumberOfMentions{
+      font-size: 12px;
+    }
+  }
+  
+  .card-image {
+    width: 30px;
+    height: 30px;
+  }
+}
+
+
+
+
 .card {
   height: 100px;
   color: var(--font-color);

@@ -1,4 +1,5 @@
-﻿@using BAR.UI.MVC.Models
+﻿@using BAR.UI.MVC.Helpers
+@model BAR.UI.MVC.Models.ItemViewModels.WeeklyReviewModel
 
 <div class='x_panel no-scrollbar x_nested_panel'>
     <div class='x_title'>
@@ -14,14 +15,36 @@
     </div>
     <div class="x_content">
         <div class="row">
-            <div class="col-12" style="max-height: 400px; height: 400px">
+            <div class="col-xs-12 col-sm-4 weeklyReview-top-card">
+                <div class="weeklyReview-avatar profile_left">
+                    <img src='https://twitter.com/@Model.PersonViewModel.ElementAt(0).SocialMediaNames.First(s => s.Source.Name == "Twitter").Username/profile_image?size=original'
+                         class="img-responsive avatar-view"
+                         onerror="this.onload = null;this.src = '/Content/build/images/picture.jpg';"/>
+                </div>
+                <div class="weeklyReview-organisation"><button onclick="window.location = '@Url.OrganisationUrl(Model.PersonViewModel.ElementAt(0).OrganisationId)';" class="btn btn-default btn-xs">@Model.PersonViewModel.ElementAt(0).OrganisationName</button></div>
+                <div class="weeklyReview-name">
+                    <a style="text-decoration: none" href="/Person/Details/@Model.WeeklyItems.ElementAt(0).ItemId">@Model.WeeklyItems.ElementAt(0).Name</a>
+                    <div class="badge bg-gold">
+                        @{
+                            var rankNumberOfMentions = Model.PersonViewModel.ElementAt(0).RankNumberOfMentions + 1;
+                        }
+                        #@rankNumberOfMentions @Resources.InNumberOfMentions.ToLower()</div>
+                </div>
+                <div class="weeklyReview-nom">
+                    @Resources.NumberOfMentions <br/>
+                    @Model.WeeklyItems.ElementAt(0).NumberOfMentions
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-8" style="max-height: 250px; height: 250px">
                 <canvas id='weeklyReview-1'></canvas>
                 <h2 class='no-graph-data text-center'>No data available.</h2>
             </div>
-            @for (int j = 0; j < 3; j++)
+        </div>
+        <div class="row">
+            @for (int j = 1; j < 4; j++)
             {
-                <div class="col-4">
-                    
+                <div class="col-xs-12 col-sm-4">
+                    @Html.Partial("Partials/_card", Model.WeeklyItems.ElementAt(j))
                 </div>
             }
         </div>
@@ -42,14 +65,19 @@
     </div>
     <div class="x_content" style="display: none">
         <div class="row">
-            <div class="col-12" style="max-height: 400px; height: 400px">
+            <div class="col-xs-12 col-sm-4">
+                
+            </div>
+            <div class="col-xs-12 col-sm-8" style="max-height: 400px; height: 400px">
                 <canvas id='weeklyReview-2'></canvas>
                 <h2 class='no-graph-data text-center'>No data available.</h2>
             </div>
-            @for (int j = 0; j < 3; j++)
+        </div>
+        <div class="row">
+            @for (int j = 5; j < 8; j++)
             {
-                <div class="col-4">
-                    <p>Card @j</p>
+                <div class="col-xs-12 col-sm-4">
+                    @Html.Partial("Partials/_card", Model.WeeklyItems.ElementAt(j))
                 </div>
             }
         </div>
@@ -70,14 +98,19 @@
     </div>
     <div class="x_content" style="display: none">
         <div class="row">
-            <div class="col-12" style="max-height: 400px; height: 400px">
+            <div class="col-xs-12 col-sm-4">
+                
+            </div>
+            <div class="col-xs-12 col-sm-8" style="max-height: 400px; height: 400px">
                 <canvas id='weeklyReview-3'></canvas>
                 <h2 class='no-graph-data text-center'>No data available.</h2>
             </div>
-            @for (int j = 0; j < 3; j++)
+        </div>
+        <div class="row">
+            @for (int j = 9; j < 12; j++)
             {
-                <div class="col-4">
-                    <p>Card @j</p>
+                <div class="col-xs-12 col-sm-4">
+                    @Html.Partial("Partials/_card", Model.WeeklyItems.ElementAt(j))
                 </div>
             }
         </div>
