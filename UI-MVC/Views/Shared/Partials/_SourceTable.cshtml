@@ -17,13 +17,6 @@
             <th>
                 @Resources.Site
             </th>
-            <th>
-            @Resources.Interval
-            <th>
-            </th>
-            <th>
-            @Resources.SetTime
-            </th>
             <th></th>
             
         </tr>
@@ -38,14 +31,7 @@
             <td>
                 @Model.Sources.ElementAt(i).Site
             </td>
-            <td>
-                @Html.TextBoxFor(Model => Model.Interval, new { @class = "renameItem form-control", interval = @Model.Interval })
-                <span style="display:none">@Model.Interval</span>
-            </td>
-            <td>
-                @Html.TextBoxFor(Model => Model.SetTime, new { @class = "renameItem form-control", settime = @Model.SetTime })
-                <span style="display:none">@Model.SetTime</span>
-            </td>
+           
             <td>
                 <btn class="sourceChange btn btn-danger btn-xs" id="@Convert.ToString(Model.Sources.ElementAt(i).SourceId)" title="@Resources.RemoveSource">@Resources.Remove</btn>
             </td>

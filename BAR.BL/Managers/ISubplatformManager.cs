@@ -43,5 +43,10 @@ namespace BAR.BL.Managers
 		void RemoveQuestion(int questionId);
 
 		bool Exists(int questionid);
-	}
+        //Timer
+        int GetInterval(int platformId);
+        string GetStartTimer(int platformId);
+        int ChangeInterval(int platformId, int interval);
+        string ChangeStartTimer(int platformId, string startTimer);
+    }
 }

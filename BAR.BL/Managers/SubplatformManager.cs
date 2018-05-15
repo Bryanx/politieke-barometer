@@ -415,5 +415,31 @@ namespace BAR.BL.Managers
 			if (uowManager == null) platformRepo = new SubplatformRepository();
 			else platformRepo = new SubplatformRepository(uowManager.UnitOfWork);
 		}
-	}
+
+        public int GetInterval(int platformId)
+        {
+            InitRepo();
+            return platformRepo.ReadInterval(platformId);
+        }
+
+        public string GetStartTimer(int platformId)
+        {
+            InitRepo();
+            return platformRepo.ReadStartTime(platformId);
+        }
+
+        public int ChangeInterval(int platformId, int interval)
+        {
+            InitRepo();
+            platformRepo.UpdateInterval(platformId, interval);
+            return interval;
+        }
+
+        public string ChangeStartTimer(int platformId, string startTimer)
+        {
+            InitRepo();
+            platformRepo.UpdateStartTime(platformId, startTimer);
+            return startTimer;
+        }
+    }
 }

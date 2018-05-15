@@ -48,7 +48,7 @@
             </div>
             <div class="x_content">
                 <br />
-                <form method="post" action="/api/SuperAdmin/SetSynchronize" id="synchronizeForm" class="form-horizontal">
+                <form method="post" action="/api/SuperAdmin/SetSynchronize" id="setSynchronizeForm" class="form-horizontal">
                     <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="interval">
                             @Resources.Interval
@@ -108,7 +108,7 @@
 @*</div>*@
 
 @section CustomJS{
-    <script type="text/javascript">
+<script type="text/javascript">
         $("#synchronizeForm").on("submit", function (event) {
             submitForm($(this), event, $("#synchronizeMessage"));
         });
@@ -156,7 +156,17 @@
                         $("#name").val("");
                         $("#site").val("");
                     });
-            });
+        });
+
+        $("#setSynchronizeForm").on("submit", function (event) {
+                event.preventDefault();
+                var $this = $(this);
+                $.ajax({
+                    type: $this.attr('method'),
+                    url: $this.attr('action'),
+                    data: $this.serialize()
+                }).fail(() => {/* ok */ })
+                    });
 
             $(document).on("click", ".sourceChange", (function (event) {
                 event.preventDefault();
@@ -173,5 +183,5 @@
                         $this.closest('tr').remove();
                     });
             }));
-    </script>
+</script>
 }

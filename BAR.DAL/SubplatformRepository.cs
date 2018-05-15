@@ -204,5 +204,35 @@ namespace BAR.DAL
 													  .SingleOrDefault();
 			return subplatFrom.Customization;
 		}
-	}
+        /// <summary>
+		/// Returns the timer interval of the subplatform.
+		/// </summary>
+        public int ReadInterval(int platformId)
+        {
+            return ctx.SubPlatforms.Find(platformId).Interval;
+        }
+        /// <summary>
+		/// Returns the set time of the timer.
+		/// </summary>
+        public string ReadStartTime(int platformId)
+        {
+            return ctx.SubPlatforms.Find(platformId).SetTime;
+        }
+        /// <summary>
+		/// Updates the timer interval of the subplatform.
+		/// </summary>
+        public int UpdateInterval(int platformId, int interval)
+        {
+            ctx.SubPlatforms.Find(platformId).Interval = interval;
+            return ctx.SaveChanges();
+        }
+        /// <summary>
+		/// Updates the set time of the timer.
+		/// </summary>
+        public int UpdateStartTime(int platformId, string setTime)
+        {
+            ctx.SubPlatforms.Find(platformId).SetTime = setTime;
+            return ctx.SaveChanges();
+        }
+    }
 }

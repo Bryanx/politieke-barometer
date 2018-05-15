@@ -21,6 +21,8 @@ namespace BAR.DAL
 		IEnumerable<Question> ReadAllQuestions();
 		IEnumerable<Question> ReadQuestions(int platformId);
 		IEnumerable<Question> ReadQuestionsForType(QuestionType type);
+        int ReadInterval(int platformId);
+        String ReadStartTime(int platformId);
 	
 		//Create
 		int CreateSubplatform(SubPlatform subPlatform);
@@ -31,7 +33,9 @@ namespace BAR.DAL
 		int UpdateSubplatforms(IEnumerable<SubPlatform> subPlatforms);
 		int UpdateQuestion(Question question);
 		int UpdateQuestions(IEnumerable<Question> questions);
-
+        int UpdateInterval(int platformId,int interval);
+        int UpdateStartTime(int platformId,string setTime);
+        
 		//Delete
 		int DeleteSubplatform(SubPlatform subPlatform);
 		int DeleteQuestion(Question question);
