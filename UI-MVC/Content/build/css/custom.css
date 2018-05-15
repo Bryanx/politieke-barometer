@@ -1807,6 +1807,24 @@ span.right {
   width: 20px;
   text-align: center; }
 
+#stories {
+  padding: 0;
+  margin-top: 35px; }
+  #stories .story-url {
+    overflow: hidden;
+    white-space: nowrap;
+    width: 80%;
+    margin-bottom: 15px;
+    text-overflow: ellipsis; }
+    #stories .story-url a {
+      overflow: hidden;
+      white-space: nowrap;
+      max-width: 100%;
+      text-overflow: ellipsis; }
+    #stories .story-url i {
+      padding: 0 20px;
+      color: #d4d4d4; }
+
 canvas {
   width: 100% !important;
   height: auto !important; }

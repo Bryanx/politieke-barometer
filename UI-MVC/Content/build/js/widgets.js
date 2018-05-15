@@ -142,6 +142,23 @@ var widgetElements = {
             "               </div>" +
             "            </div>" +
             "        </div>";
+    },
+    //stories widget
+    createStoriesWidget: function (title) {
+        return "<div class='chart-container'>" +
+            "            <div class='x_panel grid-stack-item-content bg-white no-scrollbar'>" +
+            "                <div class='x_title'>" +
+            "                    <h2 class='graphTitle'>" + title + "</h2>" +
+            // "                    <ul class='nav navbar-right panel_toolbox'>" +
+            // "                       <li><a class='addToDashboard'>" + Resources.Save + "</a></li>" +
+            // "                    </ul>" +
+            "                    <div class='clearfix'></div>" +
+            "                </div>" +
+            "                <div style='position: relative; height: 88%;'> " +
+            "                    <ul id='stories'></ul>" +
+            "               </div>" +
+            "            </div>" +
+            "        </div>";
     }
 };
 
@@ -749,6 +766,23 @@ function loadWidgets(url, itemId, onlyLoadLastWidget = false) {
         widgets.push(widget);
     };
 
+    //Creates a widget with stories for item page
+    function loadStories(itemId) {
+        grid.addWidget(widgetElements.createStoriesWidget("Latest stories"), 0, 0, 6, 6, true, 4, 12, 5, 12, -2);
+        grid.movable(".grid-stack-item", false);
+        grid.resizable(".grid-stack-item", false);
+        $.ajax({
+            method : "GET",
+            url : "/api/GetStories/" + itemId,
+            success : data => {
+                console.log(data);
+                $.each(data,  (index, url) => {
+                    $("#stories").append("<li class='story-url'><i class='fa fa-caret-right'> </i><a href='"+url+"'>" + url + "</a></li>");
+                });
+            }
+        });
+    }
+
     //Puts all the widgets on the grid.
     let loadGrid = function (data, itemId) {
         if (data != null && data.length && !orgpage) {
@@ -760,6 +794,7 @@ function loadWidgets(url, itemId, onlyLoadLastWidget = false) {
             if (dashboardpage) noWidgetsAvailable();
         }
         if (itempage && !orgpage) loadItemForSocialWidget(itemId);
+        if (itempage) loadStories(itemId);
     };
     
     //Loads the widgets via api call.
