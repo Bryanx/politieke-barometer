@@ -132,10 +132,10 @@ namespace BAR.BL.Managers
 		/// <summary>
 		/// Gets all the alerts for a specific user
 		/// </summary>
-		public IEnumerable<Alert> GetAllAlerts(string userId)
+		public IEnumerable<Alert> GetAllAlerts()
 		{
 			InitRepo();
-			return subRepo.ReadAlerts(userId, true).AsEnumerable();
+			return subRepo.ReadAllAlerts().AsEnumerable();
 		}
 
 		/// <summary>

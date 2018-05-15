@@ -23,7 +23,7 @@ namespace BAR.DAL
 		Alert ReadAlert(int alertId);
 		SubAlert ReadSubAlert(string userId, int alertId);
 		UserAlert ReadUserAlert(string userId, int alertId);
-		IEnumerable<Alert> ReadAlerts(string userId, bool showable = false);
+		IEnumerable<Alert> ReadAllAlerts();
 		IEnumerable<SubAlert> ReadAllSubAlerts();
 		IEnumerable<UserAlert> ReadAllUserAlerts();
 

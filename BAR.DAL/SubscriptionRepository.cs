@@ -28,32 +28,11 @@ namespace BAR.DAL
 		}
 
 		/// <summary>
-		/// returns a collection of alerts from a specific user.
-		/// 
-		/// If showable is true, the method will return a list of alerts
-		/// where you can also access the item and the user of a specific alert.
+		/// returns a collection of alerts
 		/// </summary>
-		public IEnumerable<Alert> ReadAlerts(string userId, bool showable = false)
+		public IEnumerable<Alert> ReadAllAlerts()
 		{
-			IEnumerable<Subscription> userSubs;
-			if (!showable)
-			{
-				userSubs = ctx.Subscriptions.Include(sub => sub.Alerts)
-											.Where(sub => sub.SubscribedUser.Id.Equals(userId))
-											.AsEnumerable();
-			}
-			else
-			{
-				userSubs = ctx.Subscriptions.Include(sub => sub.Alerts)
-											.Include(sub => sub.SubscribedItem)
-											.Include(sub => sub.SubscribedUser)
-											.Where(sub => sub.SubscribedUser.Id.Equals(userId))
-											.AsEnumerable();
-			}
-
-			List<Alert> alersToRead = new List<Alert>();
-			foreach (Subscription sub in userSubs) alersToRead.AddRange(sub.Alerts);
-			return alersToRead.AsEnumerable();
+			return ctx.Alerts.AsEnumerable();
 		}
 
 		/// <summary>

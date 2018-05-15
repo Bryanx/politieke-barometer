@@ -151,29 +151,30 @@ namespace webapi.Controllers
       return Ok(userWidgetDtos);
     }
 
-    // GET api/Android/Alerts
-    [HostAuthentication(DefaultAuthenticationTypes.ExternalBearer)]
-    [HttpGet]
-    [Route("Alerts")]
-    public IHttpActionResult GetAlerts()
-    {
-      ISubscriptionManager subscriptionManager = new SubscriptionManager();
-      List<AlertViewModel> alerts = new List<AlertViewModel>();
-      AlertViewModel alertViewModel;
+		// GET api/Android/Alerts
+		//Needs to be fixed by remi
+		//[HostAuthentication(DefaultAuthenticationTypes.ExternalBearer)]
+  //  [HttpGet]
+  //  [Route("Alerts")]
+  //  public IHttpActionResult GetAlerts()
+  //  {
+  //    ISubscriptionManager subscriptionManager = new SubscriptionManager();
+  //    List<AlertViewModel> alerts = new List<AlertViewModel>();
+  //    AlertViewModel alertViewModel;
       
-      foreach (var alert in subscriptionManager.GetAllAlerts(User.Identity.GetUserId()))
-      {
-        alertViewModel = new AlertViewModel()
-        {
-          AlertId = alert.AlertId,
-		  //Needs to be fixed by remi
-          //ItemName = alert.Subscription.SubscribedItem.Name
-        };
-        alerts.Add(alertViewModel);
-      }
+  //    foreach (var alert in subscriptionManager.GetAllAlerts(User.Identity.GetUserId()))
+  //    {
+  //      alertViewModel = new AlertViewModel()
+  //      {
+  //        AlertId = alert.AlertId,
+		  
+  //        //ItemName = alert.Subscription.SubscribedItem.Name
+  //      };
+  //      alerts.Add(alertViewModel);
+  //    }
 
-      return Ok(alerts);
-      }
+  //    return Ok(alerts);
+  //    }
 
     #region Helpers
 

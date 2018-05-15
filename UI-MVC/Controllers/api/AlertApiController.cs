@@ -62,7 +62,7 @@ namespace BAR.UI.MVC.Controllers.api
 		public IHttpActionResult MarkAlertAsRead(int alertId)
 		{
 			subManager = new SubscriptionManager();
-			subManager.ChangeAlertToRead(User.Identity.GetUserId(), alertId);
+			subManager.ChangeAlertToRead(alertId);
 			return StatusCode(HttpStatusCode.NoContent);
 		}
 
@@ -73,9 +73,8 @@ namespace BAR.UI.MVC.Controllers.api
 		[Route("api/User/Alert/{alertId}/Delete")]
 		public IHttpActionResult DeleteAlert(int alertId)
 		{
-			subManager = new SubscriptionManager();
-			Alert alert = subManager.GetAlert()
-			subManager.RemoveAlert(User.Identity.GetUserId(), alertId);
+			subManager = new SubscriptionManager();	
+			subManager.RemoveAlert(alertId);
 			return StatusCode(HttpStatusCode.NoContent);
 		}
 	}
