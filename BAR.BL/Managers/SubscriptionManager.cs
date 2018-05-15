@@ -91,10 +91,7 @@ namespace BAR.BL.Managers
 					sub.Alerts.Add(new Alert()
 					{
 						Subscription = sub,
-						AlertType = new AlertType()
-						{
-							Name = "Trending alert"
-						},
+						AlertType = AlertType.Trending,
 						TimeStamp = DateTime.Now,
 						IsRead = false
 					});

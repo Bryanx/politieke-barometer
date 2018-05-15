@@ -52,10 +52,10 @@ namespace BAR.BL.Managers
 			if (infos == null || infos.Count() == 0) return;
 	
 			//Calculate new baseline
-			DateTime startdate = DateTime.Now.AddDays(-7);
-			DateTime endDate = DateTime.Now.AddDays(-37);
+			DateTime startdate = DateTime.Now.AddDays(-3);
+			DateTime endDate = DateTime.Now.AddDays(-33);
 			int infosOld = infos.Where(info => info.CreationDate >= endDate && info.CreationDate < startdate).Count();
-			if (infosOld != 0) itemToUpdate.Baseline = infosOld / 30;
+			if (infosOld != 0) itemToUpdate.Baseline = (double) Math.Round((decimal) (infosOld / 30),  2);
 
 			//Determine trending percentage
 			int infosNew = infos.Where(info => info.CreationDate.Value.ToString("dd-MM-yy").Equals(DateTime.Now.ToString("dd-MM-yy"))).Count();
@@ -64,7 +64,7 @@ namespace BAR.BL.Managers
 				double trendingPer = (infosNew / itemToUpdate.Baseline) - 1;
 				if (trendingPer > 0)
 				{
-					itemToUpdate.TrendingPercentage = trendingPer * 100;
+					itemToUpdate.TrendingPercentage = (double) Math.Round((decimal) (trendingPer * 100), 2);
 					new SubscriptionManager().GenerateAlerts(itemToUpdate.ItemId);
 				}
 			}
