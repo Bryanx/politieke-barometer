@@ -3,9 +3,11 @@
 <table id="datatable-responsive" class="table" cellspacing="10px" width="100%">
 
     <colgroup>
-        <col style="width: 30%">
-        <col style="width: 60%">
-        <col style="width: 10%">
+        <col style="width: 15%">
+        <col style="width: 45%">
+        <col style="width: 11%">
+        <col style="width: 21%">
+        <col style="width: 8%">
     </colgroup>
     <thead>
         <tr>
@@ -16,7 +18,14 @@
                 @Resources.Site
             </th>
             <th>
+            @Resources.Interval
+            <th>
             </th>
+            <th>
+            @Resources.SetTime
+            </th>
+            <th></th>
+            
         </tr>
     </thead>
     <tbody>
@@ -28,6 +37,14 @@
             </td>
             <td>
                 @Model.Sources.ElementAt(i).Site
+            </td>
+            <td>
+                @Html.TextBoxFor(Model => Model.Interval, new { @class = "renameItem form-control", interval = @Model.Interval })
+                <span style="display:none">@Model.Interval</span>
+            </td>
+            <td>
+                @Html.TextBoxFor(Model => Model.SetTime, new { @class = "renameItem form-control", settime = @Model.SetTime })
+                <span style="display:none">@Model.SetTime</span>
             </td>
             <td>
                 <btn class="sourceChange btn btn-danger btn-xs" id="@Convert.ToString(Model.Sources.ElementAt(i).SourceId)" title="@Resources.RemoveSource">@Resources.Remove</btn>

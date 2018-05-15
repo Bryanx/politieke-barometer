@@ -14,5 +14,9 @@ namespace BAR.BL.Domain.Core
 		public DateTime CreationDate { get; set; }
 		public List<Question> Questions { get; set; }
 		public Customization Customization { get; set; }
-	}
+        //The interval of the timer in minutes.
+        public int Interval { get; set; }
+        //When the timer starts running every day.
+        public string SetTime { get; set; }
+    }
 }

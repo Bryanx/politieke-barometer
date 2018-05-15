@@ -1,7 +1,6 @@
 ﻿@model BAR.UI.MVC.Models.SourceManagement
-
 <h1>@Model.PageTitle</h1>
-<hr/>
+<hr />
 <div class="row">
     <!-- Add source -->
     <div class="col-md-6 col-xs-12">
@@ -49,41 +48,67 @@
             </div>
             <div class="x_content">
                 <br />
-                <form method="get" action="/api/Data/Synchronize" id="synchronizeForm" class="form-horizontal">
+                <form method="post" action="/api/SuperAdmin/SetSynchronize" id="synchronizeForm" class="form-horizontal">
                     <div class="form-group">
-                        <div class="col-md-12 col-sm-12 col-xs-12">
-                            Synchroniseer met externe databank vanaf laatste synchronisatie.
-                            Wacht na opslaan tot melding.
-                            <br />
-                            <br />
-                            <button type="submit" class="btn btn-dark">Synchroniseer</button>
-                            <div id="synchronizeMessage" style="display: none"></div>
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="interval">
+                            @Resources.Interval
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            @Html.TextBoxFor(Model => Model.Interval, new { @class = "renameItem form-control", interval = @Model.Interval })
+                            <span style="display:none">@Model.Interval</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="settime">
+                            @Resources.SetTime
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            @Html.TextBoxFor(Model => Model.SetTime, new { @class = "renameItem form-control", settime = @Model.SetTime })
+                            <span style="display:none">@Model.SetTime</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+                            <button type="submit" class="btn btn-dark">@Resources.Save</button>
+                            <div id="SetSynchronizeMessage" style="display: inline"></div>
                         </div>
                     </div>
                 </form>
+                <form method="get" action="/api/Data/Synchronize" id="synchronizeForm" class="form-horizontal">
+                        <div class="form-group">
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                Synchroniseer met externe databank vanaf laatste synchronisatie.
+                                Wacht na opslaan tot melding.
+                                <br />
+                                <br />
+                                <button type="submit" class="btn btn-dark">Synchroniseer</button>
+                                <div id="synchronizeMessage" style="display: none"></div>
+                            </div>
+                        </div>
+                    </form>
             </div>
         </div>
     </div>
 </div>
 <div class="row">
     <!-- Remove source -->
-    <div class="col-md-6 col-xs-12">
-        <div class="x_panel">
-            <div class="x_title">
-                <h2>@Resources.Sources</h2>
-                <div class="clearfix"></div>
-            </div>
-            <div class="x_content">
-                <div class="form-group">
-                    @Html.Partial("Partials/_SourceTable", Model)
-                </div>
+    @*<div class="col-md-6 col-xs-12">*@
+    <div class="x_panel">
+        <div class="x_title">
+            <h2>@Resources.Sources</h2>
+            <div class="clearfix"></div>
+        </div>
+        <div class="x_content">
+            <div class="form-group">
+                @Html.Partial("Partials/_SourceTable", Model)
             </div>
         </div>
     </div>
-    </div>
+</div>
+@*</div>*@
 
-    @section CustomJS{
-        <script type="text/javascript">
+@section CustomJS{
+    <script type="text/javascript">
         $("#synchronizeForm").on("submit", function (event) {
             submitForm($(this), event, $("#synchronizeMessage"));
         });
@@ -148,5 +173,5 @@
                         $this.closest('tr').remove();
                     });
             }));
-        </script>
-    }
+    </script>
+}

@@ -59,5 +59,18 @@ namespace BAR.UI.MVC.Controllers.api
 			}
 			return StatusCode(HttpStatusCode.NotAcceptable);
 		}
-	}
+
+        [HttpPost]
+        [Route("api/SuperAdmin/SetSynchronize")]
+        public IHttpActionResult SetSynchronize([FromBody]SourceManagement model)
+        {
+            IDataManager dataManager = new DataManager();
+            var source = dataManager.AddSource(model.Name, model.Site);
+            if (source != null)
+            {
+                return Ok(source.SourceId);
+            }
+            return StatusCode(HttpStatusCode.NotAcceptable);
+        }
+    }
 }
