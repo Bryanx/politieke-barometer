@@ -423,7 +423,6 @@ function loadGraphs(itemId, widget) {
 
     //Toggles the charttype: bar/line chart
     let ChangeChartType = function (e, type) {
-        console.log(widgets);
         let widgetId = $(e.target).data("widget-id");
         let chart = charts.find(c => c.config.id == widgetId);
 
@@ -710,13 +709,13 @@ function loadWidgets(url, itemId, onlyLoadLastWidget = false) {
 
     //Puts all the widgets on the grid.
     let loadGrid = function (data, itemId) {
-        if (data != null && data.length) {
+        if (data != null && data.length && !orgpage) {
             $.each(data, (index, widget) => {
                 if (!onlyLoadLastWidget) addWidgetToGrid(widget, itemId);
                 else if (index === data.length-1) addWidgetToGrid(widget, itemId);
             });
         } else {
-            noWidgetsAvailable();
+            if (dashboardpage) noWidgetsAvailable();
         }
         if (itempage && !orgpage) loadItemForSocialWidget(itemId);
     };
