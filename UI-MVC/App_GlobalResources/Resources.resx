@@ -695,5 +695,13 @@
   </data>
   <data name="IsNowAvailable" xml:space="preserve">
     <value>is now available!</value>
+  <data name="BackToHome" xml:space="preserve">
+    <value>Back to home</value>
+  </data>
+  <data name="PageNotFound" xml:space="preserve">
+    <value>Page not found</value>
+  </data>
+  <data name="SomethingWentWrong" xml:space="preserve">
+    <value>Something went wrong...</value>
   </data>
 </root>

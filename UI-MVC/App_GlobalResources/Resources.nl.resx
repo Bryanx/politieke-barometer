@@ -689,5 +689,13 @@
   </data>
   <data name="IsNowAvailable" xml:space="preserve">
     <value>is nu beschikbaar!</value>
+  <data name="BackToHome" xml:space="preserve">
+    <value>Ga naar startpagina</value>
+  </data>
+  <data name="PageNotFound" xml:space="preserve">
+    <value>Pagina niet gevonden</value>
+  </data>
+  <data name="SomethingWentWrong" xml:space="preserve">
+    <value>Er is iets misgegaan...</value>
   </data>
 </root>

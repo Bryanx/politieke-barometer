@@ -35,7 +35,8 @@ namespace BAR.DAL.EF
 
 		//Data package
 		public DbSet<Source> Sources { get; set; }
-		public DbSet<Information> Informations { get; set; }
+        public DbSet<DataSource> DataSources { get; set; }
+        public DbSet<Information> Informations { get; set; }
 		public DbSet<Property> Properties { get; set; }
 		public DbSet<SynchronizeAudit> SynchronizeAudits { get; set; }
 

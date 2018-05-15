@@ -690,5 +690,13 @@ Thème</value>
   </data>
   <data name="IsNowAvailable" xml:space="preserve">
     <value>est maintenant disponible!</value>
+  <data name="BackToHome" xml:space="preserve">
+    <value>Retour à la page d'accueil</value>
+  </data>
+  <data name="PageNotFound" xml:space="preserve">
+    <value>Page non trouvée</value>
+  </data>
+  <data name="SomethingWentWrong" xml:space="preserve">
+    <value>Quelque chose a mal tourné...</value>
   </data>
 </root>
