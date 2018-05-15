@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 
 namespace BAR.BL.Domain.Data
 {
-    class DataSource
+    public class DataSource
     {
+        public int DataSourceId { get; set; }
+        public string Name { get; set; }
+        public string Url { get; set; }
     }
 }
