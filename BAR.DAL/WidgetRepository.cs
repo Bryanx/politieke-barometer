@@ -288,7 +288,7 @@ namespace BAR.DAL
 		/// </summary>
 		public IEnumerable<Widget> ReadWidgetsWithAllDataForItem(int itemId)
 		{
-			return ctx.Widgets.Include(Widget => Widget.Items)
+			return ctx.Widgets.Include(widget => widget.Items)
 							  .Include(widget => widget.WidgetDatas)
 							  .Include(widget => widget.WidgetDatas.Select(data => data.GraphValues))
 							  .Include(widget => widget.PropertyTags)

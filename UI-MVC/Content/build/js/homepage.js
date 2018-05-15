@@ -6,7 +6,7 @@ var COLORS = [
     'rgb(75, 192, 192)',
     'rgb(54, 162, 235)',
     'rgb(153, 102, 255)',
-    'rgb(201, 203, 207)'
+    'rgb(207, 81, 171)'
 ];
 
 var DARKCOLORS = [
@@ -16,7 +16,7 @@ var DARKCOLORS = [
     'rgb(55, 162, 162)',
     'rgb(34, 132, 205)',
     'rgb(123, 72, 225)',
-    'rgb(171, 173, 177)'
+    'rgb(177, 51, 151)'
 ];
 
 /* ************* HOMEPAGE ************** */
@@ -126,15 +126,17 @@ let getGraph = function(name, itemId, widgetId, itemType) {
         url: "/api/GetGraphs/" + itemId + "/" + widgetId,
         dataType: "json",
         success: data => {
+            let d = $('#' + itemType).data("widgetId");
+            $('#' + itemType).data("widgetId", d + " " + itemId);
             switch (itemType){
                 case 1:
-                    charts1[0] == null ? AddChart(name, data[0].WidgetId, data[0].GraphValues.map(g => g.Value), data[0].GraphValues.map(g => g.NumberOfTimes), itemType) : AddDataSet(charts1[0], name, data[0].GraphValues.map(g => g.NumberOfTimes), itemType);
+                    charts1[0] == null ? AddChart(name, data[0].WidgetId, data[0].GraphValues.map(g => g.Value).reverse(), data[0].GraphValues.map(g => g.NumberOfTimes), itemType) : AddDataSet(charts1[0], name, data[0].GraphValues.map(g => g.NumberOfTimes), itemType);
                     break;
                 case 2:
-                    charts2[0] == null ? AddChart(name, data[0].WidgetId, data[0].GraphValues.map(g => g.Value), data[0].GraphValues.map(g => g.NumberOfTimes), itemType) : AddDataSet(charts2[0], name, data[0].GraphValues.map(g => g.NumberOfTimes), itemType);
+                    charts2[0] == null ? AddChart(name, data[0].WidgetId, data[0].GraphValues.map(g => g.Value).reverse(), data[0].GraphValues.map(g => g.NumberOfTimes), itemType) : AddDataSet(charts2[0], name, data[0].GraphValues.map(g => g.NumberOfTimes), itemType);
                     break;
                 case 3:
-                    charts3[0] == null ? AddChart(name, data[0].WidgetId, data[0].GraphValues.map(g => g.Value), data[0].GraphValues.map(g => g.NumberOfTimes), itemType) : AddDataSet(charts3[0], name, data[0].GraphValues.map(g => g.NumberOfTimes), itemType);
+                    charts3[0] == null ? AddChart(name, data[0].WidgetId, data[0].GraphValues.map(g => g.Value).reverse(), data[0].GraphValues.map(g => g.NumberOfTimes), itemType) : AddDataSet(charts3[0], name, data[0].GraphValues.map(g => g.NumberOfTimes), itemType);
                     break;
             }
         },
@@ -172,3 +174,62 @@ var GetTopTrending = function (trendings){
         });
     });
 };
+
+/*---------- Weekly Review ----------*/
+
+let WeeklyReview = function (name, itemId, widgetId, itemType) {
+   
+    $.ajax({
+        type: "GET",
+        url: "/api/GetGraphs/" + itemId + "/" + widgetId,
+        dataType: "json",
+        success: data => {
+            let random = Math.floor(Math.random()*(COLORS.length -1)); // Gets random color
+            let el = "weeklyReview-" + itemType;
+            new Chart(document.getElementById(el), {
+                id: data[0].WidgetId,
+                type: "line",
+                data: {
+                    labels: data[0].GraphValues.map(g => g.Value).reverse(),
+                    datasets: [{
+                        data: data[0].GraphValues.map(g => g.NumberOfTimes),
+                        label: name,
+                        borderColor: COLORS[random],
+                        backgroundColor: COLORS[random],
+                        hoverBackgroundColor: DARKCOLORS[random],
+                        fill: false,
+                    }],
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                }
+            });
+        },
+        fail: d => console.log(d)
+    });
+};
+
+/*------ Getting chart -------*/
+let getChart = function (id) {
+    switch (id) {
+        case "1": return charts1;
+        case "2": return charts2;
+        case "3": return charts3;
+    }
+};
+
+/*----- Saving widget to dashboard -----*/
+let makingJSON = function (e){
+    let c = getChart(e.target.id);
+    let json = {
+        ItemIds: $('#' + e.target.id).data("widgetId").toString().split(" ").shift(), 
+        GraphType: c[0].config.type,
+        PropertyTag: "Mentions"
+    };
+    addWidgetToDashboard(json);
+    
+};
+
+
+$(document).on("click", ".makeJSON", (e) => makingJSON(e));

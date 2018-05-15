@@ -53,8 +53,13 @@
     <div class="x_panel">
         <div class="x_title">
             <h2>Top 3 trending politici</h2>
-            <ul class='nav navbar-right panel_toolbox'>
-                <li><a id="111" class='addToDashboard'> @Resources.Save</a></li>
+            <ul class='nav panel_toolbox'>
+                <li>
+                    <a class="collapse-link">
+                        <i class="fa fa-chevron-down"></i>
+                    </a>
+                </li>
+                <li><a id="1" class='makeJSON' data-widget-id=""> @Resources.Save</a></li>
             </ul>
             <div class='clearfix'></div>   
         </div>
@@ -71,7 +76,7 @@
             <!-- /CARDS -->
 
             <div class="row">
-                <div class="col-12" style="max-height: 400px">
+                <div class="col-12" style="max-height: 400px; height: 400px">
                     <canvas id='trending-1-graph'></canvas>
                     <h2 class='no-graph-data text-center'>No data available.</h2>
                 </div>
@@ -120,13 +125,52 @@
     </div>
 </section>  <!-- /top 3 politici (trending) -->
 
+<section>     <!-- top 3 organisations (trending) -->
+    <div class="x_panel">
+        <div class="x_title">
+            <h2>Top 3 trending Organisations</h2> 
+            <ul class='nav panel_toolbox'>
+                <li>
+                    <a class="collapse-link">
+                        <i class="fa fa-chevron-down"></i>
+                    </a>
+                </li>
+                <li><a id=" + id + " class='makeJSON'> @Resources.Save</a></li>
+            </ul>
+            <div class='clearfix'></div>
+        </div>
+        <div class="x_content" style="display: none">
+            
+            <!-- CARDS -->
+            <div class="row">
+                @foreach(var item in Model.Items.Where(p => p.ItemType == ItemType.Organisation).OrderBy(p => p.NumberOfMentions).Reverse().Take(3)){
+                    <div class="col-xs-12 col-sm-4">
+                        @Html.Partial("Partials/_Card", item)
+                    </div>
+                }
+            </div>
+            <!-- /CARDS -->
+            <div class="row">
+                <div class="col-12" style="max-height: 400px; height: 400px">
+                    <canvas id='trending-2-graph'></canvas>
+                    <h2 class='no-graph-data text-center'>No data available.</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>  <!-- /top 3 organisations (trending) -->
 
 <section>     <!-- top 3 Themas (trending) -->
     <div class="x_panel">
         <div class="x_title">
             <h2>Top 3 trending Thema's</h2> 
-            <ul class='nav navbar-right panel_toolbox'>
-                <li><a id=" + id + " class='addToDashboard'> @Resources.Save</a></li>
+            <ul class='nav panel_toolbox'>
+                <li>
+                    <a class="collapse-link">
+                        <i class="fa fa-chevron-down"></i>
+                    </a>
+                </li>
+                <li><a id=" + id + " class='makeJSON'> @Resources.Save</a></li>
             </ul>
             <div class='clearfix'></div>
         </div>
@@ -142,7 +186,7 @@
             </div>
             <!-- /CARDS -->
             <div class="row">
-                <div class="col-12" style="max-height: 400px">
+                <div class="col-12" style="max-height: 400px; height: 400px">
                     <canvas id='trending-3-graph'></canvas>
                     <h2 class='no-graph-data text-center'>No data available.</h2>
                 </div>
@@ -166,6 +210,12 @@
         </div>
         <div class="x_content">
             @Html.Partial("Partials/_WeeklyReview")
+            @{
+                string input;
+                using(var reader = new StreamReader(Request.InputStream)){
+                    input = reader.ReadToEnd();
+                }
+            }
         </div>
     </div>
 </section>
@@ -238,37 +288,56 @@
     
     <script>
     $(() => {
-            $.ajax({
-                type: "GET",
-                url: '/api/GetTopTrendingItems/1',
-                dataType: "json",
-                success: data => {
-                    GetTopTrending(data);
-                    TwitterFeed(data);
-                },
-                error: (xhr) => alert(xhr.responseText)
-            });
-            
-            $.ajax({
-                type: "GET",
-                url: '/api/GetTopTrendingItems/3',
-                dataType: "json",
-                success: data => {
-                    GetTopTrending(data);
-                },
-                error: (xhr) => alert(xhr.responseText)
-            });
-            
-            $.ajax({
-                type: "GET",
-                url: '/api/Widget/GetWeeklyReview/0',
-                dataType: "json",
-                success: data => {
-                    console.log(data);
-                },
-                error: (xhr) => alert(xhr.responseText)
-            });
-         
-        })($)
+        $.ajax({
+            type: "GET",
+            url: '/api/GetTopTrendingItems/1',
+            dataType: "json",
+            success: data => {
+                GetTopTrending(data);
+                TwitterFeed(data);
+            },
+            error: (xhr) => alert(xhr.responseText)
+        });
+    
+        $.ajax({
+            type: "GET",
+            url: '/api/GetTopTrendingItems/2',
+            dataType: "json",
+            success: data => {
+                GetTopTrending(data);
+            },
+            error: (xhr) => alert(xhr.responseText)
+        });
+        
+        $.ajax({
+            type: "GET",
+            url: '/api/GetTopTrendingItems/3',
+            dataType: "json",
+            success: data => {
+                GetTopTrending(data);
+            },
+            error: (xhr) => alert(xhr.responseText)
+        });
+
+        $.ajax({
+            type: "GET",
+            url: '/api/Widget/GetWeeklyReview/0',
+            dataType: "json",
+            success: data => {
+                var teller = 1;
+                for (var j = 0; j < data.length; j++) {
+                    WeeklyReview(data[j].Title, data[j].ItemIds[0], data[j].WidgetId, teller);
+                    teller++;
+                    for (var i = 0; i < 3; i++) {
+                        j++;
+                    }
+                }
+            },
+            error: (xhr) => alert(xhr.responseText)
+        });
+        
+        
+
+    })($)
     </script>
 }
