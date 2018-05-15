@@ -17,7 +17,7 @@ namespace BAR.UI.MVC.Controllers
       userManager = new UserManager();
       return View(new BaseViewModel()
       {
-        PageTitle = "Test index",
+        PageTitle = "Error",
         User = User.Identity.IsAuthenticated ? userManager.GetUser(User.Identity.GetUserId()) : null
       });
     }
@@ -27,7 +27,7 @@ namespace BAR.UI.MVC.Controllers
       Response.StatusCode = 404;
       return View(new BaseViewModel()
       {
-        PageTitle = "Test",
+        PageTitle = "NotFound",
         User = User.Identity.IsAuthenticated ? userManager.GetUser(User.Identity.GetUserId()) : null
       });
     }
