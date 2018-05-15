@@ -628,7 +628,7 @@ namespace BAR.UI.MVC.App_GlobalResources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Interval.
+        ///   Looks up a localized string similar to Interval (min).
         /// </summary>
         public static string Interval {
             get {
@@ -1195,7 +1195,7 @@ namespace BAR.UI.MVC.App_GlobalResources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Start synchronise.
+        ///   Looks up a localized string similar to Start synchronise (hh:mm).
         /// </summary>
         public static string SetTime {
             get {

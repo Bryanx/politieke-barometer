@@ -54,7 +54,7 @@
                             @Resources.Interval
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                            @Html.TextBoxFor(Model => Model.Interval, new { @class = "renameItem form-control", interval = @Model.Interval })
+                            @Html.TextBoxFor(Model => Model.Interval, new { id= "interval",@class = "renameItem form-control", interval = @Model.Interval })
                             <span style="display:none">@Model.Interval</span>
                         </div>
                     </div>
@@ -63,7 +63,7 @@
                             @Resources.SetTime
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                            @Html.TextBoxFor(Model => Model.SetTime, new { @class = "renameItem form-control", settime = @Model.SetTime })
+                            @Html.TextBoxFor(Model => Model.SetTime, new {id="settime", @class = "renameItem form-control", settime = @Model.SetTime })
                             <span style="display:none">@Model.SetTime</span>
                         </div>
                     </div>
@@ -75,17 +75,17 @@
                     </div>
                 </form>
                 <form method="get" action="/api/Data/Synchronize" id="synchronizeForm" class="form-horizontal">
-                        <div class="form-group">
-                            <div class="col-md-12 col-sm-12 col-xs-12">
-                                Synchroniseer met externe databank vanaf laatste synchronisatie.
-                                Wacht na opslaan tot melding.
-                                <br />
-                                <br />
-                                <button type="submit" class="btn btn-dark">Synchroniseer</button>
-                                <div id="synchronizeMessage" style="display: none"></div>
-                            </div>
+                    <div class="form-group">
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            Synchroniseer met externe databank vanaf laatste synchronisatie.
+                            Wacht na opslaan tot melding.
+                            <br />
+                            <br />
+                            <button type="submit" class="btn btn-dark">Synchroniseer</button>
+                            <div id="synchronizeMessage" style="display: none"></div>
                         </div>
-                    </form>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
@@ -108,7 +108,7 @@
 @*</div>*@
 
 @section CustomJS{
-<script type="text/javascript">
+    <script type="text/javascript">
         $("#synchronizeForm").on("submit", function (event) {
             submitForm($(this), event, $("#synchronizeMessage"));
         });
@@ -161,10 +161,11 @@
         $("#setSynchronizeForm").on("submit", function (event) {
                 event.preventDefault();
                 var $this = $(this);
+                var interval=$("#interval").val();
+                var settime = $("#settime").val().replace(':','')
                 $.ajax({
-                    type: $this.attr('method'),
-                    url: $this.attr('action'),
-                    data: $this.serialize()
+                    type: "POST",
+                    url: "/api/SuperAdmin/SetSynchronize/" + interval + "/" + settime
                 }).fail(() => {/* ok */ })
                     });
 
@@ -183,5 +184,5 @@
                         $this.closest('tr').remove();
                     });
             }));
-</script>
+    </script>
 }

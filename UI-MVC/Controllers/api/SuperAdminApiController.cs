@@ -61,16 +61,18 @@ namespace BAR.UI.MVC.Controllers.api
         }
 
         [HttpPost]
-        [Route("api/SuperAdmin/SetSynchronize")]
-        public IHttpActionResult SetSynchronize([FromBody]int interval, [FromBody]string starttimer)
+        [Route("api/SuperAdmin/SetSynchronize/{interval}/{start}")]
+        public IHttpActionResult SetSynchronize(int interval, string start)
         {
+
+            start = start.Substring(0, 2) + ":" + start.Substring(2, start.Length);
             ISubplatformManager subplatformManager = new SubplatformManager();
             int subplatformid = 1;
 
-            if (interval != 0 || starttimer != "0")
+            if (interval != 0 || start != "0")
             {
                 subplatformManager.ChangeInterval(subplatformid, interval);
-                subplatformManager.ChangeStartTimer(subplatformid, starttimer);
+                subplatformManager.ChangeStartTimer(subplatformid, start);
                 return StatusCode(HttpStatusCode.Accepted);
             }
             else
