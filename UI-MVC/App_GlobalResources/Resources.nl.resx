@@ -144,6 +144,9 @@
   <data name="AddAChart" xml:space="preserve">
     <value>Voeg een grafiek toe.</value>
   </data>
+  <data name="AddItem" xml:space="preserve">
+    <value>Voeg item toe</value>
+  </data>
   <data name="AddSource" xml:space="preserve">
     <value>Bron toevoegen</value>
   </data>
@@ -545,6 +548,9 @@
   </data>
   <data name="SearchbarPlaceholder" xml:space="preserve">
     <value>Zoek naar politici, partijen of thema's.</value>
+  </data>
+  <data name="SelectOrganisation" xml:space="preserve">
+    <value>Selecteer de bijbehorende organisatie</value>
   </data>
   <data name="SelectYourCity" xml:space="preserve">
     <value>Selecteer je woonplaats</value>

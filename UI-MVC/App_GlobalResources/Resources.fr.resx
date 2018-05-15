@@ -655,4 +655,10 @@ Thème</value>
   <data name="Keywords" xml:space="preserve">
     <value>Mots de clef</value>
   </data>
+  <data name="AddItem" xml:space="preserve">
+    <value>Ajouter un item</value>
+  </data>
+  <data name="SelectOrganisation" xml:space="preserve">
+    <value>Sélectionnez l'organisation associée</value>
+  </data>
 </root>

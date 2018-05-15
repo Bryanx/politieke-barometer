@@ -142,6 +142,15 @@ namespace BAR.UI.MVC.App_GlobalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add item.
+        /// </summary>
+        public static string AddItem {
+            get {
+                return ResourceManager.GetString("AddItem", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add source.
         /// </summary>
         public static string AddSource {
@@ -1353,6 +1362,15 @@ namespace BAR.UI.MVC.App_GlobalResources {
         public static string SearchbarPlaceholder {
             get {
                 return ResourceManager.GetString("SearchbarPlaceholder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select the associated organisation.
+        /// </summary>
+        public static string SelectOrganisation {
+            get {
+                return ResourceManager.GetString("SelectOrganisation", resourceCulture);
             }
         }
         
