@@ -50,7 +50,6 @@ function generateAlertHTML(alert, type) {
   var content;
   if (type === "sub alert") content = `<strong>${alert.Name}</strong> ${Resources.IsNowTrending}`
   else if (type === "user alert") content = `<strong>${alert.Name}</strong> ${Resources.IsNowAvailable}`
-  console.log(content);
 
   //Construct alert message
   var read = "";
@@ -88,7 +87,7 @@ function generateAlertHTML(alert, type) {
   var alertContent = $("<span />",
     {
       "class": "font_16",
-      html: `<strong>${alert.Name}</strong> ${Resources.IsNowTrending}`
+      html: content
     });
   var alertTime = $("<span />",
     {
