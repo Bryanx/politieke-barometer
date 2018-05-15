@@ -1,5 +1,4 @@
-﻿using BAR.BL.Controllers;
-using BAR.BL.Domain.Items;
+﻿using BAR.BL.Domain.Items;
 using BAR.BL.Managers;
 using BAR.UI.MVC.Attributes;
 using System;
@@ -29,7 +28,7 @@ namespace BAR.UI.MVC.Controllers.api
 				//content = "{}";
 
 				//Test with fewer data 
-				content = "{\"since\":\"2018-05-01 00:00\"}";
+				content = "{\"since\":\"2018-05-11 00:00\"}";
 			}
 			else
 			{
