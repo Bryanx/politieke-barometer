@@ -495,6 +495,44 @@ function loadGraphs(itemId, widget) {
         }
     };
 
+    //Create a new chart with time on xAxes
+    let AddTimeChart = function (widget, labels, label, values, borderColor, color, darkColor, chartType) {
+        charts.push(new Chart(document.getElementById("graph" + widgetId), {
+            id: widgetId,
+            type: chartType,
+            data: {
+                labels: labels,
+                datasets: [{
+                    data: values,
+                    label: label,
+                    borderColor: borderColor,
+                    backgroundColor: color,
+                    fill: false,
+                }],
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                animation: {
+                    //when the graph is done loading, JPG/PNG download is possible:
+                    onComplete: function () {
+                        AddImageUrl(widgetId);
+                    }
+                },
+                scales: {
+                    xAxes: [{
+                        type: 'time',
+                        display: true,
+                        time: {
+                            format: "DD-MM",
+                            round: 'day'
+                        }
+                    }],
+                },
+            }
+        }));
+    };
+    
     //Create a new chart
     let AddChart = function (widget, labels, label, values, borderColor, color, darkColor, chartType) {
         charts.push(new Chart(document.getElementById("graph" + widgetId), {
@@ -554,7 +592,11 @@ function loadGraphs(itemId, widget) {
         let darkColor = DARKCOLORS[colorNumber];
         let borderColor = COLORS[colorNumber];
         let legendLabel = chartData[0].ItemName + " - " + ConvertKeyValueToResource(chartData[0].KeyValue);
-        AddChart(widget, labels, legendLabel, values, borderColor, color, darkColor, chartType);
+        if (chartData[0].KeyValue === "Number of mentions") {
+            AddTimeChart(widget, labels, legendLabel, values, borderColor, color, darkColor, chartType, chartData[0].KeyValue);
+        } else {
+            AddChart(widget, labels, legendLabel, values, borderColor, color, darkColor, chartType, chartData[0].KeyValue);
+        }
     };
 
     //Moves the graph data to the appropriate method.
