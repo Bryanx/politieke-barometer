@@ -191,7 +191,14 @@ namespace BAR.DAL.EF
         Site = "https://www.facebook.com/"
       };
       ctx.Sources.Add(facebook);
-      ctx.SaveChanges();
+      DataSource textgain = new DataSource
+      {
+        DataSourceId = 1,
+        Name = "textgain",
+        Url = "https://kdg.textgain.com/query"
+      };
+    ctx.DataSources.Add(textgain);
+    ctx.SaveChanges();
     }
 
 		/// <summary>

@@ -558,7 +558,33 @@ namespace BAR.BL.Managers
 
 			return urls.AsEnumerable();
 		}
-	}
+
+        public IEnumerable<DataSource> GetAllDataSources()
+        {
+            InitRepo();
+            return dataRepo.ReadAllDataSources();
+        }
+
+        public DataSource GetDataSource(int dataSourceId)
+        {
+            InitRepo();
+            return dataRepo.ReadDataSource(dataSourceId);
+        }
+
+        public void RemoveDataSource(int dataSourceId)
+        {
+            InitRepo();
+            DataSource dataSource = dataRepo.ReadDataSource(dataSourceId);
+            dataRepo.DeleteDataSource(dataSource);
+        }
+
+        public void ChangeDataSource(int dataSourceId)
+        {
+            InitRepo();
+            DataSource dataSource = dataRepo.ReadDataSource(dataSourceId);
+            dataRepo.UpdateDataSource(dataSource);
+        }
+    }
 }
 
 
