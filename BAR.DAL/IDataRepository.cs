@@ -23,7 +23,7 @@ namespace BAR.DAL
 		List<Source> ReadAllSources();
 		SynchronizeAudit ReadLastAudit();
 		SynchronizeAudit ReadAudit(int auditId);
-        DataSource ReadAllDataSource();
+        IEnumerable<DataSource> ReadAllDataSources();
         DataSource ReadDataSource(int dataSourceId);
 		
 		//Create
