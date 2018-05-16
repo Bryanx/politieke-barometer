@@ -113,14 +113,6 @@ namespace BAR.DAL.EF
 		/// <param name="ctx"></param>
 		private void GenerateSubPlatforms(BarometerDbContext ctx)
 		{
-			SubPlatform subPlatform1 = new SubPlatform
-			{
-				Name = "k3",
-				CreationDate = DateTime.Now,
-				Customization = AddDefaultCustomization(),
-				Questions = new List<Question>(),			
-			};
-			ctx.SubPlatforms.Add(subPlatform1);
 
 			SubPlatform subPlatform2 = new SubPlatform
 			{
@@ -130,6 +122,15 @@ namespace BAR.DAL.EF
 				Questions = new List<Question>(),
 			};
 			ctx.SubPlatforms.Add(subPlatform2);
+
+			SubPlatform subPlatform1 = new SubPlatform
+			{
+				Name = "k3",
+				CreationDate = DateTime.Now,
+				Customization = AddDefaultCustomization(),
+				Questions = new List<Question>(),			
+			};
+			ctx.SubPlatforms.Add(subPlatform1);
 
 			ctx.SaveChanges();
 		}
@@ -191,7 +192,13 @@ namespace BAR.DAL.EF
         Site = "https://www.facebook.com/"
       };
       ctx.Sources.Add(facebook);
-      ctx.SaveChanges();
+      DataSource textgain = new DataSource
+      {
+        Name = "Textgain",
+        Url = "https://kdg.textgain.com/query"
+      };
+    ctx.DataSources.Add(textgain);
+    ctx.SaveChanges();
     }
 
 		/// <summary>

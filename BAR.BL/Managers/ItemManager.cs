@@ -43,69 +43,39 @@ namespace BAR.BL.Managers
 		{
 			InitRepo();
 
-			DataManager dataManager = new DataManager();
-			IEnumerable<Information> allInfoForId = dataManager.GetInformationsForItemid(itemId);
+			//Get item
+			Item itemToUpdate = itemRepo.ReadItem(itemId);
+			if (itemToUpdate == null) return;
 
-			if (allInfoForId.Count() > 0)
+			//Get all informations
+			IEnumerable<Information> infos = new DataManager().GetInformationsForItemid(itemId);
+			if (infos == null || infos.Count() == 0) return;
+	
+			//Calculate new baseline (avarage of the last 30 days)
+			int infosOld = infos.Where(info => info.CreationDate.Value < DateTime.Now && info.CreationDate.Value >= DateTime.Now.AddDays(-30)).Count();
+			if (infosOld != 0) itemToUpdate.Baseline = Math.Round((double) (infosOld / 30));
+
+			//Determine trending percentage (avarage of the last 3 days)
+			int infosNew = infos.Where(info => info.CreationDate.Value.ToString("dd-MM-yy").Equals(DateTime.Now.ToString("dd-MM-yy"))
+								|| info.CreationDate.Value >= DateTime.Now.AddDays(-3))
+								.Count();
+			if (infosNew != 0)
 			{
-				DateTime earliestInfoDate = allInfoForId.Min(item => item.CreationDate).Value;
-				DateTime lastInfoDate = allInfoForId.Max(item => item.CreationDate).Value;
+				//If trendingper is 0 then it will be devided by 1
+				//Bescause deviding by zero gives back an error
+				double trendingPer;
+				if (itemToUpdate.Baseline == 0) trendingPer = infosNew / 1;
+				else trendingPer = infosNew / itemToUpdate.Baseline;
 
-				int period = (lastInfoDate - earliestInfoDate).Days;
-
-				if (period == 0) period = 1;
-
-				int aantalBaseline = dataManager.GetNumberInfo(itemId, earliestInfoDate);
-				int aantalTrending = dataManager.GetNumberInfo(itemId, lastInfoDate.AddDays(-1));
-
-				// Calculate the baseline = number of information / number of days from the last update until now
-				double baseline = Convert.ToDouble(aantalBaseline) / Convert.ToDouble(period);
-
-				if (baseline == 0) return;
-				// Calculate the trendingpercentage = baseline / number of days from the last update until now.
-				double trendingPer = Convert.ToDouble(aantalTrending) / baseline;
-
-				//Get item
-				Item itemToUpdate = itemRepo.ReadItem(itemId);
-				if (itemToUpdate != null)
+				if (trendingPer > 0)
 				{
-					itemToUpdate.Baseline = baseline;
-					itemToUpdate.TrendingPercentage = trendingPer;
-					itemToUpdate.LastUpdatedInfo = DateTime.Now;
-					itemRepo.UpdateItem(itemToUpdate);
+					itemToUpdate.TrendingPercentage = Math.Round(trendingPer, 2);
+					new SubscriptionManager().GenerateAlerts(itemToUpdate.ItemId);
 				}
 			}
-		}
 
-		/// <summary>
-		/// Sent emails to the people who want to receive an email
-		/// </summary>
-		public async void SendWeeklyReviewEmails(IEnumerable<User> users)
-		{
-			IEnumerable<Item> items;
-			
-			foreach (User user in users)
-			{
-				//Get 5 most trending items of
-				items = GetMostTrendingItemsForUser(user.Id);
-
-				//Send email
-				IdentityMessage message = new IdentityMessage()
-				{
-					Destination = user.Email,
-					Subject = "Nieuwe weekly review is nu beschikbaar",
-					Body = "Beste " + user.FirstName + "</br></br>" + 
-						"Een nieuwe weekly review is nu beschikbaar!</br></br>" +
-						"De 5 meest trending items van deze week zijn:</br>" +
-						"- " + items.ElementAt(0).Name + " (" + items.ElementAt(0).TrendingPercentage + "% trending)</br>" +
-						"- " + items.ElementAt(1).Name + " (" + items.ElementAt(1).TrendingPercentage + "% trending)</br>" +
-						"- " + items.ElementAt(2).Name + " (" + items.ElementAt(2).TrendingPercentage + "% trending)</br>" +
-						"- " + items.ElementAt(3).Name + " (" + items.ElementAt(3).TrendingPercentage + "% trending)</br>" +
-						"- " + items.ElementAt(4).Name + " (" + items.ElementAt(4).TrendingPercentage + "% trending)</br>" +
-						"Ga nu naar onze website om je nieuwe weekly review te bekijken!"
-				};
-				await new EmailService().SendAsync(message);
-			}		
+			//Save changes
+			itemRepo.UpdateItem(itemToUpdate);
 		}
 
 		/// <summary>
@@ -119,12 +89,11 @@ namespace BAR.BL.Managers
 			IEnumerable<Item> itemsOrderd = GetAllItems();
 			if (!useWithOldData)
 			{
-				itemsOrderd = itemsOrderd .OrderBy(item => item.NumberOfMentions).AsEnumerable();
+				itemsOrderd = itemsOrderd.OrderBy(item => item.TrendingPercentage).AsEnumerable();
 			}
 			else
 			{
-				UpdateWeeklyReviewData(itemsOrderd);
-				itemsOrderd = itemsOrderd.OrderBy(item => item.NumberOfMentions).AsEnumerable();
+				itemsOrderd = itemsOrderd.OrderBy(item => item.TrendingPercentage).AsEnumerable();
 			}
 
 			return itemsOrderd.Take(numberOfItems).AsEnumerable();
@@ -142,13 +111,12 @@ namespace BAR.BL.Managers
 			if (!useWithOldData)
 			{
 				itemsOrderd = itemsOrderd.Where(item => item.ItemType == type)
-				.OrderBy(item => item.NumberOfMentions).AsEnumerable();
+				.OrderBy(item => item.TrendingPercentage).AsEnumerable();
 			}
 			else
 			{
-				UpdateWeeklyReviewData(itemsOrderd);
 				itemsOrderd = itemsOrderd.Where(item => item.ItemType == type)
-				.OrderBy(item => item.NumberOfMentions).AsEnumerable();
+				.OrderBy(item => item.TrendingPercentage).AsEnumerable();
 			}
 
 			return itemsOrderd.Take(numberOfItems).AsEnumerable();
@@ -173,11 +141,11 @@ namespace BAR.BL.Managers
 			IEnumerable<Item> itemsOrderd;
 			if (!useWithOldData)
 			{
-				itemsOrderd = itemsFromUser.OrderBy(item => item.NumberOfMentions).AsEnumerable();
-			} else
+				itemsOrderd = itemsFromUser.OrderBy(item => item.TrendingPercentage).AsEnumerable();
+			}
+			else
 			{
-				UpdateWeeklyReviewData(itemsFromUser);
-				itemsOrderd = itemsFromUser.OrderBy(item => item.NumberOfMentions).AsEnumerable();
+				itemsOrderd = itemsFromUser.OrderBy(item => item.TrendingPercentage).AsEnumerable();
 			}
 
 			return itemsOrderd.Take(numberOfItems).AsEnumerable();
@@ -204,12 +172,12 @@ namespace BAR.BL.Managers
 			if (!useWithOldData)
 			{
 				itemsOrderd = itemsFromUser.Where(item => item.ItemType == type)
-				.OrderBy(item => item.NumberOfMentions).AsEnumerable();
-			} else
+				.OrderBy(item => item.TrendingPercentage).AsEnumerable();
+			}
+			else
 			{
-				UpdateWeeklyReviewData(itemsFromUser);
 				itemsOrderd = itemsFromUser.Where(item => item.ItemType == type)
-				.OrderBy(item => item.NumberOfMentions).AsEnumerable();
+				.OrderBy(item => item.TrendingPercentage).AsEnumerable();
 			}
 
 			return itemsOrderd.Take(numberOfItems).AsEnumerable();
@@ -219,16 +187,23 @@ namespace BAR.BL.Managers
 		/// If the last time that the old trending percentage of the item was updated 7 days ago,
 		/// then the old trending percentage will be updated.
 		/// </summary>
-		private void UpdateWeeklyReviewData(IEnumerable<Item> items)
+		public void UpdateWeeklyReviewData(int platformId)
 		{
-			foreach (Item item in items)
+			//Get timestamp
+			DateTime? lastUpdated = new SubplatformManager().GetSubPlatform(platformId).LastUpdatedWeeklyReview;
+
+			//Get all items
+			IEnumerable<Item> items = itemRepo.ReadAllItemsWithPlatforms();
+			if (items == null || items.Count() == 0) return;
+
+			//Refresh old data
+			if (lastUpdated == null || lastUpdated < DateTime.Now.AddDays(-7))
 			{
-				if (item.LastUpdated <= DateTime.Now.AddDays(-7))
-				{
-					item.NumberOfMentionsOld = item.NumberOfMentions;
-					item.LastUpdated = DateTime.Now;
-				}
-			}		
+				foreach (Item item in items) item.NumberOfMentionsOld = item.NumberOfMentions;
+			}
+
+			//Update database
+			itemRepo.UpdateItems(items);
 		}
 
 		/// <summary>
@@ -361,36 +336,36 @@ namespace BAR.BL.Managers
 			switch (itemType)
 			{
 				case ItemType.Person:
-					item = new Person()
-					{
-						District = district,
-						Level = level,
-						Gender = gender,
-						Site = site,
-						DateOfBirth = dateOfBirth,
-						Position = position,
-						SocialMediaNames = new List<SocialMediaName>()
-					};
-					break;
+				item = new Person()
+				{
+					District = district,
+					Level = level,
+					Gender = gender,
+					Site = site,
+					DateOfBirth = dateOfBirth,
+					Position = position,
+					SocialMediaNames = new List<SocialMediaName>()
+				};
+				break;
 				case ItemType.Organisation:
-					item = new Organisation()
-					{
-						Site = site,
-						SocialMediaUrls = new List<SocialMediaName>()
-					};
-					break;
+				item = new Organisation()
+				{
+					Site = site,
+					SocialMediaUrls = new List<SocialMediaName>()
+				};
+				break;
 				case ItemType.Theme:
-					item = new Theme()
+				item = new Theme()
+				{
+					Keywords = new List<Keyword>()
 					{
-						Keywords = new List<Keyword>()
-						{
 
-						}
-					};
-					break;
+					}
+				};
+				break;
 				default:
-					item = null;
-					break;
+				item = null;
+				break;
 			}
 
 			if (item == null) return null;
@@ -399,13 +374,13 @@ namespace BAR.BL.Managers
 			item.CreationDate = DateTime.Now;
 			item.LastUpdatedInfo = DateTime.Now;
 			//needs to be null to do a check later on: see updateItemTrending in itemManager for details
-			item.LastUpdated = null; 
 			item.NumberOfFollowers = 0;
 			item.TrendingPercentage = 0.0;
 			item.NumberOfMentions = 0;
 			item.NumberOfMentionsOld = 0;
 			item.Baseline = 0.0;
 			item.Deleted = false;
+			item.Baseline = 10.0;
 			item.Informations = new List<Information>();
 			item.ItemWidgets = new List<Widget>();
 
@@ -747,7 +722,7 @@ namespace BAR.BL.Managers
 						LastUpdatedInfo = DateTime.Now,
 						NumberOfFollowers = 0,
 						TrendingPercentage = 0.0,
-						Baseline = 0.0,
+						Baseline = 10.0,
 						Informations = new List<Information>(),
 						SocialMediaUrls = new List<SocialMediaName>(),
 						SubPlatform = subPlatform
@@ -853,16 +828,11 @@ namespace BAR.BL.Managers
 			DataManager dataManager = new DataManager();
 			IEnumerable<Item> items = GetAllItems();
 
+			//Update sentiment & number of mentions
 			foreach (Item item in items)
 			{
-				DetermineTrending(item.ItemId);
-				new SubscriptionManager().GenerateAlerts(item.ItemId);
-				item.NumberOfMentions = dataManager.GetInformationsForItemid(item.ItemId).Count();
-				if (item.LastUpdated == null)
-				{			
-					item.NumberOfMentionsOld = item.NumberOfMentions;
-					item.LastUpdated = DateTime.Now;
-				}
+				//Number of mentions from the last 30 days
+				item.NumberOfMentions = dataManager.GetInformationsForItemid(item.ItemId).Where(info => info.CreationDate >= DateTime.Now.AddDays(-30)).Count();
 
 				//Gather sentiment
 				double sentiment = 0.0;
@@ -886,7 +856,7 @@ namespace BAR.BL.Managers
 				//Determine sentiment
 				if (sentiment != 0)
 				{
-					sentiment = Math.Round((sentiment / counter) * 100, 2);
+					sentiment = Math.Round((sentiment / counter), 2);
 					if (sentiment >= 0) item.SentimentPositve = sentiment;
 					else item.SentimentNegative = Math.Abs(sentiment);
 				}
@@ -894,6 +864,9 @@ namespace BAR.BL.Managers
 
 			//Persist changes
 			ChangeItems(items);
+
+			//Determine trending
+			foreach (Item item in items) DetermineTrending(item.ItemId);
 		}
 
 		/// <summary>

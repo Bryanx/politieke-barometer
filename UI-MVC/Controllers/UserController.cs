@@ -1,5 +1,4 @@
 ﻿using System;
-using BAR.BL.Controllers;
 using BAR.BL.Domain.Users;
 using BAR.BL.Managers;
 using System.Collections.Generic;

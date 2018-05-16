@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace BAR.BL.Domain.Users
 {
-	public enum AlertType : Byte
+	public class UserAlert : Alert
 	{
-		Trending = 1,
-		Weekly_Review
+		public User User { get; set; }
 	}
 }
