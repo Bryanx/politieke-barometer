@@ -705,4 +705,10 @@
   <data name="SomethingWentWrong" xml:space="preserve">
     <value>Quelque chose a mal tourné...</value>
   </data>
+  <data name="HomepageHeaderSee" xml:space="preserve">
+    <value>Regardez quel</value>
+  </data>
+  <data name="HomepageHeaderTrending" xml:space="preserve">
+    <value>sont trending</value>
+  </data>
 </root>

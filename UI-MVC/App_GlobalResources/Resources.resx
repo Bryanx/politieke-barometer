@@ -711,4 +711,10 @@
   <data name="SomethingWentWrong" xml:space="preserve">
     <value>Something went wrong...</value>
   </data>
+  <data name="HomepageHeaderSee" xml:space="preserve">
+    <value>See which</value>
+  </data>
+  <data name="HomepageHeaderTrending" xml:space="preserve">
+    <value>are trending</value>
+  </data>
 </root>
