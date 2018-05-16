@@ -259,6 +259,15 @@ namespace BAR.UI.MVC.App_GlobalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to All topics.
+        /// </summary>
+        public static string AllThemes {
+            get {
+                return ResourceManager.GetString("AllThemes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Bar chart.
         /// </summary>
         public static string BarChart {
