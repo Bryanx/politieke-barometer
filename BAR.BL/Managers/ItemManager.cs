@@ -436,6 +436,16 @@ namespace BAR.BL.Managers
 			itemWidgets.Add(widget3);
 			widgetIds.Add(widget3.WidgetId);
 
+			//4th widget
+			proptags = new List<PropertyTag>();
+			proptags.Add(new PropertyTag()
+			{
+				Name = "Education"
+			});
+			ItemWidget widget4 = (ItemWidget)widgetManager.AddWidget(WidgetType.GraphType, name + " education comparison", 1, 1, proptags: proptags, graphType: GraphType.PieChart, rowspan: 6, colspan: 6);
+			itemWidgets.Add(widget4);
+			widgetIds.Add(widget4.WidgetId);
+
 			//Link widgets to item & save changes to database
 			item.ItemWidgets = itemWidgets;
 			itemRepo.UpdateItem(item);
