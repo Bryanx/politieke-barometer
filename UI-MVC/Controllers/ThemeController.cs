@@ -50,7 +50,7 @@ namespace BAR.UI.MVC.Controllers
 			return View("Index",
 				new ItemViewModel()
 				{
-					PageTitle = Resources.AllPoliticians,
+					PageTitle = Resources.AllThemes,
 					User = User.Identity.IsAuthenticated ? userManager.GetUser(User.Identity.GetUserId()) : null,
 					Items = themes
 				});
