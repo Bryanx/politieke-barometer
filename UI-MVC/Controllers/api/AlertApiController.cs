@@ -24,7 +24,7 @@ namespace BAR.UI.MVC.Controllers.api
 		public IHttpActionResult GetAlerts()
 		{
 			subManager = new SubscriptionManager();
-			IEnumerable<UserAlert> userAlerts = subManager.GetAllUserAlerts();
+			IEnumerable<UserAlert> userAlerts = subManager.GetUserAlert();
 			IEnumerable<SubAlert> subAlerts = subManager.GetAllSubAlerts();
 			if (userAlerts == null || subAlerts == null || (userAlerts.Count() == 0 && subAlerts.Count() == 0)) return StatusCode(HttpStatusCode.NoContent);
 

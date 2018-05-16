@@ -26,6 +26,8 @@ namespace BAR.DAL
 		IEnumerable<Alert> ReadAllAlerts();
 		IEnumerable<SubAlert> ReadAllSubAlerts();
 		IEnumerable<UserAlert> ReadAllUserAlerts();
+		IEnumerable<SubAlert> ReadSubAlerts(string userId);
+		IEnumerable<UserAlert> ReadUserAlerts(string userId);
 
 		//Create
 		int CreateSubscription(Subscription sub);
