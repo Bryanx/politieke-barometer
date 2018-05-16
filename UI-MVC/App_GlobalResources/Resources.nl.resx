@@ -687,6 +687,12 @@
   <data name="YourPasswordHasBeenReset" xml:space="preserve">
     <value>Uw wachtwoord is gereset.</value>
   </data>
+  <data name="AllThemes" xml:space="preserve">
+    <value>Thema-overzicht</value>
+  </data>
+  <data name="LatestStories" xml:space="preserve">
+    <value>Laatste verhalen</value>
+  </data>
   <data name="IsNowAvailable" xml:space="preserve">
     <value>is nu beschikbaar!</value>
    </data>

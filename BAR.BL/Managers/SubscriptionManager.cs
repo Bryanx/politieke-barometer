@@ -301,5 +301,23 @@ namespace BAR.BL.Managers
 			InitRepo();
 			return subRepo.ReadAllUserAlerts().AsEnumerable();
 		}
+
+		/// <summary>
+		/// Gives back all the sub alerts for a specific userId
+		/// </summary>
+		public IEnumerable<SubAlert> GetSubAlerts(string userId)
+		{
+			InitRepo();
+			return subRepo.ReadSubAlerts(userId);
+		}
+
+		/// <summary>
+		/// Gives back all the user alerts for a specific userId
+		/// </summary>
+		public IEnumerable<UserAlert> GetUserAlerts(string userId)
+		{
+			InitRepo();
+      return subRepo.ReadUserAlerts(userId);
+		}
 	}
 }
