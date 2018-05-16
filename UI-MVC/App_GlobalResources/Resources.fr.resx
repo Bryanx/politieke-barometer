@@ -705,4 +705,16 @@
   <data name="SomethingWentWrong" xml:space="preserve">
     <value>Quelque chose a mal tourné...</value>
   </data>
+  <data name="Extrovert" xml:space="preserve">
+    <value>Extraverti</value>
+  </data>
+  <data name="HigherEducated" xml:space="preserve">
+    <value>Haute éducation</value>
+  </data>
+  <data name="Introvert" xml:space="preserve">
+    <value>Introverti</value>
+  </data>
+  <data name="LowerEducated" xml:space="preserve">
+    <value>Éducation inférieure</value>
+  </data>
 </root>
