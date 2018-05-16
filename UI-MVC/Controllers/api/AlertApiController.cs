@@ -40,7 +40,7 @@ namespace BAR.UI.MVC.Controllers.api
 					Name = alert.Subscription.SubscribedItem.Name,
 					TimeStamp = alert.TimeStamp,
 					IsRead = alert.IsRead,
-					itemId = alert.Subscription.SubscribedItem.ItemId
+					ItemId = alert.Subscription.SubscribedItem.ItemId
 				};
 				lijst.Add(alertDTO);
 			}

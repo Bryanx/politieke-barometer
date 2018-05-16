@@ -10,6 +10,6 @@ namespace BAR.UI.MVC.Models {
         public bool IsRead { get; set; }
         public DateTime? TimeStamp { get; set; }
         public string Name { get; set; }
-		public int itemId { get; set; }
+		public int ItemId { get; set; }
 	}
 }
