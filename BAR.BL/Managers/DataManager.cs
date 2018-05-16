@@ -584,7 +584,23 @@ namespace BAR.BL.Managers
             DataSource dataSource = dataRepo.ReadDataSource(dataSourceId);
             dataRepo.UpdateDataSource(dataSource);
         }
-    }
+
+		/// <summary>
+		/// Gives back the geoloactionData of all the items
+		/// </summary>
+		public WidgetData GetGeoLocationData(DateTime? timestamp = null)
+		{
+			//Create Widgetdata
+			WidgetData geoData = new WidgetData()
+			{
+				KeyValue = "geo",
+				GraphValues = new List<GraphValue>()
+			};
+			
+			//Get all Items
+			IEnumerable<Item> items = new ItemManager().getall
+		}
+	}
 }
 
 

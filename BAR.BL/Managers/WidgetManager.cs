@@ -451,6 +451,7 @@ namespace BAR.BL.Managers
 				Name = "geo"
 			};
 			Widget geoloactionWidget = AddWidget(WidgetType.GraphType, "geoloaction of number of mentions", 1, 1, tags);
+
 		}
 
 		/// <summary>
