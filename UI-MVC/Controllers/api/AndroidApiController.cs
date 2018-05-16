@@ -151,30 +151,45 @@ namespace webapi.Controllers
       return Ok(userWidgetDtos);
     }
 
-		// GET api/Android/Alerts
-		//Needs to be fixed by remi
-		//[HostAuthentication(DefaultAuthenticationTypes.ExternalBearer)]
-  //  [HttpGet]
-  //  [Route("Alerts")]
-  //  public IHttpActionResult GetAlerts()
-  //  {
-  //    ISubscriptionManager subscriptionManager = new SubscriptionManager();
-  //    List<AlertViewModel> alerts = new List<AlertViewModel>();
-  //    AlertViewModel alertViewModel;
-      
-  //    foreach (var alert in subscriptionManager.GetAllAlerts(User.Identity.GetUserId()))
-  //    {
-  //      alertViewModel = new AlertViewModel()
-  //      {
-  //        AlertId = alert.AlertId,
-		  
-  //        //ItemName = alert.Subscription.SubscribedItem.Name
-  //      };
-  //      alerts.Add(alertViewModel);
-  //    }
+    // GET api/Android/Alerts
+    [HostAuthentication(DefaultAuthenticationTypes.ExternalBearer)]
+    [HttpGet]
+    [Route("Alerts")]
+    public IHttpActionResult GetAlerts()
+    {
+      ISubscriptionManager subManager = new SubscriptionManager();
+      IEnumerable<UserAlert> userAlerts = subManager.GetUserAlerts(User.Identity.GetUserId());
+      IEnumerable<SubAlert> subAlerts = subManager.GetSubAlerts(User.Identity.GetUserId());
+      if (userAlerts == null || subAlerts == null || (userAlerts.Count() == 0 && subAlerts.Count() == 0)) return StatusCode(HttpStatusCode.NoContent);
 
-  //    return Ok(alerts);
-  //    }
+      //Made DTO class to prevent circular references
+      List<AlertDTO> alerts = new List<AlertDTO>();
+      foreach (SubAlert alert in subAlerts)
+      {
+        AlertDTO alertDTO = new AlertDTO()
+        {
+          AlertId = alert.AlertId,
+          Name = alert.Subscription.SubscribedItem.Name,
+          TimeStamp = alert.TimeStamp,
+          IsRead = alert.IsRead,
+          ItemId = alert.Subscription.SubscribedItem.ItemId
+        };
+        alerts.Add(alertDTO);
+      }
+      foreach (UserAlert alert in userAlerts)
+      {
+        AlertDTO alertDTO = new AlertDTO()
+        {
+          AlertId = alert.AlertId,
+          Name = alert.Subject,
+          TimeStamp = alert.TimeStamp,
+          IsRead = alert.IsRead,
+        };
+        alerts.Add(alertDTO);
+      }
+
+      return Ok(alerts);
+    }
 
     #region Helpers
 

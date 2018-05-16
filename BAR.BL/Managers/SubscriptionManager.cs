@@ -308,7 +308,7 @@ namespace BAR.BL.Managers
 		public IEnumerable<SubAlert> GetSubAlerts(string userId)
 		{
 			InitRepo();
-			return subRepo.ReadSubAlerts(userId).AsEnumerable();
+			return subRepo.ReadSubAlerts(userId);
 		}
 
 		/// <summary>
@@ -317,7 +317,7 @@ namespace BAR.BL.Managers
 		public IEnumerable<UserAlert> GetUserAlerts(string userId)
 		{
 			InitRepo();
-			return subRepo.ReadUserAlerts(userId).AsEnumerable();
+      return subRepo.ReadUserAlerts(userId);
 		}
 	}
 }
