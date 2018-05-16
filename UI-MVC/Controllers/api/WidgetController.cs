@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
 using System.Web.Http;
 using System.Web.Mvc;
 using AutoMapper;
@@ -104,6 +105,7 @@ namespace BAR.UI.MVC.Controllers.api
 		/// </summary>
 		[System.Web.Http.HttpPost]
 		[System.Web.Http.Route("api/MoveWidget/")]
+		[System.Web.Http.Authorize]
 		public IHttpActionResult MoveWidgetToDashboard([FromBody] UserWidgetDTO model)
 		{
 			widgetManager = new WidgetManager();
@@ -117,6 +119,7 @@ namespace BAR.UI.MVC.Controllers.api
 		/// </summary>
 		[System.Web.Http.HttpPost]
 		[System.Web.Http.Route("api/NewWidget/")]
+		[System.Web.Http.Authorize]
 		public IHttpActionResult AddNewWidgetToDashboard([FromBody] AddWidgetDTO model)
 		{
 			UnitOfWorkManager uowManager = new UnitOfWorkManager();

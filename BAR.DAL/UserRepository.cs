@@ -163,5 +163,13 @@ namespace BAR.DAL
 		{
 			return ctx.Roles.Where(role => role.Users.Any(user => user.UserId.Equals(userId))).FirstOrDefault();
 		}
+
+		/// <summary>
+		/// Gives back all the users with all the alerts
+		/// </summary>
+		public IEnumerable<User> ReadAllUsersWithAlerts()
+		{
+			return ctx.Users.Include(user => user.Alerts).AsEnumerable();
+		}
 	}
 }

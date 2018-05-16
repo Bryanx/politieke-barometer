@@ -23,6 +23,7 @@ namespace BAR.BL.Managers
 		WidgetData GetNumberOfMentionsForItem(int itemId, int widgetId, string dateFormat, DateTime? startDate = null);
 		WidgetData GetPropvaluesForWidget(int itemid, int widgetId, string proptag, DateTime? startDate = null);
 		WidgetData GetUserActivitiesData(ActivityType type, DateTime? timestamp = null);
+		WidgetData GetGeoLocationData(DateTime? timestamp = null);
 
 		//Items
 		bool SynchronizeData(string json);
@@ -38,6 +39,11 @@ namespace BAR.BL.Managers
 		Source AddSource(string name, string site);
 		void RemoveSource(string sourceId);
 
+        //DataSources
+        IEnumerable<DataSource> GetAllDataSources();
+        DataSource GetDataSource(int dataSourceId);
+        void RemoveDataSource(int dataSourceId);
+        void ChangeDataSource(int dataSourceId);
 		//Other
 		bool IsJsonEmpty(string json);
 		IEnumerable<string> GetUrlsForItem(int itemId);
