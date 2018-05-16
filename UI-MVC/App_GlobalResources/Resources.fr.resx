@@ -690,6 +690,7 @@ Thème</value>
   </data>
   <data name="IsNowAvailable" xml:space="preserve">
     <value>est maintenant disponible!</value>
+  </data>
   <data name="BackToHome" xml:space="preserve">
     <value>Retour à la page d'accueil</value>
   </data>
