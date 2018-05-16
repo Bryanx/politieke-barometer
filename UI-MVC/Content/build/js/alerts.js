@@ -75,7 +75,7 @@ function generateAlertHTML(alert, type) {
       }));
   var alertBody = $("<a />",
     {
-      href: `/Person/Details/${alert.itemId}`
+      href: `/Person/Details/${alert.ItemId}`
     });
   var alertIcon = $("<div />",
     {

@@ -294,5 +294,26 @@ namespace BAR.DAL
 			ctx.Entry(alert).State = EntityState.Modified;
 			return ctx.SaveChanges();
 		}
+
+		/// <summary>
+		/// Gives back all the subscription alerts for a specific userId
+		/// </summary>
+		public IEnumerable<SubAlert> ReadSubAlerts(string userId)
+		{
+			return ctx.Alerts.OfType<SubAlert>().Include(alert => alert.Subscription)
+												.Include(alert => alert.Subscription.SubscribedUser)
+												.Where(alert => alert.Subscription.SubscribedUser.Id.Equals(userId))
+												.AsEnumerable();
+		}
+
+		/// <summary>
+		/// Gives back all the subscription alerts for a specific userId
+		/// </summary>
+		public IEnumerable<UserAlert> ReadUserAlerts(string userId)
+		{
+			return ctx.Alerts.OfType<UserAlert>().Include(alert => alert.User)
+												 .Where(alert => alert.User.Id.Equals(userId))
+												 .AsEnumerable();
+		}
 	}
 }
