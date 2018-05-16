@@ -141,7 +141,6 @@ namespace BAR.BL.Managers
 			}
 			else
 			{
-				UpdateWeeklyReviewData(itemsOrderd);
 				itemsOrderd = itemsOrderd.Where(item => item.ItemType == type)
 				.OrderBy(item => item.TrendingPercentage).AsEnumerable();
 			}
@@ -203,7 +202,6 @@ namespace BAR.BL.Managers
 			}
 			else
 			{
-				UpdateWeeklyReviewData(itemsFromUser);
 				itemsOrderd = itemsFromUser.Where(item => item.ItemType == type)
 				.OrderBy(item => item.TrendingPercentage).AsEnumerable();
 			}
@@ -884,7 +882,7 @@ namespace BAR.BL.Managers
 				//Determine sentiment
 				if (sentiment != 0)
 				{
-					sentiment = Math.Round((sentiment / counter), 2);
+					sentiment = Math.Round((sentiment / counter) * 100, 2);
 					if (sentiment >= 0) item.SentimentPositve = sentiment;
 					else item.SentimentNegative = Math.Abs(sentiment);
 				}
