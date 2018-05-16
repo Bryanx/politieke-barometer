@@ -546,6 +546,15 @@ namespace BAR.BL.Managers
 			InitRepo();
 			return widgetRepo.ReadWidgetDatasForKeyvalue(value).AsEnumerable();
 		}
+
+		/// <summary>
+		/// Gives back the geolocation widget for displaying on the homepage
+		/// </summary>
+		public Widget GetGeoLocationWidget()
+		{
+			InitRepo();
+			return widgetRepo.ReadGeoLocationWidget();
+		}
 	}
 }
 
