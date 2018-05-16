@@ -38,7 +38,7 @@ namespace BAR.DAL
 		/// <summary>
 		/// Returns an a alert of a specific origin
 		/// </summary>
-		public Alert ReadAlert(string userId, int alertId, bool readUserAlert) 
+		public Alert ReadAlert(string userId, int alertId, bool readUserAlert)
 		{
 			if (readUserAlert) return ReadUserAlert(userId, alertId);
 			else return ReadSubAlert(userId, alertId);
@@ -63,7 +63,7 @@ namespace BAR.DAL
 									.Where(sub => sub.SubscribedItem.ItemId == itemId)
 									.AsEnumerable();
 		}
-		
+
 		/// <summary>
 		/// Returns a list of subscriptions of a user.
 		/// </summary>
@@ -268,7 +268,7 @@ namespace BAR.DAL
 							 .Include(alert => alert.User)
 							 .AsEnumerable();
 		}
-		
+
 		/// <summary>
 		/// Deletes a specific alert from the database
 		/// </summary>
@@ -300,10 +300,12 @@ namespace BAR.DAL
 		/// </summary>
 		public IEnumerable<SubAlert> ReadSubAlerts(string userId)
 		{
-      return ctx.Alerts.OfType<SubAlert>().Include(alert => alert.Subscription)
-                        .Include(alert => alert.Subscription.SubscribedUser)
-                        .Where(alert => alert.Subscription.SubscribedUser.Id.Equals(userId))
-                        .ToList();
+			return ctx.Alerts.OfType<SubAlert>()
+							 .Include(alert => alert.Subscription)
+							 .Include(alert => alert.Subscription.SubscribedUser)
+							 .Include(alert => alert.Subscription.SubscribedItem)
+							 .Where(alert => alert.Subscription.SubscribedUser.Id.Equals(userId))
+							 .ToList();
 		}
 
 		/// <summary>
