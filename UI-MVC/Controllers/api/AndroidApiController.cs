@@ -178,7 +178,7 @@ namespace webapi.Controllers
           Name = alert.Subscription.SubscribedItem.Name,
           TimeStamp = alert.TimeStamp,
           IsRead = alert.IsRead,
-          ItemId = alert.Subscription.SubscribedItem.ItemId
+          AlertType = alert.AlertType
         };
         alerts.Add(alertDTO);
       }
@@ -190,6 +190,7 @@ namespace webapi.Controllers
           Name = alert.Subject,
           TimeStamp = alert.TimeStamp,
           IsRead = alert.IsRead,
+          AlertType = alert.AlertType
         };
         alerts.Add(alertDTO);
       }
