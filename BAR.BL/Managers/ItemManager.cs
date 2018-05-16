@@ -913,5 +913,14 @@ namespace BAR.BL.Managers
 			return itemToUpdate;
 
 		}
+
+		/// <summary>
+		/// Gives back all the items with all the informations
+		/// </summary>
+		public IEnumerable<Item> GetAllItemsWithInformations()
+		{
+			InitRepo();
+			return itemRepo.ReadAllItemsWithInformations().AsEnumerable();
+		}
 	}
 }
