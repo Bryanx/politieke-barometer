@@ -31,6 +31,12 @@ namespace webapi.Controllers
   [RoutePrefix("api/Android")]
   public class AndroidController : ApiController
   {
+    private ISubscriptionManager subManager;
+    private IUserManager userManager;
+    private IWidgetManager widgetManager;
+    private IItemManager itemManager;
+    private IdentityUserManager identityUserManager;
+
     // POST api/Android/Register
     [AllowAnonymous]
     [HttpPost]
@@ -42,10 +48,10 @@ namespace webapi.Controllers
         return BadRequest(ModelState);
       }
 
-      IdentityUserManager userManager = Request.GetOwinContext().GetUserManager<IdentityUserManager>();
+      identityUserManager = Request.GetOwinContext().GetUserManager<IdentityUserManager>();
       User user = new User() { UserName = model.Email, Email = model.Email };
 
-      IdentityResult result = await userManager.CreateAsync(user, model.Password);
+      IdentityResult result = await identityUserManager.CreateAsync(user, model.Password);
 
       if (!result.Succeeded)
       {
@@ -61,7 +67,7 @@ namespace webapi.Controllers
     [Route("UserInfo")]
     public IHttpActionResult GetUserInfo()
     {
-      IUserManager userManager = new UserManager();
+      userManager = new UserManager();
       User user = userManager.GetUser(User.Identity.GetUserId());
 
       UserInfoAndroidViewModel model = new UserInfoAndroidViewModel
@@ -85,7 +91,7 @@ namespace webapi.Controllers
         return BadRequest(ModelState);
       }
 
-      IUserManager userManager = new UserManager();
+      userManager = new UserManager();
       if (!model.ProfilePicture.Equals(""))
       {
         byte[] profilePicture = Convert.FromBase64String(model.ProfilePicture);
@@ -105,8 +111,8 @@ namespace webapi.Controllers
     [Route("Widgets")]
     public IHttpActionResult GetWidgets()
     {
-      IWidgetManager widgetManager = new WidgetManager();
-      ItemManager itemManager = new ItemManager();
+      widgetManager = new WidgetManager();
+      itemManager = new ItemManager();
 
       Dashboard dashboard = widgetManager.GetDashboardWithAllDataForUserId(User.Identity.GetUserId());
       if (dashboard == null) return NotFound();
@@ -157,7 +163,7 @@ namespace webapi.Controllers
     [Route("Alerts")]
     public IHttpActionResult GetAlerts()
     {
-      ISubscriptionManager subManager = new SubscriptionManager();
+      subManager = new SubscriptionManager();
       IEnumerable<UserAlert> userAlerts = subManager.GetUserAlerts(User.Identity.GetUserId());
       IEnumerable<SubAlert> subAlerts = subManager.GetSubAlerts(User.Identity.GetUserId());
       if (userAlerts == null || subAlerts == null || (userAlerts.Count() == 0 && subAlerts.Count() == 0)) return StatusCode(HttpStatusCode.NoContent);

@@ -305,7 +305,7 @@ namespace BAR.DAL
 							 .Include(alert => alert.Subscription.SubscribedUser)
 							 .Include(alert => alert.Subscription.SubscribedItem)
 							 .Where(alert => alert.Subscription.SubscribedUser.Id.Equals(userId))
-							 .ToList();
+							 .AsEnumerable();
 		}
 
 		/// <summary>
@@ -315,7 +315,7 @@ namespace BAR.DAL
 		{
 			return ctx.Alerts.OfType<UserAlert>().Include(alert => alert.User)
 												 .Where(alert => alert.User.Id.Equals(userId))
-												 .ToList();
+												 .AsEnumerable();
 		}
 	}
 }
