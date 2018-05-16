@@ -541,10 +541,10 @@ namespace BAR.BL.Managers
 		/// </summary>
 		public IEnumerable<string> GetUrlsForItem(int itemId)
 		{
-			List<string> urls = null; 
+			List<string> urls = new List<string>(); 
 
 			//Get informations for item
-			IEnumerable<Information> infos = GetInformationsWithAllInfoForItem(itemId);
+			IEnumerable<Information> infos = GetInformationsWithAllInfoForItem(itemId).Take(50);
 			if (infos == null || infos.Count() == 0) return urls;
 
 			//Extract urls

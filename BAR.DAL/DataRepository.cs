@@ -259,7 +259,7 @@ namespace BAR.DAL
 		/// </summary>
 		public IEnumerable<Information> ReadInformationsWithAllInfoForItem(int itemId)
 		{
-			return ctx.Informations.Include(info => info.Items)
+			return ctx.Informations//.Include(info => info.Items)
 								   .Include(info => info.PropertieValues)
 								   .Include(info => info.PropertieValues.Select(propval => propval.Property))
 								   .Where(info => info.Items.Any(item => item.ItemId == itemId))
