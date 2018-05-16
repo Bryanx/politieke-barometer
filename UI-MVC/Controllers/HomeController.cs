@@ -55,13 +55,15 @@ namespace BAR.UI.MVC.Controllers
     public ActionResult Privacy()
     {
       userManager = new UserManager();
+			subplatformManager = new SubplatformManager();
 
-      //Assembling the view
-      return View(new BaseViewModel()
+			//Assembling the view
+			return View(new BaseViewModel()
       {
         PageTitle = Resources.PrivacyAndSafety,
-        User = User.Identity.IsAuthenticated ? userManager.GetUser(User.Identity.GetUserId()) : null
-      });
+        User = User.Identity.IsAuthenticated ? userManager.GetUser(User.Identity.GetUserId()) : null,
+				Customization = subplatformManager.GetCustomization((int)RouteData.Values["SubPlatformID"])
+			});
     }
 
     /// <summary>
@@ -71,13 +73,15 @@ namespace BAR.UI.MVC.Controllers
     public ActionResult Faq()
     {
       userManager = new UserManager();
+			subplatformManager = new SubplatformManager();
 
-      //Assembling the view
-      return View(new BaseViewModel()
+			//Assembling the view
+			return View(new BaseViewModel()
       {
         PageTitle = Resources.QuestionAndAnswer,
-        User = User.Identity.IsAuthenticated ? userManager.GetUser(User.Identity.GetUserId()) : null
-      });
+        User = User.Identity.IsAuthenticated ? userManager.GetUser(User.Identity.GetUserId()) : null,
+				Customization = subplatformManager.GetCustomization((int)RouteData.Values["SubPlatformID"])
+			});
     }
 
     /// <summary>

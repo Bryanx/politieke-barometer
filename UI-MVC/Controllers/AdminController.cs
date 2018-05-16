@@ -31,9 +31,12 @@ namespace BAR.UI.MVC.Controllers
 		/// </summary>
 		public ActionResult Index() {
 			userManager = new UserManager();
+			platformManager = new SubplatformManager();
+
 			return View(new BaseViewModel() {
 				PageTitle = Resources.AdminDashboard,
-				User = userManager.GetUser(User.Identity.GetUserId())
+				User = userManager.GetUser(User.Identity.GetUserId()),
+				Customization = platformManager.GetCustomization((int)RouteData.Values["SubPlatformID"])
 			});
 		}
 
@@ -52,6 +55,8 @@ namespace BAR.UI.MVC.Controllers
 			CustomizationViewModel vm = Mapper.Map(custom, new CustomizationViewModel());
 			vm.User = userManager.GetUser(User.Identity.GetUserId());
 			vm.PageTitle = Resources.PageManagement;
+			vm.Customization = platformManager.GetCustomization((int)RouteData.Values["SubPlatformID"]);
+
 
 			//Assembling the view
 			return View(vm);
@@ -67,13 +72,16 @@ namespace BAR.UI.MVC.Controllers
 
 			itemManager = new ItemManager();
 			userManager = new UserManager();
+			platformManager = new SubplatformManager();
 
 			//Assembling the view
 			return View(new ItemViewModels.ItemViewModel()
 			{
 				User = userManager.GetUser(User.Identity.GetUserId()),
 				PageTitle = Resources.ItemManagement,
-				Items = Mapper.Map(itemManager.GetAllItems().Where(item => item.SubPlatform.SubPlatformId == subPlatformID), new List<ItemDTO>())
+				Items = Mapper.Map(itemManager.GetAllItems().Where(item => item.SubPlatform.SubPlatformId == subPlatformID), new List<ItemDTO>()),
+				Customization = platformManager.GetCustomization(subPlatformID)
+
 			});
 		}
 
@@ -83,6 +91,7 @@ namespace BAR.UI.MVC.Controllers
 		public ActionResult UserManagement()
 		{
 			userManager = new UserManager();
+			platformManager = new SubplatformManager();
 
 			//Get Roles
 			IdentityUserManager identityUserManager = HttpContext.GetOwinContext().GetUserManager<IdentityUserManager>();
@@ -99,7 +108,8 @@ namespace BAR.UI.MVC.Controllers
 			{
 				User = userManager.GetUser(User.Identity.GetUserId()),
 				PageTitle = Resources.UserManagement,
-				Users = users
+				Users = users,
+				Customization = platformManager.GetCustomization((int)RouteData.Values["SubPlatformID"])
 			};
 			FillViewModels(vm);
 			return View(vm);

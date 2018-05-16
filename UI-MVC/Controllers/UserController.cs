@@ -426,6 +426,7 @@ namespace BAR.UI.MVC.Controllers
 			string userId = User.Identity.GetUserId();
 			PersonViewModels itemViewModel = GetPersonViewModel(userId);
 			itemViewModel.PageTitle = Resources.Dashboard;
+			itemViewModel.Customization = new SubplatformManager().GetCustomization((int)RouteData.Values["SubPlatformID"]);
 
 			//Assebling the view
 			return View("Dashboard", itemViewModel);
@@ -457,8 +458,10 @@ namespace BAR.UI.MVC.Controllers
 				AlertsViaWebsite = user.AlertsViaWebsite,
 				AlertsViaEmail = user.AlertsViaEmail,
 				WeeklyReviewViaEmail = user.WeeklyReviewViaEmail,
-				PageTitle = Resources.Settings
-			};
+				PageTitle = Resources.Settings,
+				Customization = new SubplatformManager().GetCustomization((int)RouteData.Values["SubPlatformID"])
+
+		};
 			return View(settingsViewModel);
 		}
 
@@ -530,6 +533,7 @@ namespace BAR.UI.MVC.Controllers
 			IEnumerable<Subscription> subs = subManager.GetSubscriptionsWithItemsForUser(User.Identity.GetUserId());
 			personViewModels.Persons = personViewModels.Persons.Where(p => subs.Any(s => s.SubscribedItem.ItemId == p.Item.ItemId)).ToList();
 			personViewModels.Persons.ForEach(i => i.Subscribed = true);
+			personViewModels.Customization = new SubplatformManager().GetCustomization((int)RouteData.Values["SubPlatformID"]);
 
 			return personViewModels;
 		}

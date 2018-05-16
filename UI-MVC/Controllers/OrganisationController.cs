@@ -11,6 +11,7 @@ using BAR.UI.MVC.Attributes;
 using BAR.UI.MVC.Models;
 using Microsoft.AspNet.Identity;
 using static BAR.UI.MVC.Models.ItemViewModels;
+using BAR.BL.Domain.Core;
 
 namespace BAR.UI.MVC.Controllers
 {
@@ -22,6 +23,7 @@ namespace BAR.UI.MVC.Controllers
 		private ISubscriptionManager subManager;
 		private IItemManager itemManager;
 		private IUserManager userManager;
+		private ISubplatformManager subplatformManager;
 
 		/// <summary>
 		/// Organisation page for logged-in and non-logged-in users.
@@ -35,6 +37,7 @@ namespace BAR.UI.MVC.Controllers
       subManager = new SubscriptionManager();
 			itemManager = new ItemManager();
 			userManager = new UserManager();
+			subplatformManager = new SubplatformManager();
 
 			IList<ItemDTO> people = Mapper.Map<IList<Item>, IList<ItemDTO>>(itemManager.GetAllOrganisationsForSubplatform(subPlatformID).ToList());
 			IEnumerable<Subscription> subs = subManager.GetSubscriptionsWithItemsForUser(User.Identity.GetUserId());
@@ -47,13 +50,16 @@ namespace BAR.UI.MVC.Controllers
 				}
 			}
 
+			Customization customization = subplatformManager.GetCustomization(subPlatformID);
+
 			//Assembling the view
 			return View("Index",
 				new ItemViewModel()
 				{
-					PageTitle = Resources.AllParties,
+					PageTitle = Resources.AllParties + " " + customization.OrganisationsAlias,
 					User = User.Identity.IsAuthenticated ? userManager.GetUser(User.Identity.GetUserId()) : null,
-					Items = people
+					Items = people,
+					Customization = customization
 				});
 		}
 		
@@ -66,6 +72,7 @@ namespace BAR.UI.MVC.Controllers
 			itemManager = new ItemManager();
 			userManager = new UserManager();
 			subManager = new SubscriptionManager();
+			subplatformManager = new SubplatformManager();
 
 			Item org = itemManager.GetOrganisationWithDetails(id);
 
@@ -79,6 +86,7 @@ namespace BAR.UI.MVC.Controllers
 			organisationViewModel.Organisation = Mapper.Map(org, new ItemDTO());
 			organisationViewModel.Subscribed = subbedItem != null;
 			organisationViewModel.MemberList = GetOrgMembers(org);
+			organisationViewModel.Customization = subplatformManager.GetCustomization((int)RouteData.Values["SubPlatformID"]);
 
 			//Log visit actitivy
 			new SubplatformManager().LogActivity(ActivityType.VisitActitiy);

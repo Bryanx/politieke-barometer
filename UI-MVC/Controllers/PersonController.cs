@@ -29,6 +29,7 @@ namespace BAR.UI.MVC.Controllers
 		private IUserManager userManager;
 		private ISubscriptionManager subManager;
 		private IWidgetManager widgetManager;
+		private ISubplatformManager subplatformManager;
 
 		/// <summary>
 		/// Item page for logged-in and non-logged-in users.
@@ -42,13 +43,15 @@ namespace BAR.UI.MVC.Controllers
 			itemManager = new ItemManager();
 			userManager = new UserManager();
 			subManager = new SubscriptionManager();
+			subplatformManager = new SubplatformManager();
 
+			Customization customization = subplatformManager.GetCustomization(subPlatformID);
 			List<Person> persons = itemManager.GetAllPersonsForSubplatform(subPlatformID).ToList();
 			
 			//Return platformspecific data
 			PersonViewModels personViewModels = new PersonViewModels();
 			personViewModels.Persons = Mapper.Map(persons, personViewModels.Persons);
-			personViewModels.PageTitle = Resources.AllPoliticians;
+			personViewModels.PageTitle = Resources.AllPoliticians + " " + customization.PersonsAlias;
 			personViewModels.User = User.Identity.IsAuthenticated ? userManager.GetUser(User.Identity.GetUserId()) : null;
 
 			List<Person> allPersons = itemManager.GetAllPersonsForSubplatform(subPlatformID).ToList();
@@ -66,7 +69,9 @@ namespace BAR.UI.MVC.Controllers
 			
 			//By default person pages are ordered by trending percentage.
 			personViewModels.Persons = personViewModels.Persons.OrderByDescending(p => p.Item.TrendingPercentage).ToList();
-			
+
+			personViewModels.Customization = customization;
+
 			//Assembling the view
 			return View("Index", personViewModels);
 
@@ -97,6 +102,7 @@ namespace BAR.UI.MVC.Controllers
 			itemManager = new ItemManager();
 			userManager = new UserManager();
 			subManager = new SubscriptionManager();
+			subplatformManager = new SubplatformManager();
 
 			Item item = itemManager.GetPersonWithDetails(id);
 
@@ -115,6 +121,8 @@ namespace BAR.UI.MVC.Controllers
 			personViewModel.RankNumberOfMentions = CalculateRankNumberOfMentions(personViewModel.Item.NumberOfMentions);
 			personViewModel.RankTrendingPercentage = CalculateRankTrendingPercentage(personViewModel.Item.ItemId);
 			personViewModel.PeopleFromSameOrg = GetPeopleFromSameOrg(personViewModel.Item.ItemId);
+
+			personViewModel.Customization = subplatformManager.GetCustomization((int)RouteData.Values["SubPlatformID"]);
 
 			//Log visit activity
 			new SubplatformManager().LogActivity(ActivityType.VisitActitiy);

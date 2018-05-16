@@ -25,6 +25,7 @@ namespace BAR.UI.MVC.Controllers
 		private IUserManager userManager;
 		private ISubscriptionManager subManager;
 		private IWidgetManager widgetManager;
+		private ISubplatformManager subplatformManager;
 
 		/// <summary>
 		/// Theme overview page for logged-in and non-logged-in users.
@@ -38,6 +39,7 @@ namespace BAR.UI.MVC.Controllers
 			itemManager = new ItemManager();
 			userManager = new UserManager();
 			subManager = new SubscriptionManager();
+			subplatformManager = new SubplatformManager();
 
 			//Return platformspecific data
 			IList<ItemDTO> themes = null;
@@ -52,7 +54,8 @@ namespace BAR.UI.MVC.Controllers
 				{
 					PageTitle = Resources.AllThemes,
 					User = User.Identity.IsAuthenticated ? userManager.GetUser(User.Identity.GetUserId()) : null,
-					Items = themes
+					Items = themes,
+					Customization = subplatformManager.GetCustomization((int)RouteData.Values["SubPlatformID"])
 				});
 		}
 
@@ -68,6 +71,7 @@ namespace BAR.UI.MVC.Controllers
 			itemManager = new ItemManager();
 			userManager = new UserManager();
 			subManager = new SubscriptionManager();
+			subplatformManager = new SubplatformManager();
 
 			Item item = itemManager.GetThemeWithDetails(id);
 			Theme theme = itemManager.GetThemeWithDetails(id);
@@ -84,6 +88,8 @@ namespace BAR.UI.MVC.Controllers
 			themeViewModel.Theme = Mapper.Map(theme, new ItemDTO());
 			themeViewModel.Subscribed = subbedItem != null;
 			themeViewModel.Keywords = theme.Keywords.ToList();
+			themeViewModel.Customization = subplatformManager.GetCustomization((int)RouteData.Values["SubPlatformID"]);
+
 
 			//Assembling the view
 			return View(themeViewModel);

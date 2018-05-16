@@ -28,7 +28,7 @@
 
                 </div>
                 <div class="col-md-9 col-sm-9 col-xs-12">
-                    @Resources.Organisation
+                    @Model.Customization.OrganisationAlias
                     <h1>
                         @Model.Organisation.Name
                         @if (Model.Subscribed != true) {
@@ -41,7 +41,7 @@
                 </div>
                 <div class="col-md-3 col-sm-3 col-xs-12">
                     <h4>
-                        <strong>@Resources.Organisation @Resources.Details</strong>
+                        <strong>@Model.Customization.OrganisationAlias @Resources.Details</strong>
                     </h4>
                     <ul class="list-unstyled user_data">
                         <li class="m-top-xs">
