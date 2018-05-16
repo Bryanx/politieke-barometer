@@ -23,25 +23,20 @@ namespace BAR.DAL
 		List<Source> ReadAllSources();
 		SynchronizeAudit ReadLastAudit();
 		SynchronizeAudit ReadAudit(int auditId);
-        IEnumerable<DataSource> ReadAllDataSources();
-        DataSource ReadDataSource(int dataSourceId);
 		
 		//Create
 		int CreateInformations(IEnumerable<Information> infos);
 		int CreateAudit(SynchronizeAudit audit);
 		int CreateSource(Source source);
-        int CreateDataSource(DataSource dataSource);
 
 		//Update
 		int UpdateInformation(Information info);
 		int UpdateInformations(IEnumerable<Information> infos);
 		int UpdateAudit(SynchronizeAudit audit);
-        int UpdateDataSource(DataSource dataSource);
 
 		//Delete
 		int DeleteInformation(int infoId);
 		int DeleteInformations(IEnumerable<int> infoIds);
 		int DeleteSource(Source source);
-        int DeleteDataSource(DataSource dataSource);
-    }
+	}
 }

@@ -17,11 +17,11 @@ namespace BAR.UI.MVC.Controllers.api
 
 		[HttpGet]
 		[Route("api/Data/Synchronize")]
-		[SubPlatformCheckAPI]
 		public IHttpActionResult Synchronize()
 		{
 			dataManager = new DataManager();
 			
+
 			string content;
 			if (dataManager.GetLastAudit() == null)
 			{
@@ -40,7 +40,7 @@ namespace BAR.UI.MVC.Controllers.api
 			using (HttpClient client = new HttpClient())
 			{
 				//Make request
-				HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, dataManager.GetDataSource(1).Url);
+				HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, "https://kdg.textgain.com/query");
 				request.Headers.Add("Accept", "application/json");
 				request.Headers.Add("X-API-Key", "aEN3K6VJPEoh3sMp9ZVA73kkr");
 
@@ -64,15 +64,6 @@ namespace BAR.UI.MVC.Controllers.api
 							new WidgetManager().GenerateDataForMwidgets();
 							//Update all items with recent data
 							new ItemManager().FillItems();
-							//Update weekly review alerts
-							//Get the subplatformID from the SubPlatformCheckAPI attribute
-							object _customObject = null;
-							int suplatformID = -1;
-							if (Request.Properties.TryGetValue("SubPlatformID", out _customObject))
-							{
-								suplatformID = (int)_customObject;
-							}
-							new UserManager().GenerateAlertsForWeeklyReview(suplatformID);
 
 
 							return StatusCode(HttpStatusCode.OK);

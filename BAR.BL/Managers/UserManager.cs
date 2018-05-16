@@ -6,9 +6,6 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using System.Web;
 using System.IO;
 using System.Linq;
-using BAR.BL.Domain.Core;
-using BAR.BL.Domain.Items;
-using Microsoft.AspNet.Identity;
 
 namespace BAR.BL.Managers
 {
@@ -193,101 +190,22 @@ namespace BAR.BL.Managers
 			return userToUpdate;
 		}
 
-		public User ChangeBasicInfoAndroid(string userId, string firstname, string lastname, byte[] profilePicture = null)
-		{
-			InitRepo();
+    public User ChangeBasicInfoAndroid(string userId, string firstname, string lastname, byte[] profilePicture = null)
+    {
+      InitRepo();
 
-			//Get User
-			User userToUpdate = userRepo.ReadUser(userId);
-			if (userToUpdate == null) return null;
+      //Get User
+      User userToUpdate = userRepo.ReadUser(userId);
+      if (userToUpdate == null) return null;
 
-			//Change user
-			userToUpdate.FirstName = firstname;
-			userToUpdate.LastName = lastname;
-			userToUpdate.ProfilePicture = profilePicture;
+      //Change user
+      userToUpdate.FirstName = firstname;
+      userToUpdate.LastName = lastname;
+      userToUpdate.ProfilePicture = profilePicture;
 
-			//Update database
-			userRepo.UpdateUser(userToUpdate);
-			return userToUpdate;
-		}
-
-		/// <summary>
-		/// Changes a user in the database
-		/// </summary>
-		public User ChangeUser(User user)
-		{
-			InitRepo();
-			userRepo.UpdateUser(user);
-			return user;
-		}
-
-		/// <summary>
-		/// Generate alerts for the weekly review
-		/// </summary>
-		public void GenerateAlertsForWeeklyReview(int platformId)
-		{
-			InitRepo();
-
-			//Get timepstam for weekly review
-			SubplatformManager platformManager = new SubplatformManager();
-			SubPlatform platform = platformManager.GetSubPlatform(platformId);
-			if (platform.LastUpdatedWeeklyReview != null && platform.LastUpdatedWeeklyReview > DateTime.Now.AddDays(-7)) return;
-
-			platform.LastUpdatedWeeklyReview = DateTime.Now;
-			platformManager.ChangeSubplatform(platform);
-
-			//Get all users
-			IEnumerable<User> users = userRepo.ReadAllUsersWithAlerts();
-			if (users == null || users.Count() == 0) return;
-
-			//Generate weekly review alerts
-			foreach (User user in users)
-			{
-				UserAlert alert = new UserAlert()
-				{
-					User = user,
-					Subject = "Nieuwe Weekly Review",
-					IsRead = false,
-					TimeStamp = DateTime.Now,
-					AlertType = AlertType.Weekly_Review
-				};
-				user.Alerts.Add(alert);
-			}
-
-			//Update database & send emails
-			SendWeeklyReviewEmails(users.Where(user => user.AlertsViaEmail));
-			userRepo.UpdateUsers(users);
-		}
-
-		/// <summary>
-		/// Sent emails to the people who want to receive an email
-		/// </summary>
-		private void SendWeeklyReviewEmails(IEnumerable<User> users)
-		{
-			ItemManager itemManager = new ItemManager();
-			IEnumerable<Item> items;
-
-			foreach (User user in users)
-			{
-				//Get 5 most trending items of
-				items = itemManager.GetMostTrendingItemsForUser(user.Id, useWithOldData: true);
-
-				string content = "";
-				foreach (Item item in items.OrderBy(item => item.TrendingPercentage)) content += "- " + item.Name + " (" + item.TrendingPercentage + "% trending)</br>";
-
-				//Send email
-				IdentityMessage message = new IdentityMessage()
-				{
-					Destination = user.Email,
-					Subject = "Nieuwe Weekly Review is nu beschikbaar!",
-					Body = "Beste " + user.FirstName + "</br></br>" +
-						"Een nieuwe weekly review is nu beschikbaar!</br></br>" +
-						"De <strong>meest trending items</strong> van deze week zijn:</br>" +
-						content +
-						"</br>Ga nu naar onze website om uw nieuwe Weekly Review te bekijken!"
-				};
-				new EmailService().SendAsync(message);
-			}
-		}
-	}
+      //Update database
+      userRepo.UpdateUser(userToUpdate);
+      return userToUpdate;
+    }
+  }
 }

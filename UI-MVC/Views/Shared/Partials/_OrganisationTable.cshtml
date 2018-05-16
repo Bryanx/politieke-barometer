@@ -31,15 +31,17 @@
         <th title=@Resources.CalculatedByAmountOfTweets>
             @Resources.Trending
         </th>
-        <th>
-        </th>
+        @if (User.Identity.IsAuthenticated) {
+            <th>
+            </th>
+        }
     </tr>
     </thead>
     <tbody>
     @foreach (var item in Model.Items) {
         <tr class="subscription">
             <td>
-                <img src='/Content/build/images/organisation.png' class="img-circle person-image"/>
+                <div class="img-circle person-image"></div>
             </td>
             <td>
                 <a href='@Url.OrganisationUrl(item.ItemId)'> @item.Name</a>
@@ -58,13 +60,15 @@
             <td>
                 @Html.DisplayFor(modelItem => item.TrendingPercentage) %
             </td>
-            <td>
-                @if (item.Subscribed != true) {
-                <a class="subscribeItem btn btn-success btn-xs" data-item-id="@item.ItemId" title=@Resources.FollowThisPerson>@Resources.Subscribe</a>
-                } else {
-                <a class="subscribeItem btn btn-danger btn-xs" data-item-id="@item.ItemId" title=@Resources.Unsubscribe>@Resources.Unsubscribe</a>
-                }
-            </td>
+            @if (User.Identity.IsAuthenticated) {
+                <td>
+                    @if (item.Subscribed != true) {
+                    <a class="subscribeItem btn btn-success btn-xs" data-item-id="@item.ItemId" title=@Resources.FollowThisPerson>@Resources.Subscribe</a>
+                    } else {
+                    <a class="subscribeItem btn btn-danger btn-xs" data-item-id="@item.ItemId" title=@Resources.Unsubscribe>@Resources.Unsubscribe</a>
+                    }
+                </td>
+            }
         </tr>
     }
     </tbody>

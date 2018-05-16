@@ -166,7 +166,7 @@ function init_JQVmap() {
 	console.log('init_JQVmap');
 
 	if ($('#world-map-gdp').length) {
-		var colors = ["#E6F2F0", "#0f8ec4"];
+		var colors = ["#E6F2F0", primary_color];
 		$('#world-map-gdp').vectorMap({
 			map: 'be_mill',
 			backgroundColor: null,
@@ -689,6 +689,28 @@ function submitForm($this, event, message=null) {
                     .css("display", "inline");
             }));
     event.preventDefault();
+}
+
+//Generic ajax toggle button
+var wto;
+function ajaxToggleSubscribe(e) {
+	$this = $(e.target);
+	clearTimeout(wto);
+	var id = $this.data('item-id');
+	var text = $this.html();
+	$this.html("<i class='fa fa-circle-o-notch fa-spin'></i>");
+	wto = setTimeout(function() {
+			$.ajax({
+				type: 'POST',
+				url: '/api/ToggleSubscribe/' + id
+			}).fail(() => { /* ok */ })
+				.done(function() {
+					if (text === Resources.Subscribe) $this.html(Resources.Unsubscribe);
+					else $this.html(Resources.Subscribe);
+					$this.toggleClass("btn-danger btn-success");
+				});
+		},
+		500);
 }
 
 $.fn.toggleText = function(t1, t2){

@@ -351,25 +351,5 @@ namespace BAR.DAL
 			}
 			return ctx.SaveChanges();
 		}
-
-		/// <summary>
-		/// Gives back all the widgetdatas for a specific keyvalue
-		/// </summary>
-		public IEnumerable<WidgetData> ReadWidgetDatasForKeyvalue(string value)
-		{
-			return ctx.WidgetDatas.Where(data => data.KeyValue.ToLower().Equals(value.ToLower())).AsEnumerable();
-		}
-
-		/// <summary>
-		/// Gives back the geolocation widget for displaying on the homepage.
-		/// </summary>
-		public Widget ReadGeoLocationWidget()
-		{
-			return ctx.Widgets.Include(widget => widget.PropertyTags)
-							  .Include(widget => widget.WidgetDatas)
-							  .Include(widget => widget.WidgetDatas.Select(data => data.GraphValues))
-							  .Where(widget => widget.PropertyTags.Any(tag => tag.Name.ToLower().Equals("geo")))
-							  .First();				
-		}
 	}
 }

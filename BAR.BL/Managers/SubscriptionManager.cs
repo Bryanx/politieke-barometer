@@ -61,7 +61,7 @@ namespace BAR.BL.Managers
 				SubscribedItem = item,
 				Threshold = threshold,
 				DateSubscribed = DateTime.Now,
-				Alerts = new List<SubAlert>()
+				Alerts = new List<Alert>()
 			};
 			item.NumberOfFollowers++;
 			subRepo.CreateSubscription(subscription);
@@ -88,7 +88,7 @@ namespace BAR.BL.Managers
 			{
 				if (sub.SubscribedUser.AlertsViaWebsite && sub.SubscribedUser.IsActive)
 				{
-					sub.Alerts.Add(new SubAlert()
+					sub.Alerts.Add(new Alert()
 					{
 						Subscription = sub,
 						AlertType = AlertType.Trending,
@@ -101,15 +101,15 @@ namespace BAR.BL.Managers
 			subRepo.UpdateSubscriptions(subsToUpdate);
 
 			//Send emails
-			IEnumerable<Subscription> usersToSendEmail = subs.Where(sub => sub.SubscribedUser.AlertsViaEmail).AsEnumerable();
-			SendTrendingEmails(itemId, usersToSendEmail);
+			//IEnumerable<Subscription> usersToSendEmail = subs.Where(sub => sub.SubscribedUser.AlertsViaEmail).AsEnumerable();
+			//SendTrendingEmails(itemId, usersToSendEmail);
 		}
 
 		/// <summary>
 		/// Sends an email to the users who wants te receive an email via
 		/// if a person is trending
 		/// </summary>
-		private void SendTrendingEmails(int itemId, IEnumerable<Subscription> subs)
+		private async void SendTrendingEmails(int itemId, IEnumerable<Subscription> subs)
 		{
 			//Get item
 			Item item = new ItemManager().GetItem(itemId);
@@ -122,63 +122,77 @@ namespace BAR.BL.Managers
 				{
 					Destination = sub.SubscribedUser.Email,
 					Subject = item.Name + " is nu trending!",
-					Body = "<strong>" + item.Name + " is nu trending</strong> met  " + item.NumberOfMentions + " vermeldingen!</br>" +
-					"Ga nu naar de website en ontdenk waarom het item trending is!"
+					Body = item.Name + " is nu trending met een trendingspercentage van " + item.TrendingPercentage + "%!<\br>" +
+					"Ga nu naar de website en ontdenk waarom ze trending is!"
 				};
-				new EmailService().SendAsync(message);
+				await new EmailService().SendAsync(message);
 			}		
 		}
 
 		/// <summary>
 		/// Gets all the alerts for a specific user
 		/// </summary>
-		public IEnumerable<Alert> GetAllAlerts()
+		public IEnumerable<Alert> GetAllAlerts(string userId)
 		{
 			InitRepo();
-			return subRepo.ReadAllAlerts().AsEnumerable();
+			return subRepo.ReadAlerts(userId, true).AsEnumerable();
 		}
 
 		/// <summary>
 		/// Retrieves a single alert for a specific user.
 		/// </summary>
-		public Alert GetAlert(int alertId) 
+		public Alert GetAlert(string userId, int alertId) 
 		{
 			InitRepo();
-			return subRepo.ReadAlert(alertId);
+			return subRepo.ReadAlert(userId, alertId);
 		}
 
 		/// <summary>
 		/// Changed the isRead property of an Alert to true.
 		/// </summary>
-		public Alert ChangeAlertToRead(int alertId) 
+		public Alert ChangeAlertToRead(string userId, int alertId) 
 		{
 			InitRepo();
 
-			//Get alert
-			Alert alertToUpdate = subRepo.ReadAlert(alertId);
+			//Get Alert
+			Alert alertToUpdate = GetAlert(userId, alertId);
 			if (alertToUpdate == null) return null;
 
 			//Change alert
 			alertToUpdate.IsRead = true;
 
-			//Update alert
-			subRepo.UpdateAlert(alertToUpdate);
+			//Update database
+			subRepo.UpdateSubScription(alertToUpdate.Subscription);
+
 			return alertToUpdate;
 		}
 
 		/// <summary>
 		/// Removes a specific alert for a specific user.
 		/// </summary>
-		public void RemoveAlert(int alertId)
+		public void RemoveAlert(string userId, int alertId)
 		{
 			InitRepo();
 
 			//Get alert
-			Alert alertToRemove = subRepo.ReadAlert(alertId);
+			Alert alertToRemove = GetAlert(userId, alertId);
 			if (alertToRemove == null) return;
 
-			//Delete alert
-			subRepo.DeleteAlert(alertToRemove);
+			//Remove alert
+			Subscription sub = alertToRemove.Subscription;
+			sub.Alerts.Remove(alertToRemove);
+
+			//Update database
+			subRepo.UpdateSubScription(sub);
+		}
+
+		/// <summary>
+		/// Gets the subscription of a specific user, with alerts.
+		/// </summary>
+		public IEnumerable<Subscription> GetSubscriptionsWithAlertsForUser(string userId) 
+		{
+			InitRepo();
+			return subRepo.ReadSubscriptionsWithAlertsForUser(userId).AsEnumerable();
 		}
 
 		/// <summary>
@@ -264,60 +278,6 @@ namespace BAR.BL.Managers
 		{
 			if (uowManager == null) subRepo = new SubscriptionRepository();
 			else subRepo = new SubscriptionRepository(uowManager.UnitOfWork);
-		}
-
-		/// <summary>
-		/// Gives back a subalert based on the user -and alert Id
-		/// </summary>
-		public SubAlert GetSubAlert(string userId, int alertId)
-		{
-			InitRepo();
-			return subRepo.ReadSubAlert(userId, alertId);
-		}
-
-		/// <summary>
-		/// Gives back a subalert based on the user -and alert Id
-		/// </summary>
-		public UserAlert GetUserAlert(string userId, int alertId)
-		{
-			InitRepo();
-			return subRepo.ReadUserAlert(userId, alertId);
-		}
-
-		/// <summary>
-		/// Gives back all the subalerts
-		/// </summary>
-		public IEnumerable<SubAlert> GetAllSubAlerts()
-		{
-			InitRepo();
-			return subRepo.ReadAllSubAlerts().AsEnumerable();
-		}
-
-		/// <summary>
-		/// Gives back all the useralerts
-		/// </summary>
-		public IEnumerable<UserAlert> GetAllUserAlerts()
-		{
-			InitRepo();
-			return subRepo.ReadAllUserAlerts().AsEnumerable();
-		}
-
-		/// <summary>
-		/// Gives back all the sub alerts for a specific userId
-		/// </summary>
-		public IEnumerable<SubAlert> GetSubAlerts(string userId)
-		{
-			InitRepo();
-			return subRepo.ReadSubAlerts(userId);
-		}
-
-		/// <summary>
-		/// Gives back all the user alerts for a specific userId
-		/// </summary>
-		public IEnumerable<UserAlert> GetUserAlerts(string userId)
-		{
-			InitRepo();
-      return subRepo.ReadUserAlerts(userId);
 		}
 	}
 }

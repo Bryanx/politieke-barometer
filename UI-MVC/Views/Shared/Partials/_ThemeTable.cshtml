@@ -32,8 +32,10 @@
             <th title=@Resources.CalculatedByAmountOfTweets>
                 @Resources.Trending
             </th>
+            @if (User.Identity.IsAuthenticated)
+            {
             <th>
-            </th>
+            </th>}
         </tr>
     </thead>
     <tbody>
@@ -41,7 +43,7 @@
         {
         <tr class="subscription">
             <td>
-                <img src='/Content/build/images/topics.png' class="img-circle person-image"/>
+                <div class="img-circle person-image"></div>
             </td>
             <td>
                 <a href='@Url.ThemeUrl(item.ItemId)'> @item.Name</a>
@@ -60,6 +62,8 @@
             <td>
                 @Html.DisplayFor(modelItem => item.TrendingPercentage) %
             </td>
+            @if (User.Identity.IsAuthenticated)
+            {
             <td>
                 @if (item.Subscribed != true)
                 {
@@ -67,7 +71,7 @@
                 else
                 {
                 <a class="subscribeItem btn btn-danger btn-xs" data-item-id="@item.ItemId" title=@Resources.Unsubscribe>@Resources.Unsubscribe</a>}
-            </td>
+            </td>}
         </tr>
         }
     </tbody>

@@ -20,7 +20,7 @@
                     <div class="profile_img">
                         <div id="crop-avatar">
                             <!-- Current avatar -->
-                            <img class="img-responsive avatar-view" src="../../Content/build/images/topics.png" alt="Avatar" title="Change the avatar">
+                            <img class="img-responsive avatar-view" src="../../Content/build/images/picture.jpg" alt="Avatar" title="Change the avatar">
                         </div>
                     </div>
 
@@ -29,12 +29,15 @@
                     @Resources.Theme
                     <h1>
                         <span class="item-name">@Model.Theme.Name</span>
-                        @if (Model.Subscribed != true)
+                        @if (User.Identity.IsAuthenticated)
                         {
-                        <a class="w-100px subscribeItem btn btn-success pull-right" data-item-id="@Model.Theme.ItemId" title="Deze persoon volgen">@Resources.Subscribe</a>}
-                        else
-                        {
-                        <a class="w-100px subscribeItem btn btn-danger pull-right" data-item-id="@Model.Theme.ItemId" title="Uitschrijven">@Resources.Unsubscribe</a>}
+                            if (Model.Subscribed != true)
+                            {
+                            <a class="w-100px subscribeItem btn btn-success pull-right" data-item-id="@Model.Theme.ItemId" title="Deze persoon volgen">@Resources.Subscribe</a>}
+                            else
+                            {
+                            <a class="w-100px subscribeItem btn btn-danger pull-right" data-item-id="@Model.Theme.ItemId" title="Uitschrijven">@Resources.Unsubscribe</a>}
+                        }
                     </h1>
                     <hr />
                 </div>
@@ -73,7 +76,9 @@
     @Scripts.Render("~/bundles/gridstack")
     <script type="text/javascript" defer>
 
-        $(document).on("click", ".subscribeItem", (e) => ajaxToggleSubscribe(e));
+        $('.subscribeItem').click(function() {
+            ajaxToggleSubscribe($(this));
+        });
 
         (() => {
             loadWidgets("/api/GetItemWidgets/", @Model.Theme.ItemId);

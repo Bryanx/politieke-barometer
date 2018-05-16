@@ -29,7 +29,6 @@ namespace BAR.UI.MVC.Controllers.api
 		/// </summary>
 		[HttpPost]
 		[Route("api/ToggleSubscribe/{itemId}")]
-		[Authorize]
 		public IHttpActionResult ToggleSubscribe(int itemId)
 		{
 			SubManager = new SubscriptionManager();

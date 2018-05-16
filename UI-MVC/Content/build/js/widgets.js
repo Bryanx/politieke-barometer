@@ -142,23 +142,6 @@ var widgetElements = {
             "               </div>" +
             "            </div>" +
             "        </div>";
-    },
-    //stories widget
-    createStoriesWidget: function (title) {
-        return "<div class='chart-container'>" +
-            "            <div class='x_panel grid-stack-item-content bg-white no-scrollbar'>" +
-            "                <div class='x_title'>" +
-            "                    <h2 class='graphTitle'>" + title + "</h2>" +
-            // "                    <ul class='nav navbar-right panel_toolbox'>" +
-            // "                       <li><a class='addToDashboard'>" + Resources.Save + "</a></li>" +
-            // "                    </ul>" +
-            "                    <div class='clearfix'></div>" +
-            "                </div>" +
-            "                <div style='position: relative; height: 88%;'> " +
-            "                    <ul id='stories'></ul>" +
-            "               </div>" +
-            "            </div>" +
-            "        </div>";
     }
 };
 
@@ -512,44 +495,6 @@ function loadGraphs(itemId, widget) {
         }
     };
 
-    //Create a new chart with time on xAxes
-    let AddTimeChart = function (widget, labels, label, values, borderColor, color, darkColor, chartType) {
-        charts.push(new Chart(document.getElementById("graph" + widgetId), {
-            id: widgetId,
-            type: chartType,
-            data: {
-                labels: labels,
-                datasets: [{
-                    data: values,
-                    label: label,
-                    borderColor: borderColor,
-                    backgroundColor: color,
-                    fill: false,
-                }],
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                animation: {
-                    //when the graph is done loading, JPG/PNG download is possible:
-                    onComplete: function () {
-                        AddImageUrl(widgetId);
-                    }
-                },
-                scales: {
-                    xAxes: [{
-                        type: 'time',
-                        display: true,
-                        time: {
-                            format: "DD-MM",
-                            round: 'day'
-                        }
-                    }],
-                },
-            }
-        }));
-    };
-    
     //Create a new chart
     let AddChart = function (widget, labels, label, values, borderColor, color, darkColor, chartType) {
         charts.push(new Chart(document.getElementById("graph" + widgetId), {
@@ -609,11 +554,7 @@ function loadGraphs(itemId, widget) {
         let darkColor = DARKCOLORS[colorNumber];
         let borderColor = COLORS[colorNumber];
         let legendLabel = chartData[0].ItemName + " - " + ConvertKeyValueToResource(chartData[0].KeyValue);
-        if (chartData[0].KeyValue === "Number of mentions") {
-            AddTimeChart(widget, labels, legendLabel, values, borderColor, color, darkColor, chartType, chartData[0].KeyValue);
-        } else {
-            AddChart(widget, labels, legendLabel, values, borderColor, color, darkColor, chartType, chartData[0].KeyValue);
-        }
+        AddChart(widget, labels, legendLabel, values, borderColor, color, darkColor, chartType);
     };
 
     //Moves the graph data to the appropriate method.
@@ -766,23 +707,6 @@ function loadWidgets(url, itemId, onlyLoadLastWidget = false) {
         widgets.push(widget);
     };
 
-    //Creates a widget with stories for item page
-    function loadStories(itemId) {
-        grid.addWidget(widgetElements.createStoriesWidget(Resources.LatestStories), 0, 0, 6, 6, true, 4, 12, 5, 12, -2);
-        grid.movable(".grid-stack-item", false);
-        grid.resizable(".grid-stack-item", false);
-        $.ajax({
-            method : "GET",
-            url : "/api/GetStories/" + itemId,
-            success : data => {
-                console.log(data);
-                $.each(data,  (index, url) => {
-                    $("#stories").append("<li class='story-url'><i class='fa fa-caret-right'></i><a href='"+url+"'>" + url + "</a></li>");
-                });
-            }
-        });
-    }
-
     //Puts all the widgets on the grid.
     let loadGrid = function (data, itemId) {
         if (data != null && data.length && !orgpage) {
@@ -794,7 +718,6 @@ function loadWidgets(url, itemId, onlyLoadLastWidget = false) {
             if (dashboardpage) noWidgetsAvailable();
         }
         if (itempage && !orgpage) loadItemForSocialWidget(itemId);
-        if (itempage) loadStories(itemId);
     };
     
     //Loads the widgets via api call.
@@ -861,15 +784,8 @@ function init() {
             data:  JSON.stringify(serializedWidget),
             dataType: "application/json",
             contentType: "application/json",
-            success: () => showSaveMessage(),
-        }).fail((e) => {
-            let response = JSON.parse(e.responseText);
-            if (response.Message.toLowerCase().includes("authorization")) {
-                $("#loginmodal").modal("show");
-            } else {
-                showErrorMessage();
-            }
-        })
+            success: () => showSaveMessage()
+        }).fail(() => showErrorMessage());
     };
     
     //Adds a new widget to the current dashboard.
@@ -892,14 +808,8 @@ function init() {
                     else loadWidgets("api/Widget/GetUserWidgets", "", true);
                 }
                 showSaveMessage();
-            }
-        }).fail((e) => {
-            let response = JSON.parse(e.responseText);
-            if (response.Message.toLowerCase().includes("authorization")) {
-                $("#loginmodal").modal("show");
-            } else {
-                showErrorMessage();
-            }
+            },
+            error: (xhr) => showErrorMessage()
         })
     };
     

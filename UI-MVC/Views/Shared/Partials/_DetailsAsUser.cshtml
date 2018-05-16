@@ -12,10 +12,12 @@
         <button onclick="window.location = '@Url.OrganisationUrl(@Model.OrganisationId)';" class="btn btn-default btn-xs">@Model.OrganisationName</button>
         <h1>
             <span class="item-name">@Model.Item.Name <span class="badge bg-default">@(Model.Item.TrendingPercentage)% @Resources.Trending.ToLower()</span></span>
-           @if (Model.Subscribed != true) {
-                <a class="w-100px subscribeItem btn btn-success pull-right" data-item-id="@Model.Item.ItemId" title="Deze persoon volgen">@Resources.Subscribe</a>
-            } else {
-                <a class="w-100px subscribeItem btn btn-danger pull-right" data-item-id="@Model.Item.ItemId" title="Uitschrijven">@Resources.Unsubscribe</a>
+            @if (User.Identity.IsAuthenticated) {
+               if (Model.Subscribed != true) {
+                    <a class="w-100px subscribeItem btn btn-success pull-right" data-item-id="@Model.Item.ItemId" title="Deze persoon volgen">@Resources.Subscribe</a>
+                } else {
+                    <a class="w-100px subscribeItem btn btn-danger pull-right" data-item-id="@Model.Item.ItemId" title="Uitschrijven">@Resources.Unsubscribe</a>
+                }
             }
         </h1>
         <hr/>

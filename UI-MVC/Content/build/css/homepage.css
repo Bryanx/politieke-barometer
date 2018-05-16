@@ -11,14 +11,6 @@ nav {
   border-bottom: 0px none;
   transition: 1.2s ease-in-out; }
 
-.widget_summary {
-  padding: 20px 40px; }
-
-#twitter-feed-1, #twitter-feed-2, #twitter-feed-3 {
-  max-height: 400px;
-  overflow-y: auto;
-  margin: 20px 0; }
-
 .btn-search-submit:hover {
   background-color: var(--primary-darkest); }
 
@@ -142,20 +134,6 @@ body .container.body .main-header-container-parent {
   .search-field:focus::placeholder {
     color: #73879c;
     color: #73879c; }
-
-nav .nav-container .navbar-right li i {
-  color: white; }
-
-nav .nav-container .navbar-right .dropdown-menu li i {
-  color: var(--font-color); }
-
-nav .nav-container .navbar-right li > a.signup {
-  color: white;
-  background-color: rgba(0, 0, 0, 0.1); }
-  nav .nav-container .navbar-right li > a.signup:hover {
-    color: var(--font-color);
-    background: white !important;
-    border: 2px solid white; }
 
 nav .searchbar {
   width: 700px;

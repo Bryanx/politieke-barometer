@@ -260,25 +260,15 @@ namespace BAR.DAL
 			return ctx.SaveChanges();
 		}
 
-        /// <summary>
-        /// Reads an organisation with a given name.
-        /// </summary>
-        public Organisation ReadOrganisation(string organisationName)
-        {
-          return ctx.Items.OfType<Organisation>()
-						  .Include(org => org.SubPlatform)
-						  .Where(org => org.Name.ToLower().Equals(organisationName.ToLower()))
-						  .SingleOrDefault();
-        }
-
-		/// <summary>
-		/// Gives back all the items with all the informations
-		/// </summary>
-		public IEnumerable<Person> ReadAllItemsWithInformations()
-		{
-			return ctx.Items.OfType<Person>()
-							.Include(item => item.Informations)
-							.AsEnumerable();
-		}
+    /// <summary>
+    /// Reads an organisation with a given name.
+    /// </summary>
+    public Organisation ReadOrganisation(string organisationName)
+    {
+      return ctx.Items.OfType<Organisation>()
+					.Include(org => org.SubPlatform)
+					.Where(org => org.Name.ToLower().Equals(organisationName.ToLower()))
+					.SingleOrDefault();
+    }
 	}
 }
