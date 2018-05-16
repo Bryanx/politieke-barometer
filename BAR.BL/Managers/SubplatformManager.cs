@@ -481,5 +481,15 @@ namespace BAR.BL.Managers
 			platformRepo.UpdateUserActivity(activity);
 			return activity;
 		}
+
+		/// <summary>
+		/// Changes the subplatform in the database
+		/// </summary>
+		public SubPlatform ChangeSubplatform(SubPlatform platform)
+		{
+			InitRepo();
+			platformRepo.UpdateSubplatform(platform);
+			return platform;
+		}
 	}
 }

@@ -20,7 +20,7 @@
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
     <Use64BitIISExpress />
-    <IISExpressSSLPort>44317</IISExpressSSLPort>
+    <IISExpressSSLPort>44303</IISExpressSSLPort>
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
@@ -235,6 +235,7 @@
     <Compile Include="Controllers\api\SuperAdminApiController.cs" />
     <Compile Include="Controllers\api\UserApiController.cs" />
     <Compile Include="Controllers\api\WidgetController.cs" />
+    <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LanguageController.cs" />
     <Compile Include="Controllers\OrganisationController.cs" />
@@ -279,6 +280,7 @@
     <Content Include="Content\build\css\modules\mediaqueries.scss" />
     <Content Include="Content\build\css\partials\alerts.scss" />
     <Content Include="Content\build\css\partials\card.scss" />
+    <Content Include="Content\build\css\partials\error.css" />
     <Content Include="Content\build\css\partials\search-autocomplete.scss" />
     <Content Include="Content\build\css\partials\breadcrumbs.scss" />
     <Content Include="Content\build\css\partials\buttons.scss" />
@@ -523,7 +525,6 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Person\Details.cshtml" />
     <Content Include="Views\Person\Index.cshtml" />
-    <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Web.config" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\User\Register.cshtml" />
@@ -564,6 +565,8 @@
     <None Include="Scripts\vue\vue-resource.min.js" />
     <None Include="Scripts\vue\vue.js" />
     <None Include="Scripts\vue\vue.min.js" />
+    <Content Include="Views\Error\NotFound.cshtml" />
+    <Content Include="Views\Error\Index.cshtml" />
     <None Include="Views\Shared\DisplayTemplates\CanonicalHelperModel.ascx" />
     <None Include="Views\Shared\DisplayTemplates\CanonicalHelperModel.cshtml" />
     <None Include="Views\Shared\DisplayTemplates\MenuHelperModel.cshtml" />
