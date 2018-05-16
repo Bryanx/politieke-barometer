@@ -259,6 +259,10 @@ function loadGraphs(itemId, widget) {
                 case "f": label = Resources.Female; break;
                 case "25+": label = Resources.Above25; break;
                 case "25-": label = Resources.Below25; break;
+                case "I": label = Resources.Introvert; break;
+                case "E": label = Resources.Extrovert; break;
+                case "+": label = Resources.HigherEducated; break;
+                case "-": label = Resources.LowerEducated; break;
                 default: label = Resources.Unknown; break;
             }
             labels[index] = itemName + " - " + label;
