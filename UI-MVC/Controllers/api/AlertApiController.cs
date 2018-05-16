@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Web.Http;
+using Microsoft.AspNet.Identity;
 
 namespace BAR.UI.MVC.Controllers.api
 {
@@ -24,8 +25,9 @@ namespace BAR.UI.MVC.Controllers.api
 		public IHttpActionResult GetAlerts()
 		{
 			subManager = new SubscriptionManager();
-			IEnumerable<UserAlert> userAlerts = subManager.GetUserAlert();
-			IEnumerable<SubAlert> subAlerts = subManager.GetAllSubAlerts();
+			string userId = User.Identity.GetUserId();
+			IEnumerable<UserAlert> userAlerts = subManager.GetUserAlerts(userId);
+			IEnumerable<SubAlert> subAlerts = subManager.GetSubAlerts(userId);
 			if (userAlerts == null || subAlerts == null || (userAlerts.Count() == 0 && subAlerts.Count() == 0)) return StatusCode(HttpStatusCode.NoContent);
 
 			//Made DTO class to prevent circular references
