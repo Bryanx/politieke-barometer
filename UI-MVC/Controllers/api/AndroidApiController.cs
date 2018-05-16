@@ -31,6 +31,12 @@ namespace webapi.Controllers
   [RoutePrefix("api/Android")]
   public class AndroidController : ApiController
   {
+    private ISubscriptionManager subManager;
+    private IUserManager userManager;
+    private IWidgetManager widgetManager;
+    private IItemManager itemManager;
+    private IdentityUserManager identityUserManager;
+
     // POST api/Android/Register
     [AllowAnonymous]
     [HttpPost]
@@ -42,10 +48,10 @@ namespace webapi.Controllers
         return BadRequest(ModelState);
       }
 
-      IdentityUserManager userManager = Request.GetOwinContext().GetUserManager<IdentityUserManager>();
+      identityUserManager = Request.GetOwinContext().GetUserManager<IdentityUserManager>();
       User user = new User() { UserName = model.Email, Email = model.Email };
 
-      IdentityResult result = await userManager.CreateAsync(user, model.Password);
+      IdentityResult result = await identityUserManager.CreateAsync(user, model.Password);
 
       if (!result.Succeeded)
       {
@@ -61,7 +67,7 @@ namespace webapi.Controllers
     [Route("UserInfo")]
     public IHttpActionResult GetUserInfo()
     {
-      IUserManager userManager = new UserManager();
+      userManager = new UserManager();
       User user = userManager.GetUser(User.Identity.GetUserId());
 
       UserInfoAndroidViewModel model = new UserInfoAndroidViewModel
@@ -85,7 +91,7 @@ namespace webapi.Controllers
         return BadRequest(ModelState);
       }
 
-      IUserManager userManager = new UserManager();
+      userManager = new UserManager();
       if (!model.ProfilePicture.Equals(""))
       {
         byte[] profilePicture = Convert.FromBase64String(model.ProfilePicture);
@@ -105,8 +111,8 @@ namespace webapi.Controllers
     [Route("Widgets")]
     public IHttpActionResult GetWidgets()
     {
-      IWidgetManager widgetManager = new WidgetManager();
-      ItemManager itemManager = new ItemManager();
+      widgetManager = new WidgetManager();
+      itemManager = new ItemManager();
 
       Dashboard dashboard = widgetManager.GetDashboardWithAllDataForUserId(User.Identity.GetUserId());
       if (dashboard == null) return NotFound();
@@ -151,30 +157,45 @@ namespace webapi.Controllers
       return Ok(userWidgetDtos);
     }
 
-		// GET api/Android/Alerts
-		//Needs to be fixed by remi
-		//[HostAuthentication(DefaultAuthenticationTypes.ExternalBearer)]
-  //  [HttpGet]
-  //  [Route("Alerts")]
-  //  public IHttpActionResult GetAlerts()
-  //  {
-  //    ISubscriptionManager subscriptionManager = new SubscriptionManager();
-  //    List<AlertViewModel> alerts = new List<AlertViewModel>();
-  //    AlertViewModel alertViewModel;
-      
-  //    foreach (var alert in subscriptionManager.GetAllAlerts(User.Identity.GetUserId()))
-  //    {
-  //      alertViewModel = new AlertViewModel()
-  //      {
-  //        AlertId = alert.AlertId,
-		  
-  //        //ItemName = alert.Subscription.SubscribedItem.Name
-  //      };
-  //      alerts.Add(alertViewModel);
-  //    }
+    // GET api/Android/Alerts
+    [HostAuthentication(DefaultAuthenticationTypes.ExternalBearer)]
+    [HttpGet]
+    [Route("Alerts")]
+    public IHttpActionResult GetAlerts()
+    {
+      subManager = new SubscriptionManager();
+      IEnumerable<UserAlert> userAlerts = subManager.GetUserAlerts(User.Identity.GetUserId());
+      IEnumerable<SubAlert> subAlerts = subManager.GetSubAlerts(User.Identity.GetUserId());
+      if (userAlerts == null || subAlerts == null || (userAlerts.Count() == 0 && subAlerts.Count() == 0)) return StatusCode(HttpStatusCode.NoContent);
 
-  //    return Ok(alerts);
-  //    }
+      //Made DTO class to prevent circular references
+      List<AlertDTO> alerts = new List<AlertDTO>();
+      foreach (SubAlert alert in subAlerts)
+      {
+        AlertDTO alertDTO = new AlertDTO()
+        {
+          AlertId = alert.AlertId,
+          Name = alert.Subscription.SubscribedItem.Name,
+          TimeStamp = alert.TimeStamp,
+          IsRead = alert.IsRead,
+          ItemId = alert.Subscription.SubscribedItem.ItemId
+        };
+        alerts.Add(alertDTO);
+      }
+      foreach (UserAlert alert in userAlerts)
+      {
+        AlertDTO alertDTO = new AlertDTO()
+        {
+          AlertId = alert.AlertId,
+          Name = alert.Subject,
+          TimeStamp = alert.TimeStamp,
+          IsRead = alert.IsRead,
+        };
+        alerts.Add(alertDTO);
+      }
+
+      return Ok(alerts);
+    }
 
     #region Helpers
 

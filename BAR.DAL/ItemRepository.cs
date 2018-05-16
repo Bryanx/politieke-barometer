@@ -259,5 +259,15 @@ namespace BAR.DAL
 						  .Where(org => org.Name.ToLower().Equals(organisationName.ToLower()))
 						  .SingleOrDefault();
         }
+
+		/// <summary>
+		/// Gives back all the items with all the informations
+		/// </summary>
+		public IEnumerable<Person> ReadAllItemsWithInformations()
+		{
+			return ctx.Items.OfType<Person>()
+							.Include(item => item.Informations)
+							.AsEnumerable();
+		}
 	}
 }

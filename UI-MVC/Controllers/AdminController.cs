@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using System;
+using AutoMapper;
 using BAR.BL.Domain.Core;
 using BAR.BL.Domain.Items;
 using BAR.BL.Domain.Users;
@@ -28,9 +29,12 @@ namespace BAR.UI.MVC.Controllers
 		/// <summary>
 		/// Dashboard page of admin.
 		/// </summary>
-		public ActionResult Index()
-		{
-			return HttpNotFound();
+		public ActionResult Index() {
+			userManager = new UserManager();
+			return View(new BaseViewModel() {
+				PageTitle = Resources.AdminDashboard,
+				User = userManager.GetUser(User.Identity.GetUserId())
+			});
 		}
 
 		/// <summary>

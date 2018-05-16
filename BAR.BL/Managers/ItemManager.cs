@@ -51,12 +51,14 @@ namespace BAR.BL.Managers
 			IEnumerable<Information> infos = new DataManager().GetInformationsForItemid(itemId);
 			if (infos == null || infos.Count() == 0) return;
 	
-			//Calculate new baseline
-			int infosOld = infos.Where(info => !info.CreationDate.Value.ToString("dd-MM-yy").Equals(DateTime.Now.ToString("dd-MM-yy"))).Count();
+			//Calculate new baseline (avarage of the last 30 days)
+			int infosOld = infos.Where(info => info.CreationDate.Value < DateTime.Now && info.CreationDate.Value >= DateTime.Now.AddDays(-30)).Count();
 			if (infosOld != 0) itemToUpdate.Baseline = Math.Round((double) (infosOld / 30));
 
-			//Determine trending percentage
-			int infosNew = infos.Where(info => info.CreationDate.Value.ToString("dd-MM-yy").Equals(DateTime.Now.ToString("dd-MM-yy"))).Count();
+			//Determine trending percentage (avarage of the last 3 days)
+			int infosNew = infos.Where(info => info.CreationDate.Value.ToString("dd-MM-yy").Equals(DateTime.Now.ToString("dd-MM-yy"))
+								|| info.CreationDate.Value >= DateTime.Now.AddDays(-3))
+								.Count();
 			if (infosNew != 0)
 			{
 				//If trendingper is 0 then it will be devided by 1
@@ -433,6 +435,26 @@ namespace BAR.BL.Managers
 			ItemWidget widget3 = (ItemWidget)widgetManager.AddWidget(WidgetType.GraphType, name + " age comparison", 1, 1, proptags: proptags, graphType: GraphType.DonutChart, rowspan: 6, colspan: 6);
 			itemWidgets.Add(widget3);
 			widgetIds.Add(widget3.WidgetId);
+
+			//4th widget
+			proptags = new List<PropertyTag>();
+			proptags.Add(new PropertyTag()
+			{
+				Name = "Education"
+			});
+			ItemWidget widget4 = (ItemWidget)widgetManager.AddWidget(WidgetType.GraphType, name + " education comparison", 1, 1, proptags: proptags, graphType: GraphType.PieChart, rowspan: 6, colspan: 6);
+			itemWidgets.Add(widget4);
+			widgetIds.Add(widget4.WidgetId);
+
+			//5th widget
+			proptags = new List<PropertyTag>();
+			proptags.Add(new PropertyTag()
+			{
+				Name = "Personality"
+			});
+			ItemWidget widget5 = (ItemWidget)widgetManager.AddWidget(WidgetType.GraphType, name + " personality comparison", 1, 1, proptags: proptags, graphType: GraphType.BarChart, rowspan: 6, colspan: 6);
+			itemWidgets.Add(widget5);
+			widgetIds.Add(widget5.WidgetId);
 
 			//Link widgets to item & save changes to database
 			item.ItemWidgets = itemWidgets;
@@ -910,6 +932,15 @@ namespace BAR.BL.Managers
 			itemRepo.UpdateItem(itemToUpdate);
 			return itemToUpdate;
 
+		}
+
+		/// <summary>
+		/// Gives back all the items with all the informations
+		/// </summary>
+		public IEnumerable<Person> GetAllItemsWithInformations()
+		{
+			InitRepo();
+			return itemRepo.ReadAllItemsWithInformations().AsEnumerable();
 		}
 	}
 }

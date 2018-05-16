@@ -29,6 +29,7 @@ namespace BAR.BL.Managers
 		IEnumerable<Item> GetMostTrendingItemsForType(ItemType type, int numberOfItems = 5, bool useWithOldData = false);
 		IEnumerable<Item> GetMostTrendingItemsForUser(string userId, int numberOfItems = 5, bool useWithOldData = false);
 		IEnumerable<Item> GetMostTrendingItemsForUserAndItemType(string userId, ItemType type, int numberOfItems = 5, bool useWithOldData = false);
+		IEnumerable<Person> GetAllItemsWithInformations();
 
 		IEnumerable<Person> GetAllPersonsForSubplatform(int subPlatformID);
 		IEnumerable<Item> GetAllOrganisationsForSubplatform(int subPlatformID);
