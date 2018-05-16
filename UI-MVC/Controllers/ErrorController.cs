@@ -24,7 +24,6 @@ namespace BAR.UI.MVC.Controllers
     public ViewResult NotFound()
     {
       userManager = new UserManager();
-      Response.StatusCode = 404;
       return View(new BaseViewModel()
       {
         PageTitle = "NotFound",

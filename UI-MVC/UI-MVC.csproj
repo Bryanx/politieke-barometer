@@ -475,6 +475,7 @@
     <Content Include="Scripts\vue\vue-form-wizard.css" />
     <Content Include="Scripts\vue\vue-form-wizard.js" />
     <Content Include="Scripts\vue\vue-form-wizard.scss" />
+    <Content Include="500.html" />
     <Content Include="Views\Admin\Index.cshtml" />
     <Content Include="Views\Admin\ItemManagement.cshtml" />
     <Content Include="Views\Admin\PageManagement.cshtml" />
