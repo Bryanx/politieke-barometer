@@ -921,7 +921,14 @@ table.tile_info {
   .text-over-image:hover {
     background: white; }
 
-.avatar-view, .related-img-view {
+.avatar-view {
+  object-fit: cover;
+  width: 100% !important;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px; }
+
+.related-img-view {
   object-fit: cover;
   width: 90% !important;
   -webkit-border-radius: 5px;
