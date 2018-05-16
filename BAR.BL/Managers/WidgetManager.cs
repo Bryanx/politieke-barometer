@@ -453,7 +453,10 @@ namespace BAR.BL.Managers
 			};
 			Widget geoloactionWidget = AddWidget(WidgetType.GraphType, "geoloaction of number of mentions", 1, 1, tags);
 
-
+			//Get widgetdata for geolocaton
+			WidgetData geoData = dataManager.GetGeoLocationData();
+			geoData.Widget = geoloactionWidget;
+			widgetRepo.CreateWidgetData(geoData);
 		}
 
 		/// <summary>
