@@ -44,7 +44,10 @@ namespace BAR.UI.MVC.Controllers
 			}
 
 			ViewBag.ReturnUrl = returnUrl;
-			return View(new LoginViewModel());
+			return View(new LoginViewModel()
+			{
+				Customization = new SubplatformManager().GetCustomization((int)RouteData.Values["SubPlatformID"])
+			});
 		}
 
 		//
@@ -103,6 +106,8 @@ namespace BAR.UI.MVC.Controllers
 
 			RegisterViewModel registerViewModel = new RegisterViewModel();
 			registerViewModel.DateOfBirth = DateTime.Now;
+			registerViewModel.Customization = new SubplatformManager().GetCustomization((int)RouteData.Values["SubPlatformID"]);
+
 			return View(registerViewModel);
 		}
 
@@ -193,7 +198,10 @@ namespace BAR.UI.MVC.Controllers
 		[AllowAnonymous]
 		public ActionResult ForgotPassword()
 		{
-			return View(new ForgotPasswordViewModel());
+			return View(new ForgotPasswordViewModel()
+			{
+				Customization = new SubplatformManager().GetCustomization((int)RouteData.Values["SubPlatformID"])
+		});
 		}
 
 		//
@@ -232,7 +240,10 @@ namespace BAR.UI.MVC.Controllers
 		[AllowAnonymous]
 		public ActionResult ForgotPasswordConfirmation()
 		{
-			return View(new ForgotPasswordViewModel());
+			return View(new ForgotPasswordViewModel()
+			{
+				Customization = new SubplatformManager().GetCustomization((int)RouteData.Values["SubPlatformID"])
+		});
 		}
 
 		//
@@ -279,7 +290,10 @@ namespace BAR.UI.MVC.Controllers
 		[AllowAnonymous]
 		public ActionResult ResetPasswordConfirmation()
 		{
-			return View(new ResetPasswordViewModel());
+			return View(new ResetPasswordViewModel()
+			{
+				Customization = new SubplatformManager().GetCustomization((int)RouteData.Values["SubPlatformID"])
+			});
 		}
 
 		//
@@ -342,7 +356,8 @@ namespace BAR.UI.MVC.Controllers
 						Firstname = firstname,
 						Lastname = lastname,
 						DateOfBirth = DateTime.Now,
-						ImageData = imageData
+						ImageData = imageData,
+						Customization = new SubplatformManager().GetCustomization((int)RouteData.Values["SubPlatformID"])
 					});
 			}
 		}
@@ -413,7 +428,10 @@ namespace BAR.UI.MVC.Controllers
 		[AllowAnonymous]
 		public ActionResult ExternalLoginFailure()
 		{
-			return View(new ExternalLoginConfirmationViewModel());
+			return View(new ExternalLoginConfirmationViewModel()
+			{
+				Customization = new SubplatformManager().GetCustomization((int)RouteData.Values["SubPlatformID"])
+			});
 		}
 
 		#endregion
