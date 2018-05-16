@@ -441,6 +441,16 @@ namespace BAR.BL.Managers
 
 			//Remove overflowing items (temporary solution)
 			new ItemManager().RemoveOverflowingItems();
+
+			//Create widget for geo-data
+			WidgetData dataToRemove = dataManager
+
+			List<PropertyTag> tags = new List<PropertyTag>();
+			PropertyTag tag = new PropertyTag()
+			{
+				Name = "geo"
+			};
+			Widget geoloactionWidget = AddWidget(WidgetType.GraphType, "geoloaction of number of mentions", 1, 1, tags);
 		}
 
 		/// <summary>
