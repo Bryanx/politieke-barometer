@@ -204,5 +204,17 @@ namespace BAR.UI.MVC.Controllers
 			}
 			return RedirectToAction("PageManagement", "Admin");
 		}
+
+				/// <summary>
+		/// Returns image of byte array.
+		/// </summary>
+		public FileContentResult HeaderImage()
+		{
+			platformManager = new SubplatformManager();
+
+			Customization customization = platformManager.GetCustomization((int)RouteData.Values["SubPlatformID"]);
+			if (customization.HeaderImage == null) return null;
+			return new FileContentResult(customization.HeaderImage, "image/jpeg");
+		}
 	}
 }
