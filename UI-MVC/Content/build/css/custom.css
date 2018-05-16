@@ -248,7 +248,7 @@ hr {
   vertical-align: middle; }
 
 .container-centered {
-  max-width: 1440px;
+  max-width: 1280px;
   margin: auto; }
 
 /* Main padding on every page */
@@ -1030,7 +1030,7 @@ table.tile_info {
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#a3354a', endColorstr='#74001b'); }
 
 .footer-container {
-  max-width: 1440px;
+  max-width: 1280px;
   margin: auto;
   padding: 0 30px; }
 
@@ -1287,7 +1287,7 @@ nav {
     align-items: stretch;
     flex-direction: row;
     justify-content: space-between;
-    max-width: 1440px;
+    max-width: 1280px;
     margin: auto;
     padding: 0px 30px; }
     nav .nav-container .navbar-logo-container {
@@ -1297,7 +1297,7 @@ nav {
       margin: 0;
       order: 3;
       height: 50px;
-      min-width: 220px; }
+      min-width: 150px; }
       nav .nav-container .navbar-right .open > a {
         background: #D9DEE4; }
         nav .nav-container .navbar-right .open > a:focus, nav .nav-container .navbar-right .open > a:hover {
@@ -1335,22 +1335,23 @@ nav {
         nav .nav-container .navbar-right li > a.dashboard-menu {
           padding-top: 12px !important; }
         nav .nav-container .navbar-right li > a.signup {
-          color: white !important;
-          right: 60px;
+          outline: none !important;
+          color: var(--white);
           top: 4px;
           padding: 19px 19px !important;
           height: 40px;
           line-height: 0px;
           z-index: 2;
           border: 2px solid white;
-          background-color: rgba(0, 0, 0, 0.1);
+          background: var(--font-color);
           -webkit-border-radius: 5px;
           -moz-border-radius: 5px;
           border-radius: 5px; }
           nav .nav-container .navbar-right li > a.signup:hover {
-            background-color: white !important;
-            color: #73879C !important;
-            border: 2px solid white; }
+            background-color: white;
+            color: var(--font-color);
+            border: 2px solid;
+            border-color: var(--font-color); }
         nav .nav-container .navbar-right li .user-profile {
           justify-content: flex-end; }
           nav .nav-container .navbar-right li .user-profile > ul.dropdown-menu {
@@ -1371,7 +1372,7 @@ nav {
   .navbar-right > li > a:hover, .navbar-right > li > a:focus {
     background-color: transparent; }
 .navbar-right.navbar-nav > li > a {
-  color: var(--font-color) !important;
+  color: var(--font-color);
   font-weight: bold; }
   .navbar-right.navbar-nav > li > a#alertDropdown {
     line-height: 32px;
@@ -1397,7 +1398,7 @@ nav {
   .breadcrumb-container .breadcrumb {
     background: transparent;
     margin: auto;
-    max-width: 1440px;
+    max-width: 1280px;
     position: relative;
     color: var(--white);
     padding: 8px 30px;
