@@ -282,7 +282,7 @@ namespace BAR.BL.Managers
 				propertyValue = new PropertyValue
 				{
 					Property = properties.Where(x => x.Name.Equals("Personality")).SingleOrDefault(),
-					Value = deserializedJson[i].profile.gender,
+					Value = deserializedJson[i].profile.personality,
 					Confidence = 1
 				};
 				information.PropertieValues.Add(propertyValue);
