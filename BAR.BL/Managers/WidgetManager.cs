@@ -442,15 +442,17 @@ namespace BAR.BL.Managers
 			//Remove overflowing items (temporary solution)
 			new ItemManager().RemoveOverflowingItems();
 
-			//Create widget for geo-data
-			WidgetData dataToRemove = dataManager
+			//Remove old geodata
+			RemoveWidgetDatas(GetWidgetDatasForKeyvalue("geo"));
 
+			//Create widget for geo-data
 			List<PropertyTag> tags = new List<PropertyTag>();
 			PropertyTag tag = new PropertyTag()
 			{
 				Name = "geo"
 			};
 			Widget geoloactionWidget = AddWidget(WidgetType.GraphType, "geoloaction of number of mentions", 1, 1, tags);
+
 
 		}
 
@@ -531,6 +533,15 @@ namespace BAR.BL.Managers
 		{
 			InitRepo();
 			widgetRepo.DeleteWidgetDatas(datas);
+		}
+
+		/// <summary>
+		/// Gives back the widgetdatas from a specific keyvalue
+		/// </summary>
+		public IEnumerable<WidgetData> GetWidgetDatasForKeyvalue(string value)
+		{
+			InitRepo();
+			return widgetRepo.ReadWidgetDatasForKeyvalue(value).AsEnumerable();
 		}
 	}
 }

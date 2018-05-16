@@ -263,9 +263,11 @@ namespace BAR.DAL
 		/// <summary>
 		/// Gives back all the items with all the informations
 		/// </summary>
-		public IEnumerable<Item> ReadAllItemsWithInformations()
+		public IEnumerable<Person> ReadAllItemsWithInformations()
 		{
-			return ctx.Items.Include(item => item.Informations).AsEnumerable();
+			return ctx.Items.OfType<Person>()
+							.Include(item => item.Informations)
+							.AsEnumerable();
 		}
 	}
 }

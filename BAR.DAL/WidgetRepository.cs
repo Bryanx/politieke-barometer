@@ -351,5 +351,13 @@ namespace BAR.DAL
 			}
 			return ctx.SaveChanges();
 		}
+
+		/// <summary>
+		/// Gives back all the widgetdatas for a specific keyvalue
+		/// </summary>
+		public IEnumerable<WidgetData> ReadWidgetDatasForKeyvalue(string value)
+		{
+			return ctx.WidgetDatas.Where(data => data.KeyValue.ToLower().Equals(value.ToLower())).AsEnumerable();
+		}
 	}
 }

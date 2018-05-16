@@ -17,7 +17,7 @@ namespace BAR.DAL
 
 		IEnumerable<Item> ReadAllItemsWithPlatforms();
 		IEnumerable<Item> ReadAllItemsForUpdatedSince(DateTime since);
-		IEnumerable<Item> ReadAllItemsWithInformations();
+		IEnumerable<Person> ReadAllItemsWithInformations();
 
 		Item ReadItemByName(string name);
 		Person ReadPersonWithDetails(int itemId);

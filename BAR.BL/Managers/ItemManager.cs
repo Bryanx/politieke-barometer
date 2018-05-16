@@ -917,7 +917,7 @@ namespace BAR.BL.Managers
 		/// <summary>
 		/// Gives back all the items with all the informations
 		/// </summary>
-		public IEnumerable<Item> GetAllItemsWithInformations()
+		public IEnumerable<Person> GetAllItemsWithInformations()
 		{
 			InitRepo();
 			return itemRepo.ReadAllItemsWithInformations().AsEnumerable();

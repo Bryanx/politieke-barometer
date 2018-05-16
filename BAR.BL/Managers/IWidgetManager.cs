@@ -50,6 +50,7 @@ namespace BAR.BL.Managers
 		//WidgetDatas
 		IEnumerable<WidgetData> GetAllWidgetDatas();
 		IEnumerable<WidgetData> GetWidgetDatasForItemId(int itemId);
+		IEnumerable<WidgetData> GetWidgetDatasForKeyvalue(string value);
 
 		WidgetData AddWidgetData(WidgetData widgetData);
 
