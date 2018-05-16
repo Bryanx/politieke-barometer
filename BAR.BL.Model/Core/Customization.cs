@@ -43,5 +43,8 @@ namespace BAR.BL.Domain.Core
 		public string City { get; set; }
 		public string Country { get; set; }
 		public string Email { get; set; }
+
+		//Images
+		public byte[] HeaderImage { get; set; }
 	}
 }

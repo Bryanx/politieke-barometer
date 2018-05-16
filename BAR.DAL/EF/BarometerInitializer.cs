@@ -169,7 +169,10 @@ namespace BAR.DAL.EF
 				Zipcode = "2060",
 				City = "Antwerpen",
 				Country = "Belgi�",
-				Email = "contact@politiekebarometer.be"
+				Email = "contact@politiekebarometer.be",
+
+				//HeaderImage
+				HeaderImage = null
 			};
 
 			return custom;

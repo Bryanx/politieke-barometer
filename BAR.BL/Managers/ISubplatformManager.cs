@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace BAR.BL.Managers
 {
@@ -31,6 +32,7 @@ namespace BAR.BL.Managers
 		Customization ChangePrivacyText(int platformId, string content, string title = "Privacy policy");
 		Customization ChangeFAQTitle(int platformId, string title);
 		Customization ChangeAddress(int platformId, string streetAndHousenumber, string zipcode, string city, string country, string email);
+		Customization ChangeSubplatformHeaderImage(int platformId, HttpPostedFileBase headerImgFile);
 
 		//Questions
 		Question GetQuestion(int questionId);

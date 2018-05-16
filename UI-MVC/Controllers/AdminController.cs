@@ -186,6 +186,23 @@ namespace BAR.UI.MVC.Controllers
 			return RedirectToAction("Details", "Person", new { id = p.ItemId });
 		}
 
-		
+		/// <summary>
+		/// POST
+		/// Changes headerimage of a subplatform.
+		/// </summary>
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		public ActionResult HeaderImage([Bind(Exclude = "WebsiteHeader")]CustomizationViewModel model)
+		{
+			platformManager = new SubplatformManager();
+
+			if (Request.Files.Count > 0)
+			{
+				HttpPostedFileBase headerImgFile = Request.Files["WebsiteHeader"];
+				int subPlatformID = (int)RouteData.Values["SubPlatformID"];
+				platformManager.ChangeSubplatformHeaderImage(subPlatformID, headerImgFile);
+			}
+			return RedirectToAction("PageManagement", "Admin");
+		}
 	}
 }

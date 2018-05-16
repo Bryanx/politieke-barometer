@@ -7,6 +7,8 @@ using BAR.BL.Domain;
 using BAR.DAL;
 using BAR.BL.Domain.Core;
 using BAR.BL.Domain.Users;
+using System.Web;
+using System.IO;
 
 namespace BAR.BL.Managers
 {
@@ -490,6 +492,27 @@ namespace BAR.BL.Managers
 			InitRepo();
 			platformRepo.UpdateSubplatform(platform);
 			return platform;
+		}
+
+		public Customization ChangeSubplatformHeaderImage(int platformId, HttpPostedFileBase headerImgFile)
+		{
+			InitRepo();
+
+			//Get User
+			Customization customizationToUpdate = platformRepo.ReadCustomisation(platformId);
+			if (customizationToUpdate == null) return null;
+
+			//Change header picture
+			byte[] imageData = null;
+			using (var binary = new BinaryReader(headerImgFile.InputStream))
+			{
+				imageData = binary.ReadBytes(headerImgFile.ContentLength);
+			}
+			customizationToUpdate.HeaderImage = imageData;
+
+			//Update database
+			platformRepo.UpdateCustomization(customizationToUpdate);
+			return customizationToUpdate;
 		}
 	}
 }
