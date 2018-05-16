@@ -441,6 +441,22 @@ namespace BAR.BL.Managers
 
 			//Remove overflowing items (temporary solution)
 			new ItemManager().RemoveOverflowingItems();
+
+			//Remove old geodata
+			RemoveWidgetDatas(GetWidgetDatasForKeyvalue("geo"));
+
+			//Create widget for geo-data
+			List<PropertyTag> tags = new List<PropertyTag>();
+			PropertyTag tag = new PropertyTag()
+			{
+				Name = "geo"
+			};
+			Widget geoloactionWidget = AddWidget(WidgetType.GraphType, "geoloaction of number of mentions", 1, 1, tags);
+
+			//Get widgetdata for geolocaton
+			WidgetData geoData = dataManager.GetGeoLocationData();
+			geoData.Widget = geoloactionWidget;
+			widgetRepo.CreateWidgetData(geoData);
 		}
 
 		/// <summary>
@@ -486,7 +502,7 @@ namespace BAR.BL.Managers
 		/// for a specific user
 		/// For now, this method will only return the widgets "number of metnions" because these are the most logical.
 		/// </summary>
-		public IEnumerable<Widget> GetWidgetsForWeeklyReview(string userId = null)
+		public IEnumerable<Widget> GetWidgetsForWeeklyReview(int platformId = 2, string userId = null)
 		{
 			InitRepo();
 			List<Widget> widgets = new List<Widget>();
@@ -494,6 +510,7 @@ namespace BAR.BL.Managers
 			//Get trending items
 			ItemManager itemManager = new ItemManager();
 			IEnumerable<Item> items = null;
+			itemManager.UpdateWeeklyReviewData(platformId);
 			if (userId == null) items = itemManager.GetMostTrendingItems(useWithOldData: true);
 			else items = itemManager.GetMostTrendingItemsForUser(userId, useWithOldData: true);
 
@@ -519,6 +536,24 @@ namespace BAR.BL.Managers
 		{
 			InitRepo();
 			widgetRepo.DeleteWidgetDatas(datas);
+		}
+
+		/// <summary>
+		/// Gives back the widgetdatas from a specific keyvalue
+		/// </summary>
+		public IEnumerable<WidgetData> GetWidgetDatasForKeyvalue(string value)
+		{
+			InitRepo();
+			return widgetRepo.ReadWidgetDatasForKeyvalue(value).AsEnumerable();
+		}
+
+		/// <summary>
+		/// Gives back the geolocation widget for displaying on the homepage
+		/// </summary>
+		public Widget GetGeoLocationWidget()
+		{
+			InitRepo();
+			return widgetRepo.ReadGeoLocationWidget();
 		}
 	}
 }

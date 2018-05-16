@@ -538,7 +538,7 @@
     <value>Merci pour confirmer votre e-mail.</value>
   </data>
   <data name="Theme" xml:space="preserve">
-    <value>Thème</value>
+    <value>Sujet</value>
   </data>
   <data name="Topics" xml:space="preserve">
     <value>Sujets</value>
@@ -707,5 +707,23 @@
   </data>
   <data name="Title" xml:space="preserve">
     <value>Titre</value>
+  </data>
+  <data name="AllThemes" xml:space="preserve">
+    <value>Aperçu du sujet</value>
+  </data>
+  <data name="LatestStories" xml:space="preserve">
+    <value>Les dernières histoires</value>
+  </data>
+  <data name="IsNowAvailable" xml:space="preserve">
+    <value>est maintenant disponible!</value>
+  </data>
+  <data name="BackToHome" xml:space="preserve">
+    <value>Retour à la page d'accueil</value>
+  </data>
+  <data name="PageNotFound" xml:space="preserve">
+    <value>Page non trouvée</value>
+  </data>
+  <data name="SomethingWentWrong" xml:space="preserve">
+    <value>Quelque chose a mal tourné...</value>
   </data>
 </root>

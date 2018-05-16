@@ -13,6 +13,7 @@ namespace BAR.DAL
 		//Read
 		User ReadUser(string userId);
 		IEnumerable<User> ReadAllUsers();
+		IEnumerable<User> ReadAllUsersWithAlerts();
 		IEnumerable<User> ReadAllUsersForRole(string roleId);
 		IEnumerable<User> ReadAllUsersForArea(int areaId);
 		Area ReadArea(int areaId);
