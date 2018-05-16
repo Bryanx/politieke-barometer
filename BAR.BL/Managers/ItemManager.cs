@@ -217,6 +217,8 @@ namespace BAR.BL.Managers
 		/// </summary>
 		public void UpdateWeeklyReviewData(int platformId)
 		{
+			InitRepo();
+
 			//Get timestamp
 			DateTime? lastUpdated = new SubplatformManager().GetSubPlatform(platformId).LastUpdatedWeeklyReview;
 
@@ -228,10 +230,9 @@ namespace BAR.BL.Managers
 			if (lastUpdated == null || lastUpdated < DateTime.Now.AddDays(-7))
 			{
 				foreach (Item item in items) item.NumberOfMentionsOld = item.NumberOfMentions;
-			}
-
-			//Update database
-			itemRepo.UpdateItems(items);
+				//Update database
+				itemRepo.UpdateItems(items);
+			}			
 		}
 
 		/// <summary>
