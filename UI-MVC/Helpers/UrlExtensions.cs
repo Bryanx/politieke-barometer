@@ -62,12 +62,21 @@ namespace BAR.UI.MVC.Helpers {
                 action = nameof(UserController.ProfilePicture)
             });
         }
-        
-        #endregion
 
-        #region ItemUrls
-        
-        public static string PersonUrl(this UrlHelper helper) {
+				public static string HeaderImage(this UrlHelper helper)
+				{
+					return helper.RouteUrl("Default", new
+					{
+						controller = "Admin",
+						action = nameof(AdminController.HeaderImage)
+					});
+				}
+
+		#endregion
+
+		#region ItemUrls
+
+		public static string PersonUrl(this UrlHelper helper) {
             return helper.RouteUrl("Default", new {
                 controller = "Person",
                 action = nameof(PersonController.Index)
