@@ -31,10 +31,8 @@
         <th title=@Resources.CalculatedByAmountOfTweets>
             @Resources.Trending
         </th>
-        @if (User.Identity.IsAuthenticated) {
-            <th>
-            </th>
-        }
+        <th>
+        </th>
     </tr>
     </thead>
     <tbody>
@@ -60,15 +58,13 @@
             <td>
                 @Html.DisplayFor(modelItem => item.TrendingPercentage) %
             </td>
-            @if (User.Identity.IsAuthenticated) {
-                <td>
-                    @if (item.Subscribed != true) {
-                    <a class="subscribeItem btn btn-success btn-xs" data-item-id="@item.ItemId" title=@Resources.FollowThisPerson>@Resources.Subscribe</a>
-                    } else {
-                    <a class="subscribeItem btn btn-danger btn-xs" data-item-id="@item.ItemId" title=@Resources.Unsubscribe>@Resources.Unsubscribe</a>
-                    }
-                </td>
-            }
+            <td>
+                @if (item.Subscribed != true) {
+                <a class="subscribeItem btn btn-success btn-xs" data-item-id="@item.ItemId" title=@Resources.FollowThisPerson>@Resources.Subscribe</a>
+                } else {
+                <a class="subscribeItem btn btn-danger btn-xs" data-item-id="@item.ItemId" title=@Resources.Unsubscribe>@Resources.Unsubscribe</a>
+                }
+            </td>
         </tr>
     }
     </tbody>

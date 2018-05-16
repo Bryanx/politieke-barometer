@@ -37,10 +37,8 @@
         <th title=@Resources.CalculatedByAmountOfTweets>
             @Resources.Trending
         </th>
-        @if (User.Identity.IsAuthenticated) {
-            <th>
-            </th>
-        }
+        <th>
+        </th>
     </tr>
     </thead>
     <tbody>
@@ -108,15 +106,13 @@
                     <i class="fa fa-trophy bronze"></i>
                 }
             </td>
-            @if (User.Identity.IsAuthenticated) {
-                <td>
-                    @if (@person.Subscribed) {
-                        <a class="subscribeItem btn btn-danger btn-xs" data-item-id="@person.Item.ItemId" title=@Resources.Unsubscribe>@Resources.Unsubscribe</a>
-                    } else {
-                        <a class="subscribeItem btn btn-success btn-xs" data-item-id="@person.Item.ItemId" title=@Resources.FollowThisPerson>@Resources.Subscribe</a>
-                    }
-                </td>
-            }
+            <td>
+                @if (@person.Subscribed) {
+                    <a class="subscribeItem btn btn-danger btn-xs" data-item-id="@person.Item.ItemId" title=@Resources.Unsubscribe>@Resources.Unsubscribe</a>
+                } else {
+                    <a class="subscribeItem btn btn-success btn-xs" data-item-id="@person.Item.ItemId" title=@Resources.FollowThisPerson>@Resources.Subscribe</a>
+                }
+            </td>
         </tr>
     }
     </tbody>
