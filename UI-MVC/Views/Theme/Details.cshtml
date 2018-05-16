@@ -29,15 +29,12 @@
                     @Resources.Theme
                     <h1>
                         <span class="item-name">@Model.Theme.Name</span>
-                        @if (User.Identity.IsAuthenticated)
+                        @if (Model.Subscribed != true)
                         {
-                            if (Model.Subscribed != true)
-                            {
-                            <a class="w-100px subscribeItem btn btn-success pull-right" data-item-id="@Model.Theme.ItemId" title="Deze persoon volgen">@Resources.Subscribe</a>}
-                            else
-                            {
-                            <a class="w-100px subscribeItem btn btn-danger pull-right" data-item-id="@Model.Theme.ItemId" title="Uitschrijven">@Resources.Unsubscribe</a>}
-                        }
+                        <a class="w-100px subscribeItem btn btn-success pull-right" data-item-id="@Model.Theme.ItemId" title="Deze persoon volgen">@Resources.Subscribe</a>}
+                        else
+                        {
+                        <a class="w-100px subscribeItem btn btn-danger pull-right" data-item-id="@Model.Theme.ItemId" title="Uitschrijven">@Resources.Unsubscribe</a>}
                     </h1>
                     <hr />
                 </div>
