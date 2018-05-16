@@ -861,8 +861,15 @@ function init() {
             data:  JSON.stringify(serializedWidget),
             dataType: "application/json",
             contentType: "application/json",
-            success: () => showSaveMessage()
-        }).fail(() => showErrorMessage());
+            success: () => showSaveMessage(),
+        }).fail((e) => {
+            let response = JSON.parse(e.responseText);
+            if (response.Message.toLowerCase().includes("authorization")) {
+                $("#loginmodal").modal("show");
+            } else {
+                showErrorMessage();
+            }
+        })
     };
     
     //Adds a new widget to the current dashboard.
@@ -885,8 +892,14 @@ function init() {
                     else loadWidgets("api/Widget/GetUserWidgets", "", true);
                 }
                 showSaveMessage();
-            },
-            error: (xhr) => showErrorMessage()
+            }
+        }).fail((e) => {
+            let response = JSON.parse(e.responseText);
+            if (response.Message.toLowerCase().includes("authorization")) {
+                $("#loginmodal").modal("show");
+            } else {
+                showErrorMessage();
+            }
         })
     };
     
