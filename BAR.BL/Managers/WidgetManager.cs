@@ -28,11 +28,6 @@ namespace BAR.BL.Managers
 			this.uowManager = uowManager;
 		}
 
-		public IEnumerable<Widget> GetWidgetsForWeeklyReview(int platformId, string userId = null)
-		{
-			throw new NotImplementedException();
-		}
-
 		/// <summary>
 		/// Creates a widget based on the parameters
 		/// and links that widget to a dasboard.
@@ -491,7 +486,7 @@ namespace BAR.BL.Managers
 		/// for a specific user
 		/// For now, this method will only return the widgets "number of metnions" because these are the most logical.
 		/// </summary>
-		public IEnumerable<Widget> GetWidgetsForWeeklyReview(string userId = null, int platformId = 2)
+		public IEnumerable<Widget> GetWidgetsForWeeklyReview(string userId = null, int platformId = 1)
 		{
 			InitRepo();
 			List<Widget> widgets = new List<Widget>();

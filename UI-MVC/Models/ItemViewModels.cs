@@ -32,7 +32,7 @@ namespace BAR.UI.MVC.Models {
 
         public class WeeklyReviewModel : BaseViewModel {
             public ICollection<ItemDTO> WeeklyItems { get; set; }
-            public ICollection<PersonViewModel> PersonViewModel { get; set; }
+            public ICollection<PersonViewModel> PViewModel { get; set; }
         }
         
         public class PersonViewModels : BaseViewModel {

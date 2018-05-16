@@ -35,9 +35,17 @@ namespace BAR.UI.MVC.Controllers
       userManager = new UserManager();
       itemManager = new ItemManager();
 
-      List<Person> persons = new List<Person>();
-      itemManager.GetMostTrendingItemsForType(ItemType.Person, 4, true)
-        .Take(4).ForEach(i => persons.Add(itemManager.GetPersonWithDetails(i.ItemId)));
+      List<Item> persons = itemManager.GetMostTrendingItemsForType(ItemType.Person, 4, true).ToList();
+
+      
+      List<Person> personsWDetails = new List<Person>();
+      itemManager.GetMostTrendingItemsForType(ItemType.Person, 4, true).ForEach(i => personsWDetails.Add(itemManager.GetPersonWithDetails(i.ItemId)));
+
+      
+      List<PersonViewModel> personViewModels = Mapper.Map(personsWDetails, new List<PersonViewModel>());
+      for (int i = 0; i < persons.Count; i++) {
+        personViewModels[i].Item = Mapper.Map(persons[i], new ItemDTO());
+      }
       
 
       //Assembling the view
@@ -49,7 +57,7 @@ namespace BAR.UI.MVC.Controllers
         WeeklyReviewModel = new WeeklyReviewModel
         {
           WeeklyItems = Mapper.Map(itemManager.GetMostTrendingItems(4, true), new List<ItemDTO>()),
-          PersonViewModel = Mapper.Map(persons, new List<PersonViewModel>())
+          PViewModel = personViewModels
         }
       });
     }

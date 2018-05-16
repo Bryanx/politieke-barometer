@@ -17,16 +17,20 @@
         <div class="row">
             <div class="col-xs-12 col-sm-4 weeklyReview-top-card">
                 <div class="weeklyReview-avatar profile_left">
-                    <img src='https://twitter.com/@Model.PersonViewModel.ElementAt(0).SocialMediaNames.First(s => s.Source.Name == "Twitter").Username/profile_image?size=original'
-                         class="img-responsive avatar-view"
-                         onerror="this.onload = null;this.src = '/Content/build/images/picture.jpg';"/>
+                    @if (Model.PViewModel.ElementAt(0).SocialMediaNames.FirstOrDefault(s => s.Source.Name == "Twitter") != null) {
+                        <img src='https://twitter.com/@Model.PViewModel.ElementAt(0).SocialMediaNames.First(s => s.Source.Name == "Twitter").Username/profile_image?size=normal'
+                             class="img-circle person-image"
+                             onerror = "this.onload = null; this.src='/Content/build/images/picture.jpg';"/>
+                    } else {
+                        <img src='/Content/build/images/picture.jpg' class="img-circle person-image"/>
+                    }
                 </div>
-                <div class="weeklyReview-organisation"><button onclick="window.location = '@Url.OrganisationUrl(Model.PersonViewModel.ElementAt(0).OrganisationId)';" class="btn btn-default btn-xs">@Model.PersonViewModel.ElementAt(0).OrganisationName</button></div>
+                <div class="weeklyReview-organisation"><button onclick="window.location = '@Url.OrganisationUrl(Model.PViewModel.ElementAt(0).OrganisationId)';" class="btn btn-default btn-xs">@Model.PViewModel.ElementAt(0).OrganisationName</button></div>
                 <div class="weeklyReview-name">
                     <a style="text-decoration: none" href="/Person/Details/@Model.WeeklyItems.ElementAt(0).ItemId">@Model.WeeklyItems.ElementAt(0).Name</a>
                     <div class="badge bg-gold">
                         @{
-                            var rankNumberOfMentions = Model.PersonViewModel.ElementAt(0).RankNumberOfMentions + 1;
+                            var rankNumberOfMentions = Model.PViewModel.ElementAt(0).RankNumberOfMentions + 1;
                         }
                         #@rankNumberOfMentions @Resources.InNumberOfMentions.ToLower()</div>
                 </div>

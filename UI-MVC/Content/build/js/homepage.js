@@ -130,13 +130,13 @@ let getGraph = function(name, itemId, widgetId, itemType) {
             $('#' + itemType).data("widgetId", d + " " + itemId);
             switch (itemType){
                 case 1:
-                    charts1[0] == null ? AddChart(name, data[0].WidgetId, data[0].GraphValues.map(g => g.Value).reverse(), data[0].GraphValues.map(g => g.NumberOfTimes), itemType) : AddDataSet(charts1[0], name, data[0].GraphValues.map(g => g.NumberOfTimes), itemType);
+                    charts1[0] == null ? AddChart(name, data[0].WidgetId, data[0].GraphValues.map(g => g.Value).reverse(), data[0].GraphValues.map(g => g.NumberOfTimes).reverse(), itemType) : AddDataSet(charts1[0], name, data[0].GraphValues.map(g => g.NumberOfTimes).reverse(), itemType);
                     break;
                 case 2:
-                    charts2[0] == null ? AddChart(name, data[0].WidgetId, data[0].GraphValues.map(g => g.Value).reverse(), data[0].GraphValues.map(g => g.NumberOfTimes), itemType) : AddDataSet(charts2[0], name, data[0].GraphValues.map(g => g.NumberOfTimes), itemType);
+                    charts2[0] == null ? AddChart(name, data[0].WidgetId, data[0].GraphValues.map(g => g.Value).reverse(), data[0].GraphValues.map(g => g.NumberOfTimes).reverse(), itemType) : AddDataSet(charts2[0], name, data[0].GraphValues.map(g => g.NumberOfTimes).reverse(), itemType);
                     break;
                 case 3:
-                    charts3[0] == null ? AddChart(name, data[0].WidgetId, data[0].GraphValues.map(g => g.Value).reverse(), data[0].GraphValues.map(g => g.NumberOfTimes), itemType) : AddDataSet(charts3[0], name, data[0].GraphValues.map(g => g.NumberOfTimes), itemType);
+                    charts3[0] == null ? AddChart(name, data[0].WidgetId, data[0].GraphValues.map(g => g.Value).reverse(), data[0].GraphValues.map(g => g.NumberOfTimes).reverse(), itemType) : AddDataSet(charts3[0], name, data[0].GraphValues.map(g => g.NumberOfTimes).reverse(), itemType);
                     break;
             }
         },

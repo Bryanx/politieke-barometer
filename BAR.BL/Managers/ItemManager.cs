@@ -51,12 +51,14 @@ namespace BAR.BL.Managers
 			IEnumerable<Information> infos = new DataManager().GetInformationsForItemid(itemId);
 			if (infos == null || infos.Count() == 0) return;
 	
-			//Calculate new baseline
-			int infosOld = infos.Where(info => !info.CreationDate.Value.ToString("dd-MM-yy").Equals(DateTime.Now.ToString("dd-MM-yy"))).Count();
+			//Calculate new baseline (avarage of the last 30 days)
+			int infosOld = infos.Where(info => info.CreationDate.Value < DateTime.Now && info.CreationDate.Value >= DateTime.Now.AddDays(-30)).Count();
 			if (infosOld != 0) itemToUpdate.Baseline = Math.Round((double) (infosOld / 30));
 
-			//Determine trending percentage
-			int infosNew = infos.Where(info => info.CreationDate.Value.ToString("dd-MM-yy").Equals(DateTime.Now.ToString("dd-MM-yy"))).Count();
+			//Determine trending percentage (avarage of the last 3 days)
+			int infosNew = infos.Where(info => info.CreationDate.Value.ToString("dd-MM-yy").Equals(DateTime.Now.ToString("dd-MM-yy"))
+								|| info.CreationDate.Value >= DateTime.Now.AddDays(-3))
+								.Count();
 			if (infosNew != 0)
 			{
 				//If trendingper is 0 then it will be devided by 1
@@ -112,7 +114,7 @@ namespace BAR.BL.Managers
 		/// the number of trending items depends on the
 		/// number that you give via the parameter
 		/// </summary>
-		public IEnumerable<Item> GetMostTrendingItems(int numberOfItems = 5, bool useWithOldData = false)
+		public IEnumerable<Item> GetMostTrendingItems(int numberOfItems = 4	, bool useWithOldData = false)
 		{
 			//Order the items by populairity
 			List<Item> items = new List<Item>();

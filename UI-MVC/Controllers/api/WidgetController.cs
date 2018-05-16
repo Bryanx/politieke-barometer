@@ -196,11 +196,15 @@ namespace BAR.UI.MVC.Controllers.api
 		[System.Web.Http.Route("api/Widget/GetWeeklyReview/{id}")]
 		public IHttpActionResult GetWeeklyReview(string id)
 		{
-			if (id.Equals("0")){
-				id = null;
-			}
 			widgetManager = new WidgetManager();
-			IEnumerable<Widget> widgets = widgetManager.GetWidgetsForWeeklyReview(id);
+			IEnumerable<Widget> widgets;
+			if (id.Equals("0")){
+				widgets = widgetManager.GetWidgetsForWeeklyReview(null, 1);
+			} else {
+				widgets = widgetManager.GetWidgetsForWeeklyReview(id, 1);
+			}
+			
+			
 
 			return Ok(Mapper.Map(widgets, new List<UserWidgetDTO>()));
 		}
