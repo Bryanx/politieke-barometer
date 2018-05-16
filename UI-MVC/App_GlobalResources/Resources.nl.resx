@@ -163,7 +163,7 @@
     <value>Leeftijd</value>
   </data>
   <data name="AgeDistributionOfMentions" xml:space="preserve">
-    <value>Leeftijdsverdeling van vermeldingen</value>
+    <value>Leeftijd</value>
   </data>
   <data name="Ago" xml:space="preserve">
     <value>Geleden</value>
@@ -334,7 +334,7 @@
     <value>Geslacht</value>
   </data>
   <data name="GenderDistributionOfMentions" xml:space="preserve">
-    <value>Geslachtsverdeling van vermeldingen</value>
+    <value>Geslacht</value>
   </data>
   <data name="GraphType" xml:space="preserve">
     <value>Grafiek type</value>
@@ -716,5 +716,17 @@
   </data>
   <data name="LowerEducated" xml:space="preserve">
     <value>Lager opgeleid</value>
+  </data>
+  <data name="EducationDistributionOfMentions" xml:space="preserve">
+    <value>Opleiding</value>
+  </data>
+  <data name="MoreInfoAbout" xml:space="preserve">
+    <value>Meer informatie over</value>
+  </data>
+  <data name="PeopleWhoMention" xml:space="preserve">
+    <value>Mensen die praten over</value>
+  </data>
+  <data name="PersonalityDistributionOfMentions" xml:space="preserve">
+    <value>Persoonlijkheid</value>
   </data>
 </root>

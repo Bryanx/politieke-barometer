@@ -595,10 +595,10 @@
     <value>Âge</value>
   </data>
   <data name="AgeDistributionOfMentions" xml:space="preserve">
-    <value>Répartition par âge des mentions</value>
+    <value>Âge</value>
   </data>
   <data name="GenderDistributionOfMentions" xml:space="preserve">
-    <value>Répartition par sexe des mentions</value>
+    <value>Sexe</value>
   </data>
   <data name="NumberOfMentionsFull" xml:space="preserve">
     <value>Nombre de mentions</value>
@@ -716,5 +716,17 @@
   </data>
   <data name="LowerEducated" xml:space="preserve">
     <value>Éducation inférieure</value>
+  </data>
+  <data name="EducationDistributionOfMentions" xml:space="preserve">
+    <value>Éducation</value>
+  </data>
+  <data name="MoreInfoAbout" xml:space="preserve">
+    <value>Plus d'informations sur</value>
+  </data>
+  <data name="PeopleWhoMention" xml:space="preserve">
+    <value>Les gens qui parlent de</value>
+  </data>
+  <data name="PersonalityDistributionOfMentions" xml:space="preserve">
+    <value>Personnalité</value>
   </data>
 </root>

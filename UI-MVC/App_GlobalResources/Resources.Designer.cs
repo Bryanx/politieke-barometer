@@ -196,7 +196,7 @@ namespace BAR.UI.MVC.App_GlobalResources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Age distribution of mentions.
+        ///   Looks up a localized string similar to Age.
         /// </summary>
         public static string AgeDistributionOfMentions {
             get {
@@ -601,6 +601,15 @@ namespace BAR.UI.MVC.App_GlobalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Education.
+        /// </summary>
+        public static string EducationDistributionOfMentions {
+            get {
+                return ResourceManager.GetString("EducationDistributionOfMentions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Email.
         /// </summary>
         public static string Email {
@@ -736,7 +745,7 @@ namespace BAR.UI.MVC.App_GlobalResources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Gender distribution of mentions.
+        ///   Looks up a localized string similar to Gender.
         /// </summary>
         public static string GenderDistributionOfMentions {
             get {
@@ -1096,6 +1105,15 @@ namespace BAR.UI.MVC.App_GlobalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to More information about.
+        /// </summary>
+        public static string MoreInfoAbout {
+            get {
+                return ResourceManager.GetString("MoreInfoAbout", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to More people from.
         /// </summary>
         public static string MorePeopleFrom {
@@ -1308,6 +1326,24 @@ namespace BAR.UI.MVC.App_GlobalResources {
         public static string PasswordNotMatch {
             get {
                 return ResourceManager.GetString("PasswordNotMatch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to People who mention.
+        /// </summary>
+        public static string PeopleWhoMention {
+            get {
+                return ResourceManager.GetString("PeopleWhoMention", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Personality.
+        /// </summary>
+        public static string PersonalityDistributionOfMentions {
+            get {
+                return ResourceManager.GetString("PersonalityDistributionOfMentions", resourceCulture);
             }
         }
         
