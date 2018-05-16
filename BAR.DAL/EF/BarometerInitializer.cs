@@ -150,12 +150,12 @@ namespace BAR.DAL.EF
 				TextColor = "#73879C",
 
 				//Navbar and title text
-				PersonAlias = "Persoon",
-				PersonsAlias = "Personen",
-				OrganisationAlias = "Organisation",
-				OrganisationsAlias = "Organisations",
-				ThemeAlias = "Theme",
-				ThemesAlias = "Themes",
+				PersonAlias = "Meisje",
+				PersonsAlias = "Meisjes",
+				OrganisationAlias = "Studio",
+				OrganisationsAlias = "Studios",
+				ThemeAlias = "Liedje",
+				ThemesAlias = "Liedjes",
 
 				//Privacy
 				PrivacyTitle = "Privacy policy",

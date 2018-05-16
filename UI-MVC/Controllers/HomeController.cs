@@ -31,15 +31,21 @@ namespace BAR.UI.MVC.Controllers
     [AllowAnonymous]
     public ActionResult Index()
     {
-      userManager = new UserManager();
-      itemManager = new ItemManager();
 
-      //Assembling the view
-      return View(new ItemViewModel()
-      {
-        PageTitle = INDEX_PAGE_TITLE,
-        User = User.Identity.IsAuthenticated ? userManager.GetUser(User.Identity.GetUserId()) : null,
-        Items = Mapper.Map<IList<Item>, IList<ItemDTO>>(itemManager.GetAllItems().ToList())
+			//Get hold of subplatformID we saved in the [SubplatformCheck] attribute
+			int subPlatformId = (int)RouteData.Values["SubPlatformID"];
+
+			userManager = new UserManager();
+      itemManager = new ItemManager();
+			subplatformManager = new SubplatformManager();
+
+			//Assembling the view
+			return View(new ItemViewModel()
+			{
+				PageTitle = INDEX_PAGE_TITLE,
+				User = User.Identity.IsAuthenticated ? userManager.GetUser(User.Identity.GetUserId()) : null,
+				Items = Mapper.Map<IList<Item>, IList<ItemDTO>>(itemManager.GetAllItems().ToList()),
+				Customization = subplatformManager.GetCustomization(subPlatformId)
       });
     }
     /// <summary>
