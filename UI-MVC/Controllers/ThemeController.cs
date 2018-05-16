@@ -66,7 +66,7 @@ namespace BAR.UI.MVC.Controllers
 		public ActionResult Details(int id)
 		{
 			//** TESTING **//
-			new WidgetManager().GetWidgetsForWeeklyReview();
+			//new WidgetManager().GetWidgetsForWeeklyReview();
 
 			itemManager = new ItemManager();
 			userManager = new UserManager();
