@@ -12,7 +12,7 @@ function ajaxToggleSubscribe(e) {
                 type: 'POST',
                 url: '/api/ToggleSubscribe/' + id,
                 success: (e) => {
-                    if (e.Message.toLowerCase().includes("authorization")) {
+                    if (e !== undefined && e.Message.toLowerCase().includes("authorization")) {
                         $("#loginmodal").modal("show");
                         $this.html(Resources.Subscribe);
                     } else {
