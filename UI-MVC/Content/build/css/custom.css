@@ -1206,7 +1206,10 @@ nav .nav-container .searchbar .search-field, form.navbar-form .input-group {
   font-size: 20px;
   transition: 0.1s;
   border: none;
-  box-shadow: none !important; }
+  box-shadow: none !important;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px; }
 
 .search-field {
   padding-left: 0;
@@ -1910,7 +1913,10 @@ nav .nav-container .searchbar .search-field, form.navbar-form .input-group {
   font-size: 20px;
   transition: 0.1s;
   border: none;
-  box-shadow: none !important; }
+  box-shadow: none !important;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px; }
 
 .search-field {
   padding-left: 0;
