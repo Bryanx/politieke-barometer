@@ -615,8 +615,6 @@ namespace BAR.BL.Managers
 
 			//Update item
 			itemToUpdate.SubPlatform = subPlatform;
-			itemToUpdate.LastUpdated = DateTime.Now;
-
 			//Update database
 			itemRepo.UpdateItem(itemToUpdate);
 
@@ -642,7 +640,6 @@ namespace BAR.BL.Managers
 
 			//Update item
 			orgToUpdate.Site = site;
-			orgToUpdate.LastUpdated = DateTime.Now;
 
 			//Update database
 			itemRepo.UpdateItem(orgToUpdate);
@@ -666,7 +663,6 @@ namespace BAR.BL.Managers
 
 			//Update item
 			personToUpdate.Site = site;
-			personToUpdate.LastUpdated = DateTime.Now;
 
 			//Update database
 			itemRepo.UpdateItem(personToUpdate);
