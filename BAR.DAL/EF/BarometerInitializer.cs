@@ -2,6 +2,7 @@ using BAR.BL.Domain.Core;
 using BAR.BL.Domain.Data;
 using BAR.BL.Domain.Items;
 using BAR.BL.Domain.Users;
+using BAR.BL.Domain.Widgets;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -23,7 +24,65 @@ namespace BAR.DAL.EF
 			GenerateSources(ctx);
 			GenerateProperties(ctx);
 			GenerateAreas(ctx);
+			GenerateActivityWidgets(ctx);
 			//GenerateThemes(ctx);
+		}
+
+		/// <summary>
+		/// Generates widgets for displaying the activities that happen on the website
+		/// </summary>
+		private void GenerateActivityWidgets(BarometerDbContext ctx)
+		{
+			List<PropertyTag> tags = new List<PropertyTag>();
+			PropertyTag tag = new PropertyTag()
+			{
+				Name = "activity"
+			};
+			tags.Add(tag);
+
+			Widget loginWidget = new ItemWidget()
+			{
+				Title = "Login activities",
+				RowNumber = 1,
+				ColumnNumber = 1,
+				RowSpan = 12,
+				ColumnSpan = 6,
+				WidgetDatas = new List<WidgetData>(),
+				WidgetType = WidgetType.GraphType,
+				GraphType = GraphType.LineChart,
+				PropertyTags = tags
+			};
+			ctx.Widgets.Add(loginWidget);
+
+			Widget registerWidget = new ItemWidget()
+			{
+				Title = "Login activities",
+				RowNumber = 1,
+				ColumnNumber = 1,
+				RowSpan = 12,
+				ColumnSpan = 6,
+				WidgetDatas = new List<WidgetData>(),
+				WidgetType = WidgetType.GraphType,
+				GraphType = GraphType.LineChart,
+				PropertyTags = tags
+			};
+			ctx.Widgets.Add(registerWidget);
+
+			Widget visitWidget = new ItemWidget()
+			{
+				Title = "Login activities",
+				RowNumber = 1,
+				ColumnNumber = 1,
+				RowSpan = 12,
+				ColumnSpan = 6,
+				WidgetDatas = new List<WidgetData>(),
+				WidgetType = WidgetType.GraphType,
+				GraphType = GraphType.LineChart,
+				PropertyTags = tags
+			};
+			ctx.Widgets.Add(visitWidget);
+
+			ctx.SaveChanges();
 		}
 
 		/// <summary>
