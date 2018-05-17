@@ -7,14 +7,39 @@
 @model BAR.UI.MVC.Models.ItemViewModels.ItemViewModel
 
 <link href="../../Content/build/css/homepage.css" rel="stylesheet">
+<link href="../../Content/build/css/clouds.css" rel="stylesheet">
+
 
 <section>
 @section Homepage {
     <!-- header start -->
     <div class="main-header-container-parent row header-image-bg">
+        
         <div runat="server" class="col-md-12 col-sm-12 col-xs-12 main-header-container" style="background-image: url(&quot;@Url.HeaderImage()&quot;)">
+            
             <div runat="server" class="logo" style="background-image: url(&quot;@Url.LogoImage()&quot;);"></div>
             <div class="main-header">
+                <div id="background-wrap">
+                    <div class="x1">
+                        <div class="cloud"></div>
+                    </div>
+
+                    <div class="x2">
+                        <div class="cloud"></div>
+                    </div>
+
+                    <div class="x3">
+                        <div class="cloud"></div>
+                    </div>
+
+                    <div class="x4">
+                        <div class="cloud"></div>
+                    </div>
+
+                    <div class="x5">
+                        <div class="cloud"></div>
+                    </div>
+                </div>
                 <h1 class="main-header-title">@Resources.HomepageHeaderSee @Model.Customization.PersonsAlias.ToLower() @Resources.HomepageHeaderTrending<br/>@Resources.OnSocialMedia.ToLower().</h1>
             </div>
             @Html.Partial("Partials/_SearchBar")
