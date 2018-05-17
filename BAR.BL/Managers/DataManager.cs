@@ -541,7 +541,7 @@ namespace BAR.BL.Managers
 		/// </summary>
 		public IEnumerable<string> GetUrlsForItem(int itemId)
 		{
-			List<string> urls = new List<string>(); 
+			List<string> urls = new List<string>();
 
 			//Get informations for item
 			IEnumerable<Information> infos = GetInformationsWithAllInfoForItem(itemId).Take(50);
@@ -636,7 +636,37 @@ namespace BAR.BL.Managers
 		/// </summary>
 		public WidgetData GetOrganisationData(int itemId, DateTime? timestamp = null)
 		{
-			
+			//Create widgetdata
+			WidgetData widgetData = new WidgetData()
+			{
+				KeyValue = "organisation data",
+				GraphValues = new List<GraphValue>()
+			};
+
+			//Get items
+			IEnumerable<Item> items = new ItemManager().GetItemsForOrganisation(itemId);
+			if (items == null || items.Count() == 0) return widgetData;
+
+			//Determine timestamp
+			if (timestamp == null) timestamp = DateTime.Now.AddDays(-30);
+
+			//Query data
+			DateTime startdate = DateTime.Now;
+			while (timestamp >= startdate)
+			{
+				GraphValue graphValue = new GraphValue()
+				{
+					Value = startdate.ToString("dd-MM")
+				};
+				foreach (Item item in items)
+				{
+					graphValue.NumberOfTimes += item.Informations.Where(info => info.CreationDate >= timestamp).Count();
+				}
+				widgetData.GraphValues.Add(graphValue);
+				startdate = startdate.AddDays(-1);
+			}
+
+			return widgetData;			
 		}
 	}
 }

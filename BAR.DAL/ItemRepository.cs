@@ -278,6 +278,7 @@ namespace BAR.DAL
 		{
 			return ctx.Items.OfType<Person>()
 							.Include(item => item.Organisation)
+							.Include(item => item.Informations)
 							.Where(item => item.Organisation.ItemId == itemId)
 							.AsEnumerable();
 		}
