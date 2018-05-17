@@ -1060,6 +1060,10 @@ footer {
         margin: 0 !important;
         vertical-align: baseline; }
 
+.culture-form label {
+  padding-left: 0;
+  line-height: 2.8; }
+
 footer.copyright {
   background: var(--bg-color);
   padding-bottom: 30px;
