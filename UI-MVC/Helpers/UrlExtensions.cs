@@ -72,6 +72,15 @@ namespace BAR.UI.MVC.Helpers {
 					});
 				}
 
+				public static string LogoImage(this UrlHelper helper)
+				{
+					return helper.RouteUrl("Default", new
+					{
+						controller = "Admin",
+						action = nameof(AdminController.LogoImage)
+					});
+				}
+
 		#endregion
 
 		#region ItemUrls

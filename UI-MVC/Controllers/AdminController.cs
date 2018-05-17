@@ -211,7 +211,7 @@ namespace BAR.UI.MVC.Controllers
 		/// </summary>
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public ActionResult WebsiteLogo([Bind(Exclude = "WebsiteLogo")]CustomizationViewModel model)
+		public ActionResult LogoImage([Bind(Exclude = "WebsiteLogo")]CustomizationViewModel model)
 		{
 			platformManager = new SubplatformManager();
 

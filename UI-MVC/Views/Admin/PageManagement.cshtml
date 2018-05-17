@@ -338,7 +338,7 @@
     </div>
   </div>
     <div class="col-md-6 col-sm-6 col-xs-12">
-        <div class="x_panel fixed_height_400">
+        <div class="x_panel">
             <div class="x_title">
                 <h2>Header</h2>
                 <div class="clearfix"></div>
@@ -362,8 +362,35 @@
             </div>
         </div>
     </div>
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>Header</h2>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+                <br />
+                @using (Html.BeginForm("LogoImage", "Admin", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
+                {
+                @Html.AntiForgeryToken()
+                <div class="form-group">
+                    <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+                        <input type="file" name="WebsiteLogo" id="fileUpload" accept=".png,.jpg,.jpeg,.gif,.tif" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+                        <button type="submit" class="btn btn-dark">@Resources.Save</button>
+                        <div style="display: inline"></div>
+                    </div>
+                </div>}
+            </div>
+        </div>
+    </div>
 
 </div>
+
+
 
 
 @section CustomJS{
