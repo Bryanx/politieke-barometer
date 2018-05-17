@@ -269,5 +269,17 @@ namespace BAR.DAL
 							.Include(item => item.Informations)
 							.AsEnumerable();
 		}
+
+		/// <summary>
+		/// Gives back all the items that are related to a
+		/// specific organisation
+		/// </summary>
+		public IEnumerable<Item> ReadItemsForOrganisation(int itemId)
+		{
+			return ctx.Items.OfType<Person>()
+							.Include(item => item.Organisation)
+							.Where(item => item.Organisation.ItemId == itemId)
+							.AsEnumerable();
+		}
 	}
 }

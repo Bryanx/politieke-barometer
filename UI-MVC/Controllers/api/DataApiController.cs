@@ -14,7 +14,7 @@ namespace BAR.UI.MVC.Controllers.api
 	public class DataApiController : ApiController
 	{
 		private IDataManager dataManager;
-		private IItemManager itemManager;
+		private IWidgetManager widgetManager;
 
 		[HttpGet]
 		[Route("api/Data/Synchronize")]
@@ -22,7 +22,7 @@ namespace BAR.UI.MVC.Controllers.api
 		public IHttpActionResult Synchronize()
 		{
 			dataManager = new DataManager();
-			itemManager = new ItemManager();
+			widgetManager = new WidgetManager();
 			
 			string content;
 			if (dataManager.GetLastAudit() == null)
@@ -63,11 +63,11 @@ namespace BAR.UI.MVC.Controllers.api
 							dataManager.ChangeAudit(auditId);
 
 							//Syncronize recent data with all the widgets
-							new WidgetManager().GenerateDataForPersons();
+							widgetManager.GenerateDataForPersons();
 							//Update all items with recent data
-							itemManager.FillItems();
+							new ItemManager().FillItems();
 							//Generate data for organisations
-							itemManager.GenerateDataForOrganisations();
+							widgetManager.GenerateDataForOrganisations();
 							//Update weekly review alerts
 							//Get the subplatformID from the SubPlatformCheckAPI attribute
 							object _customObject = null;

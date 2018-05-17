@@ -942,5 +942,14 @@ namespace BAR.BL.Managers
 			InitRepo();
 			return itemRepo.ReadAllItemsWithInformations().AsEnumerable();
 		}
+
+		/// <summary>
+		/// Gives back all the persons that are related to a specific organisation
+		/// </summary>
+		public IEnumerable<Item> GetItemsForOrganisation(int itemId)
+		{
+			InitRepo();
+			return itemRepo.ReadItemsForOrganisation(itemId).AsEnumerable();
+		}
 	}
 }

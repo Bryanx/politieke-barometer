@@ -629,6 +629,15 @@ namespace BAR.BL.Managers
 
 			return geoData;
 		}
+
+		/// <summary>
+		/// Gives back a widgetdata based on the persons that are part
+		/// of the organisations.
+		/// </summary>
+		public WidgetData GetOrganisationData(int itemId, DateTime? timestamp = null)
+		{
+			
+		}
 	}
 }
 
