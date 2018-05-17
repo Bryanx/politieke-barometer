@@ -156,34 +156,103 @@ function gd(year, month, day) {
 }
 
 function init_JQVmap() {
+	if (typeof (jQuery.fn.vectorMap) === 'undefined') return;
+    if (!$('#world-map-gdp').length) return;
 
-	//console.log('check init_JQVmap [' + typeof (VectorCanvas) + '][' + typeof (jQuery.fn.vectorMap) + ']' );	
+    function NameToJQVMAP(name) {
+        switch (name.toLowerCase()) {
+            case "west-vlaanderen": return "be-vwv";
+            case "oost-vlaanderen": return "be-vov";
+            case "vlaams-brabant": return "br-vbr";
+            case "antwerpen": return "be-van";
+            case "luxemburg": return "be-wlx";
+            case "brussel": return "be-bru";
+            case "limburg": return "be-vli";
+        }
+    }
 
-	if (typeof (jQuery.fn.vectorMap) === 'undefined') {
-		return;
-	}
+    function createMap(data, top3s) {
+        var colors = ["#E6F2F0", "#0f8ec4"];
+        $('#world-map-gdp').vectorMap({
+            map: 'be_mill',
+            backgroundColor: null,
+            enableZoom: false,
+            series: {
+                regions: [{
+                    values: data,
+                    scale: colors,
+                }]
+            },
+            onRegionTipShow: function (e, el, code) {
+            	if (data[code] !== "0") {
+                    el.html(el.html() + ' (' + data[code] + ' ' + Resources.Mentions.toLowerCase() + ')' +
+                        '<br/>1. ' + top3s[code][0].Item.Name + ' (' + top3s[code][0].Item.NumberOfMentions + ')' +
+                        '<br/>2. ' + top3s[code][1].Item.Name + ' (' + top3s[code][1].Item.NumberOfMentions + ')' +
+                        '<br/>3. ' + top3s[code][2].Item.Name + ' (' + top3s[code][2].Item.NumberOfMentions + ')');
+                } else {
+                    el.html(el.html() + ' (' + data[code] + ' ' + Resources.Mentions.toLowerCase() + ')');
+				}
+            }
+        });
+    }
 
-	console.log('init_JQVmap');
+    let mapdata = {
+        "be-vwv": "0",
+        "be-van": "0",
+        "be-wlx": "0",
+        "be-wbr": "0",
+        "br-vbr": "0",
+        "be-vov": "0",
+        "be-wlg": "0",
+        "be-vli": "0",
+        "be-wht": "0",
+        "be-wna": "0",
+        "be-bru": "0",
+    };
+    
+    let top3s = {
+        "be-vwv": [],
+        "be-van": [],
+        "be-wlx": [],
+        "be-wbr": [],
+        "br-vbr": [],
+        "be-vov": [],
+        "be-wlg": [],
+        "be-vli": [],
+        "be-wht": [],
+        "be-wna": [],
+        "be-bru": [],
+    };
 
-	if ($('#world-map-gdp').length) {
-		var colors = ["#E6F2F0", "#0f8ec4"];
-		$('#world-map-gdp').vectorMap({
-			map: 'be_mill',
-			backgroundColor: null,
-			enableZoom: false,
-			series: {
-				regions: [{
-					values: sample_data,
-					scale: colors,
-				}]
-			},
-			onRegionTipShow: function (e, el, code) {
-				el.html(el.html() + ' (' + sample_data[code] + ' stemmen)');
-			}
-		});
+    function loadTop3s(mapdata) {
+        $.get({
+            url: "/api/GetPopularPersonsPerDistrict",
+            success: data => {
+                data.forEach(list => {
+                    let district = NameToJQVMAP(list[0].District);
+                    $.each(top3s, (key, value) => {
+                        if (key == district) top3s[key] = list;
+                    });
+                });
+                createMap(mapdata, top3s);
+            },
+            error: e => console.log(e)
+        });
+    }
 
-	}
-
+    $.get({
+		url: "/api/GetGeoData",
+		success: data => {
+			data.GraphValues.forEach(gv => {
+				gv.Value = NameToJQVMAP(gv.Value);
+				$.each(mapdata, (key, value) => {
+					if (key == gv.Value) mapdata[key] = gv.NumberOfTimes;
+				});
+			});
+            loadTop3s(mapdata);
+		},
+		error: e => console.log(e)
+	});
 };
 
 
