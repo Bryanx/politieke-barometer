@@ -344,23 +344,23 @@ namespace BAR.BL.Managers
 					Site = site,
 					DateOfBirth = dateOfBirth,
 					Position = position,
-					SocialMediaNames = new List<SocialMediaName>()
+					SocialMediaNames = new List<SocialMediaName>(),
+					ItemType = itemType
 				};
 				break;
 				case ItemType.Organisation:
 				item = new Organisation()
 				{
 					Site = site,
-					SocialMediaUrls = new List<SocialMediaName>()
+					SocialMediaUrls = new List<SocialMediaName>(),
+					ItemType = itemType
 				};
 				break;
 				case ItemType.Theme:
 				item = new Theme()
 				{
-					Keywords = new List<Keyword>()
-					{
-
-					}
+					Keywords = new List<Keyword>(),
+					ItemType = itemType
 				};
 				break;
 				default:
@@ -416,45 +416,50 @@ namespace BAR.BL.Managers
 			itemWidgets.Add(widget1);
 			widgetIds.Add(widget1.WidgetId);
 
-			//2nd widget
-			proptags = new List<PropertyTag>();
-			proptags.Add(new PropertyTag()
+			//If item is from type theme or person then
+			//more items shall be added
+			if (item is Theme || item is Person)
 			{
-				Name = "Gender"
-			});
-			ItemWidget widget2 = (ItemWidget)widgetManager.AddWidget(WidgetType.GraphType, name + " gender comparison ", 1, 1, proptags: proptags, graphType: GraphType.PieChart, rowspan: 6, colspan: 6);
-			itemWidgets.Add(widget2);
-			widgetIds.Add(widget2.WidgetId);
+				//2nd widget
+				proptags = new List<PropertyTag>();
+				proptags.Add(new PropertyTag()
+				{
+					Name = "Gender"
+				});
+				ItemWidget widget2 = (ItemWidget)widgetManager.AddWidget(WidgetType.GraphType, name + " gender comparison ", 1, 1, proptags: proptags, graphType: GraphType.PieChart, rowspan: 6, colspan: 6);
+				itemWidgets.Add(widget2);
+				widgetIds.Add(widget2.WidgetId);
 
-			//3rd widget
-			proptags = new List<PropertyTag>();
-			proptags.Add(new PropertyTag()
-			{
-				Name = "Age"
-			});
-			ItemWidget widget3 = (ItemWidget)widgetManager.AddWidget(WidgetType.GraphType, name + " age comparison", 1, 1, proptags: proptags, graphType: GraphType.DonutChart, rowspan: 6, colspan: 6);
-			itemWidgets.Add(widget3);
-			widgetIds.Add(widget3.WidgetId);
+				//3rd widget
+				proptags = new List<PropertyTag>();
+				proptags.Add(new PropertyTag()
+				{
+					Name = "Age"
+				});
+				ItemWidget widget3 = (ItemWidget)widgetManager.AddWidget(WidgetType.GraphType, name + " age comparison", 1, 1, proptags: proptags, graphType: GraphType.DonutChart, rowspan: 6, colspan: 6);
+				itemWidgets.Add(widget3);
+				widgetIds.Add(widget3.WidgetId);
 
-			//4th widget
-			proptags = new List<PropertyTag>();
-			proptags.Add(new PropertyTag()
-			{
-				Name = "Education"
-			});
-			ItemWidget widget4 = (ItemWidget)widgetManager.AddWidget(WidgetType.GraphType, name + " education comparison", 1, 1, proptags: proptags, graphType: GraphType.PieChart, rowspan: 6, colspan: 6);
-			itemWidgets.Add(widget4);
-			widgetIds.Add(widget4.WidgetId);
+				//4th widget
+				proptags = new List<PropertyTag>();
+				proptags.Add(new PropertyTag()
+				{
+					Name = "Education"
+				});
+				ItemWidget widget4 = (ItemWidget)widgetManager.AddWidget(WidgetType.GraphType, name + " education comparison", 1, 1, proptags: proptags, graphType: GraphType.PieChart, rowspan: 6, colspan: 6);
+				itemWidgets.Add(widget4);
+				widgetIds.Add(widget4.WidgetId);
 
-			//5th widget
-			proptags = new List<PropertyTag>();
-			proptags.Add(new PropertyTag()
-			{
-				Name = "Personality"
-			});
-			ItemWidget widget5 = (ItemWidget)widgetManager.AddWidget(WidgetType.GraphType, name + " personality comparison", 1, 1, proptags: proptags, graphType: GraphType.BarChart, rowspan: 6, colspan: 6);
-			itemWidgets.Add(widget5);
-			widgetIds.Add(widget5.WidgetId);
+				//5th widget
+				proptags = new List<PropertyTag>();
+				proptags.Add(new PropertyTag()
+				{
+					Name = "Personality"
+				});
+				ItemWidget widget5 = (ItemWidget)widgetManager.AddWidget(WidgetType.GraphType, name + " personality comparison", 1, 1, proptags: proptags, graphType: GraphType.BarChart, rowspan: 6, colspan: 6);
+				itemWidgets.Add(widget5);
+				widgetIds.Add(widget5.WidgetId);
+			}
 
 			//Link widgets to item & save changes to database
 			item.ItemWidgets = itemWidgets;

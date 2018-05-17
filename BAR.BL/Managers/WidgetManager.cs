@@ -401,7 +401,7 @@ namespace BAR.BL.Managers
 		/// Generate new data for all the widgets in the system
 		/// This method takes time, but it happens in the background.
 		/// </summary>
-		public void GenerateDataForPersons()
+		public void GenerateDataForPersonsAndThemes()
 		{
 			InitRepo();
 
@@ -410,7 +410,8 @@ namespace BAR.BL.Managers
 
 			//Fill widgets with new widgetdata
 			DataManager dataManager = new DataManager();
-			List<Widget> widgets = GetAllWidgetsWithAllData().ToList();
+			List<Widget> widgets = widgetRepo.ReadWidgetsForItemtype(ItemType.Person).ToList();
+			widgets.AddRange(widgetRepo.ReadWidgetsForItemtype(ItemType.Theme).ToList());
 			int widgetCount = widgets.Count();
 
 			List<WidgetData> widgetDatas = new List<WidgetData>();
@@ -568,22 +569,26 @@ namespace BAR.BL.Managers
 			IEnumerable<Item> items = new ItemManager().GetAllOrganisations();
 			if (items == null || items.Count() == 0) return;
 
+			//Get widgets
+			IEnumerable<Widget> widgets = widgetRepo.ReadWidgetsForItemtype(ItemType.Organisation);
+			if (widgets == null || widgets.Count() == 0) return;
+
 			//Extract data form persons to fill organisations
 			DataManager dataManager = new DataManager();
 			List<PropertyTag> tags = null;
-			foreach (Item item in items)
+			for (int i = 0; i < items.Count(); i++)
 			{
 				//Create widget for organisation data
-				tags = new List<PropertyTag>();
-				PropertyTag tag = new PropertyTag()
-				{
-					Name = "Number of metions"
-				};
-				Widget geoloactionWidget = AddWidget(WidgetType.GraphType, item.Name +  " popularity", 1, 1, tags, rowspan: 12, colspan: 6, graphType: GraphType.LineChart);
+				//tags = new List<PropertyTag>();
+				//PropertyTag tag = new PropertyTag()
+				//{
+				//	Name = "Number of metions"
+				//};
+				//Widget geoloactionWidget = AddWidget(WidgetType.GraphType, items.ElementAt(i).Name + " popularity", 1, 1, tags, rowspan: 12, colspan: 6, graphType: GraphType.LineChart);
 
 				//Get widgetdata for organisation
-				WidgetData organisationData = dataManager.GetOrganisationData(item.ItemId);
-				organisationData.Widget = geoloactionWidget;
+				WidgetData organisationData = dataManager.GetOrganisationData(items.ElementAt(i).ItemId);
+				organisationData.Widget = widgets.ElementAt(i);
 				widgetRepo.CreateWidgetData(organisationData);
 			}
 		}

@@ -1,4 +1,5 @@
-﻿using BAR.BL.Domain.Widgets;
+﻿using BAR.BL.Domain.Items;
+using BAR.BL.Domain.Widgets;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,6 +25,7 @@ namespace BAR.DAL
 		IEnumerable<Widget> ReadAllWidgetsWithAllItems();
 		IEnumerable<Widget> ReadAllWidgetsWithAllData();
 		IEnumerable<Widget> ReadWidgetsWithAllDataForItem(int itemId);
+		IEnumerable<Widget> ReadWidgetsForItemtype(ItemType type);
 		IEnumerable<UserWidget> ReadWidgetsForDashboard(int dashboardId);
 		IEnumerable<WidgetData> ReadAllWidgetDatas();
 		IEnumerable<WidgetData> ReadWidgetDatasForitemid(int itemId);
