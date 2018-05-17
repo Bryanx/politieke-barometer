@@ -144,6 +144,9 @@
   <data name="AddAChart" xml:space="preserve">
     <value>Voeg een grafiek toe.</value>
   </data>
+  <data name="AddItem" xml:space="preserve">
+    <value>Voeg item toe</value>
+  </data>
   <data name="AddSource" xml:space="preserve">
     <value>Bron toevoegen</value>
   </data>
@@ -252,6 +255,9 @@
   <data name="Contact" xml:space="preserve">
     <value>Contact</value>
   </data>
+  <data name="CreateItem" xml:space="preserve">
+    <value>Creeer Item</value>
+  </data>
   <data name="CreationDate" xml:space="preserve">
     <value>Aanmaak datum</value>
   </data>
@@ -357,6 +363,9 @@
   <data name="ImportContent" xml:space="preserve">
     <value>Content importeren</value>
   </data>
+  <data name="ImportThemes" xml:space="preserve">
+    <value>Importeer themas</value>
+  </data>
   <data name="InNumberOfMentions" xml:space="preserve">
     <value>In aantal vermeldingen.</value>
   </data>
@@ -377,6 +386,9 @@
   </data>
   <data name="JustNow" xml:space="preserve">
     <value>Zojuist</value>
+  </data>
+  <data name="Keywords" xml:space="preserve">
+    <value>Kernwoorden</value>
   </data>
   <data name="Languages" xml:space="preserve">
     <value>Talen</value>
@@ -558,6 +570,9 @@
   <data name="RemoveSource" xml:space="preserve">
     <value>Bron verwijderen</value>
   </data>
+  <data name="Required" xml:space="preserve">
+    <value>Verplicht</value>
+  </data>
   <data name="Reset" xml:space="preserve">
     <value>Reset</value>
   </data>
@@ -578,6 +593,9 @@
   </data>
   <data name="SearchbarPlaceholder" xml:space="preserve">
     <value>Zoek naar politici, partijen of thema's.</value>
+  </data>
+  <data name="SelectOrganisation" xml:space="preserve">
+    <value>Selecteer de bijbehorende organisatie</value>
   </data>
   <data name="SelectYourCity" xml:space="preserve">
     <value>Selecteer je woonplaats</value>
@@ -662,6 +680,9 @@
   </data>
   <data name="UserManagement" xml:space="preserve">
     <value>Gebruikers beheren</value>
+  </data>
+  <data name="Website" xml:space="preserve">
+    <value>Website</value>
   </data>
   <data name="WeeklyReview" xml:space="preserve">
     <value>Weekly review</value>

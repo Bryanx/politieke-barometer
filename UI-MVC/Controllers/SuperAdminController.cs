@@ -13,6 +13,7 @@ using System.Text;
 using System;
 using Microsoft.AspNet.Identity.Owin;
 using AutoMapper;
+using System.IO;
 
 namespace BAR.UI.MVC.Controllers
 {
@@ -62,6 +63,19 @@ namespace BAR.UI.MVC.Controllers
 				User = userManager.GetUser(User.Identity.GetUserId()),
 				SubPlatforms = subplatforms
 			});
+		}
+
+		public void ExportToCSV()
+		{
+			StringWriter sw = new StringWriter();
+
+			sw.WriteLine("\"FirstName\",\"LastName\"");
+
+			Response.ClearContent();
+			Response.ClearContent();
+			Response.AddHeader("content-disposition", "attachment;filename=Exported_Users.csv");
+			Response.ContentType = "text/csv";
+
 		}
 	}
 }

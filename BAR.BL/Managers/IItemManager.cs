@@ -35,14 +35,21 @@ namespace BAR.BL.Managers
 		IEnumerable<Item> GetAllOrganisationsForSubplatform(int subPlatformID);
 
 		Item AddItem(ItemType itemType, string name, string description = "", string function = "",
-			string district = null, string level = null, string site = null, Gender gender = Gender.OTHER, string position = null, DateTime? dateOfBirth = null);
+			string district = null, string level = null, string site = null, Gender gender = Gender.OTHER, string position = null, DateTime? dateOfBirth = null, List < Keyword > keywords = null);
+
+		void GenerateDefaultItemWidgets(string name, int itemId);
 
 		bool ImportJson(string json, int subPlatformID);
 		bool ImportThemes(string json, int subPlatformID);
 		
 		Item ChangeItemName(int itemId, string name);
+		Item ChangeItemPlatform(int itemId, int subplatformId);
 		Item ChangeItemActivity(int itemId);
+		Person ChangePersonSocialMedia(int personId, string twitter, string facebook);
 		Person ChangePerson(int itemId, DateTime birthday, Gender gender, string position, string district);
+		Person ChangePerson(int itemId, string site);
+		Person ChangePersonOrganisation(int itemId, int organisationId);
+		Organisation ChangeOrganisation(int itemId, string site);
 		Item ChangePicture(int itemId, HttpPostedFileBase poImgFile);
     
 		IEnumerable<Item> ChangeItems(IEnumerable<Item> items);

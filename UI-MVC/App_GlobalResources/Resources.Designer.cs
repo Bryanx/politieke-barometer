@@ -19,7 +19,7 @@ namespace BAR.UI.MVC.App_GlobalResources {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class Resources {
@@ -138,6 +138,15 @@ namespace BAR.UI.MVC.App_GlobalResources {
         public static string AddAChart {
             get {
                 return ResourceManager.GetString("AddAChart", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add item.
+        /// </summary>
+        public static string AddItem {
+            get {
+                return ResourceManager.GetString("AddItem", resourceCulture);
             }
         }
         
@@ -484,6 +493,15 @@ namespace BAR.UI.MVC.App_GlobalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Create Item.
+        /// </summary>
+        public static string CreateItem {
+            get {
+                return ResourceManager.GetString("CreateItem", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Creation date.
         /// </summary>
         public static string CreationDate {
@@ -808,6 +826,15 @@ namespace BAR.UI.MVC.App_GlobalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Import themes.
+        /// </summary>
+        public static string ImportThemes {
+            get {
+                return ResourceManager.GetString("ImportThemes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to In.
         /// </summary>
         public static string In_Time {
@@ -876,6 +903,15 @@ namespace BAR.UI.MVC.App_GlobalResources {
         public static string JustNow {
             get {
                 return ResourceManager.GetString("JustNow", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Keywords.
+        /// </summary>
+        public static string Keywords {
+            get {
+                return ResourceManager.GetString("Keywords", resourceCulture);
             }
         }
         
@@ -1447,6 +1483,15 @@ namespace BAR.UI.MVC.App_GlobalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Required.
+        /// </summary>
+        public static string Required {
+            get {
+                return ResourceManager.GetString("Required", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Reset.
         /// </summary>
         public static string Reset {
@@ -1506,6 +1551,15 @@ namespace BAR.UI.MVC.App_GlobalResources {
         public static string SearchbarPlaceholder {
             get {
                 return ResourceManager.GetString("SearchbarPlaceholder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select the associated organisation.
+        /// </summary>
+        public static string SelectOrganisation {
+            get {
+                return ResourceManager.GetString("SelectOrganisation", resourceCulture);
             }
         }
         
@@ -1794,6 +1848,15 @@ namespace BAR.UI.MVC.App_GlobalResources {
         public static string UserManagement {
             get {
                 return ResourceManager.GetString("UserManagement", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Website.
+        /// </summary>
+        public static string Website {
+            get {
+                return ResourceManager.GetString("Website", resourceCulture);
             }
         }
         
