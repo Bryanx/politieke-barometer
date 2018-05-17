@@ -15,6 +15,7 @@ namespace BAR.UI.MVC.Controllers.api
 	{
 		private IDataManager dataManager;
 		private IWidgetManager widgetManager;
+		private IItemManager itemManager;
 
 		[HttpGet]
 		[Route("api/Data/Synchronize")]
@@ -22,15 +23,14 @@ namespace BAR.UI.MVC.Controllers.api
 		public IHttpActionResult Synchronize()
 		{
 			dataManager = new DataManager();
-			widgetManager = new WidgetManager();
-			
+					
 			string content;
 			if (dataManager.GetLastAudit() == null)
 			{
 				//content = "{}";
 
 				//Test with fewer data 
-				content = "{\"since\":\"2018-05-11 00:00\"}";
+				content = "{\"since\":\"2018-05-12 00:00\"}";
 			}
 			else
 			{
@@ -62,13 +62,9 @@ namespace BAR.UI.MVC.Controllers.api
 						{						
 							dataManager.ChangeAudit(auditId);
 
-							//Syncronize recent data with all the widgets
-							widgetManager.GenerateDataForPersons();
-							//Update all items with recent data
-							new ItemManager().FillItems();
-							//Generate data for organisations
-							widgetManager.GenerateDataForOrganisations();
-							//Update weekly review alerts
+							widgetManager = new WidgetManager();
+							itemManager = new ItemManager();
+
 							//Get the subplatformID from the SubPlatformCheckAPI attribute
 							object _customObject = null;
 							int suplatformID = -1;
@@ -76,6 +72,23 @@ namespace BAR.UI.MVC.Controllers.api
 							{
 								suplatformID = (int)_customObject;
 							}
+
+							//Syncronize recent data with all the persons and themes
+							widgetManager.GenerateDataForPersonsAndThemes();
+
+							//Update all persons and themes with recent data
+							itemManager.FillPersonesAndThemes();
+
+							//Generate data for organisations
+							widgetManager.GenerateDataForOrganisations();
+
+							//Fill organisations with data
+							itemManager.FillOrganisations();
+
+							//Refesh items with old data
+							itemManager.RefreshItemData(suplatformID);
+
+							//Update weekly review alerts						
 							new UserManager().GenerateAlertsForWeeklyReview(suplatformID);
 
 
