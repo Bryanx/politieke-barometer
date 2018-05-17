@@ -42,6 +42,7 @@ namespace BAR.DAL
 		public Person ReadPersonWithDetails(int itemId)
 		{
 			return ctx.Items.OfType<Person>()
+							.Include(item => item.SubPlatform)
 							.Include(item => item.Area)
 							.Include(item => item.Organisation)
 							.Include(item => item.SocialMediaNames)
@@ -208,6 +209,16 @@ namespace BAR.DAL
 		public int UpdateItems(IEnumerable<Item> items)
 		{
 			foreach (Item item in items) ctx.Entry(item).State = EntityState.Modified;
+			return ctx.SaveChanges();
+		}
+
+		/// <summary>
+		/// Updates a person and persists changes to the database
+		/// Returns -1 if SaveChanges() is delayed by unit of work.
+		/// </summary>
+		public int UpdatePerson(Person person)
+		{
+			ctx.Entry(person).State = EntityState.Modified;
 			return ctx.SaveChanges();
 		}
 

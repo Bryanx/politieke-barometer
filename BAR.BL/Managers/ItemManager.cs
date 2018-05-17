@@ -355,7 +355,7 @@ namespace BAR.BL.Managers
 		/// THIS METHOD USES UNIT OF WORK
 		/// </summary>
 		public Item AddItem(ItemType itemType, string name, string description = "", string function = "",
-			string district = null, string level = null, string site = null, Gender gender = Gender.OTHER, string position = null, DateTime? dateOfBirth = null)
+			string district = null, string level = null, string site = null, Gender gender = Gender.OTHER, string position = null, DateTime? dateOfBirth = null, List<Keyword> keywords = null)
 		{
 			InitRepo();
 
@@ -384,14 +384,24 @@ namespace BAR.BL.Managers
 				};
 				break;
 				case ItemType.Theme:
-				item = new Theme()
-				{
-					Keywords = new List<Keyword>()
+					if(keywords != null)
 					{
+						item = new Theme()
+						{
+							Keywords = keywords
+						};
+					} else
+					{
+						item = new Theme()
+						{
+							Keywords = new List<Keyword>()
+							{
 
+							}
+						};
 					}
-				};
-				break;
+					
+					break;
 				default:
 				item = null;
 				break;
@@ -421,7 +431,7 @@ namespace BAR.BL.Managers
 		/// <summary>
 		/// Generates dafault widgets based on the itemid
 		/// </summary>
-		private void GenerateDefaultItemWidgets(string name, int itemId)
+		public void GenerateDefaultItemWidgets(string name, int itemId)
 		{
 			uowManager = new UnitOfWorkManager();
 			InitRepo();
@@ -544,6 +554,151 @@ namespace BAR.BL.Managers
 		}
 
 		/// <summary>
+		/// Updates the organisation of a given person
+		/// </summary>
+		/// <param name="itemId"></param>
+		/// <param name="organisationId"></param>
+		/// <returns></returns>
+		public Person ChangePersonOrganisation(int personId, int organisationId)
+		{
+			uowManager = new UnitOfWorkManager();
+
+			InitRepo();
+
+			Organisation org = this.GetOrganisationWithDetails(organisationId);
+			//Get item
+			Person personToUpdate = GetPersonWithDetails(personId);
+
+			if (personToUpdate == null) return null;
+
+			//Update item
+			personToUpdate.Organisation = org;
+
+			//Update database
+			itemRepo.UpdatePerson(personToUpdate);
+
+			uowManager.Save();
+			uowManager = null;
+			return personToUpdate;
+		}
+
+
+		/// <summary>
+		/// Adds socialmedia names to person
+		/// </summary>
+		/// <param name="person"></param>
+		/// <returns></returns>
+		public Person ChangePersonSocialMedia(int personId, string twitter, string facebook)
+		{
+			uowManager = new UnitOfWorkManager();
+			IDataManager dataManager = new DataManager(uowManager);
+			InitRepo();
+
+			Source twitterSource = dataManager.GetSource("Twitter");
+			Source facebookSource = dataManager.GetSource("Facebook");
+
+			//Get item
+			Person personToUpdate = GetPersonWithDetails(personId);
+
+			if (personToUpdate == null) return null;
+
+			//Update person with twitter and facebook url's
+			personToUpdate.SocialMediaNames.Add(new SocialMediaName()
+			{
+				Source = twitterSource,
+				Username = twitter
+			});
+
+			personToUpdate.SocialMediaNames.Add(new SocialMediaName()
+			{
+				Source = facebookSource,
+				Username = facebook
+			});
+
+			//Update database
+			itemRepo.UpdatePerson(personToUpdate);
+
+			uowManager.Save();
+			uowManager = null;
+			return personToUpdate;
+		}
+
+		/// <summary>
+		/// Updates the subplatform of a given item
+		/// </summary>
+		/// <param name="itemId"></param>
+		/// <param name="suplatformId"></param>
+		/// <returns></returns>
+		public Item ChangeItemPlatform(int itemId, int subplatformId)
+		{
+			uowManager = new UnitOfWorkManager();
+			ISubplatformManager subManager = new SubplatformManager(uowManager);
+			
+			InitRepo();
+
+			SubPlatform subPlatform = subManager.GetSubPlatform(subplatformId);
+			//Get item
+			Item itemToUpdate = GetItemWithSubPlatform(itemId);
+
+			if (itemToUpdate == null) return null;
+
+			//Update item
+			itemToUpdate.SubPlatform = subPlatform;
+			//Update database
+			itemRepo.UpdateItem(itemToUpdate);
+
+			uowManager.Save();
+			uowManager = null;
+			return itemToUpdate;
+		}
+
+		/// <summary>
+		/// Updates the site of a given Organisation
+		/// </summary>
+		/// <param name="itemId"></param>
+		/// <param name="site"></param>
+		/// <returns></returns>
+		public Organisation ChangeOrganisation(int itemId, string site)
+		{
+			InitRepo();
+
+			//Get item
+			Organisation orgToUpdate = GetOrganisationWithDetails(itemId);
+
+			if (orgToUpdate == null) return null;
+
+			//Update item
+			orgToUpdate.Site = site;
+
+			//Update database
+			itemRepo.UpdateItem(orgToUpdate);
+			return orgToUpdate;
+		}
+
+		/// <summary>
+		/// Updates the site of a given person
+		/// </summary>
+		/// <param name="itemId"></param>
+		/// <param name="site"></param>
+		/// <returns></returns>
+		public Person ChangePerson(int itemId, string site)
+		{
+			InitRepo();
+
+			//Get item
+			Person personToUpdate = GetPersonWithDetails(itemId);
+
+			if (personToUpdate == null) return null;
+
+			//Update item
+			personToUpdate.Site = site;
+
+			//Update database
+			itemRepo.UpdateItem(personToUpdate);
+			return personToUpdate;
+		}
+
+		/// <summary>
 		/// Updates a person.
 		/// </summary>
 		public Person ChangePerson(int itemId, DateTime birthday, Gender gender, string position, string district)
@@ -563,6 +718,7 @@ namespace BAR.BL.Managers
 
 			//Update database
 			itemRepo.UpdateItem(personToUpdate);
+
 			return personToUpdate;
 		}
 
