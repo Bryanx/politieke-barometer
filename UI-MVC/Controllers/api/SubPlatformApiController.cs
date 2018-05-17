@@ -9,6 +9,8 @@ using BAR.BL.Domain.Core;
 using BAR.UI.MVC.Models;
 using AutoMapper;
 using BAR.UI.MVC.App_GlobalResources;
+using System.Web.Routing;
+using BAR.UI.MVC.Attributes;
 
 namespace BAR.UI.MVC.Controllers.api
 {
@@ -56,18 +58,23 @@ namespace BAR.UI.MVC.Controllers.api
 		/// Changes the webpage colors of a specific subplatform
 		/// </summary>
 		[HttpPost]
-		[Route("api/Customization/PutColor/{platformId}")]
-		public IHttpActionResult PutColor(int platformId, [FromBody] CustomizationViewModel custom)
+		[Route("api/Customization/PutColor")]
+		[SubPlatformCheckAPI]
+		public IHttpActionResult PutColor([FromBody] CustomizationViewModel model)
 		{
 			platformManager = new SubplatformManager();
-
-			if (custom == null)
+			
+			object _customObject = null;
+			int suplatformId = 1;
+			if (Request.Properties.TryGetValue("SubPlatformID", out _customObject)) suplatformId = (int)_customObject;
+			
+			if (model == null)
 				return BadRequest("No customization given");
 			if (!ModelState.IsValid)
 				return BadRequest(ModelState);
 
 			platformManager.ChangePageColors
-				(platformId, custom.PrimaryColor, custom.SecondairyColor, custom.TertiaryColor, custom.BackgroundColor, custom.TextColor);
+				(suplatformId, model.PrimaryColor, model.SecondairyColor, model.TertiaryColor, model.BackgroundColor, model.TextColor);
 
 			return StatusCode(HttpStatusCode.NoContent);
 		}
@@ -76,18 +83,22 @@ namespace BAR.UI.MVC.Controllers.api
 		/// Changes the page alias of a specific subplatform
 		/// </summary>
 		[HttpPost]
-		[Route("api/Customization/PutAlias/{platformId}")]
-		public IHttpActionResult PutAlias(int platformId, [FromBody] CustomizationViewModel custom)
+		[Route("api/Customization/PutAlias")]
+		public IHttpActionResult PutAlias([FromBody] CustomizationViewModel model)
 		{
 			platformManager = new SubplatformManager();
 
-			if (custom == null)
+			object _customObject = null;
+			int suplatformId = 1;
+			if (Request.Properties.TryGetValue("SubPlatformID", out _customObject)) suplatformId = (int)_customObject;
+			
+			if (model == null)
 				return BadRequest("No customization given");
 			if (!ModelState.IsValid)
 				return BadRequest(ModelState);
 
 			platformManager.ChangePageText
-				(platformId, custom.PersonAlias, custom.PersonsAlias, custom.OrganisationAlias, custom.OrganisationsAlias, custom.ThemeAlias, custom.ThemesAlias);
+				(suplatformId, model.PersonAlias, model.PersonsAlias, model.OrganisationAlias, model.OrganisationsAlias, model.ThemeAlias, model.ThemesAlias);
 
 			return StatusCode(HttpStatusCode.NoContent);
 		}
@@ -96,17 +107,21 @@ namespace BAR.UI.MVC.Controllers.api
 		/// Changes the privacy of a specific subplatform
 		/// </summary>
 		[HttpPost]
-		[Route("api/Customization/PutPrivacy/{platformId}")]
-		public IHttpActionResult PutPrivacy(int platformId, [FromBody] CustomizationViewModel custom)
+		[Route("api/Customization/PutPrivacy")]
+		public IHttpActionResult PutPrivacy([FromBody] CustomizationViewModel custom)
 		{
 			platformManager = new SubplatformManager();
+
+			object _customObject = null;
+			int suplatformId = 1;
+			if (Request.Properties.TryGetValue("SubPlatformID", out _customObject)) suplatformId = (int)_customObject;
 
 			if (custom == null)
 				return BadRequest("No customization given");
 			if (!ModelState.IsValid)
 				return BadRequest(ModelState);
 
-			platformManager.ChangePrivacyText(platformId, custom.PrivacyText, custom.PrivacyTitle);
+			platformManager.ChangePrivacyText(suplatformId, custom.PrivacyText, custom.PrivacyTitle);
 
 			return StatusCode(HttpStatusCode.NoContent);
 		}
@@ -115,17 +130,21 @@ namespace BAR.UI.MVC.Controllers.api
 		/// Changes the FAQ of a specific subplatform
 		/// </summary>
 		[HttpPost]
-		[Route("api/Customization/PutFAQ/{platformId}")]
-		public IHttpActionResult PutFAQ(int platformId, [FromBody] CustomizationViewModel custom)
+		[Route("api/Customization/PutFAQ")]
+		public IHttpActionResult PutFAQ([FromBody] CustomizationViewModel custom)
 		{
 			platformManager = new SubplatformManager();
+
+			object _customObject = null;
+			int suplatformId = 1;
+			if (Request.Properties.TryGetValue("SubPlatformID", out _customObject)) suplatformId = (int)_customObject;
 
 			if (custom == null)
 				return BadRequest("No customization given");
 			if (!ModelState.IsValid)
 				return BadRequest(ModelState);
 
-			platformManager.ChangeFAQTitle(platformId, custom.FAQTitle);
+			platformManager.ChangeFAQTitle(suplatformId, custom.FAQTitle);
 
 			return StatusCode(HttpStatusCode.NoContent);
 		}
@@ -134,17 +153,21 @@ namespace BAR.UI.MVC.Controllers.api
 		/// Changes the address of a specific subplatform
 		/// </summary>
 		[HttpPost]
-		[Route("api/Customization/PutContact/{platformId}")]
-		public IHttpActionResult PutContact(int platformId, [FromBody] CustomizationViewModel custom)
+		[Route("api/Customization/PutContact")]
+		public IHttpActionResult PutContact([FromBody] CustomizationViewModel custom)
 		{
 			platformManager = new SubplatformManager();
 
+			object _customObject = null;
+			int suplatformId = 1;
+			if (Request.Properties.TryGetValue("SubPlatformID", out _customObject)) suplatformId = (int)_customObject;
+			
 			if (custom == null)
 				return BadRequest("No customization given");
 			if (!ModelState.IsValid)
 				return BadRequest(ModelState);
 
-			platformManager.ChangeAddress(platformId, custom.StreetAndHousenumber, custom.Zipcode, custom.City, custom.Country, custom.Email);
+			platformManager.ChangeAddress(suplatformId, custom.StreetAndHousenumber, custom.Zipcode, custom.City, custom.Country, custom.Email);
 
 			return StatusCode(HttpStatusCode.NoContent);
 		}
@@ -153,17 +176,21 @@ namespace BAR.UI.MVC.Controllers.api
 		/// Creates a question for a specific subplatform
 		/// </summary>
 		[HttpPost]
-		[Route("api/Customization/PostQuestion/{platformId}")]
-		public IHttpActionResult PostQuestion(int platformId, [FromBody] Question question)
+		[Route("api/Customization/PostQuestion/")]
+		public IHttpActionResult PostQuestion([FromBody] Question question)
 		{
 			platformManager = new SubplatformManager();
+
+			object _customObject = null;
+			int suplatformId = 1;
+			if (Request.Properties.TryGetValue("SubPlatformID", out _customObject)) suplatformId = (int)_customObject;
 
 			if (question == null)
 				return BadRequest("No question given");
 			if (!ModelState.IsValid)
 				return BadRequest(ModelState);
 
-			platformManager.AddQuestion(platformId, question.QuestionType, question.Title, question.Answer);
+			platformManager.AddQuestion(suplatformId, question.QuestionType, question.Title, question.Answer);
 
 			return StatusCode(HttpStatusCode.NoContent);
 		}
@@ -193,7 +220,7 @@ namespace BAR.UI.MVC.Controllers.api
 		/// Deletes a question
 		/// </summary>
 		[HttpPost]
-		[Route("api/Customization/DeleteQuestion/{platformId}")]
+		[Route("api/Customization/DeleteQuestion/{questionId}")]
 		public IHttpActionResult DeleteQuestion(int questionId)
 		{
 			platformManager = new SubplatformManager();

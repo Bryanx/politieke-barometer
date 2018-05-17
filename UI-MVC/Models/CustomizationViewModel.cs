@@ -22,14 +22,6 @@ namespace BAR.UI.MVC.Models
 		[RegularExpression("^#([0-9]|[a-f]|[A-F]){6}$")]
 		public string TextColor { get; set; }
 
-		//Navbar and title text
-		public string PersonAlias { get; set; }
-		public string PersonsAlias { get; set; }
-		public string OrganisationAlias { get; set; }
-		public string OrganisationsAlias { get; set; }
-		public string ThemeAlias { get; set; }
-		public string ThemesAlias { get; set; }
-
 		//Privacy
 		public string PrivacyTitle { get; set; }
 		public string PrivacyText { get; set; }
