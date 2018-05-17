@@ -360,6 +360,7 @@
     <Content Include="Content\build\js\custom.js" />
     <Content Include="Content\build\js\graphWizard.js" />
     <Content Include="Content\build\js\homepage.js" />
+    <Content Include="Content\build\js\pagemanagement.js" />
     <Content Include="Content\build\js\template.js" />
     <Content Include="Content\build\js\template.min.js" />
     <Content Include="Content\build\js\searchbar.js" />

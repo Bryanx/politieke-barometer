@@ -4,8 +4,11 @@ using System.Linq;
 using System.Threading;
 using System.Web;
 using System.Web.Mvc;
+using BAR.BL.Domain.Core;
+using BAR.BL.Managers;
 using BAR.UI.MVC.Helpers;
 using BAR.UI.MVC.Attributes;
+using BAR.UI.MVC.Models;
 
 namespace BAR.UI.MVC.Controllers {
     /// <summary>
@@ -13,6 +16,8 @@ namespace BAR.UI.MVC.Controllers {
     /// </summary>
     [SubPlatformCheck]
     public class LanguageController : Controller {
+        
+        //storing the language defaults in a cookie
         protected override IAsyncResult BeginExecuteCore(AsyncCallback callback, object state) {
             string cultureName = null;
 
@@ -33,6 +38,30 @@ namespace BAR.UI.MVC.Controllers {
             Thread.CurrentThread.CurrentUICulture = Thread.CurrentThread.CurrentCulture;
 
             return base.BeginExecuteCore(callback, state);
+        }
+
+        //Customization options: Aliases, colors, etc.
+        protected override void OnActionExecuted(ActionExecutedContext filterContext)
+        {
+            base.OnActionExecuted(filterContext);
+            
+            if (filterContext.Result is ViewResultBase result)
+            {
+                if (filterContext.Controller.ViewData.Model is BaseViewModel model) {
+                    SubplatformManager platformManager = new SubplatformManager();
+                    int subPlatformID = (int) RouteData.Values["SubPlatformID"];
+                    Customization customization = platformManager.GetCustomization(subPlatformID);
+                    //TODO: add mapper
+                    model.ContactStreet = customization.StreetAndHousenumber;
+                    model.ContactCity = customization.City;
+                    model.PersonAlias = customization.PersonAlias;
+                    model.PersonsAlias = customization.PersonsAlias;
+                    model.OrganisationAlias = customization.OrganisationAlias;
+                    model.OrganisationsAlias = customization.OrganisationsAlias;
+                    model.ThemeAlias = customization.ThemeAlias;
+                    model.ThemesAlias = customization.ThemesAlias;
+                }
+            }
         }
     }
 }
