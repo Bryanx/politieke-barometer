@@ -1,8 +1,10 @@
-$primary-color: rgb(39, 144, 188);
-$primary-color-darker: rgb(36, 107, 148);
+$primary-color: rgba(137, 137, 137, 0.2);
+$primary-color-darker: rgba(137, 137, 137, 0.7);
+$font-color: #246b94;
 
 .small-card > .card {
   height: 80px;
+  font-size: 13px;
   
   .card-user {
    display: none;
@@ -10,6 +12,7 @@ $primary-color-darker: rgb(36, 107, 148);
   .card-name {
     left: 10px;
     font-size: 13px;
+    letter-spacing: 0.8px;
   }
 
   .card-person-organisation {
@@ -21,13 +24,20 @@ $primary-color-darker: rgb(36, 107, 148);
     left: 10px;
     line-height: 4px;
     font-weight: normal;
+    :first-child {
+      border-bottom: 3px solid $primary-color-darker;
+    }
   }
 
   .card-nom {
     top: 45%;
-    left: 85px;
+    left: auto;
+    right: 10px;
     line-height: 4px;
     font-weight: normal;
+    :first-child {
+      border-bottom: 3px solid $primary-color-darker;
+    }
   }
 }
 
@@ -41,10 +51,10 @@ $primary-color-darker: rgb(36, 107, 148);
   margin-bottom: 10px;
   border-radius: 5px;
 
-  color: $primary-color-darker;
+  color: $font-color;
   box-shadow: 0 0 3px 0 rgba(0,0,0,0.2);
   background: linear-gradient(180deg, white 70%, $primary-color 30%);
-  font-weight: bold;
+  font-weight: normal;
 }
 .card-user {
   position: absolute;
@@ -55,6 +65,7 @@ $primary-color-darker: rgb(36, 107, 148);
   .person-image {
     height: 80px;
     width: 80px;
+    object-fit: cover;
   }
 }
 
@@ -78,12 +89,12 @@ $primary-color-darker: rgb(36, 107, 148);
   left: 110px;
   line-height: 8px;
   :first-child {
-    border-bottom: 5px solid;
+    border-bottom: 5px solid $primary-color-darker;
     line-height: 19px;
   }
   :last-child{
     text-align: center;
-    color: white;
+    font-weight: bold;
   }
 }
 
@@ -93,12 +104,12 @@ $primary-color-darker: rgb(36, 107, 148);
   left: 200px;
   line-height: 8px;
   :first-child {
-    border-bottom: 5px solid;
+    border-bottom: 5px solid $primary-color-darker;
     line-height: 19px;
   }
   :last-child{
     text-align: center;
-    color: white;
+    font-weight: bold;
   }
 }
 
