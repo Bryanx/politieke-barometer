@@ -36,7 +36,7 @@ namespace BAR.UI.MVC.Controllers
 			userManager = new UserManager();
       dataManager = new DataManager();
       //Assembling the view
-      return View(new SourceManagement
+      return View(new GeneralManagementViewModel
       {
         PageTitle = Resources.GeneralManagement,
         User = userManager.GetUser(User.Identity.GetUserId()),

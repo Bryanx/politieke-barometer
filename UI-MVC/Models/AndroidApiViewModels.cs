@@ -51,4 +51,10 @@ namespace BAR.UI.MVC.Models
   {
     public String DeviceToken { get; set; }
   }
+
+  public class NotificationMessageViewModel
+  {
+    public String Title { get; set; }
+    public String Message { get; set; }
+  }
 }
