@@ -24,6 +24,7 @@ namespace BAR.BL.Domain.Users
 		public bool Deleted { get; set; }
 		public byte[] ProfilePicture { get; set; }
 		public ICollection<UserAlert> Alerts { get; set; }
+    public string DeviceToken { get; set; }
 
 		//Method for cookie verification (maybe removed later from domain)
 		public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<User> manager, string authenticationType = DefaultAuthenticationTypes.ApplicationCookie)
