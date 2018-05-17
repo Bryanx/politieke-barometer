@@ -1394,6 +1394,9 @@ nav {
     flex-grow: 0;
     flex-shrink: 0; }
 
+.user-menu {
+  overflow-y: hidden !important; }
+
 .nav-fixed {
   position: fixed !important; }
 

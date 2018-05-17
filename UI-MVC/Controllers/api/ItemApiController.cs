@@ -11,6 +11,7 @@ using BAR.UI.MVC.Attributes;
 using BAR.UI.MVC.Models;
 using WebGrease.Css.Extensions;
 using BAR.BL.Domain.Core;
+using BAR.BL.Domain.Widgets;
 using WebGrease.Css.Extensions;
 
 namespace BAR.UI.MVC.Controllers.api
@@ -195,6 +196,45 @@ namespace BAR.UI.MVC.Controllers.api
 			IDataManager dataManager = new DataManager();
 			List<string> urls = dataManager.GetUrlsForItem(itemId).ToList();
 			return Ok(urls.Distinct().Take(9));
+		}
+		
+		/// <summary>
+		/// Get geodata for inside a map
+		/// </summary>
+		[HttpGet]
+		[Route("api/GetGeoData")]
+		public IHttpActionResult GetGeoData() {
+			IWidgetManager widgetManager = new WidgetManager();
+			List<WidgetDataDTO> widgetDto = Mapper.Map(widgetManager.GetGeoLocationWidget().WidgetDatas, new List<WidgetDataDTO>());
+			return Ok(widgetDto.FirstOrDefault());
+		}
+		
+		/// <summary>
+		/// Retrieves the top 3 persons per district
+		/// </summary>
+		[HttpGet]
+		[Route("api/GetPopularPersonsPerDistrict")]
+		public IHttpActionResult GetPopularPersonsPerDistrict() {
+			itemManager = new ItemManager();
+			
+			List<Person> persons = itemManager.GetAllPersons().ToList();
+			
+			List<string> districts = persons.Select(p => p.District).Distinct().ToList();
+			
+			List<List<ItemViewModels.PersonViewModel>> results = new List<List<ItemViewModels.PersonViewModel>>();
+			districts.ForEach(district => {
+				List<Person> top3persons = persons.Where(p => p.District == district)
+					.OrderByDescending(p => p.NumberOfMentions)
+					.Take(3).ToList();
+				List<ItemViewModels.PersonViewModel> top3 = Mapper.Map(top3persons, new List<ItemViewModels.PersonViewModel>());
+				List<ItemDTO> top3items = Mapper.Map(top3persons, new List<ItemDTO>());
+				for(int i = 0; i < top3.Count; i++) {
+					top3.ElementAt(i).Item = top3items.ElementAt(i);
+				}
+				results.Add(top3);
+			});
+			
+			return Ok(results);
 		}
 	}
 }

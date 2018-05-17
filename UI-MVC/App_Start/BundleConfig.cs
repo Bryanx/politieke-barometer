@@ -25,7 +25,7 @@ namespace BAR.UI.MVC {
             "~/Scripts/jqvmap/jquery.vmap.min.js",
             "~/Scripts/jqvmap/jquery.vmap.belgium.js",
             "~/Scripts/jqvmap/jquery.vmap.sampledata.js"
-        }; //TODO: replace smapledata with actual data.
+        };
         private static readonly string[] Flot = {
             "~/Scripts/flot/jquery.flot.js",
             "~/Scripts/flot/jquery.flot.pie.js",

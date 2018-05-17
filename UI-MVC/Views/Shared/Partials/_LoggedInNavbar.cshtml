@@ -48,7 +48,7 @@
             @Html.ImageHelper(@Url.ProfilePictureUrl(), htmlAttributes: new {@class = "img-circle person-image-top", onerror = "this.onload = null; this.src='/Content/build/images/user.png';"})
             <span class="userNameNav">@Model.User.FirstName</span>
         </a>
-        <ul class="dropdown-menu pull-right">
+        <ul class="dropdown-menu pull-right user-menu">
             <li>
                 <a href="@Url.SettingsUrl()"><i class="fa fa-gear"></i>@Resources.Settings</a>
             </li>
