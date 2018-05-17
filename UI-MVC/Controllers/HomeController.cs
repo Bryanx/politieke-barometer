@@ -35,18 +35,32 @@ namespace BAR.UI.MVC.Controllers
       userManager = new UserManager();
       itemManager = new ItemManager();
 
-      List<Item> persons = itemManager.GetMostTrendingItemsForType(ItemType.Person, 4, true).ToList();
-
+      // -------- Making WeeklyReviewModel --------
+      // Getting trending items
+      List<Item> weeklyTrendings = itemManager.GetMostTrendingItems(4, true).ToList();
       
-      List<Person> personsWDetails = new List<Person>();
-      itemManager.GetMostTrendingItemsForType(ItemType.Person, 4, true).ForEach(i => personsWDetails.Add(itemManager.GetPersonWithDetails(i.ItemId)));
+      // Getting PersonViewModels
+      List<PersonViewModel> weeklyPersonViewModels = new List<PersonViewModel>();
+      itemManager.GetMostTrendingItemsForType(ItemType.Person, 4, true).ForEach(item => weeklyPersonViewModels.Add(Mapper.Map(item, new PersonViewModel())));
+      for (int i = 0; i < weeklyPersonViewModels.Count; i++)
+      {
+        weeklyPersonViewModels[i].Item = Mapper.Map(weeklyTrendings[i], new ItemDTO());
+        weeklyPersonViewModels[i].SocialMediaNames = itemManager.GetPersonWithDetails(weeklyTrendings[i].ItemId).SocialMediaNames;
 
-      
-      List<PersonViewModel> personViewModels = Mapper.Map(personsWDetails, new List<PersonViewModel>());
-      for (int i = 0; i < persons.Count; i++) {
-        personViewModels[i].Item = Mapper.Map(persons[i], new ItemDTO());
       }
-      
+
+      // ------- Making TopTrending -------
+      // Getting trending items
+      List<Item> trendings = itemManager.GetMostTrendingItems(3).ToList();
+
+      // Getting personViewmodels
+      List<PersonViewModel> trendingPersonViewModels = new List<PersonViewModel>();
+      itemManager.GetMostTrendingItemsForType(ItemType.Person, 3).ForEach(item => trendingPersonViewModels.Add(Mapper.Map(item, new PersonViewModel())));
+      for (int i = 0; i < trendingPersonViewModels.Count; i++)
+      {
+        trendingPersonViewModels[i].Item = Mapper.Map(trendings[i], new ItemDTO());
+        trendingPersonViewModels[i].SocialMediaNames = itemManager.GetPersonWithDetails(trendings[i].ItemId).SocialMediaNames;
+      }
 
       //Assembling the view
       return View(new ItemViewModel
@@ -54,10 +68,12 @@ namespace BAR.UI.MVC.Controllers
         PageTitle = INDEX_PAGE_TITLE,
         User = User.Identity.IsAuthenticated ? userManager.GetUser(User.Identity.GetUserId()) : null,
         Items = Mapper.Map<IList<Item>, IList<ItemDTO>>(itemManager.GetAllItems().ToList()),
+        TopTrendingPersonViewModels = trendingPersonViewModels,
+        TopTrendingitems = trendings,
         WeeklyReviewModel = new WeeklyReviewModel
         {
-          WeeklyItems = Mapper.Map(itemManager.GetMostTrendingItems(4, true), new List<ItemDTO>()),
-          PViewModel = personViewModels
+          WeeklyPersonViewModels = weeklyPersonViewModels,
+          WeeklyItems = weeklyTrendings
         }
       });
     }

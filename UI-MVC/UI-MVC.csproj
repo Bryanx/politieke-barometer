@@ -489,6 +489,7 @@
     <Content Include="Views\Shared\DisplayTemplates\BootstrapSiteMapPathHelperModel.cshtml" />
     <Content Include="Views\Shared\Partials\_AdminTable.cshtml" />
     <Content Include="Views\Shared\Partials\_Card.cshtml" />
+    <Content Include="Views\Shared\Partials\_CardPerson.cshtml" />
     <Content Include="Views\Shared\Partials\_DetailsAsAdmin.cshtml" />
     <Content Include="Views\Shared\Partials\_DetailsAsUser.cshtml" />
     <Content Include="Views\Shared\Partials\_ExternalLoginsListPartial.cshtml" />

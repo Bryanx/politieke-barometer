@@ -59,30 +59,35 @@ if ($('.main-header-container').length) {
 let TwitterFeed = function (trendings) {
     $.each(trendings, (index,  value) => {
 
-        let name = value.SocialMediaNames[0].Username[0] === "@" ? value.SocialMediaNames[0].Username.slice(1) : value.SocialMediaNames[0].Username;
         let nameId = "#t-name-" + (index + 1);
-        let id = "twitter-feed-" + (index +1);
-        // putting name above twitter feed
-        $(nameId).append("" + value.Name + " ")
-            .next()
-            .append("" + value.TrendingPercentage.toFixed(2) + "%")
-            .parent()
-            .attr("href", "/Person/Details/" + value.ItemId);
-        
-        twttr.widgets.createTimeline(
-            {
-                sourceType: "profile",
-                screenName: name
-            },
-            document.getElementById("" + id),
-            {
-                chrome: "noheader, noborder, nofooter",
-                linkColor: primary_color,
-                tweetLimit: 20
-            }
-        );
+        if (value.SocialMediaNames[0] == null || value.SocialMediaNames.length == 0){
+            $(nameId).append("<p>Geen twitterprofiel gevonden voor " + value.Name + "</p>")
+        } else {
+            let name = value.SocialMediaNames[0].Username[0] === "@" ? value.SocialMediaNames[0].Username.slice(1) : value.SocialMediaNames[0].Username;
+            let id = "twitter-feed-" + (index +1);
+
+            // putting name above twitter feed
+            $(nameId).append("" + value.Name + " ")
+                .next()
+                .append("" + value.TrendingPercentage.toFixed(2) + "%" + " rending")
+                .parent()
+                .attr("href", "/Person/Details/" + value.ItemId);
+
+            twttr.widgets.createTimeline(
+                {
+                    sourceType: "profile",
+                    screenName: name
+                },
+                document.getElementById("" + id),
+                {
+                    chrome: "noheader, noborder, nofooter",
+                    linkColor: primary_color,
+                    tweetLimit: 20
+                }
+            );
+        }
     });
-}
+};
 
 /* ---------- Trending chart ----------*/
 var charts1 = []
@@ -130,13 +135,13 @@ let getGraph = function(name, itemId, widgetId, itemType) {
             $('#' + itemType).data("widgetId", d + " " + itemId);
             switch (itemType){
                 case 1:
-                    charts1[0] == null ? AddChart(name, data[0].WidgetId, data[0].GraphValues.map(g => g.Value).reverse(), data[0].GraphValues.map(g => g.NumberOfTimes).reverse(), itemType) : AddDataSet(charts1[0], name, data[0].GraphValues.map(g => g.NumberOfTimes).reverse(), itemType);
+                    charts1[0] == null ? AddChart(name, data[0].WidgetId, data[0].GraphValues.map(g => g.Value).reverse().slice(-14), data[0].GraphValues.map(g => g.NumberOfTimes).reverse().slice(-14), itemType) : AddDataSet(charts1[0], name, data[0].GraphValues.map(g => g.NumberOfTimes).reverse().slice(-14), itemType);
                     break;
                 case 2:
-                    charts2[0] == null ? AddChart(name, data[0].WidgetId, data[0].GraphValues.map(g => g.Value).reverse(), data[0].GraphValues.map(g => g.NumberOfTimes).reverse(), itemType) : AddDataSet(charts2[0], name, data[0].GraphValues.map(g => g.NumberOfTimes).reverse(), itemType);
+                    charts2[0] == null ? AddChart(name, data[0].WidgetId, data[0].GraphValues.map(g => g.Value).reverse().slice(-14), data[0].GraphValues.map(g => g.NumberOfTimes).reverse().slice(-14), itemType) : AddDataSet(charts2[0], name, data[0].GraphValues.map(g => g.NumberOfTimes).reverse().slice(-14), itemType);
                     break;
                 case 3:
-                    charts3[0] == null ? AddChart(name, data[0].WidgetId, data[0].GraphValues.map(g => g.Value).reverse(), data[0].GraphValues.map(g => g.NumberOfTimes).reverse(), itemType) : AddDataSet(charts3[0], name, data[0].GraphValues.map(g => g.NumberOfTimes).reverse(), itemType);
+                    charts3[0] == null ? AddChart(name, data[0].WidgetId, data[0].GraphValues.map(g => g.Value).reverse().slice(-14), data[0].GraphValues.map(g => g.NumberOfTimes).reverse().slice(-14), itemType) : AddDataSet(charts3[0], name, data[0].GraphValues.map(g => g.NumberOfTimes).reverse().slice(-14), itemType);
                     break;
             }
         },
@@ -190,9 +195,9 @@ let WeeklyReview = function (name, itemId, widgetId, itemType) {
                 id: data[0].WidgetId,
                 type: "line",
                 data: {
-                    labels: data[0].GraphValues.map(g => g.Value).reverse(),
+                    labels: data[0].GraphValues.map(g => g.Value).reverse().slice(-14),
                     datasets: [{
-                        data: data[0].GraphValues.map(g => g.NumberOfTimes),
+                        data: data[0].GraphValues.map(g => g.NumberOfTimes).reverse().slice(-14),
                         label: name,
                         borderColor: COLORS[random],
                         backgroundColor: COLORS[random],

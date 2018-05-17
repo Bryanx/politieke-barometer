@@ -1,32 +1,33 @@
-.small-card {
-  .card-user {
-    position: absolute;
-    left: 5px;
-    top: 5px;
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-  }
-  .card-category {
-    position: absolute;
-    top: 5px;
-    left: 40px;
-    font-size: 12px;
-    font-weight: bold;
-    letter-spacing: 1px;
-  }
-  .card-nom {
-    position: absolute;
-    top: 45px;
-    left: 5px;
-    .totalNumberOfMentions{
-      font-size: 12px;
-    }
-  }
+$primary-color: rgb(39, 144, 188);
+$primary-color-darker: rgb(36, 107, 148);
+
+.small-card > .card {
+  height: 80px;
   
-  .card-image {
-    width: 30px;
-    height: 30px;
+  .card-user {
+   display: none;
+  }
+  .card-name {
+    left: 10px;
+    font-size: 13px;
+  }
+
+  .card-person-organisation {
+    right: 10px;
+  }
+
+  .card-trending {
+    top: 45%;
+    left: 10px;
+    line-height: 4px;
+    font-weight: normal;
+  }
+
+  .card-nom {
+    top: 45%;
+    left: 85px;
+    line-height: 4px;
+    font-weight: normal;
   }
 }
 
@@ -34,34 +35,72 @@
 
 
 .card {
-  height: 100px;
-  color: var(--font-color);
   position: relative;
-  box-shadow: 0 0 3px 0 rgba(0,0,0,0.1);
+  height: 100px;
+  margin-top: 20px;
   margin-bottom: 10px;
+  border-radius: 5px;
+
+  color: $primary-color-darker;
+  box-shadow: 0 0 3px 0 rgba(0,0,0,0.2);
+  background: linear-gradient(180deg, white 70%, $primary-color 30%);
+  font-weight: bold;
 }
 .card-user {
   position: absolute;
   left: 10px;
-  top: 10px;
-  width: 60px;
+  top: 30px;
+  width: 50px;
   border-radius: 50%;
+  .person-image {
+    height: 80px;
+    width: 80px;
+  }
 }
-.card-category {
+
+.card-name {
   position: absolute;
   top: 10px;
-  left: 70px;
-  font-size: 15px;
-  letter-spacing: 1px;
+  left: 110px;
+  font-size: 18px;
+  letter-spacing: 1.5px;
 }
-.card-nom {
+
+.card-person-organisation {
   position: absolute;
   top: 10px;
   right: 10px;
-  .totalNumberOfMentions{
-    font-size: 30px;
+}
+
+.card-trending {
+  position: absolute;
+  top: 49%;
+  left: 110px;
+  line-height: 8px;
+  :first-child {
+    border-bottom: 5px solid;
+    line-height: 19px;
   }
-} 
+  :last-child{
+    text-align: center;
+    color: white;
+  }
+}
+
+.card-nom {
+  position: absolute;
+  top: 49%;
+  left: 200px;
+  line-height: 8px;
+  :first-child {
+    border-bottom: 5px solid;
+    line-height: 19px;
+  }
+  :last-child{
+    text-align: center;
+    color: white;
+  }
+}
 
 .card-link {
   position: absolute;
