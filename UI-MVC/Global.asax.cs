@@ -135,7 +135,7 @@ namespace BAR.UI.MVC
     }
     private void timer_Elapsed(object sender, ElapsedEventArgs e)
     {
-        DateTime MyScheduledRunTime = DateTime.Parse("00:00:00");
+        DateTime MyScheduledRunTime = DateTime.Parse(dataManager.GetStartTimer(1));
         DateTime CurrentSystemTime = DateTime.Now;
         DateTime LatestRunTime = MyScheduledRunTime.AddMilliseconds(TimerIntervalInMilliseconds);
         if ((CurrentSystemTime.CompareTo(MyScheduledRunTime) >= 0) && (CurrentSystemTime.CompareTo(LatestRunTime) <= 0))
