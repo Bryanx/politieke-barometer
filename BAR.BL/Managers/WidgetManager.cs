@@ -502,7 +502,7 @@ namespace BAR.BL.Managers
 		/// for a specific user
 		/// For now, this method will only return the widgets "number of metnions" because these are the most logical.
 		/// </summary>
-		public IEnumerable<Widget> GetWidgetsForWeeklyReview(string userId = null, int platformId = 1)
+		public IEnumerable<Widget> GetWidgetsForWeeklyReview(int platformId, string userId = null)
 		{
 			InitRepo();
 			List<Widget> widgets = new List<Widget>();
@@ -555,6 +555,11 @@ namespace BAR.BL.Managers
 		{
 			InitRepo();
 			return widgetRepo.ReadGeoLocationWidget();
+		}
+
+		public IEnumerable<Widget> GetWidgetsForActivities(int platformId)
+		{
+			throw new NotImplementedException();
 		}
 	}
 }
