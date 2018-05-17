@@ -9,59 +9,57 @@ using BAR.BL.Managers;
 using BAR.UI.MVC.Helpers;
 using BAR.UI.MVC.Attributes;
 using BAR.UI.MVC.Models;
+using AutoMapper;
 
-namespace BAR.UI.MVC.Controllers {
-    /// <summary>
-    /// This controller stores the user preferred language in a cookie.
-    /// </summary>
-    [SubPlatformCheck]
-    public class LanguageController : Controller {
-        
-        //storing the language defaults in a cookie
-        protected override IAsyncResult BeginExecuteCore(AsyncCallback callback, object state) {
-            string cultureName = null;
+namespace BAR.UI.MVC.Controllers
+{
+	/// <summary>
+	/// This controller stores the user preferred language in a cookie.
+	/// </summary>
+	[SubPlatformCheck]
+	public class LanguageController : Controller
+	{
 
-            // Attempt to read the culture cookie from Request
-            HttpCookie cultureCookie = Request.Cookies["_culture"];
-            if (cultureCookie != null)
-                cultureName = cultureCookie.Value;
-            else
-                cultureName = Request.UserLanguages != null && Request.UserLanguages.Length > 0
-                    ? Request.UserLanguages[0]
-                    : // obtain it from HTTP header AcceptLanguages
-                    null;
-            // Validate culture name
-            cultureName = LanguageHelper.GetImplementedCulture(cultureName); // This is safe
+		//storing the language defaults in a cookie
+		protected override IAsyncResult BeginExecuteCore(AsyncCallback callback, object state)
+		{
+			string cultureName = null;
 
-            // Modify current thread's cultures            
-            Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo(cultureName);
-            Thread.CurrentThread.CurrentUICulture = Thread.CurrentThread.CurrentCulture;
+			// Attempt to read the culture cookie from Request
+			HttpCookie cultureCookie = Request.Cookies["_culture"];
+			if (cultureCookie != null)
+				cultureName = cultureCookie.Value;
+			else
+				cultureName = Request.UserLanguages != null && Request.UserLanguages.Length > 0
+						? Request.UserLanguages[0]
+						: // obtain it from HTTP header AcceptLanguages
+						null;
+			// Validate culture name
+			cultureName = LanguageHelper.GetImplementedCulture(cultureName); // This is safe
 
-            return base.BeginExecuteCore(callback, state);
-        }
+			// Modify current thread's cultures            
+			Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo(cultureName);
+			Thread.CurrentThread.CurrentUICulture = Thread.CurrentThread.CurrentCulture;
 
-        //Customization options: Aliases, colors, etc.
-        protected override void OnActionExecuted(ActionExecutedContext filterContext)
-        {
-            base.OnActionExecuted(filterContext);
-            
-            if (filterContext.Result is ViewResultBase result)
-            {
-                if (filterContext.Controller.ViewData.Model is BaseViewModel model) {
-                    SubplatformManager platformManager = new SubplatformManager();
-                    int subPlatformID = (int) RouteData.Values["SubPlatformID"];
-                    Customization customization = platformManager.GetCustomization(subPlatformID);
-                    //TODO: add mapper
-                    model.ContactStreet = customization.StreetAndHousenumber;
-                    model.ContactCity = customization.City;
-                    model.PersonAlias = customization.PersonAlias;
-                    model.PersonsAlias = customization.PersonsAlias;
-                    model.OrganisationAlias = customization.OrganisationAlias;
-                    model.OrganisationsAlias = customization.OrganisationsAlias;
-                    model.ThemeAlias = customization.ThemeAlias;
-                    model.ThemesAlias = customization.ThemesAlias;
-                }
-            }
-        }
-    }
+			return base.BeginExecuteCore(callback, state);
+		}
+
+		//Customization options: Aliases, colors, etc.
+		protected override void OnActionExecuted(ActionExecutedContext filterContext)
+		{
+			base.OnActionExecuted(filterContext);
+
+			if (filterContext.Result is ViewResultBase result)
+			{
+				if (filterContext.Controller.ViewData.Model is BaseViewModel model)
+				{
+					SubplatformManager platformManager = new SubplatformManager();
+					int subPlatformID = (int)RouteData.Values["SubPlatformID"];
+					Customization customization = platformManager.GetCustomization(subPlatformID);
+					model.Customization = Mapper.Map(customization, new CustomizationViewModel());
+					
+				}
+			}
+		}
+	}
 }

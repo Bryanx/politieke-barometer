@@ -26,6 +26,14 @@ namespace BAR.UI.MVC.Models
 		public string PrivacyTitle { get; set; }
 		public string PrivacyText { get; set; }
 
+		//Navbar and title text
+		public string PersonAlias { get; set; }
+		public string PersonsAlias { get; set; }
+		public string OrganisationAlias { get; set; }
+		public string OrganisationsAlias { get; set; }
+		public string ThemeAlias { get; set; }
+		public string ThemesAlias { get; set; }
+
 		//FAQ
 		public string FAQTitle { get; set; }
 
@@ -38,5 +46,6 @@ namespace BAR.UI.MVC.Models
 
 		//Images
 		public byte[] HeaderImage { get; set; }
+		public byte[] LogoImage { get; set; }
 	}
 }

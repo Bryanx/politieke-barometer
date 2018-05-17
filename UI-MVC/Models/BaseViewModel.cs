@@ -1,5 +1,4 @@
-﻿using BAR.BL.Domain.Core;
-using BAR.BL.Domain.Users;
+﻿using BAR.BL.Domain.Users;
 
 namespace BAR.UI.MVC.Models {
     public class BaseViewModel {
@@ -7,7 +6,7 @@ namespace BAR.UI.MVC.Models {
         public string ContactStreet { get; set; } = "Nationalestraat 24";
         public string ContactCity { get; set; } = "2060 Antwerpen";
         public string ContactEmail { get; set; } = "contact@kdg.be";
-		public Customization Customization { get; set; }
+				public CustomizationViewModel Customization { get; set; }
         public User User { get; set; }
     }
 }
