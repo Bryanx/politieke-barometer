@@ -49,10 +49,11 @@ namespace BAR.BL.Managers
 		IEnumerable<Item> ChangeItems(IEnumerable<Item> items);
 		void RemoveItem(int itemId);
 		void RemoveOverflowingItems();
-		void FillItems();
+		void FillPersonesAndThemes(int platformId);
+		void FillOrganisations(int platformId);
 		void DetermineTrending(int itemId);
 		double GetTrendingPer(int itemId);
     	string ConvertPfbToString(HttpPostedFileBase pfb);
-		void UpdateWeeklyReviewData(int platformId);
+		void RefreshItemData(int platformId);
   }
 }

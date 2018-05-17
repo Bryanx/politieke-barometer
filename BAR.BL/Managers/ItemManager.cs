@@ -93,7 +93,7 @@ namespace BAR.BL.Managers
 			}
 			else
 			{
-				itemsOrderd = itemsOrderd.OrderBy(item => item.TrendingPercentage).AsEnumerable();
+				itemsOrderd = itemsOrderd.OrderBy(item => item.TrendingPercentageOld).AsEnumerable();
 			}
 
 			return itemsOrderd.Take(numberOfItems).AsEnumerable();
@@ -116,7 +116,7 @@ namespace BAR.BL.Managers
 			else
 			{
 				itemsOrderd = itemsOrderd.Where(item => item.ItemType == type)
-				.OrderBy(item => item.TrendingPercentage).AsEnumerable();
+				.OrderBy(item => item.TrendingPercentageOld).AsEnumerable();
 			}
 
 			return itemsOrderd.Take(numberOfItems).AsEnumerable();
@@ -145,7 +145,7 @@ namespace BAR.BL.Managers
 			}
 			else
 			{
-				itemsOrderd = itemsFromUser.OrderBy(item => item.TrendingPercentage).AsEnumerable();
+				itemsOrderd = itemsFromUser.OrderBy(item => item.TrendingPercentageOld).AsEnumerable();
 			}
 
 			return itemsOrderd.Take(numberOfItems).AsEnumerable();
@@ -177,7 +177,7 @@ namespace BAR.BL.Managers
 			else
 			{
 				itemsOrderd = itemsFromUser.Where(item => item.ItemType == type)
-				.OrderBy(item => item.TrendingPercentage).AsEnumerable();
+				.OrderBy(item => item.TrendingPercentageOld).AsEnumerable();
 			}
 
 			return itemsOrderd.Take(numberOfItems).AsEnumerable();
@@ -187,8 +187,10 @@ namespace BAR.BL.Managers
 		/// If the last time that the old trending percentage of the item was updated 7 days ago,
 		/// then the old trending percentage will be updated.
 		/// </summary>
-		public void UpdateWeeklyReviewData(int platformId)
+		public void RefreshItemData(int platformId)
 		{
+			InitRepo();
+
 			//Get timestamp
 			DateTime? lastUpdated = new SubplatformManager().GetSubPlatform(platformId).LastUpdatedWeeklyReview;
 
@@ -199,7 +201,7 @@ namespace BAR.BL.Managers
 			//Refresh old data
 			if (lastUpdated == null || lastUpdated < DateTime.Now.AddDays(-7))
 			{
-				foreach (Item item in items) item.NumberOfMentionsOld = item.NumberOfMentions;
+				foreach (Item item in items) item.TrendingPercentageOld = item.TrendingPercentage;
 			}
 
 			//Update database
@@ -377,7 +379,7 @@ namespace BAR.BL.Managers
 			item.NumberOfFollowers = 0;
 			item.TrendingPercentage = 0.0;
 			item.NumberOfMentions = 0;
-			item.NumberOfMentionsOld = 0;
+			item.TrendingPercentageOld = 0.0;
 			item.Baseline = 0.0;
 			item.Deleted = false;
 			item.Baseline = 10.0;
@@ -411,7 +413,6 @@ namespace BAR.BL.Managers
 			{
 				Name = "Mentions"
 			});
-
 			ItemWidget widget1 = (ItemWidget)widgetManager.AddWidget(WidgetType.GraphType, name + " popularity", 1, 1, proptags: proptags, graphType: GraphType.LineChart, rowspan: 12, colspan: 6);
 			itemWidgets.Add(widget1);
 			widgetIds.Add(widget1.WidgetId);
@@ -848,10 +849,11 @@ namespace BAR.BL.Managers
 		/// Fills all items with recent data from the last
 		/// synchronisation
 		/// </summary>
-		public void FillItems()
+		public void FillPersonesAndThemes(int platformId)
 		{
 			DataManager dataManager = new DataManager();
-			IEnumerable<Item> items = GetAllItems();
+			IEnumerable<Item> items = GetAllItems().Where(item => item.ItemType != ItemType.Organisation).AsEnumerable();
+			if (items == null || items.Count() == 0) return;
 
 			//Update sentiment & number of mentions
 			foreach (Item item in items)
@@ -892,6 +894,7 @@ namespace BAR.BL.Managers
 
 			//Determine trending
 			foreach (Item item in items) DetermineTrending(item.ItemId);
+			RefreshItemData(platformId);
 		}
 
 		/// <summary>
@@ -955,6 +958,37 @@ namespace BAR.BL.Managers
 		{
 			InitRepo();
 			return itemRepo.ReadItemsForOrganisation(itemId).AsEnumerable();
+		}
+
+		/// <summary>
+		/// Fills the organisations with data based on the persons
+		/// </summary>
+		public void FillOrganisations(int platformId)
+		{
+			////Get organisations
+			//IEnumerable<Item> organisations = GetAllOrganisations();
+			//if (organisations == null || organisations.Count() == 0) return;
+
+			////Get persons and themes
+			////IEnumerable<Item> items = GetAllItems().Where(item => item.ItemType != ItemType.Organisation).AsEnumerable();
+			////if (items == null || items.Count() == 0) return;
+
+			////Fill Organisations
+			//DataManager dataManager = new DataManager();
+			//foreach (Item org in organisations)
+			//{
+			//	//Number of mentions from the last 30 days
+			//	IEnumerable<Item> items = GetItemsForOrganisation(org.ItemId).AsEnumerable();
+			//	if (items != null || items.Count > 0)
+			//	{
+			//		foreach (Item item in items) org.NumberOfMentions = item.NumberOfMentions
+			//	}
+				
+				
+			//}
+
+			////Update items
+			//ChangeItems(organisations);
 		}
 	}
 }

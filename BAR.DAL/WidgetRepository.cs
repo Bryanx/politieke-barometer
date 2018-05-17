@@ -381,6 +381,7 @@ namespace BAR.DAL
 							  .Include(widget => widget.WidgetDatas)
 					          .Include(widget => widget.WidgetDatas.Select(data => data.GraphValues))
 							  .Include(widget => widget.Items)
+							  .Include(widget => widget.PropertyTags)
 					          .Where(widget => widget.Items.Any(item => item.ItemType == type))
 					          .AsEnumerable();
 		}

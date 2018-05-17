@@ -452,6 +452,7 @@ namespace BAR.BL.Managers
 			{
 				Name = "geo"
 			};
+			tags.Add(tag);
 			Widget geoloactionWidget = AddWidget(WidgetType.GraphType, "geoloaction of number of mentions", 1, 1, tags);
 
 			//Get widgetdata for geolocaton
@@ -511,7 +512,7 @@ namespace BAR.BL.Managers
 			//Get trending items
 			ItemManager itemManager = new ItemManager();
 			IEnumerable<Item> items = null;
-			itemManager.UpdateWeeklyReviewData(platformId);
+			itemManager.RefreshItemData(platformId);
 			if (userId == null) items = itemManager.GetMostTrendingItems(useWithOldData: true);
 			else items = itemManager.GetMostTrendingItemsForUser(userId, useWithOldData: true);
 
@@ -575,17 +576,8 @@ namespace BAR.BL.Managers
 
 			//Extract data form persons to fill organisations
 			DataManager dataManager = new DataManager();
-			List<PropertyTag> tags = null;
 			for (int i = 0; i < items.Count(); i++)
 			{
-				//Create widget for organisation data
-				//tags = new List<PropertyTag>();
-				//PropertyTag tag = new PropertyTag()
-				//{
-				//	Name = "Number of metions"
-				//};
-				//Widget geoloactionWidget = AddWidget(WidgetType.GraphType, items.ElementAt(i).Name + " popularity", 1, 1, tags, rowspan: 12, colspan: 6, graphType: GraphType.LineChart);
-
 				//Get widgetdata for organisation
 				WidgetData organisationData = dataManager.GetOrganisationData(items.ElementAt(i).ItemId);
 				organisationData.Widget = widgets.ElementAt(i);
