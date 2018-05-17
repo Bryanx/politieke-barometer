@@ -48,5 +48,8 @@ namespace BAR.BL.Managers
 		//Other
 		bool IsJsonEmpty(string json);
 		IEnumerable<string> GetUrlsForItem(int itemId);
+
+		//Sources
+		Source GetSource(string sourceName);
 	}
 }

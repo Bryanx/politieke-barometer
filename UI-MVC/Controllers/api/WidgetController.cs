@@ -90,13 +90,25 @@ namespace BAR.UI.MVC.Controllers.api
 
 			if (keyValue == null) keyValue = widgetManager.GetWidgetWithAllData(widgetId)?.PropertyTags.FirstOrDefault()?.Name;
 			
-			IEnumerable<WidgetData> widgetDatas = widgets.FirstOrDefault(w => w.WidgetDatas.Any(wd => wd.KeyValue == keyValue)).WidgetDatas;
-			IEnumerable<WidgetDataDTO> widgetDataDtos = Mapper.Map(widgetDatas, new List<WidgetDataDTO>());
+			try
+			{
+				IEnumerable<WidgetData> widgetDatas = widgets.FirstOrDefault(w => w.WidgetDatas.Any(wd => wd.KeyValue == keyValue)).WidgetDatas;
+				IEnumerable<WidgetDataDTO> widgetDataDtos = Mapper.Map(widgetDatas, new List<WidgetDataDTO>());
+
+				//Get item name
+				widgetDataDtos.First().ItemName = itemManager.GetItem(itemId).Name;
+
+				return Ok(widgetDataDtos);
+			} catch (Exception e)
+			{
+				IEnumerable<WidgetData> widgetDatas = new List<WidgetData>();
+				IEnumerable<WidgetDataDTO> widgetDataDtos = Mapper.Map(widgetDatas, new List<WidgetDataDTO>());
+
+				return Ok(widgetDataDtos);
+			}
 			
-			//Get item name
-			widgetDataDtos.First().ItemName = itemManager.GetItem(itemId).Name;
 			
-			return Ok(widgetDataDtos);
+			
 		}
 
 		/// <summary>
@@ -190,6 +202,26 @@ namespace BAR.UI.MVC.Controllers.api
 			if (widgetManager.GetWidget(id) == null) return NotFound();
 			widgetManager.RemoveWidget(id);
 			return StatusCode(HttpStatusCode.NoContent);
+		}
+		
+		/// <summary>
+		///Gets weeklyReview
+		/// </summary>
+		[System.Web.Http.HttpGet]
+		[System.Web.Http.Route("api/Widget/GetWeeklyReview/{id}")]
+		public IHttpActionResult GetWeeklyReview(string id)
+		{
+			widgetManager = new WidgetManager();
+			IEnumerable<Widget> widgets;
+			if (id.Equals("0")){
+				widgets = widgetManager.GetWidgetsForWeeklyReview(null, 1);
+			} else {
+				widgets = widgetManager.GetWidgetsForWeeklyReview(id, 1);
+			}
+			
+			
+
+			return Ok(Mapper.Map(widgets, new List<UserWidgetDTO>()));
 		}
 	}
 }

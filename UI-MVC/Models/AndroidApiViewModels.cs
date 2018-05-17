@@ -46,4 +46,15 @@ namespace BAR.UI.MVC.Models
     public int AlertId { get; set; }
     public String ItemName { get; set; }
   }
+
+  public class DeviceTokenViewModel
+  {
+    public String DeviceToken { get; set; }
+  }
+  
+  public class NotificationMessageViewModel
+  {
+    public String Title { get; set; }
+    public String Message { get; set; }
+  }
 }

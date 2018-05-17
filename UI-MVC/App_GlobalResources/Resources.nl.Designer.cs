@@ -142,6 +142,15 @@ namespace BAR.UI.MVC.App_GlobalResources {
         }
         
         /// <summary>
+        ///   Hiermee zoekt u een vertaalde tekenreeks die vergelijkbaar is met Voeg item toe.
+        /// </summary>
+        public static string AddItem {
+            get {
+                return ResourceManager.GetString("AddItem", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Hiermee zoekt u een vertaalde tekenreeks die vergelijkbaar is met Bron toevoegen.
         /// </summary>
         public static string AddSource {
@@ -196,7 +205,7 @@ namespace BAR.UI.MVC.App_GlobalResources {
         }
         
         /// <summary>
-        ///   Hiermee zoekt u een vertaalde tekenreeks die vergelijkbaar is met Leeftijdsverdeling van vermeldingen.
+        ///   Hiermee zoekt u een vertaalde tekenreeks die vergelijkbaar is met Leeftijd.
         /// </summary>
         public static string AgeDistributionOfMentions {
             get {
@@ -484,6 +493,15 @@ namespace BAR.UI.MVC.App_GlobalResources {
         }
         
         /// <summary>
+        ///   Hiermee zoekt u een vertaalde tekenreeks die vergelijkbaar is met Creeer Item.
+        /// </summary>
+        public static string CreateItem {
+            get {
+                return ResourceManager.GetString("CreateItem", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Hiermee zoekt u een vertaalde tekenreeks die vergelijkbaar is met Aanmaak datum.
         /// </summary>
         public static string CreationDate {
@@ -601,6 +619,15 @@ namespace BAR.UI.MVC.App_GlobalResources {
         }
         
         /// <summary>
+        ///   Hiermee zoekt u een vertaalde tekenreeks die vergelijkbaar is met Opleiding.
+        /// </summary>
+        public static string EducationDistributionOfMentions {
+            get {
+                return ResourceManager.GetString("EducationDistributionOfMentions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Hiermee zoekt u een vertaalde tekenreeks die vergelijkbaar is met E-mailadres.
         /// </summary>
         public static string Email {
@@ -651,6 +678,15 @@ namespace BAR.UI.MVC.App_GlobalResources {
         public static string ExternalLogin {
             get {
                 return ResourceManager.GetString("ExternalLogin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Hiermee zoekt u een vertaalde tekenreeks die vergelijkbaar is met Extravert.
+        /// </summary>
+        public static string Extrovert {
+            get {
+                return ResourceManager.GetString("Extrovert", resourceCulture);
             }
         }
         
@@ -727,7 +763,7 @@ namespace BAR.UI.MVC.App_GlobalResources {
         }
         
         /// <summary>
-        ///   Hiermee zoekt u een vertaalde tekenreeks die vergelijkbaar is met Geslachtsverdeling van vermeldingen.
+        ///   Hiermee zoekt u een vertaalde tekenreeks die vergelijkbaar is met Geslacht.
         /// </summary>
         public static string GenderDistributionOfMentions {
             get {
@@ -741,6 +777,15 @@ namespace BAR.UI.MVC.App_GlobalResources {
         public static string GraphType {
             get {
                 return ResourceManager.GetString("GraphType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Hiermee zoekt u een vertaalde tekenreeks die vergelijkbaar is met Hoger opgeleid.
+        /// </summary>
+        public static string HigherEducated {
+            get {
+                return ResourceManager.GetString("HigherEducated", resourceCulture);
             }
         }
         
@@ -799,6 +844,15 @@ namespace BAR.UI.MVC.App_GlobalResources {
         }
         
         /// <summary>
+        ///   Hiermee zoekt u een vertaalde tekenreeks die vergelijkbaar is met Importeer themas.
+        /// </summary>
+        public static string ImportThemes {
+            get {
+                return ResourceManager.GetString("ImportThemes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Hiermee zoekt u een vertaalde tekenreeks die vergelijkbaar is met Over.
         /// </summary>
         public static string In_Time {
@@ -835,6 +889,15 @@ namespace BAR.UI.MVC.App_GlobalResources {
         }
         
         /// <summary>
+        ///   Hiermee zoekt u een vertaalde tekenreeks die vergelijkbaar is met Introvert.
+        /// </summary>
+        public static string Introvert {
+            get {
+                return ResourceManager.GetString("Introvert", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Hiermee zoekt u een vertaalde tekenreeks die vergelijkbaar is met is nu beschikbaar!.
         /// </summary>
         public static string IsNowAvailable {
@@ -867,6 +930,15 @@ namespace BAR.UI.MVC.App_GlobalResources {
         public static string JustNow {
             get {
                 return ResourceManager.GetString("JustNow", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Hiermee zoekt u een vertaalde tekenreeks die vergelijkbaar is met Kernwoorden.
+        /// </summary>
+        public static string Keywords {
+            get {
+                return ResourceManager.GetString("Keywords", resourceCulture);
             }
         }
         
@@ -988,6 +1060,15 @@ namespace BAR.UI.MVC.App_GlobalResources {
         }
         
         /// <summary>
+        ///   Hiermee zoekt u een vertaalde tekenreeks die vergelijkbaar is met Lager opgeleid.
+        /// </summary>
+        public static string LowerEducated {
+            get {
+                return ResourceManager.GetString("LowerEducated", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Hiermee zoekt u een vertaalde tekenreeks die vergelijkbaar is met Man.
         /// </summary>
         public static string Male {
@@ -1024,6 +1105,15 @@ namespace BAR.UI.MVC.App_GlobalResources {
         }
         
         /// <summary>
+        ///   Hiermee zoekt u een vertaalde tekenreeks die vergelijkbaar is met Bericht.
+        /// </summary>
+        public static string Message {
+            get {
+                return ResourceManager.GetString("Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Hiermee zoekt u een vertaalde tekenreeks die vergelijkbaar is met Minuten.
         /// </summary>
         public static string Minutes {
@@ -1047,6 +1137,15 @@ namespace BAR.UI.MVC.App_GlobalResources {
         public static string MoreInfo {
             get {
                 return ResourceManager.GetString("MoreInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Hiermee zoekt u een vertaalde tekenreeks die vergelijkbaar is met Meer informatie over.
+        /// </summary>
+        public static string MoreInfoAbout {
+            get {
+                return ResourceManager.GetString("MoreInfoAbout", resourceCulture);
             }
         }
         
@@ -1267,6 +1366,24 @@ namespace BAR.UI.MVC.App_GlobalResources {
         }
         
         /// <summary>
+        ///   Hiermee zoekt u een vertaalde tekenreeks die vergelijkbaar is met Mensen die praten over.
+        /// </summary>
+        public static string PeopleWhoMention {
+            get {
+                return ResourceManager.GetString("PeopleWhoMention", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Hiermee zoekt u een vertaalde tekenreeks die vergelijkbaar is met Persoonlijkheid.
+        /// </summary>
+        public static string PersonalityDistributionOfMentions {
+            get {
+                return ResourceManager.GetString("PersonalityDistributionOfMentions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Hiermee zoekt u een vertaalde tekenreeks die vergelijkbaar is met Foto.
         /// </summary>
         public static string Photo {
@@ -1429,6 +1546,15 @@ namespace BAR.UI.MVC.App_GlobalResources {
         }
         
         /// <summary>
+        ///   Hiermee zoekt u een vertaalde tekenreeks die vergelijkbaar is met Verplicht.
+        /// </summary>
+        public static string Required {
+            get {
+                return ResourceManager.GetString("Required", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Hiermee zoekt u een vertaalde tekenreeks die vergelijkbaar is met Reset.
         /// </summary>
         public static string Reset {
@@ -1492,6 +1618,15 @@ namespace BAR.UI.MVC.App_GlobalResources {
         }
         
         /// <summary>
+        ///   Hiermee zoekt u een vertaalde tekenreeks die vergelijkbaar is met Selecteer de bijbehorende organisatie.
+        /// </summary>
+        public static string SelectOrganisation {
+            get {
+                return ResourceManager.GetString("SelectOrganisation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Hiermee zoekt u een vertaalde tekenreeks die vergelijkbaar is met Selecteer je woonplaats.
         /// </summary>
         public static string SelectYourCity {
@@ -1506,6 +1641,24 @@ namespace BAR.UI.MVC.App_GlobalResources {
         public static string SelectYourGender {
             get {
                 return ResourceManager.GetString("SelectYourGender", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Hiermee zoekt u een vertaalde tekenreeks die vergelijkbaar is met Verzenden.
+        /// </summary>
+        public static string Send {
+            get {
+                return ResourceManager.GetString("Send", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Hiermee zoekt u een vertaalde tekenreeks die vergelijkbaar is met Verzend een publiek Android bericht.
+        /// </summary>
+        public static string SendPublicAndroidMessage {
+            get {
+                return ResourceManager.GetString("SendPublicAndroidMessage", resourceCulture);
             }
         }
         
@@ -1749,6 +1902,15 @@ namespace BAR.UI.MVC.App_GlobalResources {
         public static string UserManagement {
             get {
                 return ResourceManager.GetString("UserManagement", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Hiermee zoekt u een vertaalde tekenreeks die vergelijkbaar is met Website.
+        /// </summary>
+        public static string Website {
+            get {
+                return ResourceManager.GetString("Website", resourceCulture);
             }
         }
         

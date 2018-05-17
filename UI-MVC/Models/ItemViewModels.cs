@@ -2,15 +2,27 @@
 using System.Collections.Generic;
 using BAR.BL.Domain.Items;
 using BAR.BL.Domain.Users;
+using System.Web.Mvc;
 
 namespace BAR.UI.MVC.Models {
     public class ItemViewModels {
         public class ItemViewModel : BaseViewModel {
             public IEnumerable<ItemDTO> Items { get; set; }
             public string Json { get; set; }
+            public WeeklyReviewModel WeeklyReviewModel { get; set; }
+            public ICollection<PersonViewModel> TopTrendingPersonViewModels { get; set; }
+            public ICollection<Item> TopTrendingitems { get; set; }
         }
-        
-        public class PersonViewModel : BaseViewModel {
+
+				public class ItemCreateViewModel : BaseViewModel
+				{
+						public IEnumerable<ItemDTO> Items { get; set; }
+						public string Json { get; set; }
+						public int OrganisationId { get; set; }
+						public IEnumerable<SelectListItem> Organisations { get; set; }
+				}
+
+				public class PersonViewModel : BaseViewModel {
             public ItemDTO Item { get; set; }
             public List<PersonViewModel> PeopleFromSameOrg { get; set; }
             public bool Subscribed { get; set; }
@@ -28,6 +40,11 @@ namespace BAR.UI.MVC.Models {
             public int RankTrendingPercentage  { get; set; }
             
         }
+
+        public class WeeklyReviewModel : BaseViewModel {
+            public ICollection<PersonViewModel> WeeklyPersonViewModels { get; set; }
+            public ICollection<Item> WeeklyItems { get; set; }
+        }
         
         public class PersonViewModels : BaseViewModel {
             public List<PersonViewModel> Persons { get; set; }
@@ -40,7 +57,6 @@ namespace BAR.UI.MVC.Models {
             public string Site { get; set; }
             public List<SocialMediaName> SocialMediaNames { get; set; }
             public List<PersonViewModel> MemberList { get; set; }
-            
         }
         
         public class ThemeViewModel : BaseViewModel

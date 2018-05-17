@@ -36,11 +36,13 @@ namespace BAR.DAL
 		
 		//Create
 		int CreateItem(Item item);
-    	int CreateItems(IEnumerable<Item> items);
+    int CreateItems(IEnumerable<Item> items);
 
 		//Update
 		int UpdateItem(Item item);
 		int UpdateItems(IEnumerable<Item> items);
+
+		int UpdatePerson(Person person);
 
 		//Delete
 		int DeleteItem(Item item);

@@ -142,6 +142,26 @@ var widgetElements = {
             "               </div>" +
             "            </div>" +
             "        </div>";
+    }, 
+    //facebook widget
+    createFacebookWidget: function (title, url) {
+        return "<div class='chart-container'>" +
+            "            <div class='x_panel grid-stack-item-content bg-white no-scrollbar'>" +
+            "                <div class='x_title'>" +
+            "                    <h2 class='graphTitle'>" + title + "</h2>" +
+            "                    <ul class='nav navbar-right panel_toolbox'>" +
+            "                       <li><a class='addToDashboard'>" + Resources.Save + "</a></li>" +
+            "                    </ul>" +
+            "                    <div class='clearfix'></div>" +
+            "                </div>" +
+            "                <div class='no-scrollbar' style='position: relative; height: 88%;'> " +
+            "               <div class='fb-page' data-href='"+url+"' data-tabs='timeline' " +
+            "                data-small-header='true' data-adapt-container-width='false' data-hide-cover='true' " +
+            "                data-show-facepile='false'><blockquote cite='https://www.facebook.com/facebook' class='fb-xfbml-parse-ignore'> " +
+            "               <a href='https://www.facebook.com/facebook'>Facebook</a></blockquote></div> " +
+            "               </div>" +
+            "            </div>" +
+            "        </div>";
     },
     //stories widget
     createStoriesWidget: function (title) {
@@ -163,6 +183,13 @@ var widgetElements = {
 };
 
 //gridstack
+var mentionsGridselector = $("#mentions-grid");
+mentionsGridselector.gridstack({
+    resizable: {
+        handles: "e, se, s, sw, w"
+    }
+});
+var mentionsGrid = mentionsGridselector.data("gridstack");
 var gridselector = $("#grid");
 gridselector.gridstack({
     resizable: {
@@ -170,6 +197,13 @@ gridselector.gridstack({
     }
 });
 var grid = gridselector.data("gridstack");
+var socialGridselector = $("#social-grid");
+socialGridselector.gridstack({
+    resizable: {
+        handles: "e, se, s, sw, w"
+    }
+});
+var socialGrid = socialGridselector.data("gridstack");
 
 function createNodebox(id) {
     let node = document.getElementById('graph' + id);
@@ -259,9 +293,14 @@ function loadGraphs(itemId, widget) {
                 case "f": label = Resources.Female; break;
                 case "25+": label = Resources.Above25; break;
                 case "25-": label = Resources.Below25; break;
+                case "I": label = Resources.Introvert; break;
+                case "E": label = Resources.Extrovert; break;
+                case "+": label = Resources.HigherEducated; break;
+                case "-": label = Resources.LowerEducated; break;
                 default: label = Resources.Unknown; break;
             }
-            labels[index] = itemName + " - " + label;
+            if (itempage) labels[index] = label;
+            else labels[index] = itemName + " - " + label;
         });
         return labels;
     }
@@ -271,6 +310,8 @@ function loadGraphs(itemId, widget) {
         if (KeyValue === "Number of mentions") return Resources.NumberOfMentionsFull;
         else if (KeyValue === "Age") return Resources.AgeDistributionOfMentions;
         else if (KeyValue === "Gender") return Resources.GenderDistributionOfMentions;
+        else if (KeyValue === "Education") return Resources.EducationDistributionOfMentions;
+        else if (KeyValue === "Personality") return Resources.PersonalityDistributionOfMentions;
         else return Resources.Unknown;
     }
     
@@ -716,13 +757,32 @@ function loadGraphs(itemId, widget) {
 }
 
 function loadWidgets(url, itemId, onlyLoadLastWidget = false) {
-    //Loads a social widget.
+    //Creates a widget with stories for item page
+    function loadStories(itemId, rowSpan) {
+        socialGrid.addWidget(widgetElements.createStoriesWidget(Resources.LatestStories), 0, 0, rowSpan, 6, true, 4, 12, 5, 12, -2);
+        socialGrid.movable(".grid-stack-item", false);
+        socialGrid.resizable(".grid-stack-item", false);
+        $.ajax({
+            method : "GET",
+            url : "/api/GetStories/" + itemId,
+            success : data => {
+                $.each(data,  (index, url) => {
+                    $("#stories").append("<li class='story-url'><i class='fa fa-caret-right'></i><a href='"+url+"'>" + url + "</a></li>");
+                });
+            }
+        });
+    }
+    
+    //Loads a social widgets.
     let loadSocialWidget = function(data) {
+        let widgetAmount = data.SocialMediaNames.length;
+        let rowSpan = 6;
+        if (widgetAmount === 2) rowSpan = 4; 
         $.each(data.SocialMediaNames, (index, value) => {
             if (value.Source.Name === "Twitter") {
-                grid.addWidget(widgetElements.createTwitterWidget("Twitter feed"), 1, 1, 6, 6, true, 4, 12, 4, 12, 1);
-                grid.movable(".grid-stack-item", false);
-                grid.resizable(".grid-stack-item", false);
+                socialGrid.addWidget(widgetElements.createTwitterWidget("Twitter feed"), 1, 1, rowSpan, 6, true, 4, 12, 4, 12, 1);
+                socialGrid.movable(".grid-stack-item", false);
+                socialGrid.resizable(".grid-stack-item", false);
                 twttr.widgets.createTimeline(
                     {
                         sourceType: "profile",
@@ -736,7 +796,14 @@ function loadWidgets(url, itemId, onlyLoadLastWidget = false) {
                     }
                 );
             }
+            if (value.Source.Name === "Facebook") {
+                let url = value.Username;
+                socialGrid.addWidget(widgetElements.createFacebookWidget("Facebook feed", url), 1, 1, rowSpan, 6, true, 4, 12, 4, 12, 1);
+                socialGrid.movable(".grid-stack-item", false);
+                socialGrid.resizable(".grid-stack-item", false);
+            }
         });
+        if (itempage) loadStories(itemId, rowSpan);
     };
     
     //Retrieves item for social widget..
@@ -749,52 +816,41 @@ function loadWidgets(url, itemId, onlyLoadLastWidget = false) {
     };
 
     //Adds a widget to the gridstack grid.
-    let addWidgetToGrid = function(widget, itemId) {
+    let addWidgetToGrid = function(widget, itemId, index) {
         //UserWidget
         if (widget.DashboardId !== -1) {
             grid.addWidget(widgetElements.createUserWidget(widget.WidgetId, widget.Title), widget.RowNumber, widget.ColumnNumber, widget.RowSpan, widget.ColumnSpan,
                 true, 4, 12, 5, 12, widget.WidgetId);
             //ItemWidget
         } else {
-            grid.addWidget(widgetElements.createItemWidget(widget.WidgetId, ""), widget.RowNumber, widget.ColumnNumber, widget.RowSpan, widget.ColumnSpan,
-                true, 4, 12, 4, 12, widget.WidgetId);
-            grid.movable(".grid-stack-item", false);
-            grid.resizable(".grid-stack-item", false);
+            if (index === 0) {
+                mentionsGrid.addWidget(widgetElements.createItemWidget(widget.WidgetId, ""), widget.RowNumber, widget.ColumnNumber, widget.RowSpan, widget.ColumnSpan,
+                    true, 4, 12, 4, 12, widget.WidgetId);
+                mentionsGrid.movable(".grid-stack-item", false);
+                mentionsGrid.resizable(".grid-stack-item", false);
+            } else {
+                grid.addWidget(widgetElements.createItemWidget(widget.WidgetId, ""), widget.RowNumber, widget.ColumnNumber, widget.RowSpan, widget.ColumnSpan,
+                    true, 4, 12, 4, 12, widget.WidgetId);
+                grid.movable(".grid-stack-item", false);
+                grid.resizable(".grid-stack-item", false);
+            }
         }
         //if widgettype == graphtype
         if (widget.WidgetType === 0) loadGraphs(itemId, widget);
         widgets.push(widget);
     };
 
-    //Creates a widget with stories for item page
-    function loadStories(itemId) {
-        grid.addWidget(widgetElements.createStoriesWidget(Resources.LatestStories), 0, 0, 6, 6, true, 4, 12, 5, 12, -2);
-        grid.movable(".grid-stack-item", false);
-        grid.resizable(".grid-stack-item", false);
-        $.ajax({
-            method : "GET",
-            url : "/api/GetStories/" + itemId,
-            success : data => {
-                console.log(data);
-                $.each(data,  (index, url) => {
-                    $("#stories").append("<li class='story-url'><i class='fa fa-caret-right'></i><a href='"+url+"'>" + url + "</a></li>");
-                });
-            }
-        });
-    }
-
     //Puts all the widgets on the grid.
     let loadGrid = function (data, itemId) {
         if (data != null && data.length) {
             $.each(data, (index, widget) => {
-                if (!onlyLoadLastWidget) addWidgetToGrid(widget, itemId);
-                else if (index === data.length-1) addWidgetToGrid(widget, itemId);
+                if (!onlyLoadLastWidget) addWidgetToGrid(widget, itemId, index);
+                else if (index === data.length-1) addWidgetToGrid(widget, itemId, index);
             });
         } else {
             if (dashboardpage) noWidgetsAvailable();
         }
         if (itempage && !orgpage) loadItemForSocialWidget(itemId);
-        if (itempage) loadStories(itemId);
     };
     
     //Loads the widgets via api call.
@@ -876,6 +932,7 @@ function init() {
     addWidgetToDashboard = function (json) {
         json.GraphType = convertChartTypeToGraphType(json.GraphType);
         json = JSON.stringify(json);
+        console.log(json);
         $modal = $(".makeGraphModal");
         $nowidgets = $(".no-widgets");
         $.ajax({

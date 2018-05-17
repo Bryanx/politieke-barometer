@@ -504,7 +504,7 @@ namespace BAR.BL.Managers
 		/// for a specific user
 		/// For now, this method will only return the widgets "number of metnions" because these are the most logical.
 		/// </summary>
-		public IEnumerable<Widget> GetWidgetsForWeeklyReview(int platformId = 2, string userId = null)
+		public IEnumerable<Widget> GetWidgetsForWeeklyReview(string userId = null, int platformId = 1)
 		{
 			InitRepo();
 			List<Widget> widgets = new List<Widget>();
@@ -514,22 +514,23 @@ namespace BAR.BL.Managers
 			IEnumerable<Item> items = null;
 			itemManager.RefreshItemData(platformId);
 			if (userId == null) items = itemManager.GetMostTrendingItems(useWithOldData: true);
-			else items = itemManager.GetMostTrendingItemsForUser(userId, useWithOldData: true);
-
+			else items = itemManager.GetMostTrendingItemsForUser(userId, useWithOldData: true); 
+			
 			if (items == null || items.Count() == 0) return widgets;
 
 			//Query widgets
-			foreach (Item item in items)
-			{
+			foreach (Item item in items) {
 				IEnumerable<Widget> widgetsToAdd = widgetRepo.ReadWidgetsWithAllDataForItem(item.ItemId)
-															 .Where(widget => widget.PropertyTags
-															 .Any(proptag => proptag.Name.ToLower().Equals("mentions")))
-															 .AsEnumerable();
+					.Where(widget => widget.PropertyTags
+						.Any(proptag => proptag.Name.ToLower().Equals("mentions")))
+					.AsEnumerable();
 				if (widgetsToAdd != null) widgets.AddRange(widgetsToAdd);
 			}
 
 			return widgets.AsEnumerable();
 		}
+	
+
 
 		/// <summary>
 		/// Removes all the the given widgetdata from the database

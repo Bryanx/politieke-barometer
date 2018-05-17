@@ -559,6 +559,13 @@ namespace BAR.BL.Managers
 			return urls.AsEnumerable();
 		}
 
+		public Source GetSource(string sourceName)
+		{
+			InitRepo();
+
+			return dataRepo.ReadSource(sourceName);
+		}
+
 		public IEnumerable<DataSource> GetAllDataSources()
 		{
 			InitRepo();

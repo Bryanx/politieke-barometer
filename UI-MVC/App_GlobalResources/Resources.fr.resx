@@ -595,10 +595,10 @@
     <value>Âge</value>
   </data>
   <data name="AgeDistributionOfMentions" xml:space="preserve">
-    <value>Répartition par âge des mentions</value>
+    <value>Âge</value>
   </data>
   <data name="GenderDistributionOfMentions" xml:space="preserve">
-    <value>Répartition par sexe des mentions</value>
+    <value>Sexe</value>
   </data>
   <data name="NumberOfMentionsFull" xml:space="preserve">
     <value>Nombre de mentions</value>
@@ -647,6 +647,27 @@
   </data>
   <data name="RemoveData" xml:space="preserve">
     <value>Supprimer des données</value>
+  </data>
+  <data name="Website" xml:space="preserve">
+    <value>Site web</value>
+  </data>
+  <data name="Keywords" xml:space="preserve">
+    <value>Mots de clef</value>
+  </data>
+  <data name="AddItem" xml:space="preserve">
+    <value>Ajouter un item</value>
+  </data>
+  <data name="SelectOrganisation" xml:space="preserve">
+    <value>Sélectionnez l'organisation associée</value>
+  </data>
+  <data name="Required" xml:space="preserve">
+    <value>obligatoire</value>
+  </data>
+  <data name="ImportThemes" xml:space="preserve">
+    <value>Importe themes</value>
+  </data>
+  <data name="CreateItem" xml:space="preserve">
+    <value>Creeer Item</value>
   </data>
   <data name="BasicGraph" xml:space="preserve">
     <value>Graphique de base</value>
@@ -704,5 +725,38 @@
   </data>
   <data name="SomethingWentWrong" xml:space="preserve">
     <value>Quelque chose a mal tourné...</value>
+  </data>
+  <data name="Extrovert" xml:space="preserve">
+    <value>Extraverti</value>
+  </data>
+  <data name="HigherEducated" xml:space="preserve">
+    <value>Haute éducation</value>
+  </data>
+  <data name="Introvert" xml:space="preserve">
+    <value>Introverti</value>
+  </data>
+  <data name="LowerEducated" xml:space="preserve">
+    <value>Éducation inférieure</value>
+  </data>
+  <data name="EducationDistributionOfMentions" xml:space="preserve">
+    <value>Éducation</value>
+  </data>
+  <data name="MoreInfoAbout" xml:space="preserve">
+    <value>Plus d'informations sur</value>
+  </data>
+  <data name="PeopleWhoMention" xml:space="preserve">
+    <value>Les gens qui parlent de</value>
+  </data>
+  <data name="PersonalityDistributionOfMentions" xml:space="preserve">
+    <value>Personnalité</value>
+  </data>
+    <data name="Message" xml:space="preserve">
+    <value>Message</value>
+  </data>
+  <data name="Send" xml:space="preserve">
+    <value>Envoyer</value>
+  </data>
+  <data name="SendPublicAndroidMessage" xml:space="preserve">
+    <value>Envoyer un message Android public</value>
   </data>
 </root>

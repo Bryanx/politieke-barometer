@@ -9,6 +9,7 @@ using BAR.BL.Domain.Items;
 using BAR.BL.Managers;
 using BAR.UI.MVC.Attributes;
 using BAR.UI.MVC.Models;
+using WebGrease.Css.Extensions;
 using BAR.BL.Domain.Core;
 using WebGrease.Css.Extensions;
 
@@ -26,40 +27,50 @@ namespace BAR.UI.MVC.Controllers.api
 		/// Returns all items for search suggestions.
 		/// </summary>
 		[HttpGet]
-    [SubPlatformCheckAPI]
+		[SubPlatformCheckAPI]
 		[Route("api/GetSearchItems")]
 		public IHttpActionResult GetSearchItems()
 		{
-      //Get the subplatformID from the SubPlatformCheckAPI attribute
-      object _customObject = null;
-      int suplatformID = -1;
+			//Get the subplatformID from the SubPlatformCheckAPI attribute
+			object _customObject = null;
+			int suplatformID = -1;
 
-      if (Request.Properties.TryGetValue("SubPlatformID", out _customObject))
-      {
-        suplatformID = (int)_customObject;
-      }
+			if (Request.Properties.TryGetValue("SubPlatformID", out _customObject))
+			{
+				suplatformID = (int)_customObject;
+			}
 
 
-      itemManager = new ItemManager();
+			itemManager = new ItemManager();
 			var lijst = itemManager.GetAllItems()
-        .Where(item => item.SubPlatform.SubPlatformId == suplatformID)
-        .Select(i => new {value=i.Name, data=i.ItemId});
+				.Where(item => item.SubPlatform.SubPlatformId == suplatformID)
+				.Select(i => new {value=i.Name, data=i.ItemId});
 			return Ok(lijst);
 		}
 
 		/// <summary>
-		/// Gets top 3 trending items
+		/// Gets top 3 trending items with details for specific type 
 		/// </summary>
 		[HttpGet]
-		[Route("api/GetTopTrendingItems")]
-		public IHttpActionResult GetTopTrendingItems()
+		[Route("api/GetTopTrendingItems/{itemType}")]
+		public IHttpActionResult GetTopTrendingItems(int itemType)
 		{
+			ItemType type = (ItemType) itemType;
 			itemManager = new ItemManager();
-			List<Item> lijst = itemManager.GetAllItems()
-				.OrderByDescending(m => m.TrendingPercentage)
-				.Take(3)
-				.ToList();
-			return Ok(Mapper.Map(lijst, new List<ItemDTO>()));
+			List<Item> lijst = new List<Item>();
+
+			if (type == ItemType.Person){
+				itemManager.GetMostTrendingItemsForType(ItemType.Person, 3)
+					.ForEach(i => lijst.Add(itemManager.GetPersonWithDetails(i.ItemId)));
+			} else if (type == ItemType.Organisation){
+				itemManager.GetMostTrendingItemsForType(ItemType.Organisation, 3)
+					.ForEach(i => lijst.Add(itemManager.GetOrganisationWithDetails(i.ItemId)));
+			} else {
+				itemManager.GetMostTrendingItemsForType(ItemType.Theme, 3)
+					.ForEach(i => lijst.Add(itemManager.GetThemeWithDetails(i.ItemId)));
+			}
+
+			return Ok(Mapper.Map(lijst, new List<Item>()));
 		}
 		
 		/// <summary>
@@ -111,33 +122,6 @@ namespace BAR.UI.MVC.Controllers.api
 		}
 
 		/// <summary>
-		/// Creates a person item
-		/// </summary>
-		[HttpPost]
-		[SubPlatformCheckAPI]
-		[Route("api/Admin/CreatePerson")]
-		public IHttpActionResult CreatePerson()
-		{
-			//Get the subplatformID from the SubPlatformCheckAPI attribute
-			object _customObject = null;
-			int suplatformID = -1;
-
-			if (Request.Properties.TryGetValue("SubPlatformID", out _customObject))
-			{
-				suplatformID = (int)_customObject;
-			}
-
-			itemManager = new ItemManager();
-			subplatformManager = new SubplatformManager();
-			SubPlatform subplatform = subplatformManager.GetSubPlatform(suplatformID);
-
-			Person p = (Person)itemManager.AddItem(ItemType.Person, "Maarten Jorens");
-			p.SubPlatform = subplatform;
-
-			return StatusCode(HttpStatusCode.NoContent);
-		}
-		
-		/// <summary>
 		/// Retrieves more people from the same organisation.
 		/// </summary>
 		[HttpGet]
@@ -145,12 +129,20 @@ namespace BAR.UI.MVC.Controllers.api
 		public IHttpActionResult GetMorePeopleFromOrg(string itemId)
 		{
 			itemManager = new ItemManager();
-			int orgId = itemManager.GetPersonWithDetails(Int32.Parse(itemId)).Organisation.ItemId;
-			List<Person> items = itemManager.GetAllPersons()
-				.Where(p => p.Organisation.ItemId == orgId)
-				.OrderByDescending(p => p.NumberOfMentions)
-				.Take(6).ToList();
-			return Ok(Mapper.Map(items, new List<ItemDTO>()));
+
+			Person person = itemManager.GetPersonWithDetails(Int32.Parse(itemId));
+			if(person == null)
+			{
+				return Ok(Mapper.Map(new List<Person>(), new List<ItemDTO>()));
+			} else
+			{
+				int orgId = person.Organisation.ItemId;
+				List<Person> items = itemManager.GetAllPersons()
+					.Where(p => p.Organisation.ItemId == orgId)
+					.OrderByDescending(p => p.NumberOfMentions)
+					.Take(6).ToList();
+				return Ok(Mapper.Map(items, new List<ItemDTO>()));
+			}
 		}
 		
 		/// <summary>
@@ -162,8 +154,15 @@ namespace BAR.UI.MVC.Controllers.api
 		{
 			itemManager = new ItemManager();
 			int orgId = Int32.Parse(itemId);
-			List<Person> items = itemManager.GetAllPersons().Where(p => p.Organisation.ItemId == orgId).ToList();
-			return Ok(Mapper.Map(items, new List<ItemDTO>()));
+			try
+			{
+				List<Person> items = itemManager.GetAllPersons().Where(p => p.Organisation.ItemId == orgId).ToList();
+				return Ok(Mapper.Map(items, new List<ItemDTO>()));
+			} catch(Exception e)
+			{
+				return Ok(Mapper.Map(new List<Person>(), new List<ItemDTO>()));
+			}
+			
 		}
 
 		/// <summary>

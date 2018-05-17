@@ -1,3 +1,20 @@
+.tiles {
+  border-top: 1px solid #ccc;
+  margin-top: 15px;
+  padding-top: 5px;
+  margin-bottom: 0; }
+
+.tile {
+  overflow: hidden; }
+
+.top_tiles {
+  margin-bottom: 0; }
+  .top_tiles .tile h2 {
+    font-size: 30px;
+    line-height: 30px;
+    margin: 3px 0 7px;
+    font-weight: bold; }
+
 .tile_info a {
   text-overflow: ellipsis; }
 
@@ -5,12 +22,13 @@
   margin-bottom: 20px;
   margin-top: 20px; }
   .tile_count .tile_stats_count {
-    border-bottom: 1px solid #D9DEE4;
-    padding: 0 10px 0 20px;
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
-    position: relative; }
+    position: relative;
+    text-align: center; }
+    .tile_count .tile_stats_count:first-of-type::before {
+      border-left: none !important; }
     .tile_count .tile_stats_count:before {
       content: "";
       position: absolute;
@@ -26,23 +44,5 @@
       font-size: 12px; }
     .tile_count .tile_stats_count .count_bottom i {
       width: 12px; }
-
-@media (min-width: 992px) {
-  .tile_count .tile_stats_count {
-    margin-bottom: 10px;
-    border-bottom: 0;
-    padding-bottom: 10px; } }
-@media (min-width: 992px) {
-  .tile_count .tile_stats_count:first-child:before {
-    border-left: 0; } }
-@media (min-width: 768px) {
-  .tile_count .tile_stats_count .count {
-    font-size: 40px; } }
-@media (min-width: 992px) and (max-width: 1100px) {
-  .tile_count .tile_stats_count .count {
-    font-size: 30px; } }
-@media (min-width: 768px) {
-  .tile_count .tile_stats_count span {
-    font-size: 13px; } }
 
 /*# sourceMappingURL=tiles.css.map */
