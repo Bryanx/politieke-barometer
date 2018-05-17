@@ -14,8 +14,27 @@ namespace BAR.UI.MVC.Controllers.api
 	public class DataApiController : ApiController
 	{
 		private IDataManager dataManager;
+        [HttpPost]
+        [Route("api/SuperAdmin/SetSynchronize/{interval}/{start}")]
+        public IHttpActionResult SetSynchronize(int interval, string start)
+        {
 
-		[HttpGet]
+            start = start.Substring(0, 2) + ":" + start.Substring(2, start.Length);
+            IDataManager dataManager = new DataManager();
+            int datasourceId = 1;
+
+            if (interval != 0 || start != "0")
+            {
+                dataManager.ChangeInterval(datasourceId, interval);
+                dataManager.ChangeStartTimer(datasourceId, start);
+                return StatusCode(HttpStatusCode.Accepted);
+            }
+            else
+            {
+                return StatusCode(HttpStatusCode.NotAcceptable);
+            }
+        }
+        [HttpGet]
 		[Route("api/Data/Synchronize")]
 		[SubPlatformCheckAPI]
 		public IHttpActionResult Synchronize()

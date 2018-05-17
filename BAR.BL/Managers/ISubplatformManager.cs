@@ -54,10 +54,5 @@ namespace BAR.BL.Managers
 		UserActivity ChangeUserActivity(UserActivity activity);
 
 		void LogActivity(ActivityType type);
-		int GetInterval(int platformId);
-        string GetStartTimer(int platformId);
-        int ChangeInterval(int platformId, int interval);
-        string ChangeStartTimer(int platformId, string startTimer);
-
 	}
 }

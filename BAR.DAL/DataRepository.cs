@@ -293,6 +293,36 @@ namespace BAR.DAL
             ctx.DataSources.Remove(dataSource);
             return ctx.SaveChanges();
         }
+        /// <summary>
+		/// Returns the timer interval of the subplatform.
+		/// </summary>
+        public int ReadInterval(int dataSourceId)
+        {
+            return ctx.DataSources.Find(dataSourceId).Interval;
+        }
+        /// <summary>
+		/// Returns the set time of the timer.
+		/// </summary>
+        public string ReadStartTime(int dataSourceId)
+        {
+            return ctx.DataSources.Find(dataSourceId).SetTime;
+        }
+        /// <summary>
+		/// Updates the timer interval of the subplatform.
+		/// </summary>
+        public int UpdateInterval(int dataSourceId, int interval)
+        {
+            ctx.DataSources.Find(dataSourceId).Interval = interval;
+            return ctx.SaveChanges();
+        }
+        /// <summary>
+		/// Updates the set time of the timer.
+		/// </summary>
+        public int UpdateStartTime(int dataSourceId, string setTime)
+        {
+            ctx.DataSources.Find(dataSourceId).SetTime = setTime;
+            return ctx.SaveChanges();
+        }
     }
 }
 

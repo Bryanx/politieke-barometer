@@ -24,8 +24,7 @@ namespace BAR.DAL
 		IEnumerable<Question> ReadQuestionsForType(QuestionType type);
 		IEnumerable<UserActivity> ReadAllActvities();
 		IEnumerable<UserActivity> ReadActivitiesForType(ActivityType type);
-		int ReadInterval(int platformId);
-        String ReadStartTime(int platformId);
+		
 
 		//Create
 		int CreateSubplatform(SubPlatform subPlatform);
@@ -38,8 +37,7 @@ namespace BAR.DAL
 		int UpdateQuestion(Question question);
 		int UpdateQuestions(IEnumerable<Question> questions);
 		int UpdateUserActivity(UserActivity activity);
-		int UpdateInterval(int platformId,int interval);
-        int UpdateStartTime(int platformId,string setTime);
+		
 
 
 		//Delete

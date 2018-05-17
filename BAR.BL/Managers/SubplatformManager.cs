@@ -491,30 +491,5 @@ namespace BAR.BL.Managers
 			platformRepo.UpdateSubplatform(platform);
 			return platform;
 		}
-		public int GetInterval(int platformId)
-        {
-            InitRepo();
-            return platformRepo.ReadInterval(platformId);
-        }
-
-        public string GetStartTimer(int platformId)
-        {
-             InitRepo();
-             return platformRepo.ReadStartTime(platformId);
-        }
-
-         public int ChangeInterval(int platformId, int interval)
-         {
-              InitRepo();
-              platformRepo.UpdateInterval(platformId, interval);
-              return interval;
-         }
-
-         public string ChangeStartTimer(int platformId, string startTimer)
-         {
-              InitRepo();
-              platformRepo.UpdateStartTime(platformId, startTimer);
-              return startTimer;
-         }
 	}
 }

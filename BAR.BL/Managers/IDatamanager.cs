@@ -44,8 +44,13 @@ namespace BAR.BL.Managers
         DataSource GetDataSource(int dataSourceId);
         void RemoveDataSource(int dataSourceId);
         void ChangeDataSource(int dataSourceId);
-		//Other
-		bool IsJsonEmpty(string json);
+        int GetInterval(int dataSourceId);
+        string GetStartTimer(int dataSourceId);
+        int ChangeInterval(int dataSourceId, int interval);
+        string ChangeStartTimer(int dataSourceId, string startTimer);
+
+        //Other
+        bool IsJsonEmpty(string json);
 		IEnumerable<string> GetUrlsForItem(int itemId);
 	}
 }

@@ -625,7 +625,32 @@ namespace BAR.BL.Managers
 
 			return geoData;
 		}
-	}
+        public int GetInterval(int dataSourceId)
+        {
+            InitRepo();
+            return dataRepo.ReadInterval(dataSourceId);
+        }
+
+        public string GetStartTimer(int dataSourceId)
+        {
+            InitRepo();
+            return dataRepo.ReadStartTime(dataSourceId);
+        }
+
+        public int ChangeInterval(int dataSourceId, int interval)
+        {
+            InitRepo();
+            dataRepo.UpdateInterval(dataSourceId, interval);
+            return interval;
+        }
+
+        public string ChangeStartTimer(int dataSourceId, string startTimer)
+        {
+            InitRepo();
+            dataRepo.UpdateStartTime(dataSourceId, startTimer);
+            return startTimer;
+        }
+    }
 }
 
 

@@ -15,12 +15,21 @@ using BAR.UI.MVC.Models;
 using BAR.BL.Domain.Core;
 using Microsoft.Owin.BuilderProperties;
 using BAR.UI.MVC.Controllers.api;
+using BAR.BL.Managers;
 
 namespace BAR.UI.MVC
 {
   public class MvcApplication : System.Web.HttpApplication
   {
+     DataManager dataManager = new DataManager();
      private static double TimerIntervalInMilliseconds = 43200000;
+     public void intervalChange (int dataSourceId, Timer timer)
+     {
+         timer.Stop();
+         int interval = dataManager.GetInterval(dataSourceId);
+         timer.Interval = interval * 60000;
+         timer.Start();
+     }
     protected void Application_Start()
     {
       AreaRegistration.RegisterAllAreas();
@@ -116,20 +125,23 @@ namespace BAR.UI.MVC
           .ForMember(w => w.ItemIds, opt => opt.MapFrom(src => src.Items.Select(i => i.ItemId).ToList()));
       });
       Timer timer = new Timer(TimerIntervalInMilliseconds);
-                      timer.Enabled = true;
-                      timer.Elapsed += new ElapsedEventHandler(timer_Elapsed);
-                      timer.Start();
+      timer.Enabled = true;
+      timer.AutoReset = true;
+      timer.Elapsed += new ElapsedEventHandler(timer_Elapsed);
+      
+      
+      timer.Start();
     }
-    static void timer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
-                {
-                    DateTime MyScheduledRunTime = DateTime.Parse("00:00:00");
-                    DateTime CurrentSystemTime = DateTime.Now;
-                    DateTime LatestRunTime = MyScheduledRunTime.AddMilliseconds(TimerIntervalInMilliseconds);
-                    if ((CurrentSystemTime.CompareTo(MyScheduledRunTime) >= 0) && (CurrentSystemTime.CompareTo(LatestRunTime) <= 0))
-                    {
-                        DataApiController controller = new DataApiController();
-                        controller.Synchronize();
-                    }
-                }
+    private void timer_Elapsed(object sender, ElapsedEventArgs e)
+    {
+        DateTime MyScheduledRunTime = DateTime.Parse("00:00:00");
+        DateTime CurrentSystemTime = DateTime.Now;
+        DateTime LatestRunTime = MyScheduledRunTime.AddMilliseconds(TimerIntervalInMilliseconds);
+        if ((CurrentSystemTime.CompareTo(MyScheduledRunTime) >= 0) && (CurrentSystemTime.CompareTo(LatestRunTime) <= 0))
+        {
+            DataApiController controller = new DataApiController();
+            controller.Synchronize();
+        }
+    }   
   }
 }

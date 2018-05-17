@@ -195,7 +195,11 @@ namespace BAR.DAL.EF
       DataSource textgain = new DataSource
       {
         Name = "Textgain",
-        Url = "https://kdg.textgain.com/query"
+        Url = "https://kdg.textgain.com/query",
+        DataSourceId = 1,
+        Interval = 60,
+        SetTime = "0900"
+        
       };
     ctx.DataSources.Add(textgain);
     ctx.SaveChanges();
