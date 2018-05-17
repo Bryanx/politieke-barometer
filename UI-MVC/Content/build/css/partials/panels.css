@@ -1,23 +1,23 @@
 /*
 Error: Undefined mixin 'box-shadow'.
-        on line 9 of panels.scss, in `box-shadow'
-        from line 9 of panels.scss
+        on line 16 of panels.scss, in `box-shadow'
+        from line 16 of panels.scss
 
-4:   width: 100%;
-5:   margin-bottom: 15px;
-6:   padding: 10px 17px;
-7:   display: inline-block;
-8:   background: var(--white);
-9:   @include box-shadow(0 2px 0px 0px rgba(0, 0, 0, 0.07));
-10:   @include border-radius;
-11:   -webkit-column-break-inside: avoid;
-12:   -moz-column-break-inside: avoid;
-13:   column-break-inside: avoid;
-14:   opacity: 1;
+11:   width: 100%;
+12:   margin-bottom: 15px;
+13:   padding: 10px 17px;
+14:   display: inline-block;
+15:   background: var(--white);
+16:   @include box-shadow(0 2px 0px 0px rgba(0, 0, 0, 0.07));
+17:   @include border-radius;
+18:   -webkit-column-break-inside: avoid;
+19:   -moz-column-break-inside: avoid;
+20:   column-break-inside: avoid;
+21:   opacity: 1;
 
 Backtrace:
-panels.scss:9:in `box-shadow'
-panels.scss:9
+panels.scss:16:in `box-shadow'
+panels.scss:16
 C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/sass-3.5.6/lib/sass/tree/visitors/perform.rb:352:in `block in visit_mixin'
 C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/sass-3.5.6/lib/sass/stack.rb:98:in `block in with_mixin'
 C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/sass-3.5.6/lib/sass/stack.rb:135:in `with_frame'
@@ -71,4 +71,4 @@ C:/Ruby24-x64/bin/scss:23:in `<main>'
 body:before {
   white-space: pre;
   font-family: monospace;
-  content: "Error: Undefined mixin 'box-shadow'.\A         on line 9 of panels.scss, in `box-shadow'\A         from line 9 of panels.scss\A \A 4:   width: 100%;\A 5:   margin-bottom: 15px;\A 6:   padding: 10px 17px;\A 7:   display: inline-block;\A 8:   background: var(--white);\A 9:   @include box-shadow(0 2px 0px 0px rgba(0, 0, 0, 0.07));\A 10:   @include border-radius;\A 11:   -webkit-column-break-inside: avoid;\A 12:   -moz-column-break-inside: avoid;\A 13:   column-break-inside: avoid;\A 14:   opacity: 1;"; }
+  content: "Error: Undefined mixin 'box-shadow'.\A         on line 16 of panels.scss, in `box-shadow'\A         from line 16 of panels.scss\A \A 11:   width: 100%;\A 12:   margin-bottom: 15px;\A 13:   padding: 10px 17px;\A 14:   display: inline-block;\A 15:   background: var(--white);\A 16:   @include box-shadow(0 2px 0px 0px rgba(0, 0, 0, 0.07));\A 17:   @include border-radius;\A 18:   -webkit-column-break-inside: avoid;\A 19:   -moz-column-break-inside: avoid;\A 20:   column-break-inside: avoid;\A 21:   opacity: 1;"; }

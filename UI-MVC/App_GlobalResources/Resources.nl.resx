@@ -132,6 +132,9 @@
   <data name="About_Time" xml:space="preserve">
     <value>Ongeveer</value>
   </data>
+  <data name="Above25" xml:space="preserve">
+    <value>Boven 25</value>
+  </data>
   <data name="Account" xml:space="preserve">
     <value>Account</value>
   </data>
@@ -156,6 +159,12 @@
   <data name="AdminManagement" xml:space="preserve">
     <value>Admins beheren</value>
   </data>
+  <data name="Age" xml:space="preserve">
+    <value>Leeftijd</value>
+  </data>
+  <data name="AgeDistributionOfMentions" xml:space="preserve">
+    <value>Leeftijdsverdeling van vermeldingen</value>
+  </data>
   <data name="Ago" xml:space="preserve">
     <value>Geleden</value>
   </data>
@@ -174,6 +183,15 @@
   <data name="AllPoliticians" xml:space="preserve">
     <value>Politici-overzicht</value>
   </data>
+  <data name="BarChart" xml:space="preserve">
+    <value>Staafgrafiek</value>
+  </data>
+  <data name="BasicGraph" xml:space="preserve">
+    <value>Basis grafiek</value>
+  </data>
+  <data name="Below25" xml:space="preserve">
+    <value>Onder 25</value>
+  </data>
   <data name="CalculatedByAmountOfTweets" xml:space="preserve">
     <value>Berekend volgens het aantal tweets.</value>
   </data>
@@ -186,8 +204,29 @@
   <data name="ChangeRole" xml:space="preserve">
     <value>Verander rol</value>
   </data>
+  <data name="ChooseData" xml:space="preserve">
+    <value>Data kiezen</value>
+  </data>
+  <data name="ChooseDataSubText" xml:space="preserve">
+    <value>Welke data wil u op uw grafiek laten zien?</value>
+  </data>
+  <data name="ChooseGraph" xml:space="preserve">
+    <value>Grafiek kiezen</value>
+  </data>
+  <data name="ChooseGraphSubText" xml:space="preserve">
+    <value>Welk type grafiek wilt u laten zien?</value>
+  </data>
+  <data name="ChoosePersonOrgTopic" xml:space="preserve">
+    <value>Kies een persoon, organisatie of thema.</value>
+  </data>
   <data name="City" xml:space="preserve">
     <value>Woonplaats</value>
+  </data>
+  <data name="CompareDataPlaceholder" xml:space="preserve">
+    <value>Vergelijk data met een ander persoon, organisatie of thema.</value>
+  </data>
+  <data name="ComparingGraph" xml:space="preserve">
+    <value>Vergelijkende grafiek</value>
   </data>
   <data name="ConfirmAccount" xml:space="preserve">
     <value>Bevestig je account</value>
@@ -243,6 +282,15 @@
   <data name="Details" xml:space="preserve">
     <value>Details</value>
   </data>
+  <data name="DonutChart" xml:space="preserve">
+    <value>Donutdiagram</value>
+  </data>
+  <data name="DownloadJPGImage" xml:space="preserve">
+    <value>Download JPG afbeelding</value>
+  </data>
+  <data name="DownloadPNGImage" xml:space="preserve">
+    <value>Download PNG afbeelding</value>
+  </data>
   <data name="Email" xml:space="preserve">
     <value>E-mailadres</value>
   </data>
@@ -285,11 +333,20 @@
   <data name="Gender" xml:space="preserve">
     <value>Geslacht</value>
   </data>
+  <data name="GenderDistributionOfMentions" xml:space="preserve">
+    <value>Geslachtsverdeling van vermeldingen</value>
+  </data>
+  <data name="GraphType" xml:space="preserve">
+    <value>Grafiek type</value>
+  </data>
   <data name="Home" xml:space="preserve">
     <value>Home</value>
   </data>
   <data name="HomepageHeaderTitle" xml:space="preserve">
     <value>Bekijk welke politici trending zijn</value>
+  </data>
+  <data name="HorizontalBarChart" xml:space="preserve">
+    <value>Horizontale staafgrafiek</value>
   </data>
   <data name="Hours" xml:space="preserve">
     <value>Uur</value>
@@ -299,6 +356,15 @@
   </data>
   <data name="ImportContent" xml:space="preserve">
     <value>Content importeren</value>
+  </data>
+  <data name="InNumberOfMentions" xml:space="preserve">
+    <value>In aantal vermeldingen.</value>
+  </data>
+  <data name="IntersectValue" xml:space="preserve">
+    <value>Kruising waarde</value>
+  </data>
+  <data name="InTrendingPercentage" xml:space="preserve">
+    <value>In trending percentage.</value>
   </data>
   <data name="Interval" xml:space="preserve">
     <value>Interval</value>
@@ -323,6 +389,9 @@
   </data>
   <data name="LessThenOneMinute" xml:space="preserve">
     <value>Minder dan een minuut geleden</value>
+  </data>
+  <data name="LineChart" xml:space="preserve">
+    <value>Lijngrafiek</value>
   </data>
   <data name="Link" xml:space="preserve">
     <value>Link</value>
@@ -354,6 +423,9 @@
   <data name="Man" xml:space="preserve">
     <value>Man</value>
   </data>
+  <data name="Members" xml:space="preserve">
+    <value>Leden</value>
+  </data>
   <data name="Mentions" xml:space="preserve">
     <value>Vermeldingen</value>
   </data>
@@ -365,6 +437,9 @@
   </data>
   <data name="MoreInfo" xml:space="preserve">
     <value>Meer info</value>
+  </data>
+  <data name="MorePeopleFrom" xml:space="preserve">
+    <value>Meer mensen van</value>
   </data>
   <data name="NA" xml:space="preserve">
     <value>N/B</value>
@@ -387,6 +462,9 @@
   <data name="NoChartsYet" xml:space="preserve">
     <value>Je hebt nog geen grafieken.</value>
   </data>
+  <data name="NoDataAvailable" xml:space="preserve">
+    <value>Geen data beschikbaar.</value>
+  </data>
   <data name="NowYouCan" xml:space="preserve">
     <value>Nu kan je</value>
   </data>
@@ -396,14 +474,26 @@
   <data name="NumberOfMentions" xml:space="preserve">
     <value>Vermeldingen</value>
   </data>
+  <data name="NumberOfMentionsFull" xml:space="preserve">
+    <value>Aantal vermeldingen</value>
+  </data>
   <data name="OnSocialMedia" xml:space="preserve">
     <value>Op sociale media</value>
+  </data>
+  <data name="Optional" xml:space="preserve">
+    <value>Optioneel</value>
   </data>
   <data name="Or" xml:space="preserve">
     <value>Of</value>
   </data>
   <data name="Organisation" xml:space="preserve">
     <value>Organisatie</value>
+  </data>
+  <data name="OtherSettings" xml:space="preserve">
+    <value>Overige instellingen</value>
+  </data>
+  <data name="OtherSettingsSubText" xml:space="preserve">
+    <value>Kies optioneel enkele overige instellingen.</value>
   </data>
   <data name="PageManagement" xml:space="preserve">
     <value>Pagina's beheren</value>
@@ -419,6 +509,9 @@
   </data>
   <data name="Photo" xml:space="preserve">
     <value>Foto</value>
+  </data>
+  <data name="PieChart" xml:space="preserve">
+    <value>Taartdiagram</value>
   </data>
   <data name="Politician" xml:space="preserve">
     <value>Politicus</value>
@@ -458,6 +551,9 @@
   </data>
   <data name="RemoveAlert" xml:space="preserve">
     <value>Verwijder alert</value>
+  </data>
+  <data name="RemoveData" xml:space="preserve">
+    <value>Data verwijderen</value>
   </data>
   <data name="RemoveItem" xml:space="preserve">
     <value>Verwijder item</value>
@@ -543,6 +639,15 @@
   <data name="ThanksEmailConfirm" xml:space="preserve">
     <value>Bedankt voor het bevestigen van uw e-mailadres.</value>
   </data>
+  <data name="Theme" xml:space="preserve">
+    <value>Thema</value>
+  </data>
+  <data name="Title" xml:space="preserve">
+    <value>Titel</value>
+  </data>
+  <data name="To" xml:space="preserve">
+    <value>Op</value>
+  </data>
   <data name="Topics" xml:space="preserve">
     <value>Thema's</value>
   </data>
@@ -587,5 +692,23 @@
   </data>
   <data name="YourPasswordHasBeenReset" xml:space="preserve">
     <value>Uw wachtwoord is gereset.</value>
+  </data>
+  <data name="AllThemes" xml:space="preserve">
+    <value>Thema-overzicht</value>
+  </data>
+  <data name="LatestStories" xml:space="preserve">
+    <value>Laatste verhalen</value>
+  </data>
+  <data name="IsNowAvailable" xml:space="preserve">
+    <value>is nu beschikbaar!</value>
+   </data>
+  <data name="BackToHome" xml:space="preserve">
+    <value>Ga naar startpagina</value>
+  </data>
+  <data name="PageNotFound" xml:space="preserve">
+    <value>Pagina niet gevonden</value>
+  </data>
+  <data name="SomethingWentWrong" xml:space="preserve">
+    <value>Er is iets misgegaan...</value>
   </data>
 </root>

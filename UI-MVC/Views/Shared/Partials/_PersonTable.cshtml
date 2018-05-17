@@ -1,11 +1,14 @@
 ﻿@using BAR.BL.Domain.Items
 @using BAR.UI.MVC.Helpers
-@model BAR.UI.MVC.Models.ItemViewModels.ItemViewModel
+@model BAR.UI.MVC.Models.ItemViewModels.PersonViewModels
+
+@{ var TopTrending = @Model.Persons.OrderByDescending(p => p.Item.TrendingPercentage);}
 
 <table id="datatable-infinite" class="table" cellspacing="10px" width="100%">
     <colgroup>
         <col style="width: 40px">
-        <col style="width: 35%">
+        <col style="width: 20%">
+        <col style="width: 15%">
         <col style="width: 15%">
         <col style="width: 12%">
         <col style="width: 12%">
@@ -20,6 +23,9 @@
             @Resources.Name
         </th>
         <th>
+            @Resources.Organisation
+        </th>
+        <th>
             @Resources.Mentions
         </th>
         <th>
@@ -31,44 +37,82 @@
         <th title=@Resources.CalculatedByAmountOfTweets>
             @Resources.Trending
         </th>
-        @if (User.Identity.IsAuthenticated) {
-            <th>
-            </th>
-        }
+        <th>
+        </th>
     </tr>
     </thead>
     <tbody>
-    @foreach (var item in Model.Items) {
+    @foreach (var person in Model.Persons) {
         <tr class="subscription">
             <td>
-                <div class="img-circle person-image"></div>
+            @if (person.Item.Picture != null && person.Item.Picture.Length > 0) {
+                @Html.ImageHelper(@Url.Action("Picture", "Person", new {itemId=person.Item.ItemId}), htmlAttributes: new {@class = "img-circle person-image",                      
+                    onerror = "this.onload = null; this.src='https://twitter.com/"+@person.SocialMediaNames.First(s => s.Source.Name == "Twitter").Username+"/profile_image?size=normal';"
+                });
+            } else if (person.SocialMediaNames?.FirstOrDefault(s => s.Source.Name == "Twitter") != null) {
+                <img src='https://twitter.com/@person.SocialMediaNames.First(s => s.Source.Name == "Twitter").Username/profile_image?size=normal'
+                     class="img-circle person-image"
+                     onerror = "this.onload = null; this.src='/Content/build/images/picture.jpg';"/>
+            } else {
+                if (person.OrganisationName != null) {
+                     <img src='/Content/build/images/picture.jpg' class="img-circle person-image"/>
+                 } else if (person.OrganisationId == -1) {
+                     <img src='/Content/build/images/topics.png' class="img-circle person-image"/>
+                 } else {
+                     <img src='/Content/build/images/organisation.png' class="img-circle person-image"/>
+                 }
+            }
+            <td>
+                @if (person.OrganisationName != null) {
+                    <a href='@Url.PersonUrl(person.Item.ItemId)'>@person.Item.Name</a>
+                } else if (person.OrganisationId == -1) {
+                    <a href='@Url.ThemeUrl(person.Item.ItemId)'>@person.Item.Name</a>
+                } else {
+                    <a href='@Url.OrganisationUrl(person.Item.ItemId)'>@person.Item.Name</a>
+                }
             </td>
             <td>
-                <a href='@Url.PersonUrl(item.ItemId)'> @item.Name</a>
+                <a href='@Url.OrganisationUrl(person.OrganisationId)'> @person.OrganisationName</a>
             </td>
             <td>
-                @item.NumberOfMentions
+                @person.Item.NumberOfMentions
+                @if (person.RankNumberOfMentions == 1) {
+                    <i class="fa fa-trophy gold"></i>
+                }
+                @if (person.RankNumberOfMentions == 2) {
+                    <i class="fa fa-trophy silver"></i>
+                }
+                @if (person.RankNumberOfMentions == 3) {
+                    <i class="fa fa-trophy bronze"></i>
+                }
             </td>
             <td class="green">
-                @item.SentimentPositive%
+                @person.Item.SentimentPositive%
                 <i class="glyphicon glyphicon-arrow-up"></i>
             </td>
             <td class="red">
-                @item.SentimentNegative%
+                @person.Item.SentimentNegative%
                 <i class="glyphicon glyphicon-arrow-down"></i>
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.TrendingPercentage) %
+                @Html.DisplayFor(modelItem => person.Item.TrendingPercentage)%
+                @if (person.RankTrendingPercentage == 1) {
+                    <i class="fa fa-trophy gold"></i>
+                }
+                @if (person.RankTrendingPercentage == 2) {
+                    <i class="fa fa-trophy silver"></i>
+                }
+                @if (person.RankTrendingPercentage == 3) {
+                    <i class="fa fa-trophy bronze"></i>
+                }
             </td>
-            @if (User.Identity.IsAuthenticated) {
-                <td>
-                    @if (item.Subscribed != true) {
-                    <a class="subscribeItem btn btn-success btn-xs" data-item-id="@item.ItemId" title=@Resources.FollowThisPerson>@Resources.Subscribe</a>
-                    } else {
-                    <a class="subscribeItem btn btn-danger btn-xs" data-item-id="@item.ItemId" title=@Resources.Unsubscribe>@Resources.Unsubscribe</a>
-                    }
-                </td>
-            }
+            <td>
+                @if (@person.Subscribed) {
+                    <a class="subscribeItem btn btn-danger btn-xs" data-item-id="@person.Item.ItemId" title=@Resources.Unsubscribe>@Resources.Unsubscribe</a>
+                } else {
+                    <a class="subscribeItem btn btn-success btn-xs" data-item-id="@person.Item.ItemId" title=@Resources.FollowThisPerson>@Resources.Subscribe</a>
+                }
+            </td>
         </tr>
     }
     </tbody>

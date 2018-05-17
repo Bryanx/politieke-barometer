@@ -11,6 +11,7 @@ using System.IO;
 using System.Text.RegularExpressions;
 using BAR.BL.Domain.Core;
 using BAR.BL.Domain.Widgets;
+using Microsoft.AspNet.Identity;
 
 namespace BAR.BL.Managers
 {
@@ -42,38 +43,39 @@ namespace BAR.BL.Managers
 		{
 			InitRepo();
 
-			DataManager dataManager = new DataManager();
-			IEnumerable<Information> allInfoForId = dataManager.GetInformationsForItemid(itemId);
+			//Get item
+			Item itemToUpdate = itemRepo.ReadItem(itemId);
+			if (itemToUpdate == null) return;
 
-			if (allInfoForId.Count() > 0)
+			//Get all informations
+			IEnumerable<Information> infos = new DataManager().GetInformationsForItemid(itemId);
+			if (infos == null || infos.Count() == 0) return;
+	
+			//Calculate new baseline (avarage of the last 30 days)
+			int infosOld = infos.Where(info => info.CreationDate.Value < DateTime.Now && info.CreationDate.Value >= DateTime.Now.AddDays(-30)).Count();
+			if (infosOld != 0) itemToUpdate.Baseline = Math.Round((double) (infosOld / 30));
+
+			//Determine trending percentage (avarage of the last 3 days)
+			int infosNew = infos.Where(info => info.CreationDate.Value.ToString("dd-MM-yy").Equals(DateTime.Now.ToString("dd-MM-yy"))
+								|| info.CreationDate.Value >= DateTime.Now.AddDays(-3))
+								.Count();
+			if (infosNew != 0)
 			{
-				DateTime earliestInfoDate = allInfoForId.Min(item => item.CreationDate).Value;
-				DateTime lastInfoDate = allInfoForId.Max(item => item.CreationDate).Value;
+				//If trendingper is 0 then it will be devided by 1
+				//Bescause deviding by zero gives back an error
+				double trendingPer;
+				if (itemToUpdate.Baseline == 0) trendingPer = infosNew / 1;
+				else trendingPer = infosNew / itemToUpdate.Baseline;
 
-				int period = (lastInfoDate - earliestInfoDate).Days;
-
-				if (period == 0) period = 1;
-
-				int aantalBaseline = dataManager.GetNumberInfo(itemId, earliestInfoDate);
-				int aantalTrending = dataManager.GetNumberInfo(itemId, lastInfoDate.AddDays(-1));
-
-				// Calculate the baseline = number of information / number of days from the last update until now
-				double baseline = Convert.ToDouble(aantalBaseline) / Convert.ToDouble(period);
-
-				if (baseline == 0) return;
-				// Calculate the trendingpercentage = baseline / number of days from the last update until now.
-				double trendingPer = Convert.ToDouble(aantalTrending) / baseline;
-
-				//Get item
-				Item itemToUpdate = itemRepo.ReadItem(itemId);
-				if (itemToUpdate != null)
+				if (trendingPer > 0)
 				{
-					itemToUpdate.Baseline = baseline;
-					itemToUpdate.TrendingPercentage = trendingPer;
-					itemToUpdate.LastUpdatedInfo = DateTime.Now;
-					itemRepo.UpdateItem(itemToUpdate);
+					itemToUpdate.TrendingPercentage = Math.Round(trendingPer, 2);
+					new SubscriptionManager().GenerateAlerts(itemToUpdate.ItemId);
 				}
 			}
+
+			//Save changes
+			itemRepo.UpdateItem(itemToUpdate);
 		}
 
 		/// <summary>
@@ -81,20 +83,20 @@ namespace BAR.BL.Managers
 		/// the number of trending items depends on the
 		/// number that you give via the parameter
 		/// </summary>
-		public IEnumerable<Item> GetMostTrendingItems(int numberOfItems = 5)
+		public IEnumerable<Item> GetMostTrendingItems(int numberOfItems = 5, bool useWithOldData = false)
 		{
 			//Order the items by populairity
-			IEnumerable<Item> itemsOrderd = GetAllItems()
-				.OrderBy(item => item.TrendingPercentage).AsEnumerable();
-
-			//Get the first items out of the list
-			List<Item> itemsOrderdMostPopulair = new List<Item>();
-			for (int i = 0; i < numberOfItems; i++)
+			IEnumerable<Item> itemsOrderd = GetAllItems();
+			if (!useWithOldData)
 			{
-				if (i <= itemsOrderd.Count()) itemsOrderdMostPopulair.Add(itemsOrderd.ElementAt(i));
+				itemsOrderd = itemsOrderd.OrderBy(item => item.TrendingPercentage).AsEnumerable();
+			}
+			else
+			{
+				itemsOrderd = itemsOrderd.OrderBy(item => item.TrendingPercentage).AsEnumerable();
 			}
 
-			return itemsOrderdMostPopulair.AsEnumerable();
+			return itemsOrderd.Take(numberOfItems).AsEnumerable();
 		}
 
 		/// <summary>
@@ -102,27 +104,29 @@ namespace BAR.BL.Managers
 		/// for a specific type
 		/// the number of items depends on the parameter "numberOfItems"
 		/// </summary>
-		public IEnumerable<Item> GetMostTrendingItemsForType(ItemType type, int numberOfItems = 5)
+		public IEnumerable<Item> GetMostTrendingItemsForType(ItemType type, int numberOfItems = 5, bool useWithOldData = false)
 		{
 			//order the items by populairity
-			IEnumerable<Item> itemsOrderd = GetAllItems().Where(item => item.ItemType == type)
-				.OrderBy(item => item.TrendingPercentage).AsEnumerable();
-
-			//Get the first items out of the list
-			List<Item> itemsOrderdMostPopulair = new List<Item>();
-			for (int i = 0; i < numberOfItems; i++)
+			IEnumerable<Item> itemsOrderd = GetAllItems();
+			if (!useWithOldData)
 			{
-				if (i <= itemsOrderd.Count()) itemsOrderdMostPopulair.Add(itemsOrderd.ElementAt(i));
+				itemsOrderd = itemsOrderd.Where(item => item.ItemType == type)
+				.OrderBy(item => item.TrendingPercentage).AsEnumerable();
+			}
+			else
+			{
+				itemsOrderd = itemsOrderd.Where(item => item.ItemType == type)
+				.OrderBy(item => item.TrendingPercentage).AsEnumerable();
 			}
 
-			return itemsOrderdMostPopulair.AsEnumerable();
+			return itemsOrderd.Take(numberOfItems).AsEnumerable();
 		}
 
 		/// <summary>
 		/// Gives back a list of the most trending items
 		/// based on the userId.
 		/// </summary>
-		public IEnumerable<Item> GetMostTredningItemsForUser(string userId, int numberOfItems = 5)
+		public IEnumerable<Item> GetMostTrendingItemsForUser(string userId, int numberOfItems = 5, bool useWithOldData = false)
 		{
 			//Get items for userId and order items from user
 			//We need to get every item of the subscription of a specefic user
@@ -134,17 +138,17 @@ namespace BAR.BL.Managers
 			}
 
 			//Order items
-			IEnumerable<Item> itemsOrderd = itemsFromUser
-				.OrderBy(item => item.TrendingPercentage).AsEnumerable();
-
-			//Get the first items out of the list
-			List<Item> itemsOrderdMostPopulair = new List<Item>();
-			for (int i = 0; i < numberOfItems; i++)
+			IEnumerable<Item> itemsOrderd;
+			if (!useWithOldData)
 			{
-				if (i <= itemsOrderd.Count()) itemsOrderdMostPopulair.Add(itemsOrderd.ElementAt(i));
+				itemsOrderd = itemsFromUser.OrderBy(item => item.TrendingPercentage).AsEnumerable();
+			}
+			else
+			{
+				itemsOrderd = itemsFromUser.OrderBy(item => item.TrendingPercentage).AsEnumerable();
 			}
 
-			return itemsOrderd;
+			return itemsOrderd.Take(numberOfItems).AsEnumerable();
 		}
 
 		/// <summary>
@@ -152,7 +156,7 @@ namespace BAR.BL.Managers
 		/// for a specific type and user
 		/// the number of items depends on the parameter "numberOfItems"
 		/// </summary>
-		public IEnumerable<Item> GetMostTredningItemsForUserAndItemType(string userId, ItemType type, int numberOfItems = 5)
+		public IEnumerable<Item> GetMostTrendingItemsForUserAndItemType(string userId, ItemType type, int numberOfItems = 5, bool useWithOldData = false)
 		{
 			//Get items for userId and order items from user
 			//We need to get every item of the subscription of a specefic user
@@ -164,17 +168,42 @@ namespace BAR.BL.Managers
 			}
 
 			//Order items
-			IEnumerable<Item> itemsOrderd = itemsFromUser.Where(item => item.ItemType == type)
-				.OrderBy(item => item.TrendingPercentage).AsEnumerable();
-
-			//Get the first items out of the list
-			List<Item> itemsOrderdMostPopulair = new List<Item>();
-			for (int i = 0; i < numberOfItems; i++)
+			IEnumerable<Item> itemsOrderd;
+			if (!useWithOldData)
 			{
-				if (i <= itemsOrderd.Count()) itemsOrderdMostPopulair.Add(itemsOrderd.ElementAt(i));
+				itemsOrderd = itemsFromUser.Where(item => item.ItemType == type)
+				.OrderBy(item => item.TrendingPercentage).AsEnumerable();
+			}
+			else
+			{
+				itemsOrderd = itemsFromUser.Where(item => item.ItemType == type)
+				.OrderBy(item => item.TrendingPercentage).AsEnumerable();
 			}
 
-			return itemsOrderd;
+			return itemsOrderd.Take(numberOfItems).AsEnumerable();
+		}
+
+		/// <summary>
+		/// If the last time that the old trending percentage of the item was updated 7 days ago,
+		/// then the old trending percentage will be updated.
+		/// </summary>
+		public void UpdateWeeklyReviewData(int platformId)
+		{
+			//Get timestamp
+			DateTime? lastUpdated = new SubplatformManager().GetSubPlatform(platformId).LastUpdatedWeeklyReview;
+
+			//Get all items
+			IEnumerable<Item> items = itemRepo.ReadAllItemsWithPlatforms();
+			if (items == null || items.Count() == 0) return;
+
+			//Refresh old data
+			if (lastUpdated == null || lastUpdated < DateTime.Now.AddDays(-7))
+			{
+				foreach (Item item in items) item.NumberOfMentionsOld = item.NumberOfMentions;
+			}
+
+			//Update database
+			itemRepo.UpdateItems(items);
 		}
 
 		/// <summary>
@@ -189,17 +218,30 @@ namespace BAR.BL.Managers
 		/// <summary>
 		/// Returns a person with all personal details.
 		/// </summary>
-		public Person GetPersonWithDetails(int itemId) {
+		public Person GetPersonWithDetails(int itemId)
+		{
 			InitRepo();
 			return itemRepo.ReadPersonWithDetails(itemId);
 		}
-		
+
 		/// <summary>
 		/// Returns an organisation with all personal details.
 		/// </summary>
-		public Organisation GetOrganisationWithDetails(int itemId) {
+		public Organisation GetOrganisationWithDetails(int itemId)
+		{
 			InitRepo();
 			return itemRepo.ReadOrganisationWithDetails(itemId);
+		}
+
+		/// <summary>
+		/// Returns a theme with all the Theme keywords
+		/// </summary>
+		/// <param name="itemId"></param>
+		/// <returns></returns>
+		public Theme GetThemeWithDetails(int itemId)
+		{
+			InitRepo();
+			return itemRepo.ReadThemeWithDetails(itemId);
 		}
 
 		/// <summary>
@@ -220,10 +262,10 @@ namespace BAR.BL.Managers
 			return itemRepo.ReadItemWithWidgets(itemId);
 		}
 
-				/// <summary>
-				/// Gives back all the items of a specific type
-				/// </summary>
-				public IEnumerable<Item> GetItemsForType(ItemType type)
+		/// <summary>
+		/// Gives back all the items of a specific type
+		/// </summary>
+		public IEnumerable<Item> GetItemsForType(ItemType type)
 		{
 			IEnumerable<Item> items = GetAllItems();
 			return items.Where(item => item.ItemType == type).AsEnumerable();
@@ -248,12 +290,23 @@ namespace BAR.BL.Managers
 		}
 
 		/// <summary>
-		/// Returns all (undeleted) people of the whole system
+		/// Returns all people of the whole system
 		/// </summary>
 		public IEnumerable<Person> GetAllPersons()
 		{
 			InitRepo();
-			return itemRepo.ReadAllPersons().AsEnumerable();
+			return itemRepo.ReadAllPersonsWithPlatforms();
+		}
+
+		/// <summary>
+		/// Returns all (undeleted) people for an organisation
+		/// </summary>
+		/// <param name="organisationId"></param>
+		/// <returns></returns>
+		public IEnumerable<Person> GetAllPersonsForOrganisation(int organisationId)
+		{
+			InitRepo();
+			return itemRepo.ReadAllPersonsForOrganisation(organisationId).AsEnumerable();
 		}
 
 		/// <summary>
@@ -272,7 +325,7 @@ namespace BAR.BL.Managers
 		/// NOTE
 		/// THIS METHOD USES UNIT OF WORK
 		/// </summary>
-		public Item AddItem(ItemType itemType, string name, string description = "", string function = "", Category category = null,
+		public Item AddItem(ItemType itemType, string name, string description = "", string function = "",
 			string district = null, string level = null, string site = null, Gender gender = Gender.OTHER, string position = null, DateTime? dateOfBirth = null)
 		{
 			InitRepo();
@@ -283,33 +336,36 @@ namespace BAR.BL.Managers
 			switch (itemType)
 			{
 				case ItemType.Person:
-					item = new Person()
-					{
-						District = district,
-						Level = level,
-						Gender = gender,
-						Site = site,
-						DateOfBirth = dateOfBirth,
-						Position = position,
-						SocialMediaNames = new List<SocialMediaName>(),
-					};
-					break;
+				item = new Person()
+				{
+					District = district,
+					Level = level,
+					Gender = gender,
+					Site = site,
+					DateOfBirth = dateOfBirth,
+					Position = position,
+					SocialMediaNames = new List<SocialMediaName>()
+				};
+				break;
 				case ItemType.Organisation:
-					item = new Organisation()
-					{
-						Site = site,
-						SocialMediaUrls = new List<SocialMediaName>()
-					};
-					break;
+				item = new Organisation()
+				{
+					Site = site,
+					SocialMediaUrls = new List<SocialMediaName>()
+				};
+				break;
 				case ItemType.Theme:
-					item = new Theme()
+				item = new Theme()
+				{
+					Keywords = new List<Keyword>()
 					{
-						Category = category
-					};
-					break;
+
+					}
+				};
+				break;
 				default:
-					item = null;
-					break;
+				item = null;
+				break;
 			}
 
 			if (item == null) return null;
@@ -317,11 +373,14 @@ namespace BAR.BL.Managers
 			item.Name = name;
 			item.CreationDate = DateTime.Now;
 			item.LastUpdatedInfo = DateTime.Now;
-			item.LastUpdated = DateTime.Now;
+			//needs to be null to do a check later on: see updateItemTrending in itemManager for details
 			item.NumberOfFollowers = 0;
 			item.TrendingPercentage = 0.0;
+			item.NumberOfMentions = 0;
+			item.NumberOfMentionsOld = 0;
 			item.Baseline = 0.0;
 			item.Deleted = false;
+			item.Baseline = 10.0;
 			item.Informations = new List<Information>();
 			item.ItemWidgets = new List<Widget>();
 
@@ -377,6 +436,26 @@ namespace BAR.BL.Managers
 			itemWidgets.Add(widget3);
 			widgetIds.Add(widget3.WidgetId);
 
+			//4th widget
+			proptags = new List<PropertyTag>();
+			proptags.Add(new PropertyTag()
+			{
+				Name = "Education"
+			});
+			ItemWidget widget4 = (ItemWidget)widgetManager.AddWidget(WidgetType.GraphType, name + " education comparison", 1, 1, proptags: proptags, graphType: GraphType.PieChart, rowspan: 6, colspan: 6);
+			itemWidgets.Add(widget4);
+			widgetIds.Add(widget4.WidgetId);
+
+			//5th widget
+			proptags = new List<PropertyTag>();
+			proptags.Add(new PropertyTag()
+			{
+				Name = "Personality"
+			});
+			ItemWidget widget5 = (ItemWidget)widgetManager.AddWidget(WidgetType.GraphType, name + " personality comparison", 1, 1, proptags: proptags, graphType: GraphType.BarChart, rowspan: 6, colspan: 6);
+			itemWidgets.Add(widget5);
+			widgetIds.Add(widget5.WidgetId);
+
 			//Link widgets to item & save changes to database
 			item.ItemWidgets = itemWidgets;
 			itemRepo.UpdateItem(item);
@@ -387,7 +466,7 @@ namespace BAR.BL.Managers
 		/// <summary>
 		/// Returns all (undeleted) themes of the whole system
 		/// </summary>
-		public IEnumerable<Item> GetAllThemes()
+		public IEnumerable<Theme> GetAllThemes()
 		{
 			InitRepo();
 			return itemRepo.ReadAllThemes().AsEnumerable();
@@ -396,14 +475,15 @@ namespace BAR.BL.Managers
 		/// <summary>
 		/// Returns all people for specific subplatform
 		/// </summary>
+		/// <param name="subPlatformName"></param>
 		/// <returns></returns>
-		public IEnumerable<Item> GetAllPersonsForSubplatform(int subPlatformID)
+		public IEnumerable<Person> GetAllPersonsForSubplatform(int subPlatformID)
 		{
 			return GetAllPersons()
 				.Where(item => item.Deleted == false)
 				.Where(item => item.SubPlatform.SubPlatformId.Equals(subPlatformID));
 		}
-		
+
 		/// <summary>
 		/// Returns all organisations for specific subplatform
 		/// </summary>
@@ -428,13 +508,12 @@ namespace BAR.BL.Managers
 
 			//Update item
 			itemToUpdate.Name = name;
-			itemToUpdate.LastUpdated = DateTime.Now;
 
 			//Update database
 			itemRepo.UpdateItem(itemToUpdate);
 			return itemToUpdate;
 		}
-		
+
 		/// <summary>
 		/// Updates a person.
 		/// </summary>
@@ -444,7 +523,7 @@ namespace BAR.BL.Managers
 
 			//Get item
 			Person personToUpdate = GetPersonWithDetails(itemId);
-			
+
 			if (personToUpdate == null) return null;
 
 			//Update item
@@ -452,7 +531,6 @@ namespace BAR.BL.Managers
 			personToUpdate.Gender = gender;
 			personToUpdate.Position = position;
 			personToUpdate.District = district;
-			personToUpdate.LastUpdated = DateTime.Now;
 
 			//Update database
 			itemRepo.UpdateItem(personToUpdate);
@@ -526,13 +604,13 @@ namespace BAR.BL.Managers
 			InitRepo();
 			return itemRepo.ReadItemWithWidgets(itemId);
 		}
+
 		/// <summary>
 		/// Gets person with given name.
 		/// </summary>
-		public Person GetPerson(string personName)
-		{
+		public Item GetItemByName(string name) {
 			InitRepo();
-			return itemRepo.ReadPerson(personName);
+			return itemRepo.ReadItemByName(name);
 		}
 
 		/// <summary>
@@ -557,6 +635,81 @@ namespace BAR.BL.Managers
 		{
 			CheckOrganisations(json, subPlatformID);
 			return AddItemsFromJson(json, subPlatformID);
+		}
+
+		/// <summary>
+		/// Import all the themes from the json file
+		/// </summary>
+		/// <param name="json"></param>
+		/// <param name="subPlatformID"></param>
+		/// <returns></returns>
+		public bool ImportThemes(string json, int subPlatformID)
+		{
+			return AddThemesFromJson(json, subPlatformID);
+		}
+
+		/// <summary>
+		/// Check if theme exists, if not add it to the Database
+		/// </summary>
+		/// <param name="json"></param>
+		/// <param name="subPlatformID"></param>
+		private bool AddThemesFromJson(string json, int subPlatformID)
+		{
+			uowManager = new UnitOfWorkManager();
+
+			InitRepo();
+
+			ISubplatformManager subplatformManager = new SubplatformManager(uowManager);
+			SubPlatform subPlatform = subplatformManager.GetSubPlatform(subPlatformID);
+			IEnumerable<Item> themes = GetAllThemes();
+			List<Item> newThemes = new List<Item>();
+
+			dynamic deserializedJson = JsonConvert.DeserializeObject(json);
+
+			for (int i = 0; i < deserializedJson.Count; i++)
+			{
+				string name = deserializedJson[i].name;
+
+				Theme theme = null;
+
+				List<Keyword> keywords = new List<Keyword>();
+
+				for (int j = 0; j < deserializedJson[i].keywords.Count; j++)
+				{
+					keywords.Add(new Keyword()
+					{
+						Name = deserializedJson[i].keywords[j]
+					});
+				}
+
+				if (themes
+				.Where(t => t.SubPlatform.SubPlatformId == subPlatformID)
+				.Where(x => x.Name.Equals(name)).SingleOrDefault() == null)
+				{
+					theme = new Theme()
+					{
+						ItemType = ItemType.Theme,
+						Name = name,
+						CreationDate = DateTime.Now,
+						LastUpdatedInfo = DateTime.Now,
+						NumberOfFollowers = 0,
+						TrendingPercentage = 0.0,
+						Baseline = 0.0,
+						Informations = new List<Information>(),
+						SubPlatform = subPlatform,
+						Keywords = keywords
+					};
+					itemRepo.CreateItem(theme);
+					uowManager.Save();
+					newThemes.Add(theme);
+				}
+			}
+
+			//Generate default widgets for items
+			foreach (Item item in newThemes) GenerateDefaultItemWidgets(item.Name, item.ItemId);
+			uowManager = null;
+
+			return true;
 		}
 
 		/// <summary>
@@ -587,10 +740,9 @@ namespace BAR.BL.Managers
 						Name = name,
 						CreationDate = DateTime.Now,
 						LastUpdatedInfo = DateTime.Now,
-						LastUpdated = DateTime.Now,
 						NumberOfFollowers = 0,
 						TrendingPercentage = 0.0,
-						Baseline = 0.0,
+						Baseline = 10.0,
 						Informations = new List<Information>(),
 						SocialMediaUrls = new List<SocialMediaName>(),
 						SubPlatform = subPlatform
@@ -696,24 +848,25 @@ namespace BAR.BL.Managers
 			DataManager dataManager = new DataManager();
 			IEnumerable<Item> items = GetAllItems();
 
+			//Update sentiment & number of mentions
 			foreach (Item item in items)
 			{
-				DetermineTrending(item.ItemId);
-				item.NumberOfMentions = dataManager.GetInformationsForItemid(item.ItemId).Count();
+				//Number of mentions from the last 30 days
+				item.NumberOfMentions = dataManager.GetInformationsForItemid(item.ItemId).Where(info => info.CreationDate >= DateTime.Now.AddDays(-30)).Count();
 
 				//Gather sentiment
 				double sentiment = 0.0;
 				int counter = 0;
 				IEnumerable<Information> informations = dataManager.GetInformationsWithAllInfoForItem(item.ItemId)
-																   .Where(info => info.CreationDate >= DateTime.Now.AddMonths(-1))
-																   .AsEnumerable();
+																	 .Where(info => info.CreationDate >= DateTime.Now.AddMonths(-1))
+																	 .AsEnumerable();
 				foreach (Information info in informations)
 				{
 					foreach (PropertyValue propvalue in info.PropertieValues)
 					{
 						if (propvalue.Property.Name.ToLower().Equals("sentiment"))
 						{
-							double propSen =+ Double.Parse(propvalue.Value);
+							double propSen = +Double.Parse(propvalue.Value);
 							if (propSen != 0) sentiment += propSen / 100;
 							counter++;
 						}
@@ -721,15 +874,19 @@ namespace BAR.BL.Managers
 				}
 
 				//Determine sentiment
-				if (sentiment != 0) {
-					sentiment = Math.Round((sentiment / counter) * 100, 2);
+				if (sentiment != 0)
+				{
+					sentiment = Math.Round((sentiment / counter), 2);
 					if (sentiment >= 0) item.SentimentPositve = sentiment;
 					else item.SentimentNegative = Math.Abs(sentiment);
-				}				
+				}
 			}
 
 			//Persist changes
 			ChangeItems(items);
+
+			//Determine trending
+			foreach (Item item in items) DetermineTrending(item.ItemId);
 		}
 
 		/// <summary>
@@ -751,7 +908,7 @@ namespace BAR.BL.Managers
 			IEnumerable<Item> itemsToRemove = GetAllItems().Where(item => item.SubPlatform == null).AsEnumerable();
 			itemRepo.DeleteItems(itemsToRemove);
 		}
-	
+
 		/// <summary>
 		/// Changes profile picture of given user.
 		/// </summary>
@@ -775,6 +932,15 @@ namespace BAR.BL.Managers
 			itemRepo.UpdateItem(itemToUpdate);
 			return itemToUpdate;
 
+		}
+
+		/// <summary>
+		/// Gives back all the items with all the informations
+		/// </summary>
+		public IEnumerable<Person> GetAllItemsWithInformations()
+		{
+			InitRepo();
+			return itemRepo.ReadAllItemsWithInformations().AsEnumerable();
 		}
 	}
 }

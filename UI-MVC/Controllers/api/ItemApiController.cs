@@ -1,12 +1,16 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using AutoMapper;
 using BAR.BL.Domain.Items;
 using BAR.BL.Managers;
 using BAR.UI.MVC.Attributes;
 using BAR.UI.MVC.Models;
+using BAR.BL.Domain.Core;
+using WebGrease.Css.Extensions;
 
 namespace BAR.UI.MVC.Controllers.api
 {
@@ -16,7 +20,8 @@ namespace BAR.UI.MVC.Controllers.api
 	public class ItemApiController : ApiController
 	{
 		private IItemManager itemManager;
-		
+		private ISubplatformManager subplatformManager;
+
 		/// <summary>
 		/// Returns all items for search suggestions.
 		/// </summary>
@@ -42,6 +47,21 @@ namespace BAR.UI.MVC.Controllers.api
 			return Ok(lijst);
 		}
 
+		/// <summary>
+		/// Gets top 3 trending items
+		/// </summary>
+		[HttpGet]
+		[Route("api/GetTopTrendingItems")]
+		public IHttpActionResult GetTopTrendingItems()
+		{
+			itemManager = new ItemManager();
+			List<Item> lijst = itemManager.GetAllItems()
+				.OrderByDescending(m => m.TrendingPercentage)
+				.Take(3)
+				.ToList();
+			return Ok(Mapper.Map(lijst, new List<ItemDTO>()));
+		}
+		
 		/// <summary>
 		/// Deleted status of an item is toggled.
 		/// </summary>
@@ -88,6 +108,94 @@ namespace BAR.UI.MVC.Controllers.api
 			itemManager = new ItemManager();
 			itemManager.ChangePerson(Int32.Parse(itemId), model.DateOfBirth, model.Gender, model.Position, model.District);						
 			return StatusCode(HttpStatusCode.NoContent);
+		}
+
+		/// <summary>
+		/// Creates a person item
+		/// </summary>
+		[HttpPost]
+		[SubPlatformCheckAPI]
+		[Route("api/Admin/CreatePerson")]
+		public IHttpActionResult CreatePerson()
+		{
+			//Get the subplatformID from the SubPlatformCheckAPI attribute
+			object _customObject = null;
+			int suplatformID = -1;
+
+			if (Request.Properties.TryGetValue("SubPlatformID", out _customObject))
+			{
+				suplatformID = (int)_customObject;
+			}
+
+			itemManager = new ItemManager();
+			subplatformManager = new SubplatformManager();
+			SubPlatform subplatform = subplatformManager.GetSubPlatform(suplatformID);
+
+			Person p = (Person)itemManager.AddItem(ItemType.Person, "Maarten Jorens");
+			p.SubPlatform = subplatform;
+
+			return StatusCode(HttpStatusCode.NoContent);
+		}
+		
+		/// <summary>
+		/// Retrieves more people from the same organisation.
+		/// </summary>
+		[HttpGet]
+		[Route("api/GetMorePeopleFromOrg/{itemId}")]
+		public IHttpActionResult GetMorePeopleFromOrg(string itemId)
+		{
+			itemManager = new ItemManager();
+			int orgId = itemManager.GetPersonWithDetails(Int32.Parse(itemId)).Organisation.ItemId;
+			List<Person> items = itemManager.GetAllPersons()
+				.Where(p => p.Organisation.ItemId == orgId)
+				.OrderByDescending(p => p.NumberOfMentions)
+				.Take(6).ToList();
+			return Ok(Mapper.Map(items, new List<ItemDTO>()));
+		}
+		
+		/// <summary>
+		/// Retrieves more people from the same organisation.
+		/// </summary>
+		[HttpGet]
+		[Route("api/GetPeopleFromOrg/{itemId}")]
+		public IHttpActionResult GetPeopleFromOrg(string itemId)
+		{
+			itemManager = new ItemManager();
+			int orgId = Int32.Parse(itemId);
+			List<Person> items = itemManager.GetAllPersons().Where(p => p.Organisation.ItemId == orgId).ToList();
+			return Ok(Mapper.Map(items, new List<ItemDTO>()));
+		}
+
+		/// <summary>
+		/// Determines the type of an item
+		/// needed to determine the url.
+		/// </summary>
+		[HttpGet]
+		[Route("api/checkItemType/{itemId}")]
+		public string GetItemType(int itemId)
+		{
+			if (itemId < 0) return null;
+
+			//Get item
+			itemManager = new ItemManager();
+			Item item = itemManager.GetItem(itemId);
+
+			//return correct type
+			if (item is Person) return "Person";
+			else if (item is Organisation) return "Organisation";
+			else if (item is Theme) return "Theme";
+			else return null;
+		}
+		
+		/// <summary>
+		/// Get stories from person
+		/// </summary>
+		[HttpGet]
+		[Route("api/GetStories/{itemId}")]
+		public IHttpActionResult GetStories(int itemId) {
+			IDataManager dataManager = new DataManager();
+			List<string> urls = dataManager.GetUrlsForItem(itemId).ToList();
+			return Ok(urls.Distinct().Take(9));
 		}
 	}
 }

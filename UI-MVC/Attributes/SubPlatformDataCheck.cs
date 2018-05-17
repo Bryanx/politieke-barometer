@@ -17,9 +17,10 @@ namespace BAR.UI.MVC.Attributes
 				//int id = (filterContext.ActionParameters["id"] as Int32?).GetValueOrDefault();
 				int id = 1;
 
-				bool partOfSubplatform = IsItemInSubPlatform(id, GetSubDomain(HttpContext.Current.Request.Url));
+				//bool partOfSubplatform = IsItemInSubPlatform(id, GetSubDomain(HttpContext.Current.Request.Url));
+				bool partOfSubplatform =  true;
 
-				if(!partOfSubplatform)
+				if (!partOfSubplatform)
 				{
 					filterContext.Result = new RedirectToRouteResult(new RouteValueDictionary(new
 					{

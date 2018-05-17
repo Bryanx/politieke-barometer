@@ -2,11 +2,20 @@
     The urls may give an error (when compiled the urls are correct)
  */
 
-.person-image, .person-image-top {
+.person-image-top {
   background-image: url("../images/user.png");
   background-position: center;
   background-repeat: no-repeat;
   background-size: contain;
+  width: 35px;
+  height: 35px;
+  display: inline-block;
+  margin-top: -20px;
+  margin-bottom: -20px;
+  margin-right: 5px;
+}
+
+.person-image {
   width: 35px;
   height: 35px;
   display: inline-block;
@@ -22,7 +31,6 @@
   background-position: center center;
   height: 60px;
   display: block;
-  margin: 0px 10px;
   border-bottom: 1px solid #a5a9ac;
 }
 
@@ -31,7 +39,7 @@
   border: none;
   height: 50px;
   position: relative;
-  margin-right: 0px;
+  margin-right: 10px;
 }
 
 .loadingAlerts {
@@ -82,4 +90,15 @@
   &:hover {
     background: rgb(255, 255, 255);
   }
+}
+
+.avatar-view, .related-img-view {
+  object-fit: cover;
+  width: 90% !important;
+  @include border-radius;
+}
+
+.profile_left {
+  padding-left: 0;
+  margin-left: -5px;
 }

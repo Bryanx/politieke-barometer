@@ -5,6 +5,7 @@ using System.Data.Entity;
 using BAR.BL.Domain;
 using BAR.DAL.EF;
 using BAR.BL.Domain.Core;
+using BAR.BL.Domain.Users;
 
 namespace BAR.DAL
 {
@@ -204,6 +205,41 @@ namespace BAR.DAL
 													  .SingleOrDefault();
 			return subplatFrom.Customization;
 		}
+
+		/// <summary>
+		/// Returnes all the activities
+		/// </summary>
+		public IEnumerable<UserActivity> ReadAllActvities()
+		{
+			return ctx.UserActivities.AsEnumerable();
+		}
+
+		/// <summary>
+		/// Creates a new useractivity in the database
+		/// </summary>
+		public int CreateUserActitivy(UserActivity actitivy)
+		{
+			ctx.UserActivities.Add(actitivy);
+			return ctx.SaveChanges();
+		}
+
+		/// <summary>
+		/// Updates an actitiy in the database
+		/// </summary>
+		public int UpdateUserActivity(UserActivity activity)
+		{
+			ctx.Entry(activity).State = EntityState.Modified;
+			return ctx.SaveChanges();
+		}
+
+		/// <summary>
+		/// Gives back all activities for a specific type
+		/// </summary>
+		public IEnumerable<UserActivity> ReadActivitiesForType(ActivityType type)
+		{
+			return ctx.UserActivities.Where(act => act.ActivityType == type).AsEnumerable();
+		}
+	}
         /// <summary>
 		/// Returns the timer interval of the subplatform.
 		/// </summary>

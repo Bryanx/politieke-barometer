@@ -24,4 +24,26 @@ namespace BAR.UI.MVC.Models
     [DataType(DataType.Password)]
     public string Password { get; set; }
   }
+
+  public class UserWidgetViewModel
+  {
+    public int WidgetId { get; set; }
+    public string Title { get; set; }
+    public int ColumnSpan { get; set; }
+    public int RowSpan { get; set; }
+    public int ColumnNumber { get; set; }
+    public int RowNumber { get; set; }
+    public DateTime Timestamp { get; set; }
+    public WidgetType WidgetType { get; set; }
+    public int DashboardId { get; set; }
+    public GraphType GraphType { get; set; }
+    public ICollection<int> ItemIds { get; set; }
+    public List<WidgetDataDTO> WidgetDataDtos { get; set; }
+  }
+
+  public class AlertViewModel
+  {
+    public int AlertId { get; set; }
+    public String ItemName { get; set; }
+  }
 }

@@ -63,6 +63,19 @@ namespace BAR.DAL
 		}
 
 		/// <summary>
+		/// Returns the item that matchkes the itemId.
+		/// </summary>
+		/// <param name="itemId"></param>
+		/// <returns></returns>
+		public Theme ReadThemeWithDetails(int itemId)
+		{
+			return ctx.Items.OfType<Theme>()
+				.Include(i => i.Keywords)
+				.Where(i => i.ItemId == itemId && i.Deleted == false)
+				.SingleOrDefault();
+		}
+
+		/// <summary>
 		/// Returns the item that matches the itemId.
 		/// </summary>       
 		public Item ReadItemWithWidgets(int itemId)
@@ -103,13 +116,40 @@ namespace BAR.DAL
 				            .Include(item => item.SubPlatform)
 							.AsEnumerable();
 		}
+		
+		/// <summary>
+		/// Returns a list of all persons.
+		/// </summary>
+		/// <returns></returns>
+		public IEnumerable<Person> ReadAllPersonsWithPlatforms()
+		{
+			return ctx.Items
+				.OfType<Person>()
+				.Include(item => item.ItemWidgets)
+				.Include(item => item.SubPlatform)
+				.Include(item => item.Organisation)
+				.Include(item => item.SocialMediaNames)
+				.Include(item => item.SocialMediaNames.Select(social => social.Source))
+				.AsEnumerable();
+		}
 
 		/// <summary>
 		/// Gives back a list of all the persons
 		/// </summary>
 		public IEnumerable<Person> ReadAllPersons()
 		{
-			return ReadAllItemsWithPlatforms().OfType<Person>().AsEnumerable();
+			return ReadAllPersonsWithPlatforms();
+		}
+
+		/// <summary>
+		/// Gives back a list of all the persons associated with a certain organisation
+		/// </summary>
+		/// <param name="organisationId"></param>
+		/// <returns></returns>
+		public IEnumerable<Person> ReadAllPersonsForOrganisation(int organisationId)
+		{
+			return ReadAllItemsWithPlatforms().OfType<Person>()
+				.Where(item => item.Organisation.ItemId.Equals(organisationId)).AsEnumerable();
 		}
 
 		/// <summary>
@@ -121,11 +161,15 @@ namespace BAR.DAL
 		}
 
 		/// <summary>
-		/// Gives back a list of all the thetms
+		/// Gives back a list of all the themes
 		/// </summary>
 		public IEnumerable<Theme> ReadAllThemes()
 		{
-			return ReadAllItemsWithPlatforms().OfType<Theme>().AsEnumerable();
+			return ctx.Items
+				.OfType<Theme>().Include(item => item.Keywords)
+				.Include(item => item.ItemWidgets)
+				.Include(item => item.SubPlatform)
+				.AsEnumerable();
 		}
 
 		/// <summary>
@@ -190,10 +234,9 @@ namespace BAR.DAL
 		/// <summary>
 		/// Reads a person of a given name.
 		/// </summary>
-		public Person ReadPerson(string personName)
+		public Item ReadItemByName(string name)
 		{		
-			return ctx.Items.OfType<Person>()
-							.Where(item => item.Name.ToLower().Equals(personName.ToLower()))
+			return ctx.Items.Where(item => item.Name.ToLower().Equals(name.ToLower()))
 							.SingleOrDefault();
 		}
 
@@ -216,5 +259,15 @@ namespace BAR.DAL
 						  .Where(org => org.Name.ToLower().Equals(organisationName.ToLower()))
 						  .SingleOrDefault();
         }
-  }
+
+		/// <summary>
+		/// Gives back all the items with all the informations
+		/// </summary>
+		public IEnumerable<Person> ReadAllItemsWithInformations()
+		{
+			return ctx.Items.OfType<Person>()
+							.Include(item => item.Informations)
+							.AsEnumerable();
+		}
+	}
 }

@@ -1,6 +1,7 @@
 @using System.Web.Optimization
 @using BAR.BL.Domain.Items
 @using BAR.UI.MVC.Helpers
+@using BAR.UI.MVC.Models
 @model BAR.UI.MVC.Models.ItemViewModels.PersonViewModel
 
 @{
@@ -21,7 +22,7 @@
             @if (@User.IsInRole("Admin") || @User.IsInRole("SuperAdmin")) {
                 <button id="viewAsUser" class="adminview btn btn-default btn-xs">Toggle adminview</button>
             }
-                            <!-- Current avatar -->
+            <!-- Current avatar -->
             <div id="userview">
                 @Html.Partial("Partials/_DetailsAsUser", Model)
             </div>
@@ -33,7 +34,27 @@
 </div>
 
 <!-- Widgets -->
-<div class="grid-stack" id="grid"></div>
+<div class="grid-stack item-page" id="grid"></div>
+
+<div style="visibility: hidden">space</div>
+
+<h1>@Resources.MorePeopleFrom <a href="@Url.OrganisationUrl(@Model.OrganisationId)">@Model.OrganisationName</a></h1>
+<hr/>
+<div class="row">
+    <div class="col-xs-12">
+        <div class="x_panel max_height_460 scroll">
+            <div class="x_content">
+                <br/>
+                <div id="related-items">
+                    @foreach (ItemViewModels.PersonViewModel person in @Model.PeopleFromSameOrg) {
+                        @Html.Partial("Partials/_RelatedItems", person)
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 @Html.Partial("Partials/_SocialIcons")
 
 @section CustomJS{
@@ -100,7 +121,7 @@
         $("#uploadPicture").click(() => $("#fileUpload").click());
 
         (() => {
-            loadWidgets("/api/GetItemWidgets/", @Model.Person.ItemId);
+            loadWidgets("/api/GetItemWidgets/", @Model.Item.ItemId);
 
             $("#viewAsUser").click(function() {
                 $("#userview").toggle();

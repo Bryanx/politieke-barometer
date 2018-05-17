@@ -235,12 +235,14 @@
     <Compile Include="Controllers\api\SuperAdminApiController.cs" />
     <Compile Include="Controllers\api\UserApiController.cs" />
     <Compile Include="Controllers\api\WidgetController.cs" />
+    <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LanguageController.cs" />
     <Compile Include="Controllers\OrganisationController.cs" />
     <Compile Include="Controllers\OverviewController.cs" />
     <Compile Include="Controllers\PersonController.cs" />
     <Compile Include="Controllers\SuperAdminController.cs" />
+    <Compile Include="Controllers\ThemeController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -249,6 +251,7 @@
     <Compile Include="Helpers\LanguageHelper.cs" />
     <Compile Include="Helpers\NavBarHelpers.cs" />
     <Compile Include="Helpers\UrlExtensions.cs" />
+    <Compile Include="Models\AddWidgetDTO.cs" />
     <Compile Include="Models\AlertDTO.cs" />
     <Compile Include="Models\BaseViewModel.cs" />
     <Compile Include="Models\AdminViewModels.cs" />
@@ -276,6 +279,7 @@
     <Content Include="Content\build\css\modules\colors.scss" />
     <Content Include="Content\build\css\modules\mediaqueries.scss" />
     <Content Include="Content\build\css\partials\alerts.scss" />
+    <Content Include="Content\build\css\partials\error.css" />
     <Content Include="Content\build\css\partials\search-autocomplete.scss" />
     <Content Include="Content\build\css\partials\breadcrumbs.scss" />
     <Content Include="Content\build\css\partials\buttons.scss" />
@@ -345,13 +349,16 @@
     <Content Include="Content\build\images\logo\logo-dark.svg" />
     <Content Include="Content\build\images\logo\logo-white.svg" />
     <Content Include="Content\build\images\mastercard.png" />
+    <Content Include="Content\build\images\organisation.png" />
     <Content Include="Content\build\images\parlement-smaller.jpg" />
     <Content Include="Content\build\images\paypal.png" />
     <Content Include="Content\build\images\picture.jpg" />
     <Content Include="Content\build\images\rolling.svg" />
+    <Content Include="Content\build\images\topics.png" />
     <Content Include="Content\build\images\user.png" />
     <Content Include="Content\build\js\alerts.js" />
     <Content Include="Content\build\js\custom.js" />
+    <Content Include="Content\build\js\graphWizard.js" />
     <Content Include="Content\build\js\homepage.js" />
     <Content Include="Content\build\js\template.js" />
     <Content Include="Content\build\js\template.min.js" />
@@ -400,6 +407,10 @@
     </Content>
     <Content Include="Scripts\bootstrap-wysiwyg\bootstrap-wysiwyg.min.js" />
     <Content Include="Scripts\ChartJS\Chart.js" />
+    <Content Include="Scripts\DataExport\buttons.html5.min.js" />
+    <Content Include="Scripts\DataExport\jszip.min.js" />
+    <Content Include="Scripts\DataExport\pdfmake.min.js" />
+    <Content Include="Scripts\DataExport\vfs_fonts.js" />
     <Content Include="Scripts\datatables\datatables.net-buttons-bs\css\buttons.bootstrap.css" />
     <Content Include="Scripts\datatables\datatables.net-buttons-bs\css\buttons.bootstrap.min.css" />
     <Content Include="Scripts\datatables\datatables.net-buttons-bs\js\buttons.bootstrap.js" />
@@ -462,6 +473,11 @@
     <Content Include="Scripts\nprogress.js" />
     <Content Include="Scripts\site.js" />
     <Content Include="Scripts\underscore.min.js" />
+    <Content Include="Scripts\vue\vue-form-generator.js" />
+    <Content Include="Scripts\vue\vue-form-wizard.css" />
+    <Content Include="Scripts\vue\vue-form-wizard.js" />
+    <Content Include="Scripts\vue\vue-form-wizard.scss" />
+    <Content Include="500.html" />
     <Content Include="Views\Admin\Index.cshtml" />
     <Content Include="Views\Admin\ItemManagement.cshtml" />
     <Content Include="Views\Admin\PageManagement.cshtml" />
@@ -482,14 +498,15 @@
     <Content Include="Views\Shared\Partials\_LanguagePreferences.cshtml" />
     <Content Include="Views\Shared\Partials\_LoggedInNavbar.cshtml" />
     <Content Include="Views\Shared\Partials\_LoginModal.cshtml" />
+    <Content Include="Views\Shared\Partials\_LoginNavbar.cshtml" />
     <Content Include="Views\Shared\Partials\_NavBarAdminLinks.cshtml" />
     <Content Include="Views\Shared\Partials\_NavBarSuperAdminLinks.cshtml" />
     <Content Include="Views\Shared\Partials\_OrganisationTable.cshtml" />
     <Content Include="Views\Shared\Partials\_PersonTable.cshtml" />
     <Content Include="Views\Shared\Partials\_RegisterModal.cshtml" />
+    <Content Include="Views\Shared\Partials\_RelatedItems.cshtml" />
     <Content Include="Views\Shared\Partials\_SearchBar.cshtml" />
     <Content Include="Views\Shared\Partials\_SocialIcons.cshtml" />
-    <Content Include="Views\Shared\Partials\_VisitorLeftNavBarLinks.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\SuperAdmin\PlatformManagement.cshtml" />
     <Content Include="Views\SuperAdmin\GeneralManagement.cshtml" />
@@ -507,7 +524,6 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Person\Details.cshtml" />
     <Content Include="Views\Person\Index.cshtml" />
-    <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Web.config" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\User\Register.cshtml" />
@@ -540,14 +556,16 @@
     <None Include="Scripts\jquery\jquery.validate-vsdoc.js" />
     <None Include="Scripts\jquery\jquery.validate.js" />
     <None Include="Scripts\jquery\jquery.validate.min.js" />
-    <None Include="Scripts\vue-resource.common.js" />
-    <None Include="Scripts\vue-resource.es2015.js" />
-    <None Include="Scripts\vue-resource.js" />
-    <None Include="Scripts\vue-resource.min.js" />
-    <None Include="Scripts\vue.js" />
-    <None Include="Scripts\vue.min.js" />
     <Content Include="Views\Home\GetResources.cshtml" />
     <Content Include="Views\Overview\Index.cshtml" />
+    <None Include="Scripts\vue\vue-resource.common.js" />
+    <None Include="Scripts\vue\vue-resource.es2015.js" />
+    <None Include="Scripts\vue\vue-resource.js" />
+    <None Include="Scripts\vue\vue-resource.min.js" />
+    <None Include="Scripts\vue\vue.js" />
+    <None Include="Scripts\vue\vue.min.js" />
+    <Content Include="Views\Error\NotFound.cshtml" />
+    <Content Include="Views\Error\Index.cshtml" />
     <None Include="Views\Shared\DisplayTemplates\CanonicalHelperModel.ascx" />
     <None Include="Views\Shared\DisplayTemplates\CanonicalHelperModel.cshtml" />
     <None Include="Views\Shared\DisplayTemplates\MenuHelperModel.cshtml" />
@@ -564,6 +582,10 @@
     <Content Include="Views\Shared\_LayoutSubplatformOverview.cshtml" />
     <Content Include="Views\Shared\Partials\_SourceTable.cshtml" />
     <Content Include="Views\Shared\Partials\_SubPlatformTable.cshtml" />
+    <Content Include="Views\Theme\Index.cshtml" />
+    <Content Include="Views\Theme\Details.cshtml" />
+    <Content Include="Views\Shared\Partials\_ThemeTable.cshtml" />
+    <Content Include="Views\Shared\Partials\_CreateItemModal.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BAR.BL.Model\Domain.csproj">
@@ -618,7 +640,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>5000</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>https://localhost:44303/</IISUrl>
+          <IISUrl>https://localhost:44317/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

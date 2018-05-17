@@ -1,5 +1,6 @@
 ﻿using BAR.BL.Domain;
 using BAR.BL.Domain.Core;
+using BAR.BL.Domain.Users;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,21 +22,26 @@ namespace BAR.DAL
 		IEnumerable<Question> ReadAllQuestions();
 		IEnumerable<Question> ReadQuestions(int platformId);
 		IEnumerable<Question> ReadQuestionsForType(QuestionType type);
-        int ReadInterval(int platformId);
+		IEnumerable<UserActivity> ReadAllActvities();
+		IEnumerable<UserActivity> ReadActivitiesForType(ActivityType type);
+		int ReadInterval(int platformId);
         String ReadStartTime(int platformId);
-	
+
 		//Create
 		int CreateSubplatform(SubPlatform subPlatform);
 		int CreateQuestion(Question question);
+		int CreateUserActitivy(UserActivity actitivy);
 
 		//Update
 		int UpdateSubplatform(SubPlatform subPlatform);
 		int UpdateSubplatforms(IEnumerable<SubPlatform> subPlatforms);
 		int UpdateQuestion(Question question);
 		int UpdateQuestions(IEnumerable<Question> questions);
-        int UpdateInterval(int platformId,int interval);
+		int UpdateUserActivity(UserActivity activity);
+		int UpdateInterval(int platformId,int interval);
         int UpdateStartTime(int platformId,string setTime);
-        
+
+
 		//Delete
 		int DeleteSubplatform(SubPlatform subPlatform);
 		int DeleteQuestion(Question question);

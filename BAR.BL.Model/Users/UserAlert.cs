@@ -4,13 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BAR.UI.CA
+namespace BAR.BL.Domain.Users
 {
-  public class DatabaseManager
-  {
-    static void Main(string[] args)
-    {
-
-    }
-  }
+	public class UserAlert : Alert
+	{
+		public User User { get; set; }
+	}
 }

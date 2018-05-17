@@ -23,6 +23,59 @@ namespace BAR.DAL.EF
 			GenerateSources(ctx);
 			GenerateProperties(ctx);
 			GenerateAreas(ctx);
+			//GenerateThemes(ctx);
+		}
+
+		/// <summary>
+		/// Generates test data themes
+		/// </summary>
+		/// <param name="ctx"></param>
+		private void GenerateThemes(BarometerDbContext ctx)
+		{
+			Theme t1 = new Theme()
+			{
+				Name = "Onderwijs",
+				CreationDate = DateTime.Now,
+				Baseline = 0,
+				TrendingPercentage = 0,
+				SubPlatform = ctx.SubPlatforms.Where(sp => sp.Name.Equals("politiek")).SingleOrDefault(),
+				NumberOfFollowers = 0,
+				NumberOfMentions = 0,
+				LastUpdatedInfo = DateTime.Now,
+				ItemType = ItemType.Theme
+			};
+
+			Theme t2 = new Theme()
+			{
+				Name = "Immigranten",
+				CreationDate = DateTime.Now,
+				Baseline = 0,
+				TrendingPercentage = 0,
+				SubPlatform = ctx.SubPlatforms.Where(sp => sp.Name.Equals("politiek")).SingleOrDefault(),
+				NumberOfFollowers = 0,
+				NumberOfMentions = 0,
+				LastUpdatedInfo = DateTime.Now,
+				ItemType = ItemType.Theme
+			};
+
+			Theme t3 = new Theme()
+			{
+				Name = "Pensioenen",
+				CreationDate = DateTime.Now,
+				Baseline = 0,
+				TrendingPercentage = 0,
+				SubPlatform = ctx.SubPlatforms.Where(sp => sp.Name.Equals("politiek")).SingleOrDefault(),
+				NumberOfFollowers = 0,
+				NumberOfMentions = 0,
+				LastUpdatedInfo = DateTime.Now,
+				ItemType = ItemType.Theme
+			};
+
+			ctx.Items.Add(t1);
+			ctx.Items.Add(t2);
+			ctx.Items.Add(t3);
+			ctx.SaveChanges();
+
 		}
 
 		/// <summary>
@@ -60,21 +113,24 @@ namespace BAR.DAL.EF
 		/// <param name="ctx"></param>
 		private void GenerateSubPlatforms(BarometerDbContext ctx)
 		{
-			SubPlatform subPlatform1 = new SubPlatform
-			{
-				Name = "k3",
-				CreationDate = DateTime.Now,
-				Customization = AddDefaultCustomization()
-			};
-			ctx.SubPlatforms.Add(subPlatform1);
 
 			SubPlatform subPlatform2 = new SubPlatform
 			{
 				Name = "politiek",
 				CreationDate = DateTime.Now,
-				Customization = AddDefaultCustomization()
+				Customization = AddDefaultCustomization(),
+				Questions = new List<Question>(),
 			};
 			ctx.SubPlatforms.Add(subPlatform2);
+
+			SubPlatform subPlatform1 = new SubPlatform
+			{
+				Name = "k3",
+				CreationDate = DateTime.Now,
+				Customization = AddDefaultCustomization(),
+				Questions = new List<Question>(),			
+			};
+			ctx.SubPlatforms.Add(subPlatform1);
 
 			ctx.SaveChanges();
 		}
@@ -136,7 +192,13 @@ namespace BAR.DAL.EF
         Site = "https://www.facebook.com/"
       };
       ctx.Sources.Add(facebook);
-      ctx.SaveChanges();
+      DataSource textgain = new DataSource
+      {
+        Name = "Textgain",
+        Url = "https://kdg.textgain.com/query"
+      };
+    ctx.DataSources.Add(textgain);
+    ctx.SaveChanges();
     }
 
 		/// <summary>
@@ -203,6 +265,10 @@ namespace BAR.DAL.EF
       {
         Name = "Retweet"
       };
+			Property theme = new Property
+			{
+				Name = "Theme"
+			};
 
       propertiesList.Add(gender);
       propertiesList.Add(age);
@@ -218,8 +284,10 @@ namespace BAR.DAL.EF
       propertiesList.Add(geo);
       propertiesList.Add(postId);
       propertiesList.Add(retweet);
+			propertiesList.Add(theme);
 
-      ctx.Properties.AddRange(propertiesList);
+
+			ctx.Properties.AddRange(propertiesList);
       ctx.SaveChanges();
     }
 

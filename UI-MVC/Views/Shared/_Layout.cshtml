@@ -38,21 +38,25 @@
 
             <!-- top navigation -->
             <nav>
-                <div class="navbar-logo-container" style="border: 0;">
-                    <a href='@Url.RootUrl()'>
-                        <i class="small-logo colored nav-home"></i>
-                    </a>
+                <div class="nav-container">
+                    <div class="navbar-logo-container" style="border: 0;">
+                        <a href='@Url.RootUrl()'>
+                            <i class="small-logo colored nav-home"></i>
+                        </a>
+                    </div>
+                    <!-- search -->
+                    @Html.Partial("Partials/_SearchBar")
+        
+                    <!-- login -->
+                    @Html.ShowNavLogin(Model)
                 </div>
-                <!-- search -->
-                @Html.Partial("Partials/_SearchBar")
-
-                <!-- login -->
-                @Html.ShowNavLogin(Model)
             </nav>
             <!-- /top navigation -->
             
             <!-- breadcrumbs -->
-            @Html.MvcSiteMap().SiteMapPath("BootstrapSiteMapPathHelperModel")
+            <div class="breadcrumb-container">
+                @Html.MvcSiteMap().SiteMapPath("BootstrapSiteMapPathHelperModel")
+            </div>
 
             <!-- page content -->
             @if (IsSectionDefined("Homepage"))
@@ -60,7 +64,7 @@
                 @RenderSection("Homepage")
             }
 
-            <div class="main_padding" role="main">
+            <div class="main_padding container-centered" role="main">
                 @RenderBody()
             </div>
             <!-- /page content -->
@@ -73,7 +77,12 @@
     </div>
 <div id="notificationMessage"></div>
 
-    <!-- Scripts -->
+<!-- modals -->
+@if (Model.User == null) {
+    @Html.Partial("Partials/_LoginModal", new LoginViewModel())
+}
+
+<!-- Scripts -->
     <script src="/Home/GetResources"></script> 
     @Scripts.Render("~/bundles/jquery","~/Content/build/js/searchbar.js", "~/bundles/bootstrap", "~/bundles/dates", "~/bundles/timeago", "~/bundles/custom")
     @Scripts.Render("~/Content/build/js/alerts.js")
@@ -82,12 +91,5 @@
     {
         @RenderSection("CustomJS")
     }
-    <script defer>
-        (() => {
-            $(".culture").click(function () {
-                $(this).parents("form").submit(); // post form
-            });
-        })($)
-    </script>
 </body>
 </html>

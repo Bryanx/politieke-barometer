@@ -259,13 +259,41 @@ namespace BAR.DAL
 		/// </summary>
 		public IEnumerable<Information> ReadInformationsWithAllInfoForItem(int itemId)
 		{
-			return ctx.Informations.Include(info => info.Items)
+			return ctx.Informations//.Include(info => info.Items)
 								   .Include(info => info.PropertieValues)
 								   .Include(info => info.PropertieValues.Select(propval => propval.Property))
 								   .Where(info => info.Items.Any(item => item.ItemId == itemId))
 								   .AsEnumerable();
 		}
-	}
+
+        public IEnumerable<DataSource> ReadAllDataSources()
+        {
+            return ctx.DataSources.AsEnumerable();
+        }
+
+        public DataSource ReadDataSource(int dataSourceId)
+        {
+            return ctx.DataSources.Find(dataSourceId);
+        }
+
+        public int CreateDataSource(DataSource dataSource)
+        {
+            ctx.DataSources.Add(dataSource);
+            return ctx.SaveChanges();
+        }
+
+        public int UpdateDataSource(DataSource dataSource)
+        {
+            ctx.Entry(dataSource).State = EntityState.Modified;
+            return ctx.SaveChanges();
+        }
+
+        public int DeleteDataSource(DataSource dataSource)
+        {
+            ctx.DataSources.Remove(dataSource);
+            return ctx.SaveChanges();
+        }
+    }
 }
 
 

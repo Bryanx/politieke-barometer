@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Web.Http;
-using BAR.BL.Controllers;
 using BAR.BL.Domain.Users;
 using BAR.BL.Managers;
 using BAR.UI.MVC.Models;
@@ -30,6 +29,7 @@ namespace BAR.UI.MVC.Controllers.api
 		/// </summary>
 		[HttpPost]
 		[Route("api/ToggleSubscribe/{itemId}")]
+		[Authorize]
 		public IHttpActionResult ToggleSubscribe(int itemId)
 		{
 			SubManager = new SubscriptionManager();

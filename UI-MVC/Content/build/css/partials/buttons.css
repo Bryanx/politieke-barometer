@@ -1,22 +1,23 @@
 /*
 Error: Undefined mixin 'box-shadow'.
-        on line 46 of buttons.scss, in `box-shadow'
-        from line 46 of buttons.scss
+        on line 35 of buttons.scss, in `box-shadow'
+        from line 35 of buttons.scss
 
-41: 
-42: .button {
-43:   background: #f7f9fa;
-44:   background: linear-gradient(top, #f7f9fa 0%, #f0f0f0 100%);
-45:   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#f7f9fa', endColorstr='#f0f0f0', GradientType=0);
-46:   @include box-shadow(0 1px 2px rgba(0, 0, 0, 0.1) inset);
-47:   border-radius: 0 0 5px 5px;
-48:   border-top: 1px solid #CFD5D9;
-49:   padding: 15px 0;
-50: }
+30: 
+31: .btn-search {
+32:   margin-right: 0 !important;
+33:   padding: 6px 20px;
+34:   border: 1px solid transparent;
+35:   @include box-shadow(none);
+36:   background: var(--bg-color);
+37: }
+38: 
+39: .btn-outline {
+40:   background-color: transparent;
 
 Backtrace:
-buttons.scss:46:in `box-shadow'
-buttons.scss:46
+buttons.scss:35:in `box-shadow'
+buttons.scss:35
 C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/sass-3.5.6/lib/sass/tree/visitors/perform.rb:352:in `block in visit_mixin'
 C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/sass-3.5.6/lib/sass/stack.rb:98:in `block in with_mixin'
 C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/sass-3.5.6/lib/sass/stack.rb:135:in `with_frame'
@@ -70,4 +71,4 @@ C:/Ruby24-x64/bin/scss:23:in `<main>'
 body:before {
   white-space: pre;
   font-family: monospace;
-  content: "Error: Undefined mixin 'box-shadow'.\A         on line 46 of buttons.scss, in `box-shadow'\A         from line 46 of buttons.scss\A \A 41: \A 42: .button {\A 43:   background: #f7f9fa;\A 44:   background: linear-gradient(top, #f7f9fa 0%, #f0f0f0 100%);\A 45:   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#f7f9fa', endColorstr='#f0f0f0', GradientType=0);\A 46:   @include box-shadow(0 1px 2px rgba(0, 0, 0, 0.1) inset);\A 47:   border-radius: 0 0 5px 5px;\A 48:   border-top: 1px solid #CFD5D9;\A 49:   padding: 15px 0;\A 50: }"; }
+  content: "Error: Undefined mixin 'box-shadow'.\A         on line 35 of buttons.scss, in `box-shadow'\A         from line 35 of buttons.scss\A \A 30: \A 31: .btn-search {\A 32:   margin-right: 0 !important;\A 33:   padding: 6px 20px;\A 34:   border: 1px solid transparent;\A 35:   @include box-shadow(none);\A 36:   background: var(--bg-color);\A 37: }\A 38: \A 39: .btn-outline {\A 40:   background-color: transparent;"; }

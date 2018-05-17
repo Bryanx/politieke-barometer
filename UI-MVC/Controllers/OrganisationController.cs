@@ -67,21 +67,37 @@ namespace BAR.UI.MVC.Controllers
 			userManager = new UserManager();
 			subManager = new SubscriptionManager();
 
-			Item item = itemManager.GetOrganisationWithDetails(id);
+			Item org = itemManager.GetOrganisationWithDetails(id);
 
-			if (item == null) return HttpNotFound();
+			if (org == null) return HttpNotFound();
 
 			Item subbedItem = subManager.GetSubscribedItemsForUser(User.Identity.GetUserId())
-				.FirstOrDefault(i => i.ItemId == item.ItemId);
+				.FirstOrDefault(i => i.ItemId == org.ItemId);
 
-			OrganisationViewModel organisationViewModel = Mapper.Map(item, new OrganisationViewModel());
-			organisationViewModel.PageTitle = item.Name;
+			OrganisationViewModel organisationViewModel = Mapper.Map(org, new OrganisationViewModel());
 			organisationViewModel.User = User.Identity.IsAuthenticated ? userManager.GetUser(User.Identity.GetUserId()) : null;
-			organisationViewModel.Person = Mapper.Map(item, new ItemDTO());
+			organisationViewModel.Organisation = Mapper.Map(org, new ItemDTO());
 			organisationViewModel.Subscribed = subbedItem != null;
-			                             
+			organisationViewModel.MemberList = GetOrgMembers(org);
+
+			//Log visit actitivy
+			new SubplatformManager().LogActivity(ActivityType.VisitActitiy);
+
 			//Assembling the view
 			return View(organisationViewModel);
+		}
+		
+		private List<PersonViewModel> GetOrgMembers(Item org) 
+		{
+			List<Person> persons = itemManager.GetAllPersons()
+				.Where(p => p.Organisation.ItemId == org.ItemId)
+				.OrderByDescending(p => p.NumberOfMentions)
+				.ToList();
+			List<PersonViewModel> personViewModels = Mapper.Map(persons, new List<PersonViewModel>());
+			for (int i = 0; i < persons.Count; i++) {
+				personViewModels[i].Item = Mapper.Map(persons[i], new ItemDTO());
+			}
+			return personViewModels;
 		}
 	}
 }

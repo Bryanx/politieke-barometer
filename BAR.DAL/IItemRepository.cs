@@ -14,14 +14,23 @@ namespace BAR.DAL
 		Item ReadItemWithInformations(int itemId);
 		Item ReadItemWithPlatform(int itemId);
 		Item ReadItemWithWidgets(int itemId);
+
 		IEnumerable<Item> ReadAllItemsWithPlatforms();
 		IEnumerable<Item> ReadAllItemsForUpdatedSince(DateTime since);
-		Person ReadPerson(string personName);
+		IEnumerable<Person> ReadAllItemsWithInformations();
+
+		Item ReadItemByName(string name);
 		Person ReadPersonWithDetails(int itemId);
+		
+		Theme ReadThemeWithDetails(int itemId);
+		
+		IEnumerable<Person> ReadAllPersonsForOrganisation(int organisationId);
+		
 		Organisation ReadOrganisationWithDetails(int itemId);	
     	Organisation ReadOrganisation(string organisationName);
+		
 		IEnumerable<Organisation> ReadAllOraginsations();
-		IEnumerable<Person> ReadAllPersons();	
+		IEnumerable<Person> ReadAllPersonsWithPlatforms();	
 		IEnumerable<Theme> ReadAllThemes();
 		
 		//Create

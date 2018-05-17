@@ -588,6 +588,129 @@
   <data name="Male" xml:space="preserve">
     <value>Male</value>
   </data>
+  <data name="InNumberOfMentions" xml:space="preserve">
+    <value>In number of mentions.</value>
+  </data>
+  <data name="InTrendingPercentage" xml:space="preserve">
+    <value>in trending percentage.</value>
+  </data>
+  <data name="Theme" xml:space="preserve">
+    <value>Theme</value>
+  </data>
+  <data name="Age" xml:space="preserve">
+    <value>Age</value>
+  </data>
+  <data name="AgeDistributionOfMentions" xml:space="preserve">
+    <value>Age distribution of mentions</value>
+  </data>
+  <data name="GenderDistributionOfMentions" xml:space="preserve">
+    <value>Gender distribution of mentions</value>
+  </data>
+  <data name="NumberOfMentionsFull" xml:space="preserve">
+    <value>Number of mentions</value>
+  </data>
+  <data name="To" xml:space="preserve">
+    <value>To</value>
+  </data>
+  <data name="Members" xml:space="preserve">
+    <value>Members</value>
+  </data>
+  <data name="MorePeopleFrom" xml:space="preserve">
+    <value>More people from</value>
+  </data>
+  <data name="Above25" xml:space="preserve">
+    <value>Above 25</value>
+  </data>
+  <data name="BarChart" xml:space="preserve">
+    <value>Bar chart</value>
+  </data>
+  <data name="Below25" xml:space="preserve">
+    <value>Below 25</value>
+  </data>
+  <data name="CompareDataPlaceholder" xml:space="preserve">
+    <value>Compare data with another person, organisation or topic.</value>
+  </data>
+  <data name="DonutChart" xml:space="preserve">
+    <value>Donut chart</value>
+  </data>
+  <data name="DownloadJPGImage" xml:space="preserve">
+    <value>Download JPG image</value>
+  </data>
+  <data name="DownloadPNGImage" xml:space="preserve">
+    <value>Download PNG image</value>
+  </data>
+  <data name="HorizontalBarChart" xml:space="preserve">
+    <value>Horizontal bar chart</value>
+  </data>
+  <data name="LineChart" xml:space="preserve">
+    <value>Line chart</value>
+  </data>
+  <data name="NoDataAvailable" xml:space="preserve">
+    <value>No data available.</value>
+  </data>
+  <data name="PieChart" xml:space="preserve">
+    <value>Pie chart</value>
+  </data>
+  <data name="RemoveData" xml:space="preserve">
+    <value>Remove data</value>
+  </data>
+  <data name="BasicGraph" xml:space="preserve">
+    <value>Basic graph</value>
+  </data>
+  <data name="ChooseData" xml:space="preserve">
+    <value>Choose data</value>
+  </data>
+  <data name="ChooseDataSubText" xml:space="preserve">
+    <value>What data do you want to show on your graph?</value>
+  </data>
+  <data name="ChooseGraph" xml:space="preserve">
+    <value>Choose graph</value>
+  </data>
+  <data name="ChooseGraphSubText" xml:space="preserve">
+    <value>What type of graph would you like to display?</value>
+  </data>
+  <data name="ChoosePersonOrgTopic" xml:space="preserve">
+    <value>Choose person, organisation or topic.</value>
+  </data>
+  <data name="ComparingGraph" xml:space="preserve">
+    <value>Comparing graph</value>
+  </data>
+  <data name="GraphType" xml:space="preserve">
+    <value>Graph type</value>
+  </data>
+  <data name="IntersectValue" xml:space="preserve">
+    <value>Intersect value</value>
+  </data>
+  <data name="Optional" xml:space="preserve">
+    <value>Optional</value>
+  </data>
+  <data name="OtherSettings" xml:space="preserve">
+    <value>Other settings</value>
+  </data>
+  <data name="OtherSettingsSubText" xml:space="preserve">
+    <value>Choose other optional graph settings.</value>
+  </data>
+  <data name="Title" xml:space="preserve">
+    <value>Title</value>
+  </data>
+  <data name="AllThemes" xml:space="preserve">
+    <value>All topics</value>
+  </data>
+  <data name="LatestStories" xml:space="preserve">
+    <value>Latest stories</value>
+  </data>
+  <data name="IsNowAvailable" xml:space="preserve">
+    <value>is now available!</value>
+  </data>
+  <data name="BackToHome" xml:space="preserve">
+    <value>Back to home</value>
+  </data>
+  <data name="PageNotFound" xml:space="preserve">
+    <value>Page not found</value>
+  </data>
+  <data name="SomethingWentWrong" xml:space="preserve">
+    <value>Something went wrong...</value>
+  </data>
   <data name="Interval" xml:space="preserve">
     <value>Interval</value>
   </data>

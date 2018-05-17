@@ -1,5 +1,6 @@
 ﻿using BAR.BL.Domain;
 using BAR.BL.Domain.Core;
+using BAR.BL.Domain.Users;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,7 +19,8 @@ namespace BAR.BL.Managers
 		SubPlatform AddSubplatform(string name);
 
 		SubPlatform ChangePlatformName(int platformId, string name);
-		
+		SubPlatform ChangeSubplatform(SubPlatform platform);
+
 		void RemoveSubplatform(int platformId);
 
 		//Customizations
@@ -43,10 +45,19 @@ namespace BAR.BL.Managers
 		void RemoveQuestion(int questionId);
 
 		bool Exists(int questionid);
-        //Timer
-        int GetInterval(int platformId);
+
+		//Activities
+		IEnumerable<UserActivity> GetUserActivities(ActivityType type, DateTime? timestamp = null);
+
+		UserActivity AddUserActitity(ActivityType type, double numberOfUsers = 0.0);
+
+		UserActivity ChangeUserActivity(UserActivity activity);
+
+		void LogActivity(ActivityType type);
+		int GetInterval(int platformId);
         string GetStartTimer(int platformId);
         int ChangeInterval(int platformId, int interval);
         string ChangeStartTimer(int platformId, string startTimer);
-    }
+
+	}
 }

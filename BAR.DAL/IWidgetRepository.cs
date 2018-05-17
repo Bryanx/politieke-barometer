@@ -19,14 +19,16 @@ namespace BAR.DAL
 		Widget ReadWidget(int widgetId);
 		Widget ReadWidgetWithAllitems(int widgetid);
 		Widget ReadWidgetWithAllData(int widgetId);
+		Widget ReadGeoLocationWidget();
 		IEnumerable<Widget> ReadAllWidgets();
 		IEnumerable<Widget> ReadAllWidgetsWithAllItems();
 		IEnumerable<Widget> ReadAllWidgetsWithAllData();
-		IEnumerable<Widget> ReadAllWidgetsWithAllDataForItem(int itemId);
+		IEnumerable<Widget> ReadWidgetsWithAllDataForItem(int itemId);
 		IEnumerable<UserWidget> ReadWidgetsForDashboard(int dashboardId);
 		IEnumerable<WidgetData> ReadAllWidgetDatas();
 		IEnumerable<WidgetData> ReadWidgetDatasForitemid(int itemId);
-
+		IEnumerable<WidgetData> ReadWidgetDatasForKeyvalue(string value);
+		
 		//Create
 		int CreateDashboard(Dashboard dashboard);
 		int CreateWidget(Widget widget);
@@ -44,6 +46,7 @@ namespace BAR.DAL
 		int DeleteDashboard(int dashboardId);
 		int DeleteDashboards(IEnumerable<int> dashboardIds);
 		int DeleteWidget(Widget widgetId);
-		int DeleteWidgets(IEnumerable<Widget> widgets);		
+		int DeleteWidgets(IEnumerable<Widget> widgets);
+		int DeleteWidgetDatas(IEnumerable<WidgetData> datas);
 	}
 }

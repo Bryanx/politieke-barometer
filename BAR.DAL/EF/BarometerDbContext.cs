@@ -35,12 +35,14 @@ namespace BAR.DAL.EF
 
 		//Data package
 		public DbSet<Source> Sources { get; set; }
-		public DbSet<Information> Informations { get; set; }
+        public DbSet<DataSource> DataSources { get; set; }
+        public DbSet<Information> Informations { get; set; }
 		public DbSet<Property> Properties { get; set; }
 		public DbSet<SynchronizeAudit> SynchronizeAudits { get; set; }
 
 		//User package
 		public DbSet<Subscription> Subscriptions { get; set; }
+		public DbSet<Alert> Alerts { get; set; }
 		public DbSet<Area> Areas { get; set; }
 
 		//Item package
@@ -54,6 +56,7 @@ namespace BAR.DAL.EF
 		//Core
 		public DbSet<SubPlatform> SubPlatforms { get; set; }
 		public DbSet<Question> Questions { get; set; }
+		public DbSet<UserActivity> UserActivities { get; set; }
 
 		//Static method for creating and returning a BarometerDbContext (used as in Singleton pattern)
 		public static BarometerDbContext Create()

@@ -8,7 +8,7 @@
     }
 }
 
-<div class="culture-form">
+<div class="culture-form checkbox">
     @using (Html.BeginForm("SetCulture", "Home", new {@class = "form-horizontal"})) {
         <div class="">
             <input class="culture" name="culture" id="en-us" value="en-us" type="radio" @selected("en-us", culture)/>

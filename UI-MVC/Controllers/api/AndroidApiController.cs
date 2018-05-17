@@ -23,6 +23,7 @@ using BAR.BL.Domain.Widgets;
 using System.Web.Script.Serialization;
 using System.Linq;
 using System.Net;
+using AutoMapper;
 
 namespace webapi.Controllers
 {
@@ -30,6 +31,12 @@ namespace webapi.Controllers
   [RoutePrefix("api/Android")]
   public class AndroidController : ApiController
   {
+    private ISubscriptionManager subManager;
+    private IUserManager userManager;
+    private IWidgetManager widgetManager;
+    private IItemManager itemManager;
+    private IdentityUserManager identityUserManager;
+
     // POST api/Android/Register
     [AllowAnonymous]
     [HttpPost]
@@ -41,10 +48,10 @@ namespace webapi.Controllers
         return BadRequest(ModelState);
       }
 
-      IdentityUserManager userManager = Request.GetOwinContext().GetUserManager<IdentityUserManager>();
+      identityUserManager = Request.GetOwinContext().GetUserManager<IdentityUserManager>();
       User user = new User() { UserName = model.Email, Email = model.Email };
 
-      IdentityResult result = await userManager.CreateAsync(user, model.Password);
+      IdentityResult result = await identityUserManager.CreateAsync(user, model.Password);
 
       if (!result.Succeeded)
       {
@@ -60,7 +67,7 @@ namespace webapi.Controllers
     [Route("UserInfo")]
     public IHttpActionResult GetUserInfo()
     {
-      IUserManager userManager = new UserManager();
+      userManager = new UserManager();
       User user = userManager.GetUser(User.Identity.GetUserId());
 
       UserInfoAndroidViewModel model = new UserInfoAndroidViewModel
@@ -84,7 +91,7 @@ namespace webapi.Controllers
         return BadRequest(ModelState);
       }
 
-      IUserManager userManager = new UserManager();
+      userManager = new UserManager();
       if (!model.ProfilePicture.Equals(""))
       {
         byte[] profilePicture = Convert.FromBase64String(model.ProfilePicture);
@@ -104,25 +111,91 @@ namespace webapi.Controllers
     [Route("Widgets")]
     public IHttpActionResult GetWidgets()
     {
-      IWidgetManager widgetManager = new WidgetManager();
-      Dashboard dashboard = widgetManager.GetDashboardWithAllDataForUserId(User.Identity.GetUserId());
-      if (dashboard != null)
-      {
-        IEnumerable<UserWidget> widgets = dashboard.Widgets;
-        widgets.All(x =>
-        {
-          x.Dashboard = null;
-          x.WidgetDatas.All(y =>
-          {
-            y.Widget = null;
-            return true;
-          });
-          return true;
-        });
+      widgetManager = new WidgetManager();
+      itemManager = new ItemManager();
 
-        return Ok(widgets);
+      Dashboard dashboard = widgetManager.GetDashboardWithAllDataForUserId(User.Identity.GetUserId());
+      if (dashboard == null) return NotFound();
+
+      //Get all widgets for user
+      List<UserWidget> userWidgets = widgetManager.GetWidgetsForDashboard(dashboard.DashboardId).ToList();
+      if (userWidgets == null || userWidgets.Count() == 0) return StatusCode(HttpStatusCode.NoContent);
+
+      //Convert all widget to userWidgets (DTO's).
+      List<UserWidgetViewModel> userWidgetDtos = Mapper.Map(userWidgets, new List<UserWidgetViewModel>());
+
+      foreach (UserWidgetViewModel userWidgetVM in userWidgetDtos)
+      {
+        foreach (int itemId in userWidgetVM.ItemIds)
+        {
+          //Get the topic of the graph of the userwidget.
+          string keyValue = widgetManager.GetWidgetWithAllData(userWidgetVM.WidgetId)?.WidgetDatas.FirstOrDefault()?.KeyValue;
+
+          //Get all widgets for each item in userWidgets.
+          IEnumerable<Widget> widgetsForItem = widgetManager.GetAllWidgetsWithAllDataForItem(itemId);
+
+          //Check if these widgets have graph data (WidgetData) on this topic, if they do add this data to the userWidget.
+          IEnumerable<WidgetData> widgetDatas = widgetsForItem.FirstOrDefault(w => w.WidgetDatas.Any(wd => wd.KeyValue == keyValue)).WidgetDatas;
+
+          //Convert the graphdata to a DTO.
+          List<WidgetDataDTO> widgetDataDtos = Mapper.Map(widgetDatas, new List<WidgetDataDTO>());
+
+          //Link the graphdata to the corresponding item.
+          widgetDataDtos.First().ItemName = itemManager.GetItem(itemId).Name;
+
+          if (userWidgetVM.WidgetDataDtos == null)
+          {
+            userWidgetVM.WidgetDataDtos = widgetDataDtos;
+          }
+          else
+          {
+            userWidgetVM.WidgetDataDtos.AddRange(widgetDataDtos);
+          }
+        }
       }
-      return StatusCode(HttpStatusCode.NoContent);
+
+      return Ok(userWidgetDtos);
+    }
+
+    // GET api/Android/Alerts
+    [HostAuthentication(DefaultAuthenticationTypes.ExternalBearer)]
+    [HttpGet]
+    [Route("Alerts")]
+    public IHttpActionResult GetAlerts()
+    {
+      subManager = new SubscriptionManager();
+      IEnumerable<UserAlert> userAlerts = subManager.GetUserAlerts(User.Identity.GetUserId());
+      IEnumerable<SubAlert> subAlerts = subManager.GetSubAlerts(User.Identity.GetUserId());
+      if (userAlerts == null || subAlerts == null || (userAlerts.Count() == 0 && subAlerts.Count() == 0)) return StatusCode(HttpStatusCode.NoContent);
+
+      //Made DTO class to prevent circular references
+      List<AlertDTO> alerts = new List<AlertDTO>();
+      foreach (SubAlert alert in subAlerts)
+      {
+        AlertDTO alertDTO = new AlertDTO()
+        {
+          AlertId = alert.AlertId,
+          Name = alert.Subscription.SubscribedItem.Name,
+          TimeStamp = alert.TimeStamp,
+          IsRead = alert.IsRead,
+          AlertType = alert.AlertType
+        };
+        alerts.Add(alertDTO);
+      }
+      foreach (UserAlert alert in userAlerts)
+      {
+        AlertDTO alertDTO = new AlertDTO()
+        {
+          AlertId = alert.AlertId,
+          Name = alert.Subject,
+          TimeStamp = alert.TimeStamp,
+          IsRead = alert.IsRead,
+          AlertType = alert.AlertType
+        };
+        alerts.Add(alertDTO);
+      }
+
+      return Ok(alerts);
     }
 
     #region Helpers

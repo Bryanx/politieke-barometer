@@ -286,9 +286,10 @@ namespace BAR.DAL
 		/// Gives back all widgets for a specific item id
 		/// The widget contains all the data needed to construct a graph
 		/// </summary>
-		public IEnumerable<Widget> ReadAllWidgetsWithAllDataForItem(int itemId)
+		public IEnumerable<Widget> ReadWidgetsWithAllDataForItem(int itemId)
 		{
 			Item itemToReturn =  ctx.Items.Include(item => item.ItemWidgets)
+										  .Include(item => item.ItemWidgets.Select(widget => widget.PropertyTags))
 										  .Include(item => item.ItemWidgets.Select(widget => widget.WidgetDatas))
 									      .Include(item => item.ItemWidgets.Select(widget => widget.WidgetDatas.Select(data => data.GraphValues)))
 										  .Where(item => item.ItemId == itemId).SingleOrDefault();
@@ -338,6 +339,37 @@ namespace BAR.DAL
 								 .Include(dash => dash.Widgets.Select(widget => widget.WidgetDatas))
 								 .Include(dash => dash.Widgets.Select(widget => widget.WidgetDatas.Select(data => data.GraphValues)))
 								 .Where(dash => dash.User.Id.ToLower().Equals(userId.ToLower())).SingleOrDefault();
+		}
+
+		/// <summary>
+		/// Deletes the given widgetdatas from the database
+		/// </summary>
+		public int DeleteWidgetDatas(IEnumerable<WidgetData> datas)
+		{
+			if (datas != null && datas.Count() > 0) {
+				ctx.WidgetDatas.RemoveRange(datas);
+			}
+			return ctx.SaveChanges();
+		}
+
+		/// <summary>
+		/// Gives back all the widgetdatas for a specific keyvalue
+		/// </summary>
+		public IEnumerable<WidgetData> ReadWidgetDatasForKeyvalue(string value)
+		{
+			return ctx.WidgetDatas.Where(data => data.KeyValue.ToLower().Equals(value.ToLower())).AsEnumerable();
+		}
+
+		/// <summary>
+		/// Gives back the geolocation widget for displaying on the homepage.
+		/// </summary>
+		public Widget ReadGeoLocationWidget()
+		{
+			return ctx.Widgets.Include(widget => widget.PropertyTags)
+							  .Include(widget => widget.WidgetDatas)
+							  .Include(widget => widget.WidgetDatas.Select(data => data.GraphValues))
+							  .Where(widget => widget.PropertyTags.Any(tag => tag.Name.ToLower().Equals("geo")))
+							  .First();				
 		}
 	}
 }
