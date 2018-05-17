@@ -590,19 +590,19 @@ namespace BAR.BL.Managers
 			DataManager dataManager = new DataManager();
 
 			//1st widget
-			WidgetData loginData = dataManager.GetUserActivitiesData(ActivityType.LoginActivity);
+			WidgetData loginData = dataManager.GetUserActivitiesData(ActivityType.LoginActivity, DateTime.Now.AddDays(-30));
 			Widget loginWidget = widgets.Where(widget => widget.PropertyTags.All(tag => tag.Name.ToLower().Contains("login"))).SingleOrDefault();
 			loginData.Widget = loginWidget;
 			widgetRepo.CreateWidgetData(loginData);
 
 			//2nd widget
-			WidgetData registerData = dataManager.GetUserActivitiesData(ActivityType.RegisterActivity);
+			WidgetData registerData = dataManager.GetUserActivitiesData(ActivityType.RegisterActivity, DateTime.Now.AddDays(-30));
 			Widget registerWidget = widgets.Where(widget => widget.PropertyTags.All(tag => tag.Name.ToLower().Contains("register"))).SingleOrDefault();
 			registerData.Widget = registerWidget;
 			widgetRepo.CreateWidgetData(registerData);
 
 			//3rd widget
-			WidgetData visitData = dataManager.GetUserActivitiesData(ActivityType.VisitActitiy);
+			WidgetData visitData = dataManager.GetUserActivitiesData(ActivityType.VisitActitiy, DateTime.Now.AddDays(-30));
 			Widget visitWidget = widgets.Where(widget => widget.PropertyTags.All(tag => tag.Name.ToLower().Contains("visit"))).SingleOrDefault();
 			visitData.Widget = visitWidget;
 			widgetRepo.CreateWidgetData(visitData);
