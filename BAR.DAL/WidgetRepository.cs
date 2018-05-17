@@ -380,7 +380,7 @@ namespace BAR.DAL
 			return ctx.Widgets.Include(widget => widget.PropertyTags)
 							  .Include(widget => widget.WidgetDatas)
 							  .Include(widget => widget.WidgetDatas.Select(data => data.GraphValues))
-							  .Where(widget => widget.PropertyTags.Any(tag => tag.Name.ToLower().Equals("activity")))
+							  .Where(widget => widget.PropertyTags.Any(tag => tag.Name.ToLower().Contains("activity")))
 							  .AsEnumerable();
 		}
 	}

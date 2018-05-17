@@ -33,12 +33,12 @@ namespace BAR.DAL.EF
 		/// </summary>
 		private void GenerateActivityWidgets(BarometerDbContext ctx)
 		{
-			List<PropertyTag> tags = new List<PropertyTag>();
-			PropertyTag tag = new PropertyTag()
+			List<PropertyTag> tags1 = new List<PropertyTag>();
+			PropertyTag tag1 = new PropertyTag()
 			{
-				Name = "activity"
+				Name = "activity login"
 			};
-			tags.Add(tag);
+			tags1.Add(tag1);
 
 			Widget loginWidget = new ItemWidget()
 			{
@@ -50,13 +50,20 @@ namespace BAR.DAL.EF
 				WidgetDatas = new List<WidgetData>(),
 				WidgetType = WidgetType.GraphType,
 				GraphType = GraphType.LineChart,
-				PropertyTags = tags
+				PropertyTags = tags1
 			};
 			ctx.Widgets.Add(loginWidget);
 
+			List<PropertyTag> tags2 = new List<PropertyTag>();
+			PropertyTag tag2 = new PropertyTag()
+			{
+				Name = "activity register"
+			};
+			tags1.Add(tag2);
+
 			Widget registerWidget = new ItemWidget()
 			{
-				Title = "Login activities",
+				Title = "Register activities",
 				RowNumber = 1,
 				ColumnNumber = 1,
 				RowSpan = 12,
@@ -64,13 +71,20 @@ namespace BAR.DAL.EF
 				WidgetDatas = new List<WidgetData>(),
 				WidgetType = WidgetType.GraphType,
 				GraphType = GraphType.LineChart,
-				PropertyTags = tags
+				PropertyTags = tags2
 			};
 			ctx.Widgets.Add(registerWidget);
 
+			List<PropertyTag> tags3= new List<PropertyTag>();
+			PropertyTag tag3 = new PropertyTag()
+			{
+				Name = "activity visit"
+			};
+			tags1.Add(tag3);
+
 			Widget visitWidget = new ItemWidget()
 			{
-				Title = "Login activities",
+				Title = "Visit activities",
 				RowNumber = 1,
 				ColumnNumber = 1,
 				RowSpan = 12,
@@ -78,7 +92,7 @@ namespace BAR.DAL.EF
 				WidgetDatas = new List<WidgetData>(),
 				WidgetType = WidgetType.GraphType,
 				GraphType = GraphType.LineChart,
-				PropertyTags = tags
+				PropertyTags = tags3
 			};
 			ctx.Widgets.Add(visitWidget);
 

@@ -205,7 +205,7 @@ namespace BAR.UI.MVC.Controllers.api
 		}
 		
 		/// <summary>
-		///Gets weeklyReview
+		/// Gets weeklyReview
 		/// </summary>
 		[System.Web.Http.HttpGet]
 		[System.Web.Http.Route("api/Widget/GetWeeklyReview/{id}")]

@@ -37,6 +37,7 @@ namespace BAR.BL.Managers
 		void RemoveWidget(int widgetId);
 
 		void GenerateDataForMwidgets();
+		IEnumerable<Widget> UpdateWidgetActities(IEnumerable<Widget> widgets)
 
 		void MoveWidgetToDashBoard(int widgetId, GraphType graphType, IEnumerable<int> itemIds, string userId);
 		
