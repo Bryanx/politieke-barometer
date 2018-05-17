@@ -23,6 +23,7 @@ nav .nav-container .searchbar .search-field, form.navbar-form .input-group {
   transition: 0.1s;
   border: none;
   box-shadow: none !important;
+  @include border-radius;
 }
 
 .search-field {

@@ -33,12 +33,37 @@
     </div>
 </div>
 
+<!-- Mentions widget -->
+<div class="grid-stack item-page" id="mentions-grid"></div>
+
+<div style="visibility: hidden">space</div>
+<div style="visibility: hidden">space</div>
+
+<h1>
+    @Resources.PeopleWhoMention @Model.Item.Name
+</h1>
+<hr/>
+
 <!-- Widgets -->
 <div class="grid-stack item-page" id="grid"></div>
 
 <div style="visibility: hidden">space</div>
+<div style="visibility: hidden">space</div>
 
-<h1>@Resources.MorePeopleFrom <a href="@Url.OrganisationUrl(@Model.OrganisationId)">@Model.OrganisationName</a></h1>
+<h1>
+    @Resources.MoreInfoAbout @Model.Item.Name
+</h1>
+<hr/>
+
+<!-- More information widgets -->
+<div class="grid-stack item-page" id="social-grid"></div>
+
+<div style="visibility: hidden">space</div>
+<div style="visibility: hidden">space</div>
+
+<h1>
+    @Resources.MorePeopleFrom <a href="@Url.OrganisationUrl(@Model.OrganisationId)">@Model.OrganisationName</a>
+</h1>
 <hr/>
 <div class="row">
     <div class="col-xs-12">
@@ -65,7 +90,7 @@
             if (d.getElementById(id)) return;
             js = d.createElement(s);
             js.id = id;
-            js.src = 'https://connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v2.12';
+            js.src = 'https://connect.facebook.net/nl_NL/sdk.js#xfbml=1&version=v3.0';
             fjs.parentNode.insertBefore(js, fjs);
         }(document, 'script', 'facebook-jssdk'));
     </script>
@@ -102,22 +127,23 @@
                     method: "GET",
                     url: "/api/GetItemWithDetails/" + form.data("item-id"),
                     success: data => {
-                        formdata = form.serializeArray().reduce(function (a, x) {
-                            a[x.name] = x.value;
-                            return a;
-                        }, {});
+                        formdata = form.serializeArray().reduce(function(a, x) {
+                                a[x.name] = x.value;
+                                return a;
+                            },
+                            {});
                         data.District = formdata.District;
                         data.Site = formdata.Site;
                         data.DateOfBirth = formdata.DateOfBirth;
                         data.Position = formdata.Position;
-                    submitForm($(this), event, $("#accountSettingsMessage"), data);
+                        submitForm($(this), event, $("#accountSettingsMessage"), data);
                     }
                 });
             });
 
-        $(".item-input").on('input propertychange paste',() => $("#itemForm").submit());
+        $(".item-input").on('input propertychange paste', () => $("#itemForm").submit());
         $(document).on("click", ".subscribeItem", (e) => ajaxToggleSubscribe(e));
-        $("#fileUpload").on("change",() => $("#formFileUpload").submit());
+        $("#fileUpload").on("change", () => $("#formFileUpload").submit());
         $("#uploadPicture").click(() => $("#fileUpload").click());
 
         (() => {

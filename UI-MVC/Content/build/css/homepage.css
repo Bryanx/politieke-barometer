@@ -148,10 +148,12 @@ body .container.body .main-header-container-parent {
     color: #73879c; }
 
 nav .nav-container .navbar-right li i {
-  color: white; }
+  color: white;
+  text-shadow: 0 1px 5px #0f8ec4; }
 
 nav .nav-container .navbar-right .dropdown-menu li i {
-  color: var(--font-color); }
+  color: var(--font-color);
+  text-shadow: none !important; }
 
 nav .nav-container .navbar-right li > a.signup {
   color: white;

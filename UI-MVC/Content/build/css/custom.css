@@ -921,7 +921,14 @@ table.tile_info {
   .text-over-image:hover {
     background: white; }
 
-.avatar-view, .related-img-view {
+.avatar-view {
+  object-fit: cover;
+  width: 100% !important;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px; }
+
+.related-img-view {
   object-fit: cover;
   width: 90% !important;
   -webkit-border-radius: 5px;
@@ -1052,6 +1059,10 @@ footer {
         width: 120px;
         margin: 0 !important;
         vertical-align: baseline; }
+
+.culture-form label {
+  padding-left: 0;
+  line-height: 2.8; }
 
 footer.copyright {
   background: var(--bg-color);
@@ -1199,7 +1210,10 @@ nav .nav-container .searchbar .search-field, form.navbar-form .input-group {
   font-size: 20px;
   transition: 0.1s;
   border: none;
-  box-shadow: none !important; }
+  box-shadow: none !important;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px; }
 
 .search-field {
   padding-left: 0;
@@ -1903,7 +1917,10 @@ nav .nav-container .searchbar .search-field, form.navbar-form .input-group {
   font-size: 20px;
   transition: 0.1s;
   border: none;
-  box-shadow: none !important; }
+  box-shadow: none !important;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px; }
 
 .search-field {
   padding-left: 0;
