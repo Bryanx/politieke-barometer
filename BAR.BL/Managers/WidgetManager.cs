@@ -617,6 +617,7 @@ namespace BAR.BL.Managers
 			platformManager.ChangeSubplatform(platform);
 
 			return widgets;
+		}
 
 		/// Generates data for organisations based on the data
 		/// of the persons
