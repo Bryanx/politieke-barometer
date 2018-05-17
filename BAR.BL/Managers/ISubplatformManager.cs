@@ -33,6 +33,8 @@ namespace BAR.BL.Managers
 		Customization ChangeFAQTitle(int platformId, string title);
 		Customization ChangeAddress(int platformId, string streetAndHousenumber, string zipcode, string city, string country, string email);
 		Customization ChangeSubplatformHeaderImage(int platformId, HttpPostedFileBase headerImgFile);
+		Customization ChangeSubplatformLogo(int platformId, HttpPostedFileBase logoImgFile);
+
 
 		//Questions
 		Question GetQuestion(int questionId);

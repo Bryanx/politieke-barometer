@@ -494,6 +494,12 @@ namespace BAR.BL.Managers
 			return platform;
 		}
 
+		/// <summary>
+		/// Changesthe subplatform header image
+		/// </summary>
+		/// <param name="platformId"></param>
+		/// <param name="headerImgFile"></param>
+		/// <returns></returns>
 		public Customization ChangeSubplatformHeaderImage(int platformId, HttpPostedFileBase headerImgFile)
 		{
 			InitRepo();
@@ -509,6 +515,33 @@ namespace BAR.BL.Managers
 				imageData = binary.ReadBytes(headerImgFile.ContentLength);
 			}
 			customizationToUpdate.HeaderImage = imageData;
+
+			//Update database
+			platformRepo.UpdateCustomization(customizationToUpdate);
+			return customizationToUpdate;
+		}
+
+		/// <summary>
+		/// Changes the subplatform logo image
+		/// </summary>
+		/// <param name="platformId"></param>
+		/// <param name="logoImgFile"></param>
+		/// <returns></returns>
+		public Customization ChangeSubplatformLogo(int platformId, HttpPostedFileBase logoImgFile)
+		{
+			InitRepo();
+
+			//Get User
+			Customization customizationToUpdate = platformRepo.ReadCustomisation(platformId);
+			if (customizationToUpdate == null) return null;
+
+			//Change header picture
+			byte[] imageData = null;
+			using (var binary = new BinaryReader(logoImgFile.InputStream))
+			{
+				imageData = binary.ReadBytes(logoImgFile.ContentLength);
+			}
+			customizationToUpdate.LogoImage = imageData;
 
 			//Update database
 			platformRepo.UpdateCustomization(customizationToUpdate);

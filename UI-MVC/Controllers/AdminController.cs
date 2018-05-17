@@ -205,7 +205,26 @@ namespace BAR.UI.MVC.Controllers
 			return RedirectToAction("PageManagement", "Admin");
 		}
 
-				/// <summary>
+		/// <summary>
+		/// POST
+		/// Changes headerimage of a subplatform.
+		/// </summary>
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		public ActionResult WebsiteLogo([Bind(Exclude = "WebsiteLogo")]CustomizationViewModel model)
+		{
+			platformManager = new SubplatformManager();
+
+			if (Request.Files.Count > 0)
+			{
+				HttpPostedFileBase logoImgFile = Request.Files["WebsiteLogo"];
+				int subPlatformID = (int)RouteData.Values["SubPlatformID"];
+				platformManager.ChangeSubplatformLogo(subPlatformID, logoImgFile);
+			}
+			return RedirectToAction("PageManagement", "Admin");
+		}
+
+		/// <summary>
 		/// Returns image of byte array.
 		/// </summary>
 		public FileContentResult HeaderImage()
@@ -215,6 +234,18 @@ namespace BAR.UI.MVC.Controllers
 			Customization customization = platformManager.GetCustomization((int)RouteData.Values["SubPlatformID"]);
 			if (customization.HeaderImage == null) return null;
 			return new FileContentResult(customization.HeaderImage, "image/jpeg");
+		}
+
+		/// <summary>
+		/// Returns image of byte array.
+		/// </summary>
+		public FileContentResult LogoImage()
+		{
+			platformManager = new SubplatformManager();
+
+			Customization customization = platformManager.GetCustomization((int)RouteData.Values["SubPlatformID"]);
+			if (customization.HeaderImage == null) return null;
+			return new FileContentResult(customization.LogoImage, "image/jpeg");
 		}
 	}
 }
