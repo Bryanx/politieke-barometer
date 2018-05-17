@@ -732,4 +732,13 @@
   <data name="SomethingWentWrong" xml:space="preserve">
     <value>Something went wrong...</value>
   </data>
+  <data name="Message" xml:space="preserve">
+    <value>Message</value>
+  </data>
+  <data name="Send" xml:space="preserve">
+    <value>Send</value>
+  </data>
+  <data name="SendPublicAndroidMessage" xml:space="preserve">
+    <value>Send public Android message</value>
+  </data>
 </root>

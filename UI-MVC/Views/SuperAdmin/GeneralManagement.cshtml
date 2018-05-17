@@ -1,4 +1,4 @@
-﻿@model BAR.UI.MVC.Models.SourceManagement
+﻿@model BAR.UI.MVC.Models.GeneralManagementViewModel
 
 <h1>@Model.PageTitle</h1>
 <hr/>
@@ -80,14 +80,52 @@
             </div>
         </div>
     </div>
+    <!-- Public message Android -->
+    <div class="col-md-6 col-xs-12">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>@Resources.SendPublicAndroidMessage</h2>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+                <br />
+                <form method="post" action="/api/Android/SendPublicNotification" id="sendPublicNotificatioForm" class="form-horizontal">
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="title">
+                            @Resources.Title
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            @Html.TextBoxFor(model => model.NotificationMessageViewModel.Title, "", new { @class = "form-control col-md-7 col-xs-12", id = "title" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="message">
+                            @Resources.Message
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            @Html.TextBoxFor(model => model.NotificationMessageViewModel.Message, "", new { @class = "form-control col-md-7 col-xs-12", id = "message" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+                            <button type="submit" class="btn btn-dark">@Resources.Send</button>
+                            <div id="SendPublicNotificationMessage" style="display: inline"></div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
+</div>
 
     @section CustomJS{
         <script type="text/javascript">
         $("#synchronizeForm").on("submit", function (event) {
             submitForm($(this), event, $("#synchronizeMessage"));
         });
-
+        $("#sendPublicNotificatioForm").on("submit", function (event) {
+            submitForm($(this), event, $("#SendPublicNotificationMessage"));
+        });
 
         //Ajax call in generic function so every form can use the same code.
         function submitForm($this, event, message) {

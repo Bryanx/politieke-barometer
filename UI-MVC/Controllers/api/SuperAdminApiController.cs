@@ -16,7 +16,7 @@ namespace BAR.UI.MVC.Controllers.api
 		/// </summary>
 		[HttpPost]
 		[Route("api/SuperAdmin/AddSource")]
-		public IHttpActionResult Addsource([FromBody]SourceManagement model)
+		public IHttpActionResult Addsource([FromBody]GeneralManagementViewModel model)
 		{
 			IDataManager dataManager = new DataManager();
 			var source = dataManager.AddSource(model.Name, model.Site);

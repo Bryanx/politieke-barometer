@@ -93,7 +93,8 @@ namespace BAR.BL.Managers
 						Subscription = sub,
 						AlertType = AlertType.Trending,
 						TimeStamp = DateTime.Now,
-						IsRead = false
+						IsRead = false,
+            IsSend = false
 					});
 					subsToUpdate.Add(sub);
 				}
