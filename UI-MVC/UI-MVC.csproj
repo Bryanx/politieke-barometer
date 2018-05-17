@@ -279,6 +279,7 @@
     <Content Include="Content\build\css\modules\colors.scss" />
     <Content Include="Content\build\css\modules\mediaqueries.scss" />
     <Content Include="Content\build\css\partials\alerts.scss" />
+    <Content Include="Content\build\css\partials\card.scss" />
     <Content Include="Content\build\css\partials\error.css" />
     <Content Include="Content\build\css\partials\search-autocomplete.scss" />
     <Content Include="Content\build\css\partials\breadcrumbs.scss" />
@@ -304,6 +305,7 @@
     <Content Include="Content\build\css\partials\texteditor.scss" />
     <Content Include="Content\build\css\partials\tiles.scss" />
     <Content Include="Content\build\css\partials\dashboard.scss" />
+    <Content Include="Content\build\css\partials\weeklyReview.scss" />
     <Content Include="Content\build\css\vendor\bootstrap-progressbar-3.3.4.css" />
     <Content Include="Content\build\css\vendor\bootstrap-progressbar-3.3.4.min.css" />
     <Content Include="Content\build\css\vendor\bootstrap.css" />
@@ -488,6 +490,8 @@
     <Content Include="Views\Organisation\Index.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\BootstrapSiteMapPathHelperModel.cshtml" />
     <Content Include="Views\Shared\Partials\_AdminTable.cshtml" />
+    <Content Include="Views\Shared\Partials\_Card.cshtml" />
+    <Content Include="Views\Shared\Partials\_CardPerson.cshtml" />
     <Content Include="Views\Shared\Partials\_DetailsAsAdmin.cshtml" />
     <Content Include="Views\Shared\Partials\_DetailsAsUser.cshtml" />
     <Content Include="Views\Shared\Partials\_ExternalLoginsListPartial.cshtml" />
@@ -507,6 +511,7 @@
     <Content Include="Views\Shared\Partials\_RelatedItems.cshtml" />
     <Content Include="Views\Shared\Partials\_SearchBar.cshtml" />
     <Content Include="Views\Shared\Partials\_SocialIcons.cshtml" />
+    <Content Include="Views\Shared\Partials\_WeeklyReview.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\SuperAdmin\PlatformManagement.cshtml" />
     <Content Include="Views\SuperAdmin\GeneralManagement.cshtml" />

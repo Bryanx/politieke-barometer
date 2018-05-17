@@ -1,0 +1,122 @@
+﻿@using BAR.UI.MVC.Helpers
+@model BAR.UI.MVC.Models.ItemViewModels.WeeklyReviewModel
+
+<div class='x_panel no-scrollbar x_nested_panel'>
+    <div class='x_title'>
+        <h2 class='graphTitle'>Person</h2>
+        <ul class='nav panel_toolbox'>
+            <li>
+                <a class="collapse-link">
+                    <i class="fa fa-chevron-down"></i>
+                </a>
+            </li>
+        </ul>
+        <div class='clearfix'></div>
+    </div>
+    <div class="x_content">
+        <div class="row">
+            <div class="col-xs-12 col-sm-4 weeklyReview-top-card">
+                <div class="weeklyReview-avatar profile_left">
+                    @if (Model.WeeklyPersonViewModels.ElementAt(0).SocialMediaNames.FirstOrDefault(s => s.Source.Name == "Twitter") != null) {
+                        <img src='https://twitter.com/@Model.WeeklyPersonViewModels.ElementAt(0).SocialMediaNames.First(s => s.Source.Name == "Twitter").Username/profile_image?size=normal'
+                             class="img-circle person-image"
+                             onerror = "this.onload = null; this.src='/Content/build/images/picture.jpg';"/>
+                    } else {
+                        <img src='/Content/build/images/picture.jpg' class="img-circle person-image"/>
+                    }
+                </div>
+                <div class="weeklyReview-organisation"><button onclick="window.location = '@Url.OrganisationUrl(Model.WeeklyPersonViewModels.ElementAt(0).OrganisationId)';" class="btn btn-default btn-xs">@Model.WeeklyPersonViewModels.ElementAt(0).OrganisationName</button></div>
+                <div class="weeklyReview-name">
+                    <a style="text-decoration: none" href="/Person/Details/@Model.WeeklyPersonViewModels.ElementAt(0).Item.ItemId">@Model.WeeklyPersonViewModels.ElementAt(0).Item.Name</a>
+                    <div class="badge bg-gold">
+                        @{
+                            var rankTrending = Model.WeeklyPersonViewModels.ElementAt(0).RankTrendingPercentage + 1;
+                        }
+                        #@rankTrending @Resources.InTrendingPercentage.ToLower()</div>
+                </div>
+                <div class="weeklyReview-nom">
+                    @Resources.NumberOfMentions <br/>
+                    @Model.WeeklyPersonViewModels.ElementAt(0).Item.NumberOfMentions
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-8" style="max-height: 250px; height: 250px">
+                <canvas id='weeklyReview-1'></canvas>
+                <h2 class='no-graph-data text-center'>No data available.</h2>
+            </div>
+        </div>
+        <div class="row">
+            @for (int j = 1; j < 4; j++)
+            {
+                <div class="col-xs-12 col-sm-4">
+                    @Html.Partial("Partials/_cardPerson", Model.WeeklyPersonViewModels.ElementAt(j))
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+<div class='x_panel no-scrollbar x_nested_panel'>
+    <div class='x_title'>
+        <h2 class='graphTitle'>Organisation</h2>
+        <ul class='nav panel_toolbox'>
+            <li>
+                <a class="collapse-link">
+                    <i class="fa fa-chevron-down"></i>
+                </a>
+            </li>
+        </ul>
+        <div class='clearfix'></div>
+    </div>
+    <div class="x_content" style="display: none">
+        <div class="row">
+            <div class="col-xs-12 col-sm-4">
+                
+            </div>
+            <div class="col-xs-12 col-sm-8" style="max-height: 400px; height: 400px">
+                <canvas id='weeklyReview-2'></canvas>
+                <h2 class='no-graph-data text-center'>No data available.</h2>
+            </div>
+        </div>
+        <div class="row">
+            @for (int j = 5; j < 8; j++)
+            {
+                <div class="col-xs-12 col-sm-4">
+                    @Html.Partial("Partials/_card", Model.WeeklyItems.ElementAt(j))
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+<div class='x_panel no-scrollbar x_nested_panel'>
+    <div class='x_title'>
+        <h2 class='graphTitle'>Theme</h2>
+        <ul class='nav panel_toolbox'>
+            <li>
+                <a class="collapse-link">
+                    <i class="fa fa-chevron-down"></i>
+                </a>
+            </li>
+        </ul>
+        <div class='clearfix'></div>
+    </div>
+    <div class="x_content" style="display: none">
+        <div class="row">
+            <div class="col-xs-12 col-sm-4">
+                
+            </div>
+            <div class="col-xs-12 col-sm-8" style="max-height: 400px; height: 400px">
+                <canvas id='weeklyReview-3'></canvas>
+                <h2 class='no-graph-data text-center'>No data available.</h2>
+            </div>
+        </div>
+        <div class="row">
+            @for (int j = 9; j < 12; j++)
+            {
+                <div class="col-xs-12 col-sm-4">
+                    @Html.Partial("Partials/_card", Model.WeeklyItems.ElementAt(j))
+                </div>
+            }
+        </div>
+    </div>
+</div>

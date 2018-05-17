@@ -1,0 +1,122 @@
+$primary-color: rgb(39, 144, 188);
+$primary-color-darker: rgb(36, 107, 148);
+
+.small-card > .card {
+  height: 80px;
+  
+  .card-user {
+   display: none;
+  }
+  .card-name {
+    left: 10px;
+    font-size: 13px;
+  }
+
+  .card-person-organisation {
+    right: 10px;
+  }
+
+  .card-trending {
+    top: 45%;
+    left: 10px;
+    line-height: 4px;
+    font-weight: normal;
+  }
+
+  .card-nom {
+    top: 45%;
+    left: 85px;
+    line-height: 4px;
+    font-weight: normal;
+  }
+}
+
+
+
+
+.card {
+  position: relative;
+  height: 100px;
+  margin-top: 20px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+
+  color: $primary-color-darker;
+  box-shadow: 0 0 3px 0 rgba(0,0,0,0.2);
+  background: linear-gradient(180deg, white 70%, $primary-color 30%);
+  font-weight: bold;
+}
+.card-user {
+  position: absolute;
+  left: 10px;
+  top: 30px;
+  width: 50px;
+  border-radius: 50%;
+  .person-image {
+    height: 80px;
+    width: 80px;
+  }
+}
+
+.card-name {
+  position: absolute;
+  top: 10px;
+  left: 110px;
+  font-size: 18px;
+  letter-spacing: 1.5px;
+}
+
+.card-person-organisation {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
+.card-trending {
+  position: absolute;
+  top: 49%;
+  left: 110px;
+  line-height: 8px;
+  :first-child {
+    border-bottom: 5px solid;
+    line-height: 19px;
+  }
+  :last-child{
+    text-align: center;
+    color: white;
+  }
+}
+
+.card-nom {
+  position: absolute;
+  top: 49%;
+  left: 200px;
+  line-height: 8px;
+  :first-child {
+    border-bottom: 5px solid;
+    line-height: 19px;
+  }
+  :last-child{
+    text-align: center;
+    color: white;
+  }
+}
+
+.card-link {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  width: 100%;
+  z-index: 2;
+  background: black;
+  opacity: 0;
+}
+.card-link:hover {
+  opacity: 0.05;
+}
+
+.card-image {
+  width: 50px;
+  height: 50px;
+}
