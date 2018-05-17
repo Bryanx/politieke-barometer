@@ -90,13 +90,25 @@ namespace BAR.UI.MVC.Controllers.api
 
 			if (keyValue == null) keyValue = widgetManager.GetWidgetWithAllData(widgetId)?.PropertyTags.FirstOrDefault()?.Name;
 			
-			IEnumerable<WidgetData> widgetDatas = widgets.FirstOrDefault(w => w.WidgetDatas.Any(wd => wd.KeyValue == keyValue)).WidgetDatas;
-			IEnumerable<WidgetDataDTO> widgetDataDtos = Mapper.Map(widgetDatas, new List<WidgetDataDTO>());
+			try
+			{
+				IEnumerable<WidgetData> widgetDatas = widgets.FirstOrDefault(w => w.WidgetDatas.Any(wd => wd.KeyValue == keyValue)).WidgetDatas;
+				IEnumerable<WidgetDataDTO> widgetDataDtos = Mapper.Map(widgetDatas, new List<WidgetDataDTO>());
+
+				//Get item name
+				widgetDataDtos.First().ItemName = itemManager.GetItem(itemId).Name;
+
+				return Ok(widgetDataDtos);
+			} catch (Exception e)
+			{
+				IEnumerable<WidgetData> widgetDatas = new List<WidgetData>();
+				IEnumerable<WidgetDataDTO> widgetDataDtos = Mapper.Map(widgetDatas, new List<WidgetDataDTO>());
+
+				return Ok(widgetDataDtos);
+			}
 			
-			//Get item name
-			widgetDataDtos.First().ItemName = itemManager.GetItem(itemId).Name;
 			
-			return Ok(widgetDataDtos);
+			
 		}
 
 		/// <summary>

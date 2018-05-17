@@ -648,6 +648,27 @@
   <data name="RemoveData" xml:space="preserve">
     <value>Supprimer des données</value>
   </data>
+  <data name="Website" xml:space="preserve">
+    <value>Site web</value>
+  </data>
+  <data name="Keywords" xml:space="preserve">
+    <value>Mots de clef</value>
+  </data>
+  <data name="AddItem" xml:space="preserve">
+    <value>Ajouter un item</value>
+  </data>
+  <data name="SelectOrganisation" xml:space="preserve">
+    <value>Sélectionnez l'organisation associée</value>
+  </data>
+  <data name="Required" xml:space="preserve">
+    <value>obligatoire</value>
+  </data>
+  <data name="ImportThemes" xml:space="preserve">
+    <value>Importe themes</value>
+  </data>
+  <data name="CreateItem" xml:space="preserve">
+    <value>Creeer Item</value>
+  </data>
   <data name="BasicGraph" xml:space="preserve">
     <value>Graphique de base</value>
   </data>
@@ -728,5 +749,14 @@
   </data>
   <data name="PersonalityDistributionOfMentions" xml:space="preserve">
     <value>Personnalité</value>
+  </data>
+    <data name="Message" xml:space="preserve">
+    <value>Message</value>
+  </data>
+  <data name="Send" xml:space="preserve">
+    <value>Envoyer</value>
+  </data>
+  <data name="SendPublicAndroidMessage" xml:space="preserve">
+    <value>Envoyer un message Android public</value>
   </data>
 </root>
