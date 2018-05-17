@@ -8,6 +8,7 @@ using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Web.Http;
+using BAR.UI.MVC;
 
 namespace BAR.UI.MVC.Controllers.api
 {
@@ -22,11 +23,12 @@ namespace BAR.UI.MVC.Controllers.api
             start = start.Substring(0, 2) + ":" + start.Substring(2, start.Length);
             IDataManager dataManager = new DataManager();
             int datasourceId = 1;
-
             if (interval != 0 || start != "0")
             {
                 dataManager.ChangeInterval(datasourceId, interval);
                 dataManager.ChangeStartTimer(datasourceId, start);
+                MvcApplication app = new MvcApplication();
+                app.intervalChange(1);
                 return StatusCode(HttpStatusCode.Accepted);
             }
             else

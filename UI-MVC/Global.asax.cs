@@ -23,7 +23,8 @@ namespace BAR.UI.MVC
   {
      DataManager dataManager = new DataManager();
      private static double TimerIntervalInMilliseconds = 43200000;
-     public void intervalChange (int dataSourceId, Timer timer)
+        private Timer timer = new Timer(TimerIntervalInMilliseconds);
+        public void intervalChange (int dataSourceId)
      {
          timer.Stop();
          int interval = dataManager.GetInterval(dataSourceId);
@@ -124,7 +125,7 @@ namespace BAR.UI.MVC
           .ForMember(w => w.DashboardId, opt => opt.MapFrom(src => src.Dashboard.DashboardId))
           .ForMember(w => w.ItemIds, opt => opt.MapFrom(src => src.Items.Select(i => i.ItemId).ToList()));
       });
-      Timer timer = new Timer(TimerIntervalInMilliseconds);
+      
       timer.Enabled = true;
       timer.AutoReset = true;
       timer.Elapsed += new ElapsedEventHandler(timer_Elapsed);
