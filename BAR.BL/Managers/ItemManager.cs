@@ -79,24 +79,52 @@ namespace BAR.BL.Managers
 		}
 
 		/// <summary>
+		/// Sent emails to the people who want to receive an email
+		/// </summary>
+		public async void SendWeeklyReviewEmails(IEnumerable<User> users)
+		{
+			IEnumerable<Item> items;
+
+			foreach (User user in users)
+			{
+				//Get 5 most trending items of
+				items = GetMostTrendingItemsForUser(user.Id);
+
+				//Send email
+				IdentityMessage message = new IdentityMessage()
+				{
+					Destination = user.Email,
+					Subject = "Nieuwe weekly review is nu beschikbaar",
+					Body = "Beste " + user.FirstName + "</br></br>" +
+						"Een nieuwe weekly review is nu beschikbaar!</br></br>" +
+						"De 5 meest trending items van deze week zijn:</br>" +
+						"- " + items.ElementAt(0).Name + " (" + items.ElementAt(0).TrendingPercentage + "% trending)</br>" +
+						"- " + items.ElementAt(1).Name + " (" + items.ElementAt(1).TrendingPercentage + "% trending)</br>" +
+						"- " + items.ElementAt(2).Name + " (" + items.ElementAt(2).TrendingPercentage + "% trending)</br>" +
+						"- " + items.ElementAt(3).Name + " (" + items.ElementAt(3).TrendingPercentage + "% trending)</br>" +
+						"- " + items.ElementAt(4).Name + " (" + items.ElementAt(4).TrendingPercentage + "% trending)</br>" +
+						"Ga nu naar onze website om je nieuwe weekly review te bekijken!"
+				};
+				await new EmailService().SendAsync(message);
+			}		
+		}
+
+		/// <summary>
 		/// Gives back te most trending items
 		/// the number of trending items depends on the
 		/// number that you give via the parameter
 		/// </summary>
-		public IEnumerable<Item> GetMostTrendingItems(int numberOfItems = 5, bool useWithOldData = false)
+		public IEnumerable<Item> GetMostTrendingItems(int numberOfItems = 4	, bool useWithOldData = false)
 		{
 			//Order the items by populairity
-			IEnumerable<Item> itemsOrderd = GetAllItems();
-			if (!useWithOldData)
-			{
-				itemsOrderd = itemsOrderd.OrderBy(item => item.TrendingPercentage).AsEnumerable();
-			}
-			else
-			{
-				itemsOrderd = itemsOrderd.OrderBy(item => item.TrendingPercentage).AsEnumerable();
-			}
+			List<Item> items = new List<Item>();
 
-			return itemsOrderd.Take(numberOfItems).AsEnumerable();
+			foreach (Item item in GetMostTrendingItemsForType(ItemType.Person, numberOfItems, useWithOldData)) items.Add(item);
+			foreach (Item item in GetMostTrendingItemsForType(ItemType.Organisation, numberOfItems, useWithOldData)) items.Add(item);
+			foreach (Item item in GetMostTrendingItemsForType(ItemType.Theme, numberOfItems, useWithOldData)) items.Add(item);
+
+			IEnumerable<Item> itemsOrderd = items;
+			return itemsOrderd.AsEnumerable();
 		}
 
 		/// <summary>
@@ -119,7 +147,7 @@ namespace BAR.BL.Managers
 				.OrderBy(item => item.TrendingPercentage).AsEnumerable();
 			}
 
-			return itemsOrderd.Take(numberOfItems).AsEnumerable();
+			return itemsOrderd.Reverse().Take(numberOfItems).AsEnumerable();
 		}
 
 		/// <summary>
@@ -148,7 +176,7 @@ namespace BAR.BL.Managers
 				itemsOrderd = itemsFromUser.OrderBy(item => item.TrendingPercentage).AsEnumerable();
 			}
 
-			return itemsOrderd.Take(numberOfItems).AsEnumerable();
+			return itemsOrderd.Reverse().Take(numberOfItems).AsEnumerable();
 		}
 
 		/// <summary>
@@ -189,6 +217,8 @@ namespace BAR.BL.Managers
 		/// </summary>
 		public void UpdateWeeklyReviewData(int platformId)
 		{
+			InitRepo();
+
 			//Get timestamp
 			DateTime? lastUpdated = new SubplatformManager().GetSubPlatform(platformId).LastUpdatedWeeklyReview;
 
@@ -200,10 +230,9 @@ namespace BAR.BL.Managers
 			if (lastUpdated == null || lastUpdated < DateTime.Now.AddDays(-7))
 			{
 				foreach (Item item in items) item.NumberOfMentionsOld = item.NumberOfMentions;
-			}
-
-			//Update database
-			itemRepo.UpdateItems(items);
+				//Update database
+				itemRepo.UpdateItems(items);
+			}			
 		}
 
 		/// <summary>
@@ -1032,7 +1061,7 @@ namespace BAR.BL.Managers
 				//Determine sentiment
 				if (sentiment != 0)
 				{
-					sentiment = Math.Round((sentiment / counter), 2);
+					sentiment = Math.Round((sentiment / counter) * 100, 2);
 					if (sentiment >= 0) item.SentimentPositve = sentiment;
 					else item.SentimentNegative = Math.Abs(sentiment);
 				}

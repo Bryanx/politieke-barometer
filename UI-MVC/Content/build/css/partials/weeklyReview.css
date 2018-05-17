@@ -1,0 +1,34 @@
+.weeklyReview-top-card {
+  position: relative; }
+
+.weeklyReview-avatar {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  width: 200px; }
+  .weeklyReview-avatar img {
+    width: 100% !important;
+    height: 100% !important; }
+
+.weeklyReview-name {
+  position: absolute;
+  top: 40px;
+  left: 220px;
+  letter-spacing: 1px;
+  font-size: 20px;
+  font-weight: bold; }
+
+.weeklyReview-organisation {
+  position: absolute;
+  top: 10px;
+  left: 220px; }
+
+.weeklyReview-nom {
+  position: absolute;
+  left: 220px;
+  top: 110px;
+  letter-spacing: 1px;
+  font-size: 20px;
+  font-weight: bold; }
+
+/*# sourceMappingURL=weeklyReview.css.map */

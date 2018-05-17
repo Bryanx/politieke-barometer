@@ -288,12 +288,12 @@ namespace BAR.DAL
 		/// </summary>
 		public IEnumerable<Widget> ReadWidgetsWithAllDataForItem(int itemId)
 		{
-			Item itemToReturn =  ctx.Items.Include(item => item.ItemWidgets)
-										  .Include(item => item.ItemWidgets.Select(widget => widget.PropertyTags))
-										  .Include(item => item.ItemWidgets.Select(widget => widget.WidgetDatas))
-									      .Include(item => item.ItemWidgets.Select(widget => widget.WidgetDatas.Select(data => data.GraphValues)))
-										  .Where(item => item.ItemId == itemId).SingleOrDefault();
-			return itemToReturn.ItemWidgets.AsEnumerable();
+			return ctx.Widgets.Include(widget => widget.Items)
+							  .Include(widget => widget.WidgetDatas)
+							  .Include(widget => widget.WidgetDatas.Select(data => data.GraphValues))
+							  .Include(widget => widget.PropertyTags)
+							  .Where(widget => widget.Items.Any(item => item.ItemId == itemId))
+							  .AsEnumerable();
 		}
 
 		/// <summary>

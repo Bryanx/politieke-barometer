@@ -1,0 +1,37 @@
+﻿@using BAR.UI.MVC.Helpers
+@model BAR.UI.MVC.Models.ItemViewModels.PersonViewModel
+
+<div class="card">
+    <div class="card-user">
+        @if (Model.SocialMediaNames.FirstOrDefault(s => s.Source.Name == "Twitter") != null) {
+            <img src='https://twitter.com/@Model.SocialMediaNames.First(s => s.Source.Name == "Twitter").Username/profile_image?size=original'
+                 class="img-circle person-image"
+                 onerror = "this.onload = null; this.src='/Content/build/images/picture.jpg';"/>
+        } else {
+            <img src='/Content/build/images/picture.jpg' class="img-circle person-image"/>
+        }
+    </div>
+    <div class="card-name">
+        @Model.Item.Name
+    </div>
+    <div class="card-person-organisation">
+        <button onclick="window.location = '@Url.OrganisationUrl(Model.OrganisationId)';" class="btn btn-default btn-xs">@Model.OrganisationName</button>
+    </div>
+    <div class="card-trending">
+        <p>
+            @Resources.Trending
+        </p>
+        <p>
+            @Model.Item.TrendingPercentage%
+        </p>
+    </div>
+    <div class="card-nom">
+        <p>
+            @Resources.NumberOfMentions
+        </p>
+        <p>
+            @Model.Item.NumberOfMentions
+        </p>
+    </div>
+    <a class="card-link" href="/@Model.Item.ItemType.ToString()/Details/@Model.Item.ItemId" ></a>
+</div>

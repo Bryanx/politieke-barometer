@@ -289,5 +289,24 @@ namespace BAR.BL.Managers
 				new EmailService().SendAsync(message);
 			}
 		}
-	}
+
+    /// <summary>
+    /// Changes the device token to the device where the user logs in.
+    /// </summary>
+    public User ChangeDeviceToken(string userId, string deviceToken)
+    {
+      InitRepo();
+
+      //Get User
+      User userToUpdate = userRepo.ReadUser(userId);
+      if (userToUpdate == null) return null;
+
+      //Change user device token
+      userToUpdate.DeviceToken = deviceToken;
+
+      //Update database
+      userRepo.UpdateUser(userToUpdate);
+      return userToUpdate;
+    }
+  }
 }
