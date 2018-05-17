@@ -219,6 +219,8 @@ namespace BAR.UI.MVC.Controllers
 
 			itemManager.ChangePersonSocialMedia(person.ItemId, model.Twitter, model.Facebook);
 
+			itemManager.GenerateDefaultItemWidgets(person.Name, person.ItemId);
+
 			return RedirectToAction("Details", "Person", new { id = person.ItemId });
 		}
 
