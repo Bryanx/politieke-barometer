@@ -12,6 +12,7 @@ nav {
   transition: 1.2s ease-in-out; }
 
 .widget_summary {
+
   padding: 20px 40px;
   border-right: 1px solid rgba(0, 0, 0, 0.1); }
   .widget_summary:last-of-type {
@@ -145,6 +146,20 @@ body .container.body .main-header-container-parent {
   .search-field:focus::placeholder {
     color: #73879c;
     color: #73879c; }
+
+nav .nav-container .navbar-right li i {
+  color: white; }
+
+nav .nav-container .navbar-right .dropdown-menu li i {
+  color: var(--font-color); }
+
+nav .nav-container .navbar-right li > a.signup {
+  color: white;
+  background-color: rgba(0, 0, 0, 0.1); }
+  nav .nav-container .navbar-right li > a.signup:hover {
+    color: var(--font-color);
+    background: white !important;
+    border: 2px solid white; }
 
 nav .searchbar {
   width: 700px;

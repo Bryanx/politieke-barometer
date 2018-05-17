@@ -180,6 +180,27 @@ body .container.body .main-header-container-parent {
   border: 1px solid transparent;
 }
 
+nav .nav-container .navbar-right li {
+  i {
+    color: white;
+  }
+}
+
+nav .nav-container .navbar-right .dropdown-menu li i {
+  color: var(--font-color);
+}
+
+
+nav .nav-container .navbar-right li > a.signup {
+  color: white;
+  background-color: rgba(0, 0, 0, 0.1);
+  &:hover {
+    color: var(--font-color);
+    background: white !important;
+    border: 2px solid white;
+  }
+}
+
 nav .searchbar {
   width: 700px;
   max-width: 700px;

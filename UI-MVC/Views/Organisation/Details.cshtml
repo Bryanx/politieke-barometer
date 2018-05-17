@@ -22,7 +22,7 @@
                     <div class="profile_img">
                         <div id="crop-avatar">
                             <!-- Current avatar -->
-                            <img class="img-responsive avatar-view" src="../../Content/build/images/picture.jpg" alt="Avatar" title="Change the avatar">
+                            <img class="img-responsive avatar-view" src="../../Content/build/images/organisation.png" alt="Avatar" title="Change the avatar">
                         </div>
                     </div>
 
@@ -31,12 +31,10 @@
                     @Resources.Organisation
                     <h1>
                         @Model.Organisation.Name
-                        @if (User.Identity.IsAuthenticated) {
-                            if (Model.Subscribed != true) {
-                                <a class="w-100px subscribeItem btn btn-success pull-right" data-item-id="@Model.Organisation.ItemId" title="Deze persoon volgen">@Resources.Subscribe</a>
-                            } else {
-                                <a class="w-100px subscribeItem btn btn-danger pull-right" data-item-id="@Model.Organisation.ItemId" title="Uitschrijven">@Resources.Unsubscribe</a>
-                            }
+                        @if (Model.Subscribed != true) {
+                            <a class="w-100px subscribeItem btn btn-success pull-right" data-item-id="@Model.Organisation.ItemId" title="Deze persoon volgen">@Resources.Subscribe</a>
+                        } else {
+                            <a class="w-100px subscribeItem btn btn-danger pull-right" data-item-id="@Model.Organisation.ItemId" title="Uitschrijven">@Resources.Unsubscribe</a>
                         }
                     </h1>
                     <hr/>
@@ -114,10 +112,8 @@
     @Scripts.Render("~/bundles/gridstack")
     <script type="text/javascript" defer>
 
-        $('.subscribeItem').click(function() {
-            ajaxToggleSubscribe($(this));
-        });
-
+        $(document).on("click", ".subscribeItem", (e) => ajaxToggleSubscribe(e));
+        
         function loadNumberOfMentions() {
             $.ajax({
                 method: "GET",

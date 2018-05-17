@@ -13,6 +13,8 @@
 @section CustomJS{
     @Scripts.Render("~/bundles/datatables")
     <script type="text/javascript">
+        $(document).on("click", ".subscribeItem", (e) => ajaxToggleSubscribe(e));
+
         (() => {
             $('#datatable-infinite').dataTable({
                 "searching": true,
@@ -22,10 +24,6 @@
                 "paging": true,
                 "bProcessing": true,
                 "info": true
-            });
-
-            $('.subscribeItem').click(function() {
-                ajaxToggleSubscribe($(this));
             });
         })($);
     </script>

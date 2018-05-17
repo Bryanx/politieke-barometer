@@ -36,7 +36,8 @@ function checkScroll() {
         $('.navbar-right > li > a > span').css("color", "#73879C");
         $('nav .searchbar').css('margin-top', '4px');
         $('.nav-home').css('display', 'block');
-        $('.nav.navbar-nav > li > a.signup').css("background-color", "#73879C")
+        $('.nav.navbar-nav > li > a.signup').css("background-color", "#73879C");
+        $('.nav.navbar-nav > li > a.signup').hover(()=> $('.nav.navbar-nav > li > a.signup').css("border", "2px solid #73879C"));
     } else {
         $('nav').css("background-color", "rgba(255,255,255,0)")
             .css("box-shadow", "0px 1px 2px 2px rgba(0, 0, 0, 0)");
@@ -45,6 +46,7 @@ function checkScroll() {
         $('nav .searchbar').css('margin-top', '-50px');
         $('.nav-home').css('display', 'none');
         $('.nav.navbar-nav > li > a.signup').css("background-color", "rgba(0, 0, 0, 0.1)")
+        $('.nav.navbar-nav > li > a.signup').hover(()=> $('.nav.navbar-nav > li > a.signup').css("border", "2px solid #fff"));
     }
 }
 

@@ -11,6 +11,7 @@ using BAR.UI.MVC.Attributes;
 using BAR.UI.MVC.Models;
 using WebGrease.Css.Extensions;
 using BAR.BL.Domain.Core;
+using WebGrease.Css.Extensions;
 
 namespace BAR.UI.MVC.Controllers.api
 {
@@ -195,6 +196,17 @@ namespace BAR.UI.MVC.Controllers.api
 			else if (item is Organisation) return "Organisation";
 			else if (item is Theme) return "Theme";
 			else return null;
+		}
+		
+		/// <summary>
+		/// Get stories from person
+		/// </summary>
+		[HttpGet]
+		[Route("api/GetStories/{itemId}")]
+		public IHttpActionResult GetStories(int itemId) {
+			IDataManager dataManager = new DataManager();
+			List<string> urls = dataManager.GetUrlsForItem(itemId).ToList();
+			return Ok(urls.Distinct().Take(9));
 		}
 	}
 }

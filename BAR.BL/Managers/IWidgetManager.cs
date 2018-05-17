@@ -15,6 +15,7 @@ namespace BAR.BL.Managers
 		Widget GetWidget(int widgetId);
 		Widget GetWidgetWithAllItems(int widgetId);
 		Widget GetWidgetWithAllData(int widgetId);
+		Widget GetGeoLocationWidget();
 		IEnumerable<UserWidget> GetWidgetsForDashboard(int dashboardId);
 		IEnumerable<Widget> GetAllWidgetsWithAllItems();
 		IEnumerable<Widget> GetAllWidgetsWithAllData();
@@ -50,7 +51,8 @@ namespace BAR.BL.Managers
 		//WidgetDatas
 		IEnumerable<WidgetData> GetAllWidgetDatas();
 		IEnumerable<WidgetData> GetWidgetDatasForItemId(int itemId);
-
+		IEnumerable<WidgetData> GetWidgetDatasForKeyvalue(string value);
+	
 		WidgetData AddWidgetData(WidgetData widgetData);
 
 		WidgetData ChangeWidgetData(WidgetData widgetData);
