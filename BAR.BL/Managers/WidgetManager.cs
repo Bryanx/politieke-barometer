@@ -401,7 +401,7 @@ namespace BAR.BL.Managers
 		/// Generate new data for all the widgets in the system
 		/// This method takes time, but it happens in the background.
 		/// </summary>
-		public void GenerateDataForMwidgets()
+		public void GenerateDataForPersons()
 		{
 			InitRepo();
 
@@ -554,6 +554,17 @@ namespace BAR.BL.Managers
 		{
 			InitRepo();
 			return widgetRepo.ReadGeoLocationWidget();
+		}
+
+		/// <summary>
+		/// Generates data for organisations based on the data
+		/// of the persons
+		/// </summary>
+		public void GenerateDataForOrganisations()
+		{
+			InitRepo();
+
+
 		}
 	}
 }

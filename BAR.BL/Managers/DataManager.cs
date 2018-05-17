@@ -601,25 +601,29 @@ namespace BAR.BL.Managers
 			IEnumerable<Person> persons = new ItemManager().GetAllItemsWithInformations();
 			if (persons == null || persons.Count() == 0) return geoData;
 
+			//Determine timestamp
+			if (timestamp == null) timestamp = DateTime.Now.AddDays(-30);
+
 			//Fill geoData
 			foreach (Person item in persons)
 			{
 				//Check is district already exsists
 				GraphValue graphValue;
 				graphValue = geoData.GraphValues.Where(value => value.Value.ToLower().Equals(item.District.ToLower())).SingleOrDefault();
+				int numberOfInfos = item.Informations.Where(info => info.CreationDate >= timestamp).Count();
 
 				if (graphValue == null)
 				{
 					graphValue = new GraphValue()
 					{
 						Value = item.District,
-						NumberOfTimes = item.Informations.Count()
+						NumberOfTimes = numberOfInfos
 					};
 					geoData.GraphValues.Add(graphValue);
 				}
 				else
 				{
-					graphValue.NumberOfTimes += item.Informations.Count();
+					graphValue.NumberOfTimes += numberOfInfos;
 				}
 			}
 

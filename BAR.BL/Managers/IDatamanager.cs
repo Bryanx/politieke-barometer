@@ -24,6 +24,7 @@ namespace BAR.BL.Managers
 		WidgetData GetPropvaluesForWidget(int itemid, int widgetId, string proptag, DateTime? startDate = null);
 		WidgetData GetUserActivitiesData(ActivityType type, DateTime? timestamp = null);
 		WidgetData GetGeoLocationData(DateTime? timestamp = null);
+		WidgetData GetOrganisationData(DateTime? timestamp = null);
 
 		//Items
 		bool SynchronizeData(string json);
