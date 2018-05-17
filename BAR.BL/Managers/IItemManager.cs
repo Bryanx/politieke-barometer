@@ -29,6 +29,7 @@ namespace BAR.BL.Managers
 		IEnumerable<Item> GetMostTrendingItemsForType(ItemType type, int numberOfItems = 5, bool useWithOldData = false);
 		IEnumerable<Item> GetMostTrendingItemsForUser(string userId, int numberOfItems = 5, bool useWithOldData = false);
 		IEnumerable<Item> GetMostTrendingItemsForUserAndItemType(string userId, ItemType type, int numberOfItems = 5, bool useWithOldData = false);
+		IEnumerable<Item> GetItemsForOrganisation(int itemId);
 		IEnumerable<Person> GetAllItemsWithInformations();
 
 		IEnumerable<Person> GetAllPersonsForSubplatform(int subPlatformID);
@@ -55,10 +56,11 @@ namespace BAR.BL.Managers
 		IEnumerable<Item> ChangeItems(IEnumerable<Item> items);
 		void RemoveItem(int itemId);
 		void RemoveOverflowingItems();
-		void FillItems();
+		void FillPersonesAndThemes();
+		void FillOrganisations();
 		void DetermineTrending(int itemId);
 		double GetTrendingPer(int itemId);
     	string ConvertPfbToString(HttpPostedFileBase pfb);
-		void UpdateWeeklyReviewData(int platformId);
+		void RefreshItemData(int platformId);
   }
 }

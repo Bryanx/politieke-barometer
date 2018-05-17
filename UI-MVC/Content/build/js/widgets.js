@@ -842,7 +842,7 @@ function loadWidgets(url, itemId, onlyLoadLastWidget = false) {
 
     //Puts all the widgets on the grid.
     let loadGrid = function (data, itemId) {
-        if (data != null && data.length && !orgpage) {
+        if (data != null && data.length) {
             $.each(data, (index, widget) => {
                 if (!onlyLoadLastWidget) addWidgetToGrid(widget, itemId, index);
                 else if (index === data.length-1) addWidgetToGrid(widget, itemId, index);

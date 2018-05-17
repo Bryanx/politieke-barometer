@@ -20,7 +20,7 @@ namespace BAR.BL.Domain.Items
 		public DateTime? LastUpdatedInfo { get; set; }
 		public int NumberOfFollowers { get; set; }
 		public double TrendingPercentage { get; set; }
-		public int NumberOfMentionsOld { get; set; }
+		public double TrendingPercentageOld { get; set; }
 		public int NumberOfMentions { get; set; }
 		public double SentimentPositve { get; set; }
 		public double SentimentNegative { get; set; }

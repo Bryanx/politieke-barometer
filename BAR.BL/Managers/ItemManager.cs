@@ -50,10 +50,10 @@ namespace BAR.BL.Managers
 			//Get all informations
 			IEnumerable<Information> infos = new DataManager().GetInformationsForItemid(itemId);
 			if (infos == null || infos.Count() == 0) return;
-	
+
 			//Calculate new baseline (avarage of the last 30 days)
 			int infosOld = infos.Where(info => info.CreationDate.Value < DateTime.Now && info.CreationDate.Value >= DateTime.Now.AddDays(-30)).Count();
-			if (infosOld != 0) itemToUpdate.Baseline = Math.Round((double) (infosOld / 30));
+			if (infosOld != 0) itemToUpdate.Baseline = Math.Round((double)(infosOld / 30));
 
 			//Determine trending percentage (avarage of the last 3 days)
 			int infosNew = infos.Where(info => info.CreationDate.Value.ToString("dd-MM-yy").Equals(DateTime.Now.ToString("dd-MM-yy"))
@@ -116,7 +116,6 @@ namespace BAR.BL.Managers
 		/// </summary>
 		public IEnumerable<Item> GetMostTrendingItems(int numberOfItems = 4	, bool useWithOldData = false)
 		{
-			//Order the items by populairity
 			List<Item> items = new List<Item>();
 
 			foreach (Item item in GetMostTrendingItemsForType(ItemType.Person, numberOfItems, useWithOldData)) items.Add(item);
@@ -144,7 +143,7 @@ namespace BAR.BL.Managers
 			else
 			{
 				itemsOrderd = itemsOrderd.Where(item => item.ItemType == type)
-				.OrderBy(item => item.TrendingPercentage).AsEnumerable();
+				.OrderBy(item => item.TrendingPercentageOld).AsEnumerable();
 			}
 
 			return itemsOrderd.Reverse().Take(numberOfItems).AsEnumerable();
@@ -173,7 +172,7 @@ namespace BAR.BL.Managers
 			}
 			else
 			{
-				itemsOrderd = itemsFromUser.OrderBy(item => item.TrendingPercentage).AsEnumerable();
+				itemsOrderd = itemsFromUser.OrderBy(item => item.TrendingPercentageOld).AsEnumerable();
 			}
 
 			return itemsOrderd.Reverse().Take(numberOfItems).AsEnumerable();
@@ -205,7 +204,7 @@ namespace BAR.BL.Managers
 			else
 			{
 				itemsOrderd = itemsFromUser.Where(item => item.ItemType == type)
-				.OrderBy(item => item.TrendingPercentage).AsEnumerable();
+				.OrderBy(item => item.TrendingPercentageOld).AsEnumerable();
 			}
 
 			return itemsOrderd.Take(numberOfItems).AsEnumerable();
@@ -215,7 +214,7 @@ namespace BAR.BL.Managers
 		/// If the last time that the old trending percentage of the item was updated 7 days ago,
 		/// then the old trending percentage will be updated.
 		/// </summary>
-		public void UpdateWeeklyReviewData(int platformId)
+		public void RefreshItemData(int platformId)
 		{
 			InitRepo();
 
@@ -229,10 +228,11 @@ namespace BAR.BL.Managers
 			//Refresh old data
 			if (lastUpdated == null || lastUpdated < DateTime.Now.AddDays(-7))
 			{
-				foreach (Item item in items) item.NumberOfMentionsOld = item.NumberOfMentions;
-				//Update database
-				itemRepo.UpdateItems(items);
-			}			
+				foreach (Item item in items) item.TrendingPercentageOld = item.TrendingPercentage;
+			}
+
+			//Update database
+			itemRepo.UpdateItems(items);
 		}
 
 		/// <summary>
@@ -373,35 +373,26 @@ namespace BAR.BL.Managers
 					Site = site,
 					DateOfBirth = dateOfBirth,
 					Position = position,
-					SocialMediaNames = new List<SocialMediaName>()
+					SocialMediaNames = new List<SocialMediaName>(),
+					ItemType = itemType
 				};
 				break;
 				case ItemType.Organisation:
 				item = new Organisation()
 				{
 					Site = site,
-					SocialMediaUrls = new List<SocialMediaName>()
+					SocialMediaUrls = new List<SocialMediaName>(),
+					ItemType = itemType
 				};
 				break;
 				case ItemType.Theme:
-					if(keywords != null)
-					{
-						item = new Theme()
-						{
-							Keywords = keywords
-						};
-					} else
-					{
-						item = new Theme()
-						{
-							Keywords = new List<Keyword>()
-							{
-
-							}
-						};
-					}
-					
-					break;
+				item = new Theme()
+				{
+					Keywords = new List<Keyword>(),
+					ItemType = itemType
+				};
+        if (keywords != null) keywords.AddRange(keywords);         
+				break;
 				default:
 				item = null;
 				break;
@@ -416,7 +407,7 @@ namespace BAR.BL.Managers
 			item.NumberOfFollowers = 0;
 			item.TrendingPercentage = 0.0;
 			item.NumberOfMentions = 0;
-			item.NumberOfMentionsOld = 0;
+			item.TrendingPercentageOld = 0.0;
 			item.Baseline = 0.0;
 			item.Deleted = false;
 			item.Baseline = 10.0;
@@ -450,51 +441,55 @@ namespace BAR.BL.Managers
 			{
 				Name = "Mentions"
 			});
-
 			ItemWidget widget1 = (ItemWidget)widgetManager.AddWidget(WidgetType.GraphType, name + " popularity", 1, 1, proptags: proptags, graphType: GraphType.LineChart, rowspan: 12, colspan: 6);
 			itemWidgets.Add(widget1);
 			widgetIds.Add(widget1.WidgetId);
 
-			//2nd widget
-			proptags = new List<PropertyTag>();
-			proptags.Add(new PropertyTag()
+			//If item is from type theme or person then
+			//more items shall be added
+			if (item is Theme || item is Person)
 			{
-				Name = "Gender"
-			});
-			ItemWidget widget2 = (ItemWidget)widgetManager.AddWidget(WidgetType.GraphType, name + " gender comparison ", 1, 1, proptags: proptags, graphType: GraphType.PieChart, rowspan: 6, colspan: 6);
-			itemWidgets.Add(widget2);
-			widgetIds.Add(widget2.WidgetId);
+				//2nd widget
+				proptags = new List<PropertyTag>();
+				proptags.Add(new PropertyTag()
+				{
+					Name = "Gender"
+				});
+				ItemWidget widget2 = (ItemWidget)widgetManager.AddWidget(WidgetType.GraphType, name + " gender comparison ", 1, 1, proptags: proptags, graphType: GraphType.PieChart, rowspan: 6, colspan: 6);
+				itemWidgets.Add(widget2);
+				widgetIds.Add(widget2.WidgetId);
 
-			//3rd widget
-			proptags = new List<PropertyTag>();
-			proptags.Add(new PropertyTag()
-			{
-				Name = "Age"
-			});
-			ItemWidget widget3 = (ItemWidget)widgetManager.AddWidget(WidgetType.GraphType, name + " age comparison", 1, 1, proptags: proptags, graphType: GraphType.DonutChart, rowspan: 6, colspan: 6);
-			itemWidgets.Add(widget3);
-			widgetIds.Add(widget3.WidgetId);
+				//3rd widget
+				proptags = new List<PropertyTag>();
+				proptags.Add(new PropertyTag()
+				{
+					Name = "Age"
+				});
+				ItemWidget widget3 = (ItemWidget)widgetManager.AddWidget(WidgetType.GraphType, name + " age comparison", 1, 1, proptags: proptags, graphType: GraphType.DonutChart, rowspan: 6, colspan: 6);
+				itemWidgets.Add(widget3);
+				widgetIds.Add(widget3.WidgetId);
 
-			//4th widget
-			proptags = new List<PropertyTag>();
-			proptags.Add(new PropertyTag()
-			{
-				Name = "Education"
-			});
-			ItemWidget widget4 = (ItemWidget)widgetManager.AddWidget(WidgetType.GraphType, name + " education comparison", 1, 1, proptags: proptags, graphType: GraphType.DonutChart, rowspan: 6, colspan: 6);
-			itemWidgets.Add(widget4);
-			widgetIds.Add(widget4.WidgetId);
+				//4th widget
+				proptags = new List<PropertyTag>();
+				proptags.Add(new PropertyTag()
+				{
+					Name = "Education"
+				});
+				ItemWidget widget4 = (ItemWidget)widgetManager.AddWidget(WidgetType.GraphType, name + " education comparison", 1, 1, proptags: proptags, graphType: GraphType.PieChart, rowspan: 6, colspan: 6);
+				itemWidgets.Add(widget4);
+				widgetIds.Add(widget4.WidgetId);
 
-			//5th widget
-			proptags = new List<PropertyTag>();
-			proptags.Add(new PropertyTag()
-			{
-				Name = "Personality"
-			});
-			ItemWidget widget5 = (ItemWidget)widgetManager.AddWidget(WidgetType.GraphType, name + " personality comparison", 1, 1, proptags: proptags, graphType: GraphType.PieChart, rowspan: 6, colspan: 6);
-			itemWidgets.Add(widget5);
-			widgetIds.Add(widget5.WidgetId);
-
+				//5th widget
+				proptags = new List<PropertyTag>();
+				proptags.Add(new PropertyTag()
+				{
+					Name = "Personality"
+				});
+				ItemWidget widget5 = (ItemWidget)widgetManager.AddWidget(WidgetType.GraphType, name + " personality comparison", 1, 1, proptags: proptags, graphType: GraphType.BarChart, rowspan: 6, colspan: 6);
+				itemWidgets.Add(widget5);
+				widgetIds.Add(widget5.WidgetId);
+			}
+      
 			//Link widgets to item & save changes to database
 			item.ItemWidgets = itemWidgets;
 			itemRepo.UpdateItem(item);
@@ -793,7 +788,8 @@ namespace BAR.BL.Managers
 		/// <summary>
 		/// Gets person with given name.
 		/// </summary>
-		public Item GetItemByName(string name) {
+		public Item GetItemByName(string name)
+		{
 			InitRepo();
 			return itemRepo.ReadItemByName(name);
 		}
@@ -1028,10 +1024,11 @@ namespace BAR.BL.Managers
 		/// Fills all items with recent data from the last
 		/// synchronisation
 		/// </summary>
-		public void FillItems()
+		public void FillPersonesAndThemes()
 		{
 			DataManager dataManager = new DataManager();
-			IEnumerable<Item> items = GetAllItems();
+			IEnumerable<Item> items = GetAllItems().Where(item => item.ItemType != ItemType.Organisation).AsEnumerable();
+			if (items == null || items.Count() == 0) return;
 
 			//Update sentiment & number of mentions
 			foreach (Item item in items)
@@ -1116,7 +1113,6 @@ namespace BAR.BL.Managers
 			//Update database
 			itemRepo.UpdateItem(itemToUpdate);
 			return itemToUpdate;
-
 		}
 
 		/// <summary>
@@ -1126,6 +1122,51 @@ namespace BAR.BL.Managers
 		{
 			InitRepo();
 			return itemRepo.ReadAllItemsWithInformations().AsEnumerable();
+		}
+
+		/// <summary>
+		/// Gives back all the persons that are related to a specific organisation
+		/// </summary>
+		public IEnumerable<Item> GetItemsForOrganisation(int itemId)
+		{
+			InitRepo();
+			return itemRepo.ReadItemsForOrganisation(itemId).AsEnumerable();
+		}
+
+		/// <summary>
+		/// Fills the organisations with data based on the persons
+		/// </summary>
+		public void FillOrganisations()
+		{
+			//Get organisations
+			IEnumerable<Item> organisations = GetAllOrganisations();
+			if (organisations == null || organisations.Count() == 0) return;
+
+			//Fill Organisations
+			DataManager dataManager = new DataManager();
+			foreach (Item org in organisations)
+			{
+				//Gather data
+				IEnumerable<Item> items = GetItemsForOrganisation(org.ItemId).AsEnumerable();
+				if (items != null || items.Count() > 0)
+				{
+					foreach (Item item in items)
+					{
+						org.NumberOfMentions += item.NumberOfMentions;
+						org.SentimentNegative += item.SentimentNegative;
+						org.SentimentPositve += item.SentimentPositve;
+						org.TrendingPercentage += item.TrendingPercentage;
+					}
+				}
+
+				//Rebase data
+				org.SentimentNegative = Math.Round(org.SentimentNegative / items.Count(), 2);
+				org.SentimentPositve = Math.Round(org.SentimentPositve / items.Count(), 2);
+				org.TrendingPercentage = Math.Round(org.TrendingPercentage / items.Count(), 2);
+			}
+
+			//Update items
+			ChangeItems(organisations);
 		}
 	}
 }
