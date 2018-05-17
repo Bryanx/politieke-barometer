@@ -385,5 +385,17 @@ namespace BAR.DAL
 					          .Where(widget => widget.Items.Any(item => item.ItemType == type))
 					          .AsEnumerable();
 		}
+
+		/// <summary>
+		/// Gives back all the activity widgets
+		/// </summary>
+		public IEnumerable<Widget> ReadActivityWidgets()
+		{
+			return ctx.Widgets.Include(widget => widget.PropertyTags)
+							  .Include(widget => widget.WidgetDatas)
+							  .Include(widget => widget.WidgetDatas.Select(data => data.GraphValues))
+							  .Where(widget => widget.PropertyTags.Any(tag => tag.Name.ToLower().Contains("activity")))
+							  .AsEnumerable();
+		}
 	}
 }

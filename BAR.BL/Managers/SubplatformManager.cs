@@ -426,7 +426,9 @@ namespace BAR.BL.Managers
 			InitRepo();
 			IEnumerable<UserActivity> activities = platformRepo.ReadActivitiesForType(type);
 			if (activities == null || activities.Count() == 0 || timestamp == null) return activities.AsEnumerable();
-			else return activities.Where(act => act.TimeStamp.Day >= timestamp.Value.Day).AsEnumerable();
+			else if (timestamp.Value.ToString("dd-MM-yy").Equals(DateTime.Now.ToString("dd-MM-yy")))
+				return activities.Where(act => act.TimeStamp.Day == timestamp.Value.Day).AsEnumerable();
+			else return activities.Where(act => act.TimeStamp >= timestamp.Value).AsEnumerable();
 		}
 
 		/// <summary>
@@ -459,8 +461,8 @@ namespace BAR.BL.Managers
 			IEnumerable<UserActivity> activities = GetUserActivities(type, DateTime.Now);
 			if (activities == null) return;
 
-			//If an actitivy in already present then we just
-			//need to increment the amout of registerd users
+			//If an actitivy is already present then we just
+			//need to increment the amout
 			if (activities.Count() == 1)
 			{
 				UserActivity activityToUpdate = activities.First();

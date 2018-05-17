@@ -82,6 +82,9 @@ namespace BAR.UI.MVC.Controllers
 			themeViewModel.Subscribed = subbedItem != null;
 			themeViewModel.Keywords = theme.Keywords.ToList();
 
+			//Log visit activity
+			new SubplatformManager().LogActivity(ActivityType.VisitActitiy);
+
 			//Assembling the view
 			return View(themeViewModel);
 		}

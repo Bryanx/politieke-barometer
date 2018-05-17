@@ -2,6 +2,7 @@ using BAR.BL.Domain.Core;
 using BAR.BL.Domain.Data;
 using BAR.BL.Domain.Items;
 using BAR.BL.Domain.Users;
+using BAR.BL.Domain.Widgets;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -23,7 +24,79 @@ namespace BAR.DAL.EF
 			GenerateSources(ctx);
 			GenerateProperties(ctx);
 			GenerateAreas(ctx);
+			GenerateActivityWidgets(ctx);
 			//GenerateThemes(ctx);
+		}
+
+		/// <summary>
+		/// Generates widgets for displaying the activities that happen on the website
+		/// </summary>
+		private void GenerateActivityWidgets(BarometerDbContext ctx)
+		{
+			List<PropertyTag> tags1 = new List<PropertyTag>();
+			PropertyTag tag1 = new PropertyTag()
+			{
+				Name = "activity login"
+			};
+			tags1.Add(tag1);
+
+			Widget loginWidget = new ItemWidget()
+			{
+				Title = "Login activities",
+				RowNumber = 1,
+				ColumnNumber = 1,
+				RowSpan = 12,
+				ColumnSpan = 6,
+				WidgetDatas = new List<WidgetData>(),
+				WidgetType = WidgetType.GraphType,
+				GraphType = GraphType.LineChart,
+				PropertyTags = tags1
+			};
+			ctx.Widgets.Add(loginWidget);
+
+			List<PropertyTag> tags2 = new List<PropertyTag>();
+			PropertyTag tag2 = new PropertyTag()
+			{
+				Name = "activity register"
+			};
+			tags1.Add(tag2);
+
+			Widget registerWidget = new ItemWidget()
+			{
+				Title = "Register activities",
+				RowNumber = 1,
+				ColumnNumber = 1,
+				RowSpan = 12,
+				ColumnSpan = 6,
+				WidgetDatas = new List<WidgetData>(),
+				WidgetType = WidgetType.GraphType,
+				GraphType = GraphType.LineChart,
+				PropertyTags = tags2
+			};
+			ctx.Widgets.Add(registerWidget);
+
+			List<PropertyTag> tags3= new List<PropertyTag>();
+			PropertyTag tag3 = new PropertyTag()
+			{
+				Name = "activity visit"
+			};
+			tags1.Add(tag3);
+
+			Widget visitWidget = new ItemWidget()
+			{
+				Title = "Visit activities",
+				RowNumber = 1,
+				ColumnNumber = 1,
+				RowSpan = 12,
+				ColumnSpan = 6,
+				WidgetDatas = new List<WidgetData>(),
+				WidgetType = WidgetType.GraphType,
+				GraphType = GraphType.LineChart,
+				PropertyTags = tags3
+			};
+			ctx.Widgets.Add(visitWidget);
+
+			ctx.SaveChanges();
 		}
 
 		/// <summary>
