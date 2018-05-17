@@ -67,7 +67,7 @@ namespace BAR.UI.MVC.Helpers {
 				{
 					return helper.RouteUrl("Default", new
 					{
-						controller = "Admin",
+						controller = "Home",
 						action = nameof(AdminController.HeaderImage)
 					});
 				}
@@ -76,7 +76,7 @@ namespace BAR.UI.MVC.Helpers {
 				{
 					return helper.RouteUrl("Default", new
 					{
-						controller = "Admin",
+						controller = "Home",
 						action = nameof(AdminController.LogoImage)
 					});
 				}
