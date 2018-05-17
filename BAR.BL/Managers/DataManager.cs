@@ -639,7 +639,7 @@ namespace BAR.BL.Managers
 			//Create widgetdata
 			WidgetData widgetData = new WidgetData()
 			{
-				KeyValue = "organisation data",
+				KeyValue = "Number of mentions",
 				GraphValues = new List<GraphValue>()
 			};
 
