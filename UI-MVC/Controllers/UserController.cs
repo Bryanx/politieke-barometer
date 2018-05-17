@@ -44,10 +44,7 @@ namespace BAR.UI.MVC.Controllers
 			}
 
 			ViewBag.ReturnUrl = returnUrl;
-			return View(new LoginViewModel()
-			{
-				Customization = new SubplatformManager().GetCustomization((int)RouteData.Values["SubPlatformID"])
-			});
+			return View(new LoginViewModel());
 		}
 
 		//
@@ -106,8 +103,6 @@ namespace BAR.UI.MVC.Controllers
 
 			RegisterViewModel registerViewModel = new RegisterViewModel();
 			registerViewModel.DateOfBirth = DateTime.Now;
-			registerViewModel.Customization = new SubplatformManager().GetCustomization((int)RouteData.Values["SubPlatformID"]);
-
 			return View(registerViewModel);
 		}
 
@@ -198,10 +193,7 @@ namespace BAR.UI.MVC.Controllers
 		[AllowAnonymous]
 		public ActionResult ForgotPassword()
 		{
-			return View(new ForgotPasswordViewModel()
-			{
-				Customization = new SubplatformManager().GetCustomization((int)RouteData.Values["SubPlatformID"])
-		});
+			return View(new ForgotPasswordViewModel());
 		}
 
 		//
@@ -240,10 +232,7 @@ namespace BAR.UI.MVC.Controllers
 		[AllowAnonymous]
 		public ActionResult ForgotPasswordConfirmation()
 		{
-			return View(new ForgotPasswordViewModel()
-			{
-				Customization = new SubplatformManager().GetCustomization((int)RouteData.Values["SubPlatformID"])
-		});
+			return View(new ForgotPasswordViewModel());
 		}
 
 		//
@@ -290,10 +279,7 @@ namespace BAR.UI.MVC.Controllers
 		[AllowAnonymous]
 		public ActionResult ResetPasswordConfirmation()
 		{
-			return View(new ResetPasswordViewModel()
-			{
-				Customization = new SubplatformManager().GetCustomization((int)RouteData.Values["SubPlatformID"])
-			});
+			return View(new ResetPasswordViewModel());
 		}
 
 		//
@@ -356,8 +342,7 @@ namespace BAR.UI.MVC.Controllers
 						Firstname = firstname,
 						Lastname = lastname,
 						DateOfBirth = DateTime.Now,
-						ImageData = imageData,
-						Customization = new SubplatformManager().GetCustomization((int)RouteData.Values["SubPlatformID"])
+						ImageData = imageData
 					});
 			}
 		}
@@ -428,10 +413,7 @@ namespace BAR.UI.MVC.Controllers
 		[AllowAnonymous]
 		public ActionResult ExternalLoginFailure()
 		{
-			return View(new ExternalLoginConfirmationViewModel()
-			{
-				Customization = new SubplatformManager().GetCustomization((int)RouteData.Values["SubPlatformID"])
-			});
+			return View(new ExternalLoginConfirmationViewModel());
 		}
 
 		#endregion
@@ -444,7 +426,6 @@ namespace BAR.UI.MVC.Controllers
 			string userId = User.Identity.GetUserId();
 			PersonViewModels itemViewModel = GetPersonViewModel(userId);
 			itemViewModel.PageTitle = Resources.Dashboard;
-			itemViewModel.Customization = new SubplatformManager().GetCustomization((int)RouteData.Values["SubPlatformID"]);
 
 			//Assebling the view
 			return View("Dashboard", itemViewModel);
@@ -476,10 +457,8 @@ namespace BAR.UI.MVC.Controllers
 				AlertsViaWebsite = user.AlertsViaWebsite,
 				AlertsViaEmail = user.AlertsViaEmail,
 				WeeklyReviewViaEmail = user.WeeklyReviewViaEmail,
-				PageTitle = Resources.Settings,
-				Customization = new SubplatformManager().GetCustomization((int)RouteData.Values["SubPlatformID"])
-
-		};
+				PageTitle = Resources.Settings
+			};
 			return View(settingsViewModel);
 		}
 
@@ -525,33 +504,18 @@ namespace BAR.UI.MVC.Controllers
 			int subPlatformID = (int) RouteData.Values["SubPlatformID"];
 
 			PersonViewModels personViewModels = new PersonViewModels();
-			IEnumerable<Person> allPersons = itemManager.GetAllPersonsForSubplatform(subPlatformID);
-			
-			personViewModels.Persons = Mapper.Map(allPersons, personViewModels.Persons);
+			personViewModels.Persons = Mapper.Map(itemManager.GetAllPersonsForSubplatform(subPlatformID), personViewModels.Persons);
+			personViewModels.PageTitle = Resources.AllPoliticians;
 			personViewModels.User = User.Identity.IsAuthenticated ? userManager.GetUser(User.Identity.GetUserId()) : null;
 
-			List<ItemDTO> items = Mapper.Map(allPersons, new List<ItemDTO>());
+			List<ItemDTO> items = Mapper.Map(itemManager.GetAllPersonsForSubplatform(subPlatformID), new List<ItemDTO>());
 			for(int i = 0; i < items.Count; i++) {
 				personViewModels.Persons[i].Item = items[i];
 			}
-			
-			itemManager.GetAllOrganisationsForSubplatform(subPlatformID).ForEach(item => {
-				personViewModels.Persons.Add(new PersonViewModel() {
-					Item = Mapper.Map(item, new ItemDTO())
-				});
-			});
-			
-			itemManager.GetAllThemes().ForEach(item => {
-				personViewModels.Persons.Add(new PersonViewModel() {
-					Item = Mapper.Map(item, new ItemDTO()),
-					OrganisationId = -1
-				});
-			});
 
 			IEnumerable<Subscription> subs = subManager.GetSubscriptionsWithItemsForUser(User.Identity.GetUserId());
 			personViewModels.Persons = personViewModels.Persons.Where(p => subs.Any(s => s.SubscribedItem.ItemId == p.Item.ItemId)).ToList();
 			personViewModels.Persons.ForEach(i => i.Subscribed = true);
-			personViewModels.Customization = new SubplatformManager().GetCustomization((int)RouteData.Values["SubPlatformID"]);
 
 			return personViewModels;
 		}

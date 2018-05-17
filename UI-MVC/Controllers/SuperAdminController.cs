@@ -35,15 +35,12 @@ namespace BAR.UI.MVC.Controllers
 		{
 			userManager = new UserManager();
       dataManager = new DataManager();
-			subplatformManager = new SubplatformManager();
-
       //Assembling the view
       return View(new SourceManagement
       {
         PageTitle = Resources.GeneralManagement,
         User = userManager.GetUser(User.Identity.GetUserId()),
-        Sources = dataManager.GetAllSources(),
-				Customization = subplatformManager.GetCustomization((int)RouteData.Values["SubPlatformID"])
+        Sources = dataManager.GetAllSources()
 			});
 		}
 
@@ -63,8 +60,7 @@ namespace BAR.UI.MVC.Controllers
 			{
 				PageTitle = Resources.SubPlatformManagement,
 				User = userManager.GetUser(User.Identity.GetUserId()),
-				SubPlatforms = subplatforms,
-				Customization = subplatformManager.GetCustomization((int)RouteData.Values["SubPlatformID"])
+				SubPlatforms = subplatforms
 			});
 		}
 	}

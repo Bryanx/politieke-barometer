@@ -35,8 +35,7 @@ namespace BAR.UI.MVC.Controllers
 
 			return View(new BaseViewModel() {
 				PageTitle = Resources.AdminDashboard,
-				User = userManager.GetUser(User.Identity.GetUserId()),
-				Customization = platformManager.GetCustomization((int)RouteData.Values["SubPlatformID"])
+				User = userManager.GetUser(User.Identity.GetUserId())
 			});
 		}
 
@@ -55,8 +54,6 @@ namespace BAR.UI.MVC.Controllers
 			CustomizationViewModel vm = Mapper.Map(custom, new CustomizationViewModel());
 			vm.User = userManager.GetUser(User.Identity.GetUserId());
 			vm.PageTitle = Resources.PageManagement;
-			vm.Customization = platformManager.GetCustomization((int)RouteData.Values["SubPlatformID"]);
-
 
 			//Assembling the view
 			return View(vm);
@@ -79,9 +76,7 @@ namespace BAR.UI.MVC.Controllers
 			{
 				User = userManager.GetUser(User.Identity.GetUserId()),
 				PageTitle = Resources.ItemManagement,
-				Items = Mapper.Map(itemManager.GetAllItems().Where(item => item.SubPlatform.SubPlatformId == subPlatformID), new List<ItemDTO>()),
-				Customization = platformManager.GetCustomization(subPlatformID)
-
+				Items = Mapper.Map(itemManager.GetAllItems().Where(item => item.SubPlatform.SubPlatformId == subPlatformID), new List<ItemDTO>())
 			});
 		}
 
@@ -108,8 +103,7 @@ namespace BAR.UI.MVC.Controllers
 			{
 				User = userManager.GetUser(User.Identity.GetUserId()),
 				PageTitle = Resources.UserManagement,
-				Users = users,
-				Customization = platformManager.GetCustomization((int)RouteData.Values["SubPlatformID"])
+				Users = users
 			};
 			FillViewModels(vm);
 			return View(vm);
@@ -222,30 +216,6 @@ namespace BAR.UI.MVC.Controllers
 				platformManager.ChangeSubplatformLogo(subPlatformID, logoImgFile);
 			}
 			return RedirectToAction("PageManagement", "Admin");
-		}
-
-		/// <summary>
-		/// Returns image of byte array.
-		/// </summary>
-		public FileContentResult HeaderImage()
-		{
-			platformManager = new SubplatformManager();
-
-			Customization customization = platformManager.GetCustomization((int)RouteData.Values["SubPlatformID"]);
-			if (customization.HeaderImage == null) return null;
-			return new FileContentResult(customization.HeaderImage, "image/jpeg");
-		}
-
-		/// <summary>
-		/// Returns image of byte array.
-		/// </summary>
-		public FileContentResult LogoImage()
-		{
-			platformManager = new SubplatformManager();
-
-			Customization customization = platformManager.GetCustomization((int)RouteData.Values["SubPlatformID"]);
-			if (customization.HeaderImage == null) return null;
-			return new FileContentResult(customization.LogoImage, "image/jpeg");
 		}
 	}
 }

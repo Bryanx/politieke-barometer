@@ -12,6 +12,7 @@ using BAR.UI.MVC.Helpers;
 using BAR.UI.MVC.Models;
 using Microsoft.AspNet.Identity;
 using static BAR.UI.MVC.Models.ItemViewModels;
+using BAR.BL.Domain.Core;
 
 namespace BAR.UI.MVC.Controllers
 {
@@ -44,8 +45,7 @@ namespace BAR.UI.MVC.Controllers
 			{
 				PageTitle = INDEX_PAGE_TITLE,
 				User = User.Identity.IsAuthenticated ? userManager.GetUser(User.Identity.GetUserId()) : null,
-				Items = Mapper.Map<IList<Item>, IList<ItemDTO>>(itemManager.GetAllItems().ToList()),
-				Customization = subplatformManager.GetCustomization(subPlatformId)
+				Items = Mapper.Map<IList<Item>, IList<ItemDTO>>(itemManager.GetAllItems().ToList())
       });
     }
     /// <summary>
@@ -111,5 +111,30 @@ namespace BAR.UI.MVC.Controllers
       return View();
     }
 
-  }
+
+		/// <summary>
+		/// Returns image of byte array.
+		/// </summary>
+		public FileContentResult HeaderImage()
+		{
+			subplatformManager = new SubplatformManager();
+
+			Customization customization = subplatformManager.GetCustomization((int)RouteData.Values["SubPlatformID"]);
+			if (customization.HeaderImage == null) return null;
+			return new FileContentResult(customization.HeaderImage, "image/jpeg");
+		}
+
+		/// <summary>
+		/// Returns image of byte array.
+		/// </summary>
+		public FileContentResult LogoImage()
+		{
+			subplatformManager = new SubplatformManager();
+
+			Customization customization = subplatformManager.GetCustomization((int)RouteData.Values["SubPlatformID"]);
+			if (customization.HeaderImage == null) return null;
+			return new FileContentResult(customization.LogoImage, "image/jpeg");
+		}
+
+	}
 }
