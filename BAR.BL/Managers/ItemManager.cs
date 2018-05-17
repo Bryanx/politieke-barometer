@@ -50,10 +50,10 @@ namespace BAR.BL.Managers
 			//Get all informations
 			IEnumerable<Information> infos = new DataManager().GetInformationsForItemid(itemId);
 			if (infos == null || infos.Count() == 0) return;
-	
+
 			//Calculate new baseline (avarage of the last 30 days)
 			int infosOld = infos.Where(info => info.CreationDate.Value < DateTime.Now && info.CreationDate.Value >= DateTime.Now.AddDays(-30)).Count();
-			if (infosOld != 0) itemToUpdate.Baseline = Math.Round((double) (infosOld / 30));
+			if (infosOld != 0) itemToUpdate.Baseline = Math.Round((double)(infosOld / 30));
 
 			//Determine trending percentage (avarage of the last 3 days)
 			int infosNew = infos.Where(info => info.CreationDate.Value.ToString("dd-MM-yy").Equals(DateTime.Now.ToString("dd-MM-yy"))
@@ -614,7 +614,8 @@ namespace BAR.BL.Managers
 		/// <summary>
 		/// Gets person with given name.
 		/// </summary>
-		public Item GetItemByName(string name) {
+		public Item GetItemByName(string name)
+		{
 			InitRepo();
 			return itemRepo.ReadItemByName(name);
 		}
@@ -849,7 +850,7 @@ namespace BAR.BL.Managers
 		/// Fills all items with recent data from the last
 		/// synchronisation
 		/// </summary>
-		public void FillPersonesAndThemes(int platformId)
+		public void FillPersonesAndThemes()
 		{
 			DataManager dataManager = new DataManager();
 			IEnumerable<Item> items = GetAllItems().Where(item => item.ItemType != ItemType.Organisation).AsEnumerable();
@@ -894,7 +895,6 @@ namespace BAR.BL.Managers
 
 			//Determine trending
 			foreach (Item item in items) DetermineTrending(item.ItemId);
-			RefreshItemData(platformId);
 		}
 
 		/// <summary>
@@ -939,7 +939,6 @@ namespace BAR.BL.Managers
 			//Update database
 			itemRepo.UpdateItem(itemToUpdate);
 			return itemToUpdate;
-
 		}
 
 		/// <summary>
@@ -963,32 +962,37 @@ namespace BAR.BL.Managers
 		/// <summary>
 		/// Fills the organisations with data based on the persons
 		/// </summary>
-		public void FillOrganisations(int platformId)
+		public void FillOrganisations()
 		{
-			////Get organisations
-			//IEnumerable<Item> organisations = GetAllOrganisations();
-			//if (organisations == null || organisations.Count() == 0) return;
+			//Get organisations
+			IEnumerable<Item> organisations = GetAllOrganisations();
+			if (organisations == null || organisations.Count() == 0) return;
 
-			////Get persons and themes
-			////IEnumerable<Item> items = GetAllItems().Where(item => item.ItemType != ItemType.Organisation).AsEnumerable();
-			////if (items == null || items.Count() == 0) return;
+			//Fill Organisations
+			DataManager dataManager = new DataManager();
+			foreach (Item org in organisations)
+			{
+				//Gather data
+				IEnumerable<Item> items = GetItemsForOrganisation(org.ItemId).AsEnumerable();
+				if (items != null || items.Count() > 0)
+				{
+					foreach (Item item in items)
+					{
+						org.NumberOfMentions += item.NumberOfMentions;
+						org.SentimentNegative += item.SentimentNegative;
+						org.SentimentPositve += item.SentimentPositve;
+						org.TrendingPercentage += item.TrendingPercentage;
+					}
+				}
 
-			////Fill Organisations
-			//DataManager dataManager = new DataManager();
-			//foreach (Item org in organisations)
-			//{
-			//	//Number of mentions from the last 30 days
-			//	IEnumerable<Item> items = GetItemsForOrganisation(org.ItemId).AsEnumerable();
-			//	if (items != null || items.Count > 0)
-			//	{
-			//		foreach (Item item in items) org.NumberOfMentions = item.NumberOfMentions
-			//	}
-				
-				
-			//}
+				//Rebase data
+				org.SentimentNegative = Math.Round(org.SentimentNegative / items.Count(), 2);
+				org.SentimentPositve = Math.Round(org.SentimentPositve / items.Count(), 2);
+				org.TrendingPercentage = Math.Round(org.TrendingPercentage / items.Count(), 2);
+			}
 
-			////Update items
-			//ChangeItems(organisations);
+			//Update items
+			ChangeItems(organisations);
 		}
 	}
 }
