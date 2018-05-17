@@ -932,6 +932,7 @@ function init() {
     addWidgetToDashboard = function (json) {
         json.GraphType = convertChartTypeToGraphType(json.GraphType);
         json = JSON.stringify(json);
+        console.log(json);
         $modal = $(".makeGraphModal");
         $nowidgets = $(".no-widgets");
         $.ajax({

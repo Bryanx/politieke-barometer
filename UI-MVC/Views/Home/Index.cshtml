@@ -3,6 +3,7 @@
 @using BAR.UI.MVC
 @using BAR.UI.MVC.App_GlobalResources
 @using BAR.UI.MVC.Models
+@using WebGrease.Css.Extensions
 @model BAR.UI.MVC.Models.ItemViewModels.ItemViewModel
 
 <link href="../../Content/build/css/homepage.css" rel="stylesheet">
@@ -26,10 +27,9 @@
 
 <!-- top tiles -->
     <div class="row tile_count">
-        @{ int i = 0;}
-        @foreach (var item in Model.Items.OrderByDescending(m => m.NumberOfMentions)) {
-            if (i < 6) {
-                <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
+        @foreach (var item in Model.Items.OrderByDescending(m => m.NumberOfMentions).Take(6)) {
+
+                <div class="tile_stats_count col-md-2 col-sm-4 col-xs-6">
                     <a style="text-decoration: none" href="/Person/Details/@item.ItemId">
                     <span class="count_top"><i class="fa fa-user"></i> @item.Name</span>
                     <div class="count">@item.NumberOfMentions</div>
@@ -42,59 +42,188 @@
                     </span>
                     
                 </div>
-                i++;
-            }
         }
     </div>
 <!-- /top tiles -->
 </section>  <!-- end first page -->
 
-<section>
-    <!-- top 3 politici (trending) -->
-            <div class="x_panel tile">
-                <div class="x_title">
-                    <h2>Top 3 trending politici</h2>
-                    <div class="clearfix"></div>
+<section>     <!-- top 3 politici (trending) -->
+    <div class="x_panel">
+        <div class="x_title">
+            <h2>Top 3 trending politici</h2>
+            <ul class='nav panel_toolbox'>
+                <li>
+                    <a class="collapse-link">
+                        <i class="fa fa-chevron-down"></i>
+                    </a>
+                </li>
+                <li><a id="1" class='makeJSON' data-widget-id=""> @Resources.Save @Resources.To @Resources.Dashboard</a></li>
+            </ul>
+            <div class='clearfix'></div>   
+        </div>
+        <div class="x_content">
+
+            <div class="row">
+                <div class="col-12" style="max-height: 300px; height: 300px">
+                    <canvas id='trending-1-graph'></canvas>
+                    <h2 class='no-graph-data text-center'>No data available.</h2>
                 </div>
-                <div class="x_content row">
-                    <div class="col-12" style="max-height: 500px">
-                       <canvas id='trending-graph'></canvas>
-                       <h2 class='no-graph-data text-center'>No data available.</h2>
+                
+                <!-- CARDS -->
+                <div class="row">
+                    @for (int j = 0; j < 3; j++)
+                    {
+                        <div class="col-xs-12 col-sm-4">
+                            @Html.Partial("Partials/_cardPerson", Model.TopTrendingPersonViewModels.ElementAt(j))
+                        </div>
+                    }
+                </div>
+                <!-- /CARDS -->
+                
+                <div class='x_panel no-scrollbar x_nested_panel'>
+                    <div class='x_title'>
+                        <h2 class='graphTitle'>Twitter feed</h2>
+                        <ul class='nav panel_toolbox'>
+                            <li>
+                                <a class="collapse-link">
+                                    <i class="fa fa-chevron-down"></i>
+                                </a>
+                            </li>
+                        </ul>
+                        <div class='clearfix'></div>
                     </div>
-                    @{ int j = 1;}
-                    <table>
-                        @foreach (var item in Model.Items.OrderByDescending(m => m.TrendingPercentage)
-                            .Take(3))
-                        {
-                            if (j <= 3)
+                    <div class="x_content" style="display: none">
+                        <table>
+                            @for (int j = 1; j <= 3; j++)
                             {
                                 <tr>
                                     <div class="widget_summary col-12 col-md-4">
                                         <div class="w_left w90">
-                                        <h4 id="t-name-@j" style="display: inline-block"></h4>
-                                        <h4 style="display: inline-block">
-                                            <i class="green">
-                                                <i class="fa fa-sort-asc"></i>
-                                            </i>
-                                        </h4>
+                                            <a style="text-decoration: none">
+                                                <h4 id="t-name-@j" style="display: inline-block"></h4>
+                                                <b>
+                                                    <h4 style="display: inline-block">
+                                                        
+                                                    </h4></b>
+                                            </a>
                                         </div>
                                         <div id="twitter-feed-@j" class="w_center w_90">
-                                            
-                                            
+
+
                                         </div>
                                         <div class="clearfix"></div>
                                     </div>
                                 </tr>
-                                j++;
                             }
-                        }
-                    </table>
+                        </table>
+                    </div>
                 </div>
             </div>
-    <!-- /top 3 politici (trending) -->
-</section> <!-- end second page -->
+        </div>
+    </div>
+</section>  <!-- /top 3 politici (trending) -->
 
-<section>
+<div class="row">
+    <div class="col-12 col-sm-6">
+        <section> <!-- top 3 organisations (trending) -->
+
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2>Top 3 trending Organisations</h2>
+                    <ul class='nav panel_toolbox'>
+                        <li>
+                            <a class="collapse-link">
+                                <i class="fa fa-chevron-up"></i>
+                            </a>
+                        </li>
+                        <li><a id="2" class='makeJSON' data-widget-id=""> @Resources.Save @Resources.To @Resources.Dashboard</a></li>
+                    </ul>
+                    <div class='clearfix'></div>
+                </div>
+                <div class="x_content">
+                    <div class="row">
+                        <div class="col-12" style="max-height: 300px; height: 300px">
+                            <canvas id='trending-2-graph'></canvas>
+                            <h2 class='no-graph-data text-center'>No data available.</h2>
+                        </div>
+                    </div>
+                    
+                    <!-- SMALL CARDS -->
+                    <div class="row">
+                        @for (int j = 3; j < 6; j++)
+                        {
+                            <div class="col-xs-12 col-sm-4 small-card">
+                                @Html.Partial("Partials/_card", Model.TopTrendingitems.ElementAt(j))
+                            </div>
+                        }
+                    </div>
+                    <!-- /SMALL CARDS -->
+                    
+                </div>
+            </div>
+        </section> <!-- /top 3 organisations (trending) -->
+    </div>
+        
+<div class="col-12 col-sm-6">
+    <section> <!-- top 3 Themas (trending) -->
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>Top 3 trending Thema's</h2>
+                <ul class='nav panel_toolbox'>
+                    <li>
+                        <a class="collapse-link">
+                            <i class="fa fa-chevron-down"></i>
+                        </a>
+                    </li>
+                    <li><a id="3" class='makeJSON' data-widget-id=""> @Resources.Save @Resources.To @Resources.Dashboard</a></li>
+                </ul>
+                <div class='clearfix'></div>
+            </div>
+            <div class="x_content">
+                <div class="row">
+                    <div class="col-12" style="max-height: 300px; height: 300px">
+                        <canvas id='trending-3-graph'></canvas>
+                        <h2 class='no-graph-data text-center'>No data available.</h2>
+                    </div>
+                </div>
+
+                <!-- /SMALL CARDS -->
+                <div class="row">
+                    @for (int j = 6; j < 9; j++)
+                    {
+                        <div class="col-xs-12 col-sm-4 small-card">
+                            @Html.Partial("Partials/_card", Model.TopTrendingitems.ElementAt(j))
+                        </div>
+                    }
+                </div>
+                <!-- /SMALL CARDS -->
+                
+            </div>
+        </div>
+    </section> <!-- /top 3 Themas (trending) -->
+    </div>
+</div>
+
+<section>  <!-- Weekly Review -->
+    <div class="x_panel">
+        <div class='x_title'>
+            <h2 class='graphTitle'>Weekly Review</h2>
+            <ul class='nav panel_toolbox'>
+                <li>
+                    <a class="collapse-link">
+                        <i class="fa fa-chevron-up"></i>
+                    </a>
+                </li>
+            </ul>
+            <div class='clearfix'></div>
+        </div>
+        <div class="x_content">
+            @Html.Partial("Partials/_WeeklyReview", Model.WeeklyReviewModel)
+        </div>
+    </div>
+</section>
+
+<section>  <!-- Kaart -->
 <div class="row">
     <div class="col-md-12 col-sm-12 col-xs-12">
         <div class="x_panel">
@@ -161,18 +290,58 @@
     <script src="../../Content/build/js/homepage.js"></script> 
     
     <script>
-        (() => {
-            $.ajax({
-                type: "GET",
-                url: 'api/GetTopTrendingItems',
-                dataType: "json",
-                success: data => {
-                    GetTopTrending(data);
-                    TwitterFeed(data);
-                },
-                error: (xhr) => alert(xhr.responseText)
-            });
-        })($)
+
+    $(() => {
+        $.ajax({
+            type: "GET",
+            url: '/api/GetTopTrendingItems/1',
+            dataType: "json",
+            success: data => {
+                GetTopTrending(data);
+                TwitterFeed(data);
+            },
+            error: (xhr) => alert(xhr.responseText)
+        });
+    
+        $.ajax({
+            type: "GET",
+            url: '/api/GetTopTrendingItems/2',
+            dataType: "json",
+            success: data => {
+                GetTopTrending(data);
+            },
+            error: (xhr) => alert(xhr.responseText)
+        });
+        
+        $.ajax({
+            type: "GET",
+            url: '/api/GetTopTrendingItems/3',
+            dataType: "json",
+            success: data => {
+                GetTopTrending(data);
+            },
+            error: (xhr) => alert(xhr.responseText)
+        });
+
+        $.ajax({
+            type: "GET",
+            url: '/api/Widget/GetWeeklyReview/0',
+            dataType: "json",
+            success: data => {
+                var teller = 1;
+                for (var j = 0; j < data.length; j++) {
+                    WeeklyReview(data[j].Title, data[j].ItemIds[0], data[j].WidgetId, teller);
+                    teller++;
+                    for (var i = 0; i < 3; i++) {
+                        j++;
+                    }
+                }
+            },
+            error: (xhr) => alert(xhr.responseText)
+        });
+        
+        
+
+    })($)
     </script>
 }
-

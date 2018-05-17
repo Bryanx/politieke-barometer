@@ -1126,14 +1126,14 @@ footer.joinus {
 .tile_count {
   margin-bottom: 20px;
   margin-top: 20px; }
-  .tile_count :first-child {
-    border-left: 0 !important; }
   .tile_count .tile_stats_count {
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
     position: relative;
     text-align: center; }
+    .tile_count .tile_stats_count:first-of-type::before {
+      border-left: none !important; }
     .tile_count .tile_stats_count:before {
       content: "";
       position: absolute;
@@ -1956,5 +1956,132 @@ nav .nav-container .searchbar .search-field, form.navbar-form .input-group {
 
 .fa-snapchat-square:hover::before {
   color: #fbe00f; }
+
+.small-card > .card {
+  height: 80px; }
+  .small-card > .card .card-user {
+    display: none; }
+  .small-card > .card .card-name {
+    left: 10px;
+    font-size: 13px; }
+  .small-card > .card .card-person-organisation {
+    right: 10px; }
+  .small-card > .card .card-trending {
+    top: 45%;
+    left: 10px;
+    line-height: 4px;
+    font-weight: normal; }
+  .small-card > .card .card-nom {
+    top: 45%;
+    left: 85px;
+    line-height: 4px;
+    font-weight: normal; }
+
+.card {
+  position: relative;
+  height: 100px;
+  margin-top: 20px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  color: #246b94;
+  box-shadow: 0 0 3px 0 rgba(0, 0, 0, 0.2);
+  background: linear-gradient(180deg, white 70%, #2790bc 30%);
+  font-weight: bold; }
+
+.card-user {
+  position: absolute;
+  left: 10px;
+  top: 30px;
+  width: 50px;
+  border-radius: 50%; }
+  .card-user .person-image {
+    height: 80px;
+    width: 80px; }
+
+.card-name {
+  position: absolute;
+  top: 10px;
+  left: 110px;
+  font-size: 18px;
+  letter-spacing: 1.5px; }
+
+.card-person-organisation {
+  position: absolute;
+  top: 10px;
+  right: 10px; }
+
+.card-trending {
+  position: absolute;
+  top: 49%;
+  left: 110px;
+  line-height: 8px; }
+  .card-trending :first-child {
+    border-bottom: 5px solid;
+    line-height: 19px; }
+  .card-trending :last-child {
+    text-align: center;
+    color: white; }
+
+.card-nom {
+  position: absolute;
+  top: 49%;
+  left: 200px;
+  line-height: 8px; }
+  .card-nom :first-child {
+    border-bottom: 5px solid;
+    line-height: 19px; }
+  .card-nom :last-child {
+    text-align: center;
+    color: white; }
+
+.card-link {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  width: 100%;
+  z-index: 2;
+  background: black;
+  opacity: 0; }
+
+.card-link:hover {
+  opacity: 0.05; }
+
+.card-image {
+  width: 50px;
+  height: 50px; }
+
+.weeklyReview-top-card {
+  position: relative; }
+
+.weeklyReview-avatar {
+  position: absolute;
+  top: 40px;
+  left: 0;
+  width: 200px; }
+  .weeklyReview-avatar img {
+    width: 100% !important;
+    height: 100% !important; }
+
+.weeklyReview-name {
+  position: absolute;
+  top: 60px;
+  left: 210px;
+  letter-spacing: 1px;
+  font-size: 18px;
+  font-weight: bold; }
+
+.weeklyReview-organisation {
+  position: absolute;
+  top: 30px;
+  left: 210px; }
+
+.weeklyReview-nom {
+  position: absolute;
+  left: 210px;
+  top: 140px;
+  letter-spacing: 1px;
+  font-size: 18px;
+  font-weight: bold; }
 
 /*# sourceMappingURL=custom.css.map */
