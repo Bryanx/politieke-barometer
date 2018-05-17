@@ -446,10 +446,12 @@ namespace BAR.BL.Managers
 			RemoveWidgetDatas(GetWidgetDatasForKeyvalue("geo"));
 
 			//Create widget for geo-data
-			List<PropertyTag> tags = new List<PropertyTag>();
-			PropertyTag tag = new PropertyTag()
+			List<PropertyTag> tags = new List<PropertyTag> 
 			{
-				Name = "geo"
+				new PropertyTag 
+				{
+					Name = "geo"
+				}
 			};
 			Widget geoloactionWidget = AddWidget(WidgetType.GraphType, "geoloaction of number of mentions", 1, 1, tags);
 
