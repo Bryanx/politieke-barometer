@@ -648,22 +648,21 @@ namespace BAR.BL.Managers
 			if (items == null || items.Count() == 0) return widgetData;
 
 			//Determine timestamp
-			if (timestamp == null) timestamp = DateTime.Now.AddDays(-30);
+			if (timestamp == null) timestamp = DateTime.Now;
 
 			//Query data
-			DateTime startdate = DateTime.Now;
-			while (timestamp >= startdate)
+			while (timestamp > DateTime.Now.AddDays(-30))
 			{
 				GraphValue graphValue = new GraphValue()
 				{
-					Value = startdate.ToString("dd-MM")
+					Value = timestamp.Value.ToString("dd-MM")
 				};
 				foreach (Item item in items)
 				{
-					graphValue.NumberOfTimes += item.Informations.Where(info => info.CreationDate >= timestamp).Count();
+					graphValue.NumberOfTimes += item.Informations.Where(info => info.CreationDate.Value.ToString("dd-MM-yy").Equals(timestamp.Value.ToString("dd-MM-yy"))).Count();
 				}
 				widgetData.GraphValues.Add(graphValue);
-				startdate = startdate.AddDays(-1);
+				timestamp = timestamp.Value.AddDays(-1);
 			}
 
 			return widgetData;			

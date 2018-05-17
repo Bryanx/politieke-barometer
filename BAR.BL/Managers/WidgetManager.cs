@@ -582,7 +582,7 @@ namespace BAR.BL.Managers
 				Widget geoloactionWidget = AddWidget(WidgetType.GraphType, item.Name +  " popularity", 1, 1, tags, rowspan: 12, colspan: 6, graphType: GraphType.LineChart);
 
 				//Get widgetdata for organisation
-				WidgetData organisationData = dataManager.GetGeoLocationData();
+				WidgetData organisationData = dataManager.GetOrganisationData(item.ItemId);
 				organisationData.Widget = geoloactionWidget;
 				widgetRepo.CreateWidgetData(organisationData);
 			}
