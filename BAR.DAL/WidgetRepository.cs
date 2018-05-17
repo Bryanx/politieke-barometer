@@ -369,7 +369,21 @@ namespace BAR.DAL
 							  .Include(widget => widget.WidgetDatas)
 							  .Include(widget => widget.WidgetDatas.Select(data => data.GraphValues))
 							  .Where(widget => widget.PropertyTags.Any(tag => tag.Name.ToLower().Equals("geo")))
-							  .First();				
+							  .SingleOrDefault();				
+		}
+
+		/// <summary>
+		/// Gives back all the widgets for a specific type
+		/// </summary>
+		public IEnumerable<Widget> ReadWidgetsForItemtype(ItemType type)
+		{
+			return ctx.Widgets.Include(widget => widget.Items)
+							  .Include(widget => widget.WidgetDatas)
+					          .Include(widget => widget.WidgetDatas.Select(data => data.GraphValues))
+							  .Include(widget => widget.Items)
+							  .Include(widget => widget.PropertyTags)
+					          .Where(widget => widget.Items.Any(item => item.ItemType == type))
+					          .AsEnumerable();
 		}
 
 		/// <summary>

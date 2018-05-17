@@ -402,7 +402,7 @@ namespace BAR.BL.Managers
 		/// Generate new data for all the widgets in the system
 		/// This method takes time, but it happens in the background.
 		/// </summary>
-		public void GenerateDataForMwidgets()
+		public void GenerateDataForPersonsAndThemes()
 		{
 			InitRepo();
 
@@ -411,7 +411,8 @@ namespace BAR.BL.Managers
 
 			//Fill widgets with new widgetdata
 			DataManager dataManager = new DataManager();
-			List<Widget> widgets = GetAllWidgetsWithAllData().ToList();
+			List<Widget> widgets = widgetRepo.ReadWidgetsForItemtype(ItemType.Person).ToList();
+			widgets.AddRange(widgetRepo.ReadWidgetsForItemtype(ItemType.Theme).ToList());
 			int widgetCount = widgets.Count();
 
 			List<WidgetData> widgetDatas = new List<WidgetData>();
@@ -447,10 +448,12 @@ namespace BAR.BL.Managers
 			RemoveWidgetDatas(GetWidgetDatasForKeyvalue("geo"));
 
 			//Create widget for geo-data
-			List<PropertyTag> tags = new List<PropertyTag>();
-			PropertyTag tag = new PropertyTag()
+			List<PropertyTag> tags = new List<PropertyTag> 
 			{
-				Name = "geo"
+				new PropertyTag 
+				{
+					Name = "geo"
+				}
 			};
 			Widget geoloactionWidget = AddWidget(WidgetType.GraphType, "geoloaction of number of mentions", 1, 1, tags);
 
@@ -511,7 +514,7 @@ namespace BAR.BL.Managers
 			//Get trending items
 			ItemManager itemManager = new ItemManager();
 			IEnumerable<Item> items = null;
-			itemManager.UpdateWeeklyReviewData(platformId);
+			itemManager.RefreshItemData(platformId);
 			if (userId == null) items = itemManager.GetMostTrendingItems(useWithOldData: true);
 			else items = itemManager.GetMostTrendingItemsForUser(userId, useWithOldData: true);
 
@@ -614,6 +617,31 @@ namespace BAR.BL.Managers
 			platformManager.ChangeSubplatform(platform);
 
 			return widgets;
+
+		/// Generates data for organisations based on the data
+		/// of the persons
+		/// </summary>
+		public void GenerateDataForOrganisations()
+		{
+			InitRepo();
+
+			//Get items
+			IEnumerable<Item> items = new ItemManager().GetAllOrganisations();
+			if (items == null || items.Count() == 0) return;
+
+			//Get widgets
+			IEnumerable<Widget> widgets = widgetRepo.ReadWidgetsForItemtype(ItemType.Organisation);
+			if (widgets == null || widgets.Count() == 0) return;
+
+			//Extract data form persons to fill organisations
+			DataManager dataManager = new DataManager();
+			for (int i = 0; i < items.Count(); i++)
+			{
+				//Get widgetdata for organisation
+				WidgetData organisationData = dataManager.GetOrganisationData(items.ElementAt(i).ItemId);
+				organisationData.Widget = widgets.ElementAt(i);
+				widgetRepo.CreateWidgetData(organisationData);
+			}
 		}
 	}
 }
