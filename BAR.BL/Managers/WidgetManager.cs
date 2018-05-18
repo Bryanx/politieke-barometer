@@ -589,28 +589,36 @@ namespace BAR.BL.Managers
 		/// </summary>
 		public IEnumerable<Widget> UpdateWidgetActities(IEnumerable<Widget> widgets, int platformId)
 		{
-			//Remove old widgetdatas
-			IEnumerable<WidgetData> widgetDatas = GetWidgetDatasForKeyvalue("activity");
-			if (widgetDatas != null && widgetDatas.Count() > 0) widgetRepo.DeleteWidgetDatas(widgetDatas);
-
-			//** update widgetDatas **//
+			//** Create new widgetDatas **//
 			DataManager dataManager = new DataManager();
 
 			//1st widget
 			WidgetData loginData = dataManager.GetUserActivitiesData(ActivityType.LoginActivity, DateTime.Now.AddDays(-30));
 			Widget loginWidget = widgets.Where(widget => widget.PropertyTags.All(tag => tag.Name.ToLower().Contains("login"))).SingleOrDefault();
+			loginWidget.WidgetDatas = new List<WidgetData>
+			{
+				loginData
+			};
 			loginData.Widget = loginWidget;
 			widgetRepo.CreateWidgetData(loginData);
 
 			//2nd widget
 			WidgetData registerData = dataManager.GetUserActivitiesData(ActivityType.RegisterActivity, DateTime.Now.AddDays(-30));
 			Widget registerWidget = widgets.Where(widget => widget.PropertyTags.All(tag => tag.Name.ToLower().Contains("register"))).SingleOrDefault();
+			loginWidget.WidgetDatas = new List<WidgetData>
+			{
+				loginData
+			};
 			registerData.Widget = registerWidget;
 			widgetRepo.CreateWidgetData(registerData);
 
 			//3rd widget
 			WidgetData visitData = dataManager.GetUserActivitiesData(ActivityType.VisitActitiy, DateTime.Now.AddDays(-30));
 			Widget visitWidget = widgets.Where(widget => widget.PropertyTags.All(tag => tag.Name.ToLower().Contains("visit"))).SingleOrDefault();
+			loginWidget.WidgetDatas = new List<WidgetData>
+			{
+				loginData
+			};
 			visitData.Widget = visitWidget;
 			widgetRepo.CreateWidgetData(visitData);
 

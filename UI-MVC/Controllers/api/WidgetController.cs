@@ -245,7 +245,7 @@ namespace BAR.UI.MVC.Controllers.api
 				suplatformID = (int)_customObject;
 			}
 			
-			IEnumerable<Widget> widgets = widgetManager.GetWidgetsForActivities(suplatformID);
+			List<Widget> widgets = widgetManager.GetWidgetsForActivities(suplatformID).ToList();
 			var test = widgetManager.GetWidgetWithAllData(widgets.First().WidgetId);
 
 			
