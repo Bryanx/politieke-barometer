@@ -323,7 +323,7 @@ namespace BAR.BL.Managers
 
     public IEnumerable<SubAlert> GetUnsendedSubAlerts()
     {
-      return GetAllSubAlerts().Where(x => x.IsSend == false);
+      return GetAllSubAlerts().Where(alert => alert.IsSend == false);
     }
   }
 }
