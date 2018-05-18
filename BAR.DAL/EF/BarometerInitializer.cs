@@ -198,7 +198,8 @@ namespace BAR.DAL.EF
         Url = "https://kdg.textgain.com/query",
         DataSourceId = 1,
         Interval = 60,
-        SetTime = "0900"
+        SetTime = "0900",
+        LastTimeChecked = DateTime.Now
         
       };
     ctx.DataSources.Add(textgain);

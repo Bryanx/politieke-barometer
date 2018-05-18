@@ -278,6 +278,7 @@ namespace BAR.DAL
 
         public int CreateDataSource(DataSource dataSource)
         {
+            dataSource.LastTimeChecked = DateTime.Now;
             ctx.DataSources.Add(dataSource);
             return ctx.SaveChanges();
         }
