@@ -577,8 +577,11 @@ namespace BAR.BL.Managers
 			DateTime? lastUpdated = new SubplatformManager().GetSubPlatform(platformId).LastUpdatedActivities;
 
 			//If lastUpdated was to long ago, then the activities shall be udpated
-			if (lastUpdated == null || !lastUpdated.Value.ToString("dd-MM-yy").Equals(DateTime.Now.ToString("dd-MM-yy"))) return UpdateWidgetActities(widgets, platformId);
-			else return widgets;
+			if (lastUpdated == null || !lastUpdated.Value.ToString("dd-MM-yy").Equals(DateTime.Now.ToString("dd-MM-yy"))) widgets = UpdateWidgetActities(widgets, platformId);
+
+			//Link widdatas to widgets
+			foreach (Widget widget in widgets) widget.WidgetDatas.ToList().AddRange(GetWidgetDatasForWidgetId(widget.WidgetId));
+			return widgets;
 		}
 
 		/// <summary>
@@ -643,6 +646,15 @@ namespace BAR.BL.Managers
 				organisationData.Widget = widgets.ElementAt(i);
 				widgetRepo.CreateWidgetData(organisationData);
 			}
+		}
+
+		/// <summary>
+		/// Gives back all the widgetdatas based on the widgetId
+		/// </summary>
+		public IEnumerable<WidgetData> GetWidgetDatasForWidgetId(int widgetId)
+		{
+			InitRepo();
+			return widgetRepo.ReadWidgetDatasForWidgetId(widgetId).AsEnumerable();
 		}
 	}
 }
