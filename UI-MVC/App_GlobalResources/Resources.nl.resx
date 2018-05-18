@@ -750,7 +750,7 @@
   <data name="PersonalityDistributionOfMentions" xml:space="preserve">
     <value>Persoonlijkheid</value>
   </data>
-    <data name="Message" xml:space="preserve">
+  <data name="Message" xml:space="preserve">
     <value>Bericht</value>
   </data>
   <data name="Send" xml:space="preserve">
@@ -758,5 +758,8 @@
   </data>
   <data name="SendPublicAndroidMessage" xml:space="preserve">
     <value>Verzend een publiek Android bericht</value>
+  </data>
+  <data name="Town" xml:space="preserve">
+    <value>Gemeente</value>
   </data>
 </root>
