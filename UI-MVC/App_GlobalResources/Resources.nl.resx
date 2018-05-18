@@ -454,7 +454,7 @@
     <value>Nee</value>
   </data>
   <data name="NoAlertsMessage" xml:space="preserve">
-    <value>Abonneer jezelf op politici, partijen of thema's om te zien als zij trending zijn.</value>
+    <value>Geen alerts beschikbaar.</value>
   </data>
   <data name="NoChartsYet" xml:space="preserve">
     <value>Je hebt nog geen grafieken.</value>
@@ -710,5 +710,11 @@
   </data>
   <data name="HomepageHeaderTrending" xml:space="preserve">
     <value>trending zijn</value>
+  </data>
+  <data name="SearchFor" xml:space="preserve">
+    <value>Zoek op</value>
+  </data>
+  <data name="And" xml:space="preserve">
+    <value>en</value>
   </data>
 </root>

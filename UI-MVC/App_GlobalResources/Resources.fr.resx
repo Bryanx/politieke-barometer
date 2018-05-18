@@ -711,4 +711,10 @@
   <data name="HomepageHeaderTrending" xml:space="preserve">
     <value>sont trending</value>
   </data>
+  <data name="SearchFor" xml:space="preserve">
+    <value>Cherchez des</value>
+  </data>
+  <data name="And" xml:space="preserve">
+    <value>et</value>
+  </data>
 </root>

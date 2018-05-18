@@ -22,6 +22,7 @@ namespace BAR.UI.MVC.Controllers
 		private ISubscriptionManager subManager;
 		private IItemManager itemManager;
 		private IUserManager userManager;
+		private ISubplatformManager subplatformManager;
 
 		/// <summary>
 		/// Organisation page for logged-in and non-logged-in users.
@@ -35,6 +36,7 @@ namespace BAR.UI.MVC.Controllers
       subManager = new SubscriptionManager();
 			itemManager = new ItemManager();
 			userManager = new UserManager();
+			subplatformManager = new SubplatformManager();
 
 			IList<ItemDTO> people = Mapper.Map<IList<Item>, IList<ItemDTO>>(itemManager.GetAllOrganisationsForSubplatform(subPlatformID).ToList());
 			IEnumerable<Subscription> subs = subManager.GetSubscriptionsWithItemsForUser(User.Identity.GetUserId());
@@ -51,7 +53,7 @@ namespace BAR.UI.MVC.Controllers
 			return View("Index",
 				new ItemViewModel()
 				{
-					PageTitle = Resources.AllParties,
+					PageTitle = subplatformManager.GetCustomization(subPlatformID).OrganisationsAlias,
 					User = User.Identity.IsAuthenticated ? userManager.GetUser(User.Identity.GetUserId()) : null,
 					Items = people
 				});

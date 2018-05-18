@@ -42,7 +42,7 @@
                 </div>*@
                 <h1 class="main-header-title">@Resources.HomepageHeaderSee @Model.Customization.PersonsAlias.ToLower() @Resources.HomepageHeaderTrending<br/>@Resources.OnSocialMedia.ToLower().</h1>
             </div>
-            @Html.Partial("Partials/_SearchBar")
+            @Html.Partial("Partials/_SearchBar", Model)
         </div>
     </div>
     <!-- header end -->

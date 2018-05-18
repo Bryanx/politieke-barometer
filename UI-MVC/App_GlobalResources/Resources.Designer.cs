@@ -268,6 +268,15 @@ namespace BAR.UI.MVC.App_GlobalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to and.
+        /// </summary>
+        public static string And {
+            get {
+                return ResourceManager.GetString("And", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Back to home.
         /// </summary>
         public static string BackToHome {
@@ -1132,7 +1141,7 @@ namespace BAR.UI.MVC.App_GlobalResources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Subscribe yourself to politicians, parties or topics to see when they are trending..
+        ///   Looks up a localized string similar to No alerts available..
         /// </summary>
         public static string NoAlertsMessage {
             get {
@@ -1515,6 +1524,15 @@ namespace BAR.UI.MVC.App_GlobalResources {
         public static string SearchbarPlaceholder {
             get {
                 return ResourceManager.GetString("SearchbarPlaceholder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Search for.
+        /// </summary>
+        public static string SearchFor {
+            get {
+                return ResourceManager.GetString("SearchFor", resourceCulture);
             }
         }
         

@@ -25,6 +25,7 @@ namespace BAR.UI.MVC.Controllers
 		private IUserManager userManager;
 		private ISubscriptionManager subManager;
 		private IWidgetManager widgetManager;
+		private ISubplatformManager subplatformManager;
 
 		/// <summary>
 		/// Theme overview page for logged-in and non-logged-in users.
@@ -38,6 +39,7 @@ namespace BAR.UI.MVC.Controllers
 			itemManager = new ItemManager();
 			userManager = new UserManager();
 			subManager = new SubscriptionManager();
+			subplatformManager = new SubplatformManager();
 
 			//Return platformspecific data
 			IList<ItemDTO> themes = null;
@@ -50,7 +52,7 @@ namespace BAR.UI.MVC.Controllers
 			return View("Index",
 				new ItemViewModel()
 				{
-					PageTitle = Resources.AllPoliticians,
+					PageTitle = subplatformManager.GetCustomization(subPlatformID).ThemesAlias,
 					User = User.Identity.IsAuthenticated ? userManager.GetUser(User.Identity.GetUserId()) : null,
 					Items = themes
 				});

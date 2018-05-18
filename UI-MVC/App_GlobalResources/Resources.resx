@@ -358,7 +358,7 @@
     <value>No</value>
   </data>
   <data name="NoAlertsMessage" xml:space="preserve">
-    <value>Subscribe yourself to politicians, parties or topics to see when they are trending.</value>
+    <value>No alerts available.</value>
   </data>
   <data name="NoChartsYet" xml:space="preserve">
     <value>You don't have any charts yet.</value>
@@ -716,5 +716,11 @@
   </data>
   <data name="HomepageHeaderTrending" xml:space="preserve">
     <value>are trending</value>
+  </data>
+  <data name="SearchFor" xml:space="preserve">
+    <value>Search for</value>
+  </data>
+  <data name="And" xml:space="preserve">
+    <value>and</value>
   </data>
 </root>

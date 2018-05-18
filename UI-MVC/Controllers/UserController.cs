@@ -30,6 +30,7 @@ namespace BAR.UI.MVC.Controllers
 	{
 		private IUserManager userManager;
 		private ISubscriptionManager subManager;
+		private ISubplatformManager subplatformManager;
 
 		#region Identity
 
@@ -500,12 +501,13 @@ namespace BAR.UI.MVC.Controllers
 			ItemManager itemManager = new ItemManager();
 			subManager = new SubscriptionManager();
 			userManager = new UserManager();
+			subplatformManager = new SubplatformManager();
 			
 			int subPlatformID = (int) RouteData.Values["SubPlatformID"];
 
 			PersonViewModels personViewModels = new PersonViewModels();
 			personViewModels.Persons = Mapper.Map(itemManager.GetAllPersonsForSubplatform(subPlatformID), personViewModels.Persons);
-			personViewModels.PageTitle = Resources.AllPoliticians;
+			personViewModels.PageTitle = subplatformManager.GetCustomization(subPlatformID).PersonsAlias;
 			personViewModels.User = User.Identity.IsAuthenticated ? userManager.GetUser(User.Identity.GetUserId()) : null;
 
 			List<ItemDTO> items = Mapper.Map(itemManager.GetAllPersonsForSubplatform(subPlatformID), new List<ItemDTO>());
