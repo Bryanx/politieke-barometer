@@ -21,16 +21,9 @@ namespace BAR.UI.MVC
 {
   public class MvcApplication : System.Web.HttpApplication
   {
-     DataManager dataManager = new DataManager();
+     
      private static double TimerIntervalInMilliseconds = 43200000;
-        private Timer timer = new Timer(TimerIntervalInMilliseconds);
-        public void intervalChange (int dataSourceId)
-     {
-         timer.Stop();
-         int interval = dataManager.GetInterval(dataSourceId);
-         timer.Interval = interval * 60000;
-         timer.Start();
-     }
+     private Timer timer = new Timer(TimerIntervalInMilliseconds);
     protected void Application_Start()
     {
       AreaRegistration.RegisterAllAreas();
@@ -135,14 +128,26 @@ namespace BAR.UI.MVC
     }
     private void timer_Elapsed(object sender, ElapsedEventArgs e)
     {
-        DateTime MyScheduledRunTime = DateTime.Parse(dataManager.GetStartTimer(1));
-        DateTime CurrentSystemTime = DateTime.Now;
-        DateTime LatestRunTime = MyScheduledRunTime.AddMilliseconds(TimerIntervalInMilliseconds);
-        if ((CurrentSystemTime.CompareTo(MyScheduledRunTime) >= 0) && (CurrentSystemTime.CompareTo(LatestRunTime) <= 0))
-        {
-            DataApiController controller = new DataApiController();
-            controller.Synchronize();
-        }
+            DataManager dataManager = new DataManager();
+            DateTime MyScheduledRunTime = DateTime.Parse(dataManager.GetStartTimer(1));
+            DateTime CurrentSystemTime = DateTime.Now;
+            DateTime LatestRunTime = MyScheduledRunTime.AddMilliseconds(TimerIntervalInMilliseconds);
+            if ((CurrentSystemTime.CompareTo(MyScheduledRunTime) >= 0) && (CurrentSystemTime.CompareTo(LatestRunTime) <= 0))
+            {
+                DataApiController controller = new DataApiController();
+                controller.Synchronize();
+            }
+            
+        int newInterval = dataManager.GetInterval(1);
+        double interval = timer.Interval;
+            if (newInterval < interval)
+            {
+                timer.Stop();
+                timer.Interval = interval * 60000;
+                timer.Start();
+            }
+        
+        
     }   
   }
 }
