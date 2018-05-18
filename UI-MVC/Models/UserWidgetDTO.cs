@@ -15,5 +15,7 @@ namespace BAR.UI.MVC.Models {
         public int DashboardId { get; set; }
         public GraphType GraphType { get; set; }
         public ICollection<int> ItemIds { get; set; }
+        public ICollection<WidgetDataDTO> WidgetDatas { get; set; }
+        
     }
 }

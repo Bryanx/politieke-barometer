@@ -590,7 +590,8 @@ namespace BAR.BL.Managers
 		public IEnumerable<Widget> UpdateWidgetActities(IEnumerable<Widget> widgets, int platformId)
 		{
 			//Remove old widgetdatas
-			widgetRepo.DeleteWidgetDatas(GetWidgetDatasForKeyvalue("activity"));
+			IEnumerable<WidgetData> widgetDatas = GetWidgetDatasForKeyvalue("activity");
+			if (widgetDatas != null && widgetDatas.Count() > 0) widgetRepo.DeleteWidgetDatas(widgetDatas);
 
 			//** update widgetDatas **//
 			DataManager dataManager = new DataManager();

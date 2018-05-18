@@ -126,9 +126,9 @@ namespace BAR.UI.MVC.Controllers.api
 		/// Creates a new Widget from the body of the post request.
 		/// If the widget already exists, returns 409 Conflict
 		/// </summary>
+		[System.Web.Http.Authorize]
 		[System.Web.Http.HttpPost]
 		[System.Web.Http.Route("api/NewWidget/")]
-		[System.Web.Http.Authorize]
 		public IHttpActionResult AddNewWidgetToDashboard([FromBody] AddWidgetDTO model)
 		{
 			UnitOfWorkManager uowManager = new UnitOfWorkManager();
@@ -204,7 +204,6 @@ namespace BAR.UI.MVC.Controllers.api
 		/// <summary>
 		/// Gets weeklyReview
 		/// </summary>
-		///
 		[SubPlatformCheckAPI]
 		[System.Web.Http.HttpGet]
 		[System.Web.Http.Route("api/Widget/GetWeeklyReview/{id}")]
@@ -228,11 +227,15 @@ namespace BAR.UI.MVC.Controllers.api
 			
 			return Ok(Mapper.Map(widgets, new List<UserWidgetDTO>()));
 		}
-
+		
+		/// <summary>
+		/// Returns all activity widgets. These widgets contain information about user activity.
+		/// </summary>
+		[SubPlatformCheckAPI]
 		[System.Web.Http.HttpGet]
 		[System.Web.Http.Route("api/GetActivityWidgets")]
-		[SubPlatformCheckAPI]
-		public IHttpActionResult GetActivityWidgets() {
+		public IHttpActionResult GetActivityWidgets()
+		{
 			widgetManager = new WidgetManager();
 
 			object _customObject = null;
@@ -243,10 +246,12 @@ namespace BAR.UI.MVC.Controllers.api
 			}
 			
 			IEnumerable<Widget> widgets = widgetManager.GetWidgetsForActivities(suplatformID);
+			var test = widgetManager.GetWidgetWithAllData(widgets.First().WidgetId);
+
+			
 			if (widgets == null) return NotFound();
-			int count = widgets.Count();
-			IEnumerable<UserWidgetDTO> userWidgetDtos = Mapper.Map(widgets.ToList(), new List<UserWidgetDTO>());
-			return Ok(userWidgetDtos);
+			
+			return Ok(Mapper.Map(widgets.ToList(), new List<UserWidgetDTO>()));
 		}
 	}
 }
