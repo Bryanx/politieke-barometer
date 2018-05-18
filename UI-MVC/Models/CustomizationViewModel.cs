@@ -14,13 +14,29 @@ namespace BAR.UI.MVC.Models
 		[RegularExpression("^#([0-9]|[a-f]|[A-F]){6}$")]
 		public string PrimaryColor { get; set; }
 		[RegularExpression("^#([0-9]|[a-f]|[A-F]){6}$")]
-		public string SecondairyColor { get; set; }
+		public string PrimaryDarkerColor { get; set; }
+		[RegularExpression("^#([0-9]|[a-f]|[A-F]){6}$")]
+		public string PrimaryDarkestColor { get; set; }
+		[RegularExpression("^#([0-9]|[a-f]|[A-F]){6}$")]
+		public string SecondaryColor { get; set; }
+		[RegularExpression("^#([0-9]|[a-f]|[A-F]){6}$")]
+		public string SecondaryLighterColor { get; set; }
+		[RegularExpression("^#([0-9]|[a-f]|[A-F]){6}$")]
+		public string SecondaryDarkerColor { get; set; }
+		[RegularExpression("^#([0-9]|[a-f]|[A-F]){6}$")]
+		public string SecondaryDarkestColor { get; set; }
+
 		[RegularExpression("^#([0-9]|[a-f]|[A-F]){6}$")]
 		public string TertiaryColor { get; set; }
+
 		[RegularExpression("^#([0-9]|[a-f]|[A-F]){6}$")]
 		public string BackgroundColor { get; set; }
 		[RegularExpression("^#([0-9]|[a-f]|[A-F]){6}$")]
 		public string TextColor { get; set; }
+		[RegularExpression("^#([0-9]|[a-f]|[A-F]){6}$")]
+		public string LinkColor { get; set; }
+		[RegularExpression("^#([0-9]|[a-f]|[A-F]){6}$")]
+		public string WhiteColor { get; set; }
 
 		//Privacy
 		public string PrivacyTitle { get; set; }
@@ -37,6 +53,9 @@ namespace BAR.UI.MVC.Models
 		//FAQ
 		public string FAQTitle { get; set; }
 
+		//Questions
+		public QuestionsViewModel QuestionsViewModel { get; set; }
+
 		//Contact properties
 		public string StreetAndHousenumber { get; set; }
 		public string Zipcode { get; set; }
@@ -47,5 +66,24 @@ namespace BAR.UI.MVC.Models
 		//Images
 		public byte[] HeaderImage { get; set; }
 		public byte[] LogoImage { get; set; }
+
+
+	}
+
+	/// <summary>
+	/// All Questions
+	/// </summary>
+	public class QuestionsViewModel : BaseViewModel
+	{
+		IEnumerable<QuestionDTO> Questions { get; set; }
+	}
+
+	/// <summary>
+	/// View model of a Question and Answer
+	/// </summary>
+	public class QuestionDTO : BaseViewModel
+	{
+		public string Title { get; set; }
+		public string Answer { get; set; }
 	}
 }

@@ -78,7 +78,7 @@ namespace BAR.UI.MVC
 					.ForMember(m => m.CustomizationId, opt => opt.MapFrom(src => src.CustomizationId))
 					//Mapping Page colors
 					.ForMember(m => m.PrimaryColor, opt => opt.MapFrom(src => src.PrimaryColor))
-					.ForMember(m => m.SecondairyColor, opt => opt.MapFrom(src => src.SecondairyColor))
+					.ForMember(m => m.SecondaryColor, opt => opt.MapFrom(src => src.SecondaryColor))
 					.ForMember(m => m.TertiaryColor, opt => opt.MapFrom(src => src.TertiaryColor))
 					.ForMember(m => m.BackgroundColor, opt => opt.MapFrom(src => src.BackgroundColor))
 					.ForMember(m => m.TextColor, opt => opt.MapFrom(src => src.TextColor))

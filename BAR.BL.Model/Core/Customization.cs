@@ -17,10 +17,21 @@ namespace BAR.BL.Domain.Core
 
 		//Colors
 		public string PrimaryColor { get; set; }
-		public string SecondairyColor { get; set; }
+		public string PrimaryDarkerColor { get; set; }
+		public string PrimaryDarkestColor { get; set; }
+
+		public string SecondaryColor { get; set; }
+		public string SecondaryLighterColor { get; set; }
+		public string SecondaryDarkerColor { get; set; }
+		public string SecondaryDarkestColor { get; set; }
+
 		public string TertiaryColor { get; set; }
+
 		public string BackgroundColor { get; set; }
 		public string TextColor { get; set; }
+		public string LinkColor { get; set; }
+		public string WhiteColor { get; set; }
+
 
 		//Navbar and title text
 		public string PersonAlias { get; set; }
