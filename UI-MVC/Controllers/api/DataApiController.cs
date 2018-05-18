@@ -27,8 +27,6 @@ namespace BAR.UI.MVC.Controllers.api
             {
                 dataManager.ChangeInterval(datasourceId, interval);
                 dataManager.ChangeStartTimer(datasourceId, start);
-                MvcApplication app = new MvcApplication();
-                app.intervalChange(1);
                 return StatusCode(HttpStatusCode.Accepted);
             }
             else

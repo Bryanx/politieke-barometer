@@ -15,5 +15,6 @@ namespace BAR.BL.Domain.Data
         public int Interval { get; set; }
         //When the timer starts running every day.
         public string SetTime { get; set; }
+        public DateTime LastTimeChecked { get; set; }
     }
 }

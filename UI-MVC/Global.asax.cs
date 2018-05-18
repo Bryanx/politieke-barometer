@@ -16,13 +16,14 @@ using BAR.BL.Domain.Core;
 using Microsoft.Owin.BuilderProperties;
 using BAR.UI.MVC.Controllers.api;
 using BAR.BL.Managers;
+using BAR.BL.Domain.Data;
 
 namespace BAR.UI.MVC
 {
   public class MvcApplication : System.Web.HttpApplication
   {
      
-     private static double TimerIntervalInMilliseconds = 43200000;
+     private static double TimerIntervalInMilliseconds = 60000;
      private Timer timer = new Timer(TimerIntervalInMilliseconds);
     protected void Application_Start()
     {
@@ -121,33 +122,46 @@ namespace BAR.UI.MVC
       
       timer.Enabled = true;
       timer.AutoReset = true;
-      timer.Elapsed += new ElapsedEventHandler(timer_Elapsed);
+      timer.Elapsed += new ElapsedEventHandler(timerElapsed);
       
       
       timer.Start();
     }
-    private void timer_Elapsed(object sender, ElapsedEventArgs e)
+    private void changeInterval(int interval)
     {
-            DataManager dataManager = new DataManager();
-            DateTime MyScheduledRunTime = DateTime.Parse(dataManager.GetStartTimer(1));
-            DateTime CurrentSystemTime = DateTime.Now;
-            DateTime LatestRunTime = MyScheduledRunTime.AddMilliseconds(TimerIntervalInMilliseconds);
-            if ((CurrentSystemTime.CompareTo(MyScheduledRunTime) >= 0) && (CurrentSystemTime.CompareTo(LatestRunTime) <= 0))
+        timer.Stop();
+        timer.Interval = interval * 60000;
+        timer.Start();
+    }
+    private void timerElapsed(object sender, ElapsedEventArgs e)
+    {
+        DataManager dataManager = new DataManager();
+        List<DataSource> datasources = dataManager.GetAllDataSources().ToList();
+        for (int i=0;i<datasources.Count();i++)
             {
-                DataApiController controller = new DataApiController();
-                controller.Synchronize();
+                DataSource datasource = datasources[i];
+                if (datasource.LastTimeChecked < DateTime.Now)
+                {
+
+                }
             }
+        
+        
+        
+            //DataApiController controller = new DataApiController();
+            //controller.Synchronize();
+        
             
         int newInterval = dataManager.GetInterval(1);
         double interval = timer.Interval;
-            if (newInterval < interval)
-            {
-                timer.Stop();
-                timer.Interval = interval * 60000;
-                timer.Start();
-            }
+        if (newInterval < interval)
+        {
+            changeInterval(newInterval);
+                
+        }
         
         
-    }   
+    }  
+    
   }
 }
