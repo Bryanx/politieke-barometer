@@ -41,6 +41,7 @@ namespace BAR.DAL
         int UpdateDataSource(DataSource dataSource);
         int UpdateInterval(int dataSourceId, int interval);
         int UpdateStartTime(int dataSourceId, string setTime);
+        int UpdateLastTimeChecked(int dataSourceId, DateTime date);
 
         //Delete
         int DeleteInformation(int infoId);

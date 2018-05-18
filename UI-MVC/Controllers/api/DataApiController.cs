@@ -35,9 +35,9 @@ namespace BAR.UI.MVC.Controllers.api
             }
         }
         [HttpGet]
-		[Route("api/Data/Synchronize")]
+		[Route("api/Data/Synchronize/{id}")]
 		[SubPlatformCheckAPI]
-		public IHttpActionResult Synchronize()
+		public IHttpActionResult Synchronize(int id)
 		{
 			dataManager = new DataManager();
 
@@ -59,7 +59,7 @@ namespace BAR.UI.MVC.Controllers.api
 			using (HttpClient client = new HttpClient())
 			{
 				//Make request
-				HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, dataManager.GetDataSource(1).Url);
+				HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, dataManager.GetDataSource(id).Url);
 				request.Headers.Add("Accept", "application/json");
 				request.Headers.Add("X-API-Key", "aEN3K6VJPEoh3sMp9ZVA73kkr");
 

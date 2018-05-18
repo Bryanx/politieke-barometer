@@ -20,28 +20,70 @@
             <th>
                 @Resources.Interval
             </th>
+            <th>
+                @Resources.Synchronize
+            </th>
             <th></th>
-            
+
         </tr>
     </thead>
     <tbody>
         @for (int i = 0; i < Model.DataSources.Count(); i++)
         {
-        <tr>
-            <td>
-                @Model.DataSources.ElementAt(i).Name
-            </td>
-            <td>
-                @Model.DataSources.ElementAt(i).Url
-            </td>
-            <td>
-                @Html.TextBoxFor(m => m.Interval.ElementAt(i), new { @class = "renameItem form-control", source_interval = Model.Interval.ElementAt(i) })
-                <span style="display:none">@Model.Interval.ElementAt(i)</span>
-            </td>
-            <td>
-                <btn class="sourceChange btn btn-danger btn-xs" id="@Convert.ToString(Model.DataSources.ElementAt(i).DataSourceId)" title="@Resources.RemoveSource">@Resources.Remove</btn>
-            </td>
-        </tr>
+            <tr>
+                <td>
+                    @Model.DataSources.ElementAt(i).Name
+                </td>
+                <td>
+                    @Model.DataSources.ElementAt(i).Url
+                </td>
+                <td>
+                    @Html.TextBoxFor(m => m.Interval, new { @class = "renameItem form-control", source_interval = Model.Interval })
+                    <span style="display:none">@Model.DataSources.ElementAt(i).Interval</span>
+                </td>
+                <td>
+                    <btn class="sourceChange btn btn-danger btn-xs" id="(Model.DataSources.ElementAt(i).DataSourceId)" title="@Resources.Synchronize">@Resources.Synchronize</btn>
+                </td>
+                <td>
+                    <btn class="sourceChange btn btn-danger btn-xs" id="removeSource" title="@Resources.RemoveSource">@Resources.Remove</btn>
+                </td>
+
+            </tr>
         }
     </tbody>
 </table>
+@section CustomJS{
+
+<script type="text/javascript">
+        $("#synchronizeForm").on("click", function (event) {
+            submitForm($(this), event, $("#synchronizeMessage"));
+        });
+
+    function submitForm($this, event, message) {
+        $.ajax({
+            type: 'GET',
+            url: '/api/Data/Synchronize/' + event.target.id,
+            succes: message
+                .addClass('green')
+                .html("@Resources.Saved")
+                .fadeOut(2000,
+                    function () {
+                        $(this)
+                            .removeClass()
+                            .html("")
+                            .css("display", "inline");
+                    })
+        }).fail(() => message
+            .addClass('red')
+            .html("@Resources.Failed")
+            .fadeOut(2000,
+            function () {
+                $(this)
+                    .removeClass()
+                    .html("")
+                    .css("display", "inline");
+            }));
+    event.preventDefault();
+    }
+</script>
+}

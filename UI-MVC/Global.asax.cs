@@ -132,7 +132,8 @@ namespace BAR.UI.MVC
                 if (datasource.LastTimeChecked.AddMinutes(datasource.Interval) < DateTime.Now)
                 {
                     DataApiController controller = new DataApiController();
-                    controller.Synchronize();
+                    controller.Synchronize(i);
+                    dataManager.ChangeLastTimeChecked(i, DateTime.Now);
                 }
             }
     }      

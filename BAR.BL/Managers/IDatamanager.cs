@@ -48,6 +48,7 @@ namespace BAR.BL.Managers
         string GetStartTimer(int dataSourceId);
         int ChangeInterval(int dataSourceId, int interval);
         string ChangeStartTimer(int dataSourceId, string startTimer);
+        DateTime ChangeLastTimeChecked(int dataSourceId, DateTime date);
 
         //Other
         bool IsJsonEmpty(string json);

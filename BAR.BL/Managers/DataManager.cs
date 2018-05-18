@@ -650,6 +650,13 @@ namespace BAR.BL.Managers
             dataRepo.UpdateStartTime(dataSourceId, startTimer);
             return startTimer;
         }
+
+        public DateTime ChangeLastTimeChecked(int dataSourceId, DateTime date)
+        {
+            InitRepo();
+            dataRepo.UpdateLastTimeChecked(dataSourceId, date);
+            return date;
+        }
     }
 }
 

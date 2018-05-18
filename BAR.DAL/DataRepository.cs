@@ -324,6 +324,12 @@ namespace BAR.DAL
             ctx.DataSources.Find(dataSourceId).SetTime = setTime;
             return ctx.SaveChanges();
         }
+
+        public int UpdateLastTimeChecked(int dataSourceId, DateTime date)
+        {
+            ctx.DataSources.Find(dataSourceId).LastTimeChecked = date;
+            return ctx.SaveChanges();
+        }
     }
 }
 
