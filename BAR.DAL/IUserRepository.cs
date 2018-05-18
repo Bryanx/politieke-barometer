@@ -1,10 +1,6 @@
 ﻿using BAR.BL.Domain.Users;
 using Microsoft.AspNet.Identity.EntityFramework;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BAR.DAL
 {
@@ -29,7 +25,6 @@ namespace BAR.DAL
 		int UpdateUsers(IEnumerable<User> users);
 
 		//Delete
-		int DeleteUser(string userId);
-		int DeleteUsers(IEnumerable<string> userIds);
+		//User acounts will be deactivated, but not deleted.
 	}
 }

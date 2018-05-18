@@ -560,7 +560,7 @@ namespace BAR.BL.Managers
 
 			InitRepo();
 
-			Organisation org = this.GetOrganisationWithDetails(organisationId);
+			Organisation org = GetOrganisationWithDetails(organisationId);
 			//Get item
 			Person personToUpdate = GetPersonWithDetails(personId);
 
