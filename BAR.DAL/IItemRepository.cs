@@ -8,12 +8,10 @@ namespace BAR.DAL
 	{
 		//Read
 		Item ReadItem(int itemId);
-		Item ReadItemWithInformations(int itemId);
 		Item ReadItemWithPlatform(int itemId);
 		Item ReadItemWithWidgets(int itemId);
 		Item ReadItemByName(string name);
 		IEnumerable<Item> ReadAllItemsWithPlatforms();
-		IEnumerable<Item> ReadAllItemsForUpdatedSince(DateTime since);
 		IEnumerable<Item> ReadItemsForOrganisation(int itemId);
 		Person ReadPersonWithDetails(int itemId);
 		IEnumerable<Person> ReadAllItemsWithInformations();

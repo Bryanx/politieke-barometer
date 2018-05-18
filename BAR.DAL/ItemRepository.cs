@@ -95,17 +95,6 @@ namespace BAR.DAL
 		}
 
 		/// <summary>
-		/// Does the same thing as ReadItem but it loads all the
-		/// informations with it.
-		/// </summary>
-		public Item ReadItemWithInformations(int itemId)
-		{
-			return ctx.Items.Include(item => item.Informations)
-							.Where(item => item.ItemId == itemId)
-							.SingleOrDefault();
-		}
-
-		/// <summary>
 		/// Returns a list of all items.
 		/// </summary>
 		/// <returns></returns>
@@ -167,15 +156,6 @@ namespace BAR.DAL
 							.Include(item => item.ItemWidgets)
 							.Include(item => item.SubPlatform)
 							.AsEnumerable();
-		}
-
-		/// <summary>
-		/// Gives back a list of items that were
-		/// last updated from a given date untill now.
-		/// </summary>
-		public IEnumerable<Item> ReadAllItemsForUpdatedSince(DateTime since)
-		{
-			return ctx.Items.Where(item => item.LastUpdatedInfo >= since).AsEnumerable();
 		}
 
 		/// <summary>
