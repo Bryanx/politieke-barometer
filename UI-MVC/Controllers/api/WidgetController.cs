@@ -106,9 +106,6 @@ namespace BAR.UI.MVC.Controllers.api
 
 				return Ok(widgetDataDtos);
 			}
-			
-			
-			
 		}
 
 		/// <summary>
@@ -230,6 +227,25 @@ namespace BAR.UI.MVC.Controllers.api
 			}
 			
 			return Ok(Mapper.Map(widgets, new List<UserWidgetDTO>()));
+		}
+
+		[System.Web.Http.HttpGet]
+		[System.Web.Http.Route("api/GetActivityWidgets")]
+		[SubPlatformCheckAPI]
+		public IHttpActionResult GetActivityWidgets() {
+			widgetManager = new WidgetManager();
+
+			object _customObject = null;
+			int suplatformID = -1;
+			if (Request.Properties.TryGetValue("SubPlatformID", out _customObject))
+			{
+				suplatformID = (int)_customObject;
+			}
+			
+			IEnumerable<Widget> widgets = widgetManager.GetWidgetsForActivities(suplatformID);
+			if (widgets == null) return NotFound();
+			IEnumerable<UserWidgetDTO> userWidgetDtos = Mapper.Map(widgets.ToList(), new List<UserWidgetDTO>());
+			return Ok(userWidgetDtos);
 		}
 	}
 }
