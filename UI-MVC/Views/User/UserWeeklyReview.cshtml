@@ -1,0 +1,44 @@
+﻿@using System.Web.Optimization
+@using WebGrease.Css.Extensions
+@model BAR.UI.MVC.Models.ItemViewModels.WeeklyReviewModel
+
+<section>
+    <div class="x_panel">
+        <div class="x_title">
+            <h2>Top 3 trending politici</h2>
+            <ul class='nav panel_toolbox'>
+                <li>
+                    <a class="collapse-link">
+                        <i class="fa fa-chevron-down"></i>
+                    </a>
+                </li>
+                <li><a id="1" class='makeJSON' data-widget-id=""> @Resources.Save @Resources.To @Resources.Dashboard</a></li>
+            </ul>
+            <div class='clearfix'></div>   
+        </div>
+        <div class="x_content">
+
+            <div class="row">
+                <div class="col-12" style="max-height: 300px; height: 300px">
+                    <canvas id='user-weekly-1'></canvas>
+                    <h2 class='no-graph-data text-center'>No data available.</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section CustomJS{
+
+    <script src="~/Scripts/ChartJS/Chart.js"></script>
+    @Scripts.Render("~/bundles/gridstack", "~/bundles/map")
+    <script src="../../Content/build/js/weeklyReview.js"></script>
+
+    <script>
+        console.log(@Model.widgets)
+        $(() => {     
+
+
+        })($);
+    </script>
+}

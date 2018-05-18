@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using BAR.BL.Domain.Users;
 using BAR.BL.Managers;
 using System.Collections.Generic;
@@ -17,6 +18,7 @@ using System.Configuration;
 using System.Security.Claims;
 using AutoMapper;
 using BAR.BL;
+using BAR.BL.Domain.Widgets;
 using WebGrease.Css.Extensions;
 using static BAR.UI.MVC.Models.ItemViewModels;
 
@@ -33,7 +35,31 @@ namespace BAR.UI.MVC.Controllers
 
 		#region Identity
 
-		//
+		public ActionResult UserWeeklyReview()
+		{
+			WidgetManager widgetManager = new WidgetManager();
+			ItemManager itemManager = new ItemManager();
+			string userId = User.Identity.GetUserId();
+			
+			// Making widgets
+			IEnumerable<Widget> widgets = widgetManager.GetWidgetsForWeeklyReview(userId);
+			
+			// making 
+			ICollection<Item> items = new List<Item>();
+			itemManager.GetMostTrendingItemsForUserAndItemType(userId, ItemType.Person, 4, true).ForEach(item => items.Add(item));
+			itemManager.GetMostTrendingItemsForUserAndItemType(userId, ItemType.Organisation, 4, true).ForEach(item => items.Add(item));
+			itemManager.GetMostTrendingItemsForUserAndItemType(userId, ItemType.Theme, 4, true).ForEach(item => items.Add(item));
+			
+			
+			// Building WeeklyReviewModel
+			WeeklyReviewModel weeklyReviewModel = new WeeklyReviewModel {
+				widgets = widgets,
+				WeeklyItems = items
+			};
+			
+			return View(weeklyReviewModel);
+		}
+		
 		// GET: /User/Login
 		[AllowAnonymous]
 		public ActionResult Login(string returnUrl)

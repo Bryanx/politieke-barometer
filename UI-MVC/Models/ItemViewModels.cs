@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using BAR.BL.Domain.Items;
 using BAR.BL.Domain.Users;
 using System.Web.Mvc;
+using BAR.BL.Domain.Widgets;
 
 namespace BAR.UI.MVC.Models {
     public class ItemViewModels {
@@ -44,6 +45,7 @@ namespace BAR.UI.MVC.Models {
         public class WeeklyReviewModel : BaseViewModel {
             public ICollection<PersonViewModel> WeeklyPersonViewModels { get; set; }
             public ICollection<Item> WeeklyItems { get; set; }
+            public IEnumerable<Widget> widgets { get; set; }
         }
         
         public class PersonViewModels : BaseViewModel {
