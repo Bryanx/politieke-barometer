@@ -92,7 +92,7 @@ namespace BAR.BL.Managers
 			//Change Customization
 			Customization custom = platform.Customization;
 			custom.PrimaryColor = primaryColor;
-			custom.SecondairyColor = secondairyColor;
+			custom.SecondaryColor = secondairyColor;
 			custom.TertiaryColor = tertiaryColor;
 			custom.BackgroundColor = backgroundColor;
 			custom.TextColor = textColor;
@@ -209,7 +209,7 @@ namespace BAR.BL.Managers
 			{
 				//Colors
 				PrimaryColor = "#0f8ec4",
-				SecondairyColor = "#303E4D",
+				SecondaryColor = "#303E4D",
 				TertiaryColor = "#278e87",
 				BackgroundColor = "#f7f7f7",
 				TextColor = "#73879C",

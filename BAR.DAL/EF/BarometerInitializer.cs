@@ -128,7 +128,7 @@ namespace BAR.DAL.EF
 				Name = "k3",
 				CreationDate = DateTime.Now,
 				Customization = AddDefaultCustomization(),
-				Questions = new List<Question>(),			
+				Questions = new List<Question>(),
 			};
 			ctx.SubPlatforms.Add(subPlatform1);
 
@@ -143,11 +143,20 @@ namespace BAR.DAL.EF
 			Customization custom = new Customization()
 			{
 				//Colors
-				PrimaryColor = "#0f8ec4",
-				SecondairyColor = "#303E4D",
-				TertiaryColor = "#278e87",
-				BackgroundColor = "#f7f7f7",
+				PrimaryColor = "#c40f3f",
+				SecondaryColor = "#303E4D",
+				SecondaryDarkerColor = "#2a3744",
+				SecondaryDarkestColor = "#1f2e3f",
+				SecondaryLighterColor = "#3c3c3c",
+				TertiaryColor = "#79268e",
+				BackgroundColor = "#fbff87",
+				PrimaryDarkerColor = "#0e85b8",
+				PrimaryDarkestColor = "#0d77a4",
+
+				WhiteColor = "#fff",
+				LinkColor = "#5A738E",
 				TextColor = "#73879C",
+
 
 				//Navbar and title text
 				PersonAlias = "Meisje",
@@ -178,31 +187,31 @@ namespace BAR.DAL.EF
 			return custom;
 		}
 
-    /// <summary>
-    /// Generates all of the sources we get our information from.
-    /// </summary>
-    private void GenerateSources(BarometerDbContext ctx)
-    {
-      Source twitter = new Source
-      {
-        Name = "Twitter",
-        Site = "https://twitter.com/"
-      };
-      ctx.Sources.Add(twitter);
-      Source facebook = new Source
-      {
-        Name = "Facebook",
-        Site = "https://www.facebook.com/"
-      };
-      ctx.Sources.Add(facebook);
-      DataSource textgain = new DataSource
-      {
-        Name = "Textgain",
-        Url = "https://kdg.textgain.com/query"
-      };
-    ctx.DataSources.Add(textgain);
-    ctx.SaveChanges();
-    }
+		/// <summary>
+		/// Generates all of the sources we get our information from.
+		/// </summary>
+		private void GenerateSources(BarometerDbContext ctx)
+		{
+			Source twitter = new Source
+			{
+				Name = "Twitter",
+				Site = "https://twitter.com/"
+			};
+			ctx.Sources.Add(twitter);
+			Source facebook = new Source
+			{
+				Name = "Facebook",
+				Site = "https://www.facebook.com/"
+			};
+			ctx.Sources.Add(facebook);
+			DataSource textgain = new DataSource
+			{
+				Name = "Textgain",
+				Url = "https://kdg.textgain.com/query"
+			};
+			ctx.DataSources.Add(textgain);
+			ctx.SaveChanges();
+		}
 
 		/// <summary>
 		/// Performance gain if you put all items in a list
@@ -212,110 +221,110 @@ namespace BAR.DAL.EF
 		{
 			List<Property> propertiesList = new List<Property>();
 
-      Property gender = new Property
-      {
-        Name = "Gender"
-      };
-      Property age = new Property
-      {
-        Name = "Age"
-      };
-      Property education = new Property
-      {
-        Name = "Education"
-      };
-      Property language = new Property
-      {
-        Name = "Language"
-      };
-      Property personality = new Property
-      {
-        Name = "Personality"
-      };
-      Property word = new Property
-      {
-        Name = "Word"
-      };
-      Property sentiment = new Property
-      {
-        Name = "Sentiment"
-      };
-      Property hashtag = new Property
-      {
-        Name = "Hashtag"
-      };
-      Property mention = new Property
-      {
-        Name = "Mention"
-      };
-      Property url = new Property
-      {
-        Name = "Url"
-      };
-      Property date = new Property
-      {
-        Name = "Date"
-      };
-      Property geo = new Property
-      {
-        Name = "Geo"
-      };
-      Property postId = new Property
-      {
-        Name = "PostId"
-      };     
-      Property retweet = new Property
-      {
-        Name = "Retweet"
-      };
+			Property gender = new Property
+			{
+				Name = "Gender"
+			};
+			Property age = new Property
+			{
+				Name = "Age"
+			};
+			Property education = new Property
+			{
+				Name = "Education"
+			};
+			Property language = new Property
+			{
+				Name = "Language"
+			};
+			Property personality = new Property
+			{
+				Name = "Personality"
+			};
+			Property word = new Property
+			{
+				Name = "Word"
+			};
+			Property sentiment = new Property
+			{
+				Name = "Sentiment"
+			};
+			Property hashtag = new Property
+			{
+				Name = "Hashtag"
+			};
+			Property mention = new Property
+			{
+				Name = "Mention"
+			};
+			Property url = new Property
+			{
+				Name = "Url"
+			};
+			Property date = new Property
+			{
+				Name = "Date"
+			};
+			Property geo = new Property
+			{
+				Name = "Geo"
+			};
+			Property postId = new Property
+			{
+				Name = "PostId"
+			};
+			Property retweet = new Property
+			{
+				Name = "Retweet"
+			};
 			Property theme = new Property
 			{
 				Name = "Theme"
 			};
 
-      propertiesList.Add(gender);
-      propertiesList.Add(age);
-      propertiesList.Add(education);
-      propertiesList.Add(language);
-      propertiesList.Add(personality);
-      propertiesList.Add(word);
-      propertiesList.Add(sentiment);
-      propertiesList.Add(hashtag);
-      propertiesList.Add(mention);
-      propertiesList.Add(url);
-      propertiesList.Add(date);
-      propertiesList.Add(geo);
-      propertiesList.Add(postId);
-      propertiesList.Add(retweet);
+			propertiesList.Add(gender);
+			propertiesList.Add(age);
+			propertiesList.Add(education);
+			propertiesList.Add(language);
+			propertiesList.Add(personality);
+			propertiesList.Add(word);
+			propertiesList.Add(sentiment);
+			propertiesList.Add(hashtag);
+			propertiesList.Add(mention);
+			propertiesList.Add(url);
+			propertiesList.Add(date);
+			propertiesList.Add(geo);
+			propertiesList.Add(postId);
+			propertiesList.Add(retweet);
 			propertiesList.Add(theme);
 
 
 			ctx.Properties.AddRange(propertiesList);
-      ctx.SaveChanges();
-    }
+			ctx.SaveChanges();
+		}
 
-    /// <summary>
-    /// Reads all Belgium cities from Json.
-    /// </summary>
-    /// <param name="ctx"></param>
-    private void GenerateAreas(BarometerDbContext ctx)
-    {
-      string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "zipcode-belgium.json");
-      string json = File.ReadAllText(path);
-      dynamic deserializedJson = JsonConvert.DeserializeObject(json);
+		/// <summary>
+		/// Reads all Belgium cities from Json.
+		/// </summary>
+		/// <param name="ctx"></param>
+		private void GenerateAreas(BarometerDbContext ctx)
+		{
+			string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "zipcode-belgium.json");
+			string json = File.ReadAllText(path);
+			dynamic deserializedJson = JsonConvert.DeserializeObject(json);
 
-      for (int i = 0; i < deserializedJson.Count; i++)
-      {
-        Area area = new Area
-        {
-          Country    = "België",
-          PostalCode = deserializedJson[i].zip,
-          Residence  = deserializedJson[i].city
-        };
-        ctx.Areas.Add(area);
-      }
-      ctx.SaveChanges();
-    }
-  }
+			for (int i = 0; i < deserializedJson.Count; i++)
+			{
+				Area area = new Area
+				{
+					Country = "België",
+					PostalCode = deserializedJson[i].zip,
+					Residence = deserializedJson[i].city
+				};
+				ctx.Areas.Add(area);
+			}
+			ctx.SaveChanges();
+		}
+	}
 }
 

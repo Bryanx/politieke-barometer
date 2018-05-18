@@ -71,7 +71,9 @@ namespace BAR.UI.MVC.Controllers
     public ActionResult Faq()
     {
       userManager = new UserManager();
+			subplatformManager = new SubplatformManager();
 
+			IEnumerable<Question> questions = subplatformManager.GetAllQuestions();
       //Assembling the view
       return View(new BaseViewModel()
       {
