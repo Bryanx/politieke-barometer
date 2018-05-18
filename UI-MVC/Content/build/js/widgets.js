@@ -1002,7 +1002,7 @@ function init() {
         let widgetId = e.target.id;
         if (widgetId.length) {
             $.ajax({
-                type: "DELETE",
+                type: "POST",
                 url: "/api/Widget/Delete/" + widgetId,
                 dataType: "json",
                 error: (xhr) => {
