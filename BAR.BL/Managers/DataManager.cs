@@ -512,22 +512,30 @@ namespace BAR.BL.Managers
 			WidgetData widgetData = new WidgetData()
 			{
 				GraphValues = new List<GraphValue>(),
-				KeyValue = "User Activities"
+				KeyValue = "activity"
 			};
 
 			//Get actitivies
 			IEnumerable<UserActivity> activities = new SubplatformManager().GetUserActivities(type, timestamp);
 			if (activities == null || activities.Count() == 0) return widgetData;
+			int count = activities.Count();
 
 			//Query data
 			DateTime startdate = DateTime.Now;
-			while (timestamp >= startdate)
+			UserActivity activity;
+			while (timestamp <= startdate)
 			{
 				GraphValue graphValue = new GraphValue()
 				{
-					NumberOfTimes = activities.Where(act => act.TimeStamp.Day == startdate.Day).Count(),
+					NumberOfTimes = 0,
 					Value = startdate.ToString("dd-MM")
 				};
+				activity = activities.Where(act => act.TimeStamp.ToString("dd-MM-yy").Equals(startdate.ToString("dd-MM-yy"))).SingleOrDefault();
+				if (activity != null)
+				{
+					graphValue.NumberOfTimes = activity.NumberOfTimes;
+					widgetData.GraphValues.Add(graphValue);
+				}
 				startdate = startdate.AddDays(-1);
 			}
 
@@ -541,7 +549,7 @@ namespace BAR.BL.Managers
 		/// </summary>
 		public IEnumerable<string> GetUrlsForItem(int itemId)
 		{
-			List<string> urls = new List<string>(); 
+			List<string> urls = new List<string>();
 
 			//Get informations for item
 			IEnumerable<Information> infos = GetInformationsWithAllInfoForItem(itemId).Take(50);
@@ -608,29 +616,71 @@ namespace BAR.BL.Managers
 			IEnumerable<Person> persons = new ItemManager().GetAllItemsWithInformations();
 			if (persons == null || persons.Count() == 0) return geoData;
 
+			//Determine timestamp
+			if (timestamp == null) timestamp = DateTime.Now.AddDays(-30);
+
 			//Fill geoData
 			foreach (Person item in persons)
 			{
 				//Check is district already exsists
 				GraphValue graphValue;
 				graphValue = geoData.GraphValues.Where(value => value.Value.ToLower().Equals(item.District.ToLower())).SingleOrDefault();
+				int numberOfInfos = item.Informations.Where(info => info.CreationDate >= timestamp).Count();
 
 				if (graphValue == null)
 				{
 					graphValue = new GraphValue()
 					{
 						Value = item.District,
-						NumberOfTimes = item.Informations.Count()
+						NumberOfTimes = numberOfInfos
 					};
 					geoData.GraphValues.Add(graphValue);
 				}
 				else
 				{
-					graphValue.NumberOfTimes += item.Informations.Count();
+					graphValue.NumberOfTimes += numberOfInfos;
 				}
 			}
 
 			return geoData;
+		}
+
+		/// <summary>
+		/// Gives back a widgetdata based on the persons that are part
+		/// of the organisations.
+		/// </summary>
+		public WidgetData GetOrganisationData(int itemId, DateTime? timestamp = null)
+		{
+			//Create widgetdata
+			WidgetData widgetData = new WidgetData()
+			{
+				KeyValue = "Number of mentions",
+				GraphValues = new List<GraphValue>()
+			};
+
+			//Get items
+			IEnumerable<Item> items = new ItemManager().GetItemsForOrganisation(itemId);
+			if (items == null || items.Count() == 0) return widgetData;
+
+			//Determine timestamp
+			if (timestamp == null) timestamp = DateTime.Now;
+
+			//Query data
+			while (timestamp > DateTime.Now.AddDays(-30))
+			{
+				GraphValue graphValue = new GraphValue()
+				{
+					Value = timestamp.Value.ToString("dd-MM")
+				};
+				foreach (Item item in items)
+				{
+					graphValue.NumberOfTimes += item.Informations.Where(info => info.CreationDate.Value.ToString("dd-MM-yy").Equals(timestamp.Value.ToString("dd-MM-yy"))).Count();
+				}
+				widgetData.GraphValues.Add(graphValue);
+				timestamp = timestamp.Value.AddDays(-1);
+			}
+
+			return widgetData;			
 		}
 	}
 }

@@ -36,7 +36,7 @@ new Vue({
                     model: "PropertyTag",
                     required: true,
                     validator: VueFormGenerator.validators.string,
-                    values: ['Number of mentions', 'Age', 'Gender'],
+                    values: ['Number of mentions', 'Age', 'Gender', "Personality", "Education"],
                     styleClasses: 'col-xs-12',
                     default: 'Number of mentions',
                 },

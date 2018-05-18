@@ -33,6 +33,7 @@ function checkScroll() {
         $('nav').css("background-color", "rgba(255,255,255,1)")
             .css("box-shadow", "0px 3px 3px -2px rgba(0, 0, 0, 0.05)");
         $('.navbar-right > li > a > i').css("color", "#73879C");
+        $('.navbar-right > li > a > i').css("text-shadow", 'none');
         $('.navbar-right > li > a > span').css("color", "#73879C");
         $('nav .searchbar').css('margin-top', '4px');
         $('.nav-home').css('display', 'block');
@@ -42,6 +43,7 @@ function checkScroll() {
         $('nav').css("background-color", "rgba(255,255,255,0)")
             .css("box-shadow", "0px 1px 2px 2px rgba(0, 0, 0, 0)");
         $('.navbar-right > li > a > i').css("color", "white");
+        $('.navbar-right > li > a > i').css("text-shadow", '0 1px 5px #0f8ec4');
         $('.navbar-right > li > a > span').css("color", "white");
         $('nav .searchbar').css('margin-top', '-50px');
         $('.nav-home').css('display', 'none');

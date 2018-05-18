@@ -595,10 +595,10 @@
     <value>Âge</value>
   </data>
   <data name="AgeDistributionOfMentions" xml:space="preserve">
-    <value>Répartition par âge des mentions</value>
+    <value>Âge</value>
   </data>
   <data name="GenderDistributionOfMentions" xml:space="preserve">
-    <value>Répartition par sexe des mentions</value>
+    <value>Sexe</value>
   </data>
   <data name="NumberOfMentionsFull" xml:space="preserve">
     <value>Nombre de mentions</value>
@@ -726,7 +726,31 @@
   <data name="SomethingWentWrong" xml:space="preserve">
     <value>Quelque chose a mal tourné...</value>
   </data>
-  <data name="Message" xml:space="preserve">
+  <data name="Extrovert" xml:space="preserve">
+    <value>Extraverti</value>
+  </data>
+  <data name="HigherEducated" xml:space="preserve">
+    <value>Haute éducation</value>
+  </data>
+  <data name="Introvert" xml:space="preserve">
+    <value>Introverti</value>
+  </data>
+  <data name="LowerEducated" xml:space="preserve">
+    <value>Éducation inférieure</value>
+  </data>
+  <data name="EducationDistributionOfMentions" xml:space="preserve">
+    <value>Éducation</value>
+  </data>
+  <data name="MoreInfoAbout" xml:space="preserve">
+    <value>Plus d'informations sur</value>
+  </data>
+  <data name="PeopleWhoMention" xml:space="preserve">
+    <value>Les gens qui parlent de</value>
+  </data>
+  <data name="PersonalityDistributionOfMentions" xml:space="preserve">
+    <value>Personnalité</value>
+  </data>
+    <data name="Message" xml:space="preserve">
     <value>Message</value>
   </data>
   <data name="Send" xml:space="preserve">
