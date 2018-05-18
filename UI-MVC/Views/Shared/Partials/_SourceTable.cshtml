@@ -54,36 +54,29 @@
 </table>
 @section CustomJS{
 
-    <script type="text/javascript">
+<script type="text/javascript">
         $("#synchronizeForm").on("click", function (event) {
             submitForm($(this), event, $("#synchronizeMessage"));
         });
-
-    function submitForm($this, event, message) {
-        $.ajax({
-            type: 'GET',
-            url: '/api/Data/DeleteItem/' + event.target.id,
-            succes: message
-                .addClass('green')
-                .html("@Resources.Saved")
-                .fadeOut(2000,
-                    function () {
-                        $(this)
-                            .removeClass()
-                            .html("")
-                            .css("display", "inline");
-                    })
-        }).fail(() => message
-            .addClass('red')
-            .html("@Resources.Failed")
-            .fadeOut(2000,
-            function () {
-                $(this)
-                    .removeClass()
-                    .html("")
-                    .css("display", "inline");
-            }));
-    event.preventDefault();
-    }
-    </script>
+    var wto;
+    $(".removeItem").click(function() {
+                clearTimeout(wto);
+                var $this = $(this);
+                var id = $this.data('item-id');
+                var text = $this.html();
+                $this.html("<i class='fa fa-circle-o-notch fa-spin'></i>");
+                wto = setTimeout(function() {
+                        $.ajax({
+                                type: 'POST',
+                                url: '/api/Data/DeleteItem/' + id
+                            }).fail(() => { alert("@Resources.CannotRemoveItem") })
+                            .done(function() {
+                                if (text === "@Resources.Recover") $this.html("@Resources.Remove");
+                                else $this.html("@Resources.Recover");
+                                $this.toggleClass("btn-danger btn-dark");
+                            });
+                    },
+                    500);
+            });
+</script>
 }
