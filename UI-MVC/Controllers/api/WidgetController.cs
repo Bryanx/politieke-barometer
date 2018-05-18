@@ -244,6 +244,7 @@ namespace BAR.UI.MVC.Controllers.api
 			
 			IEnumerable<Widget> widgets = widgetManager.GetWidgetsForActivities(suplatformID);
 			if (widgets == null) return NotFound();
+			int count = widgets.Count();
 			IEnumerable<UserWidgetDTO> userWidgetDtos = Mapper.Map(widgets.ToList(), new List<UserWidgetDTO>());
 			return Ok(userWidgetDtos);
 		}

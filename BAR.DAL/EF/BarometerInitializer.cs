@@ -59,7 +59,7 @@ namespace BAR.DAL.EF
 			{
 				Name = "activity register"
 			};
-			tags1.Add(tag2);
+			tags2.Add(tag2);
 
 			Widget registerWidget = new ItemWidget()
 			{
@@ -80,7 +80,7 @@ namespace BAR.DAL.EF
 			{
 				Name = "activity visit"
 			};
-			tags1.Add(tag3);
+			tags3.Add(tag3);
 
 			Widget visitWidget = new ItemWidget()
 			{
