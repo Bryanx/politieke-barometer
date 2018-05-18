@@ -38,6 +38,7 @@ namespace BAR.DAL
 		int UpdateSubscriptions(IEnumerable<Subscription> subs);
 		int UpdateSubscriptionsForUser(string userId);
 		int UpdateSubscriptionsForItem(int itemId);
+    int UpdateSubAlert(SubAlert subAlert);
 
 		//Delete
 		int DeleteAlert(Alert alert);

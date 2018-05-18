@@ -27,6 +27,6 @@ namespace BAR.BL.Managers
 		User ChangeBasicInfoAndroid(string userId, string firstname, string lastname, byte[] profilePicture = null);
     User ChangeDeviceToken(string userId, string deviceToken);
 
-		void GenerateAlertsForWeeklyReview(int platformId);
+		bool GenerateAlertsForWeeklyReview(int platformId);
 	}
 }

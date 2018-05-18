@@ -291,7 +291,7 @@ namespace BAR.BL.Managers
 		public IEnumerable<SubAlert> GetAllSubAlerts()
 		{
 			InitRepo();
-			return subRepo.ReadAllSubAlerts().AsEnumerable();
+      return subRepo.ReadAllSubAlerts().AsEnumerable();
 		}
 
 		/// <summary>
@@ -323,7 +323,18 @@ namespace BAR.BL.Managers
 
     public IEnumerable<SubAlert> GetUnsendedSubAlerts()
     {
+      InitRepo();
       return GetAllSubAlerts().Where(alert => alert.IsSend == false);
+    }
+
+    public void ChangeSubAlertToSend(SubAlert subAlert)
+    {
+
+      //Change alert status
+      subAlert.IsSend = true;
+
+      //Update database
+      subRepo.UpdateSubAlert(subAlert);
     }
   }
 }

@@ -95,16 +95,18 @@ namespace BAR.UI.MVC.Controllers.api
 							itemManager.RefreshItemData(suplatformID);
 
 							//Update weekly review alerts						
-							new UserManager().GenerateAlertsForWeeklyReview(suplatformID);
-
-              //Send weekly review notification to android
-              await controllerHelpers.SendPushNotificationAsync("/topics/weeklyreview", "Weekly Review", "Er is een nieuwe weekly review beschikbaar.");
+							if(new UserManager().GenerateAlertsForWeeklyReview(suplatformID))
+              {
+                //Send weekly review notification to android
+                await controllerHelpers.SendPushNotificationAsync("/topics/weeklyreview", "Weekly Review", "Er is een nieuwe weekly review beschikbaar.");
+              }
 
               //Send trending notifications to users
               foreach (SubAlert subAlert in subscriptionManager.GetUnsendedSubAlerts())
               {
                 User user = subAlert.Subscription.SubscribedUser;
                 await controllerHelpers.SendPushNotificationAsync(user.DeviceToken, "Trending", String.Format("%s is nu trending.", subAlert.Subscription.SubscribedItem.Name));
+                subscriptionManager.ChangeSubAlertToSend(subAlert);
               }
 
 							return StatusCode(HttpStatusCode.OK);
@@ -116,13 +118,6 @@ namespace BAR.UI.MVC.Controllers.api
 					}
 					else
 					{
-            subscriptionManager = new SubscriptionManager();
-            ControllerHelpers controllerHelpers = new ControllerHelpers();
-            foreach (SubAlert subAlert in subscriptionManager.GetUnsendedSubAlerts())
-            {
-              User user = subAlert.Subscription.SubscribedUser;
-              await controllerHelpers.SendPushNotificationAsync(user.DeviceToken, "Trending", String.Format("%s is nu trending.", subAlert.Subscription.SubscribedItem.Name));
-            }
             return StatusCode(HttpStatusCode.NoContent);
           }
 				}
