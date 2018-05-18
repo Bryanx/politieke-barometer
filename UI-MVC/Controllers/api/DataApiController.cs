@@ -112,5 +112,13 @@ namespace BAR.UI.MVC.Controllers.api
 				}
 			}
 		}
-	}
+        [HttpPost]
+        [Route("api/Data/DeleteItem/{itemId}")]
+        public IHttpActionResult ToggleDeleteItem(string itemId)
+        {
+            dataManager = new DataManager();
+            dataManager.RemoveDataSource(Int32.Parse(itemId));
+            return StatusCode(HttpStatusCode.NoContent);
+        }
+    }
 }

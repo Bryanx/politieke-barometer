@@ -45,7 +45,7 @@
                     <btn class="sourceChange btn btn-danger btn-xs" id="(Model.DataSources.ElementAt(i).DataSourceId)" title="@Resources.Synchronize">@Resources.Synchronize</btn>
                 </td>
                 <td>
-                    <btn class="sourceChange btn btn-danger btn-xs" id="removeSource" title="@Resources.RemoveSource">@Resources.Remove</btn>
+                        <a class="removeItem btn btn-danger btn-xs" id="@Model.DataSources.ElementAt(i).DataSourceId" title=@Resources.RemoveItem>@Resources.Remove</a>
                 </td>
 
             </tr>
@@ -54,7 +54,7 @@
 </table>
 @section CustomJS{
 
-<script type="text/javascript">
+    <script type="text/javascript">
         $("#synchronizeForm").on("click", function (event) {
             submitForm($(this), event, $("#synchronizeMessage"));
         });
@@ -62,7 +62,7 @@
     function submitForm($this, event, message) {
         $.ajax({
             type: 'GET',
-            url: '/api/Data/Synchronize/' + event.target.id,
+            url: '/api/Data/DeleteItem/' + event.target.id,
             succes: message
                 .addClass('green')
                 .html("@Resources.Saved")
@@ -85,5 +85,5 @@
             }));
     event.preventDefault();
     }
-</script>
+    </script>
 }

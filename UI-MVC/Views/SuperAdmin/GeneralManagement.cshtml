@@ -108,7 +108,7 @@
 @*</div>*@
 
 @section CustomJS{
-    <script type="text/javascript">
+<script type="text/javascript">
         $("#synchronizeForm").on("submit", function (event) {
             submitForm($(this), event, $("#synchronizeMessage"));
         });
@@ -183,6 +183,25 @@
                     .done(function () {
                         $this.closest('tr').remove();
                     });
-            }));
-    </script>
+        }));
+         $(".removeItem").click(function() {
+                clearTimeout(wto);
+                var $this = $(this);
+                var id = $this.data('item-id');
+                var text = $this.html();
+                $this.html("<i class='fa fa-circle-o-notch fa-spin'></i>");
+                wto = setTimeout(function() {
+                        $.ajax({
+                                type: 'POST',
+                                url: '/api/SuperAdmin/ToggleDeleteItem/' + id
+                            }).fail(() => { alert("@Resources.CannotRemoveItem") })
+                            .done(function() {
+                                if (text === "@Resources.Recover") $this.html("@Resources.Remove");
+                                else $this.html("@Resources.Recover");
+                                $this.toggleClass("btn-danger btn-dark");
+                            });
+                    },
+                    500);
+            });
+</script>
 }
