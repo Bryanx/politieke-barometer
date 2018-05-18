@@ -16,17 +16,16 @@ namespace BAR.UI.MVC.Controllers.api
 	{
 		private IDataManager dataManager;
         [HttpPost]
-        [Route("api/SuperAdmin/SetSynchronize/{interval}/{start}")]
-        public IHttpActionResult SetSynchronize(int interval, string start)
+        [Route("api/Data/SetSynchronize/{interval}/{start}/{id}")]
+        public IHttpActionResult SetSynchronize(int id,int interval, string start)
         {
 
             start = start.Substring(0, 2) + ":" + start.Substring(2, start.Length);
             IDataManager dataManager = new DataManager();
-            int datasourceId = 1;
             if (interval != 0 || start != "0")
             {
-                dataManager.ChangeInterval(datasourceId, interval);
-                dataManager.ChangeStartTimer(datasourceId, start);
+                dataManager.ChangeInterval(id, interval);
+                dataManager.ChangeStartTimer(id, start);
                 return StatusCode(HttpStatusCode.Accepted);
             }
             else
@@ -40,7 +39,6 @@ namespace BAR.UI.MVC.Controllers.api
 		public IHttpActionResult Synchronize(int id)
 		{
 			dataManager = new DataManager();
-
 			string content;
 			if (dataManager.GetLastAudit() == null)
 			{
@@ -113,12 +111,13 @@ namespace BAR.UI.MVC.Controllers.api
 			}
 		}
         [HttpPost]
-        [Route("api/Data/DeleteItem/{itemId}")]
-        public IHttpActionResult ToggleDeleteItem(string itemId)
+        [Route("api/Data/DeleteItem/{dataSourceId}")]
+        public IHttpActionResult ToggleDeleteItem(string dataSourceId)
         {
             dataManager = new DataManager();
-            dataManager.RemoveDataSource(Int32.Parse(itemId));
+            dataManager.RemoveDataSource(Int32.Parse(dataSourceId));
             return StatusCode(HttpStatusCode.NoContent);
         }
+
     }
 }

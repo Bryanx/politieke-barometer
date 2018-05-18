@@ -162,10 +162,10 @@
                 event.preventDefault();
                 var $this = $(this);
                 var interval=$("#interval").val();
-                var settime = $("#settime").val().replace(':','')
+                var settime = $("#settime").val().replace(':', '')
                 $.ajax({
                     type: "POST",
-                    url: "/api/SuperAdmin/SetSynchronize/" + interval + "/" + settime
+                    url: "/api/Data/SetSynchronize/" + interval + "/" + settime
                 }).fail(() => {/* ok */ })
                     });
 
@@ -175,7 +175,7 @@
                 var id = $this.attr('id');
                 $.ajax({
                     type: 'POST',
-                    url: '/api/SuperAdmin/RemoveSource',
+                    url: '/api/Data/DeleteItem',
                     data: JSON.stringify(id),
                     contentType: 'application/json; charset=utf-8',
                     dataType: "json"
@@ -185,16 +185,34 @@
                     });
         }));
          $(".removeItem").click(function() {
-                clearTimeout(wto);
                 var $this = $(this);
-                var id = $this.data('item-id');
+                var id = $this.data('source-id');
                 var text = $this.html();
                 $this.html("<i class='fa fa-circle-o-notch fa-spin'></i>");
                 wto = setTimeout(function() {
                         $.ajax({
                                 type: 'POST',
-                                url: '/api/SuperAdmin/ToggleDeleteItem/' + id
+                                url: '/api/Data/DeleteItem/' + id
                             }).fail(() => { alert("@Resources.CannotRemoveItem") })
+                            .done(function() {
+                                if (text === "@Resources.Recover") $this.html("@Resources.Remove");
+                                else $this.html("@Resources.Recover");
+                                $this.toggleClass("btn-danger btn-dark");
+                            });
+                    },
+                    500);
+            });
+
+         $(".synchronise").click(function() {
+                var $this = $(this);
+                var id = $this.data('source-id');
+                var text = $this.html();
+                $this.html("<i class='fa fa-circle-o-notch fa-spin'></i>");
+                wto = setTimeout(function() {
+                        $.ajax({
+                                type: 'GET',
+                                url: '/api/Data/Synchronize/' + id
+                            }).fail(() => { alert("@Resources.Failed") })
                             .done(function() {
                                 if (text === "@Resources.Recover") $this.html("@Resources.Remove");
                                 else $this.html("@Resources.Recover");
