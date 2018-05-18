@@ -1,12 +1,8 @@
 ﻿using BAR.BL.Domain.Data;
 using BAR.DAL.EF;
-using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Text;
 using System.Data.Entity;
-using BAR.BL.Domain.Items;
 
 namespace BAR.DAL
 {
@@ -117,18 +113,8 @@ namespace BAR.DAL
 		{
 			return ctx.Informations.Include(info => info.PropertieValues)
 								   .Include(info => info.PropertieValues.Select(propval => propval.Property))
-								   .Where(info => info.InformationId == informationId).SingleOrDefault();
-		}
-
-		/// <summary>
-		/// Gets the number of informations of a specific given item
-		/// from the creation date untill now.
-		/// </summary
-		public int ReadNumberInfo(int itemId, DateTime since)
-		{
-			return ctx.Informations
-				.Where(info => info.Items.Any(item => item.ItemId == itemId))
-				.Where(info => info.CreationDate >= since).Count();
+								   .Where(info => info.InformationId == informationId)
+								   .SingleOrDefault();
 		}
 
 		/// <summary>
@@ -259,35 +245,51 @@ namespace BAR.DAL
 		/// </summary>
 		public IEnumerable<Information> ReadInformationsWithAllInfoForItem(int itemId)
 		{
-			return ctx.Informations//.Include(info => info.Items)
+			return ctx.Informations.Include(info => info.Items)
 								   .Include(info => info.PropertieValues)
 								   .Include(info => info.PropertieValues.Select(propval => propval.Property))
 								   .Where(info => info.Items.Any(item => item.ItemId == itemId))
 								   .AsEnumerable();
 		}
 
+		/// <summary>
+		/// Gives back all datasources
+		/// </summary>
+		/// <returns></returns>
         public IEnumerable<DataSource> ReadAllDataSources()
         {
             return ctx.DataSources.AsEnumerable();
         }
 
+		/// <summary>
+		/// Gives back the datasources based on thd datasource ID.
+		/// </summary>
         public DataSource ReadDataSource(int dataSourceId)
         {
             return ctx.DataSources.Find(dataSourceId);
         }
 
+		/// <summary>
+		/// Creates e new datasource in the database
+		/// </summary>
         public int CreateDataSource(DataSource dataSource)
         {
             ctx.DataSources.Add(dataSource);
             return ctx.SaveChanges();
         }
 
+		/// <summary>
+		/// Updates a datasource in the database
+		/// </summary>
         public int UpdateDataSource(DataSource dataSource)
         {
             ctx.Entry(dataSource).State = EntityState.Modified;
             return ctx.SaveChanges();
         }
 
+		/// <summary>
+		/// Deletes the given datasource in the database
+		/// </summary>
         public int DeleteDataSource(DataSource dataSource)
         {
             ctx.DataSources.Remove(dataSource);
