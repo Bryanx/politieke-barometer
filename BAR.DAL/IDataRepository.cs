@@ -6,7 +6,6 @@ namespace BAR.DAL
 	public interface IDataRepository
 	{
 		//Read
-		Information ReadInformation(int informationid);
 		Information ReadInformationWitlAllInfo(int informationId);		
 		IEnumerable<Information> ReadAllInformations();
 		IEnumerable<Information> ReadInformationsForItemid(int itemId);
@@ -28,14 +27,11 @@ namespace BAR.DAL
         int CreateDataSource(DataSource dataSource);
 
 		//Update
-		int UpdateInformation(Information info);
 		int UpdateInformations(IEnumerable<Information> infos);
 		int UpdateAudit(SynchronizeAudit audit);
         int UpdateDataSource(DataSource dataSource);
 
 		//Delete
-		int DeleteInformation(int infoId);
-		int DeleteInformations(IEnumerable<int> infoIds);
 		int DeleteSource(Source source);
         int DeleteDataSource(DataSource dataSource);
     }

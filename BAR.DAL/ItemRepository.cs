@@ -66,14 +66,12 @@ namespace BAR.DAL
 		/// <summary>
 		/// Returns the item that matchkes the itemId.
 		/// </summary>
-		/// <param name="itemId"></param>
-		/// <returns></returns>
 		public Theme ReadThemeWithDetails(int itemId)
 		{
 			return ctx.Items.OfType<Theme>()
-				.Include(i => i.Keywords)
-				.Where(i => i.ItemId == itemId && i.Deleted == false)
-				.SingleOrDefault();
+							.Include(item => item.Keywords)
+							.Where(item => item.ItemId == itemId && !item.Deleted)
+							.SingleOrDefault();
 		}
 
 		/// <summary>
@@ -124,14 +122,13 @@ namespace BAR.DAL
 		/// <returns></returns>
 		public IEnumerable<Person> ReadAllPersonsWithPlatforms()
 		{
-			return ctx.Items
-				.OfType<Person>()
-				.Include(item => item.ItemWidgets)
-				.Include(item => item.SubPlatform)
-				.Include(item => item.Organisation)
-				.Include(item => item.SocialMediaNames)
-				.Include(item => item.SocialMediaNames.Select(social => social.Source))
-				.AsEnumerable();
+			return ctx.Items.OfType<Person>()
+							.Include(item => item.ItemWidgets)
+							.Include(item => item.SubPlatform)
+							.Include(item => item.Organisation)
+							.Include(item => item.SocialMediaNames)
+							.Include(item => item.SocialMediaNames.Select(social => social.Source))
+							.AsEnumerable();
 		}
 
 		/// <summary>
@@ -139,18 +136,17 @@ namespace BAR.DAL
 		/// </summary>
 		public IEnumerable<Person> ReadAllPersons()
 		{
-			return ReadAllPersonsWithPlatforms();
+			return ReadAllPersonsWithPlatforms().AsEnumerable();
 		}
 
 		/// <summary>
 		/// Gives back a list of all the persons associated with a certain organisation
 		/// </summary>
-		/// <param name="organisationId"></param>
-		/// <returns></returns>
 		public IEnumerable<Person> ReadAllPersonsForOrganisation(int organisationId)
 		{
 			return ReadAllItemsWithPlatforms().OfType<Person>()
-				.Where(item => item.Organisation.ItemId.Equals(organisationId)).AsEnumerable();
+											  .Where(item => item.Organisation.ItemId.Equals(organisationId))
+											  .AsEnumerable();
 		}
 
 		/// <summary>
@@ -166,11 +162,11 @@ namespace BAR.DAL
 		/// </summary>
 		public IEnumerable<Theme> ReadAllThemes()
 		{
-			return ctx.Items
-				.OfType<Theme>().Include(item => item.Keywords)
-				.Include(item => item.ItemWidgets)
-				.Include(item => item.SubPlatform)
-				.AsEnumerable();
+			return ctx.Items.OfType<Theme>()
+							.Include(item => item.Keywords)
+							.Include(item => item.ItemWidgets)
+							.Include(item => item.SubPlatform)
+							.AsEnumerable();
 		}
 
 		/// <summary>
@@ -238,7 +234,7 @@ namespace BAR.DAL
 		/// </summary>
 		public int DeleteItems(IEnumerable<Item> items)
 		{
-			foreach (Item item in items) ctx.Items.Remove(item);
+			ctx.Items.RemoveRange(items);
 			return ctx.SaveChanges();
 		}
 

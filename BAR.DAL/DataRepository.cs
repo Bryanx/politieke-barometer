@@ -40,44 +40,6 @@ namespace BAR.DAL
 		}
 
 		/// <summary>
-		/// Deletes a specific information object
-		/// Returns -1 if SaveChanges() is delayed by unit of work.
-		/// 
-		/// WARNING
-		/// All of the the propertyvalues of the information also need to be deleted.
-		/// 
-		/// NOTE
-		/// Normally we don't delete informations.
-		/// </summary>
-		public int DeleteInformation(int infoId)
-		{
-			Information infoToDelete = ReadInformationWitlAllInfo(infoId);
-			ctx.Informations.Remove(infoToDelete);
-			return ctx.SaveChanges();
-		}
-
-		/// <summary>
-		/// Deletes a range of information objects
-		/// Returns -1 if SaveChanges() is delayed by unit of work.
-		/// 
-		/// WARNING
-		/// All the propertyvalues of the informations also need the be deleted.
-		/// 
-		/// NOTE
-		/// Normally we don't delete informations.
-		/// </summary>
-		public int DeleteInformations(IEnumerable<int> infoIds)
-		{
-			//Get informations to delete
-			List<Information> infosToDelete = new List<Information>();
-			foreach (int infoId in infoIds) infosToDelete.Add(ReadInformationWitlAllInfo(infoId));
-			
-			//Delete informations
-			ctx.Informations.RemoveRange(infosToDelete);
-			return ctx.SaveChanges();
-		}
-
-		/// <summary>
 		/// Returns a list of informations based on
 		/// a specific item.
 		/// </summary>
@@ -95,14 +57,6 @@ namespace BAR.DAL
 		public IEnumerable<Information> ReadAllInformations()
 		{
 			return ctx.Informations.AsEnumerable();
-		}
-
-		/// <summary>
-		/// Gives back an information object based on informationid.
-		/// </summary>
-		public Information ReadInformation(int informationid)
-		{
-			return ctx.Informations.Find(informationid);
 		}
 
 		/// <summary>

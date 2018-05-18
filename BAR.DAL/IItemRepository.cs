@@ -1,9 +1,6 @@
 ﻿using BAR.BL.Domain.Items;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BAR.DAL
 {
@@ -14,34 +11,27 @@ namespace BAR.DAL
 		Item ReadItemWithInformations(int itemId);
 		Item ReadItemWithPlatform(int itemId);
 		Item ReadItemWithWidgets(int itemId);
-
+		Item ReadItemByName(string name);
 		IEnumerable<Item> ReadAllItemsWithPlatforms();
 		IEnumerable<Item> ReadAllItemsForUpdatedSince(DateTime since);
 		IEnumerable<Item> ReadItemsForOrganisation(int itemId);
-		IEnumerable<Person> ReadAllItemsWithInformations();
-
-		Item ReadItemByName(string name);
 		Person ReadPersonWithDetails(int itemId);
-		
-		Theme ReadThemeWithDetails(int itemId);
-		
+		IEnumerable<Person> ReadAllItemsWithInformations();
+		IEnumerable<Person> ReadAllPersonsWithPlatforms();
 		IEnumerable<Person> ReadAllPersonsForOrganisation(int organisationId);
-		
-		Organisation ReadOrganisationWithDetails(int itemId);	
-    	Organisation ReadOrganisation(string organisationName);
-		
+		Organisation ReadOrganisationWithDetails(int itemId);
+		Organisation ReadOrganisation(string organisationName);
 		IEnumerable<Organisation> ReadAllOraginsations();
-		IEnumerable<Person> ReadAllPersonsWithPlatforms();	
+		Theme ReadThemeWithDetails(int itemId);	
 		IEnumerable<Theme> ReadAllThemes();
-		
+
 		//Create
 		int CreateItem(Item item);
-    int CreateItems(IEnumerable<Item> items);
+		int CreateItems(IEnumerable<Item> items);
 
 		//Update
 		int UpdateItem(Item item);
 		int UpdateItems(IEnumerable<Item> items);
-
 		int UpdatePerson(Person person);
 
 		//Delete
