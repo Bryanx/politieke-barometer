@@ -1,20 +1,14 @@
 ﻿using BAR.BL.Domain.Items;
 using BAR.BL.Domain.Widgets;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BAR.DAL
 {
 	public interface IWidgetRepository
 	{
 		//Read
-		Dashboard ReadDashboard(int dashboardId);
 		Dashboard ReadDashboardWithWidgets(int dashboardId);
 		Dashboard ReadDashboardWithWidgets(string userId);
-		Dashboard ReadGeneralDashboard();
 		Dashboard ReadDashboardWithAllDataForUserId(string userId);
 		IEnumerable<Dashboard> ReadAllDashboards();
 		Widget ReadWidget(int widgetId);
@@ -39,17 +33,12 @@ namespace BAR.DAL
 		int CreateWidgetDatas(ICollection<WidgetData> items);
 
 		//Update
-		int UpdateDashboard(Dashboard dashboard);
-		int UpdateDashboards(IEnumerable<Dashboard> dashboards);
 		int UpdateWidget(Widget widget);
 		int UpdateWidgets(IEnumerable<Widget> widgets);
 		int UpdateWidgetData(WidgetData widgetData);
 
 		//Delete
-		int DeleteDashboard(int dashboardId);
-		int DeleteDashboards(IEnumerable<int> dashboardIds);
 		int DeleteWidget(Widget widgetId);
-		int DeleteWidgets(IEnumerable<Widget> widgets);
 		int DeleteWidgetDatas(IEnumerable<WidgetData> datas);
 	}
 }

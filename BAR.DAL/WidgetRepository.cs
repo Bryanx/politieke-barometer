@@ -1,5 +1,4 @@
 ﻿using BAR.DAL.EF;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using BAR.BL.Domain.Widgets;
@@ -43,22 +42,13 @@ namespace BAR.DAL
 		}
 
 		/// <summary>
-		/// Gives back a dashboard object for a 
-		/// specific dashboard id.
-		/// </summary>
-		public Dashboard ReadDashboard(int dashboardId)
-		{
-			return ctx.Dashboards.Find(dashboardId);
-		}
-
-		/// <summary>
 		/// Gives back a dashboard object with all the widgets
 		/// for a specific dashboard id.
 		/// </summary>
 		public Dashboard ReadDashboardWithWidgets(int dashboardId)
 		{
 			return ctx.Dashboards.Include(dash => dash.Widgets)
-                 .Include(dash => dash.Widgets.Select(widget => widget.Items))
+								 .Include(dash => dash.Widgets.Select(widget => widget.Items))
 								 .Where(dash => dash.DashboardId == dashboardId)
 								 .SingleOrDefault();
 		}
@@ -71,16 +61,6 @@ namespace BAR.DAL
 		{
 			return ctx.Dashboards.Include(dash => dash.Widgets)
 								 .Where(dash => dash.User.Id == userId)
-								 .SingleOrDefault();
-		}
-
-		/// <summary>
-		/// Gives back the general dashboard.
-		/// </summary>
-		public Dashboard ReadGeneralDashboard()
-		{
-			return ctx.Dashboards.Include(dash => dash.Widgets)
-								 .Where(dash => dash.DashboardType == DashboardType.General)
 								 .SingleOrDefault();
 		}
 
@@ -129,26 +109,6 @@ namespace BAR.DAL
 		}
 
 		/// <summary>
-		/// Updates a specific dashboard.
-		/// Returns -1 if SaveChanges() is delayed by unit of work.
-		/// </summary>
-		public int UpdateDashboard(Dashboard dashboard)
-		{
-			ctx.Entry(dashboard).State = EntityState.Modified;
-			return ctx.SaveChanges();
-		}
-
-		/// <summary>
-		/// Updates a list of dashboards.
-		/// Returns -1 if SaveChanges() is delayed by unit of work.
-		/// </summary>
-		public int UpdateDashboards(IEnumerable<Dashboard> dashboards)
-		{
-			foreach (Dashboard dashboard in dashboards) ctx.Entry(dashboard).State = EntityState.Modified;
-			return ctx.SaveChanges();
-		}
-
-		/// <summary>
 		/// Updates a specific widget.
 		/// Returns -1 if SaveChanges() is delayed by unit of work.
 		/// </summary>
@@ -165,37 +125,6 @@ namespace BAR.DAL
 		public int UpdateWidgets(IEnumerable<Widget> widgets)
 		{
 			foreach (Widget widget in widgets) ctx.Entry(widget).State = EntityState.Modified;
-			return ctx.SaveChanges();
-		}
-
-		/// <summary>
-		/// Deletes a specific dashboard.
-		/// Returns -1 if SaveChanges() is delayed by unit of work.
-		/// 
-		/// WARNING
-		/// All the widgets of the dashboard also need the be deleted.
-		/// </summary>
-		public int DeleteDashboard(int dashboardId)
-		{
-			Dashboard dashboardToDelete = ReadDashboardWithWidgets(dashboardId);
-			if (dashboardToDelete != null) ctx.Dashboards.Remove(dashboardToDelete);
-			return ctx.SaveChanges();
-		}
-
-		/// <summary>
-		/// Deletes a list of dashboards.
-		/// Returns -1 if SaveChanges() is delayed by unit of work.
-		/// 
-		/// WARNING
-		/// All the widgets of the dashboards also need the be deleted.
-		/// </summary>
-		public int DeleteDashboards(IEnumerable<int> dashboardIds)
-		{
-			foreach (int id in dashboardIds)
-			{
-				Dashboard dashboardToDelete = ReadDashboardWithWidgets(id);
-				if (dashboardToDelete != null) ctx.Dashboards.Remove(dashboardToDelete);
-			}
 			return ctx.SaveChanges();
 		}
 
@@ -227,16 +156,6 @@ namespace BAR.DAL
 		public IEnumerable<Widget> ReadAllWidgetsWithAllItems()
 		{
 			return ctx.Widgets.Include(widget => widget.Items).AsEnumerable();
-		}
-
-		/// <summary>
-		/// Deletes a list of widgets.
-		/// Returns -1 if SaveChanges() is delayed by unit of work.
-		/// </summary>
-		public int DeleteWidgets(IEnumerable<Widget> widgets)
-		{
-			foreach (UserWidget widget in widgets) ctx.Widgets.Remove(widget);
-			return ctx.SaveChanges();
 		}
 
 		/// <summary>
@@ -338,7 +257,8 @@ namespace BAR.DAL
 								 .Include(dash => dash.Widgets)
 								 .Include(dash => dash.Widgets.Select(widget => widget.WidgetDatas))
 								 .Include(dash => dash.Widgets.Select(widget => widget.WidgetDatas.Select(data => data.GraphValues)))
-								 .Where(dash => dash.User.Id.ToLower().Equals(userId.ToLower())).SingleOrDefault();
+								 .Where(dash => dash.User.Id.ToLower().Equals(userId.ToLower()))
+								 .SingleOrDefault();
 		}
 
 		/// <summary>
@@ -357,7 +277,8 @@ namespace BAR.DAL
 		/// </summary>
 		public IEnumerable<WidgetData> ReadWidgetDatasForKeyvalue(string value)
 		{
-			return ctx.WidgetDatas.Where(data => data.KeyValue.ToLower().Equals(value.ToLower())).AsEnumerable();
+			return ctx.WidgetDatas.Where(data => data.KeyValue.ToLower().Equals(value.ToLower()))
+					  .AsEnumerable();
 		}
 
 		/// <summary>
