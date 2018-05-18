@@ -25,6 +25,7 @@ namespace BAR.DAL
 		IEnumerable<Widget> ReadAllWidgetsWithAllItems();
 		IEnumerable<Widget> ReadAllWidgetsWithAllData();
 		IEnumerable<Widget> ReadWidgetsWithAllDataForItem(int itemId);
+		IEnumerable<Widget> ReadActivityWidgets();
 		IEnumerable<Widget> ReadWidgetsForItemtype(ItemType type);
 		IEnumerable<UserWidget> ReadWidgetsForDashboard(int dashboardId);
 		IEnumerable<WidgetData> ReadAllWidgetDatas();

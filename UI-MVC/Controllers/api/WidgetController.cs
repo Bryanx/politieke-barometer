@@ -205,22 +205,28 @@ namespace BAR.UI.MVC.Controllers.api
 		}
 		
 		/// <summary>
-		///Gets weeklyReview
+		/// Gets weeklyReview
 		/// </summary>
 		[System.Web.Http.HttpGet]
 		[System.Web.Http.Route("api/Widget/GetWeeklyReview/{id}")]
 		public IHttpActionResult GetWeeklyReview(string id)
 		{
+			//Determine subplatform
+			object _customObject = null;
+			int suplatformID = -1;
+			if (Request.Properties.TryGetValue("SubPlatformID", out _customObject))
+			{
+				suplatformID = (int)_customObject;
+			}
+
 			widgetManager = new WidgetManager();
 			IEnumerable<Widget> widgets;
 			if (id.Equals("0")){
-				widgets = widgetManager.GetWidgetsForWeeklyReview(null, 1);
+				widgets = widgetManager.GetWidgetsForWeeklyReview(suplatformID, null);
 			} else {
-				widgets = widgetManager.GetWidgetsForWeeklyReview(id, 1);
+				widgets = widgetManager.GetWidgetsForWeeklyReview(suplatformID, id);
 			}
 			
-			
-
 			return Ok(Mapper.Map(widgets, new List<UserWidgetDTO>()));
 		}
 	}

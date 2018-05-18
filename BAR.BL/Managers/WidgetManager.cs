@@ -7,6 +7,7 @@ using BAR.DAL;
 using BAR.BL.Domain.Users;
 using BAR.BL.Domain.Items;
 using BAR.BL.Domain.Data;
+using BAR.BL.Domain.Core;
 
 namespace BAR.BL.Managers
 {
@@ -505,7 +506,7 @@ namespace BAR.BL.Managers
 		/// for a specific user
 		/// For now, this method will only return the widgets "number of metnions" because these are the most logical.
 		/// </summary>
-		public IEnumerable<Widget> GetWidgetsForWeeklyReview(string userId = null, int platformId = 1)
+		public IEnumerable<Widget> GetWidgetsForWeeklyReview(int platformId, string userId = null)
 		{
 			InitRepo();
 			List<Widget> widgets = new List<Widget>();
@@ -515,12 +516,13 @@ namespace BAR.BL.Managers
 			IEnumerable<Item> items = null;
 			itemManager.RefreshItemData(platformId);
 			if (userId == null) items = itemManager.GetMostTrendingItems(useWithOldData: true);
-			else items = itemManager.GetMostTrendingItemsForUser(userId, useWithOldData: true); 
-			
+			else items = itemManager.GetMostTrendingItemsForUser(userId, useWithOldData: true);
+
 			if (items == null || items.Count() == 0) return widgets;
 
 			//Query widgets
-			foreach (Item item in items) {
+			foreach (Item item in items)
+			{
 				IEnumerable<Widget> widgetsToAdd = widgetRepo.ReadWidgetsWithAllDataForItem(item.ItemId)
 					.Where(widget => widget.PropertyTags
 						.Any(proptag => proptag.Name.ToLower().Equals("mentions")))
@@ -530,7 +532,7 @@ namespace BAR.BL.Managers
 
 			return widgets.AsEnumerable();
 		}
-	
+
 
 
 		/// <summary>
@@ -561,6 +563,62 @@ namespace BAR.BL.Managers
 		}
 
 		/// <summary>
+		/// Gives back all the widgets for monitoring activities
+		/// </summary>
+		public IEnumerable<Widget> GetWidgetsForActivities(int platformId)
+		{
+			InitRepo();
+
+			//Get widgets
+			IEnumerable<Widget> widgets = widgetRepo.ReadActivityWidgets().AsEnumerable();
+			if (widgets == null || widgets.Count() == 0) return widgets;
+
+			//Check lastUpdated
+			DateTime? lastUpdated = new SubplatformManager().GetSubPlatform(platformId).LastUpdatedActivities;
+
+			//If lastUpdated was to long ago, then the activities shall be udpated
+			if (lastUpdated == null || !lastUpdated.Value.ToString("dd-MM-yy").Equals(DateTime.Now.ToString("dd-MM-yy"))) return UpdateWidgetActities(widgets, platformId);
+			else return widgets;
+		}
+
+		/// <summary>
+		/// Forces an update for the activity widgets
+		/// </summary>
+		public IEnumerable<Widget> UpdateWidgetActities(IEnumerable<Widget> widgets, int platformId)
+		{
+			//Remove old widgetdatas
+			widgetRepo.DeleteWidgetDatas(GetWidgetDatasForKeyvalue("activity"));
+
+			//** update widgetDatas **//
+			DataManager dataManager = new DataManager();
+
+			//1st widget
+			WidgetData loginData = dataManager.GetUserActivitiesData(ActivityType.LoginActivity, DateTime.Now.AddDays(-30));
+			Widget loginWidget = widgets.Where(widget => widget.PropertyTags.All(tag => tag.Name.ToLower().Contains("login"))).SingleOrDefault();
+			loginData.Widget = loginWidget;
+			widgetRepo.CreateWidgetData(loginData);
+
+			//2nd widget
+			WidgetData registerData = dataManager.GetUserActivitiesData(ActivityType.RegisterActivity, DateTime.Now.AddDays(-30));
+			Widget registerWidget = widgets.Where(widget => widget.PropertyTags.All(tag => tag.Name.ToLower().Contains("register"))).SingleOrDefault();
+			registerData.Widget = registerWidget;
+			widgetRepo.CreateWidgetData(registerData);
+
+			//3rd widget
+			WidgetData visitData = dataManager.GetUserActivitiesData(ActivityType.VisitActitiy, DateTime.Now.AddDays(-30));
+			Widget visitWidget = widgets.Where(widget => widget.PropertyTags.All(tag => tag.Name.ToLower().Contains("visit"))).SingleOrDefault();
+			visitData.Widget = visitWidget;
+			widgetRepo.CreateWidgetData(visitData);
+
+			//Get last updated
+			SubplatformManager platformManager = new SubplatformManager();
+			SubPlatform platform = platformManager.GetSubPlatform(platformId);
+			platform.LastUpdatedActivities = DateTime.Now;
+			platformManager.ChangeSubplatform(platform);
+
+			return widgets;
+		}
+
 		/// Generates data for organisations based on the data
 		/// of the persons
 		/// </summary>

@@ -512,22 +512,30 @@ namespace BAR.BL.Managers
 			WidgetData widgetData = new WidgetData()
 			{
 				GraphValues = new List<GraphValue>(),
-				KeyValue = "User Activities"
+				KeyValue = "activity"
 			};
 
 			//Get actitivies
 			IEnumerable<UserActivity> activities = new SubplatformManager().GetUserActivities(type, timestamp);
 			if (activities == null || activities.Count() == 0) return widgetData;
+			int count = activities.Count();
 
 			//Query data
 			DateTime startdate = DateTime.Now;
-			while (timestamp >= startdate)
+			UserActivity activity;
+			while (timestamp <= startdate)
 			{
 				GraphValue graphValue = new GraphValue()
 				{
-					NumberOfTimes = activities.Where(act => act.TimeStamp.Day == startdate.Day).Count(),
+					NumberOfTimes = 0,
 					Value = startdate.ToString("dd-MM")
 				};
+				activity = activities.Where(act => act.TimeStamp.ToString("dd-MM-yy").Equals(startdate.ToString("dd-MM-yy"))).SingleOrDefault();
+				if (activity != null)
+				{
+					graphValue.NumberOfTimes = activity.NumberOfTimes;
+					widgetData.GraphValues.Add(graphValue);
+				}
 				startdate = startdate.AddDays(-1);
 			}
 
