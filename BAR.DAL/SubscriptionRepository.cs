@@ -255,7 +255,8 @@ namespace BAR.DAL
 		{
 			return ctx.Alerts.OfType<SubAlert>()
 							 .Include(alert => alert.Subscription)
-							 .Include(alert => alert.Subscription.SubscribedItem)
+               .Include(alert => alert.Subscription.SubscribedUser)
+               .Include(alert => alert.Subscription.SubscribedItem)
 							 .AsEnumerable();
 		}
 
