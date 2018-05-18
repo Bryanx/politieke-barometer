@@ -56,7 +56,7 @@ namespace BAR.DAL
 		/// <summary>
 		/// Gives back a subplatform with all the questions and then customization.
 		/// </summary>
-		public SubPlatform GetSubplatformWithAllinfo(int platformId)
+		public SubPlatform ReadSubplatformWithAllinfo(int platformId)
 		{
 			return ctx.SubPlatforms.Include(platform => platform.Questions)
 								   .Include(platform => platform.Customization)
