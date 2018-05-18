@@ -40,7 +40,7 @@ namespace BAR.UI.MVC.Controllers
       {
         PageTitle = Resources.GeneralManagement,
         User = userManager.GetUser(User.Identity.GetUserId()),
-        Sources = dataManager.GetAllSources()
+        DataSources = dataManager.GetAllDataSources()
 			});
 		}
 

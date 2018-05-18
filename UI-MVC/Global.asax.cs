@@ -22,9 +22,6 @@ namespace BAR.UI.MVC
 {
   public class MvcApplication : System.Web.HttpApplication
   {
-     
-     private static double TimerIntervalInMilliseconds = 60000;
-     private Timer timer = new Timer(TimerIntervalInMilliseconds);
     protected void Application_Start()
     {
       AreaRegistration.RegisterAllAreas();
@@ -119,19 +116,11 @@ namespace BAR.UI.MVC
           .ForMember(w => w.DashboardId, opt => opt.MapFrom(src => src.Dashboard.DashboardId))
           .ForMember(w => w.ItemIds, opt => opt.MapFrom(src => src.Items.Select(i => i.ItemId).ToList()));
       });
-      
+      double TimerIntervalInMilliseconds = 60000;
+      Timer timer = new Timer(TimerIntervalInMilliseconds);
       timer.Enabled = true;
-      timer.AutoReset = true;
       timer.Elapsed += new ElapsedEventHandler(timerElapsed);
-      
-      
       timer.Start();
-    }
-    private void changeInterval(int interval)
-    {
-        timer.Stop();
-        timer.Interval = interval * 60000;
-        timer.Start();
     }
     private void timerElapsed(object sender, ElapsedEventArgs e)
     {
@@ -140,28 +129,12 @@ namespace BAR.UI.MVC
         for (int i=0;i<datasources.Count();i++)
             {
                 DataSource datasource = datasources[i];
-                if (datasource.LastTimeChecked < DateTime.Now)
+                if (datasource.LastTimeChecked.AddMinutes(datasource.Interval) < DateTime.Now)
                 {
-
+                    DataApiController controller = new DataApiController();
+                    controller.Synchronize();
                 }
             }
-        
-        
-        
-            //DataApiController controller = new DataApiController();
-            //controller.Synchronize();
-        
-            
-        int newInterval = dataManager.GetInterval(1);
-        double interval = timer.Interval;
-        if (newInterval < interval)
-        {
-            changeInterval(newInterval);
-                
-        }
-        
-        
-    }  
-    
+    }      
   }
 }
