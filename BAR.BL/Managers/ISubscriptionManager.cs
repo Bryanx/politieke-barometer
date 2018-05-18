@@ -26,6 +26,7 @@ namespace BAR.BL.Managers
 		IEnumerable<UserAlert> GetAllUserAlerts();
 		IEnumerable<SubAlert> GetSubAlerts(string userId);
 		IEnumerable<UserAlert> GetUserAlerts(string userId);
+    IEnumerable<SubAlert> GetUnsendedSubAlerts();
 
 		Alert ChangeAlertToRead(int alertId);
 
