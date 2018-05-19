@@ -32,7 +32,7 @@ namespace BAR.UI.MVC.Models {
             public Gender Gender { get; set; }
             public string Site { get; set; }
             public DateTime DateOfBirth { get; set; }
-            public Area Area { get; set; }
+            public string Town { get; set; }
             public string Position { get; set; }
             public int OrganisationId { get; set; }
             public string OrganisationName { get; set; }

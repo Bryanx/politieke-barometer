@@ -765,4 +765,7 @@
   <data name="SendPublicAndroidMessage" xml:space="preserve">
     <value>Send public Android message</value>
   </data>
+  <data name="Town" xml:space="preserve">
+    <value>Town</value>
+  </data>
 </root>

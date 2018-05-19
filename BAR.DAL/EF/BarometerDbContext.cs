@@ -20,14 +20,11 @@ namespace BAR.DAL.EF
 		private readonly bool delaySave;
 
 		/// <summary>
-		/// Constructor of PizzaDbContext, loads the connectionstring based on de
-		/// configuration key "PizzaDB"
-		/// </summary>
 		/// Indicates if this context class operates under a Unit-Of-Work pattern. If so,
 		/// SaveChanges will not be executed on the database, instead you'll need to use
 		/// CommitChanges (but that method is not publicly available)
 		/// By default, unitOfWorkPresent will be set to false
-		/// </param>
+		/// </summary>
 		public BarometerDbContext(bool useUOF = false) : base("BAR_DB")
 		{
 			delaySave = useUOF;
@@ -35,8 +32,8 @@ namespace BAR.DAL.EF
 
 		//Data package
 		public DbSet<Source> Sources { get; set; }
-        public DbSet<DataSource> DataSources { get; set; }
-        public DbSet<Information> Informations { get; set; }
+		public DbSet<DataSource> DataSources { get; set; }
+		public DbSet<Information> Informations { get; set; }
 		public DbSet<Property> Properties { get; set; }
 		public DbSet<SynchronizeAudit> SynchronizeAudits { get; set; }
 
@@ -85,7 +82,7 @@ namespace BAR.DAL.EF
 		public override int SaveChanges()
 		{
 			if (delaySave) return -1;
-			return base.SaveChanges();
+			else return base.SaveChanges();
 		}
 
 		/// <summary>
@@ -95,11 +92,8 @@ namespace BAR.DAL.EF
 		/// </summary>
 		internal int CommitChanges()
 		{
-			if (delaySave)
-			{
-				return base.SaveChanges();
-			}
-			throw new InvalidOperationException("No UnitOfWork present, use SaveChanges instead");
+			if (delaySave) return base.SaveChanges();
+			else throw new InvalidOperationException("No UnitOfWork present, use SaveChanges instead");
 		}
 	}
 }
