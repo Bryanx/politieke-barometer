@@ -18,6 +18,7 @@ using Widget = BAR.BL.Domain.Widgets.Widget;
 using BAR.BL.Domain.Items;
 using BAR.BL.Domain.Users;
 using BAR.UI.MVC.App_GlobalResources;
+using BAR.UI.MVC.Attributes;
 
 
 namespace BAR.UI.MVC.Controllers.api
@@ -207,6 +208,7 @@ namespace BAR.UI.MVC.Controllers.api
 		/// <summary>
 		/// Gets weeklyReview
 		/// </summary>
+		[SubPlatformCheckAPI]
 		[System.Web.Http.HttpGet]
 		[System.Web.Http.Route("api/Widget/GetWeeklyReview/{id}")]
 		public IHttpActionResult GetWeeklyReview(string id)

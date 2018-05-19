@@ -366,7 +366,6 @@
     <Content Include="Content\build\js\template.js" />
     <Content Include="Content\build\js\template.min.js" />
     <Content Include="Content\build\js\searchbar.js" />
-    <Content Include="Content\build\js\weeklyReview.js" />
     <Content Include="Content\build\js\widgets.js" />
     <Content Include="Content\themes\base\accordion.css" />
     <Content Include="Content\themes\base\all.css" />
