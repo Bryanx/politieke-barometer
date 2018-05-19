@@ -78,7 +78,7 @@ namespace BAR.BL.Managers
 				if (trendingPer > 0)
 				{
 					itemToUpdate.TrendingPercentage = Math.Round(trendingPer, 2);
-					new SubscriptionManager().GenerateAlerts(itemToUpdate.ItemId);
+					if (trendingPer > 7.50) new SubscriptionManager().GenerateAlerts(itemToUpdate.ItemId);
 				}
 			}
 
