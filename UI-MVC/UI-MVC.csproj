@@ -519,6 +519,7 @@
     <Content Include="Views\SuperAdmin\GeneralManagement.cshtml" />
     <Content Include="Views\User\Dashboard.cshtml" />
     <Content Include="Views\User\Settings.cshtml" />
+    <Content Include="Views\User\UserWeeklyReview.cshtml" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>

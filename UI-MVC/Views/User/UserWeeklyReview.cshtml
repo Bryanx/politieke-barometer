@@ -1,0 +1,24 @@
+﻿@using System.Web.Optimization
+@using WebGrease.Css.Extensions
+@model BAR.UI.MVC.Models.ItemViewModels.WeeklyReviewModel
+
+<section>
+    @Html.Partial("Partials/_WeeklyReview", Model)
+</section>
+
+@section CustomJS {
+    <script src="~/Scripts/ChartJS/Chart.js"></script>
+    <script src="https://platform.twitter.com/widgets.js"></script>
+    @Scripts.Render("~/bundles/gridstack", "~/bundles/map")
+    <script src="../../Content/build/js/homepage.js"></script> 
+    
+    <script defer>
+        (() => {
+            console.log("@Model.widgets.Count()");
+            WeeklyReview("@Model.widgets.ElementAt(0).Title", @Model.widgets.ElementAt(0).Items.ElementAt(0).ItemId, @Model.widgets.ElementAt(0).WidgetId, 1);
+            WeeklyReview("@Model.widgets.ElementAt(4).Title", @Model.widgets.ElementAt(4).Items.ElementAt(0).ItemId, @Model.widgets.ElementAt(4).WidgetId, 2);
+            WeeklyReview("@Model.widgets.ElementAt(8).Title", @Model.widgets.ElementAt(8).Items.ElementAt(0).ItemId, @Model.widgets.ElementAt(8).WidgetId, 3);
+        })($) 
+        
+    </script>
+}

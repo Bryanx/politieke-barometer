@@ -2012,7 +2012,7 @@ nav .nav-container .searchbar .search-field, form.navbar-form .input-group {
 .card-name {
   position: absolute;
   top: 10px;
-  left: 110px;
+  left: 100px;
   font-size: 18px;
   letter-spacing: 1.5px; }
 
@@ -2024,10 +2024,10 @@ nav .nav-container .searchbar .search-field, form.navbar-form .input-group {
 .card-trending {
   position: absolute;
   top: 49%;
-  left: 110px;
+  left: 100px;
   line-height: 8px; }
   .card-trending :first-child {
-    border-bottom: 5px solid rgba(137, 137, 137, 0.7);
+    border-bottom: 3px solid rgba(137, 137, 137, 0.7);
     line-height: 19px; }
   .card-trending :last-child {
     text-align: center;
@@ -2036,10 +2036,10 @@ nav .nav-container .searchbar .search-field, form.navbar-form .input-group {
 .card-nom {
   position: absolute;
   top: 49%;
-  left: 200px;
+  left: 180px;
   line-height: 8px; }
   .card-nom :first-child {
-    border-bottom: 5px solid rgba(137, 137, 137, 0.7);
+    border-bottom: 3px solid rgba(137, 137, 137, 0.7);
     line-height: 19px; }
   .card-nom :last-child {
     text-align: center;
@@ -2067,32 +2067,57 @@ nav .nav-container .searchbar .search-field, form.navbar-form .input-group {
 
 .weeklyReview-avatar {
   position: absolute;
-  top: 40px;
-  left: 0;
+  top: 30px;
+  left: 10px;
   width: 200px; }
   .weeklyReview-avatar img {
-    width: 100% !important;
-    height: 100% !important; }
+    width: 160px !important;
+    height: 160px !important;
+    object-fit: cover; }
 
 .weeklyReview-name {
   position: absolute;
-  top: 60px;
-  left: 210px;
+  top: 40px;
+  left: 190px;
   letter-spacing: 1px;
   font-size: 18px;
   font-weight: bold; }
+
+.weeklyReview-ranking {
+  position: absolute;
+  top: 70px;
+  left: 190px;
+  font-size: 18px; }
 
 .weeklyReview-organisation {
   position: absolute;
-  top: 30px;
-  left: 210px; }
+  top: 10px;
+  left: 190px; }
 
 .weeklyReview-nom {
   position: absolute;
-  left: 210px;
-  top: 140px;
+  left: 190px;
+  top: 190px;
   letter-spacing: 1px;
-  font-size: 18px;
-  font-weight: bold; }
+  font-size: 18px; }
+  .weeklyReview-nom :first-child {
+    border-bottom: 3px solid rgba(137, 137, 137, 0.7);
+    line-height: 19px; }
+  .weeklyReview-nom :last-child {
+    text-align: center;
+    font-weight: bold; }
+
+.weeklyReview-trending {
+  position: absolute;
+  left: 60px;
+  top: 190px;
+  letter-spacing: 1px;
+  font-size: 18px; }
+  .weeklyReview-trending :first-child {
+    border-bottom: 3px solid rgba(137, 137, 137, 0.7);
+    line-height: 19px; }
+  .weeklyReview-trending :last-child {
+    text-align: center;
+    font-weight: bold; }
 
 /*# sourceMappingURL=custom.css.map */

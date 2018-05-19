@@ -74,7 +74,7 @@
                     @for (int j = 0; j < 3; j++)
                     {
                         <div class="col-xs-12 col-sm-4">
-                            @if (Model.TopTrendingPersonViewModels.Count != 0) {
+                            @if (Model.TopTrendingPersonViewModels.Count == 3) {
                                 @Html.Partial("Partials/_cardPerson", Model.TopTrendingPersonViewModels.ElementAt(j))
                             }                               
                         </div>
@@ -155,7 +155,7 @@
                         @for (int j = 3; j < 6; j++)
                         {
                             <div class="col-xs-12 col-sm-4 small-card">
-                                @if (Model.TopTrendingitems.Count != 0) {
+                                @if (Model.TopTrendingitems.Count > 3) {
                                     @Html.Partial("Partials/_card", Model.TopTrendingitems.ElementAt(j))
                                 }
                             </div>
@@ -196,7 +196,7 @@
                     @for (int j = 6; j < 9; j++)
                     {
                         <div class="col-xs-12 col-sm-4 small-card">
-                            @if (Model.TopTrendingitems.Count >= 8) {
+                            @if (Model.TopTrendingitems.Count > 7) {
                                 @Html.Partial("Partials/_card", Model.TopTrendingitems.ElementAt(j))
                             }
                         </div>
@@ -224,7 +224,7 @@
             <div class='clearfix'></div>
         </div>
         <div class="x_content">
-        @if (Model.WeeklyReviewModel.WeeklyItems.Count >= 12) {
+        @if (Model.WeeklyReviewModel.WeeklyItems.Count > 11) {
             @Html.Partial("Partials/_WeeklyReview", Model.WeeklyReviewModel)
         }
         </div>
@@ -291,6 +291,7 @@
             js.src = 'https://connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v2.12';
             fjs.parentNode.insertBefore(js, fjs);
         }(document, 'script', 'facebook-jssdk'));
+        
     </script>
     <script src="~/Scripts/ChartJS/Chart.js"></script>
     <script src="https://platform.twitter.com/widgets.js"></script>
