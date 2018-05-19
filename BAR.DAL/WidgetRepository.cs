@@ -164,11 +164,11 @@ namespace BAR.DAL
 		public Widget ReadWidgetWithAllData(int widgetId)
 		{
 			return ctx.Widgets.Include(widget => widget.Items)
-					   .Include(widget => widget.PropertyTags)
-					   .Include(widget => widget.WidgetDatas)
-					   .Include(widget => widget.WidgetDatas.Select(widgetData => widgetData.GraphValues))
-					   .Where(widget => widget.WidgetId == widgetId)
-					   .SingleOrDefault();
+							  .Include(widget => widget.PropertyTags)
+							  .Include(widget => widget.WidgetDatas)
+							  .Include(widget => widget.WidgetDatas.Select(widgetData => widgetData.GraphValues))
+							  .Where(widget => widget.WidgetId == widgetId)
+							  .SingleOrDefault();
 		}
 
 		/// <summary>
@@ -177,10 +177,10 @@ namespace BAR.DAL
 		public IEnumerable<Widget> ReadAllWidgetsWithAllData()
 		{
 			return ctx.Widgets.Include(widget => widget.Items)
-					   .Include(widget => widget.PropertyTags)
-					   .Include(widget => widget.WidgetDatas)
-					   .Include(widget => widget.WidgetDatas.Select(widgetData => widgetData.GraphValues))
-					   .ToList();
+							  .Include(widget => widget.PropertyTags)
+							  .Include(widget => widget.WidgetDatas)
+							  .Include(widget => widget.WidgetDatas.Select(widgetData => widgetData.GraphValues))
+							  .AsEnumerable();
 		}
 
 		/// <summary>
@@ -266,9 +266,7 @@ namespace BAR.DAL
 		/// </summary>
 		public int DeleteWidgetDatas(IEnumerable<WidgetData> datas)
 		{
-			if (datas != null && datas.Count() > 0) {
-				ctx.WidgetDatas.RemoveRange(datas);
-			}
+			if (datas != null && datas.Count() > 0) ctx.WidgetDatas.RemoveRange(datas);
 			return ctx.SaveChanges();
 		}
 
@@ -278,7 +276,7 @@ namespace BAR.DAL
 		public IEnumerable<WidgetData> ReadWidgetDatasForKeyvalue(string value)
 		{
 			return ctx.WidgetDatas.Where(data => data.KeyValue.ToLower().Equals(value.ToLower()))
-					  .AsEnumerable();
+								  .AsEnumerable();
 		}
 
 		/// <summary>
