@@ -313,15 +313,6 @@ namespace BAR.BL.Managers
 		}
 
 		/// <summary>
-		/// Deletes a dashboard from the database.
-		/// </summary>
-		public void RemoveDashboard(int dashboardId)
-		{
-			InitRepo();
-			widgetRepo.DeleteDashboard(dashboardId);
-		}
-
-		/// <summary>
 		/// Gives back a widget with all the items
 		/// </summary>
 		public Widget GetWidgetWithAllItems(int widgetId)

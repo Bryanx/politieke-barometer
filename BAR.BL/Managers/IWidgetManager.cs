@@ -49,8 +49,6 @@ namespace BAR.BL.Managers
 
 		Dashboard AddDashboard(string userId, DashboardType dashType = DashboardType.Private);
 
-		void RemoveDashboard(int dashboardId);
-
 		//WidgetDatas
 		IEnumerable<WidgetData> GetAllWidgetDatas();
 		IEnumerable<WidgetData> GetWidgetDatasForItemId(int itemId);

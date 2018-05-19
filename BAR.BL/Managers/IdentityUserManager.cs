@@ -28,17 +28,18 @@ namespace BAR.BL.Managers
 		/// </summary>
 		public static IdentityUserManager Create(IdentityFactoryOptions<IdentityUserManager> options, IOwinContext context)
 		{
-			var manager = new IdentityUserManager(new UserIdentityRepository(context.Get<BarometerDbContext>()));
+			var identityManager = new IdentityUserManager(new UserIdentityRepository(context.Get<BarometerDbContext>()));
 			var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(context.Get<BarometerDbContext>()));
+
 			//Configure validation logic for usernames
-			manager.UserValidator = new UserValidator<User>(manager)
+			identityManager.UserValidator = new UserValidator<User>(identityManager)
 			{
 				AllowOnlyAlphanumericUserNames = false,
 				RequireUniqueEmail = true
 			};
 
 			//Configure validation logic for passwords
-			manager.PasswordValidator = new PasswordValidator
+			identityManager.PasswordValidator = new PasswordValidator
 			{
 				RequiredLength = 6,
 				RequireNonLetterOrDigit = false,
@@ -48,27 +49,27 @@ namespace BAR.BL.Managers
 			};
 
 			//Configure user lockout defaults
-			manager.UserLockoutEnabledByDefault = true;
-			manager.DefaultAccountLockoutTimeSpan = TimeSpan.FromMinutes(5);
-			manager.MaxFailedAccessAttemptsBeforeLockout = 5;
+			identityManager.UserLockoutEnabledByDefault = true;
+			identityManager.DefaultAccountLockoutTimeSpan = TimeSpan.FromMinutes(5);
+			identityManager.MaxFailedAccessAttemptsBeforeLockout = 5;
 
 			//Register two factor authentication providers
-			manager.RegisterTwoFactorProvider("Email Code", new EmailTokenProvider<User>
+			identityManager.RegisterTwoFactorProvider("Email Code", new EmailTokenProvider<User>
 			{
 				Subject = "Security Code",
 				BodyFormat = "Your security code is {0}"
 			});
-			manager.EmailService = new EmailService();
+			identityManager.EmailService = new EmailService();
 			var dataProtectionProvider = options.DataProtectionProvider;
 			if (dataProtectionProvider != null)
 			{
-				manager.UserTokenProvider =
+				identityManager.UserTokenProvider =
 						new DataProtectorTokenProvider<User>(dataProtectionProvider.Create("ASP.NET Identity"));
 			}
 
 			//Add roles
 			AddRoles(roleManager);
-			return manager;
+			return identityManager;
 		}
 
 		/// <summary>
@@ -76,29 +77,30 @@ namespace BAR.BL.Managers
 		/// </summary>
 		private static void AddRoles(RoleManager<IdentityRole> roleManager)
 		{
+			//Create Admin role
 			if (!roleManager.RoleExists("Admin"))
 			{
-				//Create Admin role
-				var role = new IdentityRole
+				IdentityRole role = new IdentityRole
 				{
 					Name = "Admin"
 				};
 				roleManager.Create(role);
 			}
+
 			//Create SuperAdmin role  
 			if (!roleManager.RoleExists("SuperAdmin"))
 			{
-				var role = new IdentityRole
+				IdentityRole role = new IdentityRole
 				{
 					Name = "SuperAdmin"
 				};
 				roleManager.Create(role);
-
 			}
+
 			//Create User role   
 			if (!roleManager.RoleExists("User"))
 			{
-				var role = new IdentityRole
+				IdentityRole role = new IdentityRole
 				{
 					Name = "User"
 				};
