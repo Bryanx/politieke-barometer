@@ -8,10 +8,8 @@ using BAR.BL.Domain.Users;
 using Newtonsoft.Json;
 using System.Web;
 using System.IO;
-using System.Text.RegularExpressions;
 using BAR.BL.Domain.Core;
 using BAR.BL.Domain.Widgets;
-using Microsoft.AspNet.Identity;
 
 namespace BAR.BL.Managers
 {
@@ -33,6 +31,16 @@ namespace BAR.BL.Managers
 		public ItemManager(UnitOfWorkManager uowManager = null)
 		{
 			this.uowManager = uowManager;
+		}
+
+		/// <summary>
+		/// Determines if the repo needs a unit of work
+		/// if the unitOfWorkManager is present
+		/// </summary>
+		private void InitRepo()
+		{
+			if (uowManager == null) itemRepo = new ItemRepository();
+			else itemRepo = new ItemRepository(uowManager.UnitOfWork);
 		}
 
 		/// <summary>
@@ -70,43 +78,12 @@ namespace BAR.BL.Managers
 				if (trendingPer > 0)
 				{
 					itemToUpdate.TrendingPercentage = Math.Round(trendingPer, 2);
-					new SubscriptionManager().GenerateAlerts(itemToUpdate.ItemId);
+					if (trendingPer > 7.50) new SubscriptionManager().GenerateAlerts(itemToUpdate.ItemId);
 				}
 			}
 
 			//Save changes
 			itemRepo.UpdateItem(itemToUpdate);
-		}
-
-		/// <summary>
-		/// Sent emails to the people who want to receive an email
-		/// </summary>
-		public async void SendWeeklyReviewEmails(IEnumerable<User> users)
-		{
-			IEnumerable<Item> items;
-
-			foreach (User user in users)
-			{
-				//Get 5 most trending items of
-				items = GetMostTrendingItemsForUser(user.Id);
-
-				//Send email
-				IdentityMessage message = new IdentityMessage()
-				{
-					Destination = user.Email,
-					Subject = "Nieuwe weekly review is nu beschikbaar",
-					Body = "Beste " + user.FirstName + "</br></br>" +
-						"Een nieuwe weekly review is nu beschikbaar!</br></br>" +
-						"De 5 meest trending items van deze week zijn:</br>" +
-						"- " + items.ElementAt(0).Name + " (" + items.ElementAt(0).TrendingPercentage + "% trending)</br>" +
-						"- " + items.ElementAt(1).Name + " (" + items.ElementAt(1).TrendingPercentage + "% trending)</br>" +
-						"- " + items.ElementAt(2).Name + " (" + items.ElementAt(2).TrendingPercentage + "% trending)</br>" +
-						"- " + items.ElementAt(3).Name + " (" + items.ElementAt(3).TrendingPercentage + "% trending)</br>" +
-						"- " + items.ElementAt(4).Name + " (" + items.ElementAt(4).TrendingPercentage + "% trending)</br>" +
-						"Ga nu naar onze website om je nieuwe weekly review te bekijken!"
-				};
-				await new EmailService().SendAsync(message);
-			}		
 		}
 
 		/// <summary>
@@ -265,8 +242,6 @@ namespace BAR.BL.Managers
 		/// <summary>
 		/// Returns a theme with all the Theme keywords
 		/// </summary>
-		/// <param name="itemId"></param>
-		/// <returns></returns>
 		public Theme GetThemeWithDetails(int itemId)
 		{
 			InitRepo();
@@ -276,7 +251,6 @@ namespace BAR.BL.Managers
 		/// <summary>
 		/// Returns an item for a specifig itemId including the attached subplatform.
 		/// </summary>
-		/// <returns></returns>
 		public Item GetItemWithSubPlatform(int itemId)
 		{
 			InitRepo();
@@ -301,15 +275,6 @@ namespace BAR.BL.Managers
 		}
 
 		/// <summary>
-		/// Gets the trending percentage of a specific item
-		/// </summary>
-		public double GetTrendingPer(int itemId)
-		{
-			InitRepo();
-			return itemRepo.ReadItem(itemId).TrendingPercentage;
-		}
-
-		/// <summary>
 		/// Returns a list of all items (deleted and undeleted).
 		/// </summary>
 		public IEnumerable<Item> GetAllItems()
@@ -330,8 +295,6 @@ namespace BAR.BL.Managers
 		/// <summary>
 		/// Returns all (undeleted) people for an organisation
 		/// </summary>
-		/// <param name="organisationId"></param>
-		/// <returns></returns>
 		public IEnumerable<Person> GetAllPersonsForOrganisation(int organisationId)
 		{
 			InitRepo();
@@ -350,12 +313,10 @@ namespace BAR.BL.Managers
 
 		/// <summary>
 		/// Creates a new item based on the given parameters
-		/// 
-		/// NOTE
-		/// THIS METHOD USES UNIT OF WORK
 		/// </summary>
 		public Item AddItem(ItemType itemType, string name, string description = "", string function = "",
-			string district = null, string level = null, string site = null, Gender gender = Gender.OTHER, string position = null, DateTime? dateOfBirth = null, List<Keyword> keywords = null)
+			string district = null, string level = null, string site = null, Gender gender = Gender.OTHER, string position = null,
+			DateTime? dateOfBirth = null, List<Keyword> keywords = null)
 		{
 			InitRepo();
 
@@ -403,12 +364,10 @@ namespace BAR.BL.Managers
 			item.Name = name;
 			item.CreationDate = DateTime.Now;
 			item.LastUpdatedInfo = DateTime.Now;
-			//needs to be null to do a check later on: see updateItemTrending in itemManager for details
 			item.NumberOfFollowers = 0;
-			item.TrendingPercentage = 0.0;
 			item.NumberOfMentions = 0;
+			item.TrendingPercentage = 0.0;
 			item.TrendingPercentageOld = 0.0;
-			item.Baseline = 0.0;
 			item.Deleted = false;
 			item.Baseline = 10.0;
 			item.Informations = new List<Information>();
@@ -509,24 +468,21 @@ namespace BAR.BL.Managers
 		/// <summary>
 		/// Returns all people for specific subplatform
 		/// </summary>
-		/// <param name="subPlatformName"></param>
-		/// <returns></returns>
 		public IEnumerable<Person> GetAllPersonsForSubplatform(int subPlatformID)
 		{
-			return GetAllPersons()
-				.Where(item => item.Deleted == false)
-				.Where(item => item.SubPlatform.SubPlatformId.Equals(subPlatformID));
+			return GetAllPersons().Where(item => !item.Deleted)
+								  .Where(item => item.SubPlatform.SubPlatformId.Equals(subPlatformID))
+								  .AsEnumerable();
 		}
 
 		/// <summary>
 		/// Returns all organisations for specific subplatform
 		/// </summary>
-		/// <returns></returns>
 		public IEnumerable<Item> GetAllOrganisationsForSubplatform(int subPlatformID)
 		{
-			return GetAllOrganisations()
-				.Where(item => item.Deleted == false)
-				.Where(item => item.SubPlatform.SubPlatformId.Equals(subPlatformID));
+			return GetAllOrganisations().Where(item => !item.Deleted)
+										.Where(item => item.SubPlatform.SubPlatformId.Equals(subPlatformID))
+										.AsEnumerable();
 		}
 
 		/// <summary>
@@ -551,19 +507,17 @@ namespace BAR.BL.Managers
 		/// <summary>
 		/// Updates the organisation of a given person
 		/// </summary>
-		/// <param name="itemId"></param>
-		/// <param name="organisationId"></param>
-		/// <returns></returns>
 		public Person ChangePersonOrganisation(int personId, int organisationId)
 		{
 			uowManager = new UnitOfWorkManager();
-
 			InitRepo();
 
-			Organisation org = this.GetOrganisationWithDetails(organisationId);
-			//Get item
-			Person personToUpdate = GetPersonWithDetails(personId);
+			//Get organisation 
+			Organisation org = GetOrganisationWithDetails(organisationId);
+			if (org == null) return null;
 
+			//Get person
+			Person personToUpdate = GetPersonWithDetails(personId);
 			if (personToUpdate == null) return null;
 
 			//Update item
@@ -571,7 +525,6 @@ namespace BAR.BL.Managers
 
 			//Update database
 			itemRepo.UpdatePerson(personToUpdate);
-
 			uowManager.Save();
 			uowManager = null;
 			return personToUpdate;
@@ -581,38 +534,32 @@ namespace BAR.BL.Managers
 		/// <summary>
 		/// Adds socialmedia names to person
 		/// </summary>
-		/// <param name="person"></param>
-		/// <returns></returns>
 		public Person ChangePersonSocialMedia(int personId, string twitter, string facebook)
 		{
 			uowManager = new UnitOfWorkManager();
-			IDataManager dataManager = new DataManager(uowManager);
 			InitRepo();
-
-			Source twitterSource = dataManager.GetSource("Twitter");
-			Source facebookSource = dataManager.GetSource("Facebook");
 
 			//Get item
 			Person personToUpdate = GetPersonWithDetails(personId);
-
 			if (personToUpdate == null) return null;
 
-			//Update person with twitter and facebook url's
-			personToUpdate.SocialMediaNames.Add(new SocialMediaName()
-			{
-				Source = twitterSource,
-				Username = twitter
-			});
+			//Get sources
+			DataManager dataManager = new DataManager(uowManager);
+			IEnumerable<Source> sources = dataManager.GetAllSources();
+			if (sources == null || sources.Count() == 0) return null;
 
-			personToUpdate.SocialMediaNames.Add(new SocialMediaName()
+			//Update person with with new urls
+			foreach (Source source in sources)
 			{
-				Source = facebookSource,
-				Username = facebook
-			});
-
+				personToUpdate.SocialMediaNames.Add(new SocialMediaName()
+				{
+					Source = source,
+					Username = source.Name
+				});
+			}
+			
 			//Update database
 			itemRepo.UpdatePerson(personToUpdate);
-
 			uowManager.Save();
 			uowManager = null;
 			return personToUpdate;
@@ -621,27 +568,24 @@ namespace BAR.BL.Managers
 		/// <summary>
 		/// Updates the subplatform of a given item
 		/// </summary>
-		/// <param name="itemId"></param>
-		/// <param name="suplatformId"></param>
-		/// <returns></returns>
 		public Item ChangeItemPlatform(int itemId, int subplatformId)
 		{
-			uowManager = new UnitOfWorkManager();
-			ISubplatformManager subManager = new SubplatformManager(uowManager);
-			
+			uowManager = new UnitOfWorkManager();	
 			InitRepo();
 
-			SubPlatform subPlatform = subManager.GetSubPlatform(subplatformId);
+			//Get subplatform
+			SubPlatform platform = new SubplatformManager(uowManager).GetSubPlatform(subplatformId);
+			if (platform == null) return null;
+
 			//Get item
 			Item itemToUpdate = GetItemWithSubPlatform(itemId);
-
 			if (itemToUpdate == null) return null;
 
 			//Update item
-			itemToUpdate.SubPlatform = subPlatform;
+			itemToUpdate.SubPlatform = platform;
+
 			//Update database
 			itemRepo.UpdateItem(itemToUpdate);
-
 			uowManager.Save();
 			uowManager = null;
 			return itemToUpdate;
@@ -650,16 +594,12 @@ namespace BAR.BL.Managers
 		/// <summary>
 		/// Updates the site of a given Organisation
 		/// </summary>
-		/// <param name="itemId"></param>
-		/// <param name="site"></param>
-		/// <returns></returns>
 		public Organisation ChangeOrganisation(int itemId, string site)
 		{
 			InitRepo();
 
 			//Get item
 			Organisation orgToUpdate = GetOrganisationWithDetails(itemId);
-
 			if (orgToUpdate == null) return null;
 
 			//Update item
@@ -673,16 +613,12 @@ namespace BAR.BL.Managers
 		/// <summary>
 		/// Updates the site of a given person
 		/// </summary>
-		/// <param name="itemId"></param>
-		/// <param name="site"></param>
-		/// <returns></returns>
 		public Person ChangePerson(int itemId, string site)
 		{
 			InitRepo();
 
 			//Get item
 			Person personToUpdate = GetPersonWithDetails(itemId);
-
 			if (personToUpdate == null) return null;
 
 			//Update item
@@ -694,7 +630,7 @@ namespace BAR.BL.Managers
 		}
 
 		/// <summary>
-		/// Updates a person.
+		/// Updates a person completely.
 		/// </summary>
 		public Person ChangePerson(int itemId, DateTime birthday, Gender gender, string position, string district)
 		{
@@ -702,7 +638,6 @@ namespace BAR.BL.Managers
 
 			//Get item
 			Person personToUpdate = GetPersonWithDetails(itemId);
-
 			if (personToUpdate == null) return null;
 
 			//Update item
@@ -713,29 +648,8 @@ namespace BAR.BL.Managers
 
 			//Update database
 			itemRepo.UpdateItem(personToUpdate);
-
 			return personToUpdate;
 		}
-
-		/// <summary>
-		/// Updates the description of a given item.
-		/// </summary>
-		//public Item ChangeItemDescription(int itemId, string description)
-		//{
-		//	InitRepo();
-
-		//	//Get item
-		//	Item itemToUpdate = GetItem(itemId);
-		//	if (itemToUpdate == null) return null;
-
-		//	//Update item
-		//	itemToUpdate.Description = description;
-		//	itemToUpdate.LastUpdated = DateTime.Now;
-
-		//	//Update database
-		//	itemRepo.UpdateItem(itemToUpdate);
-		//	return itemToUpdate;
-		//}
 
 		/// <summary>
 		/// Changes an item to non-active or active
@@ -762,18 +676,13 @@ namespace BAR.BL.Managers
 		public void RemoveItem(int itemId)
 		{
 			InitRepo();
-			Item itemToRemove = GetItem(itemId);
-			if (itemToRemove != null) itemRepo.DeleteItem(itemToRemove);
-		}
 
-		/// <summary>
-		/// Determines if the repo needs a unit of work
-		/// if the unitOfWorkManager is present
-		/// </summary>
-		private void InitRepo()
-		{
-			if (uowManager == null) itemRepo = new ItemRepository();
-			else itemRepo = new ItemRepository(uowManager.UnitOfWork);
+			//Get item
+			Item itemToRemove = GetItem(itemId);
+			if (itemToRemove != null) return;
+
+			//Remove item
+			itemRepo.DeleteItem(itemToRemove);
 		}
 
 		/// <summary>
@@ -783,15 +692,6 @@ namespace BAR.BL.Managers
 		{
 			InitRepo();
 			return itemRepo.ReadItemWithWidgets(itemId);
-		}
-
-		/// <summary>
-		/// Gets person with given name.
-		/// </summary>
-		public Item GetItemByName(string name)
-		{
-			InitRepo();
-			return itemRepo.ReadItemByName(name);
 		}
 
 		/// <summary>
@@ -821,38 +721,27 @@ namespace BAR.BL.Managers
 		/// <summary>
 		/// Import all the themes from the json file
 		/// </summary>
-		/// <param name="json"></param>
-		/// <param name="subPlatformID"></param>
-		/// <returns></returns>
 		public bool ImportThemes(string json, int subPlatformID)
 		{
-			return AddThemesFromJson(json, subPlatformID);
-		}
-
-		/// <summary>
-		/// Check if theme exists, if not add it to the Database
-		/// </summary>
-		/// <param name="json"></param>
-		/// <param name="subPlatformID"></param>
-		private bool AddThemesFromJson(string json, int subPlatformID)
-		{
 			uowManager = new UnitOfWorkManager();
-
 			InitRepo();
 
-			ISubplatformManager subplatformManager = new SubplatformManager(uowManager);
-			SubPlatform subPlatform = subplatformManager.GetSubPlatform(subPlatformID);
+			//Get platform
+			SubPlatform platform = new SubplatformManager(uowManager).GetSubPlatform(subPlatformID);
+			if (platform == null) return false;
+
+			//Get themes
 			IEnumerable<Item> themes = GetAllThemes();
+			if (themes == null) return false;
 			List<Item> newThemes = new List<Item>();
 
 			dynamic deserializedJson = JsonConvert.DeserializeObject(json);
 
+			//Extract themes from JSON
 			for (int i = 0; i < deserializedJson.Count; i++)
 			{
 				string name = deserializedJson[i].name;
-
 				Theme theme = null;
-
 				List<Keyword> keywords = new List<Keyword>();
 
 				for (int j = 0; j < deserializedJson[i].keywords.Count; j++)
@@ -863,9 +752,10 @@ namespace BAR.BL.Managers
 					});
 				}
 
+				//Create new theme
 				if (themes
 				.Where(t => t.SubPlatform.SubPlatformId == subPlatformID)
-				.Where(x => x.Name.Equals(name)).SingleOrDefault() == null)
+				.Where(t => t.Name.Equals(name)).SingleOrDefault() == null)
 				{
 					theme = new Theme()
 					{
@@ -877,7 +767,7 @@ namespace BAR.BL.Managers
 						TrendingPercentage = 0.0,
 						Baseline = 0.0,
 						Informations = new List<Information>(),
-						SubPlatform = subPlatform,
+						SubPlatform = platform,
 						Keywords = keywords
 					};
 					itemRepo.CreateItem(theme);
@@ -889,7 +779,6 @@ namespace BAR.BL.Managers
 			//Generate default widgets for items
 			foreach (Item item in newThemes) GenerateDefaultItemWidgets(item.Name, item.ItemId);
 			uowManager = null;
-
 			return true;
 		}
 
@@ -899,15 +788,15 @@ namespace BAR.BL.Managers
 		private void CheckOrganisations(string json, int subPlatformID)
 		{
 			uowManager = new UnitOfWorkManager();
-
 			InitRepo();
 
-			ISubplatformManager subplatformManager = new SubplatformManager(uowManager);
-			SubPlatform subPlatform = subplatformManager.GetSubPlatform(subPlatformID);
+			//Get subplatform 
+			SubPlatform platform = new SubplatformManager(uowManager).GetSubPlatform(subPlatformID);
+			if (platform == null) return;
 
+			//Extract organisations out of the JSON
 			dynamic deserializedJson = JsonConvert.DeserializeObject(json);
 			List<Item> organisations = new List<Item>();
-
 			for (int i = 0; i < deserializedJson.Count; i++)
 			{
 				string name = deserializedJson[i].organisation;
@@ -926,7 +815,7 @@ namespace BAR.BL.Managers
 						Baseline = 10.0,
 						Informations = new List<Information>(),
 						SocialMediaUrls = new List<SocialMediaName>(),
-						SubPlatform = subPlatform
+						SubPlatform = platform
 					};
 					itemRepo.CreateItem(organisation);
 					uowManager.Save();
@@ -946,20 +835,20 @@ namespace BAR.BL.Managers
 		{
 			uowManager = new UnitOfWorkManager();
 			InitRepo();
-			dynamic deserializedJson = JsonConvert.DeserializeObject(json);
+
+			dynamic deserializedJson = JsonConvert.DeserializeObject(json);	
+			UserManager userManager = new UserManager(uowManager);
+			DataManager dataManager = new DataManager(uowManager);
+			SubPlatform subPlatform = new SubplatformManager(uowManager).GetSubPlatform(subPlatformID);
 
 			//Needs to be in memory to gain preformance
-			IUserManager userManager = new UserManager(uowManager);
-			IDataManager dataManager = new DataManager(uowManager);
-			ISubplatformManager subplatformManager = new SubplatformManager(uowManager);
-			SubPlatform subPlatform = subplatformManager.GetSubPlatform(subPlatformID);
 			IEnumerable<Area> areas = userManager.GetAreas();
 			IEnumerable<Source> sources = dataManager.GetAllSources();
 			IEnumerable<Item> organisations = GetAllOrganisations();
 			IEnumerable<Item> persons = GetAllPersons();
-
 			List<Item> items = new List<Item>();
 
+			//Extract perons out of the JSON
 			for (int i = 0; i < deserializedJson.Count; i++)
 			{
 				string fullname = deserializedJson[i].full_name;
@@ -983,14 +872,15 @@ namespace BAR.BL.Managers
 
 					Person person = (Person)AddItem(itemType: ItemType.Person, name: fullname, gender: personGender, district: district,
 						level: level, site: site, position: position, dateOfBirth: dateOfBirth);
-					person.SubPlatform = subPlatform; person.Area = areas.Where(x => x.PostalCode.Equals(postalCode) && x.Residence.ToLower().Equals(town.ToLower())).SingleOrDefault();
+					person.SubPlatform = subPlatform;
+					person.Area = areas.Where(area => area.PostalCode.Equals(postalCode) && area.Residence.ToLower().Equals(town.ToLower())).SingleOrDefault();
 
 					if (!string.IsNullOrEmpty(twitter))
 					{
 						SocialMediaName twitterSocial = new SocialMediaName()
 						{
 							Username = twitter,
-							Source = sources.Where(x => x.Name.Equals("Twitter")).SingleOrDefault()
+							Source = sources.Where(src => src.Name.Equals("Twitter")).SingleOrDefault()
 						};
 						person.SocialMediaNames.Add(twitterSocial);
 					}
@@ -999,24 +889,25 @@ namespace BAR.BL.Managers
 						SocialMediaName facebookSocial = new SocialMediaName()
 						{
 							Username = facebook,
-							Source = sources.Where(x => x.Name.Equals("Facebook")).SingleOrDefault()
+							Source = sources.Where(src => src.Name.Equals("Facebook")).SingleOrDefault()
 						};
 						person.SocialMediaNames.Add(facebookSocial);
 					}
-					person.Organisation = (Organisation)organisations.Where(x => x.Name.Equals(organisation)).SingleOrDefault();
+					person.Organisation = (Organisation) organisations.Where(org => org.Name.Equals(organisation)).SingleOrDefault();
 
 					items.Add(person);
 				}
 			}
 
+			//Save items to the database
 			if (items.Count > 0)
 			{
 				itemRepo.CreateItems(items);
 				uowManager.Save();
 				foreach (Item item in items) GenerateDefaultItemWidgets(item.Name, item.ItemId);
+				uowManager = null;
 				return true;
 			}
-
 			return false;
 		}
 
@@ -1082,7 +973,7 @@ namespace BAR.BL.Managers
 		}
 
 		/// <summary>
-		/// Removes all given items from the database
+		/// Removes all items where subplatform is null from the database
 		/// </summary>
 		public void RemoveOverflowingItems()
 		{

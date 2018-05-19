@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using BAR.BL.Domain;
 using BAR.DAL;
 using BAR.BL.Domain.Core;
 using BAR.BL.Domain.Users;
@@ -25,6 +22,16 @@ namespace BAR.BL.Managers
 		public SubplatformManager(UnitOfWorkManager uowManager = null)
 		{
 			this.uowManager = uowManager;
+		}
+
+		/// <summary>
+		/// Determines if the repo needs a unit of work
+		/// if the unitOfWorkManager is present
+		/// </summary>
+		private void InitRepo()
+		{
+			if (uowManager == null) platformRepo = new SubplatformRepository();
+			else platformRepo = new SubplatformRepository(uowManager.UnitOfWork);
 		}
 
 		/// <summary>
@@ -152,30 +159,6 @@ namespace BAR.BL.Managers
 		}
 
 		/// <summary>
-		/// Changes the platformname of a specific platform
-		/// Updates the changes in database
-		/// 
-		/// WARNING
-		/// Method will not work because a manual change of the subdomain is required
-		/// </summary>
-		public SubPlatform ChangePlatformName(int platformId, string name)
-		{
-			InitRepo();
-
-			//Get platform
-			SubPlatform platform = GetSubPlatform(platformId);
-			if (platform == null) return null;
-
-			//Change platform
-			platform.Name = name;
-
-			//Update platform
-			platformRepo.UpdateSubplatform(platform);
-
-			return platform;
-		}
-
-		/// <summary>
 		/// Makes an subplatform and persist that to the database
 		/// </summary>
 		public SubPlatform AddSubplatform(string name)
@@ -213,8 +196,8 @@ namespace BAR.BL.Managers
 				TextColor = "#73879C",
 
 				//Navbar and title text
-				PersonAlias = "Persoon",
-				PersonsAlias = "Personen",
+				PersonAlias = "Person",
+				PersonsAlias = "Persons",
 				OrganisationAlias = "Organisation",
 				OrganisationsAlias = "Organisations",
 				ThemeAlias = "Theme",
@@ -385,6 +368,7 @@ namespace BAR.BL.Managers
 			Question question = GetQuestion(questionId);
 			if (question == null) return;
 
+			//Remove from database
 			platformRepo.DeleteQuestion(question);
 		}
 
@@ -408,22 +392,13 @@ namespace BAR.BL.Managers
 		}
 
 		/// <summary>
-		/// Determines if the repo needs a unit of work
-		/// if the unitOfWorkManager is present
-		/// </summary>
-		private void InitRepo()
-		{
-			if (uowManager == null) platformRepo = new SubplatformRepository();
-			else platformRepo = new SubplatformRepository(uowManager.UnitOfWork);
-		}
-
-		/// <summary>
 		/// Gives back all the userAcitities for a specific timestamp
 		/// If no timestamp was given then all the activities wil be returned
 		/// </summary>
 		public IEnumerable<UserActivity> GetUserActivities(ActivityType type, DateTime? timestamp = null)
 		{
 			InitRepo();
+
 			IEnumerable<UserActivity> activities = platformRepo.ReadActivitiesForType(type);
 			if (activities == null || activities.Count() == 0 || timestamp == null) return activities.AsEnumerable();
 			else if (timestamp.Value.ToString("dd-MM-yy").Equals(DateTime.Now.ToString("dd-MM-yy")))
@@ -448,7 +423,6 @@ namespace BAR.BL.Managers
 
 			//Persist actitivy to database
 			platformRepo.CreateUserActitivy(activity);
-
 			return activity;
 		}
 
@@ -467,21 +441,11 @@ namespace BAR.BL.Managers
 			{
 				UserActivity activityToUpdate = activities.First();
 				activityToUpdate.NumberOfTimes++;
-				platformRepo.UpdateUserActivity(activityToUpdate);
-				//If an actitivy is not presnet
-				//then a new actitivy shall be created
+				platformRepo.UpdateUserActivity(activityToUpdate);			
 			}
+			//If an actitivy is not presnet
+			//then a new actitivy shall be created
 			else AddUserActitity(type, 1);
-		}
-
-		/// <summary>
-		/// Changes a userActivity
-		/// </summary>
-		public UserActivity ChangeUserActivity(UserActivity activity)
-		{
-			InitRepo();
-			platformRepo.UpdateUserActivity(activity);
-			return activity;
 		}
 
 		/// <summary>

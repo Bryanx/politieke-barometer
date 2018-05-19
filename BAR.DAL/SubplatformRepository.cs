@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Data.Entity;
-using BAR.BL.Domain;
 using BAR.DAL.EF;
 using BAR.BL.Domain.Core;
 using BAR.BL.Domain.Users;
@@ -56,7 +54,7 @@ namespace BAR.DAL
 		/// <summary>
 		/// Gives back a subplatform with all the questions and then customization.
 		/// </summary>
-		public SubPlatform GetSubplatformWithAllinfo(int platformId)
+		public SubPlatform ReadSubplatformWithAllinfo(int platformId)
 		{
 			return ctx.SubPlatforms.Include(platform => platform.Questions)
 								   .Include(platform => platform.Customization)

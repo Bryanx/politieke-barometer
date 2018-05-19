@@ -193,6 +193,10 @@ namespace BAR.BL.Managers
 			return userToUpdate;
 		}
 
+		/// <summary>
+		/// Changes the inforamtion of a user that has modified his
+		/// name on a android device.
+		/// </summary>
 		public User ChangeBasicInfoAndroid(string userId, string firstname, string lastname, byte[] profilePicture = null)
 		{
 			InitRepo();
@@ -209,16 +213,6 @@ namespace BAR.BL.Managers
 			//Update database
 			userRepo.UpdateUser(userToUpdate);
 			return userToUpdate;
-		}
-
-		/// <summary>
-		/// Changes a user in the database
-		/// </summary>
-		public User ChangeUser(User user)
-		{
-			InitRepo();
-			userRepo.UpdateUser(user);
-			return user;
 		}
 
 		/// <summary>
@@ -286,27 +280,27 @@ namespace BAR.BL.Managers
 						content +
 						"</br>Ga nu naar onze website om uw nieuwe Weekly Review te bekijken!"
 				};
-				new EmailService().SendAsync(message);
+				new EmailService().Send(message);
 			}
 		}
 
-    /// <summary>
-    /// Changes the device token to the device where the user logs in.
-    /// </summary>
-    public User ChangeDeviceToken(string userId, string deviceToken)
-    {
-      InitRepo();
+		/// <summary>
+		/// Changes the device token to the device where the user logs in.
+		/// </summary>
+		public User ChangeDeviceToken(string userId, string deviceToken)
+		{
+			InitRepo();
 
-      //Get User
-      User userToUpdate = userRepo.ReadUser(userId);
-      if (userToUpdate == null) return null;
+			//Get User
+			User userToUpdate = userRepo.ReadUser(userId);
+			if (userToUpdate == null) return null;
 
-      //Change user device token
-      userToUpdate.DeviceToken = deviceToken;
+			//Change user device token
+			userToUpdate.DeviceToken = deviceToken;
 
-      //Update database
-      userRepo.UpdateUser(userToUpdate);
-      return userToUpdate;
-    }
-  }
+			//Update database
+			userRepo.UpdateUser(userToUpdate);
+			return userToUpdate;
+		}
+	}
 }
