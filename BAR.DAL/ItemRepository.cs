@@ -112,12 +112,13 @@ namespace BAR.DAL
 		public IEnumerable<Person> ReadAllPersonsWithPlatforms()
 		{
 			return ctx.Items.OfType<Person>()
-							.Include(item => item.ItemWidgets)
-							.Include(item => item.SubPlatform)
-							.Include(item => item.Organisation)
-							.Include(item => item.SocialMediaNames)
-							.Include(item => item.SocialMediaNames.Select(social => social.Source))
-							.AsEnumerable();
+				              .Include(item => item.Area)
+				              .Include(item => item.ItemWidgets)
+				              .Include(item => item.SubPlatform)
+				              .Include(item => item.Organisation)
+				              .Include(item => item.SocialMediaNames)
+				              .Include(item => item.SocialMediaNames.Select(social => social.Source))
+				              .AsEnumerable();
 		}
 
 		/// <summary>
