@@ -196,7 +196,7 @@ namespace BAR.BL.Managers
 				TextColor = "#73879C",
 
 				//Navbar and title text
-				PersonAlias = "Persoon",
+				PersonAlias = "Person",
 				PersonsAlias = "Persons",
 				OrganisationAlias = "Organisation",
 				OrganisationsAlias = "Organisations",
