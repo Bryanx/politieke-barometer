@@ -126,6 +126,7 @@ namespace BAR.DAL
 		{
 			return ctx.Items
 				.OfType<Person>()
+				.Include(item => item.Area)
 				.Include(item => item.ItemWidgets)
 				.Include(item => item.SubPlatform)
 				.Include(item => item.Organisation)
