@@ -236,8 +236,7 @@ function init_JQVmap() {
                 });
                 createMap(mapdata, top3s);
             },
-            error: e => console.log(e)
-        });
+        }).fail(/* no data probably */);
     }
 
     $.get({
@@ -251,8 +250,7 @@ function init_JQVmap() {
 			});
             loadTop3s(mapdata);
 		},
-		error: e => console.log(e)
-	});
+	}).fail(/* no data probably */);
 };
 
 

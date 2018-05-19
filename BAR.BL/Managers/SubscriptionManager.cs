@@ -320,5 +320,10 @@ namespace BAR.BL.Managers
 			InitRepo();
       return subRepo.ReadUserAlerts(userId);
 		}
-	}
+
+    public IEnumerable<SubAlert> GetUnsendedSubAlerts()
+    {
+      return GetAllSubAlerts().Where(alert => alert.IsSend == false);
+    }
+  }
 }

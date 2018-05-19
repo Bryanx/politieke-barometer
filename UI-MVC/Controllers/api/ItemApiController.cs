@@ -205,7 +205,9 @@ namespace BAR.UI.MVC.Controllers.api
 		[Route("api/GetGeoData")]
 		public IHttpActionResult GetGeoData() {
 			IWidgetManager widgetManager = new WidgetManager();
-			List<WidgetDataDTO> widgetDto = Mapper.Map(widgetManager.GetGeoLocationWidget().WidgetDatas, new List<WidgetDataDTO>());
+			Widget geoWidget = widgetManager.GetGeoLocationWidget();
+			if (geoWidget == null) return NotFound();
+			List<WidgetDataDTO> widgetDto = Mapper.Map(geoWidget?.WidgetDatas, new List<WidgetDataDTO>());
 			return Ok(widgetDto.FirstOrDefault());
 		}
 		
@@ -218,6 +220,8 @@ namespace BAR.UI.MVC.Controllers.api
 			itemManager = new ItemManager();
 			
 			List<Person> persons = itemManager.GetAllPersons().ToList();
+
+			if (!persons.Any()) return NotFound();
 			
 			List<string> districts = persons.Select(p => p.District).Distinct().ToList();
 			

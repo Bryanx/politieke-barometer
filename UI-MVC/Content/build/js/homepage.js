@@ -73,7 +73,7 @@ let TwitterFeed = function (trendings) {
             // putting name above twitter feed
             $(nameId).append("" + value.Name + " ")
                 .next()
-                .append("" + value.TrendingPercentage.toFixed(2) + "%" + " rending")
+                .append("" + value.TrendingPercentage.toFixed(2) + "%" + " trending")
                 .parent()
                 .attr("href", "/Person/Details/" + value.ItemId);
 

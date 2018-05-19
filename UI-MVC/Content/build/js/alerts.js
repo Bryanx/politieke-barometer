@@ -153,7 +153,7 @@ function loadAlerts() {
 function checkAlertType(value) {
   $.ajax({
     type: "GET",
-    url: "api/User/Alert/CheckAlert/" + value.AlertId,
+    url: "/api/User/Alert/CheckAlert/" + value.AlertId,
     contentType: 'application/json; charset=utf-8',
     dataType: "json",
   }).fail(() => {/* ok */ })

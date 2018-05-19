@@ -1,12 +1,15 @@
 ﻿using BAR.BL.Domain.Items;
+using BAR.BL.Domain.Users;
 using BAR.BL.Managers;
 using BAR.UI.MVC.Attributes;
+using BAR.UI.MVC.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Text;
+using System.Threading.Tasks;
 using System.Web.Http;
 
 namespace BAR.UI.MVC.Controllers.api
@@ -16,21 +19,22 @@ namespace BAR.UI.MVC.Controllers.api
 		private IDataManager dataManager;
 		private IWidgetManager widgetManager;
 		private IItemManager itemManager;
+    private ISubscriptionManager subscriptionManager;
 
 		[HttpGet]
 		[Route("api/Data/Synchronize")]
 		[SubPlatformCheckAPI]
-		public IHttpActionResult Synchronize()
+		public async Task<IHttpActionResult> SynchronizeAsync()
 		{
 			dataManager = new DataManager();
 					
 			string content;
 			if (dataManager.GetLastAudit() == null)
 			{
-				//content = "{}";
+				content = "{}";
 
 				//Test with fewer data 
-				content = "{\"since\":\"2018-04-18 00:00\"}";
+				//content = "{\"since\":\"2018-04-15 00:00\"}";
 			}
 			else
 			{
@@ -64,6 +68,8 @@ namespace BAR.UI.MVC.Controllers.api
 
 							widgetManager = new WidgetManager();
 							itemManager = new ItemManager();
+              subscriptionManager = new SubscriptionManager();
+              ControllerHelpers controllerHelpers = new ControllerHelpers();
 
 							//Get the subplatformID from the SubPlatformCheckAPI attribute
 							object _customObject = null;
@@ -91,6 +97,15 @@ namespace BAR.UI.MVC.Controllers.api
 							//Update weekly review alerts						
 							new UserManager().GenerateAlertsForWeeklyReview(suplatformID);
 
+              //Send weekly review notification to android
+              await controllerHelpers.SendPushNotificationAsync("/topics/weeklyreview", "Weekly Review", "Er is een nieuwe weekly review beschikbaar.");
+
+              //Send trending notifications to users
+              foreach (SubAlert subAlert in subscriptionManager.GetUnsendedSubAlerts())
+              {
+                User user = subAlert.Subscription.SubscribedUser;
+                await controllerHelpers.SendPushNotificationAsync(user.DeviceToken, "Trending", String.Format("%s is nu trending.", subAlert.Subscription.SubscribedItem.Name));
+              }
 
 							return StatusCode(HttpStatusCode.OK);
 						}
@@ -101,8 +116,15 @@ namespace BAR.UI.MVC.Controllers.api
 					}
 					else
 					{
-						return StatusCode(HttpStatusCode.NoContent);
-					}
+            subscriptionManager = new SubscriptionManager();
+            ControllerHelpers controllerHelpers = new ControllerHelpers();
+            foreach (SubAlert subAlert in subscriptionManager.GetUnsendedSubAlerts())
+            {
+              User user = subAlert.Subscription.SubscribedUser;
+              await controllerHelpers.SendPushNotificationAsync(user.DeviceToken, "Trending", String.Format("%s is nu trending.", subAlert.Subscription.SubscribedItem.Name));
+            }
+            return StatusCode(HttpStatusCode.NoContent);
+          }
 				}
 				else
 				{

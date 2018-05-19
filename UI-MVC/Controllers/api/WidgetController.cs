@@ -194,7 +194,7 @@ namespace BAR.UI.MVC.Controllers.api
 		/// <summary>
 		/// Deletes a widget
 		/// </summary>
-		[System.Web.Http.HttpDelete]
+		[System.Web.Http.HttpPost]
 		[System.Web.Http.Route("api/Widget/Delete/{id}")]
 		public IHttpActionResult Delete(int id)
 		{
