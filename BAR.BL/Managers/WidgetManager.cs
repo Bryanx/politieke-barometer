@@ -639,7 +639,7 @@ namespace BAR.BL.Managers
 			for (int i = 0; i < items.Count(); i++)
 			{
 				//Get widgetdata for organisation
-				WidgetData organisationData = dataManager.GetOrganisationData(items.ElementAt(i).ItemId);
+				WidgetData organisationData = dataManager.GetOrganisationData(items.ElementAt(i).ItemId, "dd-MM");
 				organisationData.Widget = widgets.ElementAt(i);
 				widgetRepo.CreateWidgetData(organisationData);
 			}

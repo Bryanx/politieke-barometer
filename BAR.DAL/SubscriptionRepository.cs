@@ -1,9 +1,6 @@
 ﻿using BAR.BL.Domain.Users;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using BAR.DAL.EF;
 using System.Data.Entity;
 
@@ -33,15 +30,6 @@ namespace BAR.DAL
 		public IEnumerable<Alert> ReadAllAlerts()
 		{
 			return ctx.Alerts.AsEnumerable();
-		}
-
-		/// <summary>
-		/// Returns an a alert of a specific origin
-		/// </summary>
-		public Alert ReadAlert(string userId, int alertId, bool readUserAlert)
-		{
-			if (readUserAlert) return ReadUserAlert(userId, alertId);
-			else return ReadSubAlert(userId, alertId);
 		}
 
 		/// <summary>
@@ -172,26 +160,6 @@ namespace BAR.DAL
 		}
 
 		/// <summary>
-		/// Updates all the subscriptions for a specific user.
-		/// Returns -1 if SaveChanges() is delayed by unit of work.
-		/// </summary>
-		public int UpdateSubscriptionsForUser(string userId)
-		{
-			IEnumerable<Subscription> subs = ReadSubscriptionsForUser(userId);
-			return UpdateSubscriptions(subs);
-		}
-
-		/// <summary>
-		/// Updates all the subscriptions for a specific item.
-		/// Returns -1 if SaveChanges() is delayed by unit of work.
-		/// </summary>
-		public int UpdateSubscriptionsForItem(int itemId)
-		{
-			IEnumerable<Subscription> subs = ReadSubscriptionsForItem(itemId);
-			return UpdateSubscriptions(subs);
-		}
-
-		/// <summary>
 		/// Deletes a subscription from the database.
 		/// Returns -1 if SaveChanges() is delayed by unit of work.
 		/// </summary>
@@ -200,36 +168,6 @@ namespace BAR.DAL
 			Subscription subscripton = ReadSubscriptionWithAlerts(subId);
 			if (subscripton != null) ctx.Subscriptions.Remove(subscripton);
 			return ctx.SaveChanges();
-		}
-
-		/// <summary>
-		/// Deletes a list of subscriptions from the database.
-		/// Returns -1 if SaveChanges() is delayed by unit of work.
-		/// </summary>
-		public int DeleteSubscriptions(IEnumerable<Subscription> subs)
-		{
-			foreach (Subscription sub in subs) ctx.Subscriptions.Remove(sub);
-			return ctx.SaveChanges();
-		}
-
-		/// <summary>
-		/// Deletes all the subscriptons for a specific user.
-		/// Returns -1 if SaveChanges() is delayed by unit of work.
-		/// </summary>
-		public int DeleteSubscriptionsForUser(string userId)
-		{
-			IEnumerable<Subscription> subs = ReadSubscriptionsForUser(userId);
-			return DeleteSubscriptions(subs);
-		}
-
-		/// <summary>
-		/// Deletes all the subscriptons for a specific item.
-		/// Returns -1 if SaveChanges() is delayed by unit of work.
-		/// </summary>
-		public int DeleteSubscriptionsForItem(int itemId)
-		{
-			IEnumerable<Subscription> subs = ReadSubscriptionsForItem(itemId);
-			return DeleteSubscriptions(subs);
 		}
 
 		/// <summary>
@@ -255,8 +193,8 @@ namespace BAR.DAL
 		{
 			return ctx.Alerts.OfType<SubAlert>()
 							 .Include(alert => alert.Subscription)
-               .Include(alert => alert.Subscription.SubscribedUser)
-               .Include(alert => alert.Subscription.SubscribedItem)
+							 .Include(alert => alert.Subscription.SubscribedUser)
+							 .Include(alert => alert.Subscription.SubscribedItem)
 							 .AsEnumerable();
 		}
 

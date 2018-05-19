@@ -1,11 +1,9 @@
 ﻿using BAR.BL.Domain.Users;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using BAR.DAL.EF;
 using System.Data.Entity;
 using Microsoft.AspNet.Identity.EntityFramework;
-using System.Data.Entity.Migrations;
 
 namespace BAR.DAL
 {
@@ -94,45 +92,6 @@ namespace BAR.DAL
 		}
 
 		/// <summary>
-		/// Deletes a given user from the database
-		/// Returns -1 if SaveChanges() is delayed by unit of work.
-		/// 
-		/// WARNING
-		/// if user is deleted, all the acitivies of a specific user also need to be deleted.
-		/// Dashboard of the user also needs to be deleted.
-		/// 
-		/// NOTE
-		/// Normally we don't delete a user, we disable his account but keep the information.
-		/// </summary>
-		public int DeleteUser(string userId)
-		{
-			User userToDelete = ReadUser(userId);
-			if (userToDelete != null) ctx.Users.Remove(userToDelete);
-			return ctx.SaveChanges();
-		}
-
-		/// <summary>
-		/// Deletes a given list of users
-		/// Returns -1 if SaveChanges() is delayed by unit of work.
-		/// 
-		/// WARNING
-		/// if users are deleted, all the acitivies of the users also need to be deleted.
-		/// Dashboard of the users also needs to be deleted.
-		/// 
-		/// NOTE
-		/// Normally we don't delete a users, we disable his account but keep the information
-		/// </summary>
-		public int DeleteUsers(IEnumerable<string> userIds)
-		{
-			foreach (string userid in userIds)
-			{
-				User userToDelete = ReadUser(userid);
-				if (userToDelete != null) ctx.Users.Remove(userToDelete);
-			}
-			return ctx.SaveChanges();
-		}
-
-		/// <summary>
 		/// Reads all areas.
 		/// </summary>
 		public IEnumerable<Area> ReadAllAreas()
@@ -161,7 +120,8 @@ namespace BAR.DAL
 		/// </summary>
 		public IdentityRole ReadRole(string userId)
 		{
-			return ctx.Roles.Where(role => role.Users.Any(user => user.UserId.Equals(userId))).FirstOrDefault();
+			return ctx.Roles.Where(role => role.Users.Any(user => user.UserId.Equals(userId)))
+							.SingleOrDefault();
 		}
 
 		/// <summary>
