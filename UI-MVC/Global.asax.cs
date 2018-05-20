@@ -2,16 +2,21 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Timers;
 using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using System.Web.Configuration;
 using AutoMapper;
 using BAR.BL.Domain.Items;
 using BAR.BL.Domain.Widgets;
 using BAR.UI.MVC.Models;
 using BAR.BL.Domain.Core;
 using Microsoft.Owin.BuilderProperties;
+using BAR.UI.MVC.Controllers.api;
+using BAR.BL.Managers;
+using BAR.BL.Domain.Data;
 
 namespace BAR.UI.MVC
 {
@@ -72,7 +77,7 @@ namespace BAR.UI.MVC
           .ForMember(p => p.GraphValues, opt => opt.MapFrom(src => src.GraphValues))
           .ForMember(p => p.KeyValue, opt => opt.MapFrom(src => src.KeyValue))
           .ForMember(p => p.WidgetId, opt => opt.MapFrom(src => src.Widget.WidgetId));
-     
+
           //Mapping customization
 				cfg.CreateMap<Customization, CustomizationViewModel>()
 					.ForMember(m => m.CustomizationId, opt => opt.MapFrom(src => src.CustomizationId))
@@ -111,6 +116,26 @@ namespace BAR.UI.MVC
           .ForMember(w => w.DashboardId, opt => opt.MapFrom(src => src.Dashboard.DashboardId))
           .ForMember(w => w.ItemIds, opt => opt.MapFrom(src => src.Items.Select(i => i.ItemId).ToList()));
       });
+      double TimerIntervalInMilliseconds = 60000;
+      Timer timer = new Timer(TimerIntervalInMilliseconds);
+      timer.Enabled = true;
+      timer.Elapsed += new ElapsedEventHandler(timerElapsed);
+      timer.Start();
     }
+    private void timerElapsed(object sender, ElapsedEventArgs e)
+    {
+        DataManager dataManager = new DataManager();
+        List<DataSource> datasources = dataManager.GetAllDataSources().ToList();
+        for (int i=0;i<datasources.Count();i++)
+            {
+                DataSource datasource = datasources[i];
+                if (datasource.LastTimeChecked.AddMinutes(datasource.Interval) < DateTime.Now)
+                {
+                    DataApiController controller = new DataApiController();
+                    controller.Synchronize(i);
+                    dataManager.ChangeLastTimeChecked(i, DateTime.Now);
+                }
+            }
+    }      
   }
 }

@@ -27,37 +27,37 @@ namespace BAR.UI.MVC.Controllers.api
 			return StatusCode(HttpStatusCode.NotAcceptable);
 		}
 
-		/// <summary>
-		/// Remove source.
-		/// </summary>
-		[HttpPost]
-		[Route("api/SuperAdmin/RemoveSource")]
-		public IHttpActionResult RemoveSource([FromBody]string id)
-		{
-			if (!string.IsNullOrEmpty(id))
-			{
-				IDataManager dataManager = new DataManager();
+        /// <summary>
+        /// Remove source.
+        /// </summary>
+        [HttpPost]
+        [Route("api/SuperAdmin/RemoveSource")]
+        public IHttpActionResult RemoveSource([FromBody]string id)
+        {
+            if (!string.IsNullOrEmpty(id))
+            {
+                IDataManager dataManager = new DataManager();
 
-				dataManager.RemoveSource(id);
-				return StatusCode(HttpStatusCode.NoContent);
-			}
-			return StatusCode(HttpStatusCode.NotAcceptable);
-		}
+                dataManager.RemoveSource(id);
+                return StatusCode(HttpStatusCode.NoContent);
+            }
+            return StatusCode(HttpStatusCode.NotAcceptable);
+        }
 
-		/// <summary>
-		/// Add source.
-		/// </summary>
-		[HttpPost]
-		[Route("api/SuperAdmin/AddSubplatform")]
-		public IHttpActionResult AddSubplatform([FromBody]SubPlatformManagement model)
-		{
-			ISubplatformManager subplatformManager = new SubplatformManager();
-			var subplatform = subplatformManager.AddSubplatform(model.Name);
-			if (subplatform != null)
-			{
-				return Ok(subplatform.SubPlatformId);
-			}
-			return StatusCode(HttpStatusCode.NotAcceptable);
-		}
-	}
+        /// <summary>
+        /// Add source.
+        /// </summary>
+        [HttpPost]
+        [Route("api/SuperAdmin/AddSubplatform")]
+        public IHttpActionResult AddSubplatform([FromBody]SubPlatformManagement model)
+        {
+            ISubplatformManager subplatformManager = new SubplatformManager();
+            var subplatform = subplatformManager.AddSubplatform(model.Name);
+            if (subplatform != null)
+            {
+                return Ok(subplatform.SubPlatformId);
+            }
+            return StatusCode(HttpStatusCode.NotAcceptable);
+        }
+    }
 }

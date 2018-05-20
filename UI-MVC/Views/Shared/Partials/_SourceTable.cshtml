@@ -3,9 +3,11 @@
 <table id="datatable-responsive" class="table" cellspacing="10px" width="100%">
 
     <colgroup>
-        <col style="width: 30%">
-        <col style="width: 60%">
-        <col style="width: 10%">
+        <col style="width: 15%">
+        <col style="width: 45%">
+        <col style="width: 11%">
+        <col style="width: 21%">
+        <col style="width: 8%">
     </colgroup>
     <thead>
         <tr>
@@ -16,23 +18,48 @@
                 @Resources.Site
             </th>
             <th>
+                @Resources.Interval
             </th>
+            <th>
+                @Resources.Synchronize
+            </th>
+            <th>
+                @Resources.Remove
+            </th>
+
         </tr>
     </thead>
     <tbody>
-        @for (int i = 0; i < Model.Sources.Count(); i++)
+        @for (int i = 0; i < Model.DataSources.Count(); i++)
         {
-        <tr>
-            <td>
-                @Model.Sources.ElementAt(i).Name
-            </td>
-            <td>
-                @Model.Sources.ElementAt(i).Site
-            </td>
-            <td>
-                <btn class="sourceChange btn btn-danger btn-xs" id="@Convert.ToString(Model.Sources.ElementAt(i).SourceId)" title="@Resources.RemoveSource">@Resources.Remove</btn>
-            </td>
-        </tr>
+            <tr>
+                <td>
+                    @Model.DataSources.ElementAt(i).Name
+                </td>
+                <td>
+                    @Model.DataSources.ElementAt(i).Url
+                </td>
+                <td>
+                    @Html.TextBoxFor(m => m.DataSources.ElementAt(i).Interval, new {id = Model.DataSources.ElementAt(i).DataSourceId, @class = "changeItem form-control", interval = Model.Interval, name = "Interval" })
+                    <span style="display:none">@Model.DataSources.ElementAt(i).Interval</span>
+                </td>
+                <td>
+                    <btn class="synchronise btn btn-danger btn-xs" data-source-id="@Model.DataSources.ElementAt(i).DataSourceId" title="@Resources.Synchronize">@Resources.Synchronize</btn>
+                </td>
+                <td>
+                    <a class="removeItem btn btn-danger btn-xs" data-source-id="@Model.DataSources.ElementAt(i).DataSourceId" title=@Resources.RemoveItem>@Resources.Remove</a>
+                </td>
+
+            </tr>
         }
     </tbody>
 </table>
+@section CustomJS{
+
+<script type="text/javascript">
+        $("#synchronizeForm").on("click", function (event) {
+            submitForm($(this), event, $("#synchronizeMessage"));
+    });
+             
+</script>
+}

@@ -1,12 +1,16 @@
 ﻿using BAR.BL.Domain.Data;
+using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace BAR.DAL
 {
 	public interface IDataRepository
 	{
 		//Read
-		Information ReadInformationWitlAllInfo(int informationId);		
+		Information ReadInformationWitlAllInfo(int informationId);
 		IEnumerable<Information> ReadAllInformations();
 		IEnumerable<Information> ReadInformationsForItemid(int itemId);
 		IEnumerable<Information> ReadInformationsWithAllInfoForItem(int itemId);
@@ -19,6 +23,8 @@ namespace BAR.DAL
 		SynchronizeAudit ReadAudit(int auditId);
         DataSource ReadDataSource(int dataSourceId);
 		IEnumerable<DataSource> ReadAllDataSources();
+		int ReadInterval(int dataSourceId);
+        string ReadStartTime(int dataSourceId);
 
 		//Create
 		int CreateInformations(IEnumerable<Information> infos);
@@ -29,7 +35,10 @@ namespace BAR.DAL
 		//Update
 		int UpdateInformations(IEnumerable<Information> infos);
 		int UpdateAudit(SynchronizeAudit audit);
-        int UpdateDataSource(DataSource dataSource);
+        int UpdateDataSource(DataSource dataSource, int interval);
+        int UpdateInterval(int dataSourceId, int interval);
+        int UpdateStartTime(int dataSourceId, string setTime);
+        int UpdateLastTimeChecked(int dataSourceId, DateTime date);
 
 		//Delete
 		int DeleteSource(Source source);

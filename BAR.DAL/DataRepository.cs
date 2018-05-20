@@ -3,6 +3,7 @@ using BAR.DAL.EF;
 using System.Collections.Generic;
 using System.Linq;
 using System.Data.Entity;
+using System;
 
 namespace BAR.DAL
 {
@@ -228,6 +229,7 @@ namespace BAR.DAL
 		/// </summary>
         public int CreateDataSource(DataSource dataSource)
         {
+            dataSource.LastTimeChecked = DateTime.Now;
             ctx.DataSources.Add(dataSource);
             return ctx.SaveChanges();
         }
@@ -235,8 +237,9 @@ namespace BAR.DAL
 		/// <summary>
 		/// Updates a datasource in the database
 		/// </summary>
-        public int UpdateDataSource(DataSource dataSource)
+        public int UpdateDataSource(DataSource dataSource, int interval)
         {
+            ctx.DataSources.Find(dataSource.DataSourceId).Interval = interval;
             ctx.Entry(dataSource).State = EntityState.Modified;
             return ctx.SaveChanges();
         }
@@ -247,6 +250,44 @@ namespace BAR.DAL
         public int DeleteDataSource(DataSource dataSource)
         {
             ctx.DataSources.Remove(dataSource);
+            return ctx.SaveChanges();
+        }
+        /// <summary>
+		/// Returns the timer interval of the datasource.
+		/// </summary>
+        public int ReadInterval(int dataSourceId)
+        {
+            return ctx.DataSources.Find(dataSourceId).Interval;
+        }
+        /// <summary>
+		/// Returns the set time of the timer.
+		/// </summary>
+        public string ReadStartTime(int dataSourceId)
+        {
+            return ctx.DataSources.Find(dataSourceId).SetTime;
+        }
+        /// <summary>
+		/// Updates the timer interval of the datasource.
+		/// </summary>
+        public int UpdateInterval(int dataSourceId, int interval)
+        {
+            ctx.DataSources.Find(dataSourceId).Interval = interval;
+            return ctx.SaveChanges();
+        }
+        /// <summary>
+		/// Updates the set time of the timer from the datasource.
+		/// </summary>
+        public int UpdateStartTime(int dataSourceId, string setTime)
+        {
+            ctx.DataSources.Find(dataSourceId).SetTime = setTime;
+            return ctx.SaveChanges();
+        }
+        /// <summary>
+		/// Updates the last time checked from the datasource.
+		/// </summary>
+        public int UpdateLastTimeChecked(int dataSourceId, DateTime date)
+        {
+            ctx.DataSources.Find(dataSourceId).LastTimeChecked = date;
             return ctx.SaveChanges();
         }
     }

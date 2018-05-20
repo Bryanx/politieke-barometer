@@ -13,6 +13,7 @@ using System.Text;
 using System;
 using Microsoft.AspNet.Identity.Owin;
 using AutoMapper;
+using BAR.BL.Domain.Data;
 using System.IO;
 
 namespace BAR.UI.MVC.Controllers
@@ -36,13 +37,14 @@ namespace BAR.UI.MVC.Controllers
 		{
 			userManager = new UserManager();
       dataManager = new DataManager();
+            IEnumerable<DataSource> datasources = dataManager.GetAllDataSources();
       //Assembling the view
       return View(new GeneralManagementViewModel
       {
         PageTitle = Resources.GeneralManagement,
         User = userManager.GetUser(User.Identity.GetUserId()),
-        Sources = dataManager.GetAllSources()
-			});
+         DataSources = datasources
+      });
 		}
 
 		/// <summary>

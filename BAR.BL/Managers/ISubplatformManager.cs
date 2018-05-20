@@ -15,7 +15,7 @@ namespace BAR.BL.Managers
 		SubPlatform AddSubplatform(string name);
 
 		SubPlatform ChangeSubplatform(SubPlatform platform);
-		
+
 		void RemoveSubplatform(int platformId);
 
 		//Customizations

@@ -762,4 +762,10 @@
   <data name="Town" xml:space="preserve">
     <value>Village</value>
   </data>
+  <data name="Interrval" xml:space="preserve">
+    <value>Intervalle</value>
+  </data>
+  <data name="SetTime" xml:space="preserve">
+    <value>Commencer à synchroniser</value>
+  </data>
 </root>

@@ -149,7 +149,7 @@ namespace BAR.UI.MVC.App_GlobalResources {
                 return ResourceManager.GetString("AddItem", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Add source.
         /// </summary>
@@ -500,7 +500,7 @@ namespace BAR.UI.MVC.App_GlobalResources {
                 return ResourceManager.GetString("CreateItem", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Creation date.
         /// </summary>
@@ -626,7 +626,7 @@ namespace BAR.UI.MVC.App_GlobalResources {
                 return ResourceManager.GetString("EducationDistributionOfMentions", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Email.
         /// </summary>
@@ -689,7 +689,7 @@ namespace BAR.UI.MVC.App_GlobalResources {
                 return ResourceManager.GetString("Extrovert", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Failed.
         /// </summary>
@@ -797,7 +797,7 @@ namespace BAR.UI.MVC.App_GlobalResources {
                 return ResourceManager.GetString("HigherEducated", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Home.
         /// </summary>
@@ -860,7 +860,7 @@ namespace BAR.UI.MVC.App_GlobalResources {
                 return ResourceManager.GetString("ImportThemes", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to In.
         /// </summary>
@@ -905,7 +905,7 @@ namespace BAR.UI.MVC.App_GlobalResources {
                 return ResourceManager.GetString("Introvert", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to is now available!.
         /// </summary>
@@ -915,6 +915,15 @@ namespace BAR.UI.MVC.App_GlobalResources {
             }
         }
         
+        /// <summary>
+        ///   Looks up a localized string similar to Interval (min).
+        /// </summary>
+        public static string Interval {
+            get {
+                return ResourceManager.GetString("Interval", resourceCulture);
+            }
+        }
+
         /// <summary>
         ///   Looks up a localized string similar to is now trending!.
         /// </summary>
@@ -950,7 +959,7 @@ namespace BAR.UI.MVC.App_GlobalResources {
                 return ResourceManager.GetString("Keywords", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Languages.
         /// </summary>
@@ -1076,7 +1085,7 @@ namespace BAR.UI.MVC.App_GlobalResources {
                 return ResourceManager.GetString("LowerEducated", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Male.
         /// </summary>
@@ -1121,7 +1130,7 @@ namespace BAR.UI.MVC.App_GlobalResources {
                 return ResourceManager.GetString("Message", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Minutes.
         /// </summary>
@@ -1157,7 +1166,7 @@ namespace BAR.UI.MVC.App_GlobalResources {
                 return ResourceManager.GetString("MoreInfoAbout", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to More people from.
         /// </summary>
@@ -1382,7 +1391,7 @@ namespace BAR.UI.MVC.App_GlobalResources {
                 return ResourceManager.GetString("PeopleWhoMention", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Personality.
         /// </summary>
@@ -1391,7 +1400,7 @@ namespace BAR.UI.MVC.App_GlobalResources {
                 return ResourceManager.GetString("PersonalityDistributionOfMentions", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Photo.
         /// </summary>
@@ -1562,7 +1571,7 @@ namespace BAR.UI.MVC.App_GlobalResources {
                 return ResourceManager.GetString("Required", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Reset.
         /// </summary>
@@ -1634,7 +1643,7 @@ namespace BAR.UI.MVC.App_GlobalResources {
                 return ResourceManager.GetString("SelectOrganisation", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Select your city..
         /// </summary>
@@ -1661,7 +1670,7 @@ namespace BAR.UI.MVC.App_GlobalResources {
                 return ResourceManager.GetString("Send", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Send public Android message.
         /// </summary>
@@ -1670,10 +1679,19 @@ namespace BAR.UI.MVC.App_GlobalResources {
                 return ResourceManager.GetString("SendPublicAndroidMessage", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Settings.
         /// </summary>
+        /// <summary>
+        ///   Looks up a localized string similar to Start synchronise (hh:mm).
+        /// </summary>
+        public static string SetTime {
+            get {
+                return ResourceManager.GetString("SetTime", resourceCulture);
+            }
+        }
+
         public static string Settings {
             get {
                 return ResourceManager.GetString("Settings", resourceCulture);
@@ -1877,7 +1895,7 @@ namespace BAR.UI.MVC.App_GlobalResources {
                 return ResourceManager.GetString("Town", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Trending.
         /// </summary>
@@ -1940,7 +1958,7 @@ namespace BAR.UI.MVC.App_GlobalResources {
                 return ResourceManager.GetString("Website", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Weekly review.
         /// </summary>
