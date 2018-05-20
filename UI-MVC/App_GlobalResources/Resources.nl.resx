@@ -144,6 +144,9 @@
   <data name="AddAChart" xml:space="preserve">
     <value>Voeg een grafiek toe.</value>
   </data>
+  <data name="AddItem" xml:space="preserve">
+    <value>Voeg item toe</value>
+  </data>
   <data name="AddSource" xml:space="preserve">
     <value>Bron toevoegen</value>
   </data>
@@ -163,7 +166,7 @@
     <value>Leeftijd</value>
   </data>
   <data name="AgeDistributionOfMentions" xml:space="preserve">
-    <value>Leeftijdsverdeling van vermeldingen</value>
+    <value>Leeftijd</value>
   </data>
   <data name="Ago" xml:space="preserve">
     <value>Geleden</value>
@@ -252,6 +255,9 @@
   <data name="Contact" xml:space="preserve">
     <value>Contact</value>
   </data>
+  <data name="CreateItem" xml:space="preserve">
+    <value>Creeer Item</value>
+  </data>
   <data name="CreationDate" xml:space="preserve">
     <value>Aanmaak datum</value>
   </data>
@@ -334,7 +340,7 @@
     <value>Geslacht</value>
   </data>
   <data name="GenderDistributionOfMentions" xml:space="preserve">
-    <value>Geslachtsverdeling van vermeldingen</value>
+    <value>Geslacht</value>
   </data>
   <data name="GraphType" xml:space="preserve">
     <value>Grafiek type</value>
@@ -356,6 +362,9 @@
   </data>
   <data name="ImportContent" xml:space="preserve">
     <value>Content importeren</value>
+  </data>
+  <data name="ImportThemes" xml:space="preserve">
+    <value>Importeer themas</value>
   </data>
   <data name="InNumberOfMentions" xml:space="preserve">
     <value>In aantal vermeldingen.</value>
@@ -380,6 +389,9 @@
   </data>
   <data name="JustNow" xml:space="preserve">
     <value>Zojuist</value>
+  </data>
+  <data name="Keywords" xml:space="preserve">
+    <value>Kernwoorden</value>
   </data>
   <data name="Languages" xml:space="preserve">
     <value>Talen</value>
@@ -561,6 +573,9 @@
   <data name="RemoveSource" xml:space="preserve">
     <value>Bron verwijderen</value>
   </data>
+  <data name="Required" xml:space="preserve">
+    <value>Verplicht</value>
+  </data>
   <data name="Reset" xml:space="preserve">
     <value>Reset</value>
   </data>
@@ -581,6 +596,9 @@
   </data>
   <data name="SearchbarPlaceholder" xml:space="preserve">
     <value>Zoek naar politici, partijen of thema's.</value>
+  </data>
+  <data name="SelectOrganisation" xml:space="preserve">
+    <value>Selecteer de bijbehorende organisatie</value>
   </data>
   <data name="SelectYourCity" xml:space="preserve">
     <value>Selecteer je woonplaats</value>
@@ -669,6 +687,9 @@
   <data name="UserManagement" xml:space="preserve">
     <value>Gebruikers beheren</value>
   </data>
+  <data name="Website" xml:space="preserve">
+    <value>Website</value>
+  </data>
   <data name="WeeklyReview" xml:space="preserve">
     <value>Weekly review</value>
   </data>
@@ -701,7 +722,7 @@
   </data>
   <data name="IsNowAvailable" xml:space="preserve">
     <value>is nu beschikbaar!</value>
-   </data>
+  </data>
   <data name="BackToHome" xml:space="preserve">
     <value>Ga naar startpagina</value>
   </data>
@@ -710,5 +731,41 @@
   </data>
   <data name="SomethingWentWrong" xml:space="preserve">
     <value>Er is iets misgegaan...</value>
+  </data>
+  <data name="Extrovert" xml:space="preserve">
+    <value>Extravert</value>
+  </data>
+  <data name="HigherEducated" xml:space="preserve">
+    <value>Hoger opgeleid</value>
+  </data>
+  <data name="Introvert" xml:space="preserve">
+    <value>Introvert</value>
+  </data>
+  <data name="LowerEducated" xml:space="preserve">
+    <value>Lager opgeleid</value>
+  </data>
+  <data name="EducationDistributionOfMentions" xml:space="preserve">
+    <value>Opleiding</value>
+  </data>
+  <data name="MoreInfoAbout" xml:space="preserve">
+    <value>Meer informatie over</value>
+  </data>
+  <data name="PeopleWhoMention" xml:space="preserve">
+    <value>Mensen die praten over</value>
+  </data>
+  <data name="PersonalityDistributionOfMentions" xml:space="preserve">
+    <value>Persoonlijkheid</value>
+  </data>
+  <data name="Message" xml:space="preserve">
+    <value>Bericht</value>
+  </data>
+  <data name="Send" xml:space="preserve">
+    <value>Verzenden</value>
+  </data>
+  <data name="SendPublicAndroidMessage" xml:space="preserve">
+    <value>Verzend een publiek Android bericht</value>
+  </data>
+  <data name="Town" xml:space="preserve">
+    <value>Gemeente</value>
   </data>
 </root>

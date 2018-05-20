@@ -12,7 +12,11 @@ nav {
   transition: 1.2s ease-in-out; }
 
 .widget_summary {
-  padding: 20px 40px; }
+
+  padding: 20px 40px;
+  border-right: 1px solid rgba(0, 0, 0, 0.1); }
+  .widget_summary:last-of-type {
+    border: 0 !important; }
 
 #twitter-feed-1, #twitter-feed-2, #twitter-feed-3 {
   max-height: 400px;
@@ -144,10 +148,12 @@ body .container.body .main-header-container-parent {
     color: #73879c; }
 
 nav .nav-container .navbar-right li i {
-  color: white; }
+  color: white;
+  text-shadow: 0 1px 5px #0f8ec4; }
 
 nav .nav-container .navbar-right .dropdown-menu li i {
-  color: var(--font-color); }
+  color: var(--font-color);
+  text-shadow: none !important; }
 
 nav .nav-container .navbar-right li > a.signup {
   color: white;
@@ -178,5 +184,8 @@ nav .searchbar {
   max-height: 400px;
   overflow-y: auto;
   margin: 20px 0; }
+
+.x_nested_panel {
+  box-shadow: none !important; }
 
 /*# sourceMappingURL=homepage.css.map */

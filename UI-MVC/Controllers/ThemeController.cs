@@ -62,9 +62,6 @@ namespace BAR.UI.MVC.Controllers
 		[SubPlatformDataCheck]
 		public ActionResult Details(int id)
 		{
-			//** TESTING **//
-			new WidgetManager().GetWidgetsForWeeklyReview();
-
 			itemManager = new ItemManager();
 			userManager = new UserManager();
 			subManager = new SubscriptionManager();
@@ -84,6 +81,9 @@ namespace BAR.UI.MVC.Controllers
 			themeViewModel.Theme = Mapper.Map(theme, new ItemDTO());
 			themeViewModel.Subscribed = subbedItem != null;
 			themeViewModel.Keywords = theme.Keywords.ToList();
+
+			//Log visit activity
+			new SubplatformManager().LogActivity(ActivityType.VisitActitiy);
 
 			//Assembling the view
 			return View(themeViewModel);

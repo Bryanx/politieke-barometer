@@ -18,6 +18,7 @@ using Widget = BAR.BL.Domain.Widgets.Widget;
 using BAR.BL.Domain.Items;
 using BAR.BL.Domain.Users;
 using BAR.UI.MVC.App_GlobalResources;
+using BAR.UI.MVC.Attributes;
 
 
 namespace BAR.UI.MVC.Controllers.api
@@ -62,7 +63,7 @@ namespace BAR.UI.MVC.Controllers.api
 		{
 			widgetManager = new WidgetManager();
 
-			IEnumerable<Widget> widgets = widgetManager.GetWidgetsForItem(itemId);
+			IEnumerable<Widget> widgets = widgetManager.GetItemwidgetsForItem(itemId);
 			
 			if (widgets == null || widgets.Count() == 0) return StatusCode(HttpStatusCode.NoContent);
 
@@ -90,13 +91,25 @@ namespace BAR.UI.MVC.Controllers.api
 
 			if (keyValue == null) keyValue = widgetManager.GetWidgetWithAllData(widgetId)?.PropertyTags.FirstOrDefault()?.Name;
 			
-			IEnumerable<WidgetData> widgetDatas = widgets.FirstOrDefault(w => w.WidgetDatas.Any(wd => wd.KeyValue == keyValue)).WidgetDatas;
-			IEnumerable<WidgetDataDTO> widgetDataDtos = Mapper.Map(widgetDatas, new List<WidgetDataDTO>());
+			try
+			{
+				IEnumerable<WidgetData> widgetDatas = widgets.FirstOrDefault(w => w.WidgetDatas.Any(wd => wd.KeyValue == keyValue)).WidgetDatas;
+				IEnumerable<WidgetDataDTO> widgetDataDtos = Mapper.Map(widgetDatas, new List<WidgetDataDTO>());
+
+				//Get item name
+				widgetDataDtos.First().ItemName = itemManager.GetItem(itemId).Name;
+
+				return Ok(widgetDataDtos);
+			} catch (Exception e)
+			{
+				IEnumerable<WidgetData> widgetDatas = new List<WidgetData>();
+				IEnumerable<WidgetDataDTO> widgetDataDtos = Mapper.Map(widgetDatas, new List<WidgetDataDTO>());
+
+				return Ok(widgetDataDtos);
+			}
 			
-			//Get item name
-			widgetDataDtos.First().ItemName = itemManager.GetItem(itemId).Name;
 			
-			return Ok(widgetDataDtos);
+			
 		}
 
 		/// <summary>
@@ -181,7 +194,7 @@ namespace BAR.UI.MVC.Controllers.api
 		/// <summary>
 		/// Deletes a widget
 		/// </summary>
-		[System.Web.Http.HttpDelete]
+		[System.Web.Http.HttpPost]
 		[System.Web.Http.Route("api/Widget/Delete/{id}")]
 		public IHttpActionResult Delete(int id)
 		{
@@ -190,6 +203,33 @@ namespace BAR.UI.MVC.Controllers.api
 			if (widgetManager.GetWidget(id) == null) return NotFound();
 			widgetManager.RemoveWidget(id);
 			return StatusCode(HttpStatusCode.NoContent);
+		}
+		
+		/// <summary>
+		/// Gets weeklyReview
+		/// </summary>
+		[SubPlatformCheckAPI]
+		[System.Web.Http.HttpGet]
+		[System.Web.Http.Route("api/Widget/GetWeeklyReview/{id}")]
+		public IHttpActionResult GetWeeklyReview(string id)
+		{
+			//Determine subplatform
+			object _customObject = null;
+			int suplatformID = -1;
+			if (Request.Properties.TryGetValue("SubPlatformID", out _customObject))
+			{
+				suplatformID = (int)_customObject;
+			}
+
+			widgetManager = new WidgetManager();
+			IEnumerable<Widget> widgets;
+			if (id.Equals("0")){
+				widgets = widgetManager.GetWidgetsForWeeklyReview(suplatformID, null);
+			} else {
+				widgets = widgetManager.GetWidgetsForWeeklyReview(suplatformID, id);
+			}
+			
+			return Ok(Mapper.Map(widgets, new List<UserWidgetDTO>()));
 		}
 	}
 }

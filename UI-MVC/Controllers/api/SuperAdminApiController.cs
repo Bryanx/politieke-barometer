@@ -9,23 +9,23 @@ using System.Web.Http;
 
 namespace BAR.UI.MVC.Controllers.api
 {
-    public class SuperAdminApiController : ApiController
-    {
-        /// <summary>
-        /// Add source.
-        /// </summary>
-        [HttpPost]
-        [Route("api/SuperAdmin/AddSource")]
-        public IHttpActionResult Addsource([FromBody]SourceManagement model)
-        {
-            IDataManager dataManager = new DataManager();
-            var source = dataManager.AddSource(model.Name, model.Site);
-            if (source != null)
-            {
-                return Ok(source.SourceId);
-            }
-            return StatusCode(HttpStatusCode.NotAcceptable);
-        }
+	public class SuperAdminApiController : ApiController
+	{
+		/// <summary>
+		/// Add source.
+		/// </summary>
+		[HttpPost]
+		[Route("api/SuperAdmin/AddSource")]
+		public IHttpActionResult Addsource([FromBody]GeneralManagementViewModel model)
+		{
+			IDataManager dataManager = new DataManager();
+			var source = dataManager.AddSource(model.Name, model.Site);
+			if (source != null)
+			{
+				return Ok(source.SourceId);
+			}
+			return StatusCode(HttpStatusCode.NotAcceptable);
+		}
 
         /// <summary>
         /// Remove source.

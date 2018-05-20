@@ -24,6 +24,9 @@ using System.Web.Script.Serialization;
 using System.Linq;
 using System.Net;
 using AutoMapper;
+using Newtonsoft.Json;
+using System.Text;
+using BAR.UI.MVC.Helpers;
 
 namespace webapi.Controllers
 {
@@ -101,7 +104,7 @@ namespace webapi.Controllers
       {
         userManager.ChangeBasicInfoAndroid(User.Identity.GetUserId(), model.FirstName, model.LastName);
       }
-      
+
       return Ok();
     }
 
@@ -198,6 +201,32 @@ namespace webapi.Controllers
       return Ok(alerts);
     }
 
+    // POST api/Android/DeviceToken
+    [HostAuthentication(DefaultAuthenticationTypes.ExternalBearer)]
+    [HttpPost]
+    [Route("DeviceToken")]
+    public IHttpActionResult PostDeviceToken([FromBody]DeviceTokenViewModel model)
+    {
+      if (!ModelState.IsValid)
+      {
+        return BadRequest(ModelState);
+      }
+
+      userManager = new UserManager();
+      userManager.ChangeDeviceToken(User.Identity.GetUserId(), model.DeviceToken);
+      return Ok();
+    }
+
+    // POST api/Android/SendPublicNotification
+    [HttpPost]
+    [Route("SendPublicNotification")]
+    [Authorize(Roles = "Admin, SuperAdmin")]
+    public async Task<IHttpActionResult> SendPublicNotificationAsync([FromBody] GeneralManagementViewModel model)
+    {
+      await new ControllerHelpers().SendPushNotificationAsync("/topics/general", model.NotificationMessageViewModel.Title, model.NotificationMessageViewModel.Message);
+      return Ok();
+    }
+
     #region Helpers
 
     private IHttpActionResult GetErrorResult(IdentityResult result)
@@ -219,7 +248,6 @@ namespace webapi.Controllers
 
         if (ModelState.IsValid)
         {
-          // No ModelState errors are available to send, so just return an empty BadRequest.
           return BadRequest();
         }
 

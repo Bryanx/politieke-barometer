@@ -1,0 +1,27 @@
+﻿@model BAR.BL.Domain.Items.Item
+
+<div class="card">
+    <div class="card-user">
+        <img src='/Content/build/images/picture.jpg' class="img-circle card-image"/>
+    </div>
+    <div class="card-name">
+        @Model.Name
+    </div>
+    <div class="card-trending">
+        <p>
+            @Resources.Trending
+        </p>
+        <p>
+            @Model.TrendingPercentage%
+        </p>
+    </div>
+    <div class="card-nom">
+        <p>
+            @Resources.NumberOfMentions
+        </p>
+        <p>
+            @Model.NumberOfMentions
+        </p>
+    </div>
+    <a class="card-link" href="/@Model.ItemType.ToString()/Details/@Model.ItemId" ></a>
+</div>

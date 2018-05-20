@@ -3,9 +3,6 @@ using BAR.BL.Domain.Widgets;
 using System;
 using System.Collections.Generic;
 using BAR.BL.Domain.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BAR.BL.Managers
 {
@@ -16,46 +13,38 @@ namespace BAR.BL.Managers
 		Widget GetWidgetWithAllItems(int widgetId);
 		Widget GetWidgetWithAllData(int widgetId);
 		Widget GetGeoLocationWidget();
-		IEnumerable<UserWidget> GetWidgetsForDashboard(int dashboardId);
-		IEnumerable<Widget> GetAllWidgetsWithAllItems();
-		IEnumerable<Widget> GetAllWidgetsWithAllData();
-		IEnumerable<Widget> GetWidgetsForItem(int itemId);
+		IEnumerable<Widget> GetItemwidgetsForItem(int itemId);
 		IEnumerable<Widget> GetAllWidgetsWithAllDataForItem(int itemId);
 		IEnumerable<Widget> GetWidgetsForWeeklyReview(int platformId, string userId = null);
+		IEnumerable<Widget> GetWidgetsForActivities(int platformId);
+		IEnumerable<UserWidget> GetWidgetsForDashboard(int dashboardId);
 
 		Widget AddWidget(WidgetType widgetType, string title, int rowNbr, int colNbr, List<PropertyTag> proptags,
 			DateTime? timestamp = null, GraphType? graphType = null, int rowspan = 1, int colspan = 1, int dashboardId = -1, List<WidgetData> datas = null, List<Item> items = null);
-		Widget AddItemToWidget(int widgetId, int itemId);
 
-		Widget ChangeWidgetDetails(int widgetId, int rowNbr, int colNbr, List<int> itemIds, int rowspan = 1, int colspan = 1,
-			GraphType graphType = (GraphType) 0);
+		Widget ChangeWidgetDetails(int widgetId, int rowNbr, int colNbr, List<int> itemIds, int rowspan = 1, int colspan = 1, GraphType graphType = 0);
 		Widget ChangeWidgetTitle(int widgetId, string title);
 		Widget ChangeWidget(Widget widget);
-		IEnumerable<Widget> ChangeWidgets(IEnumerable<Widget> widgets);
+		IEnumerable<Widget> ChangeWidgetActities(IEnumerable<Widget> widgets, int platformId);
 
 		void RemoveWidget(int widgetId);
-
-		void GenerateDataForMwidgets();
-
+	
+		void GenerateDataForPersonsAndThemes();
+		void GenerateDataForOrganisations();
 		void MoveWidgetToDashBoard(int widgetId, GraphType graphType, IEnumerable<int> itemIds, string userId);
 		
 		//dashboards
-		Dashboard GetDashboard(int dashboardId);
 		Dashboard GetDashboard(string userId);
 		Dashboard GetDashboardWithAllDataForUserId(string userId);
 
 		Dashboard AddDashboard(string userId, DashboardType dashType = DashboardType.Private);
 
-		void RemoveDashboard(int dashboardId);
-
 		//WidgetDatas
 		IEnumerable<WidgetData> GetAllWidgetDatas();
 		IEnumerable<WidgetData> GetWidgetDatasForItemId(int itemId);
 		IEnumerable<WidgetData> GetWidgetDatasForKeyvalue(string value);
-	
-		WidgetData AddWidgetData(WidgetData widgetData);
 
-		WidgetData ChangeWidgetData(WidgetData widgetData);
+		WidgetData AddWidgetData(WidgetData widgetData);
 
 		void RemoveWidgetDatas(IEnumerable<WidgetData> datas);
 	}

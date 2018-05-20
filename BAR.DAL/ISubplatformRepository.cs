@@ -1,11 +1,6 @@
-﻿using BAR.BL.Domain;
-using BAR.BL.Domain.Core;
+﻿using BAR.BL.Domain.Core;
 using BAR.BL.Domain.Users;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BAR.DAL
 {
@@ -14,7 +9,7 @@ namespace BAR.DAL
 		//Read
 		SubPlatform ReadSubPlatform(int platformId);
 		SubPlatform ReadSubPlatform(string platformId);
-		SubPlatform GetSubplatformWithAllinfo(int platformId);
+		SubPlatform ReadSubplatformWithAllinfo(int platformId);
 		SubPlatform ReadSubplatformWithCustomization(int platformId);		
 		IEnumerable<SubPlatform> ReadSubPlatforms();
 		Customization ReadCustomisation(int platformId);

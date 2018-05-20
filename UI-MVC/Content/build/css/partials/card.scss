@@ -1,0 +1,133 @@
+$primary-color: rgba(137, 137, 137, 0.2);
+$primary-color-darker: rgba(137, 137, 137, 0.7);
+$font-color: #246b94;
+
+.small-card > .card {
+  height: 80px;
+  font-size: 13px;
+  
+  .card-user {
+   display: none;
+  }
+  .card-name {
+    left: 10px;
+    font-size: 13px;
+    letter-spacing: 0.8px;
+  }
+
+  .card-person-organisation {
+    right: 10px;
+  }
+
+  .card-trending {
+    top: 45%;
+    left: 10px;
+    line-height: 4px;
+    font-weight: normal;
+    :first-child {
+      border-bottom: 3px solid $primary-color-darker;
+    }
+  }
+
+  .card-nom {
+    top: 45%;
+    left: auto;
+    right: 10px;
+    line-height: 4px;
+    font-weight: normal;
+    :first-child {
+      border-bottom: 3px solid $primary-color-darker;
+    }
+  }
+}
+
+
+
+
+.card {
+  position: relative;
+  height: 100px;
+  margin-top: 20px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+
+  color: $font-color;
+  box-shadow: 0 0 3px 0 rgba(0,0,0,0.2);
+  background: linear-gradient(180deg, white 70%, $primary-color 30%);
+  font-weight: normal;
+}
+.card-user {
+  position: absolute;
+  left: 10px;
+  top: 30px;
+  width: 50px;
+  border-radius: 50%;
+  .person-image {
+    height: 80px;
+    width: 80px;
+    object-fit: cover;
+  }
+}
+
+.card-name {
+  position: absolute;
+  top: 10px;
+  left: 100px;
+  font-size: 18px;
+  letter-spacing: 1.5px;
+}
+
+.card-person-organisation {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
+.card-trending {
+  position: absolute;
+  top: 49%;
+  left: 100px;
+  line-height: 8px;
+  :first-child {
+    border-bottom: 3px solid $primary-color-darker;
+    line-height: 19px;
+  }
+  :last-child{
+    text-align: center;
+    font-weight: bold;
+  }
+}
+
+.card-nom {
+  position: absolute;
+  top: 49%;
+  left: 180px;
+  line-height: 8px;
+  :first-child {
+    border-bottom: 3px solid $primary-color-darker;
+    line-height: 19px;
+  }
+  :last-child{
+    text-align: center;
+    font-weight: bold;
+  }
+}
+
+.card-link {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  width: 100%;
+  z-index: 2;
+  background: black;
+  opacity: 0;
+}
+.card-link:hover {
+  opacity: 0.05;
+}
+
+.card-image {
+  width: 50px;
+  height: 50px;
+}

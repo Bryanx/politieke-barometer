@@ -1,5 +1,4 @@
 ﻿using BAR.DAL.EF;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using BAR.BL.Domain.Widgets;
@@ -43,22 +42,13 @@ namespace BAR.DAL
 		}
 
 		/// <summary>
-		/// Gives back a dashboard object for a 
-		/// specific dashboard id.
-		/// </summary>
-		public Dashboard ReadDashboard(int dashboardId)
-		{
-			return ctx.Dashboards.Find(dashboardId);
-		}
-
-		/// <summary>
 		/// Gives back a dashboard object with all the widgets
 		/// for a specific dashboard id.
 		/// </summary>
 		public Dashboard ReadDashboardWithWidgets(int dashboardId)
 		{
 			return ctx.Dashboards.Include(dash => dash.Widgets)
-                 .Include(dash => dash.Widgets.Select(widget => widget.Items))
+								 .Include(dash => dash.Widgets.Select(widget => widget.Items))
 								 .Where(dash => dash.DashboardId == dashboardId)
 								 .SingleOrDefault();
 		}
@@ -71,16 +61,6 @@ namespace BAR.DAL
 		{
 			return ctx.Dashboards.Include(dash => dash.Widgets)
 								 .Where(dash => dash.User.Id == userId)
-								 .SingleOrDefault();
-		}
-
-		/// <summary>
-		/// Gives back the general dashboard.
-		/// </summary>
-		public Dashboard ReadGeneralDashboard()
-		{
-			return ctx.Dashboards.Include(dash => dash.Widgets)
-								 .Where(dash => dash.DashboardType == DashboardType.General)
 								 .SingleOrDefault();
 		}
 
@@ -129,26 +109,6 @@ namespace BAR.DAL
 		}
 
 		/// <summary>
-		/// Updates a specific dashboard.
-		/// Returns -1 if SaveChanges() is delayed by unit of work.
-		/// </summary>
-		public int UpdateDashboard(Dashboard dashboard)
-		{
-			ctx.Entry(dashboard).State = EntityState.Modified;
-			return ctx.SaveChanges();
-		}
-
-		/// <summary>
-		/// Updates a list of dashboards.
-		/// Returns -1 if SaveChanges() is delayed by unit of work.
-		/// </summary>
-		public int UpdateDashboards(IEnumerable<Dashboard> dashboards)
-		{
-			foreach (Dashboard dashboard in dashboards) ctx.Entry(dashboard).State = EntityState.Modified;
-			return ctx.SaveChanges();
-		}
-
-		/// <summary>
 		/// Updates a specific widget.
 		/// Returns -1 if SaveChanges() is delayed by unit of work.
 		/// </summary>
@@ -165,37 +125,6 @@ namespace BAR.DAL
 		public int UpdateWidgets(IEnumerable<Widget> widgets)
 		{
 			foreach (Widget widget in widgets) ctx.Entry(widget).State = EntityState.Modified;
-			return ctx.SaveChanges();
-		}
-
-		/// <summary>
-		/// Deletes a specific dashboard.
-		/// Returns -1 if SaveChanges() is delayed by unit of work.
-		/// 
-		/// WARNING
-		/// All the widgets of the dashboard also need the be deleted.
-		/// </summary>
-		public int DeleteDashboard(int dashboardId)
-		{
-			Dashboard dashboardToDelete = ReadDashboardWithWidgets(dashboardId);
-			if (dashboardToDelete != null) ctx.Dashboards.Remove(dashboardToDelete);
-			return ctx.SaveChanges();
-		}
-
-		/// <summary>
-		/// Deletes a list of dashboards.
-		/// Returns -1 if SaveChanges() is delayed by unit of work.
-		/// 
-		/// WARNING
-		/// All the widgets of the dashboards also need the be deleted.
-		/// </summary>
-		public int DeleteDashboards(IEnumerable<int> dashboardIds)
-		{
-			foreach (int id in dashboardIds)
-			{
-				Dashboard dashboardToDelete = ReadDashboardWithWidgets(id);
-				if (dashboardToDelete != null) ctx.Dashboards.Remove(dashboardToDelete);
-			}
 			return ctx.SaveChanges();
 		}
 
@@ -230,26 +159,16 @@ namespace BAR.DAL
 		}
 
 		/// <summary>
-		/// Deletes a list of widgets.
-		/// Returns -1 if SaveChanges() is delayed by unit of work.
-		/// </summary>
-		public int DeleteWidgets(IEnumerable<Widget> widgets)
-		{
-			foreach (UserWidget widget in widgets) ctx.Widgets.Remove(widget);
-			return ctx.SaveChanges();
-		}
-
-		/// <summary>
 		/// Reads a widget with all the data of that specific widget.
 		/// </summary>
 		public Widget ReadWidgetWithAllData(int widgetId)
 		{
 			return ctx.Widgets.Include(widget => widget.Items)
-					   .Include(widget => widget.PropertyTags)
-					   .Include(widget => widget.WidgetDatas)
-					   .Include(widget => widget.WidgetDatas.Select(widgetData => widgetData.GraphValues))
-					   .Where(widget => widget.WidgetId == widgetId)
-					   .SingleOrDefault();
+							  .Include(widget => widget.PropertyTags)
+							  .Include(widget => widget.WidgetDatas)
+							  .Include(widget => widget.WidgetDatas.Select(widgetData => widgetData.GraphValues))
+							  .Where(widget => widget.WidgetId == widgetId)
+							  .SingleOrDefault();
 		}
 
 		/// <summary>
@@ -258,10 +177,10 @@ namespace BAR.DAL
 		public IEnumerable<Widget> ReadAllWidgetsWithAllData()
 		{
 			return ctx.Widgets.Include(widget => widget.Items)
-					   .Include(widget => widget.PropertyTags)
-					   .Include(widget => widget.WidgetDatas)
-					   .Include(widget => widget.WidgetDatas.Select(widgetData => widgetData.GraphValues))
-					   .ToList();
+							  .Include(widget => widget.PropertyTags)
+							  .Include(widget => widget.WidgetDatas)
+							  .Include(widget => widget.WidgetDatas.Select(widgetData => widgetData.GraphValues))
+							  .AsEnumerable();
 		}
 
 		/// <summary>
@@ -288,12 +207,12 @@ namespace BAR.DAL
 		/// </summary>
 		public IEnumerable<Widget> ReadWidgetsWithAllDataForItem(int itemId)
 		{
-			Item itemToReturn =  ctx.Items.Include(item => item.ItemWidgets)
-										  .Include(item => item.ItemWidgets.Select(widget => widget.PropertyTags))
-										  .Include(item => item.ItemWidgets.Select(widget => widget.WidgetDatas))
-									      .Include(item => item.ItemWidgets.Select(widget => widget.WidgetDatas.Select(data => data.GraphValues)))
-										  .Where(item => item.ItemId == itemId).SingleOrDefault();
-			return itemToReturn.ItemWidgets.AsEnumerable();
+			return ctx.Widgets.Include(widget => widget.Items)
+							  .Include(widget => widget.WidgetDatas)
+							  .Include(widget => widget.WidgetDatas.Select(data => data.GraphValues))
+							  .Include(widget => widget.PropertyTags)
+							  .Where(widget => widget.Items.Any(item => item.ItemId == itemId))
+							  .AsEnumerable();
 		}
 
 		/// <summary>
@@ -338,7 +257,8 @@ namespace BAR.DAL
 								 .Include(dash => dash.Widgets)
 								 .Include(dash => dash.Widgets.Select(widget => widget.WidgetDatas))
 								 .Include(dash => dash.Widgets.Select(widget => widget.WidgetDatas.Select(data => data.GraphValues)))
-								 .Where(dash => dash.User.Id.ToLower().Equals(userId.ToLower())).SingleOrDefault();
+								 .Where(dash => dash.User.Id.ToLower().Equals(userId.ToLower()))
+								 .SingleOrDefault();
 		}
 
 		/// <summary>
@@ -346,9 +266,7 @@ namespace BAR.DAL
 		/// </summary>
 		public int DeleteWidgetDatas(IEnumerable<WidgetData> datas)
 		{
-			if (datas != null && datas.Count() > 0) {
-				ctx.WidgetDatas.RemoveRange(datas);
-			}
+			if (datas != null && datas.Count() > 0) ctx.WidgetDatas.RemoveRange(datas);
 			return ctx.SaveChanges();
 		}
 
@@ -357,7 +275,8 @@ namespace BAR.DAL
 		/// </summary>
 		public IEnumerable<WidgetData> ReadWidgetDatasForKeyvalue(string value)
 		{
-			return ctx.WidgetDatas.Where(data => data.KeyValue.ToLower().Equals(value.ToLower())).AsEnumerable();
+			return ctx.WidgetDatas.Where(data => data.KeyValue.ToLower().Equals(value.ToLower()))
+								  .AsEnumerable();
 		}
 
 		/// <summary>
@@ -369,7 +288,33 @@ namespace BAR.DAL
 							  .Include(widget => widget.WidgetDatas)
 							  .Include(widget => widget.WidgetDatas.Select(data => data.GraphValues))
 							  .Where(widget => widget.PropertyTags.Any(tag => tag.Name.ToLower().Equals("geo")))
-							  .First();				
+							  .SingleOrDefault();				
+		}
+
+		/// <summary>
+		/// Gives back all the widgets for a specific type
+		/// </summary>
+		public IEnumerable<Widget> ReadWidgetsForItemtype(ItemType type)
+		{
+			return ctx.Widgets.Include(widget => widget.Items)
+							  .Include(widget => widget.WidgetDatas)
+					          .Include(widget => widget.WidgetDatas.Select(data => data.GraphValues))
+							  .Include(widget => widget.Items)
+							  .Include(widget => widget.PropertyTags)
+					          .Where(widget => widget.Items.Any(item => item.ItemType == type))
+					          .AsEnumerable();
+		}
+
+		/// <summary>
+		/// Gives back all the activity widgets
+		/// </summary>
+		public IEnumerable<Widget> ReadActivityWidgets()
+		{
+			return ctx.Widgets.Include(widget => widget.PropertyTags)
+							  .Include(widget => widget.WidgetDatas)
+							  .Include(widget => widget.WidgetDatas.Select(data => data.GraphValues))
+							  .Where(widget => widget.PropertyTags.Any(tag => tag.Name.ToLower().Contains("activity")))
+							  .AsEnumerable();
 		}
 	}
 }

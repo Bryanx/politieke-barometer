@@ -11,6 +11,7 @@ using BAR.UI.MVC.App_GlobalResources;
 using BAR.UI.MVC.Helpers;
 using BAR.UI.MVC.Models;
 using Microsoft.AspNet.Identity;
+using WebGrease.Css.Extensions;
 using static BAR.UI.MVC.Models.ItemViewModels;
 
 namespace BAR.UI.MVC.Controllers
@@ -34,12 +35,46 @@ namespace BAR.UI.MVC.Controllers
       userManager = new UserManager();
       itemManager = new ItemManager();
 
+      // -------- Making WeeklyReviewModel --------
+      // Getting trending items
+      List<Item> weeklyTrendings = itemManager.GetMostTrendingItems(4, true).ToList();
+      
+      // Getting PersonViewModels
+      List<PersonViewModel> weeklyPersonViewModels = new List<PersonViewModel>();
+      itemManager.GetMostTrendingItemsForType(ItemType.Person, 4, true).ForEach(item => weeklyPersonViewModels.Add(Mapper.Map(item, new PersonViewModel())));
+      for (int i = 0; i < weeklyPersonViewModels.Count; i++)
+      {
+        weeklyPersonViewModels[i].Item = Mapper.Map(weeklyTrendings[i], new ItemDTO());
+        weeklyPersonViewModels[i].SocialMediaNames = itemManager.GetPersonWithDetails(weeklyTrendings[i].ItemId).SocialMediaNames;
+
+      }
+
+      // ------- Making TopTrending -------
+      // Getting trending items
+      List<Item> trendings = itemManager.GetMostTrendingItems(3).ToList();
+
+      // Getting personViewmodels
+      List<PersonViewModel> trendingPersonViewModels = new List<PersonViewModel>();
+      itemManager.GetMostTrendingItemsForType(ItemType.Person, 3).ForEach(item => trendingPersonViewModels.Add(Mapper.Map(item, new PersonViewModel())));
+      for (int i = 0; i < trendingPersonViewModels.Count; i++)
+      {
+        trendingPersonViewModels[i].Item = Mapper.Map(trendings[i], new ItemDTO());
+        trendingPersonViewModels[i].SocialMediaNames = itemManager.GetPersonWithDetails(trendings[i].ItemId).SocialMediaNames;
+      }
+
       //Assembling the view
-      return View(new ItemViewModel()
+      return View(new ItemViewModel
       {
         PageTitle = INDEX_PAGE_TITLE,
         User = User.Identity.IsAuthenticated ? userManager.GetUser(User.Identity.GetUserId()) : null,
-        Items = Mapper.Map<IList<Item>, IList<ItemDTO>>(itemManager.GetAllItems().ToList())
+        Items = Mapper.Map<IList<Item>, IList<ItemDTO>>(itemManager.GetAllItems().ToList()),
+        TopTrendingPersonViewModels = trendingPersonViewModels,
+        TopTrendingitems = trendings,
+        WeeklyReviewModel = new WeeklyReviewModel
+        {
+          WeeklyPersonViewModels = weeklyPersonViewModels,
+          WeeklyItems = weeklyTrendings
+        }
       });
     }
     /// <summary>

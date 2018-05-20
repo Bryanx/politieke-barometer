@@ -125,17 +125,26 @@ namespace BAR.UI.MVC.Controllers
 
 		private List<PersonViewModel> GetPeopleFromSameOrg(int itemId) 
 		{
-			int orgId = itemManager.GetPersonWithDetails(itemId).Organisation.ItemId;
-			List<Person> persons = itemManager.GetAllPersons()
-				.Where(p => p.Organisation.ItemId == orgId)
-				.Where(p => p.ItemId != itemId) //except the current person
-				.OrderByDescending(p => p.NumberOfMentions)
-				.Take(6).ToList();
-			List<PersonViewModel> personViewModels = Mapper.Map(persons, new List<PersonViewModel>());
-			for (int i = 0; i < persons.Count; i++) {
-				personViewModels[i].Item = Mapper.Map(persons[i], new ItemDTO());
+			try
+			{
+				int orgId = itemManager.GetPersonWithDetails(itemId).Organisation.ItemId;
+				List<Person> persons = itemManager.GetAllPersons()
+					.Where(p => p.Organisation.ItemId == orgId)
+					.Where(p => p.ItemId != itemId) //except the current person
+					.OrderByDescending(p => p.NumberOfMentions)
+					.Take(6).ToList();
+				List<PersonViewModel> personViewModels = Mapper.Map(persons, new List<PersonViewModel>());
+				for (int i = 0; i < persons.Count; i++)
+				{
+					personViewModels[i].Item = Mapper.Map(persons[i], new ItemDTO());
+				}
+				return personViewModels;
+			} catch(Exception e)
+			{
+				List<PersonViewModel> personViewModels = Mapper.Map(new List<Person>(), new List<PersonViewModel>());
+				return personViewModels;
 			}
-			return personViewModels;
+			
 		}
 
 		/// <summary>

@@ -14,6 +14,7 @@ using System;
 using Microsoft.AspNet.Identity.Owin;
 using AutoMapper;
 using BAR.BL.Domain.Data;
+using System.IO;
 
 namespace BAR.UI.MVC.Controllers
 {
@@ -38,7 +39,7 @@ namespace BAR.UI.MVC.Controllers
       dataManager = new DataManager();
             IEnumerable<DataSource> datasources = dataManager.GetAllDataSources();
       //Assembling the view
-      return View(new SourceManagement
+      return View(new GeneralManagementViewModel
       {
         PageTitle = Resources.GeneralManagement,
         User = userManager.GetUser(User.Identity.GetUserId()),
@@ -64,6 +65,19 @@ namespace BAR.UI.MVC.Controllers
 				User = userManager.GetUser(User.Identity.GetUserId()),
 				SubPlatforms = subplatforms
 			});
+		}
+
+		public void ExportToCSV()
+		{
+			StringWriter sw = new StringWriter();
+
+			sw.WriteLine("\"FirstName\",\"LastName\"");
+
+			Response.ClearContent();
+			Response.ClearContent();
+			Response.AddHeader("content-disposition", "attachment;filename=Exported_Users.csv");
+			Response.ContentType = "text/csv";
+
 		}
 	}
 }

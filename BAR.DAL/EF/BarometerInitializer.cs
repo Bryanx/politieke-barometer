@@ -2,6 +2,7 @@ using BAR.BL.Domain.Core;
 using BAR.BL.Domain.Data;
 using BAR.BL.Domain.Items;
 using BAR.BL.Domain.Users;
+using BAR.BL.Domain.Widgets;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -23,59 +24,78 @@ namespace BAR.DAL.EF
 			GenerateSources(ctx);
 			GenerateProperties(ctx);
 			GenerateAreas(ctx);
-			//GenerateThemes(ctx);
+			GenerateActivityWidgets(ctx);
 		}
 
 		/// <summary>
-		/// Generates test data themes
+		/// Generates widgets for displaying the activities that happen on the website
 		/// </summary>
-		/// <param name="ctx"></param>
-		private void GenerateThemes(BarometerDbContext ctx)
+		private void GenerateActivityWidgets(BarometerDbContext ctx)
 		{
-			Theme t1 = new Theme()
+			List<PropertyTag> tags1 = new List<PropertyTag>();
+			PropertyTag tag1 = new PropertyTag()
 			{
-				Name = "Onderwijs",
-				CreationDate = DateTime.Now,
-				Baseline = 0,
-				TrendingPercentage = 0,
-				SubPlatform = ctx.SubPlatforms.Where(sp => sp.Name.Equals("politiek")).SingleOrDefault(),
-				NumberOfFollowers = 0,
-				NumberOfMentions = 0,
-				LastUpdatedInfo = DateTime.Now,
-				ItemType = ItemType.Theme
+				Name = "activity login"
 			};
+			tags1.Add(tag1);
 
-			Theme t2 = new Theme()
+			Widget loginWidget = new ItemWidget()
 			{
-				Name = "Immigranten",
-				CreationDate = DateTime.Now,
-				Baseline = 0,
-				TrendingPercentage = 0,
-				SubPlatform = ctx.SubPlatforms.Where(sp => sp.Name.Equals("politiek")).SingleOrDefault(),
-				NumberOfFollowers = 0,
-				NumberOfMentions = 0,
-				LastUpdatedInfo = DateTime.Now,
-				ItemType = ItemType.Theme
+				Title = "Login activities",
+				RowNumber = 1,
+				ColumnNumber = 1,
+				RowSpan = 12,
+				ColumnSpan = 6,
+				WidgetDatas = new List<WidgetData>(),
+				WidgetType = WidgetType.GraphType,
+				GraphType = GraphType.LineChart,
+				PropertyTags = tags1
 			};
+			ctx.Widgets.Add(loginWidget);
 
-			Theme t3 = new Theme()
+			List<PropertyTag> tags2 = new List<PropertyTag>();
+			PropertyTag tag2 = new PropertyTag()
 			{
-				Name = "Pensioenen",
-				CreationDate = DateTime.Now,
-				Baseline = 0,
-				TrendingPercentage = 0,
-				SubPlatform = ctx.SubPlatforms.Where(sp => sp.Name.Equals("politiek")).SingleOrDefault(),
-				NumberOfFollowers = 0,
-				NumberOfMentions = 0,
-				LastUpdatedInfo = DateTime.Now,
-				ItemType = ItemType.Theme
+				Name = "activity register"
 			};
+			tags1.Add(tag2);
 
-			ctx.Items.Add(t1);
-			ctx.Items.Add(t2);
-			ctx.Items.Add(t3);
+			Widget registerWidget = new ItemWidget()
+			{
+				Title = "Register activities",
+				RowNumber = 1,
+				ColumnNumber = 1,
+				RowSpan = 12,
+				ColumnSpan = 6,
+				WidgetDatas = new List<WidgetData>(),
+				WidgetType = WidgetType.GraphType,
+				GraphType = GraphType.LineChart,
+				PropertyTags = tags2
+			};
+			ctx.Widgets.Add(registerWidget);
+
+			List<PropertyTag> tags3= new List<PropertyTag>();
+			PropertyTag tag3 = new PropertyTag()
+			{
+				Name = "activity visit"
+			};
+			tags1.Add(tag3);
+
+			Widget visitWidget = new ItemWidget()
+			{
+				Title = "Visit activities",
+				RowNumber = 1,
+				ColumnNumber = 1,
+				RowSpan = 12,
+				ColumnSpan = 6,
+				WidgetDatas = new List<WidgetData>(),
+				WidgetType = WidgetType.GraphType,
+				GraphType = GraphType.LineChart,
+				PropertyTags = tags3
+			};
+			ctx.Widgets.Add(visitWidget);
+
 			ctx.SaveChanges();
-
 		}
 
 		/// <summary>

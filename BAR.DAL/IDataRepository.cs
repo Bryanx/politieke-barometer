@@ -10,12 +10,10 @@ namespace BAR.DAL
 	public interface IDataRepository
 	{
 		//Read
-		int ReadNumberInfo(int itemId, DateTime since);
-		Information ReadInformation(int informationid);
 		Information ReadInformationWitlAllInfo(int informationId);
-		IEnumerable<Information> ReadInformationsWithAllInfoForItem(int itemId);
 		IEnumerable<Information> ReadAllInformations();
 		IEnumerable<Information> ReadInformationsForItemid(int itemId);
+		IEnumerable<Information> ReadInformationsWithAllInfoForItem(int itemId);
 		Property ReadProperty(string propertyName);
 		List<Property> ReadAllProperties();
 		Source ReadSource(string sourceName);
@@ -23,19 +21,18 @@ namespace BAR.DAL
 		List<Source> ReadAllSources();
 		SynchronizeAudit ReadLastAudit();
 		SynchronizeAudit ReadAudit(int auditId);
-        IEnumerable<DataSource> ReadAllDataSources();
         DataSource ReadDataSource(int dataSourceId);
-        int ReadInterval(int dataSourceId);
+		IEnumerable<DataSource> ReadAllDataSources();
+		int ReadInterval(int dataSourceId);
         string ReadStartTime(int dataSourceId);
 
-        //Create
-        int CreateInformations(IEnumerable<Information> infos);
+		//Create
+		int CreateInformations(IEnumerable<Information> infos);
 		int CreateAudit(SynchronizeAudit audit);
 		int CreateSource(Source source);
         int CreateDataSource(DataSource dataSource);
 
 		//Update
-		int UpdateInformation(Information info);
 		int UpdateInformations(IEnumerable<Information> infos);
 		int UpdateAudit(SynchronizeAudit audit);
         int UpdateDataSource(DataSource dataSource, int interval);
@@ -43,9 +40,7 @@ namespace BAR.DAL
         int UpdateStartTime(int dataSourceId, string setTime);
         int UpdateLastTimeChecked(int dataSourceId, DateTime date);
 
-        //Delete
-        int DeleteInformation(int infoId);
-		int DeleteInformations(IEnumerable<int> infoIds);
+		//Delete
 		int DeleteSource(Source source);
         int DeleteDataSource(DataSource dataSource);
     }

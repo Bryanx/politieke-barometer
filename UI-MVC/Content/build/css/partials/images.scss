@@ -92,7 +92,13 @@
   }
 }
 
-.avatar-view, .related-img-view {
+.avatar-view {
+  object-fit: cover;
+  width: 100% !important;
+  @include border-radius;
+}
+
+.related-img-view {
   object-fit: cover;
   width: 90% !important;
   @include border-radius;

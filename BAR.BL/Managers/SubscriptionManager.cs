@@ -1,10 +1,10 @@
-﻿using System;
-using BAR.DAL;
+﻿using BAR.BL.Domain.Items;
 using BAR.BL.Domain.Users;
+using BAR.DAL;
+using Microsoft.AspNet.Identity;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using BAR.BL.Domain.Items;
-using Microsoft.AspNet.Identity;
 
 namespace BAR.BL.Managers
 {
@@ -24,6 +24,16 @@ namespace BAR.BL.Managers
 		public SubscriptionManager(UnitOfWorkManager uowManager = null)
 		{
 			this.uowManager = uowManager;
+		}
+
+		/// <summary>
+		/// Determines if the repo needs a unit of work
+		/// if the unitOfWorkManager is present.
+		/// </summary>
+		private void InitRepo()
+		{
+			if (uowManager == null) subRepo = new SubscriptionRepository();
+			else subRepo = new SubscriptionRepository(uowManager.UnitOfWork);
 		}
 
 		/// <summary>
@@ -64,10 +74,11 @@ namespace BAR.BL.Managers
 				Alerts = new List<SubAlert>()
 			};
 			item.NumberOfFollowers++;
+			
+			//Save changes to the database
 			subRepo.CreateSubscription(subscription);
 			uowManager.Save();
 			uowManager = null;
-
 			return subscription;
 		}
 
@@ -93,7 +104,8 @@ namespace BAR.BL.Managers
 						Subscription = sub,
 						AlertType = AlertType.Trending,
 						TimeStamp = DateTime.Now,
-						IsRead = false
+						IsRead = false,
+						IsSend = false
 					});
 					subsToUpdate.Add(sub);
 				}
@@ -125,8 +137,8 @@ namespace BAR.BL.Managers
 					Body = "<strong>" + item.Name + " is nu trending</strong> met  " + item.NumberOfMentions + " vermeldingen!</br>" +
 					"Ga nu naar de website en ontdenk waarom het item trending is!"
 				};
-				new EmailService().SendAsync(message);
-			}		
+				new EmailService().Send(message);
+			}
 		}
 
 		/// <summary>
@@ -141,7 +153,7 @@ namespace BAR.BL.Managers
 		/// <summary>
 		/// Retrieves a single alert for a specific user.
 		/// </summary>
-		public Alert GetAlert(int alertId) 
+		public Alert GetAlert(int alertId)
 		{
 			InitRepo();
 			return subRepo.ReadAlert(alertId);
@@ -150,7 +162,7 @@ namespace BAR.BL.Managers
 		/// <summary>
 		/// Changed the isRead property of an Alert to true.
 		/// </summary>
-		public Alert ChangeAlertToRead(int alertId) 
+		public Alert ChangeAlertToRead(int alertId)
 		{
 			InitRepo();
 
@@ -184,18 +196,19 @@ namespace BAR.BL.Managers
 		/// <summary>
 		/// Gets the subscription of a specific user, with items.
 		/// </summary>
-		public IEnumerable<Subscription> GetSubscriptionsWithItemsForUser(string userId) 
+		public IEnumerable<Subscription> GetSubscriptionsWithItemsForUser(string userId)
 		{
 			InitRepo();
 			return subRepo.ReadSubscriptionsWithItemsForUser(userId).AsEnumerable();
 		}
-		
+
 		/// <summary>
 		/// Gets the subscribed items for a specific user.
 		/// </summary>
-		public IEnumerable<Item> GetSubscribedItemsForUser(string userId) {
+		public IEnumerable<Item> GetSubscribedItemsForUser(string userId)
+		{
 			InitRepo();
-			return GetSubscriptionsWithItemsForUser(userId).Select(s => s.SubscribedItem).AsEnumerable();
+			return GetSubscriptionsWithItemsForUser(userId).Select(sub => sub.SubscribedItem).AsEnumerable();
 		}
 
 		/// <summary>
@@ -210,11 +223,19 @@ namespace BAR.BL.Managers
 		/// <summary>
 		/// Toggles a subscription on wether the subscription exists or not.
 		/// </summary>
-		public void ToggleSubscription(string userId, int itemId) {
+		public void ToggleSubscription(string userId, int itemId)
+		{
+			//Get subs
 			IEnumerable<Subscription> subs = GetSubscriptionsWithItemsForUser(userId);
-			if (subs.Select(s => s.SubscribedItem.ItemId).Contains(itemId)) {
-				RemoveSubscription(subs.First(s => s.SubscribedItem.ItemId == itemId).SubscriptionId);
-			} else {
+			if (subs == null || subs.Count() == 0) return;
+
+			//Toggle subs
+			if (subs.Select(sub => sub.SubscribedItem.ItemId).Contains(itemId))
+			{
+				RemoveSubscription(subs.First(sub => sub.SubscribedItem.ItemId == itemId).SubscriptionId);
+			}
+			else
+			{
 				CreateSubscription(userId, itemId);
 			}
 		}
@@ -252,18 +273,7 @@ namespace BAR.BL.Managers
 
 			//Update database
 			subRepo.UpdateSubScription(subToUpdate);
-
 			return subToUpdate;
-		}
-
-		/// <summary>
-		/// Determines if the repo needs a unit of work
-		/// if the unitOfWorkManager is present.
-		/// </summary>
-		private void InitRepo()
-		{
-			if (uowManager == null) subRepo = new SubscriptionRepository();
-			else subRepo = new SubscriptionRepository(uowManager.UnitOfWork);
 		}
 
 		/// <summary>
@@ -317,7 +327,16 @@ namespace BAR.BL.Managers
 		public IEnumerable<UserAlert> GetUserAlerts(string userId)
 		{
 			InitRepo();
-      return subRepo.ReadUserAlerts(userId);
+			return subRepo.ReadUserAlerts(userId);
+		}
+
+		/// <summary>
+		/// Gets all the sub alerts that where not yet sent to the
+		/// android devices
+		/// </summary>
+		public IEnumerable<SubAlert> GetUnsendedSubAlerts()
+		{
+			return GetAllSubAlerts().Where(alert => !alert.IsSend);
 		}
 	}
 }
