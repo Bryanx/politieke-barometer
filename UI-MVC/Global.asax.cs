@@ -32,8 +32,8 @@ namespace BAR.UI.MVC
 				  .ForMember(m => m.ItemId, opt => opt.MapFrom(src => src.ItemId))
 				  .ForMember(m => m.Name, opt => opt.MapFrom(src => src.Name))
 				  .ForMember(m => m.NumberOfMentions, opt => opt.MapFrom(src => src.NumberOfMentions))
-				  .ForMember(m => m.SentimentNegative, opt => opt.MapFrom(src => src.SentimentNegative))
-				  .ForMember(m => m.SentimentPositive, opt => opt.MapFrom(src => src.SentimentPositve))
+				  .ForMember(m => m.SentimentNegative, opt => opt.MapFrom(src => Math.Floor(src.SentimentNegative)))
+				  .ForMember(m => m.SentimentPositive, opt => opt.MapFrom(src => Math.Floor(src.SentimentPositve)))
 				  .ForMember(m => m.TrendingPercentage, opt => opt.MapFrom(src => Math.Floor(src.TrendingPercentage)));
 
 				//Mapping UserWidgets
@@ -131,12 +131,15 @@ namespace BAR.UI.MVC
 			});
 
 			double TimerIntervalInMilliseconds = 60000;
-			Timer timer = new Timer(TimerIntervalInMilliseconds);
-			timer.Enabled = true;
-			timer.Elapsed += new ElapsedEventHandler(timerElapsed);
+			Timer timer = new Timer(TimerIntervalInMilliseconds)
+			{
+				Enabled = true
+			};
+			timer.Elapsed += new ElapsedEventHandler(TimerElapsed);
 			timer.Start();
 		}
-		private void timerElapsed(object sender, ElapsedEventArgs e)
+
+		private void TimerElapsed(object sender, ElapsedEventArgs e)
 		{
 			DataManager dataManager = new DataManager();
 			List<DataSource> datasources = dataManager.GetAllDataSources().ToList();
