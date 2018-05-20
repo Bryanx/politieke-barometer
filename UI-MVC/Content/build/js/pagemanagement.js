@@ -85,8 +85,8 @@ function putColor() {
     }, {});
     let data = {
         PrimaryColor: formdata.PrimaryColor,
-        PrimaryDarkerColor: FormData.primary_darker,
-        PrimaryDarkestColor: FormData.primary_darkest,
+        PrimaryDarkerColor: FormData.PrimaryDarkerColor,
+        PrimaryDarkestColor: FormData.PrimaryDarkestColor,
         SecondaryColor: formdata.SecondaryColor,
         SecondaryLighterColor: FormData.SecondaryLighterColor,
         SecondaryDarkerColor: FormData.SecondaryDarkerColor,
