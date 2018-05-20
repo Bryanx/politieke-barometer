@@ -2,7 +2,6 @@
 using BAR.BL.Domain.Items;
 using BAR.BL.Managers;
 using System;
-using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
 
@@ -14,10 +13,6 @@ namespace BAR.UI.MVC.Attributes
 		{
 			if (filterContext.ActionParameters.ContainsKey("id"))
 			{
-				//int id = (filterContext.ActionParameters["id"] as Int32?).GetValueOrDefault();
-				int id = 1;
-
-				//bool partOfSubplatform = IsItemInSubPlatform(id, GetSubDomain(HttpContext.Current.Request.Url));
 				bool partOfSubplatform =  true;
 
 				if (!partOfSubplatform)
@@ -33,21 +28,27 @@ namespace BAR.UI.MVC.Attributes
 			base.OnActionExecuting(filterContext);
 		}
 
+		/// <summary>
+		/// Determines if the itemId is in the correct subpltform
+		/// </summary>
 		private static bool IsItemInSubPlatform(int itemID, int subPlatformId)
 		{
-			ISubplatformManager subplatformManager = new SubplatformManager();
-			SubPlatform subplatform = subplatformManager.GetSubPlatform(subPlatformId);
+			//Get subplatform
+			SubPlatform subplatform = new SubplatformManager().GetSubPlatform(subPlatformId);
+			if (subplatform == null) return false;
 
-			IItemManager itemManager = new ItemManager();
-			Item item = itemManager.GetItemWithSubPlatform(itemID);
+			//Get item
+			Item item = new ItemManager().GetItemWithSubPlatform(itemID);
+			if (item == null) return false;
 
-			if(item.SubPlatform.SubPlatformId == subPlatformId)
-			{
-				return true;
-			}
-			return false;
+			//Do check
+			if(item.SubPlatform.SubPlatformId == subPlatformId) return true;	
+			else return false;
 		}
 
+		/// <summary>
+		/// Gives back the subdomain that you are currently on
+		/// </summary>
 		private static int GetSubDomain(Uri url)
 		{
 			string host = url.Host;
@@ -57,8 +58,7 @@ namespace BAR.UI.MVC.Attributes
 				string subdomain = host.Substring(0, index);
 				if (subdomain != "www")
 				{
-					ISubplatformManager subplatformManager = new SubplatformManager();
-					SubPlatform subplatform = subplatformManager.GetSubPlatform(subdomain);
+					SubPlatform subplatform = new SubplatformManager().GetSubPlatform(subdomain);
 					if (subplatform == null)
 					{
 						return -1;
