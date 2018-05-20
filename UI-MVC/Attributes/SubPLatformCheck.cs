@@ -1,9 +1,6 @@
 ﻿using BAR.BL.Domain.Core;
 using BAR.BL.Managers;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
 
@@ -13,10 +10,9 @@ namespace BAR.UI.MVC.Attributes
 	{
 		public override void OnActionExecuting(ActionExecutingContext filterContext)
 		{
-			//int subdomainID = GetSubDomain(HttpContext.Current.Request.Url);
-      int subdomainID = 1;
+			int subdomainID = 1;
 
-      base.OnActionExecuting(filterContext);
+			base.OnActionExecuting(filterContext);
 
 			if (subdomainID == -1)
 			{
@@ -25,13 +21,17 @@ namespace BAR.UI.MVC.Attributes
 					controller = "Overview",
 					action = "Index"
 				}));
-			} else
+			}
+			else
 			{
 				filterContext.RouteData.Values.Add("SubPlatformID", subdomainID);
 			}
-			
+
 		}
 
+		/// <summary>
+		/// Gives back the current subplatform id based on the url
+		/// </summary>
 		private static int GetSubDomain(Uri url)
 		{
 			string host = url.Host;
@@ -41,12 +41,12 @@ namespace BAR.UI.MVC.Attributes
 				string subdomain = host.Substring(0, index);
 				if (subdomain != "www")
 				{
-					ISubplatformManager subplatformManager = new SubplatformManager();
-					SubPlatform subplatform = subplatformManager.GetSubPlatform(subdomain);
-					if(subplatform == null)
+					SubPlatform subplatform = new SubplatformManager().GetSubPlatform(subdomain);
+					if (subplatform == null)
 					{
 						return -1;
-					} else
+					}
+					else
 					{
 						return subplatform.SubPlatformId;
 					}
