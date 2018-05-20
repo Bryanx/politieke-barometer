@@ -40,7 +40,7 @@
                     @Model.DataSources.ElementAt(i).Url
                 </td>
                 <td>
-                    @Html.TextBoxFor(m => m.DataSources.ElementAt(i).Interval, new { @class = "renameItem form-control", source_interval = Model.Interval })
+                    @Html.TextBoxFor(m => m.DataSources.ElementAt(i).Interval, new {id = Model.DataSources.ElementAt(i).DataSourceId, @class = "changeItem form-control", interval = Model.Interval, name = "Interval" })
                     <span style="display:none">@Model.DataSources.ElementAt(i).Interval</span>
                 </td>
                 <td>
@@ -59,6 +59,7 @@
 <script type="text/javascript">
         $("#synchronizeForm").on("click", function (event) {
             submitForm($(this), event, $("#synchronizeMessage"));
-        });
+    });
+             
 </script>
 }

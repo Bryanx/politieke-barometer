@@ -578,11 +578,11 @@ namespace BAR.BL.Managers
 			dataRepo.DeleteDataSource(dataSource);
 		}
 
-		public void ChangeDataSource(int dataSourceId)
+		public void ChangeDataSource(int dataSourceId, int interval)
 		{
 			InitRepo();
 			DataSource dataSource = dataRepo.ReadDataSource(dataSourceId);
-			dataRepo.UpdateDataSource(dataSource);
+			dataRepo.UpdateDataSource(dataSource, interval);
 		}
 
 		/// <summary>

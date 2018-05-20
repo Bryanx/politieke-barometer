@@ -283,8 +283,9 @@ namespace BAR.DAL
             return ctx.SaveChanges();
         }
 
-        public int UpdateDataSource(DataSource dataSource)
+        public int UpdateDataSource(DataSource dataSource, int interval)
         {
+            ctx.DataSources.Find(dataSource.DataSourceId).Interval = interval;
             ctx.Entry(dataSource).State = EntityState.Modified;
             return ctx.SaveChanges();
         }

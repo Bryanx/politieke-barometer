@@ -43,7 +43,7 @@ namespace BAR.BL.Managers
         IEnumerable<DataSource> GetAllDataSources();
         DataSource GetDataSource(int dataSourceId);
         void RemoveDataSource(int dataSourceId);
-        void ChangeDataSource(int dataSourceId);
+        void ChangeDataSource(int dataSourceId, int interval);
         int GetInterval(int dataSourceId);
         string GetStartTimer(int dataSourceId);
         int ChangeInterval(int dataSourceId, int interval);

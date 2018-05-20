@@ -38,7 +38,7 @@ namespace BAR.DAL
 		int UpdateInformation(Information info);
 		int UpdateInformations(IEnumerable<Information> infos);
 		int UpdateAudit(SynchronizeAudit audit);
-        int UpdateDataSource(DataSource dataSource);
+        int UpdateDataSource(DataSource dataSource, int interval);
         int UpdateInterval(int dataSourceId, int interval);
         int UpdateStartTime(int dataSourceId, string setTime);
         int UpdateLastTimeChecked(int dataSourceId, DateTime date);

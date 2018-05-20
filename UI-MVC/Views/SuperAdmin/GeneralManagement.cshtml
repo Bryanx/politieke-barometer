@@ -202,6 +202,19 @@
                     },
                     500);
             });
+         $(".changeItem").change(function() {
+                var $this = $(this);
+                var id = document.getElementsByClassName('changeItem')[0].id
+                var interval = document.getElementsByClassName('changeItem')[0].value;
+                $this.html("<i class='fa fa-circle-o-notch fa-spin'></i>");
+                wto = setTimeout(function() {
+                        $.ajax({
+                                type: 'POST',
+                                url: '/api/Data/ChangeDataSource/' + id + '/' + interval
+                            }).fail(() => { alert("@Resources.CannotRemoveItem") })
+                    },
+                    500);
+            });
 
          $(".synchronise").click(function() {
                 var $this = $(this);

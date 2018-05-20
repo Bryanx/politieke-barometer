@@ -118,6 +118,16 @@ namespace BAR.UI.MVC.Controllers.api
             dataManager.RemoveDataSource(Int32.Parse(dataSourceId));
             return StatusCode(HttpStatusCode.NoContent);
         }
+        [HttpPost]
+        [Route("api/Data/ChangeDataSource/{dataSourceId}/{interval}")]
+        public IHttpActionResult RenameItem(string dataSourceId, string interval)
+        {
+            int id = Convert.ToInt32(dataSourceId);
+            int intervalNumber = Convert.ToInt32(interval);
+            dataManager = new DataManager();
+            dataManager.ChangeDataSource(id, intervalNumber);
+            return StatusCode(HttpStatusCode.NoContent);
+        }
 
     }
 }
