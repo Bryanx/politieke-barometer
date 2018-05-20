@@ -20,6 +20,7 @@ using BAR.BL.Domain.Users;
 using BAR.UI.MVC.App_GlobalResources;
 using BAR.UI.MVC.Attributes;
 
+
 namespace BAR.UI.MVC.Controllers.api
 {
 	/// <summary>
@@ -62,7 +63,7 @@ namespace BAR.UI.MVC.Controllers.api
 		{
 			widgetManager = new WidgetManager();
 
-			IEnumerable<Widget> widgets = widgetManager.GetWidgetsForItem(itemId);
+			IEnumerable<Widget> widgets = widgetManager.GetItemwidgetsForItem(itemId);
 			
 			if (widgets == null || widgets.Count() == 0) return StatusCode(HttpStatusCode.NoContent);
 
@@ -190,7 +191,7 @@ namespace BAR.UI.MVC.Controllers.api
 		/// <summary>
 		/// Deletes a widget
 		/// </summary>
-		[System.Web.Http.HttpDelete]
+		[System.Web.Http.HttpPost]
 		[System.Web.Http.Route("api/Widget/Delete/{id}")]
 		public IHttpActionResult Delete(int id)
 		{
