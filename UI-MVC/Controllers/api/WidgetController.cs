@@ -231,15 +231,14 @@ namespace BAR.UI.MVC.Controllers.api
 		/// Returns all activity widgets. These widgets contain information about user activity.
 		/// </summary>
 		[SubPlatformCheckAPI]
-		[System.Web.Http.HttpGet]
-		[System.Web.Http.Route("api/GetActivityWidgets")]
+		[HttpGet]
+		[Route("api/GetActivityWidgets")]
 		public IHttpActionResult GetActivityWidgets()
 		{
 			widgetManager = new WidgetManager();
 
-			object _customObject = null;
 			int suplatformID = -1;
-			if (Request.Properties.TryGetValue("SubPlatformID", out _customObject))
+			if (Request.Properties.TryGetValue("SubPlatformID", out object _customObject))
 			{
 				suplatformID = (int)_customObject;
 			}
