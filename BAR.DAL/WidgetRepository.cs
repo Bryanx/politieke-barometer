@@ -316,5 +316,15 @@ namespace BAR.DAL
 							  .Where(widget => widget.PropertyTags.Any(tag => tag.Name.ToLower().Contains("activity")))
 							  .AsEnumerable();
 		}
+
+		/// <summary>
+		/// Gives back all the widgetdatas based on the widgetId
+		/// </summary>
+		public IEnumerable<WidgetData> ReadWidgetDatasForWidgetId(int widgetId)
+		{
+			return ctx.WidgetDatas.Include(data => data.Widget)
+								  .Where(data => data.Widget.WidgetId == widgetId)
+								  .AsEnumerable();
+		}
 	}
 }

@@ -6,6 +6,7 @@
   <mvcSiteMapNode title="$resources:Resources,Home" controller="Home" action="Index">
     <mvcSiteMapNode title="$resources:Resources,Privacy" controller="Home" action="Privacy"/>
     <mvcSiteMapNode title="$resources:Resources,ForgotPassword" controller="User" action="ForgotPassword"/>
+    <mvcSiteMapNode title="$resources:Resources,Login" controller="User" action="Login"/>
     <mvcSiteMapNode title="$resources:Resources,QuestionAndAnswer" controller="Home" action="Faq"/>
     <mvcSiteMapNode title="$resources:Resources,Dashboard" controller="User" action="Index">
         <mvcSiteMapNode title="$resources:Resources,Settings" controller="User" action="Settings"/>

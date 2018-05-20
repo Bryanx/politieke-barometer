@@ -360,6 +360,7 @@
     <Content Include="Content\build\images\rolling.svg" />
     <Content Include="Content\build\images\topics.png" />
     <Content Include="Content\build\images\user.png" />
+    <Content Include="Content\build\js\admindashboard.js" />
     <Content Include="Content\build\js\alerts.js" />
     <Content Include="Content\build\js\custom.js" />
     <Content Include="Content\build\js\graphWizard.js" />

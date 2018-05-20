@@ -216,10 +216,20 @@ namespace BAR.UI.MVC.Controllers.api
 		/// </summary>
 		[HttpGet]
 		[Route("api/GetPopularPersonsPerDistrict")]
+		[SubPlatformCheckAPI]
 		public IHttpActionResult GetPopularPersonsPerDistrict() {
 			itemManager = new ItemManager();
 			
-			List<Person> persons = itemManager.GetAllPersons().ToList();
+			//Get the subplatformID from the SubPlatformCheckAPI attribute
+			object _customObject = null;
+			int suplatformID = -1;
+
+			if (Request.Properties.TryGetValue("SubPlatformID", out _customObject))
+			{
+				suplatformID = (int)_customObject;
+			}
+			
+			List<Person> persons = itemManager.GetAllPersonsForSubplatform(suplatformID).ToList();
 
 			if (!persons.Any()) return NotFound();
 			
