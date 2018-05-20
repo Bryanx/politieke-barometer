@@ -246,8 +246,6 @@ namespace BAR.UI.MVC.Controllers.api
 			}
 			
 			List<Widget> widgets = widgetManager.GetWidgetsForActivities(suplatformID).ToList();
-			var test = widgetManager.GetWidgetWithAllData(widgets.First().WidgetId);
-
 			
 			if (widgets == null) return NotFound();
 			

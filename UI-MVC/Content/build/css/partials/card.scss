@@ -56,6 +56,28 @@ $font-color: #246b94;
   background: linear-gradient(180deg, white 70%, $primary-color 30%);
   font-weight: normal;
 }
+
+.card-url {
+  @extend .card;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  background: var(--white);
+  box-shadow: 0 2px 0px 0px rgba(0, 0, 0, 0.07);
+  i {
+    display: block;
+    text-align: center;
+    font-size: 40px;
+    transition: font-size .2s;
+  }
+  &:hover {
+    i {
+      font-size: 50px;
+    }
+  }
+}
+
 .card-user {
   position: absolute;
   left: 10px;

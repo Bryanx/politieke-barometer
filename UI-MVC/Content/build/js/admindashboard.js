@@ -25,17 +25,66 @@ var activityWidget = function (id, title) {
         "        </div>";
 };
 
+var AddTimeChart = function (widget, labels, label, values, borderColor, color, darkColor, chartType) {
+    let chart = new Chart(document.getElementById("graph" + widget.WidgetId), {
+        id: widget.WidgetId,
+        type: chartType,
+        data: {
+            labels: labels,
+            datasets: [{
+                data: values,
+                label: label,
+                borderColor: borderColor,
+                backgroundColor: color,
+                fill: false,
+            }],
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                xAxes: [{
+                    type: 'time',
+                    display: true,
+                    time: {
+                        format: "DD-MM",
+                        round: 'day'
+                    }
+                }],
+            },
+        }
+    });
+    console.log(chart);
+};
+
+
 (() => {
+    let COLORS = [
+        'rgb(255, 99, 132)',
+        'rgb(255, 159, 64)',
+        'rgb(255, 205, 86)',
+        'rgb(75, 192, 192)',
+        'rgb(54, 162, 235)',
+        'rgb(153, 102, 255)',
+        'rgb(207, 81, 171)'
+    ];
     $.get({
         url: "/api/GetActivityWidgets",
         success: widgets => {
             let rowSpan = 12;
+            console.log(widgets);
             widgets.forEach(widget => {
                 adminGrid.addWidget(activityWidget(widget.WidgetId, widget.Title), widget.RowNumber, widget.ColumnNumber,
                     rowSpan,  widget.ColumnSpan,  true, 6, 12, 6, 6, widget.WidgetId);
                 adminGrid.movable(".grid-stack-item", false);
                 adminGrid.resizable(".grid-stack-item", false);
                 rowSpan = 6;
+            });
+            $.each(widgets, (i, widget) => {
+                i += 3;
+                let labels = widget.WidgetDatas[0].GraphValues.map(g => g.Value);
+                let values = widget.WidgetDatas[0].GraphValues.map(g => g.NumberOfTimes);
+                AddTimeChart(widget, labels, widget.Title, values, COLORS[i], COLORS[i], COLORS[i], "line");
             });
         }
     });
