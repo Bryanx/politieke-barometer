@@ -641,7 +641,7 @@ namespace BAR.UI.MVC.Controllers
 			{
 				WeeklyPersonViewModels = weeklyPersonViewModels,
 				WeeklyItems = weeklyTrendings,
-				widgets = widgets,
+				Widgets = widgets,
 				User = User.Identity.IsAuthenticated ? userManager.GetUser(User.Identity.GetUserId()) : null,
 			};
 
