@@ -593,15 +593,12 @@ namespace BAR.BL.Managers
 		public void ChangeDataSource(int dataSourceId, int interval)
 		{
 			InitRepo();
-
 			//Get datasource
 			DataSource dataSource = dataRepo.ReadDataSource(dataSourceId);
-			dataRepo.UpdateDataSource(dataSource, interval);
 			if (dataSource == null) return;
-
-			//Update datasource
-			dataRepo.UpdateDataSource(dataSource);
-		}
+            //Update datasource
+            dataRepo.UpdateDataSource(dataSource, interval);
+        }
 
 		/// <summary>
 		/// Gives back the geoloactionData of all the items
