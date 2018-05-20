@@ -5,16 +5,15 @@ using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
-using System.Web.Configuration;
 using AutoMapper;
 using BAR.BL.Domain.Items;
 using BAR.BL.Domain.Widgets;
 using BAR.UI.MVC.Models;
 using BAR.BL.Domain.Core;
-using Microsoft.Owin.BuilderProperties;
 using BAR.UI.MVC.Controllers.api;
 using BAR.BL.Managers;
 using BAR.BL.Domain.Data;
+using System.Collections.Generic;
 
 namespace BAR.UI.MVC
 {
@@ -90,7 +89,7 @@ namespace BAR.UI.MVC
 					.ForMember(p => p.KeyValue, opt => opt.MapFrom(src => src.KeyValue))
 					.ForMember(p => p.WidgetId, opt => opt.MapFrom(src => src.Widget.WidgetId));
 
-          //Mapping customization
+				//Mapping customization
 				cfg.CreateMap<Customization, CustomizationViewModel>()
 					.ForMember(m => m.CustomizationId, opt => opt.MapFrom(src => src.CustomizationId))
 					//Mapping Page colors
@@ -117,7 +116,7 @@ namespace BAR.UI.MVC
 					.ForMember(m => m.City, opt => opt.MapFrom(src => src.City))
 					.ForMember(m => m.Country, opt => opt.MapFrom(src => src.Country))
 					.ForMember(m => m.Email, opt => opt.MapFrom(src => src.Email));
-				
+
 				//Mapping user widgets
 				cfg.CreateMap<UserWidget, UserWidgetViewModel>()
 				  .ForMember(w => w.WidgetId, opt => opt.MapFrom(src => src.WidgetId))
@@ -131,26 +130,28 @@ namespace BAR.UI.MVC
 				  .ForMember(w => w.ItemIds, opt => opt.MapFrom(src => src.Items.Select(i => i.ItemId).ToList()));
 			});
 
-      double TimerIntervalInMilliseconds = 60000;
-      Timer timer = new Timer(TimerIntervalInMilliseconds);
-      timer.Enabled = true;
-      timer.Elapsed += new ElapsedEventHandler(timerElapsed);
-      timer.Start();
-    }
-    private void timerElapsed(object sender, ElapsedEventArgs e)
-    {
-        DataManager dataManager = new DataManager();
-        List<DataSource> datasources = dataManager.GetAllDataSources().ToList();
-        for (int i=0;i<datasources.Count();i++)
-            {
-                DataSource datasource = datasources[i];
-                if (datasource.LastTimeChecked.AddMinutes(datasource.Interval) < DateTime.Now)
-                {
-                    DataApiController controller = new DataApiController();
-                    controller.Synchronize(i);
-                    dataManager.ChangeLastTimeChecked(i, DateTime.Now);
-                }
-            }
-    }      
-  }
+			double TimerIntervalInMilliseconds = 60000;
+			Timer timer = new Timer(TimerIntervalInMilliseconds);
+			timer.Enabled = true;
+			timer.Elapsed += new ElapsedEventHandler(timerElapsed);
+			timer.Start();
+		}
+		private void timerElapsed(object sender, ElapsedEventArgs e)
+		{
+			DataManager dataManager = new DataManager();
+			List<DataSource> datasources = dataManager.GetAllDataSources().ToList();
+			for (int i = 0; i < datasources.Count(); i++)
+			{
+				DataSource datasource = datasources[i];
+				if (datasource.LastTimeChecked.AddMinutes(datasource.Interval) < DateTime.Now)
+				{
+					DataApiController controller = new DataApiController();
+#pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
+					controller.Synchronize(i);
+#pragma warning restore CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
+					dataManager.ChangeLastTimeCheckedTime(i, DateTime.Now);
+				}
+			}
+		}
+	}
 }

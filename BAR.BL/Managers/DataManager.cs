@@ -588,19 +588,6 @@ namespace BAR.BL.Managers
 		}
 
 		/// <summary>
-		/// Changes a datasource in the database
-		/// </summary>
-		public void ChangeDataSource(int dataSourceId, int interval)
-		{
-			InitRepo();
-			//Get datasource
-			DataSource dataSource = dataRepo.ReadDataSource(dataSourceId);
-			if (dataSource == null) return;
-            //Update datasource
-            dataRepo.UpdateDataSource(dataSource, interval);
-        }
-
-		/// <summary>
 		/// Gives back the geoloactionData of all the items
 		/// </summary>
 		public WidgetData GetGeoLocationData(DateTime? timestamp = null)
@@ -683,50 +670,63 @@ namespace BAR.BL.Managers
 			return widgetData;
 		}
 
-		 /// <summary>
-         /// Gets the interval from the datasource with the given ID.
-         /// </summary>
+		/// <summary>
+		/// changes the interval from the datasource with the given ID.
+		/// </summary>
+		public DataSource ChangeTimerInterval(int dataSourceId, int interval)
+		{
+			InitRepo();
 
-         public int GetInterval(int dataSourceId)
-                {
-                    InitRepo();
-                    return dataRepo.ReadInterval(dataSourceId);
-                }
-        /// <summary>
-        /// Gets the startTimer from the datasource with the given ID.
-        /// </summary>
-        public string GetStartTimer(int dataSourceId)
-        {
-            InitRepo();
-            return dataRepo.ReadStartTime(dataSourceId);
-        }
-        /// <summary>
-        /// changes the interval from the datasource with the given ID.
-        /// </summary>
-        public int ChangeInterval(int dataSourceId, int interval)
-        {
-            InitRepo();
-            dataRepo.UpdateInterval(dataSourceId, interval);
-            return interval;
-        }
-        /// <summary>
-        /// Changes the StratTimer from the datasource with the given ID.
-        /// </summary>
-        public string ChangeStartTimer(int dataSourceId, string startTimer)
-        {
-            InitRepo();
-            dataRepo.UpdateStartTime(dataSourceId, startTimer);
-            return startTimer;
-        }
-        /// <summary>
-        /// Changes the time when the datasource has last been chacked.
-        /// </summary>
-        public DateTime ChangeLastTimeChecked(int dataSourceId, DateTime date)
-        {
-            InitRepo();
-            dataRepo.UpdateLastTimeChecked(dataSourceId, date);
-            return date;
-        }
+			//Get datasource
+			DataSource source = GetDataSource(dataSourceId);
+			if (source == null) return null;
+
+			//Change datasource
+			source.Interval = interval;
+
+			//Update database
+			dataRepo.UpdateDataSource(source);
+			return source;
+		}
+
+		/// <summary>
+		/// Changes the StratTimer from the datasource with the given ID.
+		/// </summary>
+		public DataSource ChangeStartTimer(int dataSourceId, string startTimer)
+		{
+			InitRepo();
+
+			//Get datasource
+			DataSource source = GetDataSource(dataSourceId);
+			if (source == null) return null;
+
+			//Change datasource
+			source.SetTime = startTimer;
+
+			//Updat
+			dataRepo.UpdateDataSource(source);
+			return source;
+		}
+
+
+		/// <summary>
+		/// Changes the time when the datasource has last been chacked.
+		/// </summary>
+		public DataSource ChangeLastTimeCheckedTime(int dataSourceId, DateTime date)
+		{
+			InitRepo();
+
+			//Get datasource
+			DataSource source = GetDataSource(dataSourceId);
+			if (source == null) return null;
+
+			//Change datasource
+			source.LastTimeChecked = date;
+
+			//Update database
+			dataRepo.UpdateDataSource(source);
+			return source;
+		}
 	}
 }
 

@@ -18,7 +18,6 @@ namespace BAR.UI.MVC.Controllers
 	public class SuperAdminController : LanguageController
 	{
 		private IUserManager userManager;
-		private IItemManager itemManager;
 		private ISubplatformManager subplatformManager;
 		private IDataManager dataManager;
 

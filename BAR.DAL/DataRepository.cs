@@ -161,86 +161,37 @@ namespace BAR.DAL
 		/// Gives back all datasources
 		/// </summary>
 		/// <returns></returns>
-        public IEnumerable<DataSource> ReadAllDataSources()
-        {
-            return ctx.DataSources.AsEnumerable();
-        }
+		public IEnumerable<DataSource> ReadAllDataSources()
+		{
+			return ctx.DataSources.AsEnumerable();
+		}
 
 		/// <summary>
 		/// Gives back the datasources based on thd datasource ID.
 		/// </summary>
-        public DataSource ReadDataSource(int dataSourceId)
-        {
-            return ctx.DataSources.Find(dataSourceId);
-        }
-
-		/// <summary>
-		/// Creates e new datasource in the database
-		/// </summary>
-        public int CreateDataSource(DataSource dataSource)
-        {
-            dataSource.LastTimeChecked = DateTime.Now;
-            ctx.DataSources.Add(dataSource);
-            return ctx.SaveChanges();
-        }
-
-		/// <summary>
-		/// Updates a datasource in the database
-		/// </summary>
-        public int UpdateDataSource(DataSource dataSource, int interval)
-        {
-            ctx.DataSources.Find(dataSource.DataSourceId).Interval = interval;
-            ctx.Entry(dataSource).State = EntityState.Modified;
-            return ctx.SaveChanges();
-        }
+		public DataSource ReadDataSource(int dataSourceId)
+		{
+			return ctx.DataSources.Find(dataSourceId);
+		}
 
 		/// <summary>
 		/// Deletes the given datasource in the database
 		/// </summary>
-        public int DeleteDataSource(DataSource dataSource)
-        {
-            ctx.DataSources.Remove(dataSource);
-            return ctx.SaveChanges();
-        }
-        /// <summary>
-		/// Returns the timer interval of the datasource.
+		public int DeleteDataSource(DataSource dataSource)
+		{
+			ctx.DataSources.Remove(dataSource);
+			return ctx.SaveChanges();
+		}
+
+		/// <summary>
+		/// Updates a datasource in the database
 		/// </summary>
-        public int ReadInterval(int dataSourceId)
-        {
-            return ctx.DataSources.Find(dataSourceId).Interval;
-        }
-        /// <summary>
-		/// Returns the set time of the timer.
-		/// </summary>
-        public string ReadStartTime(int dataSourceId)
-        {
-            return ctx.DataSources.Find(dataSourceId).SetTime;
-        }
-        /// <summary>
-		/// Updates the timer interval of the datasource.
-		/// </summary>
-        public int UpdateInterval(int dataSourceId, int interval)
-        {
-            ctx.DataSources.Find(dataSourceId).Interval = interval;
-            return ctx.SaveChanges();
-        }
-        /// <summary>
-		/// Updates the set time of the timer from the datasource.
-		/// </summary>
-        public int UpdateStartTime(int dataSourceId, string setTime)
-        {
-            ctx.DataSources.Find(dataSourceId).SetTime = setTime;
-            return ctx.SaveChanges();
-        }
-        /// <summary>
-		/// Updates the last time checked from the datasource.
-		/// </summary>
-        public int UpdateLastTimeChecked(int dataSourceId, DateTime date)
-        {
-            ctx.DataSources.Find(dataSourceId).LastTimeChecked = date;
-            return ctx.SaveChanges();
-        }
-    }
+		public int UpdateDataSource(DataSource dataSource)
+		{
+			ctx.Entry(dataSource).State = EntityState.Modified;
+			return ctx.SaveChanges();
+		}
+	}
 }
 
 

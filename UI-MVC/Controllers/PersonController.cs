@@ -24,7 +24,6 @@ namespace BAR.UI.MVC.Controllers
 		private IItemManager itemManager;
 		private IUserManager userManager;
 		private ISubscriptionManager subManager;
-		private IWidgetManager widgetManager;
 
 		/// <summary>
 		/// Item page for logged-in and non-logged-in users.

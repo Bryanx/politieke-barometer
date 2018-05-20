@@ -1,9 +1,5 @@
 ﻿using BAR.BL.Domain.Data;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BAR.DAL
 {
@@ -20,21 +16,15 @@ namespace BAR.DAL
 		SynchronizeAudit ReadAudit(int auditId);
         DataSource ReadDataSource(int dataSourceId);
 		IEnumerable<DataSource> ReadAllDataSources();
-		int ReadInterval(int dataSourceId);
-        string ReadStartTime(int dataSourceId);
 
 		//Create
 		int CreateInformations(IEnumerable<Information> infos);
 		int CreateAudit(SynchronizeAudit audit);
 		int CreateSource(Source source);
-        int CreateDataSource(DataSource dataSource);
 
 		//Update
 		int UpdateAudit(SynchronizeAudit audit);
-        int UpdateDataSource(DataSource dataSource, int interval);
-        int UpdateInterval(int dataSourceId, int interval);
-        int UpdateStartTime(int dataSourceId, string setTime);
-        int UpdateLastTimeChecked(int dataSourceId, DateTime date);
+        int UpdateDataSource(DataSource dataSource);
 
 		//Delete
 		int DeleteSource(Source source);

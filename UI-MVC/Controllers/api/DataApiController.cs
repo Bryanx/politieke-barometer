@@ -29,7 +29,7 @@ namespace BAR.UI.MVC.Controllers.api
             IDataManager dataManager = new DataManager();
             if (interval != 0 || start != "0")
             {
-                dataManager.ChangeInterval(id, interval);
+                dataManager.ChangeTimerInterval(id, interval);
                 dataManager.ChangeStartTimer(id, start);
                 return StatusCode(HttpStatusCode.Accepted);
             }
@@ -164,7 +164,7 @@ namespace BAR.UI.MVC.Controllers.api
             int id = Convert.ToInt32(dataSourceId);
             int intervalNumber = Convert.ToInt32(interval);
             dataManager = new DataManager();
-            dataManager.ChangeDataSource(id, intervalNumber);
+            dataManager.ChangeTimerInterval(id, intervalNumber);
             return StatusCode(HttpStatusCode.NoContent);
         }
 

@@ -23,7 +23,6 @@ namespace BAR.UI.MVC.Controllers
 		private const string INDEX_PAGE_TITLE = "Politieke Barometer";
 		private IItemManager itemManager;
 		private IUserManager userManager;
-		private ISubplatformManager subplatformManager;
 
 		/// <summary>
 		/// Landing page for logged-in and non-logged-in users.
