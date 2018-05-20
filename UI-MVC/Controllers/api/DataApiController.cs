@@ -8,7 +8,6 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web.Http;
-using BAR.UI.MVC;
 
 namespace BAR.UI.MVC.Controllers.api
 {
@@ -20,13 +19,15 @@ namespace BAR.UI.MVC.Controllers.api
 		private IUserManager userManager;
 		private ISubscriptionManager subscriptionManager;
 
+		/// <summary>
+		/// Sets the synchronize timer
+		/// </summary>
         [HttpPost]
         [Route("api/Data/SetSynchronize/{interval}/{start}/{id}")]
         public IHttpActionResult SetSynchronize(int id,int interval, string start)
         {
-
             start = start.Substring(0, 2) + ":" + start.Substring(2, start.Length);
-            IDataManager dataManager = new DataManager();
+            dataManager = new DataManager();
             if (interval != 0 || start != "0")
             {
                 dataManager.ChangeTimerInterval(id, interval);
@@ -38,6 +39,10 @@ namespace BAR.UI.MVC.Controllers.api
                 return StatusCode(HttpStatusCode.NotAcceptable);
             }
         }
+
+		/// <summary>
+		/// Synchronizes with the database of textgain
+		/// </summary>
         [HttpGet]
 		[Route("api/Data/Synchronize/{id}")]
 		[SubPlatformCheckAPI]
@@ -149,22 +154,28 @@ namespace BAR.UI.MVC.Controllers.api
 				}
 			}
 		}
+
+		/// <summary>
+		/// Sets an item to a deleted state
+		/// </summary>
         [HttpPost]
         [Route("api/Data/DeleteItem/{dataSourceId}")]
-        public IHttpActionResult ToggleDeleteItem(string dataSourceId)
+        public IHttpActionResult ToggleDeleteItem(int dataSourceId)
         {
             dataManager = new DataManager();
-            dataManager.RemoveDataSource(Int32.Parse(dataSourceId));
+            dataManager.RemoveDataSource(dataSourceId);
             return StatusCode(HttpStatusCode.NoContent);
         }
+
+		/// <summary>
+		/// Renames a datasource
+		/// </summary>
         [HttpPost]
         [Route("api/Data/ChangeDataSource/{dataSourceId}/{interval}")]
-        public IHttpActionResult RenameItem(string dataSourceId, string interval)
+        public IHttpActionResult RenameItem(int dataSourceId, int interval)
         {
-            int id = Convert.ToInt32(dataSourceId);
-            int intervalNumber = Convert.ToInt32(interval);
             dataManager = new DataManager();
-            dataManager.ChangeTimerInterval(id, intervalNumber);
+            dataManager.ChangeTimerInterval(dataSourceId, interval);
             return StatusCode(HttpStatusCode.NoContent);
         }
 
