@@ -103,6 +103,10 @@ namespace BAR.UI.MVC
 					.ForMember(m => m.HeaderImage, opt => opt.MapFrom(src => src.HeaderImage))
 					.ForMember(m => m.LogoImage, opt => opt.MapFrom(src => src.LogoImage));
 
+				cfg.CreateMap<Question, QuestionDTO>()
+					.ForMember(m => m.Title, opt => opt.MapFrom(src => src.Title))
+					.ForMember(m => m.Answer, opt => opt.MapFrom(src => src.Answer));
+
 				cfg.CreateMap<UserWidget, UserWidgetViewModel>()
           .ForMember(w => w.WidgetId, opt => opt.MapFrom(src => src.WidgetId))
           .ForMember(w => w.Title, opt => opt.MapFrom(src => src.Title))

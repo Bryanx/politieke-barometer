@@ -54,7 +54,7 @@ namespace BAR.UI.MVC.Models
 		public string FAQTitle { get; set; }
 
 		//Questions
-		public QuestionsViewModel QuestionsViewModel { get; set; }
+		public IEnumerable<QuestionDTO> Questions { get; set; }
 
 		//Contact properties
 		public string StreetAndHousenumber { get; set; }
@@ -66,16 +66,6 @@ namespace BAR.UI.MVC.Models
 		//Images
 		public byte[] HeaderImage { get; set; }
 		public byte[] LogoImage { get; set; }
-
-
-	}
-
-	/// <summary>
-	/// All Questions
-	/// </summary>
-	public class QuestionsViewModel : BaseViewModel
-	{
-		IEnumerable<QuestionDTO> Questions { get; set; }
 	}
 
 	/// <summary>

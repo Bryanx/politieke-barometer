@@ -57,7 +57,7 @@ namespace BAR.UI.MVC.Controllers
 					int subPlatformID = (int)RouteData.Values["SubPlatformID"];
 					Customization customization = platformManager.GetCustomization(subPlatformID);
 					model.Customization = Mapper.Map(customization, new CustomizationViewModel());
-					
+					model.Customization.Questions = Mapper.Map(platformManager.GetQuestions(subPlatformID), new List<QuestionDTO>());
 				}
 			}
 		}

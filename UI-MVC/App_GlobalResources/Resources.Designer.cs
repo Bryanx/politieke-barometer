@@ -772,6 +772,15 @@ namespace BAR.UI.MVC.App_GlobalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Header picture.
+        /// </summary>
+        public static string HeaderPicture {
+            get {
+                return ResourceManager.GetString("HeaderPicture", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Home.
         /// </summary>
         public static string Home {
@@ -1020,6 +1029,15 @@ namespace BAR.UI.MVC.App_GlobalResources {
         public static string LoginWithAccount {
             get {
                 return ResourceManager.GetString("LoginWithAccount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Logo.
+        /// </summary>
+        public static string LogoPicture {
+            get {
+                return ResourceManager.GetString("LogoPicture", resourceCulture);
             }
         }
         

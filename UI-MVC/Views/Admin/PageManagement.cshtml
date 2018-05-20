@@ -96,7 +96,7 @@
         </div>
     </div>
     <div class="col-md-6 col-sm-6 col-xs-12">
-        <div class="x_panel fixed_height_670">
+        <div class="x_panel fixed_height_900">
             <div class="x_title">
                 <h2>Pagina teksten</h2>
                 <div class="clearfix"></div>
@@ -188,29 +188,17 @@
                 <div class="clearfix"></div>
             </div>
             <div class="x_content">
-                <br />
-                <form id="form_page_faq" class="form-horizontal form-label-left">
+                </br>
+                <form id="form_question_faq" class="form-horizontal form-label-left">
                     <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">
-                            FAQTitle
+                            FAQ
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
                             @Html.TextBoxFor(model => model.FAQTitle, "", new { @class = "form-control", placeholder = @Model.FAQTitle })
                         </div>
-                    </div>
-                    <div class="col-sm-6 col-md-6 col-xs-12 center-margin">
-                        <div class="form-group">
-                            <button type="submit" class="btn btn-dark">Opslaan</button>
-                        </div>
-                    </div>
-                </form>
-                <form id="form_question_faq" class="form-horizontal form-label-left">
-                    <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12">
-                            FAQTitle
-                        </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                            @*@Html.TextBoxFor(model => model.FAQTitle, "", new { @class = "form-control", placeholder = @Model.FAQTitle })*@
+                            @Html.TextBoxFor(model => model.FAQAnswer, "", new { @class = "form-control", placeholder = @Model.FAQAnswer })
                         </div>
                     </div>
                     <div class="col-sm-6 col-md-6 col-xs-12 center-margin">
@@ -267,7 +255,7 @@
     <div class="col-md-6 col-sm-6 col-xs-12">
         <div class="x_panel">
             <div class="x_title">
-                <h2>Header</h2>
+                <h2>@Resources.HeaderPicture</h2>
                 <div class="clearfix"></div>
             </div>
             <div class="x_content">
@@ -292,7 +280,7 @@
     <div class="col-md-6 col-sm-6 col-xs-12">
         <div class="x_panel">
             <div class="x_title">
-                <h2>Header</h2>
+                <h2>@Resources.LogoPicture</h2>
                 <div class="clearfix"></div>
             </div>
             <div class="x_content">

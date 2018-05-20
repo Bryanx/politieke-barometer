@@ -747,4 +747,10 @@
   <data name="TextColor" xml:space="preserve">
     <value>Tekst kleur</value>
   </data>
+  <data name="HeaderPicture" xml:space="preserve">
+    <value>Hoofding foto</value>
+  </data>
+  <data name="LogoPicture" xml:space="preserve">
+    <value>Logo</value>
+  </data>
 </root>
