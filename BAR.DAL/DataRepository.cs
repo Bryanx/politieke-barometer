@@ -51,56 +51,6 @@ namespace BAR.DAL
 		}
 
 		/// <summary>
-		/// Gives back a list of information-objects.
-		/// </summary>
-		/// <returns></returns>
-		public IEnumerable<Information> ReadAllInformations()
-		{
-			return ctx.Informations.AsEnumerable();
-		}
-
-		/// <summary>
-		/// Gives back an information object with his property-values
-		/// based on informationid.
-		/// </summary>
-		public Information ReadInformationWitlAllInfo(int informationId)
-		{
-			return ctx.Informations.Include(info => info.PropertieValues)
-								   .Include(info => info.PropertieValues.Select(propval => propval.Property))
-								   .Where(info => info.InformationId == informationId)
-								   .SingleOrDefault();
-		}
-
-		/// <summary>
-		/// Updates an instance of a specific information object
-		/// Returns -1 if SaveChanges() is delayed by unit of work.
-		/// </summary>
-		public int UpdateInformation(Information info)
-		{
-			ctx.Entry(info).State = EntityState.Modified;
-			return ctx.SaveChanges();
-		}
-
-		/// <summary>
-		/// Updates all informations objects that are in the list.
-		/// Returns -1 if SaveChanges() is delayed by unit of work.
-		/// </summary>
-		public int UpdateInformations(IEnumerable<Information> infos)
-		{
-			foreach (Information info in infos) ctx.Entry(info).State = EntityState.Modified;
-			return ctx.SaveChanges();
-		}
-
-		/// <summary>
-		/// Gives back a property by propertyname
-		/// </summary>
-		public Property ReadProperty(string propertyName)
-		{
-			return ctx.Properties.Where(prop => prop.Name.ToLower().Equals(propertyName.ToLower()))
-								 .SingleOrDefault();
-		}
-		
-		/// <summary>
 		/// Gives back a scource by sourcename
 		/// </summary>
 		public Source ReadSource(string sourceName)

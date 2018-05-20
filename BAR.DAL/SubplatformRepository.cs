@@ -52,17 +52,6 @@ namespace BAR.DAL
 		}
 
 		/// <summary>
-		/// Gives back a subplatform with all the questions and then customization.
-		/// </summary>
-		public SubPlatform ReadSubplatformWithAllinfo(int platformId)
-		{
-			return ctx.SubPlatforms.Include(platform => platform.Questions)
-								   .Include(platform => platform.Customization)
-								   .Where(platform => platform.SubPlatformId == platformId)
-								   .SingleOrDefault();
-		}
-
-		/// <summary>
 		/// Reads all the questions
 		/// </summary>
 		public IEnumerable<Question> ReadAllQuestions()
@@ -129,15 +118,6 @@ namespace BAR.DAL
 		public int UpdateSubplatform(SubPlatform subPlatform)
 		{
 			ctx.Entry(subPlatform).State = EntityState.Modified;
-			return ctx.SaveChanges();
-		}
-
-		/// <summary>
-		/// Updates a given list of subplatforms
-		/// </summary>
-		public int UpdateSubplatforms(IEnumerable<SubPlatform> subPlatforms)
-		{
-			foreach (SubPlatform platform in subPlatforms) ctx.Entry(platform).State = EntityState.Modified;
 			return ctx.SaveChanges();
 		}
 
