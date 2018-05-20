@@ -682,38 +682,51 @@ namespace BAR.BL.Managers
 
 			return widgetData;
 		}
-		 public int GetInterval(int dataSourceId)
+
+		 /// <summary>
+         /// Gets the interval from the datasource with the given ID.
+         /// </summary>
+
+         public int GetInterval(int dataSourceId)
                 {
                     InitRepo();
                     return dataRepo.ReadInterval(dataSourceId);
                 }
-
-                public string GetStartTimer(int dataSourceId)
-                {
-                    InitRepo();
-                    return dataRepo.ReadStartTime(dataSourceId);
-                }
-
-                public int ChangeInterval(int dataSourceId, int interval)
-                {
-                    InitRepo();
-                    dataRepo.UpdateInterval(dataSourceId, interval);
-                    return interval;
-                }
-
-                public string ChangeStartTimer(int dataSourceId, string startTimer)
-                {
-                    InitRepo();
-                    dataRepo.UpdateStartTime(dataSourceId, startTimer);
-                    return startTimer;
-                }
-
-                public DateTime ChangeLastTimeChecked(int dataSourceId, DateTime date)
-                {
-                    InitRepo();
-                    dataRepo.UpdateLastTimeChecked(dataSourceId, date);
-                    return date;
-                }
+        /// <summary>
+        /// Gets the startTimer from the datasource with the given ID.
+        /// </summary>
+        public string GetStartTimer(int dataSourceId)
+        {
+            InitRepo();
+            return dataRepo.ReadStartTime(dataSourceId);
+        }
+        /// <summary>
+        /// changes the interval from the datasource with the given ID.
+        /// </summary>
+        public int ChangeInterval(int dataSourceId, int interval)
+        {
+            InitRepo();
+            dataRepo.UpdateInterval(dataSourceId, interval);
+            return interval;
+        }
+        /// <summary>
+        /// Changes the StratTimer from the datasource with the given ID.
+        /// </summary>
+        public string ChangeStartTimer(int dataSourceId, string startTimer)
+        {
+            InitRepo();
+            dataRepo.UpdateStartTime(dataSourceId, startTimer);
+            return startTimer;
+        }
+        /// <summary>
+        /// Changes the time when the datasource has last been chacked.
+        /// </summary>
+        public DateTime ChangeLastTimeChecked(int dataSourceId, DateTime date)
+        {
+            InitRepo();
+            dataRepo.UpdateLastTimeChecked(dataSourceId, date);
+            return date;
+        }
 	}
 }
 

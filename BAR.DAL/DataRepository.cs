@@ -253,7 +253,7 @@ namespace BAR.DAL
             return ctx.SaveChanges();
         }
         /// <summary>
-		/// Returns the timer interval of the subplatform.
+		/// Returns the timer interval of the datasource.
 		/// </summary>
         public int ReadInterval(int dataSourceId)
         {
@@ -267,7 +267,7 @@ namespace BAR.DAL
             return ctx.DataSources.Find(dataSourceId).SetTime;
         }
         /// <summary>
-		/// Updates the timer interval of the subplatform.
+		/// Updates the timer interval of the datasource.
 		/// </summary>
         public int UpdateInterval(int dataSourceId, int interval)
         {
@@ -275,14 +275,16 @@ namespace BAR.DAL
             return ctx.SaveChanges();
         }
         /// <summary>
-		/// Updates the set time of the timer.
+		/// Updates the set time of the timer from the datasource.
 		/// </summary>
         public int UpdateStartTime(int dataSourceId, string setTime)
         {
             ctx.DataSources.Find(dataSourceId).SetTime = setTime;
             return ctx.SaveChanges();
         }
-
+        /// <summary>
+		/// Updates the last time checked from the datasource.
+		/// </summary>
         public int UpdateLastTimeChecked(int dataSourceId, DateTime date)
         {
             ctx.DataSources.Find(dataSourceId).LastTimeChecked = date;
