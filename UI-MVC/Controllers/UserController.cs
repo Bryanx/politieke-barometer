@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using BAR.BL.Domain.Users;
 using BAR.BL.Managers;
 using System.Collections.Generic;
@@ -14,12 +13,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using System.Net;
 using Microsoft.Owin.Security;
-using System.Configuration;
-using System.Security.Claims;
 using AutoMapper;
-using BAR.BL;
 using BAR.BL.Domain.Widgets;
-using BAR.UI.MVC.Attributes;
 using WebGrease.Css.Extensions;
 using static BAR.UI.MVC.Models.ItemViewModels;
 
@@ -35,100 +30,6 @@ namespace BAR.UI.MVC.Controllers
 		private ISubscriptionManager subManager;
 
 		#region Identity
-
-		public ActionResult UserWeeklyReview()
-		{
-			// Building WeeklyReviewModel
-			WidgetManager widgetManager = new WidgetManager();
-			ItemManager itemManager = new ItemManager();
-			userManager = new UserManager();
-			string userId = User.Identity.GetUserId();
-			
-			// -------- Making WeeklyReviewModel --------
-			// Getting trending items for user and all items
-			List<Item> weeklyTrendings = new List<Item>();
-			
-			itemManager.GetMostTrendingItemsForUserAndItemType(userId, ItemType.Person, 4, true).OrderBy(item => item.TrendingPercentage).Reverse().ForEach(item => weeklyTrendings.Add(item));
-			if (weeklyTrendings.Count < 4) {
-				List<Item> trendings = itemManager.GetMostTrendingItemsForType(ItemType.Person, 4, true).ToList();
-				while (weeklyTrendings.Count < 4) {
-					List<int> ids = new List<int>();
-					weeklyTrendings.ForEach(i => ids.Add(i.ItemId));
-					if (ids.Contains(trendings.First().ItemId)) {
-						trendings.RemoveAt(0);
-					} else {
-						weeklyTrendings.Add(trendings.First());
-						trendings.RemoveAt(0);
-					}
-				}
-			}
-
-			weeklyTrendings.OrderBy(item => item.TrendingPercentage);
-			
-			// Getting PersonViewModels for Persons
-			List<PersonViewModel> weeklyPersonViewModels = new List<PersonViewModel>();
-			weeklyTrendings.ForEach(item => weeklyPersonViewModels.Add(Mapper.Map(item, new PersonViewModel())));
-			List<Person> details = new List<Person>();
-			weeklyTrendings.ForEach(i => details.Add(itemManager.GetPersonWithDetails(i.ItemId)));
-			for (int i = 0; i < weeklyPersonViewModels.Count; i++)
-			{
-				weeklyPersonViewModels[i].Item = Mapper.Map(weeklyTrendings[i], new ItemDTO());
-				weeklyPersonViewModels[i].SocialMediaNames = details[i].SocialMediaNames;
-				weeklyPersonViewModels[i].OrganisationId = details[i].Organisation.ItemId;
-				weeklyPersonViewModels[i].OrganisationName = details[i].Organisation.Name;
-
-			}
-			
-			itemManager.GetMostTrendingItemsForUserAndItemType(userId, ItemType.Organisation, 4, true).OrderBy(item => item.TrendingPercentage).Reverse().ForEach(item => weeklyTrendings.Add(item));
-			if (weeklyTrendings.Count < 8) {
-				List<Item> trendings = itemManager.GetMostTrendingItemsForType(ItemType.Organisation, 4, true).ToList();
-				while (weeklyTrendings.Count < 8) {
-					List<int> ids = new List<int>();
-					weeklyTrendings.ForEach(i => ids.Add(i.ItemId));
-					if (ids.Contains(trendings.First().ItemId)) {
-						trendings.RemoveAt(0);
-					} else {
-						weeklyTrendings.Add(trendings.First());
-						trendings.RemoveAt(0);
-					}
-				}
-			}
-			itemManager.GetMostTrendingItemsForUserAndItemType(userId, ItemType.Theme, 4, true).OrderBy(item => item.TrendingPercentage).Reverse().ForEach(item => weeklyTrendings.Add(item));
-			if (weeklyTrendings.Count < 12) {
-				List<Item> trendings = itemManager.GetMostTrendingItemsForType(ItemType.Theme, 4, true).ToList();
-				while (weeklyTrendings.Count < 12) {
-					List<int> ids = new List<int>();
-					weeklyTrendings.ForEach(i => ids.Add(i.ItemId));
-					if (ids.Contains(trendings.First().ItemId)) {
-						trendings.RemoveAt(0);
-					} else {
-						weeklyTrendings.Add(trendings.First());
-						trendings.RemoveAt(0);
-					}
-				}
-			}
-			// Making widgets
-			List<Widget> widgets = new List<Widget>();
-			
-			foreach (Item item in weeklyTrendings)
-			{
-				IEnumerable<Widget> widgetsToAdd = widgetManager.GetAllWidgetsWithAllDataForItem(item.ItemId)
-					.Where(widget => widget.PropertyTags
-						.Any(proptag => proptag.Name.ToLower().Equals("mentions")))
-					.AsEnumerable();
-				if (widgetsToAdd != null) widgets.AddRange(widgetsToAdd);
-			}
-			
-			
-			WeeklyReviewModel weeklyReviewModel = new WeeklyReviewModel {
-				WeeklyPersonViewModels = weeklyPersonViewModels,
-				WeeklyItems = weeklyTrendings,
-				widgets = widgets,
-				User = User.Identity.IsAuthenticated ? userManager.GetUser(User.Identity.GetUserId()) : null,
-			};
-			
-			return View(weeklyReviewModel);
-		}	
 		
 		// GET: /User/Login
 		[AllowAnonymous]
@@ -197,8 +98,10 @@ namespace BAR.UI.MVC.Controllers
 				return RedirectToAction("Index", "User");
 			}
 
-			RegisterViewModel registerViewModel = new RegisterViewModel();
-			registerViewModel.DateOfBirth = DateTime.Now;
+			RegisterViewModel registerViewModel = new RegisterViewModel
+			{
+				DateOfBirth = DateTime.Now
+			};
 			return View(registerViewModel);
 		}
 
@@ -535,11 +438,11 @@ namespace BAR.UI.MVC.Controllers
 			userManager = new UserManager();
 
 			User user = userManager.GetUser(User.Identity.GetUserId());
-			var areas = userManager.GetAreas().Select(x => new SelectListItem
+			var areas = userManager.GetAreas().Select(area => new SelectListItem
 			{
-				Value = x.AreaId.ToString(),
-				Text = x.Residence,
-			}).OrderBy(x => x.Text);
+				Value = area.AreaId.ToString(),
+				Text = area.Residence,
+			}).OrderBy(area => area.Text);
 
 			//Assembling the view
 			SettingsViewModel settingsViewModel = new SettingsViewModel
@@ -624,10 +527,125 @@ namespace BAR.UI.MVC.Controllers
 			});
 
 			IEnumerable<Subscription> subs = subManager.GetSubscriptionsWithItemsForUser(User.Identity.GetUserId());
-			personViewModels.Persons = personViewModels.Persons.Where(p => subs.Any(s => s.SubscribedItem.ItemId == p.Item.ItemId)).ToList();
-			personViewModels.Persons.ForEach(i => i.Subscribed = true);
+			personViewModels.Persons = personViewModels.Persons.Where(person => subs.Any(sub => sub.SubscribedItem.ItemId == person.Item.ItemId)).ToList();
+			personViewModels.Persons.ForEach(person => person.Subscribed = true);
 
 			return personViewModels;
+		}
+
+		/// <summary>
+		/// Gives back a partial view of the weekly review
+		/// </summary>
+		public ActionResult UserWeeklyReview()
+		{
+			// Building WeeklyReviewModel
+			WidgetManager widgetManager = new WidgetManager();
+			ItemManager itemManager = new ItemManager();
+			userManager = new UserManager();
+			string userId = User.Identity.GetUserId();
+
+			// -------- Making WeeklyReviewModel --------
+			// Getting trending items for user and all items
+			List<Item> weeklyTrendings = new List<Item>();
+
+			itemManager.GetMostTrendingItemsForUserAndItemType(userId, ItemType.Person, 4, true).OrderBy(item => item.TrendingPercentage).Reverse().ForEach(item => weeklyTrendings.Add(item));
+			if (weeklyTrendings.Count < 4)
+			{
+				List<Item> trendings = itemManager.GetMostTrendingItemsForType(ItemType.Person, 4, true).ToList();
+				while (weeklyTrendings.Count < 4)
+				{
+					List<int> ids = new List<int>();
+					weeklyTrendings.ForEach(i => ids.Add(i.ItemId));
+					if (ids.Contains(trendings.First().ItemId))
+					{
+						trendings.RemoveAt(0);
+					}
+					else
+					{
+						weeklyTrendings.Add(trendings.First());
+						trendings.RemoveAt(0);
+					}
+				}
+			}
+
+			weeklyTrendings.OrderBy(item => item.TrendingPercentage);
+
+			// Getting PersonViewModels for Persons
+			List<PersonViewModel> weeklyPersonViewModels = new List<PersonViewModel>();
+			weeklyTrendings.ForEach(item => weeklyPersonViewModels.Add(Mapper.Map(item, new PersonViewModel())));
+			List<Person> details = new List<Person>();
+			weeklyTrendings.ForEach(i => details.Add(itemManager.GetPersonWithDetails(i.ItemId)));
+			for (int i = 0; i < weeklyPersonViewModels.Count; i++)
+			{
+				weeklyPersonViewModels[i].Item = Mapper.Map(weeklyTrendings[i], new ItemDTO());
+				weeklyPersonViewModels[i].SocialMediaNames = details[i].SocialMediaNames;
+				weeklyPersonViewModels[i].OrganisationId = details[i].Organisation.ItemId;
+				weeklyPersonViewModels[i].OrganisationName = details[i].Organisation.Name;
+
+			}
+
+			itemManager.GetMostTrendingItemsForUserAndItemType(userId, ItemType.Organisation, 4, true).OrderBy(item => item.TrendingPercentage).Reverse().ForEach(item => weeklyTrendings.Add(item));
+			if (weeklyTrendings.Count < 8)
+			{
+				List<Item> trendings = itemManager.GetMostTrendingItemsForType(ItemType.Organisation, 4, true).ToList();
+				while (weeklyTrendings.Count < 8)
+				{
+					List<int> ids = new List<int>();
+					weeklyTrendings.ForEach(i => ids.Add(i.ItemId));
+					if (ids.Contains(trendings.First().ItemId))
+					{
+						trendings.RemoveAt(0);
+					}
+					else
+					{
+						weeklyTrendings.Add(trendings.First());
+						trendings.RemoveAt(0);
+					}
+				}
+			}
+
+			itemManager.GetMostTrendingItemsForUserAndItemType(userId, ItemType.Theme, 4, true).OrderBy(item => item.TrendingPercentage).Reverse().ForEach(item => weeklyTrendings.Add(item));
+			if (weeklyTrendings.Count < 12)
+			{
+				List<Item> trendings = itemManager.GetMostTrendingItemsForType(ItemType.Theme, 4, true).ToList();
+				while (weeklyTrendings.Count < 12)
+				{
+					List<int> ids = new List<int>();
+					weeklyTrendings.ForEach(i => ids.Add(i.ItemId));
+					if (ids.Contains(trendings.First().ItemId))
+					{
+						trendings.RemoveAt(0);
+					}
+					else
+					{
+						weeklyTrendings.Add(trendings.First());
+						trendings.RemoveAt(0);
+					}
+				}
+			}
+
+			// Making widgets
+			List<Widget> widgets = new List<Widget>();
+
+			foreach (Item item in weeklyTrendings)
+			{
+				IEnumerable<Widget> widgetsToAdd = widgetManager.GetAllWidgetsWithAllDataForItem(item.ItemId)
+					.Where(widget => widget.PropertyTags
+						.Any(proptag => proptag.Name.ToLower().Equals("mentions")))
+					.AsEnumerable();
+				if (widgetsToAdd != null) widgets.AddRange(widgetsToAdd);
+			}
+
+
+			WeeklyReviewModel weeklyReviewModel = new WeeklyReviewModel
+			{
+				WeeklyPersonViewModels = weeklyPersonViewModels,
+				WeeklyItems = weeklyTrendings,
+				widgets = widgets,
+				User = User.Identity.IsAuthenticated ? userManager.GetUser(User.Identity.GetUserId()) : null,
+			};
+
+			return View(weeklyReviewModel);
 		}
 
 		#region Helpers

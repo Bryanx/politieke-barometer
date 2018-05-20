@@ -24,7 +24,6 @@ namespace BAR.UI.MVC.Controllers.api
 	{
 		private IWidgetManager widgetManager;
 		private IItemManager itemManager;
-		private IDataManager dataManager;
 
 		/// <summary>
 		///Reads all widgets for a user dashboard and returns them

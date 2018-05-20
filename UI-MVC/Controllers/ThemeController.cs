@@ -6,10 +6,8 @@ using BAR.UI.MVC.App_GlobalResources;
 using BAR.UI.MVC.Attributes;
 using BAR.UI.MVC.Models;
 using Microsoft.AspNet.Identity;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using WebGrease.Css.Extensions;
 using static BAR.UI.MVC.Models.ItemViewModels;
@@ -44,7 +42,7 @@ namespace BAR.UI.MVC.Controllers
 			themes = Mapper.Map(itemManager.GetAllThemes().Where(theme => theme.SubPlatform.SubPlatformId == subPlatformID), new List<ItemDTO>());
 
 			IEnumerable<Subscription> subs = subManager.GetSubscriptionsWithItemsForUser(User.Identity.GetUserId());
-			themes.Where(p => subs.Any(s => s.SubscribedItem.ItemId == p.ItemId)).ForEach(dto => dto.Subscribed = true);
+			themes.Where(theme => subs.Any(sub => sub.SubscribedItem.ItemId == theme.ItemId)).ForEach(dto => dto.Subscribed = true);
 
 			//Assembling the view
 			return View("Index",
@@ -66,13 +64,13 @@ namespace BAR.UI.MVC.Controllers
 			userManager = new UserManager();
 			subManager = new SubscriptionManager();
 
-			Item item = itemManager.GetThemeWithDetails(id);
+			Item requestedItem = itemManager.GetThemeWithDetails(id);
 			Theme theme = itemManager.GetThemeWithDetails(id);
 
-			if (item == null) return HttpNotFound();
+			if (requestedItem == null) return HttpNotFound();
 
 			Item subbedItem = subManager.GetSubscribedItemsForUser(User.Identity.GetUserId())
-				.FirstOrDefault(i => i.ItemId == item.ItemId);
+				.FirstOrDefault(item => item.ItemId == item.ItemId);
 
 			ThemeViewModel themeViewModel = Mapper.Map(theme, new ThemeViewModel());
 

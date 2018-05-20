@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -16,129 +15,133 @@ using static BAR.UI.MVC.Models.ItemViewModels;
 
 namespace BAR.UI.MVC.Controllers
 {
-  /// <summary>
-  /// This controller is used for managing the homepage.
-  /// </summary>
-  public class HomeController : LanguageController
-  {
-    private const string INDEX_PAGE_TITLE = "Politieke Barometer";
-    private IItemManager itemManager;
-    private IUserManager userManager;
-    private ISubplatformManager subplatformManager;
+	/// <summary>
+	/// This controller is used for managing the homepage.
+	/// </summary>
+	public class HomeController : LanguageController
+	{
+		private const string INDEX_PAGE_TITLE = "Politieke Barometer";
+		private IItemManager itemManager;
+		private IUserManager userManager;
+		private ISubplatformManager subplatformManager;
 
-    /// <summary>
-    /// Landing page for logged-in and non-logged-in users.
-    /// </summary>
-    [AllowAnonymous]
-    public ActionResult Index()
-    {
-      userManager = new UserManager();
-      itemManager = new ItemManager();
+		/// <summary>
+		/// Landing page for logged-in and non-logged-in users.
+		/// </summary>
+		[AllowAnonymous]
+		public ActionResult Index()
+		{
+			userManager = new UserManager();
+			itemManager = new ItemManager();
 
-      // -------- Making WeeklyReviewModel --------
-      // Getting trending items
-      List<Item> weeklyTrendings = itemManager.GetMostTrendingItems(4, true).ToList();
-      
-      // Getting PersonViewModels
-      List<PersonViewModel> weeklyPersonViewModels = new List<PersonViewModel>();
-      itemManager.GetMostTrendingItemsForType(ItemType.Person, 4, true).ForEach(item => weeklyPersonViewModels.Add(Mapper.Map(item, new PersonViewModel())));
-      for (int i = 0; i < weeklyPersonViewModels.Count; i++)
-      {
-        weeklyPersonViewModels[i].Item = Mapper.Map(weeklyTrendings[i], new ItemDTO());
-        weeklyPersonViewModels[i].SocialMediaNames = itemManager.GetPersonWithDetails(weeklyTrendings[i].ItemId).SocialMediaNames;
+			// -------- Making WeeklyReviewModel --------
+			// Getting trending items
+			List<Item> weeklyTrendings = itemManager.GetMostTrendingItems(4, true).ToList();
 
-      }
+			// Getting PersonViewModels
+			List<PersonViewModel> weeklyPersonViewModels = new List<PersonViewModel>();
+			itemManager.GetMostTrendingItemsForType(ItemType.Person, 4, true).ForEach(item => weeklyPersonViewModels.Add(Mapper.Map(item, new PersonViewModel())));
+			for (int i = 0; i < weeklyPersonViewModels.Count; i++)
+			{
+				weeklyPersonViewModels[i].Item = Mapper.Map(weeklyTrendings[i], new ItemDTO());
+				weeklyPersonViewModels[i].SocialMediaNames = itemManager.GetPersonWithDetails(weeklyTrendings[i].ItemId).SocialMediaNames;
 
-      // ------- Making TopTrending -------
-      // Getting trending items
-      List<Item> trendings = itemManager.GetMostTrendingItems(3).ToList();
+			}
 
-      // Getting personViewmodels
-      List<PersonViewModel> trendingPersonViewModels = new List<PersonViewModel>();
-      itemManager.GetMostTrendingItemsForType(ItemType.Person, 3).ForEach(item => trendingPersonViewModels.Add(Mapper.Map(item, new PersonViewModel())));
-      for (int i = 0; i < trendingPersonViewModels.Count; i++)
-      {
-        trendingPersonViewModels[i].Item = Mapper.Map(trendings[i], new ItemDTO());
-        trendingPersonViewModels[i].SocialMediaNames = itemManager.GetPersonWithDetails(trendings[i].ItemId).SocialMediaNames;
-      }
+			// ------- Making TopTrending -------
+			// Getting trending items
+			List<Item> trendings = itemManager.GetMostTrendingItems(3).ToList();
 
-      //Assembling the view
-      return View(new ItemViewModel
-      {
-        PageTitle = INDEX_PAGE_TITLE,
-        User = User.Identity.IsAuthenticated ? userManager.GetUser(User.Identity.GetUserId()) : null,
-        Items = Mapper.Map<IList<Item>, IList<ItemDTO>>(itemManager.GetAllItems().ToList()),
-        TopTrendingPersonViewModels = trendingPersonViewModels,
-        TopTrendingitems = trendings,
-        WeeklyReviewModel = new WeeklyReviewModel
-        {
-          WeeklyPersonViewModels = weeklyPersonViewModels,
-          WeeklyItems = weeklyTrendings
-        }
-      });
-    }
-    /// <summary>
-    /// Privacy page for logged-in and non-logged-in users.
-    /// </summary>
-    [AllowAnonymous]
-    public ActionResult Privacy()
-    {
-      userManager = new UserManager();
+			// Getting personViewmodels
+			List<PersonViewModel> trendingPersonViewModels = new List<PersonViewModel>();
+			itemManager.GetMostTrendingItemsForType(ItemType.Person, 3).ForEach(item => trendingPersonViewModels.Add(Mapper.Map(item, new PersonViewModel())));
+			for (int i = 0; i < trendingPersonViewModels.Count; i++)
+			{
+				trendingPersonViewModels[i].Item = Mapper.Map(trendings[i], new ItemDTO());
+				trendingPersonViewModels[i].SocialMediaNames = itemManager.GetPersonWithDetails(trendings[i].ItemId).SocialMediaNames;
+			}
 
-      //Assembling the view
-      return View(new BaseViewModel()
-      {
-        PageTitle = Resources.PrivacyAndSafety,
-        User = User.Identity.IsAuthenticated ? userManager.GetUser(User.Identity.GetUserId()) : null
-      });
-    }
+			//Assembling the view
+			return View(new ItemViewModel
+			{
+				PageTitle = INDEX_PAGE_TITLE,
+				User = User.Identity.IsAuthenticated ? userManager.GetUser(User.Identity.GetUserId()) : null,
+				Items = Mapper.Map<IList<Item>, IList<ItemDTO>>(itemManager.GetAllItems().ToList()),
+				TopTrendingPersonViewModels = trendingPersonViewModels,
+				TopTrendingitems = trendings,
+				WeeklyReviewModel = new WeeklyReviewModel
+				{
+					WeeklyPersonViewModels = weeklyPersonViewModels,
+					WeeklyItems = weeklyTrendings
+				}
+			});
+		}
 
-    /// <summary>
-    /// FAQ page for logged-in and non-logged-in users.
-    /// </summary>
-    [AllowAnonymous]
-    public ActionResult Faq()
-    {
-      userManager = new UserManager();
+		/// <summary>
+		/// Privacy page for logged-in and non-logged-in users.
+		/// </summary>
+		[AllowAnonymous]
+		public ActionResult Privacy()
+		{
+			userManager = new UserManager();
 
-      //Assembling the view
-      return View(new BaseViewModel()
-      {
-        PageTitle = Resources.QuestionAndAnswer,
-        User = User.Identity.IsAuthenticated ? userManager.GetUser(User.Identity.GetUserId()) : null
-      });
-    }
+			//Assembling the view
+			return View(new BaseViewModel()
+			{
+				PageTitle = Resources.PrivacyAndSafety,
+				User = User.Identity.IsAuthenticated ? userManager.GetUser(User.Identity.GetUserId()) : null
+			});
+		}
 
-    /// <summary>
-    /// Saves the language preferences in a cookie.
-    /// </summary>
-    public ActionResult SetCulture(string culture)
-    {
-      // Validate input
-      culture = LanguageHelper.GetImplementedCulture(culture);
-      // Save culture in a cookie
-      HttpCookie cookie = Request.Cookies["_culture"];
-      if (cookie != null)
-        cookie.Value = culture;   // update cookie value
-      else
-      {
-        cookie = new HttpCookie("_culture");
-        cookie.Value = culture;
-        cookie.Expires = DateTime.Now.AddYears(1);
-      }
-      Response.Cookies.Add(cookie);
-      return Redirect(Request.UrlReferrer.ToString());
-    }
+		/// <summary>
+		/// FAQ page for logged-in and non-logged-in users.
+		/// </summary>
+		[AllowAnonymous]
+		public ActionResult Faq()
+		{
+			userManager = new UserManager();
 
-    /// <summary>
-    /// Returns a javascript object with language resources.
-    /// This way local resources can be used in javascript files.
-    /// </summary>
-    public ActionResult GetResources()
-    {
-      Response.ContentType = "text/javascript";
-      return View();
-    }
+			//Assembling the view
+			return View(new BaseViewModel()
+			{
+				PageTitle = Resources.QuestionAndAnswer,
+				User = User.Identity.IsAuthenticated ? userManager.GetUser(User.Identity.GetUserId()) : null
+			});
+		}
 
-  }
+		/// <summary>
+		/// Saves the language preferences in a cookie.
+		/// </summary>
+		public ActionResult SetCulture(string culture)
+		{
+			// Validate input
+			culture = LanguageHelper.GetImplementedCulture(culture);
+
+			// Save culture in a cookie
+			HttpCookie cookie = Request.Cookies["_culture"];
+			if (cookie != null)
+				cookie.Value = culture;   // update cookie value
+			else
+			{
+				cookie = new HttpCookie("_culture")
+				{
+					Value = culture,
+					Expires = DateTime.Now.AddYears(1)
+				};
+			}
+			Response.Cookies.Add(cookie);
+
+			return Redirect(Request.UrlReferrer.ToString());
+		}
+
+		/// <summary>
+		/// Returns a javascript object with language resources.
+		/// This way local resources can be used in javascript files.
+		/// </summary>
+		public ActionResult GetResources()
+		{
+			Response.ContentType = "text/javascript";
+			return View();
+		}
+	}
 }

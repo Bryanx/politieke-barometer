@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Web;
 using System.Web.Mvc;
@@ -25,6 +23,7 @@ namespace BAR.UI.MVC.Controllers {
                     ? Request.UserLanguages[0]
                     : // obtain it from HTTP header AcceptLanguages
                     null;
+
             // Validate culture name
             cultureName = LanguageHelper.GetImplementedCulture(cultureName); // This is safe
 
