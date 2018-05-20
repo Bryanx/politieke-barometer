@@ -768,4 +768,10 @@
   <data name="Town" xml:space="preserve">
     <value>Town</value>
   </data>
+  <data name="Interval" xml:space="preserve">
+    <value>Interval</value>
+  </data>
+  <data name="SetTime" xml:space="preserve">
+    <value>Start synchronise</value>
+  </data>
 </root>

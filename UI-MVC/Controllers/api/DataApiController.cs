@@ -8,6 +8,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web.Http;
+using BAR.UI.MVC;
 
 namespace BAR.UI.MVC.Controllers.api
 {
@@ -19,10 +20,28 @@ namespace BAR.UI.MVC.Controllers.api
 		private IUserManager userManager;
 		private ISubscriptionManager subscriptionManager;
 
-		[HttpGet]
-		[Route("api/Data/Synchronize")]
+        [HttpPost]
+        [Route("api/Data/SetSynchronize/{interval}/{start}/{id}")]
+        public IHttpActionResult SetSynchronize(int id,int interval, string start)
+        {
+
+            start = start.Substring(0, 2) + ":" + start.Substring(2, start.Length);
+            IDataManager dataManager = new DataManager();
+            if (interval != 0 || start != "0")
+            {
+                dataManager.ChangeInterval(id, interval);
+                dataManager.ChangeStartTimer(id, start);
+                return StatusCode(HttpStatusCode.Accepted);
+            }
+            else
+            {
+                return StatusCode(HttpStatusCode.NotAcceptable);
+            }
+        }
+        [HttpGet]
+		[Route("api/Data/Synchronize/{id}")]
 		[SubPlatformCheckAPI]
-		public async Task<IHttpActionResult> SynchronizeAsync()
+		public async Task<IHttpActionResult> Synchronize(int id)
 		{
 			dataManager = new DataManager();
 
@@ -44,7 +63,7 @@ namespace BAR.UI.MVC.Controllers.api
 			using (HttpClient client = new HttpClient())
 			{
 				//Make request
-				HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, dataManager.GetDataSource(1).Url);
+				HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, dataManager.GetDataSource(id).Url);
 				request.Headers.Add("Accept", "application/json");
 				request.Headers.Add("X-API-Key", "aEN3K6VJPEoh3sMp9ZVA73kkr");
 
@@ -130,5 +149,24 @@ namespace BAR.UI.MVC.Controllers.api
 				}
 			}
 		}
-	}
+        [HttpPost]
+        [Route("api/Data/DeleteItem/{dataSourceId}")]
+        public IHttpActionResult ToggleDeleteItem(string dataSourceId)
+        {
+            dataManager = new DataManager();
+            dataManager.RemoveDataSource(Int32.Parse(dataSourceId));
+            return StatusCode(HttpStatusCode.NoContent);
+        }
+        [HttpPost]
+        [Route("api/Data/ChangeDataSource/{dataSourceId}/{interval}")]
+        public IHttpActionResult RenameItem(string dataSourceId, string interval)
+        {
+            int id = Convert.ToInt32(dataSourceId);
+            int intervalNumber = Convert.ToInt32(interval);
+            dataManager = new DataManager();
+            dataManager.ChangeDataSource(id, intervalNumber);
+            return StatusCode(HttpStatusCode.NoContent);
+        }
+
+    }
 }

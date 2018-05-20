@@ -217,5 +217,5 @@ namespace BAR.DAL
 		{
 			return ctx.UserActivities.Where(act => act.ActivityType == type).AsEnumerable();
 		}
-	}
+    }
 }

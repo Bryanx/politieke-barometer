@@ -18,7 +18,8 @@ namespace BAR.DAL
 		IEnumerable<Question> ReadQuestionsForType(QuestionType type);
 		IEnumerable<UserActivity> ReadAllActvities();
 		IEnumerable<UserActivity> ReadActivitiesForType(ActivityType type);
-	
+		
+
 		//Create
 		int CreateSubplatform(SubPlatform subPlatform);
 		int CreateQuestion(Question question);
@@ -29,6 +30,8 @@ namespace BAR.DAL
 		int UpdateQuestion(Question question);
 		int UpdateQuestions(IEnumerable<Question> questions);
 		int UpdateUserActivity(UserActivity activity);
+		
+
 
 		//Delete
 		int DeleteSubplatform(SubPlatform subPlatform);

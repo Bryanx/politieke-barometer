@@ -35,11 +35,17 @@ namespace BAR.BL.Managers
         IEnumerable<DataSource> GetAllDataSources();
         DataSource GetDataSource(int dataSourceId);
         void RemoveDataSource(int dataSourceId);
-        void ChangeDataSource(int dataSourceId);
+       void ChangeDataSource(int dataSourceId, int interval);
+               int GetInterval(int dataSourceId);
+               string GetStartTimer(int dataSourceId);
+               int ChangeInterval(int dataSourceId, int interval);
+               string ChangeStartTimer(int dataSourceId, string startTimer);
+               DateTime ChangeLastTimeChecked(int dataSourceId, DateTime date);
+
 
 		//Others
 		bool SynchronizeData(string json);
 		bool IsJsonEmpty(string json);
-		IEnumerable<string> GetUrlsForItem(int itemId);		
+		IEnumerable<string> GetUrlsForItem(int itemId);
 	}
 }

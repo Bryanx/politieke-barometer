@@ -5,6 +5,7 @@ using BAR.UI.MVC.App_GlobalResources;
 using BAR.UI.MVC.Models;
 using Microsoft.AspNet.Identity;
 using AutoMapper;
+using BAR.BL.Domain.Data;
 using System.IO;
 
 namespace BAR.UI.MVC.Controllers
@@ -26,16 +27,18 @@ namespace BAR.UI.MVC.Controllers
 		/// </summary>
 		public ActionResult GeneralManagement()
 		{
-			userManager = new UserManager();
-			dataManager = new DataManager();
-
-			//Assembling the view
-			return View(new GeneralManagementViewModel
-			{
-				PageTitle = Resources.GeneralManagement,
-				User = userManager.GetUser(User.Identity.GetUserId()),
-				Sources = dataManager.GetAllSources()
-			});
+			userManager = new UserManager();      
+      dataManager = new DataManager();
+      
+      IEnumerable<DataSource> datasources = dataManager.GetAllDataSources();
+      
+      //Assembling the view
+      return View(new GeneralManagementViewModel
+      {
+        PageTitle = Resources.GeneralManagement,
+        User = userManager.GetUser(User.Identity.GetUserId()),
+         DataSources = datasources
+      });
 		}
 
 		/// <summary>
