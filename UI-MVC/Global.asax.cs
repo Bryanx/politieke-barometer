@@ -28,8 +28,8 @@ namespace BAR.UI.MVC
           .ForMember(m => m.ItemId, opt => opt.MapFrom(src => src.ItemId))
           .ForMember(m => m.Name, opt => opt.MapFrom(src => src.Name))
           .ForMember(m => m.NumberOfMentions, opt => opt.MapFrom(src => src.NumberOfMentions))
-          .ForMember(m => m.SentimentNegative, opt => opt.MapFrom(src => src.SentimentNegative*100))
-          .ForMember(m => m.SentimentPositive, opt => opt.MapFrom(src => src.SentimentPositve*100))
+          .ForMember(m => m.SentimentNegative, opt => opt.MapFrom(src => src.SentimentNegative))
+          .ForMember(m => m.SentimentPositive, opt => opt.MapFrom(src => src.SentimentPositve))
           .ForMember(m => m.TrendingPercentage, opt => opt.MapFrom(src => Math.Floor(src.TrendingPercentage)));
         cfg.CreateMap<UserWidget, UserWidgetDTO>()
           .ForMember(w => w.WidgetId, opt => opt.MapFrom(src => src.WidgetId))
