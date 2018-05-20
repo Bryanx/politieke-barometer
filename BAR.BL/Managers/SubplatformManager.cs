@@ -81,7 +81,8 @@ namespace BAR.BL.Managers
 		/// Changes the page colors of a specific platform
 		/// Updates the changes in database
 		/// </summary>
-		public Customization ChangePageColors(int platformId, string primaryColor, string secondairyColor, string tertiaryColor, string backgroundColor, string textColor)
+		public Customization ChangePageColors(int platformId, string primaryColor, string primaryDarkerColor, string primaryDarkestColor, string secondairyColor,
+			string secondaryLighterColor, string secondaryDarkerColor, string secondaryDarkestColor, string tertiaryColor, string backgroundColor, string textColor)
 		{
 			InitRepo();
 
@@ -92,7 +93,12 @@ namespace BAR.BL.Managers
 			//Change Customization
 			Customization custom = platform.Customization;
 			custom.PrimaryColor = primaryColor;
+			custom.PrimaryDarkerColor = primaryDarkerColor;
+			custom.PrimaryDarkestColor = primaryDarkestColor;
 			custom.SecondaryColor = secondairyColor;
+			custom.SecondaryLighterColor = secondaryLighterColor;
+			custom.SecondaryDarkerColor = secondaryDarkerColor;
+			custom.SecondaryDarkestColor = secondaryDarkestColor;
 			custom.TertiaryColor = tertiaryColor;
 			custom.BackgroundColor = backgroundColor;
 			custom.TextColor = textColor;

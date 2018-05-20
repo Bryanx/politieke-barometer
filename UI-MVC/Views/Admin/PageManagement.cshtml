@@ -8,7 +8,7 @@
 
 <div class="row">
     <div class="col-md-6 col-sm-6 col-xs-12">
-        <div class="x_panel fixed_height_670">
+        <div class="x_panel fixed_height_900">
             <div class="x_title">
                 <h2>Pagina kleuren</h2>
                 <div class="clearfix"></div>
@@ -17,35 +17,70 @@
                 <br />
                 <div class="col-sm-8 col-md-8 col-xs-12 center-margin">
                     <form id="form_page_color" class="form-horizontal form-label-left">
-                        <label class="control-label">Primaire kleur</label>
+                        <label class="control-label">@Resources.PrimaryColor</label>
                         <div id="cp-primary" class="input-group">
                             @Html.TextBoxFor(model => model.PrimaryColor, "", new { @class = "form-control", id = "ip-primary", placeholder = @Model.PrimaryColor })
                             <span class="input-group-addon">
                                 <i></i>
                             </span>
                         </div>
-                        <label class="control-label">Secundaire kleur</label>
+                        <label class="control-label">@Resources.PrimaryDarkerColor</label>
+                        <div id="cp-primary-darker" class="input-group">
+                            @Html.TextBoxFor(model => model.PrimaryDarkerColor, "", new { @class = "form-control", id = "ip-primary-darker", placeholder = @Model.PrimaryDarkerColor })
+                            <span class="input-group-addon">
+                                <i></i>
+                            </span>
+                        </div>
+                        <label class="control-label">@Resources.PrimaryDarkestColor</label>
+                        <div id="cp-primary-darkest" class="input-group">
+                            @Html.TextBoxFor(model => model.PrimaryDarkestColor, "", new { @class = "form-control", id = "ip-primary-darkest", placeholder = @Model.PrimaryDarkestColor })
+                            <span class="input-group-addon">
+                                <i></i>
+                            </span>
+                        </div>
+                        <label class="control-label">@Resources.SecondaryColor</label>
                         <div id="cp-secondary" class="input-group">
                             @Html.TextBoxFor(model => model.SecondaryColor, "", new { @class = "form-control", id = "ip-secondary", placeholder = @Model.SecondaryColor })
                             <span class="input-group-addon">
                                 <i></i>
                             </span>
                         </div>
-                        <label class="control-label">Tertiaire kleur</label>
+                        <label class="control-label">@Resources.SecondaryLighterColor</label>
+                        <div id="cp-secondary-lighter" class="input-group">
+                            @Html.TextBoxFor(model => model.SecondaryLighterColor, "", new { @class = "form-control", id = "ip-secondary-lighter", placeholder = @Model.SecondaryLighterColor })
+                            <span class="input-group-addon">
+                                <i></i>
+                            </span>
+                        </div>
+                        <label class="control-label">@Resources.SecondaryDarkerColor</label>
+                        <div id="cp-secondary-darker" class="input-group">
+                            @Html.TextBoxFor(model => model.SecondaryDarkerColor, "", new { @class = "form-control", id = "ip-secondary-darker", placeholder = @Model.SecondaryDarkerColor })
+                            <span class="input-group-addon">
+                                <i></i>
+                            </span>
+                        </div>
+                        <label class="control-label">@Resources.SecondaryDarkestColor</label>
+                        <div id="cp-secondary-darkest" class="input-group">
+                            @Html.TextBoxFor(model => model.SecondaryDarkestColor, "", new { @class = "form-control", id = "ip-secondary-darkest", placeholder = @Model.SecondaryDarkestColor })
+                            <span class="input-group-addon">
+                                <i></i>
+                            </span>
+                        </div>
+                        <label class="control-label">@Resources.TertiaryColor</label>
                         <div id="cp-tertiary" class="input-group">
                             @Html.TextBoxFor(model => model.TertiaryColor, "", new { @class = "form-control", id = "ip-tertiary", placeholder = @Model.TertiaryColor })
                             <span class="input-group-addon">
                                 <i></i>
                             </span>
                         </div>
-                        <label class="control-label">Achtergrond kleur</label>
+                        <label class="control-label">@Resources.BackgroundColor</label>
                         <div id="cp-bg" class="input-group">
                             @Html.TextBoxFor(model => model.BackgroundColor, "", new { @class = "form-control", id = "ip-bg", placeholder = @Model.BackgroundColor })
                             <span class="input-group-addon">
                                 <i></i>
                             </span>
                         </div>
-                        <label class="control-label">Tekst kleur</label>
+                        <label class="control-label">@Resources.TextColor</label>
                         <div id="cp-font" class="input-group">
                             @Html.TextBoxFor(model => model.TextColor, "", new { @class = "form-control", id = "ip-font", placeholder = @Model.TextColor })
                             <span class="input-group-addon">

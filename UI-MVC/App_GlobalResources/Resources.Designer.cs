@@ -277,6 +277,15 @@ namespace BAR.UI.MVC.App_GlobalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Background Color.
+        /// </summary>
+        public static string BackgroundColor {
+            get {
+                return ResourceManager.GetString("BackgroundColor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Back to home.
         /// </summary>
         public static string BackToHome {
@@ -1348,6 +1357,33 @@ namespace BAR.UI.MVC.App_GlobalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Primary Color.
+        /// </summary>
+        public static string PrimaryColor {
+            get {
+                return ResourceManager.GetString("PrimaryColor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Darker Primary Color.
+        /// </summary>
+        public static string PrimaryDarkerColor {
+            get {
+                return ResourceManager.GetString("PrimaryDarkerColor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Darkest Primary Color.
+        /// </summary>
+        public static string PrimaryDarkestColor {
+            get {
+                return ResourceManager.GetString("PrimaryDarkestColor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Privacy.
         /// </summary>
         public static string Privacy {
@@ -1537,6 +1573,42 @@ namespace BAR.UI.MVC.App_GlobalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Secondary Color.
+        /// </summary>
+        public static string SecondaryColor {
+            get {
+                return ResourceManager.GetString("SecondaryColor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Darker Secondary Color.
+        /// </summary>
+        public static string SecondaryDarkerColor {
+            get {
+                return ResourceManager.GetString("SecondaryDarkerColor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Darkest Secondary Color.
+        /// </summary>
+        public static string SecondaryDarkestColor {
+            get {
+                return ResourceManager.GetString("SecondaryDarkestColor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lighter Secondary Color.
+        /// </summary>
+        public static string SecondaryLighterColor {
+            get {
+                return ResourceManager.GetString("SecondaryLighterColor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Select your city..
         /// </summary>
         public static string SelectYourCity {
@@ -1704,6 +1776,24 @@ namespace BAR.UI.MVC.App_GlobalResources {
         public static string Synchronize {
             get {
                 return ResourceManager.GetString("Synchronize", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tertiary Color.
+        /// </summary>
+        public static string TertiaryColor {
+            get {
+                return ResourceManager.GetString("TertiaryColor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Text Color.
+        /// </summary>
+        public static string TextColor {
+            get {
+                return ResourceManager.GetString("TextColor", resourceCulture);
             }
         }
         

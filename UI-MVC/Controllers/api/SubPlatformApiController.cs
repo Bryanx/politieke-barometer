@@ -74,7 +74,8 @@ namespace BAR.UI.MVC.Controllers.api
 				return BadRequest(ModelState);
 
 			platformManager.ChangePageColors
-				(suplatformId, model.PrimaryColor, model.SecondaryColor, model.TertiaryColor, model.BackgroundColor, model.TextColor);
+				(suplatformId, model.PrimaryColor, model.PrimaryDarkerColor, model.PrimaryDarkestColor, model.SecondaryColor,
+				model.SecondaryLighterColor, model.SecondaryDarkerColor, model.SecondaryDarkestColor, model.TertiaryColor, model.BackgroundColor, model.TextColor);
 
 			return StatusCode(HttpStatusCode.NoContent);
 		}
