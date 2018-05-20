@@ -507,8 +507,11 @@ namespace BAR.BL.Managers
 			DateTime? lastUpdated = new SubplatformManager().GetSubPlatform(platformId).LastUpdatedActivities;
 
 			//If lastUpdated was to long ago, then the activities shall be udpated
-			if (lastUpdated == null || !lastUpdated.Value.ToString("dd-MM-yy").Equals(DateTime.Now.ToString("dd-MM-yy"))) return ChangeWidgetActities(widgets, platformId);
-			else return widgets;
+			if (lastUpdated == null || !lastUpdated.Value.ToString("dd-MM-yy").Equals(DateTime.Now.ToString("dd-MM-yy"))) widgets = ChangeWidgetActities(widgets, platformId);
+			
+			//Link widdatas to widgets
+			foreach (Widget widget in widgets) widget.WidgetDatas.ToList().AddRange(GetWidgetDatasForWidgetId(widget.WidgetId));
+			return widgets;
 		}
 
 		/// <summary>
@@ -516,27 +519,36 @@ namespace BAR.BL.Managers
 		/// </summary>
 		public IEnumerable<Widget> ChangeWidgetActities(IEnumerable<Widget> widgets, int platformId)
 		{
-			//Remove old widgetdatas
-			widgetRepo.DeleteWidgetDatas(GetWidgetDatasForKeyvalue("activity"));
-
-			//** update widgetDatas **//
+			//** Create new widgetDatas **//
 			DataManager dataManager = new DataManager();
 
 			//1st widget
 			WidgetData loginData = dataManager.GetUserActivitiesData(ActivityType.LoginActivity, DateTime.Now.AddDays(-30));
 			Widget loginWidget = widgets.Where(widget => widget.PropertyTags.All(tag => tag.Name.ToLower().Contains("login"))).SingleOrDefault();
+			loginWidget.WidgetDatas = new List<WidgetData>
+			{
+				loginData
+			};
 			loginData.Widget = loginWidget;
 			widgetRepo.CreateWidgetData(loginData);
 
 			//2nd widget
 			WidgetData registerData = dataManager.GetUserActivitiesData(ActivityType.RegisterActivity, DateTime.Now.AddDays(-30));
 			Widget registerWidget = widgets.Where(widget => widget.PropertyTags.All(tag => tag.Name.ToLower().Contains("register"))).SingleOrDefault();
+			loginWidget.WidgetDatas = new List<WidgetData>
+			{
+				loginData
+			};
 			registerData.Widget = registerWidget;
 			widgetRepo.CreateWidgetData(registerData);
 
 			//3rd widget
 			WidgetData visitData = dataManager.GetUserActivitiesData(ActivityType.VisitActitiy, DateTime.Now.AddDays(-30));
 			Widget visitWidget = widgets.Where(widget => widget.PropertyTags.All(tag => tag.Name.ToLower().Contains("visit"))).SingleOrDefault();
+			loginWidget.WidgetDatas = new List<WidgetData>
+			{
+				loginData
+			};
 			visitData.Widget = visitWidget;
 			widgetRepo.CreateWidgetData(visitData);
 
@@ -573,6 +585,15 @@ namespace BAR.BL.Managers
 				organisationData.Widget = widgets.ElementAt(i);
 				widgetRepo.CreateWidgetData(organisationData);
 			}
+		}
+
+		/// <summary>
+		/// Gives back all the widgetdatas based on the widgetId
+		/// </summary>
+		public IEnumerable<WidgetData> GetWidgetDatasForWidgetId(int widgetId)
+		{
+			InitRepo();
+			return widgetRepo.ReadWidgetDatasForWidgetId(widgetId).AsEnumerable();
 		}
 	}
 }

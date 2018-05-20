@@ -509,12 +509,9 @@ namespace BAR.BL.Managers
 					Value = startdate.ToString("dd-MM")
 				};
 				activity = activities.Where(act => act.TimeStamp.ToString("dd-MM-yy").Equals(startdate.ToString("dd-MM-yy"))).SingleOrDefault();
-				if (activity != null)
-				{
-					graphValue.NumberOfTimes = activity.NumberOfTimes;
-					widgetData.GraphValues.Add(graphValue);
-				}
+				if (activity != null) graphValue.NumberOfTimes = activity.NumberOfTimes;					
 				startdate = startdate.AddDays(-1);
+				widgetData.GraphValues.Add(graphValue);
 			}
 
 			return widgetData;

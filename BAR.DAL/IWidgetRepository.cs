@@ -21,7 +21,8 @@ namespace BAR.DAL
 		IEnumerable<WidgetData> ReadAllWidgetDatas();
 		IEnumerable<WidgetData> ReadWidgetDatasForitemid(int itemId);
 		IEnumerable<WidgetData> ReadWidgetDatasForKeyvalue(string value);
-		
+		IEnumerable<WidgetData> ReadWidgetDatasForWidgetId(int widgetId);
+
 		//Create
 		int CreateDashboard(Dashboard dashboard);
 		int CreateWidget(Widget widget);

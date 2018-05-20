@@ -1960,34 +1960,34 @@ nav .nav-container .searchbar .search-field, form.navbar-form .input-group {
 .fa-snapchat-square:hover::before {
   color: #fbe00f; }
 
-.small-card > .card {
+.small-card > .card, .small-card > .card-url {
   height: 80px;
   font-size: 13px; }
-  .small-card > .card .card-user {
+  .small-card > .card .card-user, .small-card > .card-url .card-user {
     display: none; }
-  .small-card > .card .card-name {
+  .small-card > .card .card-name, .small-card > .card-url .card-name {
     left: 10px;
     font-size: 13px;
     letter-spacing: 0.8px; }
-  .small-card > .card .card-person-organisation {
+  .small-card > .card .card-person-organisation, .small-card > .card-url .card-person-organisation {
     right: 10px; }
-  .small-card > .card .card-trending {
+  .small-card > .card .card-trending, .small-card > .card-url .card-trending {
     top: 45%;
     left: 10px;
     line-height: 4px;
     font-weight: normal; }
-    .small-card > .card .card-trending :first-child {
+    .small-card > .card .card-trending :first-child, .small-card > .card-url .card-trending :first-child {
       border-bottom: 3px solid rgba(137, 137, 137, 0.7); }
-  .small-card > .card .card-nom {
+  .small-card > .card .card-nom, .small-card > .card-url .card-nom {
     top: 45%;
     left: auto;
     right: 10px;
     line-height: 4px;
     font-weight: normal; }
-    .small-card > .card .card-nom :first-child {
+    .small-card > .card .card-nom :first-child, .small-card > .card-url .card-nom :first-child {
       border-bottom: 3px solid rgba(137, 137, 137, 0.7); }
 
-.card {
+.card, .card-url {
   position: relative;
   height: 100px;
   margin-top: 20px;
@@ -1997,6 +1997,21 @@ nav .nav-container .searchbar .search-field, form.navbar-form .input-group {
   box-shadow: 0 0 3px 0 rgba(0, 0, 0, 0.2);
   background: linear-gradient(180deg, white 70%, rgba(137, 137, 137, 0.2) 30%);
   font-weight: normal; }
+
+.card-url {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  background: var(--white);
+  box-shadow: 0 2px 0px 0px rgba(0, 0, 0, 0.07); }
+  .card-url i {
+    display: block;
+    text-align: center;
+    font-size: 40px;
+    transition: font-size .2s; }
+  .card-url:hover i {
+    font-size: 50px; }
 
 .card-user {
   position: absolute;

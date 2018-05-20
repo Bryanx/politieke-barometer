@@ -43,7 +43,8 @@ namespace BAR.BL.Managers
 		IEnumerable<WidgetData> GetAllWidgetDatas();
 		IEnumerable<WidgetData> GetWidgetDatasForItemId(int itemId);
 		IEnumerable<WidgetData> GetWidgetDatasForKeyvalue(string value);
-
+		IEnumerable<WidgetData> GetWidgetDatasForWidgetId(int widgetId);
+	
 		WidgetData AddWidgetData(WidgetData widgetData);
 
 		void RemoveWidgetDatas(IEnumerable<WidgetData> datas);

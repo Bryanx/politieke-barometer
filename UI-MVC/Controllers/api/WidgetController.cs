@@ -101,9 +101,6 @@ namespace BAR.UI.MVC.Controllers.api
 
 				return Ok(widgetDataDtos);
 			}
-			
-			
-			
 		}
 
 		/// <summary>
@@ -228,6 +225,30 @@ namespace BAR.UI.MVC.Controllers.api
 			}
 			
 			return Ok(Mapper.Map(widgets, new List<UserWidgetDTO>()));
+		}
+		
+		/// <summary>
+		/// Returns all activity widgets. These widgets contain information about user activity.
+		/// </summary>
+		[SubPlatformCheckAPI]
+		[System.Web.Http.HttpGet]
+		[System.Web.Http.Route("api/GetActivityWidgets")]
+		public IHttpActionResult GetActivityWidgets()
+		{
+			widgetManager = new WidgetManager();
+
+			object _customObject = null;
+			int suplatformID = -1;
+			if (Request.Properties.TryGetValue("SubPlatformID", out _customObject))
+			{
+				suplatformID = (int)_customObject;
+			}
+			
+			List<Widget> widgets = widgetManager.GetWidgetsForActivities(suplatformID).ToList();
+			
+			if (widgets == null) return NotFound();
+			
+			return Ok(Mapper.Map(widgets.ToList(), new List<UserWidgetDTO>()));
 		}
 	}
 }
