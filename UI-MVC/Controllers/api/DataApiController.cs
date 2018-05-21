@@ -1,8 +1,11 @@
-﻿using BAR.BL.Domain.Users;
+﻿using BAR.BL.Domain.Items;
+using BAR.BL.Domain.Users;
 using BAR.BL.Managers;
 using BAR.UI.MVC.Attributes;
 using BAR.UI.MVC.Helpers;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Text;
@@ -48,7 +51,44 @@ namespace BAR.UI.MVC.Controllers.api
 		[SubPlatformCheckAPI]
 		public async Task<IHttpActionResult> Synchronize(int id)
 		{
+			//Get the subplatformID from the SubPlatformCheckAPI attribute
+			object _customObject = null;
+			int suplatformID = -1;
+			if (Request.Properties.TryGetValue("SubPlatformID", out _customObject))
+			{
+				suplatformID = (int)_customObject;
+			}
+
 			dataManager = new DataManager();
+			itemManager = new ItemManager();
+
+			List<Theme> themes = itemManager.GetAllThemesForSubplatform(suplatformID).ToList();
+
+			//Making the string with all the themes the source should validate
+			string themeString = "\"themes\":{ ";
+			for(int i=0; i< themes.Count(); i++)
+			{
+				themeString += "\"";
+				themeString += themes[i].Name;
+				themeString += "\":[";
+				List<Keyword> keywords = themes[i].Keywords.ToList();
+				for (int j= 0; j < keywords.Count(); j++)
+				{
+					themeString += "\"";
+					themeString += keywords[j].Name;
+					themeString += "\"";
+					if (j != keywords.Count()-1)
+					{
+						themeString += ",";
+					}
+				}
+				themeString += "]";
+				if (i != themes.Count()-1)
+				{
+					themeString += ",";
+				}
+			}
+			themeString += "}";
 
 			string content;
 			if (dataManager.GetLastAudit() == null)
@@ -56,7 +96,10 @@ namespace BAR.UI.MVC.Controllers.api
 				//content = "{}";
 
 				//Test with fewer data 
-				content = "{\"since\":\"2018-05-14 00:00\"}";
+				content = "{" +
+					"\"since\":\"2018-05-18 00:00\"," +
+					themeString +
+					"}";
 			}
 			else
 			{
@@ -93,13 +136,6 @@ namespace BAR.UI.MVC.Controllers.api
 							subscriptionManager = new SubscriptionManager();
 							userManager = new UserManager();
 							ControllerHelpers controllerHelpers = new ControllerHelpers();
-
-							//Get the subplatformID from the SubPlatformCheckAPI attribute
-							int suplatformID = -1;
-							if (Request.Properties.TryGetValue("SubPlatformID", out object _customObject))
-							{
-								suplatformID = (int)_customObject;
-							}
 
 							//Syncronize recent data with all the persons and themes
 							widgetManager.GenerateDataForPersonsAndThemes();

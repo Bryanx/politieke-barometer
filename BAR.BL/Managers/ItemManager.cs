@@ -466,6 +466,17 @@ namespace BAR.BL.Managers
 		}
 
 		/// <summary>
+		/// Returns all (undeleted) themes for a specific subplatform
+		/// </summary>
+		public IEnumerable<Theme> GetAllThemesForSubplatform(int subplatformId)
+		{
+			InitRepo();
+			return itemRepo.ReadAllThemes()
+				.Where(item => item.SubPlatform.SubPlatformId.Equals(subplatformId))
+				.AsEnumerable();
+		}
+
+		/// <summary>
 		/// Returns all people for specific subplatform
 		/// </summary>
 		public IEnumerable<Person> GetAllPersonsForSubplatform(int subPlatformID)
