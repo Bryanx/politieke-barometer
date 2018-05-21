@@ -14,10 +14,10 @@
     
     <script defer>
         (() => {
-            console.log("@Model.widgets.Count()");
-            WeeklyReview("@Model.widgets.ElementAt(0).Title", @Model.widgets.ElementAt(0).Items.ElementAt(0).ItemId, @Model.widgets.ElementAt(0).WidgetId, 1);
-            WeeklyReview("@Model.widgets.ElementAt(4).Title", @Model.widgets.ElementAt(4).Items.ElementAt(0).ItemId, @Model.widgets.ElementAt(4).WidgetId, 2);
-            WeeklyReview("@Model.widgets.ElementAt(8).Title", @Model.widgets.ElementAt(8).Items.ElementAt(0).ItemId, @Model.widgets.ElementAt(8).WidgetId, 3);
+            console.log("@Model.Widgets.Count()");
+            WeeklyReview("@Model.Widgets.ElementAt(0).Title", @Model.Widgets.ElementAt(0).Items.ElementAt(0).ItemId, @Model.Widgets.ElementAt(0).WidgetId, 1);
+            WeeklyReview("@Model.Widgets.ElementAt(4).Title", @Model.Widgets.ElementAt(4).Items.ElementAt(0).ItemId, @Model.Widgets.ElementAt(4).WidgetId, 2);
+            WeeklyReview("@Model.Widgets.ElementAt(8).Title", @Model.Widgets.ElementAt(8).Items.ElementAt(0).ItemId, @Model.Widgets.ElementAt(8).WidgetId, 3);
         })($) 
         
     </script>

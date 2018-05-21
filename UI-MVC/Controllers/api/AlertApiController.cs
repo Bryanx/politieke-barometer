@@ -28,6 +28,7 @@ namespace BAR.UI.MVC.Controllers.api
 			string userId = User.Identity.GetUserId();
 			IEnumerable<UserAlert> userAlerts = subManager.GetUserAlerts(userId);
 			IEnumerable<SubAlert> subAlerts = subManager.GetSubAlerts(userId);
+
 			if (userAlerts == null || subAlerts == null || (userAlerts.Count() == 0 && subAlerts.Count() == 0)) return StatusCode(HttpStatusCode.NoContent);
 
 			//Made DTO class to prevent circular references

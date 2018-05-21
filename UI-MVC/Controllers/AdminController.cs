@@ -1,12 +1,9 @@
-﻿using System;
-using AutoMapper;
+﻿using AutoMapper;
 using BAR.BL.Domain.Core;
-using BAR.BL.Domain.Data;
 using BAR.BL.Domain.Items;
 using BAR.BL.Domain.Users;
 using BAR.BL.Managers;
 using BAR.UI.MVC.App_GlobalResources;
-using BAR.UI.MVC.Attributes;
 using BAR.UI.MVC.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
@@ -33,9 +30,13 @@ namespace BAR.UI.MVC.Controllers
 		/// <summary>
 		/// Dashboard page of admin.
 		/// </summary>
-		public ActionResult Index() {
+		public ActionResult Index()
+		{
 			userManager = new UserManager();
-			return View(new BaseViewModel() {
+
+			//Assembling the view
+			return View(new BaseViewModel()
+			{
 				PageTitle = Resources.AdminDashboard,
 				User = userManager.GetUser(User.Identity.GetUserId())
 			});
@@ -126,26 +127,24 @@ namespace BAR.UI.MVC.Controllers
 		{
 			userManager = new UserManager();
 
-			vm.AdminRoles = userManager.GetAllRoles().Select(x => new SelectListItem
+			vm.AdminRoles = userManager.GetAllRoles().Select(role => new SelectListItem
 			{
-				Value = x.Id,
-				Text = x.Name,
-			}).OrderBy(x => x.Text);
-			vm.UserRoles = userManager.GetAllRoles().Where(r => r.Name == "Admin" || r.Name == "User")
-				.Select(x => new SelectListItem
+				Value = role.Id,
+				Text = role.Name,
+			}).OrderBy(role => role.Text);
+			vm.UserRoles = userManager.GetAllRoles().Where(role => role.Name == "Admin" || role.Name == "User")
+				.Select(role => new SelectListItem
 				{
-					Value = x.Id,
-					Text = x.Name,
-				}).OrderBy(x => x.Text);
+					Value = role.Id,
+					Text = role.Name,
+				}).OrderBy(role => role.Text);
 		}
 
 		/// <summary>
 		/// Method that processes a json file with themes and associated keywords
 		/// </summary>
-		/// <param name="model"></param>
-		/// <returns></returns>
 		[HttpPost]
-		public ActionResult UploadThemes([Bind(Exclude = "jsonFileThemes")]ItemViewModels.ItemViewModel model)
+		public ActionResult UploadThemes([Bind(Exclude = "jsonFileThemes")] ItemViewModel model)
 		{
 			//Get hold of subplatformID we received
 			int subPlatformID = (int)RouteData.Values["SubPlatformID"];
@@ -164,10 +163,8 @@ namespace BAR.UI.MVC.Controllers
 		/// <summary>
 		/// Method that processes a json file with persons and organisations
 		/// </summary>
-		/// <param name="model"></param>
-		/// <returns></returns>
 		[HttpPost]
-		public ActionResult UploadJson([Bind(Exclude = "jsonFile")]ItemViewModels.ItemViewModel model)
+		public ActionResult UploadJson([Bind(Exclude = "jsonFile")] ItemViewModel model)
 		{
 			//Get hold of subplatformID we received
 			int subPlatformID = (int)RouteData.Values["SubPlatformID"];
@@ -186,8 +183,6 @@ namespace BAR.UI.MVC.Controllers
 		/// <summary>
 		/// Creates a person based on model in HttpPost
 		/// </summary>
-		/// <param name="model"></param>
-		/// <returns></returns>
 		[HttpPost]
 		public ActionResult CreatePerson(CreateItemModels.CreatePersonModel model)
 		{
@@ -227,8 +222,6 @@ namespace BAR.UI.MVC.Controllers
 		/// <summary>
 		/// Creates an organisation based on model in HttpPost
 		/// </summary>
-		/// <param name="model"></param>
-		/// <returns></returns>
 		[HttpPost]
 		public ActionResult CreateOrganisation(CreateItemModels.CreateOrganisationModel model)
 		{
@@ -263,8 +256,6 @@ namespace BAR.UI.MVC.Controllers
 		/// <summary>
 		/// Creates a theme based on model in HttpPost
 		/// </summary>
-		/// <param name="model"></param>
-		/// <returns></returns>
 		[HttpPost]
 		public ActionResult CreateTheme(CreateItemModels.CreateThemeModel model)
 		{
@@ -273,7 +264,7 @@ namespace BAR.UI.MVC.Controllers
 			itemManager = new ItemManager();
 			platformManager = new SubplatformManager();
 
-			if(model.Name == null || model.Keywords == null)
+			if (model.Name == null || model.Keywords == null)
 			{
 				return RedirectToAction("ItemManagement", "Admin");
 			}
@@ -287,15 +278,15 @@ namespace BAR.UI.MVC.Controllers
 					return RedirectToAction("ItemManagement", "Admin");
 				}
 			}
-			
+
 			List<string> keywordStrings = model.Keywords.Split(',').ToList();
-			foreach(string word in keywordStrings)
+			foreach (string word in keywordStrings)
 			{
 				word.Replace(" ", string.Empty);
 			}
-			List<Keyword> keywords = new List<Keyword>();
 
-			foreach(string keywordString in keywordStrings)
+			List<Keyword> keywords = new List<Keyword>();
+			foreach (string keywordString in keywordStrings)
 			{
 				keywords.Add(new Keyword
 				{
@@ -307,7 +298,6 @@ namespace BAR.UI.MVC.Controllers
 			itemManager.ChangeItemPlatform(theme.ItemId, subPlatformID);
 
 			itemManager.GenerateDefaultItemWidgets(theme.Name, theme.ItemId);
-
 
 			return RedirectToAction("Details", "Theme", new { id = theme.ItemId });
 		}

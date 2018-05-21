@@ -20,9 +20,9 @@ namespace BAR.BL.Managers
 		WidgetData GetOrganisationData(int itemId, string dateFormat, DateTime? timestamp = null);
 
 		//Audits
-		SynchronizeAudit AddAudit(DateTime timestamp, bool succes);
-		SynchronizeAudit GetAudit(int synchronizeAuditId);
 		SynchronizeAudit GetLastAudit();
+		SynchronizeAudit AddAudit(DateTime timestamp, bool succes);
+		SynchronizeAudit GetAudit(int synchronizeAuditId);	
 		SynchronizeAudit ChangeAudit(int synchronizeAuditId);
 
 		//Sources
@@ -31,18 +31,14 @@ namespace BAR.BL.Managers
 		Source AddSource(string name, string site);
 		void RemoveSource(string sourceId);
 
-        //DataSources
-        IEnumerable<DataSource> GetAllDataSources();
-        DataSource GetDataSource(int dataSourceId);
-        void RemoveDataSource(int dataSourceId);
-       void ChangeDataSource(int dataSourceId, int interval);
-               int GetInterval(int dataSourceId);
-               string GetStartTimer(int dataSourceId);
-               int ChangeInterval(int dataSourceId, int interval);
-               string ChangeStartTimer(int dataSourceId, string startTimer);
-               DateTime ChangeLastTimeChecked(int dataSourceId, DateTime date);
-
-
+		//DataSources
+		DataSource GetDataSource(int dataSourceId);
+		IEnumerable<DataSource> GetAllDataSources();
+		DataSource ChangeTimerInterval(int dataSourceId, int interval);
+		DataSource ChangeStartTimer(int dataSourceId, string startTimer);
+		DataSource ChangeLastTimeCheckedTime(int dataSourceId, DateTime date);
+		void RemoveDataSource(int dataSourceId);	
+		
 		//Others
 		bool SynchronizeData(string json);
 		bool IsJsonEmpty(string json);

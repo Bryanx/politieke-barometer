@@ -3,116 +3,92 @@
 <h1>@Model.PageTitle</h1>
 <hr />
 <div class="row">
-    <!-- Add source -->
-    <div class="col-md-6 col-xs-12">
-        <div class="x_panel">
-            <div class="x_title">
-                <h2>@Resources.AddSource</h2>
-                <div class="clearfix"></div>
-            </div>
-            <div class="x_content fixed_height_200">
-                <br />
-                <form method="post" action="/api/SuperAdmin/AddSource" id="addSourceForm" class="form-horizontal">
-                    <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">
-                            @Resources.Name
-                        </label>
-                        <div class="col-md-6 col-sm-6 col-xs-12">
-                            @Html.TextBoxFor(model => model.Name, "", new { @class = "form-control col-md-7 col-xs-12", id = "name" })
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="site">
-                            @Resources.Site
-                        </label>
-                        <div class="col-md-6 col-sm-6 col-xs-12">
-                            @Html.TextBoxFor(model => model.Site, "", new { @class = "form-control col-md-7 col-xs-12", id = "site" })
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
-                            <button type="submit" class="btn btn-dark">@Resources.Save</button>
-                            <div id="addSourceMessage" style="display: inline"></div>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <!-- Synchronize -->
-        <div class="col-md-6 col-xs-12">
-            <div class="x_panel">
-                <div class="x_title">
-                    <h2>@Resources.Synchronize</h2>
-                    <div class="clearfix"></div>
-                </div>
-                <div class="x_content fixed_height_200">
-                    <br />
-                    <form method="get" action="/api/Data/Synchronize" id="synchronizeForm" class="form-horizontal">
-                        <div class="form-group">
-                            <div class="col-md-12 col-sm-12 col-xs-12">
-                                Synchroniseer met externe databank vanaf laatste synchronisatie.
-                                Wacht na opslaan tot melding.
-                                <br />
-                                <br />
-                                <button type="submit" class="btn btn-dark">Synchroniseer</button>
-                                <div id="synchronizeMessage" style="display: none"></div>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-        <!-- Public message Android -->
-        <div class="col-md-6 col-xs-12">
-            <div class="x_panel">
-                <div class="x_title">
-                    <h2>@Resources.SendPublicAndroidMessage</h2>
-                    <div class="clearfix"></div>
-                </div>
-                <div class="x_content fixed_height_200">
-                    <br />
-                    <form method="post" action="/api/Android/SendPublicNotification" id="sendPublicNotificatioForm" class="form-horizontal">
-                        <div class="form-group">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="title">
-                                @Resources.Title
-                            </label>
-                            <div class="col-md-6 col-sm-6 col-xs-12">
-                                @Html.TextBoxFor(model => model.NotificationMessageViewModel.Title, "", new { @class = "form-control col-md-7 col-xs-12", id = "title" })
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="message">
-                                @Resources.Message
-                            </label>
-                            <div class="col-md-6 col-sm-6 col-xs-12">
-                                @Html.TextBoxFor(model => model.NotificationMessageViewModel.Message, "", new { @class = "form-control col-md-7 col-xs-12", id = "message" })
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
-                                <button type="submit" class="btn btn-dark">@Resources.Send</button>
-                                <div id="SendPublicNotificationMessage" style="display: inline"></div>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Remove sources -->
+  <!-- Add source -->
+  <div class="col-md-6 col-xs-12">
     <div class="x_panel">
+      <div class="x_title">
+        <h2>@Resources.AddSource</h2>
+        <div class="clearfix"></div>
+      </div>
+      <div class="x_content fixed_height_200">
+        <br />
+        <form method="post" action="/api/SuperAdmin/AddSource" id="addSourceForm" class="form-horizontal">
+          <div class="form-group">
+            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">
+              @Resources.Name
+            </label>
+            <div class="col-md-6 col-sm-6 col-xs-12">
+              @Html.TextBoxFor(model => model.Name, "", new { @class = "form-control col-md-7 col-xs-12", id = "name" })
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="site">
+              @Resources.Site
+            </label>
+            <div class="col-md-6 col-sm-6 col-xs-12">
+              @Html.TextBoxFor(model => model.Site, "", new { @class = "form-control col-md-7 col-xs-12", id = "site" })
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+              <button type="submit" class="btn btn-dark">@Resources.Save</button>
+              <div id="addSourceMessage" style="display: inline"></div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <!-- Public message Android -->
+    <div class="col-md-6 col-xs-12">
+      <div class="x_panel">
         <div class="x_title">
-            <h2>@Resources.Sources</h2>
-            <div class="clearfix"></div>
+          <h2>@Resources.SendPublicAndroidMessage</h2>
+          <div class="clearfix"></div>
         </div>
         <div class="x_content fixed_height_200">
+          <br />
+          <form method="post" action="/api/Android/SendPublicNotification" id="sendPublicNotificatioForm" class="form-horizontal">
             <div class="form-group">
-                @Html.Partial("Partials/_SourceTable", Model)
+              <label class="control-label col-md-3 col-sm-3 col-xs-12" for="title">
+                @Resources.Title
+              </label>
+              <div class="col-md-6 col-sm-6 col-xs-12">
+                @Html.TextBoxFor(model => model.NotificationMessageViewModel.Title, "", new { @class = "form-control col-md-7 col-xs-12", id = "title" })
+              </div>
             </div>
+            <div class="form-group">
+              <label class="control-label col-md-3 col-sm-3 col-xs-12" for="message">
+                @Resources.Message
+              </label>
+              <div class="col-md-6 col-sm-6 col-xs-12">
+                @Html.TextBoxFor(model => model.NotificationMessageViewModel.Message, "", new { @class = "form-control col-md-7 col-xs-12", id = "message" })
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+                <button type="submit" class="btn btn-dark">@Resources.Send</button>
+                <div id="SendPublicNotificationMessage" style="display: inline"></div>
+              </div>
+            </div>
+          </form>
         </div>
+      </div>
     </div>
+  </div>
+  <!-- Remove sources -->
+  <div class="x_panel">
+    <div class="x_title">
+      <h2>@Resources.Sources</h2>
+      <div class="clearfix"></div>
+    </div>
+    <div class="x_content fixed_height_200">
+      <div class="form-group">
+        @Html.Partial("Partials/_SourceTable", Model)
+      </div>
+    </div>
+  </div>
 </div>
 
 @section CustomJS{
@@ -244,5 +220,5 @@
                     },
                     500);
             });
-</script>
+  </script>
 }

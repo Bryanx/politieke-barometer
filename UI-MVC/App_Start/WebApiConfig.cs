@@ -1,5 +1,4 @@
-﻿using Microsoft.Owin.Security.OAuth;
-using System.Web.Http;
+﻿using System.Web.Http;
 
 namespace BAR.UI.MVC
 {
@@ -13,7 +12,7 @@ namespace BAR.UI.MVC
       config.Routes.MapHttpRoute(
           "DefaultApi",
           "api/{controller}/{id}",
-          defaults: new { id = System.Web.Http.RouteParameter.Optional }
+          defaults: new { id = RouteParameter.Optional }
       );
     }
   }

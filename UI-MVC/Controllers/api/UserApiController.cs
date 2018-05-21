@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
+﻿using System.Net;
 using System.Web.Http;
 using BAR.BL.Domain.Users;
 using BAR.BL.Managers;
 using BAR.UI.MVC.Models;
 using Microsoft.AspNet.Identity;
-using Microsoft.Owin.Host.SystemWeb;
-using BAR.BL;
 using System.Web;
 using Microsoft.AspNet.Identity.Owin;
 using System.Threading.Tasks;
@@ -64,8 +59,7 @@ namespace BAR.UI.MVC.Controllers.api
 		[Route("api/User/UpdateProfile")]
 		public IHttpActionResult UpdateProfile(SettingsViewModel model)
 		{
-			UnitOfWorkManager uowManager = new UnitOfWorkManager();
-			userManager = new UserManager(uowManager);
+			userManager = new UserManager();
 
 			Area area = userManager.GetArea(model.SelectedAreaId);
 			User user = userManager.ChangeUserBasicInfo(User.Identity.GetUserId(), model.Firstname, model.Lastname, model.Gender, model.DateOfBirth, area);
@@ -92,6 +86,7 @@ namespace BAR.UI.MVC.Controllers.api
 		[Route("api/Admin/ToggleAccountActivity/{userId}")]
 		public IHttpActionResult ToggleAccountActivity(string userId)
 		{
+			if (userId == null) return BadRequest("No userId given");
 			userManager = new UserManager();
 			userManager.ChangeUserAccount(userId);
 			return StatusCode(HttpStatusCode.NoContent);
@@ -109,7 +104,7 @@ namespace BAR.UI.MVC.Controllers.api
 				userManager = new UserManager();
 				string currentRole = userManager.GetRole(userId).Name;
 
-				userManagerIdentity =HttpContext.Current.GetOwinContext().GetUserManager<IdentityUserManager>();
+				userManagerIdentity = HttpContext.Current.GetOwinContext().GetUserManager<IdentityUserManager>();
 				userManagerIdentity.RemoveFromRole(userId, currentRole);
 				userManagerIdentity.AddToRole(userId, roleName);
 

@@ -96,6 +96,7 @@ namespace BAR.BL.Managers
 		/// </summary>
 		public User ChangeUserBasicInfo(string userId, string firstname, string lastname, Gender gender, DateTime dateOfBirth, Area area)
 		{
+			uowManager = new UnitOfWorkManager();
 			InitRepo();
 
 			//Get User
