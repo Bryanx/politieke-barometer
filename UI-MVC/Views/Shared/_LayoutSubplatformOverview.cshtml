@@ -35,21 +35,6 @@
     <div class="container body">
         <div class="main_container">
 
-            <!-- top navigation -->
-            <div class="top_nav">
-                <div class="nav_menu">
-                    <div class="navbar" style="border: 0;">
-                        <a href='@Url.RootUrl()'>
-                            <i class="small-logo colored"></i>
-                        </a>
-                    </div>
-
-                    <!-- login -->
-                    @Html.ShowNavLogin(Model)
-                </div>
-            </div>
-            <!-- /top navigation -->
-
             <!-- page content -->
             @if (IsSectionDefined("Homepage"))
             {

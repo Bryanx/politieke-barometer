@@ -2,6 +2,7 @@
 using BAR.BL.Domain.Items;
 using BAR.BL.Managers;
 using System;
+using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
 
@@ -14,11 +15,11 @@ namespace BAR.UI.MVC.Attributes
 			if (filterContext.ActionParameters.ContainsKey("id"))
 			{
 				//** NEEDED FOR TESTING WITH SUBPLATFORMS **//
-				//int id = (filterContext.ActionParameters["id"] as Int32?).GetValueOrDefault();
+				int id = (filterContext.ActionParameters["id"] as Int32?).GetValueOrDefault();
 				//int id = 1;
-				//bool partOfSubplatform = IsItemInSubPlatform(id, GetSubDomain(HttpContext.Current.Request.Url));
+				bool partOfSubplatform = IsItemInSubPlatform(id, GetSubDomain(HttpContext.Current.Request.Url));
 
-				bool partOfSubplatform =  true;
+				//bool partOfSubplatform =  true;
 
 				if (!partOfSubplatform)
 				{
