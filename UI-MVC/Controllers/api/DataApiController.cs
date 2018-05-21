@@ -104,7 +104,7 @@ namespace BAR.UI.MVC.Controllers.api
 			else
 			{
 				string stringdate = dataManager.GetLastAudit().TimeStamp.ToString("yyyy-MM-dd HH:mm");
-				content = String.Format("{{\"since\":\"{0}\"}", stringdate);
+				content = String.Format("{{\"since\":\"{0}\"}}", stringdate);
 			}
 			int auditId = dataManager.AddAudit(DateTime.Now, false).SynchronizeAuditId;
 
