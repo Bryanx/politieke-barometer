@@ -10,6 +10,7 @@
                     <i class="fa fa-chevron-down"></i>
                 </a>
             </li>
+            <li><a id="3" class='makeJSON' data-widget-id=""> @Resources.Save @Resources.To @Resources.Dashboard</a></li>
         </ul>
         <div class='clearfix'></div>
     </div>
@@ -22,8 +23,6 @@
                 <div class="weeklyReview-organisation"><button onclick="window.location = '@Url.OrganisationUrl(Model.WeeklyPersonViewModels.ElementAt(0).OrganisationId)';" class="btn btn-default btn-xs">@Model.WeeklyPersonViewModels.ElementAt(0).OrganisationName</button></div>
                 <div class="weeklyReview-name">
                     <a style="text-decoration: none" href="/Person/Details/@Model.WeeklyPersonViewModels.ElementAt(0).Item.ItemId">@Model.WeeklyPersonViewModels.ElementAt(0).Item.Name</a>
-                </div>
-                <div class="weeklyReview-ranking">
                     <div class="badge bg-gold">
                         #1 @Resources.Trending.ToLower() @Resources.Politician 
                     </div>
@@ -62,6 +61,7 @@
                     <i class="fa fa-chevron-down"></i>
                 </a>
             </li>
+            <li><a id="4" class='makeJSON' data-widget-id=""> @Resources.Save @Resources.To @Resources.Dashboard</a></li>
         </ul>
         <div class='clearfix'></div>
     </div>
@@ -73,8 +73,6 @@
                 </div>
                 <div class="weeklyReview-name">
                     <a style="text-decoration: none" href="/Organisation/Details/@Model.WeeklyItems.ElementAt(4).ItemId">@Model.WeeklyItems.ElementAt(4).Name</a>
-                </div>
-                <div class="weeklyReview-ranking">
                     <div class="badge bg-gold">
                         #1 @Resources.Trending.ToLower() @Resources.Organisation 
                     </div>
@@ -113,6 +111,7 @@
                     <i class="fa fa-chevron-down"></i>
                 </a>
             </li>
+            <li><a id="5" class='makeJSON' data-widget-id=""> @Resources.Save @Resources.To @Resources.Dashboard</a></li>
         </ul>
         <div class='clearfix'></div>
     </div>
@@ -124,8 +123,6 @@
                 </div>
                 <div class="weeklyReview-name">
                     <a style="text-decoration: none" href="/Organisation/Details/@Model.WeeklyItems.ElementAt(8).ItemId">@Model.WeeklyItems.ElementAt(8).Name</a>
-                </div>
-                <div class="weeklyReview-ranking">
                     <div class="badge bg-gold">
                         #1 @Resources.Trending.ToLower() @Resources.Theme 
                     </div>
