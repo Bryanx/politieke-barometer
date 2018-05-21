@@ -1064,7 +1064,7 @@ namespace BAR.BL.Managers
 				//Rebase data
 				org.SentimentNegative = Math.Round(org.SentimentNegative / items.Count(), 2);
 				org.SentimentPositve = Math.Round(org.SentimentPositve / items.Count(), 2);
-				org.TrendingPercentage = Math.Round(org.TrendingPercentage / items.Count(), 2);
+				org.TrendingPercentage = Math.Round(org.TrendingPercentage / items.Count());
 			}
 
 			//Update items

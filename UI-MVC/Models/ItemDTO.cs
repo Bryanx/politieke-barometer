@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using BAR.BL.Domain;
-using BAR.BL.Domain.Data;
 using BAR.BL.Domain.Items;
-using BAR.BL.Domain.Users;
 using BAR.UI.MVC.App_GlobalResources;
 
 namespace BAR.UI.MVC.Models {

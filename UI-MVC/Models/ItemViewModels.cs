@@ -39,13 +39,12 @@ namespace BAR.UI.MVC.Models {
             public List<SocialMediaName> SocialMediaNames { get; set; }
             public int RankNumberOfMentions  { get; set; }
             public int RankTrendingPercentage  { get; set; }
-            
         }
 
         public class WeeklyReviewModel : BaseViewModel {
             public ICollection<PersonViewModel> WeeklyPersonViewModels { get; set; }
             public ICollection<Item> WeeklyItems { get; set; }
-            public IEnumerable<Widget> widgets { get; set; }
+            public IEnumerable<Widget> Widgets { get; set; }
         }
         
         public class PersonViewModels : BaseViewModel {

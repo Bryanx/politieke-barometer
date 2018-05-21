@@ -33,35 +33,6 @@ namespace BAR.DAL
 		}
 
 		/// <summary>
-		/// Returns a collection of subscriptions from a specific item.
-		/// </summary>
-		public IEnumerable<Subscription> ReadSubscriptionsForItem(int itemId)
-		{
-			return ctx.Subscriptions.Where(sub => sub.SubscribedItem.ItemId == itemId)
-									.AsEnumerable();
-		}
-
-		/// <summary>
-		/// Returns a list of subscriptions with their alerts
-		/// for a specific item.
-		/// </summary>
-		public IEnumerable<Subscription> ReadSubscritpionsWithAlerts(int itemId)
-		{
-			return ctx.Subscriptions.Include(sub => sub.Alerts)
-									.Where(sub => sub.SubscribedItem.ItemId == itemId)
-									.AsEnumerable();
-		}
-
-		/// <summary>
-		/// Returns a list of subscriptions of a user.
-		/// </summary>
-		public IEnumerable<Subscription> ReadSubscriptionsForUser(string userId)
-		{
-			return ctx.Subscriptions.Where(sub => sub.SubscribedUser.Id.Equals(userId))
-									.AsEnumerable();
-		}
-
-		/// <summary>
 		/// Returns a list of subscriptions with their items.
 		/// </summary>
 		public IEnumerable<Subscription> ReadSubscriptionsWithItemsForUser(string userId)
@@ -118,14 +89,6 @@ namespace BAR.DAL
 									.Include(sub => sub.SubscribedUser)
 									.Where(sub => sub.SubscribedItem.ItemId == itemId)
 									.AsEnumerable();
-		}
-
-		/// <summary>
-		/// Returns all the subscriptons.
-		/// </summary>
-		public IEnumerable<Subscription> ReadAllSubscriptions()
-		{
-			return ctx.Subscriptions.AsEnumerable();
 		}
 
 		/// <summary>

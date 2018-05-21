@@ -11,7 +11,6 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web.Http;
-using BAR.UI.MVC;
 
 namespace BAR.UI.MVC.Controllers.api
 {
@@ -20,27 +19,34 @@ namespace BAR.UI.MVC.Controllers.api
 		private IDataManager dataManager;
 		private IWidgetManager widgetManager;
 		private IItemManager itemManager;
+		private IUserManager userManager;
 		private ISubscriptionManager subscriptionManager;
 
-		[HttpPost]
-		[Route("api/Data/SetSynchronize/{interval}/{start}/{id}")]
-		public IHttpActionResult SetSynchronize(int id, int interval, string start)
-		{
+		/// <summary>
+		/// Sets the synchronize timer
+		/// </summary>
+        [HttpPost]
+        [Route("api/Data/SetSynchronize/{interval}/{start}/{id}")]
+        public IHttpActionResult SetSynchronize(int id,int interval, string start)
+        {
+            start = start.Substring(0, 2) + ":" + start.Substring(2, start.Length);
+            dataManager = new DataManager();
+            if (interval != 0 || start != "0")
+            {
+                dataManager.ChangeTimerInterval(id, interval);
+                dataManager.ChangeStartTimer(id, start);
+                return StatusCode(HttpStatusCode.Accepted);
+            }
+            else
+            {
+                return StatusCode(HttpStatusCode.NotAcceptable);
+            }
+        }
 
-			start = start.Substring(0, 2) + ":" + start.Substring(2, start.Length);
-			IDataManager dataManager = new DataManager();
-			if (interval != 0 || start != "0")
-			{
-				dataManager.ChangeInterval(id, interval);
-				dataManager.ChangeStartTimer(id, start);
-				return StatusCode(HttpStatusCode.Accepted);
-			}
-			else
-			{
-				return StatusCode(HttpStatusCode.NotAcceptable);
-			}
-		}
-		[HttpGet]
+		/// <summary>
+		/// Synchronizes with the database of textgain
+		/// </summary>
+        [HttpGet]
 		[Route("api/Data/Synchronize/{id}")]
 		[SubPlatformCheckAPI]
 		public async Task<IHttpActionResult> Synchronize(int id)
@@ -98,7 +104,7 @@ namespace BAR.UI.MVC.Controllers.api
 			else
 			{
 				string stringdate = dataManager.GetLastAudit().TimeStamp.ToString("yyyy-MM-dd HH:mm");
-				content = String.Format("{{\"since\":\"{0}\",{1}}", stringdate, themeString);
+				content = String.Format("{{\"since\":\"{0}\"}", stringdate);
 			}
 			int auditId = dataManager.AddAudit(DateTime.Now, false).SynchronizeAuditId;
 
@@ -128,9 +134,8 @@ namespace BAR.UI.MVC.Controllers.api
 							widgetManager = new WidgetManager();
 							itemManager = new ItemManager();
 							subscriptionManager = new SubscriptionManager();
+							userManager = new UserManager();
 							ControllerHelpers controllerHelpers = new ControllerHelpers();
-
-							
 
 							//Syncronize recent data with all the persons and themes
 							widgetManager.GenerateDataForPersonsAndThemes();
@@ -147,8 +152,8 @@ namespace BAR.UI.MVC.Controllers.api
 							//Refesh items with old data
 							itemManager.RefreshItemData(suplatformID);
 
-							//Update weekly review alerts
-							new UserManager().GenerateAlertsForWeeklyReview(suplatformID);
+							//Update weekly review alerts						
+							userManager.GenerateAlertsForWeeklyReview(suplatformID);
 
 							//Send weekly review notification to android
 							await controllerHelpers.SendPushNotificationAsync("/topics/weeklyreview", "Weekly Review", "Er is een nieuwe weekly review beschikbaar.");
@@ -185,24 +190,30 @@ namespace BAR.UI.MVC.Controllers.api
 				}
 			}
 		}
-		[HttpPost]
-		[Route("api/Data/DeleteItem/{dataSourceId}")]
-		public IHttpActionResult ToggleDeleteItem(string dataSourceId)
-		{
-			dataManager = new DataManager();
-			dataManager.RemoveDataSource(Int32.Parse(dataSourceId));
-			return StatusCode(HttpStatusCode.NoContent);
-		}
-		[HttpPost]
-		[Route("api/Data/ChangeDataSource/{dataSourceId}/{interval}")]
-		public IHttpActionResult RenameItem(string dataSourceId, string interval)
-		{
-			int id = Convert.ToInt32(dataSourceId);
-			int intervalNumber = Convert.ToInt32(interval);
-			dataManager = new DataManager();
-			dataManager.ChangeDataSource(id, intervalNumber);
-			return StatusCode(HttpStatusCode.NoContent);
-		}
 
-	}
+		/// <summary>
+		/// Sets an item to a deleted state
+		/// </summary>
+        [HttpPost]
+        [Route("api/Data/DeleteItem/{dataSourceId}")]
+        public IHttpActionResult ToggleDeleteItem(int dataSourceId)
+        {
+            dataManager = new DataManager();
+            dataManager.RemoveDataSource(dataSourceId);
+            return StatusCode(HttpStatusCode.NoContent);
+        }
+
+		/// <summary>
+		/// Renames a datasource
+		/// </summary>
+        [HttpPost]
+        [Route("api/Data/ChangeDataSource/{dataSourceId}/{interval}")]
+        public IHttpActionResult RenameItem(int dataSourceId, int interval)
+        {
+            dataManager = new DataManager();
+            dataManager.ChangeTimerInterval(dataSourceId, interval);
+            return StatusCode(HttpStatusCode.NoContent);
+        }
+
+    }
 }

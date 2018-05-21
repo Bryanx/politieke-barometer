@@ -1,22 +1,15 @@
-
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using System.Net.Http;
 using System.Web.Http;
-using System.Web.Mvc;
 using AutoMapper;
 using BAR.BL.Domain.Data;
 using BAR.BL.Domain.Widgets;
 using BAR.BL.Managers;
 using BAR.UI.MVC.Models;
 using Microsoft.AspNet.Identity;
-using WebGrease.Css.Extensions;
-using Widget = BAR.BL.Domain.Widgets.Widget;
 using BAR.BL.Domain.Items;
-using BAR.BL.Domain.Users;
 using BAR.UI.MVC.App_GlobalResources;
 using BAR.UI.MVC.Attributes;
 
@@ -27,12 +20,10 @@ namespace BAR.UI.MVC.Controllers.api
 	/// This class is used to transfer all widget information from UI to the managers.
 	/// The api calls are in ajax requests on the dashboard index page.
 	/// </summary>
-
 	public class WidgetController : ApiController
 	{
 		private IWidgetManager widgetManager;
 		private IItemManager itemManager;
-		private IDataManager dataManager;
 
 		/// <summary>
 		///Reads all widgets for a user dashboard and returns them
@@ -40,32 +31,33 @@ namespace BAR.UI.MVC.Controllers.api
 		public IHttpActionResult GetUserWidgets()
 		{
 			widgetManager = new WidgetManager();
-
 			Dashboard dash = widgetManager.GetDashboard(User.Identity.GetUserId());
 
 			try {
 				List<UserWidget> widgets = widgetManager.GetWidgetsForDashboard(dash.DashboardId).ToList();
-				if (widgets == null || widgets.Count() == 0) return StatusCode(HttpStatusCode.NoContent);
+
+				if (widgets == null || widgets.Count() == 0)
+					return StatusCode(HttpStatusCode.NoContent);
 
 				return Ok(Mapper.Map(widgets, new List<UserWidgetDTO>()));
 
 			} catch (Exception e) {
-				return StatusCode(HttpStatusCode.BadRequest);
+				return BadRequest(e.Message);
 			}
 		}
 		
 		/// <summary>
 		///Reads all widgets for an item and returns them.
 		/// </summary>
-		[System.Web.Http.HttpGet]
-		[System.Web.Http.Route("api/GetItemWidgets/{itemId}")]
+		[HttpGet]
+		[Route("api/GetItemWidgets/{itemId}")]
 		public IHttpActionResult GetItemWidgets(int itemId)
 		{
 			widgetManager = new WidgetManager();
-
 			IEnumerable<Widget> widgets = widgetManager.GetItemwidgetsForItem(itemId);
 			
-			if (widgets == null || widgets.Count() == 0) return StatusCode(HttpStatusCode.NoContent);
+			if (widgets == null || widgets.Count() == 0)
+				return StatusCode(HttpStatusCode.NoContent);
 
 			List<UserWidgetDTO> uWidgets = Mapper.Map(widgets, new List<UserWidgetDTO>());
 			foreach (UserWidgetDTO widgetDto in uWidgets) widgetDto.DashboardId = -1;
@@ -76,8 +68,8 @@ namespace BAR.UI.MVC.Controllers.api
 		/// <summary>
 		/// Retrieves the graph data for a given itemId and widget.
 		/// </summary>
-		[System.Web.Http.HttpGet]
-		[System.Web.Http.Route("api/GetGraphs/{itemId}/{widgetId}")]
+		[HttpGet]
+		[Route("api/GetGraphs/{itemId}/{widgetId}")]
 		public IHttpActionResult GetGraphs(int itemId, int widgetId)
 		{
 			widgetManager = new WidgetManager();
@@ -88,19 +80,21 @@ namespace BAR.UI.MVC.Controllers.api
 
 			//Get keyvalue for the widgetid.
 			string keyValue = widgetManager.GetWidgetWithAllData(widgetId)?.WidgetDatas.FirstOrDefault()?.KeyValue;
-
 			if (keyValue == null) keyValue = widgetManager.GetWidgetWithAllData(widgetId)?.PropertyTags.FirstOrDefault()?.Name;
 			
 			try
 			{
-				IEnumerable<WidgetData> widgetDatas = widgets.FirstOrDefault(w => w.WidgetDatas.Any(wd => wd.KeyValue == keyValue)).WidgetDatas;
+				IEnumerable<WidgetData> widgetDatas = widgets.FirstOrDefault(widget => widget.WidgetDatas.Any(data => data.KeyValue == keyValue)).WidgetDatas;
 				IEnumerable<WidgetDataDTO> widgetDataDtos = Mapper.Map(widgetDatas, new List<WidgetDataDTO>());
 
 				//Get item name
 				widgetDataDtos.First().ItemName = itemManager.GetItem(itemId).Name;
 
 				return Ok(widgetDataDtos);
-			} catch (Exception e)
+#pragma warning disable CS0168 // Variable is declared but never used
+			}
+			catch (Exception e)
+#pragma warning restore CS0168 // Variable is declared but never used
 			{
 				IEnumerable<WidgetData> widgetDatas = new List<WidgetData>();
 				IEnumerable<WidgetDataDTO> widgetDataDtos = Mapper.Map(widgetDatas, new List<WidgetDataDTO>());
@@ -113,9 +107,9 @@ namespace BAR.UI.MVC.Controllers.api
 		/// Transfers a Widget to the dashboard of a user.
 		/// The given ItemWidget will be copied to a UserWidget.
 		/// </summary>
-		[System.Web.Http.HttpPost]
-		[System.Web.Http.Route("api/MoveWidget/")]
-		[System.Web.Http.Authorize]
+		[HttpPost]
+		[Route("api/MoveWidget/")]
+		[Authorize]
 		public IHttpActionResult MoveWidgetToDashboard([FromBody] UserWidgetDTO model)
 		{
 			widgetManager = new WidgetManager();
@@ -127,9 +121,9 @@ namespace BAR.UI.MVC.Controllers.api
 		/// Creates a new Widget from the body of the post request.
 		/// If the widget already exists, returns 409 Conflict
 		/// </summary>
-		[System.Web.Http.Authorize]
-		[System.Web.Http.HttpPost]
-		[System.Web.Http.Route("api/NewWidget/")]
+		[HttpPost]
+		[Route("api/NewWidget/")]
+		[Authorize]
 		public IHttpActionResult AddNewWidgetToDashboard([FromBody] AddWidgetDTO model)
 		{
 			UnitOfWorkManager uowManager = new UnitOfWorkManager();
@@ -155,17 +149,18 @@ namespace BAR.UI.MVC.Controllers.api
 		/// <summary>
 		/// Updates existing widgets.
 		/// </summary>
-		/// <param name="widgets"></param>
-		/// <returns>If all goes well, 204 No Content is returned</returns>
-		[System.Web.Http.HttpPost]
-		[System.Web.Http.Route("api/UpdateWidget/")]
+		[HttpPost]
+		[Route("api/UpdateWidget/")]
 		public IHttpActionResult UpdateWidget([FromBody] UserWidgetDTO[] widgets)
 		{
 			widgetManager = new WidgetManager();
 			
 			foreach (UserWidgetDTO widget in widgets) {
-				if (widget == null) return BadRequest("No widget given");
-				if (widgetManager.GetWidget(widget.WidgetId) == null) return NotFound();
+				if (widget == null)
+					return BadRequest("No widget given");
+				if (widgetManager.GetWidget(widget.WidgetId) == null)
+					return NotFound();
+
 				widgetManager.ChangeWidgetDetails(widget.WidgetId, widget.RowNumber, widget.ColumnNumber, widget.ItemIds.ToList(),
 						widget.RowSpan, widget.ColumnSpan, widget.GraphType);
 			}
@@ -175,14 +170,16 @@ namespace BAR.UI.MVC.Controllers.api
 		/// <summary>
 		/// Change the title of a widget
 		/// </summary>
-		[System.Web.Http.HttpPost]
-		[System.Web.Http.Route("api/Widget/{id}/{title}")]
+		[HttpPost]
+		[Route("api/Widget/{id}/{title}")]
 		public IHttpActionResult PutName(int id, string title)
 		{
 			widgetManager = new WidgetManager();
 
-			if (widgetManager.GetWidget(id) == null) return NotFound();
-			if (!ModelState.IsValid) return BadRequest(ModelState);
+			if (widgetManager.GetWidget(id) == null)
+				return NotFound();
+			if (!ModelState.IsValid)
+				return BadRequest(ModelState);
 			
 			widgetManager.ChangeWidgetTitle(id, title);
 			return StatusCode(HttpStatusCode.NoContent);
@@ -191,13 +188,15 @@ namespace BAR.UI.MVC.Controllers.api
 		/// <summary>
 		/// Deletes a widget
 		/// </summary>
-		[System.Web.Http.HttpPost]
-		[System.Web.Http.Route("api/Widget/Delete/{id}")]
+		[HttpPost]
+		[Route("api/Widget/Delete/{id}")]
 		public IHttpActionResult Delete(int id)
 		{
 			widgetManager = new WidgetManager();
 
-			if (widgetManager.GetWidget(id) == null) return NotFound();
+			if (widgetManager.GetWidget(id) == null)
+				return NotFound();
+
 			widgetManager.RemoveWidget(id);
 			return StatusCode(HttpStatusCode.NoContent);
 		}
@@ -206,14 +205,13 @@ namespace BAR.UI.MVC.Controllers.api
 		/// Gets weeklyReview
 		/// </summary>
 		[SubPlatformCheckAPI]
-		[System.Web.Http.HttpGet]
-		[System.Web.Http.Route("api/Widget/GetWeeklyReview/{id}")]
+		[HttpGet]
+		[Route("api/Widget/GetWeeklyReview/{id}")]
 		public IHttpActionResult GetWeeklyReview(string id)
 		{
 			//Determine subplatform
-			object _customObject = null;
 			int suplatformID = -1;
-			if (Request.Properties.TryGetValue("SubPlatformID", out _customObject))
+			if (Request.Properties.TryGetValue("SubPlatformID", out object _customObject))
 			{
 				suplatformID = (int)_customObject;
 			}
@@ -233,15 +231,14 @@ namespace BAR.UI.MVC.Controllers.api
 		/// Returns all activity widgets. These widgets contain information about user activity.
 		/// </summary>
 		[SubPlatformCheckAPI]
-		[System.Web.Http.HttpGet]
-		[System.Web.Http.Route("api/GetActivityWidgets")]
+		[HttpGet]
+		[Route("api/GetActivityWidgets")]
 		public IHttpActionResult GetActivityWidgets()
 		{
 			widgetManager = new WidgetManager();
 
-			object _customObject = null;
 			int suplatformID = -1;
-			if (Request.Properties.TryGetValue("SubPlatformID", out _customObject))
+			if (Request.Properties.TryGetValue("SubPlatformID", out object _customObject))
 			{
 				suplatformID = (int)_customObject;
 			}

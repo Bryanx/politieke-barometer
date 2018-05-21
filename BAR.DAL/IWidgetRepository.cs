@@ -10,14 +10,10 @@ namespace BAR.DAL
 		Dashboard ReadDashboardWithWidgets(int dashboardId);
 		Dashboard ReadDashboardWithWidgets(string userId);
 		Dashboard ReadDashboardWithAllDataForUserId(string userId);
-		IEnumerable<Dashboard> ReadAllDashboards();
 		Widget ReadWidget(int widgetId);
 		Widget ReadWidgetWithAllitems(int widgetid);
 		Widget ReadWidgetWithAllData(int widgetId);
 		Widget ReadGeoLocationWidget();
-		IEnumerable<Widget> ReadAllWidgets();
-		IEnumerable<Widget> ReadAllWidgetsWithAllItems();
-		IEnumerable<Widget> ReadAllWidgetsWithAllData();
 		IEnumerable<Widget> ReadWidgetsWithAllDataForItem(int itemId);
 		IEnumerable<Widget> ReadActivityWidgets();
 		IEnumerable<Widget> ReadWidgetsForItemtype(ItemType type);
@@ -35,8 +31,6 @@ namespace BAR.DAL
 
 		//Update
 		int UpdateWidget(Widget widget);
-		int UpdateWidgets(IEnumerable<Widget> widgets);
-		int UpdateWidgetData(WidgetData widgetData);
 
 		//Delete
 		int DeleteWidget(Widget widgetId);

@@ -1,6 +1,5 @@
 ﻿using BAR.BL.Domain.Items;
 using BAR.DAL.EF;
-using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
@@ -217,15 +216,6 @@ namespace BAR.DAL
 		{
 			ctx.Items.RemoveRange(items);
 			return ctx.SaveChanges();
-		}
-
-		/// <summary>
-		/// Reads a person of a given name.
-		/// </summary>
-		public Item ReadItemByName(string name)
-		{		
-			return ctx.Items.Where(item => item.Name.ToLower().Equals(name.ToLower()))
-							.SingleOrDefault();
 		}
 
 		/// <summary>
