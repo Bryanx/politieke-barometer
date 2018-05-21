@@ -10,6 +10,8 @@ namespace BAR.UI.MVC.Controllers.api
 	/// <summary>
 	/// This API-controller is used for the customization of the subplatforms.
 	/// </summary>
+	///
+	[SubPlatformCheckAPI]
 	public class SubPlatformApiController : ApiController
 	{
 		private ISubplatformManager platformManager;
@@ -22,11 +24,14 @@ namespace BAR.UI.MVC.Controllers.api
 		[Route("api/Customization/GetPlatformId/{platformName}")]
 		public int GetPlatformId(string platformName)
 		{
-			platformManager = new SubplatformManager();
-			SubPlatform platform = platformManager.GetSubPlatform(platformName);
+			//Get the subplatformID from the SubPlatformCheckAPI attribute
+			int suplatformID = -1;
+			if (Request.Properties.TryGetValue("SubPlatformID", out object _customObject))
+			{
+				suplatformID = (int)_customObject;
+			}
 
-			if (platform == null) return -1;
-			else return platform.SubPlatformId;
+			return suplatformID;
 		}
 
 		/// <summary>

@@ -15,7 +15,13 @@ namespace BAR.UI.MVC.Attributes
 		{
 			int subdomainId = GetSubDomain(HttpContext.Current.Request.Url);
 			//int subdomainId = 1;
-			actionContext.Request.Properties.Add("SubPlatformID", subdomainId);
+			try
+			{
+				actionContext.Request.Properties.Add("SubPlatformID", subdomainId);
+			} catch (Exception e)
+			{
+				//Do Nothing, already added
+			}
 
 			base.OnActionExecuting(actionContext);
 		}
