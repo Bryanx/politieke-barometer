@@ -225,6 +225,20 @@ let WeeklyReview = function (name, itemId, widgetId, itemType) {
     });
 };
 
+let WeeklyReviewAddData = function (name, itemId, widgetId, itemType) {
+
+    $.ajax({
+        type: "GET",
+        url: "/api/GetGraphs/" + itemId + "/" + widgetId,
+        dataType: "json",
+        success: data => {
+            let c = findingChart(itemType+2);
+            AddDataSet(c,  name,  data[0].GraphValues.map(g => g.NumberOfTimes).reverse().slice(-14));
+        },
+        fail: d => console.log(d)
+    });
+};
+
 /*---------- finding chart ---------- */
 let findingChart = function (id) {
   return charts.find(chart => chart.config.id == id);  
