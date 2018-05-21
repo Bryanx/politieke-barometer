@@ -64,6 +64,7 @@ namespace BAR.BL.Managers
 		//Themes
 		Theme GetThemeWithDetails(int itemId);
 		IEnumerable<Theme> GetAllThemes();
+		IEnumerable<Theme> GetAllThemesForSubplatform(int subplatformId);
 
 		bool ImportThemes(string json, int subPlatformID);
 	}

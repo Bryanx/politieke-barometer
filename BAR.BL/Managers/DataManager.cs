@@ -334,21 +334,31 @@ namespace BAR.BL.Managers
 					information.Items.Add(items.Where(x => x.Name.Equals(name)).SingleOrDefault());
 				}
 
-				for (int j = 0; j < deserializedJson[i].words.Count; j++)
+				//Add connection to Item (Theme)
+				//Read themes
+				for (int j = 0; j < deserializedJson[i].themes.Count; j++)
 				{
-					string wordName = deserializedJson[i].words[j];
-
-					foreach (Theme theme in themes)
-					{
-						foreach (Keyword keyword in theme.Keywords.ToList())
-						{
-							if (keyword.Name.ToLower().Equals(wordName.ToLower()))
-							{
-								information.Items.Add(themes.Where(x => x.Name.Equals(theme.Name)).SingleOrDefault());
-							}
-						}
-					}
+					string name = deserializedJson[i].themes[j];
+					information.Items.Add(themes.Where(x => x.Name.Equals(name)).SingleOrDefault());
 				}
+
+
+				////Associate Data with a given theme
+				//for (int j = 0; j < deserializedJson[i].words.Count; j++)
+				//{
+				//	string wordName = deserializedJson[i].words[j];
+
+				//	foreach (Theme theme in themes)
+				//	{
+				//		foreach (Keyword keyword in theme.Keywords.ToList())
+				//		{
+				//			if (keyword.Name.ToLower().Equals(wordName.ToLower()))
+				//			{
+				//				information.Items.Add(themes.Where(x => x.Name.Equals(theme.Name)).SingleOrDefault());
+				//			}
+				//		}
+				//	}
+				//}
 
 				//Add other information
 				information.Source = sources.Where(x => x.Name.Equals("Twitter")).SingleOrDefault();

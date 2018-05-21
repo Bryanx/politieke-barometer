@@ -19,33 +19,70 @@ namespace BAR.UI.MVC.Controllers.api
 	{
 		private IDataManager dataManager;
 		private IWidgetManager widgetManager;
-        private IItemManager itemManager;
-        private ISubscriptionManager subscriptionManager;
+		private IItemManager itemManager;
+		private ISubscriptionManager subscriptionManager;
 
-        [HttpPost]
-        [Route("api/Data/SetSynchronize/{interval}/{start}/{id}")]
-        public IHttpActionResult SetSynchronize(int id,int interval, string start)
-        {
+		[HttpPost]
+		[Route("api/Data/SetSynchronize/{interval}/{start}/{id}")]
+		public IHttpActionResult SetSynchronize(int id, int interval, string start)
+		{
 
-            start = start.Substring(0, 2) + ":" + start.Substring(2, start.Length);
-            IDataManager dataManager = new DataManager();
-            if (interval != 0 || start != "0")
-            {
-                dataManager.ChangeInterval(id, interval);
-                dataManager.ChangeStartTimer(id, start);
-                return StatusCode(HttpStatusCode.Accepted);
-            }
-            else
-            {
-                return StatusCode(HttpStatusCode.NotAcceptable);
-            }
-        }
-        [HttpGet]
+			start = start.Substring(0, 2) + ":" + start.Substring(2, start.Length);
+			IDataManager dataManager = new DataManager();
+			if (interval != 0 || start != "0")
+			{
+				dataManager.ChangeInterval(id, interval);
+				dataManager.ChangeStartTimer(id, start);
+				return StatusCode(HttpStatusCode.Accepted);
+			}
+			else
+			{
+				return StatusCode(HttpStatusCode.NotAcceptable);
+			}
+		}
+		[HttpGet]
 		[Route("api/Data/Synchronize/{id}")]
 		[SubPlatformCheckAPI]
 		public async Task<IHttpActionResult> Synchronize(int id)
 		{
+			//Get the subplatformID from the SubPlatformCheckAPI attribute
+			object _customObject = null;
+			int suplatformID = -1;
+			if (Request.Properties.TryGetValue("SubPlatformID", out _customObject))
+			{
+				suplatformID = (int)_customObject;
+			}
+
 			dataManager = new DataManager();
+			itemManager = new ItemManager();
+
+			List<Theme> themes = itemManager.GetAllThemesForSubplatform(suplatformID).ToList();
+
+			//Making the string with all the themes the source should validate
+			string themeString = "\"themes\":{ ";
+			for(int i=0; i< themes.Count(); i++)
+			{
+				themeString += "\"";
+				themeString += themes[i].Name;
+				themeString += "\":[";
+				List<Keyword> keywords = themes[i].Keywords.ToList();
+				for (int j= 0; j < keywords.Count(); j++)
+				{
+					themeString += "\"";
+					themeString += keywords[j].Name;
+					themeString += "\"";
+					if (j != keywords.Count()-1)
+					{
+						themeString += ",";
+					}
+				}
+				themeString += "]";
+				if (i != themes.Count()-1)
+				{
+					themeString += ",";
+				}
+			}
+			themeString += "}";
 
 			string content;
 			if (dataManager.GetLastAudit() == null)
@@ -53,12 +90,15 @@ namespace BAR.UI.MVC.Controllers.api
 				//content = "{}";
 
 				//Test with fewer data 
-				content = "{\"since\":\"2018-05-13 00:00\"}";
+				content = "{" +
+					"\"since\":\"2018-05-18 00:00\"," +
+					themeString +
+					"}";
 			}
 			else
 			{
 				string stringdate = dataManager.GetLastAudit().TimeStamp.ToString("yyyy-MM-dd HH:mm");
-				content = String.Format("{{\"since\":\"{0}\"}}", stringdate);
+				content = String.Format("{{\"since\":\"{0}\",{1}}", stringdate, themeString);
 			}
 			int auditId = dataManager.AddAudit(DateTime.Now, false).SynchronizeAuditId;
 
@@ -82,21 +122,15 @@ namespace BAR.UI.MVC.Controllers.api
 					{
 						var completed = dataManager.SynchronizeData(json);
 						if (completed)
-						{						
+						{
 							dataManager.ChangeAudit(auditId);
 
 							widgetManager = new WidgetManager();
 							itemManager = new ItemManager();
-              subscriptionManager = new SubscriptionManager();
-              ControllerHelpers controllerHelpers = new ControllerHelpers();
+							subscriptionManager = new SubscriptionManager();
+							ControllerHelpers controllerHelpers = new ControllerHelpers();
 
-							//Get the subplatformID from the SubPlatformCheckAPI attribute
-							object _customObject = null;
-							int suplatformID = -1;
-							if (Request.Properties.TryGetValue("SubPlatformID", out _customObject))
-							{
-								suplatformID = (int)_customObject;
-							}
+							
 
 							//Syncronize recent data with all the persons and themes
 							widgetManager.GenerateDataForPersonsAndThemes();
@@ -116,15 +150,15 @@ namespace BAR.UI.MVC.Controllers.api
 							//Update weekly review alerts
 							new UserManager().GenerateAlertsForWeeklyReview(suplatformID);
 
-              //Send weekly review notification to android
-              await controllerHelpers.SendPushNotificationAsync("/topics/weeklyreview", "Weekly Review", "Er is een nieuwe weekly review beschikbaar.");
+							//Send weekly review notification to android
+							await controllerHelpers.SendPushNotificationAsync("/topics/weeklyreview", "Weekly Review", "Er is een nieuwe weekly review beschikbaar.");
 
-              //Send trending notifications to users
-              foreach (SubAlert subAlert in subscriptionManager.GetUnsendedSubAlerts())
-              {
-                User user = subAlert.Subscription.SubscribedUser;
-                await controllerHelpers.SendPushNotificationAsync(user.DeviceToken, "Trending", String.Format("%s is nu trending.", subAlert.Subscription.SubscribedItem.Name));
-              }
+							//Send trending notifications to users
+							foreach (SubAlert subAlert in subscriptionManager.GetUnsendedSubAlerts())
+							{
+								User user = subAlert.Subscription.SubscribedUser;
+								await controllerHelpers.SendPushNotificationAsync(user.DeviceToken, "Trending", String.Format("%s is nu trending.", subAlert.Subscription.SubscribedItem.Name));
+							}
 
 							return StatusCode(HttpStatusCode.OK);
 						}
@@ -135,15 +169,15 @@ namespace BAR.UI.MVC.Controllers.api
 					}
 					else
 					{
-            subscriptionManager = new SubscriptionManager();
-            ControllerHelpers controllerHelpers = new ControllerHelpers();
-            foreach (SubAlert subAlert in subscriptionManager.GetUnsendedSubAlerts())
-            {
-              User user = subAlert.Subscription.SubscribedUser;
-              await controllerHelpers.SendPushNotificationAsync(user.DeviceToken, "Trending", String.Format("%s is nu trending.", subAlert.Subscription.SubscribedItem.Name));
-            }
-            return StatusCode(HttpStatusCode.NoContent);
-          }
+						subscriptionManager = new SubscriptionManager();
+						ControllerHelpers controllerHelpers = new ControllerHelpers();
+						foreach (SubAlert subAlert in subscriptionManager.GetUnsendedSubAlerts())
+						{
+							User user = subAlert.Subscription.SubscribedUser;
+							await controllerHelpers.SendPushNotificationAsync(user.DeviceToken, "Trending", String.Format("%s is nu trending.", subAlert.Subscription.SubscribedItem.Name));
+						}
+						return StatusCode(HttpStatusCode.NoContent);
+					}
 				}
 				else
 				{
@@ -151,24 +185,24 @@ namespace BAR.UI.MVC.Controllers.api
 				}
 			}
 		}
-        [HttpPost]
-        [Route("api/Data/DeleteItem/{dataSourceId}")]
-        public IHttpActionResult ToggleDeleteItem(string dataSourceId)
-        {
-            dataManager = new DataManager();
-            dataManager.RemoveDataSource(Int32.Parse(dataSourceId));
-            return StatusCode(HttpStatusCode.NoContent);
-        }
-        [HttpPost]
-        [Route("api/Data/ChangeDataSource/{dataSourceId}/{interval}")]
-        public IHttpActionResult RenameItem(string dataSourceId, string interval)
-        {
-            int id = Convert.ToInt32(dataSourceId);
-            int intervalNumber = Convert.ToInt32(interval);
-            dataManager = new DataManager();
-            dataManager.ChangeDataSource(id, intervalNumber);
-            return StatusCode(HttpStatusCode.NoContent);
-        }
+		[HttpPost]
+		[Route("api/Data/DeleteItem/{dataSourceId}")]
+		public IHttpActionResult ToggleDeleteItem(string dataSourceId)
+		{
+			dataManager = new DataManager();
+			dataManager.RemoveDataSource(Int32.Parse(dataSourceId));
+			return StatusCode(HttpStatusCode.NoContent);
+		}
+		[HttpPost]
+		[Route("api/Data/ChangeDataSource/{dataSourceId}/{interval}")]
+		public IHttpActionResult RenameItem(string dataSourceId, string interval)
+		{
+			int id = Convert.ToInt32(dataSourceId);
+			int intervalNumber = Convert.ToInt32(interval);
+			dataManager = new DataManager();
+			dataManager.ChangeDataSource(id, intervalNumber);
+			return StatusCode(HttpStatusCode.NoContent);
+		}
 
-    }
+	}
 }
