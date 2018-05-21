@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Data.Entity;
-using BAR.BL.Domain;
 using BAR.DAL.EF;
 using BAR.BL.Domain.Core;
 using BAR.BL.Domain.Users;
@@ -51,17 +49,6 @@ namespace BAR.DAL
 		public Question ReadQuestion(int questionId)
 		{
 			return ctx.Questions.Find(questionId);
-		}
-
-		/// <summary>
-		/// Gives back a subplatform with all the questions and then customization.
-		/// </summary>
-		public SubPlatform GetSubplatformWithAllinfo(int platformId)
-		{
-			return ctx.SubPlatforms.Include(platform => platform.Questions)
-								   .Include(platform => platform.Customization)
-								   .Where(platform => platform.SubPlatformId == platformId)
-								   .SingleOrDefault();
 		}
 
 		/// <summary>
@@ -131,15 +118,6 @@ namespace BAR.DAL
 		public int UpdateSubplatform(SubPlatform subPlatform)
 		{
 			ctx.Entry(subPlatform).State = EntityState.Modified;
-			return ctx.SaveChanges();
-		}
-
-		/// <summary>
-		/// Updates a given list of subplatforms
-		/// </summary>
-		public int UpdateSubplatforms(IEnumerable<SubPlatform> subPlatforms)
-		{
-			foreach (SubPlatform platform in subPlatforms) ctx.Entry(platform).State = EntityState.Modified;
 			return ctx.SaveChanges();
 		}
 
@@ -248,5 +226,5 @@ namespace BAR.DAL
 		{
 			return ctx.UserActivities.Where(act => act.ActivityType == type).AsEnumerable();
 		}
-	}
+    }
 }

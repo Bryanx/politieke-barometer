@@ -1,93 +1,104 @@
-﻿@model BAR.UI.MVC.Models.SourceManagement
+﻿@model BAR.UI.MVC.Models.GeneralManagementViewModel
 
 <h1>@Model.PageTitle</h1>
-<hr/>
+<hr />
 <div class="row">
-    <!-- Add source -->
-    <div class="col-md-6 col-xs-12">
-        <div class="x_panel">
-            <div class="x_title">
-                <h2>@Resources.AddSource</h2>
-                <div class="clearfix"></div>
+  <!-- Add source -->
+  <div class="col-md-6 col-xs-12">
+    <div class="x_panel">
+      <div class="x_title">
+        <h2>@Resources.AddSource</h2>
+        <div class="clearfix"></div>
+      </div>
+      <div class="x_content fixed_height_200">
+        <br />
+        <form method="post" action="/api/SuperAdmin/AddSource" id="addSourceForm" class="form-horizontal">
+          <div class="form-group">
+            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">
+              @Resources.Name
+            </label>
+            <div class="col-md-6 col-sm-6 col-xs-12">
+              @Html.TextBoxFor(model => model.Name, "", new { @class = "form-control col-md-7 col-xs-12", id = "name" })
             </div>
-            <div class="x_content">
-                <br />
-                <form method="post" action="/api/SuperAdmin/AddSource" id="addSourceForm" class="form-horizontal">
-                    <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">
-                            @Resources.Name
-                        </label>
-                        <div class="col-md-6 col-sm-6 col-xs-12">
-                            @Html.TextBoxFor(model => model.Name, "", new { @class = "form-control col-md-7 col-xs-12", id = "name" })
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="site">
-                            @Resources.Site
-                        </label>
-                        <div class="col-md-6 col-sm-6 col-xs-12">
-                            @Html.TextBoxFor(model => model.Site, "", new { @class = "form-control col-md-7 col-xs-12", id = "site" })
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
-                            <button type="submit" class="btn btn-dark">@Resources.Save</button>
-                            <div id="addSourceMessage" style="display: inline"></div>
-                        </div>
-                    </div>
-                </form>
+          </div>
+          <div class="form-group">
+            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="site">
+              @Resources.Site
+            </label>
+            <div class="col-md-6 col-sm-6 col-xs-12">
+              @Html.TextBoxFor(model => model.Site, "", new { @class = "form-control col-md-7 col-xs-12", id = "site" })
             </div>
-        </div>
+          </div>
+          <div class="form-group">
+            <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+              <button type="submit" class="btn btn-dark">@Resources.Save</button>
+              <div id="addSourceMessage" style="display: inline"></div>
+            </div>
+          </div>
+        </form>
+      </div>
     </div>
-
-    <!-- Synchronize -->
+  </div>
+  <div class="row">
+    <!-- Public message Android -->
     <div class="col-md-6 col-xs-12">
-        <div class="x_panel">
-            <div class="x_title">
-                <h2>@Resources.Synchronize</h2>
-                <div class="clearfix"></div>
-            </div>
-            <div class="x_content">
-                <br />
-                <form method="get" action="/api/Data/Synchronize" id="synchronizeForm" class="form-horizontal">
-                    <div class="form-group">
-                        <div class="col-md-12 col-sm-12 col-xs-12">
-                            Synchroniseer met externe databank vanaf laatste synchronisatie.
-                            Wacht na opslaan tot melding.
-                            <br />
-                            <br />
-                            <button type="submit" class="btn btn-dark">Synchroniseer</button>
-                            <div id="synchronizeMessage" style="display: none"></div>
-                        </div>
-                    </div>
-                </form>
-            </div>
+      <div class="x_panel">
+        <div class="x_title">
+          <h2>@Resources.SendPublicAndroidMessage</h2>
+          <div class="clearfix"></div>
         </div>
+        <div class="x_content fixed_height_200">
+          <br />
+          <form method="post" action="/api/Android/SendPublicNotification" id="sendPublicNotificatioForm" class="form-horizontal">
+            <div class="form-group">
+              <label class="control-label col-md-3 col-sm-3 col-xs-12" for="title">
+                @Resources.Title
+              </label>
+              <div class="col-md-6 col-sm-6 col-xs-12">
+                @Html.TextBoxFor(model => model.NotificationMessageViewModel.Title, "", new { @class = "form-control col-md-7 col-xs-12", id = "title" })
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-md-3 col-sm-3 col-xs-12" for="message">
+                @Resources.Message
+              </label>
+              <div class="col-md-6 col-sm-6 col-xs-12">
+                @Html.TextBoxFor(model => model.NotificationMessageViewModel.Message, "", new { @class = "form-control col-md-7 col-xs-12", id = "message" })
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+                <button type="submit" class="btn btn-dark">@Resources.Send</button>
+                <div id="SendPublicNotificationMessage" style="display: inline"></div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
     </div>
+  </div>
+  <!-- Remove sources -->
+  <div class="x_panel">
+    <div class="x_title">
+      <h2>@Resources.Sources</h2>
+      <div class="clearfix"></div>
+    </div>
+    <div class="x_content fixed_height_200">
+      <div class="form-group">
+        @Html.Partial("Partials/_SourceTable", Model)
+      </div>
+    </div>
+  </div>
 </div>
-<div class="row">
-    <!-- Remove source -->
-    <div class="col-md-6 col-xs-12">
-        <div class="x_panel">
-            <div class="x_title">
-                <h2>@Resources.Sources</h2>
-                <div class="clearfix"></div>
-            </div>
-            <div class="x_content">
-                <div class="form-group">
-                    @Html.Partial("Partials/_SourceTable", Model)
-                </div>
-            </div>
-        </div>
-    </div>
-    </div>
 
-    @section CustomJS{
-        <script type="text/javascript">
+@section CustomJS{
+  <script type="text/javascript">
         $("#synchronizeForm").on("submit", function (event) {
             submitForm($(this), event, $("#synchronizeMessage"));
         });
-
+        $("#sendPublicNotificatioForm").on("submit", function (event) {
+            submitForm($(this), event, $("#SendPublicNotificationMessage"));
+        });
 
         //Ajax call in generic function so every form can use the same code.
         function submitForm($this, event, message) {
@@ -133,13 +144,24 @@
                     });
             });
 
+        $("#setSynchronizeForm").on("submit", function (event) {
+                event.preventDefault();
+                var $this = $(this);
+                var interval=$("#interval").val();
+                var settime = $("#settime").val().replace(':', '')
+                $.ajax({
+                    type: "POST",
+                    url: "/api/Data/SetSynchronize/" + interval + "/" + settime
+                }).fail(() => {/* ok */ })
+                    });
+
             $(document).on("click", ".sourceChange", (function (event) {
                 event.preventDefault();
                 var $this = $(this);
                 var id = $this.attr('id');
                 $.ajax({
                     type: 'POST',
-                    url: '/api/SuperAdmin/RemoveSource',
+                    url: '/api/Data/DeleteItem',
                     data: JSON.stringify(id),
                     contentType: 'application/json; charset=utf-8',
                     dataType: "json"
@@ -147,6 +169,56 @@
                     .done(function () {
                         $this.closest('tr').remove();
                     });
-            }));
-        </script>
-    }
+        }));
+         $(".removeItem").click(function() {
+                var $this = $(this);
+                var id = $this.data('source-id');
+                var text = $this.html();
+                $this.html("<i class='fa fa-circle-o-notch fa-spin'></i>");
+                wto = setTimeout(function() {
+                        $.ajax({
+                                type: 'POST',
+                                url: '/api/Data/DeleteItem/' + id
+                            }).fail(() => { alert("@Resources.CannotRemoveItem") })
+                            .done(function() {
+                                if (text === "@Resources.Recover") $this.html("@Resources.Remove");
+                                else $this.html("@Resources.Recover");
+                                $this.toggleClass("btn-danger btn-dark");
+                            });
+                    },
+                    500);
+            });
+         $(".changeItem").change(function() {
+                var $this = $(this);
+                var id = document.getElementsByClassName('changeItem')[0].id
+                var interval = document.getElementsByClassName('changeItem')[0].value;
+                $this.html("<i class='fa fa-circle-o-notch fa-spin'></i>");
+                wto = setTimeout(function() {
+                        $.ajax({
+                                type: 'POST',
+                                url: '/api/Data/ChangeDataSource/' + id + '/' + interval
+                            }).fail(() => { alert("@Resources.CannotRemoveItem") })
+                    },
+                    500);
+            });
+
+         $(".synchronise").click(function() {
+                var $this = $(this);
+                var id = $this.data('source-id');
+                var text = $this.html();
+                $this.html("<i class='fa fa-circle-o-notch fa-spin'></i>");
+                wto = setTimeout(function() {
+                        $.ajax({
+                                type: 'GET',
+                                url: '/api/Data/Synchronize/' + id
+                            }).fail(() => { alert("@Resources.Failed") })
+                            .done(function() {
+                                if (text === "@Resources.Recover") $this.html("@Resources.Remove");
+                                else $this.html("@Resources.Recover");
+                                $this.toggleClass("btn-danger btn-dark");
+                            });
+                    },
+                    500);
+            });
+  </script>
+}

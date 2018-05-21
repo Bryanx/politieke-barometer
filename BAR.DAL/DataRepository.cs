@@ -1,12 +1,9 @@
 ﻿using BAR.BL.Domain.Data;
 using BAR.DAL.EF;
-using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Text;
 using System.Data.Entity;
-using BAR.BL.Domain.Items;
+using System;
 
 namespace BAR.DAL
 {
@@ -44,44 +41,6 @@ namespace BAR.DAL
 		}
 
 		/// <summary>
-		/// Deletes a specific information object
-		/// Returns -1 if SaveChanges() is delayed by unit of work.
-		/// 
-		/// WARNING
-		/// All of the the propertyvalues of the information also need to be deleted.
-		/// 
-		/// NOTE
-		/// Normally we don't delete informations.
-		/// </summary>
-		public int DeleteInformation(int infoId)
-		{
-			Information infoToDelete = ReadInformationWitlAllInfo(infoId);
-			ctx.Informations.Remove(infoToDelete);
-			return ctx.SaveChanges();
-		}
-
-		/// <summary>
-		/// Deletes a range of information objects
-		/// Returns -1 if SaveChanges() is delayed by unit of work.
-		/// 
-		/// WARNING
-		/// All the propertyvalues of the informations also need the be deleted.
-		/// 
-		/// NOTE
-		/// Normally we don't delete informations.
-		/// </summary>
-		public int DeleteInformations(IEnumerable<int> infoIds)
-		{
-			//Get informations to delete
-			List<Information> infosToDelete = new List<Information>();
-			foreach (int infoId in infoIds) infosToDelete.Add(ReadInformationWitlAllInfo(infoId));
-			
-			//Delete informations
-			ctx.Informations.RemoveRange(infosToDelete);
-			return ctx.SaveChanges();
-		}
-
-		/// <summary>
 		/// Returns a list of informations based on
 		/// a specific item.
 		/// </summary>
@@ -92,74 +51,6 @@ namespace BAR.DAL
 								   .AsEnumerable();
 		}
 
-		/// <summary>
-		/// Gives back a list of information-objects.
-		/// </summary>
-		/// <returns></returns>
-		public IEnumerable<Information> ReadAllInformations()
-		{
-			return ctx.Informations.AsEnumerable();
-		}
-
-		/// <summary>
-		/// Gives back an information object based on informationid.
-		/// </summary>
-		public Information ReadInformation(int informationid)
-		{
-			return ctx.Informations.Find(informationid);
-		}
-
-		/// <summary>
-		/// Gives back an information object with his property-values
-		/// based on informationid.
-		/// </summary>
-		public Information ReadInformationWitlAllInfo(int informationId)
-		{
-			return ctx.Informations.Include(info => info.PropertieValues)
-								   .Include(info => info.PropertieValues.Select(propval => propval.Property))
-								   .Where(info => info.InformationId == informationId).SingleOrDefault();
-		}
-
-		/// <summary>
-		/// Gets the number of informations of a specific given item
-		/// from the creation date untill now.
-		/// </summary
-		public int ReadNumberInfo(int itemId, DateTime since)
-		{
-			return ctx.Informations
-				.Where(info => info.Items.Any(item => item.ItemId == itemId))
-				.Where(info => info.CreationDate >= since).Count();
-		}
-
-		/// <summary>
-		/// Updates an instance of a specific information object
-		/// Returns -1 if SaveChanges() is delayed by unit of work.
-		/// </summary>
-		public int UpdateInformation(Information info)
-		{
-			ctx.Entry(info).State = EntityState.Modified;
-			return ctx.SaveChanges();
-		}
-
-		/// <summary>
-		/// Updates all informations objects that are in the list.
-		/// Returns -1 if SaveChanges() is delayed by unit of work.
-		/// </summary>
-		public int UpdateInformations(IEnumerable<Information> infos)
-		{
-			foreach (Information info in infos) ctx.Entry(info).State = EntityState.Modified;
-			return ctx.SaveChanges();
-		}
-
-		/// <summary>
-		/// Gives back a property by propertyname
-		/// </summary>
-		public Property ReadProperty(string propertyName)
-		{
-			return ctx.Properties.Where(prop => prop.Name.ToLower().Equals(propertyName.ToLower()))
-								 .SingleOrDefault();
-		}
-		
 		/// <summary>
 		/// Gives back a scource by sourcename
 		/// </summary>
@@ -259,41 +150,48 @@ namespace BAR.DAL
 		/// </summary>
 		public IEnumerable<Information> ReadInformationsWithAllInfoForItem(int itemId)
 		{
-			return ctx.Informations//.Include(info => info.Items)
+			return ctx.Informations.Include(info => info.Items)
 								   .Include(info => info.PropertieValues)
 								   .Include(info => info.PropertieValues.Select(propval => propval.Property))
 								   .Where(info => info.Items.Any(item => item.ItemId == itemId))
 								   .AsEnumerable();
 		}
 
-        public IEnumerable<DataSource> ReadAllDataSources()
-        {
-            return ctx.DataSources.AsEnumerable();
-        }
+		/// <summary>
+		/// Gives back all datasources
+		/// </summary>
+		/// <returns></returns>
+		public IEnumerable<DataSource> ReadAllDataSources()
+		{
+			return ctx.DataSources.AsEnumerable();
+		}
 
-        public DataSource ReadDataSource(int dataSourceId)
-        {
-            return ctx.DataSources.Find(dataSourceId);
-        }
+		/// <summary>
+		/// Gives back the datasources based on thd datasource ID.
+		/// </summary>
+		public DataSource ReadDataSource(int dataSourceId)
+		{
+			return ctx.DataSources.Find(dataSourceId);
+		}
 
-        public int CreateDataSource(DataSource dataSource)
-        {
-            ctx.DataSources.Add(dataSource);
-            return ctx.SaveChanges();
-        }
+		/// <summary>
+		/// Deletes the given datasource in the database
+		/// </summary>
+		public int DeleteDataSource(DataSource dataSource)
+		{
+			ctx.DataSources.Remove(dataSource);
+			return ctx.SaveChanges();
+		}
 
-        public int UpdateDataSource(DataSource dataSource)
-        {
-            ctx.Entry(dataSource).State = EntityState.Modified;
-            return ctx.SaveChanges();
-        }
-
-        public int DeleteDataSource(DataSource dataSource)
-        {
-            ctx.DataSources.Remove(dataSource);
-            return ctx.SaveChanges();
-        }
-    }
+		/// <summary>
+		/// Updates a datasource in the database
+		/// </summary>
+		public int UpdateDataSource(DataSource dataSource)
+		{
+			ctx.Entry(dataSource).State = EntityState.Modified;
+			return ctx.SaveChanges();
+		}
+	}
 }
 
 

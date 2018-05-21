@@ -1,9 +1,4 @@
 ﻿using BAR.DAL;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BAR.BL.Managers
 {
@@ -19,7 +14,7 @@ namespace BAR.BL.Managers
 		{
 			get
 			{   
-				//This is used to make sure there won't be any extra UnitOfWork instances
+				//This construction is used to make sure there won't be any extra UnitOfWork instances
 				if (uof == null) uof = new UnitOfWork();
 				return uof;
 			}

@@ -41,6 +41,13 @@ namespace BAR.UI.MVC.Helpers {
                 action = nameof(UserController.Index)
             });
         }
+        
+        public static string UserWeeklyReview(this UrlHelper helper) {
+            return helper.RouteUrl("Default", new {
+                controller = "User",
+                action = nameof(UserController.UserWeeklyReview)
+            });
+        }
 
         public static string SettingsUrl(this UrlHelper helper) {
             return helper.RouteUrl("Default", new {

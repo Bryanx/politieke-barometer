@@ -1,15 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
+﻿using System.Net;
 using System.Web.Http;
 using BAR.BL.Managers;
 using BAR.BL.Domain.Core;
 using BAR.UI.MVC.Models;
-using AutoMapper;
-using BAR.UI.MVC.App_GlobalResources;
-using System.Web.Routing;
 using BAR.UI.MVC.Attributes;
 
 namespace BAR.UI.MVC.Controllers.api
@@ -225,6 +218,7 @@ namespace BAR.UI.MVC.Controllers.api
 		public IHttpActionResult DeleteQuestion(int questionId)
 		{
 			platformManager = new SubplatformManager();
+
 			if (!platformManager.Exists(questionId))
 				return NotFound();
 

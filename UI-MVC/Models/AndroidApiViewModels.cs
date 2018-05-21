@@ -1,10 +1,7 @@
-﻿using BAR.BL.Domain.Users;
-using BAR.BL.Domain.Widgets;
+﻿using BAR.BL.Domain.Widgets;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
 
 namespace BAR.UI.MVC.Models
 {
@@ -45,5 +42,16 @@ namespace BAR.UI.MVC.Models
   {
     public int AlertId { get; set; }
     public String ItemName { get; set; }
+  }
+
+  public class DeviceTokenViewModel
+  {
+    public String DeviceToken { get; set; }
+  }
+  
+  public class NotificationMessageViewModel
+  {
+    public String Title { get; set; }
+    public String Message { get; set; }
   }
 }

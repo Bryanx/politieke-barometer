@@ -27,15 +27,15 @@
 .tile_count {
   margin-bottom: 20px;
   margin-top: 20px;
-  :first-child{
-    border-left: 0 !important;
-  }
   .tile_stats_count {
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
     position: relative;
     text-align: center;
+    &:first-of-type::before{
+      border-left: none !important;
+    }
     &:before {
       content: "";
       position: absolute;

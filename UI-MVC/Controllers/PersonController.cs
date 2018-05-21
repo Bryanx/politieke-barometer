@@ -1,22 +1,18 @@
-﻿using System;
+﻿using AutoMapper;
+using BAR.BL.Domain.Items;
+using BAR.BL.Domain.Users;
+using BAR.BL.Managers;
+using BAR.UI.MVC.App_GlobalResources;
+using BAR.UI.MVC.Attributes;
+using BAR.UI.MVC.Models;
+using Microsoft.AspNet.Identity;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using AutoMapper;
-using BAR.BL;
-using BAR.BL.Domain.Items;
-using BAR.BL.Domain.Users;
-using BAR.BL.Domain.Widgets;
-using BAR.BL.Managers;
-using BAR.UI.MVC.App_GlobalResources;
-using BAR.UI.MVC.Models;
-using Microsoft.AspNet.Identity;
 using WebGrease.Css.Extensions;
 using static BAR.UI.MVC.Models.ItemViewModels;
-using BAR.UI.MVC.Attributes;
-using BAR.BL.Domain;
-using BAR.BL.Domain.Core;
 
 namespace BAR.UI.MVC.Controllers
 {
@@ -38,7 +34,7 @@ namespace BAR.UI.MVC.Controllers
 		public ActionResult Index()
 		{
 			//Get hold of subplatformID we received
-			int subPlatformID = (int) RouteData.Values["SubPlatformID"];
+			int subPlatformID = (int)RouteData.Values["SubPlatformID"];
 
 			itemManager = new ItemManager();
 			userManager = new UserManager();
@@ -53,39 +49,50 @@ namespace BAR.UI.MVC.Controllers
 
 			List<Person> allPersons = itemManager.GetAllPersonsForSubplatform(subPlatformID).ToList();
 			List<ItemDTO> items = Mapper.Map(allPersons, new List<ItemDTO>());
-			for(int i = 0; i < items.Count; i++) {
+			for (int i = 0; i < items.Count; i++)
+			{
 				personViewModels.Persons[i].Item = items[i];
 				personViewModels.Persons[i].Item.Picture = persons[i].Picture;
 			}
 
 			IEnumerable<Subscription> subs = subManager.GetSubscriptionsWithItemsForUser(User.Identity.GetUserId());
-			personViewModels.Persons.Where(p => subs.Any(s => s.SubscribedItem.ItemId == p.Item.ItemId)).ForEach(i => i.Subscribed = true);
-			
-			personViewModels.Persons.ForEach(p => p.RankNumberOfMentions = CalculateRankNumberOfMentions(p.Item.NumberOfMentions, allPersons));
-			personViewModels.Persons.ForEach(p => p.RankTrendingPercentage = CalculateRankTrendingPercentage(p.Item.ItemId, allPersons));
-			
+			personViewModels.Persons.Where(person => subs.Any(s => s.SubscribedItem.ItemId == person.Item.ItemId)).ForEach(item => item.Subscribed = true);
+
+			personViewModels.Persons.ForEach(person => person.RankNumberOfMentions = CalculateRankNumberOfMentions(person.Item.NumberOfMentions, allPersons));
+			personViewModels.Persons.ForEach(person => person.RankTrendingPercentage = CalculateRankTrendingPercentage(person.Item.ItemId, allPersons));
+
 			//By default person pages are ordered by trending percentage.
-			personViewModels.Persons = personViewModels.Persons.OrderByDescending(p => p.Item.TrendingPercentage).ToList();
-			
+			personViewModels.Persons = personViewModels.Persons.OrderByDescending(person => person.Item.TrendingPercentage).ToList();
+
 			//Assembling the view
 			return View("Index", personViewModels);
 
 		}
 
-		private int CalculateRankTrendingPercentage(int itemId, List<Person> items = null) {
-			if (items == null) {
-				items = new ItemManager().GetAllPersonsForSubplatform((int) RouteData.Values["SubPlatformID"]).ToList();
+		/// <summary>
+		/// Calculates the most trending items by trending percentage
+		/// </summary>
+		private int CalculateRankTrendingPercentage(int itemId, List<Person> items = null)
+		{
+			if (items == null)
+			{
+				items = new ItemManager().GetAllPersonsForSubplatform((int)RouteData.Values["SubPlatformID"]).ToList();
 			}
 			return items.OrderByDescending(i => i.TrendingPercentage).ToList()
-				.FindIndex(p => p.ItemId == itemId) +1;
+				.FindIndex(p => p.ItemId == itemId) + 1;
 		}
 
-		private int CalculateRankNumberOfMentions(int numberOfMentions, List<Person> items = null) {
-			if (items == null) {
-				items = new ItemManager().GetAllPersonsForSubplatform((int) RouteData.Values["SubPlatformID"]).ToList();
+		/// <summary>
+		/// Calculates the most number of mentions for the items
+		/// </summary>
+		private int CalculateRankNumberOfMentions(int numberOfMentions, List<Person> items = null)
+		{
+			if (items == null)
+			{
+				items = new ItemManager().GetAllPersonsForSubplatform((int)RouteData.Values["SubPlatformID"]).ToList();
 			}
 			return items.OrderByDescending(i => i.NumberOfMentions).ToList()
-				.FindIndex(p => p.NumberOfMentions == numberOfMentions)+1;
+				.FindIndex(p => p.NumberOfMentions == numberOfMentions) + 1;
 		}
 
 		/// <summary>
@@ -99,43 +106,57 @@ namespace BAR.UI.MVC.Controllers
 			subManager = new SubscriptionManager();
 
 			Item item = itemManager.GetPersonWithDetails(id);
-
 			if (item == null) return HttpNotFound();
 
 			Item subbedItem = subManager.GetSubscribedItemsForUser(User.Identity.GetUserId())
 				.FirstOrDefault(i => i.ItemId == item.ItemId);
 
 			PersonViewModel personViewModel = Mapper.Map(item, new PersonViewModel());
-			
+
 			personViewModel.PageTitle = item.Name;
 			personViewModel.User = User.Identity.IsAuthenticated ? userManager.GetUser(User.Identity.GetUserId()) : null;
 			personViewModel.Item = Mapper.Map(item, new ItemDTO());
 			personViewModel.Subscribed = subbedItem != null;
-			
+
 			personViewModel.RankNumberOfMentions = CalculateRankNumberOfMentions(personViewModel.Item.NumberOfMentions);
 			personViewModel.RankTrendingPercentage = CalculateRankTrendingPercentage(personViewModel.Item.ItemId);
 			personViewModel.PeopleFromSameOrg = GetPeopleFromSameOrg(personViewModel.Item.ItemId);
 
 			//Log visit activity
 			new SubplatformManager().LogActivity(ActivityType.VisitActitiy);
-			
+
 			//Assembling the view
 			return View(personViewModel);
 		}
 
-		private List<PersonViewModel> GetPeopleFromSameOrg(int itemId) 
+		/// <summary>
+		/// Gives back the persons that are in the same organisation
+		/// </summary>
+		private List<PersonViewModel> GetPeopleFromSameOrg(int itemId)
 		{
-			int orgId = itemManager.GetPersonWithDetails(itemId).Organisation.ItemId;
-			List<Person> persons = itemManager.GetAllPersons()
-				.Where(p => p.Organisation.ItemId == orgId)
-				.Where(p => p.ItemId != itemId) //except the current person
-				.OrderByDescending(p => p.NumberOfMentions)
-				.Take(6).ToList();
-			List<PersonViewModel> personViewModels = Mapper.Map(persons, new List<PersonViewModel>());
-			for (int i = 0; i < persons.Count; i++) {
-				personViewModels[i].Item = Mapper.Map(persons[i], new ItemDTO());
+			try
+			{
+				int orgId = itemManager.GetPersonWithDetails(itemId).Organisation.ItemId;
+				List<Person> persons = itemManager.GetAllPersons()
+					.Where(p => p.Organisation.ItemId == orgId)
+					.Where(p => p.ItemId != itemId) //except the current person
+					.OrderByDescending(p => p.NumberOfMentions)
+					.Take(6).ToList();
+				List<PersonViewModel> personViewModels = Mapper.Map(persons, new List<PersonViewModel>());
+				for (int i = 0; i < persons.Count; i++)
+				{
+					personViewModels[i].Item = Mapper.Map(persons[i], new ItemDTO());
+				}
+				return personViewModels;
+#pragma warning disable CS0168 // Variable is declared but never used
 			}
-			return personViewModels;
+			catch (Exception e)
+#pragma warning restore CS0168 // Variable is declared but never used
+			{
+				List<PersonViewModel> personViewModels = Mapper.Map(new List<Person>(), new List<PersonViewModel>());
+				return personViewModels;
+			}
+
 		}
 
 		/// <summary>
@@ -165,6 +186,7 @@ namespace BAR.UI.MVC.Controllers
 				HttpPostedFileBase poImgFile = Request.Files["Picture"];
 				itemManager.ChangePicture(model.ItemId, poImgFile);
 			}
+
 			return RedirectToAction("Details", "Person", new { id = model.ItemId });
 		}
 	}

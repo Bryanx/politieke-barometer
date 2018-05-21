@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using AutoMapper;
@@ -30,10 +29,10 @@ namespace BAR.UI.MVC.Controllers
 		[AllowAnonymous]
 		public ActionResult Index()
 		{
-      //Get hold of subplatformID we received
-      int subPlatformID = (int)RouteData.Values["SubPlatformID"];
+			//Get hold of subplatformID we received
+			int subPlatformID = (int)RouteData.Values["SubPlatformID"];
 
-      subManager = new SubscriptionManager();
+			subManager = new SubscriptionManager();
 			itemManager = new ItemManager();
 			userManager = new UserManager();
 			subplatformManager = new SubplatformManager();
@@ -58,7 +57,7 @@ namespace BAR.UI.MVC.Controllers
 					Items = people
 				});
 		}
-		
+
 		/// <summary>
 		/// Detailed organisation page for logged-in and non-logged-in users.
 		/// </summary>
@@ -70,7 +69,6 @@ namespace BAR.UI.MVC.Controllers
 			subManager = new SubscriptionManager();
 
 			Item org = itemManager.GetOrganisationWithDetails(id);
-
 			if (org == null) return HttpNotFound();
 
 			Item subbedItem = subManager.GetSubscribedItemsForUser(User.Identity.GetUserId())
@@ -88,15 +86,20 @@ namespace BAR.UI.MVC.Controllers
 			//Assembling the view
 			return View(organisationViewModel);
 		}
-		
-		private List<PersonViewModel> GetOrgMembers(Item org) 
+
+		/// <summary>
+		/// Gives back all the members of a specific organisation
+		/// </summary>
+		private List<PersonViewModel> GetOrgMembers(Item org)
 		{
 			List<Person> persons = itemManager.GetAllPersons()
-				.Where(p => p.Organisation.ItemId == org.ItemId)
-				.OrderByDescending(p => p.NumberOfMentions)
+				.Where(person => person.Organisation.ItemId == org.ItemId)
+				.OrderByDescending(person => person.NumberOfMentions)
 				.ToList();
+
 			List<PersonViewModel> personViewModels = Mapper.Map(persons, new List<PersonViewModel>());
-			for (int i = 0; i < persons.Count; i++) {
+			for (int i = 0; i < persons.Count; i++)
+			{
 				personViewModels[i].Item = Mapper.Map(persons[i], new ItemDTO());
 			}
 			return personViewModels;

@@ -1,0 +1,62 @@
+.weeklyReview-top-card {
+  position: relative;
+}
+
+.weeklyReview-avatar {
+  position: absolute;
+  top: 30px;
+  left: 10px;
+  width: 200px;
+  img {
+    width: 160px !important;
+    height: 160px !important;
+    object-fit: cover;
+  }
+}
+
+.weeklyReview-name {
+  position: absolute;
+  top: 40px;
+  left: 190px;
+  letter-spacing: 1px;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.weeklyReview-organisation {
+  position: absolute;
+  top: 10px;
+  left: 190px;
+}
+
+.weeklyReview-nom {
+  position: absolute;
+  left: 190px;
+  top: 190px;
+  letter-spacing: 1px;
+  font-size: 18px;
+  :first-child {
+    border-bottom: 3px solid $primary-color-darker;
+    line-height: 19px;
+  }
+  :last-child{
+    text-align: center;
+    font-weight: bold;
+  }
+}
+
+.weeklyReview-trending {
+  position: absolute;
+  left: 60px;
+  top: 190px;
+  letter-spacing: 1px;
+  font-size: 18px;
+  :first-child {
+    border-bottom: 3px solid $primary-color-darker;
+    line-height: 19px;
+  }
+  :last-child{
+    text-align: center;
+    font-weight: bold;
+  }
+}

@@ -1,0 +1,153 @@
+﻿@using BAR.UI.MVC.Helpers
+@model BAR.UI.MVC.Models.ItemViewModels.WeeklyReviewModel
+
+<div class='x_panel no-scrollbar x_nested_panel'>
+    <div class='x_title'>
+        <h2 class='graphTitle'>Person</h2>
+        <ul class='nav panel_toolbox'>
+            <li>
+                <a class="collapse-link">
+                    <i class="fa fa-chevron-down"></i>
+                </a>
+            </li>
+            <li><a id="3" class='makeJSON' data-widget-id=""> @Resources.Save @Resources.To @Resources.Dashboard</a></li>
+        </ul>
+        <div class='clearfix'></div>
+    </div>
+    <div class="x_content">
+        <div class="row">
+            <div class="col-xs-12 col-sm-4 weeklyReview-top-card">
+                <div class="weeklyReview-avatar profile_left">
+                    @Html.LoadProfilePicture(Model.WeeklyPersonViewModels.ElementAt(0), "original", new {@class = "img-circle person-image"})
+                </div>
+                <div class="weeklyReview-organisation"><button onclick="window.location = '@Url.OrganisationUrl(Model.WeeklyPersonViewModels.ElementAt(0).OrganisationId)';" class="btn btn-default btn-xs">@Model.WeeklyPersonViewModels.ElementAt(0).OrganisationName</button></div>
+                <div class="weeklyReview-name">
+                    <a style="text-decoration: none" href="/Person/Details/@Model.WeeklyPersonViewModels.ElementAt(0).Item.ItemId">@Model.WeeklyPersonViewModels.ElementAt(0).Item.Name</a>
+                    <div class="badge bg-gold">
+                        #1 @Resources.Trending.ToLower() @Resources.Politician 
+                    </div>
+                </div>
+                <div class="weeklyReview-trending">
+                    <p>@Resources.Trending </p>
+                    <p>@Model.WeeklyPersonViewModels.ElementAt(0).Item.TrendingPercentage%</p>
+                </div>
+                <div class="weeklyReview-nom">
+                    <p>@Resources.NumberOfMentions </p>
+                    <p>@Model.WeeklyPersonViewModels.ElementAt(0).Item.NumberOfMentions</p>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-8" style="max-height: 250px; height: 250px">
+                <canvas id='weeklyReview-1'></canvas>
+                <h2 class='no-graph-data text-center'>No data available.</h2>
+            </div>
+        </div>
+        <div class="row">
+            @for (int j = 1; j < 4; j++)
+            {
+                <div class="col-xs-12 col-sm-4">
+                    @Html.Partial("Partials/_cardPerson", Model.WeeklyPersonViewModels.ElementAt(j))
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+<div class='x_panel no-scrollbar x_nested_panel'>
+    <div class='x_title'>
+        <h2 class='graphTitle'>Organisation</h2>
+        <ul class='nav panel_toolbox'>
+            <li>
+                <a class="collapse-link">
+                    <i class="fa fa-chevron-down"></i>
+                </a>
+            </li>
+            <li><a id="4" class='makeJSON' data-widget-id=""> @Resources.Save @Resources.To @Resources.Dashboard</a></li>
+        </ul>
+        <div class='clearfix'></div>
+    </div>
+    <div class="x_content">
+        <div class="row">
+            <div class="col-xs-12 col-sm-4 weeklyReview-top-card">
+                <div class="weeklyReview-avatar profile_left">
+                        <img src='/Content/build/images/picture.jpg' class="img-circle person-image"/>
+                </div>
+                <div class="weeklyReview-name">
+                    <a style="text-decoration: none" href="/Organisation/Details/@Model.WeeklyItems.ElementAt(4).ItemId">@Model.WeeklyItems.ElementAt(4).Name</a>
+                    <div class="badge bg-gold">
+                        #1 @Resources.Trending.ToLower() @Resources.Organisation 
+                    </div>
+                </div>
+                <div class="weeklyReview-trending">
+                    <p>@Resources.Trending </p>
+                    <p>@Model.WeeklyPersonViewModels.ElementAt(0).Item.TrendingPercentage%</p>
+                </div>
+                <div class="weeklyReview-nom">
+                    <p>@Resources.NumberOfMentions </p>
+                    <p>@Model.WeeklyPersonViewModels.ElementAt(0).Item.NumberOfMentions</p>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-8" style="max-height: 250px; height: 250px">
+                <canvas id='weeklyReview-2'></canvas>
+                <h2 class='no-graph-data text-center'>No data available.</h2>
+            </div>
+        </div>
+        <div class="row">
+            @for (int j = 5; j < 8; j++)
+            {
+                <div class="col-xs-12 col-sm-4">
+                    @Html.Partial("Partials/_card", Model.WeeklyItems.ElementAt(j))
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+<div class='x_panel no-scrollbar x_nested_panel'>
+    <div class='x_title'>
+        <h2 class='graphTitle'>Theme</h2>
+        <ul class='nav panel_toolbox'>
+            <li>
+                <a class="collapse-link">
+                    <i class="fa fa-chevron-down"></i>
+                </a>
+            </li>
+            <li><a id="5" class='makeJSON' data-widget-id=""> @Resources.Save @Resources.To @Resources.Dashboard</a></li>
+        </ul>
+        <div class='clearfix'></div>
+    </div>
+    <div class="x_content">
+        <div class="row">
+            <div class="col-xs-12 col-sm-4 weeklyReview-top-card">
+                <div class="weeklyReview-avatar profile_left">
+                    <img src='/Content/build/images/picture.jpg' class="img-circle person-image"/>
+                </div>
+                <div class="weeklyReview-name">
+                    <a style="text-decoration: none" href="/Organisation/Details/@Model.WeeklyItems.ElementAt(8).ItemId">@Model.WeeklyItems.ElementAt(8).Name</a>
+                    <div class="badge bg-gold">
+                        #1 @Resources.Trending.ToLower() @Resources.Theme 
+                    </div>
+                </div>
+                <div class="weeklyReview-trending">
+                    <p>@Resources.Trending </p>
+                    <p>@Model.WeeklyPersonViewModels.ElementAt(0).Item.TrendingPercentage%</p>
+                </div>
+                <div class="weeklyReview-nom">
+                    <p>@Resources.NumberOfMentions </p>
+                    <p>@Model.WeeklyPersonViewModels.ElementAt(0).Item.NumberOfMentions</p>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-8" style="max-height: 250px; height: 250px">
+                <canvas id='weeklyReview-3'></canvas>
+                <h2 class='no-graph-data text-center'>No data available.</h2>
+            </div>
+        </div>
+        <div class="row">
+            @for (int j = 9; j < 12; j++)
+            {
+                <div class="col-xs-12 col-sm-4">
+                    @Html.Partial("Partials/_card", Model.WeeklyItems.ElementAt(j))
+                </div>
+            }
+        </div>
+    </div>
+</div>

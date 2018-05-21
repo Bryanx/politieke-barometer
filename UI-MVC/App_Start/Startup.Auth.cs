@@ -6,15 +6,11 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.Facebook;
-using Microsoft.Owin.Security.Google;
 using Microsoft.Owin.Security.OAuth;
 using Owin;
 using System;
-using System.Collections.Generic;
 using System.Configuration;
-using System.Linq;
 using System.Net.Http;
-using System.Web;
 using webapi.Providers;
 
 namespace BAR.UI.MVC
@@ -66,8 +62,10 @@ namespace BAR.UI.MVC
         Scope = { "public_profile" },
         Provider = new FacebookAuthenticationProvider()
         {
-          OnAuthenticated = async context =>
-          {
+#pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
+			OnAuthenticated = async context =>
+#pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
+		  {
             context.Identity.AddClaim(new System.Security.Claims.Claim("FacebookAccessToken", context.AccessToken));
             foreach (var claim in context.User)
             {
