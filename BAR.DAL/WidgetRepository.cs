@@ -26,22 +26,6 @@ namespace BAR.DAL
 		}
 
 		/// <summary>
-		/// Gives back a list of all the dashboards.
-		/// </summary>
-		public IEnumerable<Dashboard> ReadAllDashboards()
-		{
-			return ctx.Dashboards.AsEnumerable();
-		}
-
-		/// <summary>
-		/// Gives back a list of all the widgets.
-		/// </summary>
-		public IEnumerable<Widget> ReadAllWidgets()
-		{
-			return ctx.Widgets.AsEnumerable();
-		}
-
-		/// <summary>
 		/// Gives back a dashboard object with all the widgets
 		/// for a specific dashboard id.
 		/// </summary>
@@ -119,16 +103,6 @@ namespace BAR.DAL
 		}
 
 		/// <summary>
-		/// Updates a list of widgets.
-		/// Returns -1 if SaveChanges() is delayed by unit of work.
-		/// </summary>
-		public int UpdateWidgets(IEnumerable<Widget> widgets)
-		{
-			foreach (Widget widget in widgets) ctx.Entry(widget).State = EntityState.Modified;
-			return ctx.SaveChanges();
-		}
-
-		/// <summary>
 		/// Updates a specific widget.
 		/// Returns -1 if SaveChanges() is delayed by unit of work.
 		/// </summary>
@@ -151,14 +125,6 @@ namespace BAR.DAL
 		}
 
 		/// <summary>
-		/// Gives back a list with all the widgets with all their items.
-		/// </summary>
-		public IEnumerable<Widget> ReadAllWidgetsWithAllItems()
-		{
-			return ctx.Widgets.Include(widget => widget.Items).AsEnumerable();
-		}
-
-		/// <summary>
 		/// Reads a widget with all the data of that specific widget.
 		/// </summary>
 		public Widget ReadWidgetWithAllData(int widgetId)
@@ -172,32 +138,11 @@ namespace BAR.DAL
 		}
 
 		/// <summary>
-		/// Reads all the widgets with all the data.
-		/// </summary>
-		public IEnumerable<Widget> ReadAllWidgetsWithAllData()
-		{
-			return ctx.Widgets.Include(widget => widget.Items)
-							  .Include(widget => widget.PropertyTags)
-							  .Include(widget => widget.WidgetDatas)
-							  .Include(widget => widget.WidgetDatas.Select(widgetData => widgetData.GraphValues))
-							  .AsEnumerable();
-		}
-
-		/// <summary>
 		/// Creates a new widgetData in the database
 		/// </summary>
 		public int CreateWidgetData(WidgetData widgetData)
 		{
 			ctx.WidgetDatas.Add(widgetData);
-			return ctx.SaveChanges();
-		}
-
-		/// <summary>
-		/// Updates a given widgetData
-		/// </summary>
-		public int UpdateWidgetData(WidgetData widgetData)
-		{
-			ctx.Entry(widgetData).State = EntityState.Modified;
 			return ctx.SaveChanges();
 		}
 

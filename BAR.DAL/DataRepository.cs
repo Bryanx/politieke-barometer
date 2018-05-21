@@ -52,56 +52,6 @@ namespace BAR.DAL
 		}
 
 		/// <summary>
-		/// Gives back a list of information-objects.
-		/// </summary>
-		/// <returns></returns>
-		public IEnumerable<Information> ReadAllInformations()
-		{
-			return ctx.Informations.AsEnumerable();
-		}
-
-		/// <summary>
-		/// Gives back an information object with his property-values
-		/// based on informationid.
-		/// </summary>
-		public Information ReadInformationWitlAllInfo(int informationId)
-		{
-			return ctx.Informations.Include(info => info.PropertieValues)
-								   .Include(info => info.PropertieValues.Select(propval => propval.Property))
-								   .Where(info => info.InformationId == informationId)
-								   .SingleOrDefault();
-		}
-
-		/// <summary>
-		/// Updates an instance of a specific information object
-		/// Returns -1 if SaveChanges() is delayed by unit of work.
-		/// </summary>
-		public int UpdateInformation(Information info)
-		{
-			ctx.Entry(info).State = EntityState.Modified;
-			return ctx.SaveChanges();
-		}
-
-		/// <summary>
-		/// Updates all informations objects that are in the list.
-		/// Returns -1 if SaveChanges() is delayed by unit of work.
-		/// </summary>
-		public int UpdateInformations(IEnumerable<Information> infos)
-		{
-			foreach (Information info in infos) ctx.Entry(info).State = EntityState.Modified;
-			return ctx.SaveChanges();
-		}
-
-		/// <summary>
-		/// Gives back a property by propertyname
-		/// </summary>
-		public Property ReadProperty(string propertyName)
-		{
-			return ctx.Properties.Where(prop => prop.Name.ToLower().Equals(propertyName.ToLower()))
-								 .SingleOrDefault();
-		}
-		
-		/// <summary>
 		/// Gives back a scource by sourcename
 		/// </summary>
 		public Source ReadSource(string sourceName)
@@ -211,86 +161,37 @@ namespace BAR.DAL
 		/// Gives back all datasources
 		/// </summary>
 		/// <returns></returns>
-        public IEnumerable<DataSource> ReadAllDataSources()
-        {
-            return ctx.DataSources.AsEnumerable();
-        }
+		public IEnumerable<DataSource> ReadAllDataSources()
+		{
+			return ctx.DataSources.AsEnumerable();
+		}
 
 		/// <summary>
 		/// Gives back the datasources based on thd datasource ID.
 		/// </summary>
-        public DataSource ReadDataSource(int dataSourceId)
-        {
-            return ctx.DataSources.Find(dataSourceId);
-        }
-
-		/// <summary>
-		/// Creates e new datasource in the database
-		/// </summary>
-        public int CreateDataSource(DataSource dataSource)
-        {
-            dataSource.LastTimeChecked = DateTime.Now;
-            ctx.DataSources.Add(dataSource);
-            return ctx.SaveChanges();
-        }
-
-		/// <summary>
-		/// Updates a datasource in the database
-		/// </summary>
-        public int UpdateDataSource(DataSource dataSource, int interval)
-        {
-            ctx.DataSources.Find(dataSource.DataSourceId).Interval = interval;
-            ctx.Entry(dataSource).State = EntityState.Modified;
-            return ctx.SaveChanges();
-        }
+		public DataSource ReadDataSource(int dataSourceId)
+		{
+			return ctx.DataSources.Find(dataSourceId);
+		}
 
 		/// <summary>
 		/// Deletes the given datasource in the database
 		/// </summary>
-        public int DeleteDataSource(DataSource dataSource)
-        {
-            ctx.DataSources.Remove(dataSource);
-            return ctx.SaveChanges();
-        }
-        /// <summary>
-		/// Returns the timer interval of the datasource.
+		public int DeleteDataSource(DataSource dataSource)
+		{
+			ctx.DataSources.Remove(dataSource);
+			return ctx.SaveChanges();
+		}
+
+		/// <summary>
+		/// Updates a datasource in the database
 		/// </summary>
-        public int ReadInterval(int dataSourceId)
-        {
-            return ctx.DataSources.Find(dataSourceId).Interval;
-        }
-        /// <summary>
-		/// Returns the set time of the timer.
-		/// </summary>
-        public string ReadStartTime(int dataSourceId)
-        {
-            return ctx.DataSources.Find(dataSourceId).SetTime;
-        }
-        /// <summary>
-		/// Updates the timer interval of the datasource.
-		/// </summary>
-        public int UpdateInterval(int dataSourceId, int interval)
-        {
-            ctx.DataSources.Find(dataSourceId).Interval = interval;
-            return ctx.SaveChanges();
-        }
-        /// <summary>
-		/// Updates the set time of the timer from the datasource.
-		/// </summary>
-        public int UpdateStartTime(int dataSourceId, string setTime)
-        {
-            ctx.DataSources.Find(dataSourceId).SetTime = setTime;
-            return ctx.SaveChanges();
-        }
-        /// <summary>
-		/// Updates the last time checked from the datasource.
-		/// </summary>
-        public int UpdateLastTimeChecked(int dataSourceId, DateTime date)
-        {
-            ctx.DataSources.Find(dataSourceId).LastTimeChecked = date;
-            return ctx.SaveChanges();
-        }
-    }
+		public int UpdateDataSource(DataSource dataSource)
+		{
+			ctx.Entry(dataSource).State = EntityState.Modified;
+			return ctx.SaveChanges();
+		}
+	}
 }
 
 

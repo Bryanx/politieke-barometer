@@ -227,7 +227,7 @@ namespace BAR.BL.Managers
 		{
 			//Get subs
 			IEnumerable<Subscription> subs = GetSubscriptionsWithItemsForUser(userId);
-			if (subs == null || subs.Count() == 0) return;
+			if (subs == null) return;
 
 			//Toggle subs
 			if (subs.Select(sub => sub.SubscribedItem.ItemId).Contains(itemId))
