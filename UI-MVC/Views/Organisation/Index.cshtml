@@ -1,26 +1,15 @@
 ﻿@using System.Web.Optimization
 @model BAR.UI.MVC.Models.ItemViewModels.ItemViewModel
 
-@{
-    ViewBag.Title = Model.PageTitle;
-}
-
 @section CustomCSS{
-    @Styles.Render("~/bundles/datatables")
+    @Styles.Render("~/bundles/datatables-css")
 }
 
-<div class="col-md-12 col-sm-12 col-xs-12">
-
-    <h1>@Model.PageTitle</h1>
-    <hr/>
-
-    @Html.Partial("Partials/_OrganisationTable", Model)
-</div>
-<div style="visibility: hidden">t</div>
+<h1>@Model.PageTitle</h1>
+<hr/>
+@Html.Partial("Partials/_OrganisationTable", Model)
+<div style="visibility: hidden">space</div>
 
 @section CustomJS{
-    @Scripts.Render("~/bundles/datatablesScripts")
-    <script>
-        $(document).on("click", ".subscribeItem", (e) => ajaxToggleSubscribe(e));
-    </script>
+    @Scripts.Render("~/bundles/datatables")
 }

@@ -3,6 +3,7 @@
 @model BAR.UI.MVC.Models.ItemViewModels.PersonViewModel
 
 <div class='org-member col-xs-6 col-sm-4 col-md-2'>
+
     <a href="@Url.PersonUrl(@Model.Item.ItemId)">
         @Html.LoadProfilePicture(Model, "original", new {@class = "img-responsive related-img-view"})
     </a>

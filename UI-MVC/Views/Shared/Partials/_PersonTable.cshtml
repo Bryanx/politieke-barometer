@@ -4,7 +4,7 @@
 
 @{ var TopTrending = @Model.Persons.OrderByDescending(p => p.Item.TrendingPercentage);}
 
-<table id="datatable-infinite" class="table" cellspacing="10px" width="100%">
+<table class="datatable-infinite table" cellspacing="10px" width="100%">
     <colgroup>
         <col style="width: 40px">
         <col style="width: 15%">

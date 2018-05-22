@@ -182,7 +182,6 @@ var GetTopTrending = function (trendings){
             url: 'api/GetItemWidgets/' + value.ItemId,
             dataType: "json",
             success: data => getGraph((value.Name + " " + value.TrendingPercentage.toFixed(0) + "%"),  value.ItemId, data[0].WidgetId, value.ItemType),
-            error: (xhr) => alert(xhr.responseText)
         });
     });
 };
