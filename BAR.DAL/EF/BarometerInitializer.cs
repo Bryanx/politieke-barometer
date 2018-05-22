@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.IO;
 using System.Linq;
+using System.Text;
 
 namespace BAR.DAL.EF
 {
@@ -201,8 +202,9 @@ namespace BAR.DAL.EF
 				Email = "contact@politiekebarometer.be",
 
 				//HeaderImage
-				HeaderImage = null,
-				LogoImage = null
+				HeaderImage = Encoding.ASCII.GetBytes(""),
+				LogoImage = Encoding.ASCII.GetBytes(""),
+				DarkLogoImage = Encoding.ASCII.GetBytes("")
 			};
 
 			return custom;

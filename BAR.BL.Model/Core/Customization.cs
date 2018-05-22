@@ -58,5 +58,7 @@ namespace BAR.BL.Domain.Core
 		//Images
 		public byte[] HeaderImage { get; set; }
 		public byte[] LogoImage { get; set; }
+		public byte[] DarkLogoImage { get; set; }
+
 	}
 }

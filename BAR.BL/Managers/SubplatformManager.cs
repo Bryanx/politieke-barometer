@@ -519,5 +519,32 @@ namespace BAR.BL.Managers
 			platformRepo.UpdateCustomization(customizationToUpdate);
 			return customizationToUpdate;
 		}
+
+		/// <summary>
+		/// Changes the subplatfor dark logo image
+		/// </summary>
+		/// <param name="platformId"></param>
+		/// <param name="darkLogoImgFile"></param>
+		/// <returns></returns>
+		public Customization ChangeSubplatformDarkLogo(int platformId, HttpPostedFileBase darkLogoImgFile)
+		{
+			InitRepo();
+
+			//Get User
+			Customization customizationToUpdate = platformRepo.ReadCustomisation(platformId);
+			if (customizationToUpdate == null) return null;
+
+			//Change header picture
+			byte[] imageData = null;
+			using (var binary = new BinaryReader(darkLogoImgFile.InputStream))
+			{
+				imageData = binary.ReadBytes(darkLogoImgFile.ContentLength);
+			}
+			customizationToUpdate.DarkLogoImage = imageData;
+
+			//Update database
+			platformRepo.UpdateCustomization(customizationToUpdate);
+			return customizationToUpdate;
+		}
 	}
 }

@@ -63,6 +63,8 @@ namespace BAR.UI.MVC.Models
 		//Images
 		public byte[] HeaderImage { get; set; }
 		public byte[] LogoImage { get; set; }
+		public byte[] DarkLogoImage { get; set; }
+
 	}
 
 	/// <summary>

@@ -175,6 +175,5 @@ namespace BAR.UI.MVC.Controllers
         if (customization.HeaderImage == null) return null;
         return new FileContentResult(customization.LogoImage, "image/jpeg");
     }
-
 	}
 }

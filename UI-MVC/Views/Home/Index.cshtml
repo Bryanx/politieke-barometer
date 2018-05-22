@@ -15,13 +15,13 @@
     <div class="main-header-container-parent row header-image-bg">
         
         <div runat="server" class="col-md-12 col-sm-12 col-xs-12 main-header-container" style="background-image: url(&quot;@Url.HeaderImage()&quot;)">
-            
-            <div runat="server" class="logo" style="background-image: url(&quot;@Url.LogoImage()&quot;);"></div>
-            <div class="main-header">
-                <h1 class="main-header-title">@Resources.HomepageHeaderSee @Model.Customization.PersonsAlias.ToLower() @Resources.HomepageHeaderTrending<br/>@Resources.OnSocialMedia.ToLower().</h1>
-            </div>
-            @Html.Partial("Partials/_SearchBar", Model)
+
+        <div runat="server" class="logo" style="background-image: url(&quot;@Url.LogoImage()&quot;);"></div>
+        <div class="main-header">
+            <h1 class="main-header-title">@Resources.HomepageHeaderSee @Model.Customization.PersonsAlias.ToLower() @Resources.HomepageHeaderTrending<br />@Resources.OnSocialMedia.ToLower().</h1>
         </div>
+        @Html.Partial("Partials/_SearchBar", Model)
+    </div>
     </div>
     <!-- header end -->
 }

@@ -29,6 +29,8 @@ namespace BAR.BL.Managers
 		Customization ChangeAddress(int platformId, string streetAndHousenumber, string zipcode, string city, string country, string email);
 		Customization ChangeSubplatformHeaderImage(int platformId, HttpPostedFileBase headerImgFile);
 		Customization ChangeSubplatformLogo(int platformId, HttpPostedFileBase logoImgFile);
+		Customization ChangeSubplatformDarkLogo(int platformId, HttpPostedFileBase darkLogoImgFile);
+
 
 
 		//Questions
