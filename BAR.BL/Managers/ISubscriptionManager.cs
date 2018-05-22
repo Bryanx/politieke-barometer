@@ -30,6 +30,7 @@ namespace BAR.BL.Managers
 		IEnumerable<SubAlert> GetUnsendedSubAlerts();
 
 		Alert ChangeAlertToRead(int alertId);
+    void ChangeSubAlertToSend(SubAlert subAlert);
 
 		void RemoveAlert(int alertId);
 

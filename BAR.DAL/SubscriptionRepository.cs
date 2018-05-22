@@ -219,5 +219,11 @@ namespace BAR.DAL
 												 .Where(alert => alert.User.Id.Equals(userId))
 												 .AsEnumerable();
 		}
-	}
+
+    public int UpdateSubAlert(SubAlert subAlert)
+    {
+      ctx.Entry(subAlert).State = EntityState.Modified;
+      return ctx.SaveChanges();
+    }
+  }
 }

@@ -300,7 +300,7 @@ namespace BAR.BL.Managers
 		public IEnumerable<SubAlert> GetAllSubAlerts()
 		{
 			InitRepo();
-			return subRepo.ReadAllSubAlerts().AsEnumerable();
+      return subRepo.ReadAllSubAlerts().AsEnumerable();
 		}
 
 		/// <summary>
@@ -330,13 +330,26 @@ namespace BAR.BL.Managers
 			return subRepo.ReadUserAlerts(userId);
 		}
 
-		/// <summary>
-		/// Gets all the sub alerts that where not yet sent to the
+    /// <summary>
+		/// Gets all the sub alerts that were not yet sent to the
 		/// android devices
 		/// </summary>
-		public IEnumerable<SubAlert> GetUnsendedSubAlerts()
-		{
-			return GetAllSubAlerts().Where(alert => !alert.IsSend);
-		}
+    public IEnumerable<SubAlert> GetUnsendedSubAlerts()
+    {
+      InitRepo();
+      return GetAllSubAlerts().Where(alert => !alert.IsSend);
+    }
+
+    /// <summary>
+		/// Change status to send
+		/// </summary>
+    public void ChangeSubAlertToSend(SubAlert subAlert)
+    {
+      //Change alert status
+      subAlert.IsSend = true;
+
+      //Update database
+      subRepo.UpdateSubAlert(subAlert);
+    }
 	}
 }
