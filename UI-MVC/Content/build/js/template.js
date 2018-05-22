@@ -700,33 +700,18 @@ function init_compose() {
 };
 
 function init_DataTables() {
-	if (console.log("run_datatables"), "undefined" != typeof $.fn.DataTable) {
-		console.log("init_DataTables");
-		var a = function () {
-			$("#datatable-buttons").length && $("#datatable-buttons").DataTable({
-				dom: "Blfrtip",
-				buttons: [{extend: "copy", className: "btn-sm"}, {extend: "csv", className: "btn-sm"}, {
-					extend: "excel",
-					className: "btn-sm"
-				}, {extend: "pdfHtml5", className: "btn-sm"}, {extend: "print", className: "btn-sm"}],
-				responsive: !0
-			})
-		};
-		TableManageButtons = function () {
-			"use strict";
-			return {
-				init: function () {
-					a()
-				}
-			}
-		}(), $("#datatable").dataTable(), $("#datatable-keytable").DataTable({keys: !0}), $("#datatable-responsive").DataTable(), $("#datatable-scroller").DataTable({
-			ajax: "js/datatables/json/scroller-demo.json",
-			deferRender: !0,
-			scrollY: 380,
-			scrollCollapse: !0,
-			scroller: !0
-		}), $("#datatable-fixed-header").DataTable({fixedHeader: !0});
-	}
+    let $tableInfinite =  $('.datatable-infinite');
+    if ($tableInfinite.length && "undefined" != typeof $.fn.DataTable) {
+        $tableInfinite.dataTable({
+            "searching": true,
+            "bScrollInfinite": true,
+            "bScrollCollapse": true,
+            "sScrollY": "760px",
+            "paging": true,
+            "bProcessing": true,
+            "info": true
+        });
+    }
 }
 
 //Generic Ajax call

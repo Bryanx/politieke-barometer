@@ -52,17 +52,12 @@ namespace BAR.UI.MVC.Helpers {
                 
                 HttpWebRequest request = (HttpWebRequest) WebRequest.Create(imageUrl);
                 using (HttpWebResponse response = (HttpWebResponse) request.GetResponse()) {
-                    if (response.StatusCode == HttpStatusCode.OK) {
-                        return imageUrl;
-                    } else {
-                        return "/Content/build/images/picture.jpg";
-                    }
+                    if (response.StatusCode == HttpStatusCode.OK) return response.ResponseUri.AbsoluteUri;
+                    return "/Content/build/images/picture.jpg";
                 }
-#pragma warning disable CS0168 // Variable is declared but never used
 			}
 			catch (Exception e)
 			{
-#pragma warning restore CS0168 // Variable is declared but never used
 				return "/Content/build/images/picture.jpg";
             }
         }

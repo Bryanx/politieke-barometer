@@ -12,19 +12,4 @@
 
 @section CustomJS{
     @Scripts.Render("~/bundles/datatables")
-    <script type="text/javascript">
-        (() => {
-            $('#datatable-infinite').dataTable({
-                "searching": true,
-                "bScrollInfinite": true,
-                "bScrollCollapse": true,
-                "sScrollY": "760px",
-                "paging": true,
-                "bProcessing": true,
-                "info": true
-            });
-            
-            $(document).on("click", ".subscribeItem", (e) => ajaxToggleSubscribe(e));
-        })($);
-    </script>
 }
