@@ -258,7 +258,6 @@
     <Compile Include="Models\AdminViewModels.cs" />
     <Compile Include="Models\CreateItemModels.cs" />
     <Compile Include="Models\CustomizationViewModel.cs" />
-    <Compile Include="Models\Graph.cs" />
     <Compile Include="Models\ItemDTO.cs" />
     <Compile Include="Models\ItemViewModels.cs" />
     <Compile Include="Models\SubPlatformDTO.cs" />
@@ -360,6 +359,7 @@
     <Content Include="Content\build\images\rolling.svg" />
     <Content Include="Content\build\images\topics.png" />
     <Content Include="Content\build\images\user.png" />
+    <Content Include="Content\build\js\admindashboard.js" />
     <Content Include="Content\build\js\alerts.js" />
     <Content Include="Content\build\js\custom.js" />
     <Content Include="Content\build\js\graphWizard.js" />
@@ -519,6 +519,7 @@
     <Content Include="Views\SuperAdmin\GeneralManagement.cshtml" />
     <Content Include="Views\User\Dashboard.cshtml" />
     <Content Include="Views\User\Settings.cshtml" />
+    <Content Include="Views\User\UserWeeklyReview.cshtml" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>

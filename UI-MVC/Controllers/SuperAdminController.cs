@@ -1,18 +1,11 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
-using BAR.BL.Domain.Users;
 using BAR.BL.Managers;
 using BAR.UI.MVC.App_GlobalResources;
 using BAR.UI.MVC.Models;
 using Microsoft.AspNet.Identity;
-using System.Net.Http;
-using System.Threading.Tasks;
-using System.Text;
-using System;
-using Microsoft.AspNet.Identity.Owin;
 using AutoMapper;
+using BAR.BL.Domain.Data;
 using System.IO;
 
 namespace BAR.UI.MVC.Controllers
@@ -25,7 +18,6 @@ namespace BAR.UI.MVC.Controllers
 	public class SuperAdminController : LanguageController
 	{
 		private IUserManager userManager;
-		private IItemManager itemManager;
 		private ISubplatformManager subplatformManager;
 		private IDataManager dataManager;
 
@@ -34,15 +26,18 @@ namespace BAR.UI.MVC.Controllers
 		/// </summary>
 		public ActionResult GeneralManagement()
 		{
-			userManager = new UserManager();
+			userManager = new UserManager();      
       dataManager = new DataManager();
+      
+      IEnumerable<DataSource> datasources = dataManager.GetAllDataSources();
+      
       //Assembling the view
       return View(new GeneralManagementViewModel
       {
         PageTitle = Resources.GeneralManagement,
         User = userManager.GetUser(User.Identity.GetUserId()),
-        Sources = dataManager.GetAllSources()
-			});
+         DataSources = datasources
+      });
 		}
 
 		/// <summary>
@@ -53,7 +48,7 @@ namespace BAR.UI.MVC.Controllers
 			userManager = new UserManager();
 			subplatformManager = new SubplatformManager();
 
-			IList<SubPlatformDTO> subplatforms = null;
+			List<SubPlatformDTO> subplatforms = null;
 			subplatforms = Mapper.Map(subplatformManager.GetSubplatforms(), new List<SubPlatformDTO>());
 
 			//Assembling the view
@@ -65,6 +60,9 @@ namespace BAR.UI.MVC.Controllers
 			});
 		}
 
+		/// <summary>
+		/// Exports all items to CSV
+		/// </summary>
 		public void ExportToCSV()
 		{
 			StringWriter sw = new StringWriter();

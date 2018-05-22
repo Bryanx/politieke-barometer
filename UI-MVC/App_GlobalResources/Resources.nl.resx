@@ -375,6 +375,9 @@
   <data name="InTrendingPercentage" xml:space="preserve">
     <value>In trending percentage.</value>
   </data>
+  <data name="Interval" xml:space="preserve">
+    <value>Interval</value>
+  </data>
   <data name="In_Time" xml:space="preserve">
     <value>Over</value>
   </data>
@@ -603,6 +606,9 @@
   <data name="SelectYourGender" xml:space="preserve">
     <value>Selecteer je geslacht</value>
   </data>
+  <data name="SetTime" xml:space="preserve">
+    <value>Begin synchroniseren</value>
+  </data>
   <data name="Settings" xml:space="preserve">
     <value>Instellingen</value>
   </data>
@@ -750,7 +756,7 @@
   <data name="PersonalityDistributionOfMentions" xml:space="preserve">
     <value>Persoonlijkheid</value>
   </data>
-    <data name="Message" xml:space="preserve">
+  <data name="Message" xml:space="preserve">
     <value>Bericht</value>
   </data>
   <data name="Send" xml:space="preserve">
@@ -758,5 +764,8 @@
   </data>
   <data name="SendPublicAndroidMessage" xml:space="preserve">
     <value>Verzend een publiek Android bericht</value>
+  </data>
+  <data name="Town" xml:space="preserve">
+    <value>Gemeente</value>
   </data>
 </root>

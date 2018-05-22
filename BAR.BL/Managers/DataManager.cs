@@ -39,15 +39,6 @@ namespace BAR.BL.Managers
 		}
 
 		/// <summary>
-		/// Gets the number of informations of a specific given item.
-		/// </summary
-		public int GetNumberInfo(int itemId, DateTime since)
-		{
-			InitRepo();
-			return dataRepo.ReadNumberInfo(itemId, since);
-		}
-
-		/// <summary>
 		/// Returns a list of informations for
 		/// a specific item id.
 		/// </summary>
@@ -55,41 +46,6 @@ namespace BAR.BL.Managers
 		{
 			InitRepo();
 			return dataRepo.ReadInformationsForItemid(itemId);
-		}
-
-		/// <summary>
-		/// Gives back a list of informations for a specific widget
-		/// </summary>
-		public IEnumerable<Information> GetInformationsForWidgetid(int widgetId)
-		{
-			//Get widget
-			WidgetManager widgetManager = new WidgetManager();
-			Widget widget = widgetManager.GetWidgetWithAllItems(widgetId);
-			if (widget == null) return null;
-
-			//Get informations
-			List<Information> infos = new List<Information>();
-			ItemManager itemManager = new ItemManager();
-			foreach (Item item in widget.Items)
-			{
-				infos.AddRange(GetInformationsForItemid(item.ItemId));
-			}
-
-			return infos.AsEnumerable();
-		}
-
-		/// <summary>
-		/// Gives back all the infomations based on a given timestamp
-		/// </summary>
-		public IEnumerable<Information> GetInformationsWithTimestamp(int widgetId)
-		{
-			//Get timestap of widget
-			WidgetManager widgetManager = new WidgetManager();
-			DateTime? timestamp = widgetManager.GetWidget(widgetId).Timestamp;
-
-			//Return filterd informations
-			if (timestamp == null) return GetInformationsForItemid(widgetId).AsEnumerable();
-			else return GetInformationsForItemid(widgetId).Where(info => info.CreationDate >= timestamp).AsEnumerable();
 		}
 
 		/// <summary>
@@ -117,11 +73,12 @@ namespace BAR.BL.Managers
 			IEnumerable<Information> informations = GetInformationsWithAllInfoForItem(itemId);
 			if (informations == null || informations.Count() == 0) return widgetData;
 
+			//Determine startdata
 			DateTime timestamp = widget.Timestamp.Value;
 			if (startDate == null) startDate = DateTime.Now;
 			else if (startDate < timestamp) return widgetData;
 
-
+			//Extract information
 			while (timestamp <= startDate)
 			{
 				//Each grapvalue represents a total number of mentions mapped
@@ -135,18 +92,12 @@ namespace BAR.BL.Managers
 				startDate = startDate.Value.AddDays(-1);
 			}
 
-			//Reverse order of graphvalues
-			widgetData.GraphValues.Reverse();
 			return widgetData;
 		}
 
 		/// <summary>
-		/// Gives back a map with all the propertievalues of a specific propertie
-		/// works dynamicly. The returnvalue contains the following:
-		/// 
-		/// Dictionary:
-		/// - key: name of the property-value
-		/// - value: number of times the property-value was mentioned
+		/// Gives back a widgetdata with all the propertievalues of a specific propertie
+		/// works dynamicly.
 		/// 
 		/// WARNING
 		/// This method will only work if the widget has a propertytag
@@ -166,13 +117,14 @@ namespace BAR.BL.Managers
 			DateTime? timestamp = widget.Timestamp.Value;
 			if (timestamp == null) return widgetData;
 
+			//Determine startdata
 			if (startDate == null) startDate = DateTime.Now;
 			else if (startDate < timestamp) return widgetData;
 
 			//Get informations for item
 			IEnumerable<Information> infosQueried = GetInformationsWithAllInfoForItem(itemid).Where(info => info.CreationDate <= startDate)
-													 .Where(info => info.CreationDate > timestamp)
-													 .AsEnumerable();
+																							 .Where(info => info.CreationDate > timestamp)
+																							 .AsEnumerable();
 			if (infosQueried == null || infosQueried.Count() == 0) return widgetData;
 
 			//Map timestap to number of propertyValues			
@@ -211,6 +163,8 @@ namespace BAR.BL.Managers
 		{
 			dynamic deserializedJson = JsonConvert.DeserializeObject(json);
 			int informationCount = deserializedJson.Count;
+
+			//Synchronize data in batches to forecome an out of memory exception
 			for (int i = 0; i < informationCount; i += 1000)
 			{
 				if (i + 1000 < informationCount)
@@ -222,6 +176,7 @@ namespace BAR.BL.Managers
 					BatchUpdate(json, i, informationCount);
 				}
 			}
+
 			return true;
 		}
 
@@ -232,12 +187,16 @@ namespace BAR.BL.Managers
 		{
 			uowManager = new UnitOfWorkManager();
 			InitRepo();
+
+			//Load everything in memory to gain performance
 			IItemManager itemManager = new ItemManager(uowManager);
 			IEnumerable<Item> items = itemManager.GetAllPersons();
 			List<Theme> themes = itemManager.GetAllThemes().ToList();
 			IEnumerable<Property> properties = dataRepo.ReadAllProperties();
 			IEnumerable<Source> sources = dataRepo.ReadAllSources();
 			dynamic deserializedJson = JsonConvert.DeserializeObject(json);
+
+			//Map propertyvalues to
 			List<Information> informationList = new List<Information>();
 			for (int i = start; i < end; i++)
 			{
@@ -375,21 +334,31 @@ namespace BAR.BL.Managers
 					information.Items.Add(items.Where(x => x.Name.Equals(name)).SingleOrDefault());
 				}
 
-				for (int j = 0; j < deserializedJson[i].words.Count; j++)
+				//Add connection to Item (Theme)
+				//Read themes
+				for (int j = 0; j < deserializedJson[i].themes.Count; j++)
 				{
-					string wordName = deserializedJson[i].words[j];
-
-					foreach (Theme theme in themes)
-					{
-						foreach (Keyword keyword in theme.Keywords.ToList())
-						{
-							if (keyword.Name.ToLower().Equals(wordName.ToLower()))
-							{
-								information.Items.Add(themes.Where(x => x.Name.Equals(theme.Name)).SingleOrDefault());
-							}
-						}
-					}
+					string name = deserializedJson[i].themes[j];
+					information.Items.Add(themes.Where(x => x.Name.Equals(name)).SingleOrDefault());
 				}
+
+
+				////Associate Data with a given theme
+				//for (int j = 0; j < deserializedJson[i].words.Count; j++)
+				//{
+				//	string wordName = deserializedJson[i].words[j];
+
+				//	foreach (Theme theme in themes)
+				//	{
+				//		foreach (Keyword keyword in theme.Keywords.ToList())
+				//		{
+				//			if (keyword.Name.ToLower().Equals(wordName.ToLower()))
+				//			{
+				//				information.Items.Add(themes.Where(x => x.Name.Equals(theme.Name)).SingleOrDefault());
+				//			}
+				//		}
+				//	}
+				//}
 
 				//Add other information
 				information.Source = sources.Where(x => x.Name.Equals("Twitter")).SingleOrDefault();
@@ -398,6 +367,7 @@ namespace BAR.BL.Managers
 				information.CreationDate = infoDate;
 				informationList.Add(information);
 			}
+
 			dataRepo.CreateInformations(informationList);
 			uowManager.Save();
 			uowManager = null;
@@ -441,8 +411,15 @@ namespace BAR.BL.Managers
 		public SynchronizeAudit ChangeAudit(int synchronizeAuditId)
 		{
 			InitRepo();
+
+			//Get audit
 			SynchronizeAudit synchronizeAudit = GetAudit(synchronizeAuditId);
+			if (synchronizeAudit == null) return null;
+
+			//Change audit
 			synchronizeAudit.Succes = true;
+
+			//Updata audit in the database
 			dataRepo.UpdateAudit(synchronizeAudit);
 			return synchronizeAudit;
 		}
@@ -455,11 +432,8 @@ namespace BAR.BL.Managers
 			dynamic deserializedJson = JsonConvert.DeserializeObject(json);
 			int informationCount = deserializedJson.Count;
 
-			if (informationCount == 0)
-			{
-				return true;
-			}
-			return false;
+			if (informationCount == 0) return true;
+			else return false;
 		}
 
 		/// <summary>
@@ -471,6 +445,9 @@ namespace BAR.BL.Managers
 			return dataRepo.ReadAllSources();
 		}
 
+		/// <summary>
+		/// Adds a source to the database.
+		/// </summary>
 		public Source AddSource(string name, string site)
 		{
 			InitRepo();
@@ -483,10 +460,18 @@ namespace BAR.BL.Managers
 			return source;
 		}
 
+		/// <summary>
+		/// Removes a source from the database
+		/// </summary>
 		public void RemoveSource(string sourceId)
 		{
 			InitRepo();
+
+			//Get source
 			Source source = dataRepo.ReadSource(Convert.ToInt32(sourceId));
+			if (source == null) return;
+
+			//Delete source
 			dataRepo.DeleteSource(source);
 		}
 
@@ -515,6 +500,9 @@ namespace BAR.BL.Managers
 				KeyValue = "activity"
 			};
 
+			//Check timestamp
+			if (timestamp == null) timestamp = DateTime.Now.AddDays(-30);
+
 			//Get actitivies
 			IEnumerable<UserActivity> activities = new SubplatformManager().GetUserActivities(type, timestamp);
 			if (activities == null || activities.Count() == 0) return widgetData;
@@ -531,16 +519,11 @@ namespace BAR.BL.Managers
 					Value = startdate.ToString("dd-MM")
 				};
 				activity = activities.Where(act => act.TimeStamp.ToString("dd-MM-yy").Equals(startdate.ToString("dd-MM-yy"))).SingleOrDefault();
-				if (activity != null)
-				{
-					graphValue.NumberOfTimes = activity.NumberOfTimes;
-					widgetData.GraphValues.Add(graphValue);
-				}
+				if (activity != null) graphValue.NumberOfTimes = activity.NumberOfTimes;					
 				startdate = startdate.AddDays(-1);
+				widgetData.GraphValues.Add(graphValue);
 			}
 
-			//Reverse data
-			widgetData.GraphValues.Reverse();
 			return widgetData;
 		}
 
@@ -567,37 +550,48 @@ namespace BAR.BL.Managers
 			return urls.AsEnumerable();
 		}
 
+		/// <summary>
+		/// Returns a source from the database
+		/// based on the source name.
+		/// </summary>
 		public Source GetSource(string sourceName)
 		{
 			InitRepo();
-
 			return dataRepo.ReadSource(sourceName);
 		}
 
+		/// <summary>
+		/// Gives back all the datasources
+		/// </summary>
 		public IEnumerable<DataSource> GetAllDataSources()
 		{
 			InitRepo();
 			return dataRepo.ReadAllDataSources();
 		}
 
+		/// <summary>
+		/// Returns a source from the database
+		/// based on the sourceId.
+		/// </summary>
 		public DataSource GetDataSource(int dataSourceId)
 		{
 			InitRepo();
 			return dataRepo.ReadDataSource(dataSourceId);
 		}
 
+		/// <summary>
+		/// Removes a datasource from the database
+		/// </summary>
 		public void RemoveDataSource(int dataSourceId)
 		{
 			InitRepo();
-			DataSource dataSource = dataRepo.ReadDataSource(dataSourceId);
-			dataRepo.DeleteDataSource(dataSource);
-		}
 
-		public void ChangeDataSource(int dataSourceId)
-		{
-			InitRepo();
+			//Get datasource
 			DataSource dataSource = dataRepo.ReadDataSource(dataSourceId);
-			dataRepo.UpdateDataSource(dataSource);
+			if (dataSource == null) return;
+
+			//Remove datasource
+			dataRepo.DeleteDataSource(dataSource);
 		}
 
 		/// <summary>
@@ -649,7 +643,7 @@ namespace BAR.BL.Managers
 		/// Gives back a widgetdata based on the persons that are part
 		/// of the organisations.
 		/// </summary>
-		public WidgetData GetOrganisationData(int itemId, DateTime? timestamp = null)
+		public WidgetData GetOrganisationData(int itemId, string dateFormat, DateTime? timestamp = null)
 		{
 			//Create widgetdata
 			WidgetData widgetData = new WidgetData()
@@ -670,7 +664,7 @@ namespace BAR.BL.Managers
 			{
 				GraphValue graphValue = new GraphValue()
 				{
-					Value = timestamp.Value.ToString("dd-MM")
+					Value = timestamp.Value.ToString(dateFormat)
 				};
 				foreach (Item item in items)
 				{
@@ -680,7 +674,65 @@ namespace BAR.BL.Managers
 				timestamp = timestamp.Value.AddDays(-1);
 			}
 
-			return widgetData;			
+			return widgetData;
+		}
+
+		/// <summary>
+		/// changes the interval from the datasource with the given ID.
+		/// </summary>
+		public DataSource ChangeTimerInterval(int dataSourceId, int interval)
+		{
+			InitRepo();
+
+			//Get datasource
+			DataSource source = GetDataSource(dataSourceId);
+			if (source == null) return null;
+
+			//Change datasource
+			source.Interval = interval;
+
+			//Update database
+			dataRepo.UpdateDataSource(source);
+			return source;
+		}
+
+		/// <summary>
+		/// Changes the StratTimer from the datasource with the given ID.
+		/// </summary>
+		public DataSource ChangeStartTimer(int dataSourceId, string startTimer)
+		{
+			InitRepo();
+
+			//Get datasource
+			DataSource source = GetDataSource(dataSourceId);
+			if (source == null) return null;
+
+			//Change datasource
+			source.SetTime = startTimer;
+
+			//Updat
+			dataRepo.UpdateDataSource(source);
+			return source;
+		}
+
+
+		/// <summary>
+		/// Changes the time when the datasource has last been chacked.
+		/// </summary>
+		public DataSource ChangeLastTimeCheckedTime(int dataSourceId, DateTime date)
+		{
+			InitRepo();
+
+			//Get datasource
+			DataSource source = GetDataSource(dataSourceId);
+			if (source == null) return null;
+
+			//Change datasource
+			source.LastTimeChecked = date;
+
+			//Update database
+			dataRepo.UpdateDataSource(source);
+			return source;
 		}
 	}
 }

@@ -25,7 +25,6 @@ namespace BAR.DAL.EF
 			GenerateProperties(ctx);
 			GenerateAreas(ctx);
 			GenerateActivityWidgets(ctx);
-			//GenerateThemes(ctx);
 		}
 
 		/// <summary>
@@ -59,7 +58,7 @@ namespace BAR.DAL.EF
 			{
 				Name = "activity register"
 			};
-			tags1.Add(tag2);
+			tags2.Add(tag2);
 
 			Widget registerWidget = new ItemWidget()
 			{
@@ -80,7 +79,7 @@ namespace BAR.DAL.EF
 			{
 				Name = "activity visit"
 			};
-			tags1.Add(tag3);
+			tags3.Add(tag3);
 
 			Widget visitWidget = new ItemWidget()
 			{
@@ -97,58 +96,6 @@ namespace BAR.DAL.EF
 			ctx.Widgets.Add(visitWidget);
 
 			ctx.SaveChanges();
-		}
-
-		/// <summary>
-		/// Generates test data themes
-		/// </summary>
-		/// <param name="ctx"></param>
-		private void GenerateThemes(BarometerDbContext ctx)
-		{
-			Theme t1 = new Theme()
-			{
-				Name = "Onderwijs",
-				CreationDate = DateTime.Now,
-				Baseline = 0,
-				TrendingPercentage = 0,
-				SubPlatform = ctx.SubPlatforms.Where(sp => sp.Name.Equals("politiek")).SingleOrDefault(),
-				NumberOfFollowers = 0,
-				NumberOfMentions = 0,
-				LastUpdatedInfo = DateTime.Now,
-				ItemType = ItemType.Theme
-			};
-
-			Theme t2 = new Theme()
-			{
-				Name = "Immigranten",
-				CreationDate = DateTime.Now,
-				Baseline = 0,
-				TrendingPercentage = 0,
-				SubPlatform = ctx.SubPlatforms.Where(sp => sp.Name.Equals("politiek")).SingleOrDefault(),
-				NumberOfFollowers = 0,
-				NumberOfMentions = 0,
-				LastUpdatedInfo = DateTime.Now,
-				ItemType = ItemType.Theme
-			};
-
-			Theme t3 = new Theme()
-			{
-				Name = "Pensioenen",
-				CreationDate = DateTime.Now,
-				Baseline = 0,
-				TrendingPercentage = 0,
-				SubPlatform = ctx.SubPlatforms.Where(sp => sp.Name.Equals("politiek")).SingleOrDefault(),
-				NumberOfFollowers = 0,
-				NumberOfMentions = 0,
-				LastUpdatedInfo = DateTime.Now,
-				ItemType = ItemType.Theme
-			};
-
-			ctx.Items.Add(t1);
-			ctx.Items.Add(t2);
-			ctx.Items.Add(t3);
-			ctx.SaveChanges();
-
 		}
 
 		/// <summary>
@@ -268,7 +215,12 @@ namespace BAR.DAL.EF
       DataSource textgain = new DataSource
       {
         Name = "Textgain",
-        Url = "https://kdg.textgain.com/query"
+        Url = "https://kdg.textgain.com/query",
+        DataSourceId = 1,
+        Interval = 60,
+        SetTime = "0900",
+        LastTimeChecked = DateTime.Now
+        
       };
     ctx.DataSources.Add(textgain);
     ctx.SaveChanges();

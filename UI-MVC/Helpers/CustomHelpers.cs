@@ -1,12 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using System.Security.Policy;
 using System.Web.Mvc;
 using BAR.BL.Domain.Items;
 using BAR.UI.MVC.Models;
-using MvcSiteMapProvider.Collections.Specialized;
 
 namespace BAR.UI.MVC.Helpers {
     public static class CustomHelpers {
@@ -61,8 +58,12 @@ namespace BAR.UI.MVC.Helpers {
                         return "/Content/build/images/picture.jpg";
                     }
                 }
-            } catch (Exception e) {
-                return "/Content/build/images/picture.jpg";
+#pragma warning disable CS0168 // Variable is declared but never used
+			}
+			catch (Exception e)
+			{
+#pragma warning restore CS0168 // Variable is declared but never used
+				return "/Content/build/images/picture.jpg";
             }
         }
     }

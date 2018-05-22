@@ -27,7 +27,7 @@
 
 <!-- top tiles -->
     <div class="row tile_count">
-        @foreach (var item in Model.Items.OfType<Person>().OrderByDescending(m => m.NumberOfMentions).Take(6)) {
+        @foreach (var item in Model.Items.Where(i => i.ItemType == ItemType.Person).OrderByDescending(m => m.NumberOfMentions).Take(6)) {
 
                 <div class="tile_stats_count col-md-2 col-sm-4 col-xs-6">
                     <a style="text-decoration: none" href="/Person/Details/@item.ItemId">
@@ -57,7 +57,7 @@
                         <i class="fa fa-chevron-down"></i>
                     </a>
                 </li>
-                <li><a id="1" class='makeJSON' data-widget-id=""> @Resources.Save @Resources.To @Resources.Dashboard</a></li>
+                <li><a id="0" class='makeJSON' data-widget-id=""> @Resources.Save @Resources.To @Resources.Dashboard</a></li>
             </ul>
             <div class='clearfix'></div>   
         </div>
@@ -74,7 +74,7 @@
                     @for (int j = 0; j < 3; j++)
                     {
                         <div class="col-xs-12 col-sm-4">
-                            @if (Model.TopTrendingPersonViewModels.Count != 0) {
+                            @if (Model.TopTrendingPersonViewModels.Count == 3) {
                                 @Html.Partial("Partials/_cardPerson", Model.TopTrendingPersonViewModels.ElementAt(j))
                             }                               
                         </div>
@@ -138,7 +138,7 @@
                                 <i class="fa fa-chevron-up"></i>
                             </a>
                         </li>
-                        <li><a id="2" class='makeJSON' data-widget-id=""> @Resources.Save @Resources.To @Resources.Dashboard</a></li>
+                        <li><a id="1" class='makeJSON' data-widget-id=""> @Resources.Save @Resources.To @Resources.Dashboard</a></li>
                     </ul>
                     <div class='clearfix'></div>
                 </div>
@@ -155,7 +155,7 @@
                         @for (int j = 3; j < 6; j++)
                         {
                             <div class="col-xs-12 col-sm-4 small-card">
-                                @if (Model.TopTrendingitems.Count != 0) {
+                                @if (Model.TopTrendingitems.Count > 3) {
                                     @Html.Partial("Partials/_card", Model.TopTrendingitems.ElementAt(j))
                                 }
                             </div>
@@ -179,7 +179,7 @@
                             <i class="fa fa-chevron-down"></i>
                         </a>
                     </li>
-                    <li><a id="3" class='makeJSON' data-widget-id=""> @Resources.Save @Resources.To @Resources.Dashboard</a></li>
+                    <li><a id="2" class='makeJSON' data-widget-id=""> @Resources.Save @Resources.To @Resources.Dashboard</a></li>
                 </ul>
                 <div class='clearfix'></div>
             </div>
@@ -196,7 +196,7 @@
                     @for (int j = 6; j < 9; j++)
                     {
                         <div class="col-xs-12 col-sm-4 small-card">
-                            @if (Model.TopTrendingitems.Count != 0) {
+                            @if (Model.TopTrendingitems.Count > 7) {
                                 @Html.Partial("Partials/_card", Model.TopTrendingitems.ElementAt(j))
                             }
                         </div>
@@ -224,7 +224,7 @@
             <div class='clearfix'></div>
         </div>
         <div class="x_content">
-        @if (Model.WeeklyReviewModel.WeeklyItems.Count != 0) {
+        @if (Model.WeeklyReviewModel.WeeklyItems.Count > 11) {
             @Html.Partial("Partials/_WeeklyReview", Model.WeeklyReviewModel)
         }
         </div>
@@ -291,65 +291,64 @@
             js.src = 'https://connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v2.12';
             fjs.parentNode.insertBefore(js, fjs);
         }(document, 'script', 'facebook-jssdk'));
+
     </script>
     <script src="~/Scripts/ChartJS/Chart.js"></script>
     <script src="https://platform.twitter.com/widgets.js"></script>
     @Scripts.Render("~/bundles/gridstack", "~/bundles/map")
-    <script src="../../Content/build/js/homepage.js"></script> 
-    
+    <script src="../../Content/build/js/homepage.js"></script>
+
     <script>
 
-    (() => {
-        $.ajax({
-            type: "GET",
-            url: '/api/GetTopTrendingItems/1',
-            dataType: "json",
-            success: data => {
-                GetTopTrending(data);
-                TwitterFeed(data);
-            },
-            error: (xhr) => alert(xhr.responseText)
-        });
-    
-        $.ajax({
-            type: "GET",
-            url: '/api/GetTopTrendingItems/2',
-            dataType: "json",
-            success: data => {
-                GetTopTrending(data);
-            },
-            error: (xhr) => alert(xhr.responseText)
-        });
-        
-        $.ajax({
-            type: "GET",
-            url: '/api/GetTopTrendingItems/3',
-            dataType: "json",
-            success: data => {
-                GetTopTrending(data);
-            },
-            error: (xhr) => alert(xhr.responseText)
-        });
+        (() => {
+            $.ajax({
+                type: "GET",
+                url: '/api/GetTopTrendingItems/1',
+                dataType: "json",
+                success: data => {
+                    GetTopTrending(data);
+                    TwitterFeed(data);
+                },
+                error: (xhr) => alert(xhr.responseText)
+            });
 
-        $.ajax({
-            type: "GET",
-            url: '/api/Widget/GetWeeklyReview/0',
-            dataType: "json",
-            success: data => {
-                var teller = 1;
-                for (var j = 0; j < data.length; j++) {
-                    WeeklyReview(data[j].Title, data[j].ItemIds[0], data[j].WidgetId, teller);
-                    teller++;
-                    for (var i = 0; i < 3; i++) {
-                        j++;
+            $.ajax({
+                type: "GET",
+                url: '/api/GetTopTrendingItems/2',
+                dataType: "json",
+                success: data => {
+                    GetTopTrending(data);
+                },
+                error: (xhr) => alert(xhr.responseText)
+            });
+
+            $.ajax({
+                type: "GET",
+                url: '/api/GetTopTrendingItems/3',
+                dataType: "json",
+                success: data => {
+                    GetTopTrending(data);
+                },
+                error: (xhr) => alert(xhr.responseText)
+            });
+
+            $.ajax({
+                type: "GET",
+                url: '/api/Widget/GetWeeklyReview/0',
+                dataType: "json",
+                success: data => {
+                    var itemtype = 0;
+                    for (var j = 0; j < data.length; j++) {
+                        if (j === 0 || j === 4 || j === 8) {
+                            itemtype++;
+                            WeeklyReview(data[j].Title, data[j].ItemIds[0], data[j].WidgetId, itemtype);
+                        }
                     }
-                }
-            },
-            error: (xhr) => alert(xhr.responseText)
-        });
-        
-        
+                },
+                error: (xhr) => alert(xhr.responseText)
+            });
 
-    })($)
+
+        })($)
     </script>
 }

@@ -1960,34 +1960,34 @@ nav .nav-container .searchbar .search-field, form.navbar-form .input-group {
 .fa-snapchat-square:hover::before {
   color: #fbe00f; }
 
-.small-card > .card {
+.small-card > .card, .small-card > .card-url {
   height: 80px;
   font-size: 13px; }
-  .small-card > .card .card-user {
+  .small-card > .card .card-user, .small-card > .card-url .card-user {
     display: none; }
-  .small-card > .card .card-name {
+  .small-card > .card .card-name, .small-card > .card-url .card-name {
     left: 10px;
     font-size: 13px;
     letter-spacing: 0.8px; }
-  .small-card > .card .card-person-organisation {
+  .small-card > .card .card-person-organisation, .small-card > .card-url .card-person-organisation {
     right: 10px; }
-  .small-card > .card .card-trending {
+  .small-card > .card .card-trending, .small-card > .card-url .card-trending {
     top: 45%;
     left: 10px;
     line-height: 4px;
     font-weight: normal; }
-    .small-card > .card .card-trending :first-child {
+    .small-card > .card .card-trending :first-child, .small-card > .card-url .card-trending :first-child {
       border-bottom: 3px solid rgba(137, 137, 137, 0.7); }
-  .small-card > .card .card-nom {
+  .small-card > .card .card-nom, .small-card > .card-url .card-nom {
     top: 45%;
     left: auto;
     right: 10px;
     line-height: 4px;
     font-weight: normal; }
-    .small-card > .card .card-nom :first-child {
+    .small-card > .card .card-nom :first-child, .small-card > .card-url .card-nom :first-child {
       border-bottom: 3px solid rgba(137, 137, 137, 0.7); }
 
-.card {
+.card, .card-url {
   position: relative;
   height: 100px;
   margin-top: 20px;
@@ -1997,6 +1997,21 @@ nav .nav-container .searchbar .search-field, form.navbar-form .input-group {
   box-shadow: 0 0 3px 0 rgba(0, 0, 0, 0.2);
   background: linear-gradient(180deg, white 70%, rgba(137, 137, 137, 0.2) 30%);
   font-weight: normal; }
+
+.card-url {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  background: var(--white);
+  box-shadow: 0 2px 0px 0px rgba(0, 0, 0, 0.07); }
+  .card-url i {
+    display: block;
+    text-align: center;
+    font-size: 40px;
+    transition: font-size .2s; }
+  .card-url:hover i {
+    font-size: 50px; }
 
 .card-user {
   position: absolute;
@@ -2012,7 +2027,7 @@ nav .nav-container .searchbar .search-field, form.navbar-form .input-group {
 .card-name {
   position: absolute;
   top: 10px;
-  left: 110px;
+  left: 100px;
   font-size: 18px;
   letter-spacing: 1.5px; }
 
@@ -2024,10 +2039,10 @@ nav .nav-container .searchbar .search-field, form.navbar-form .input-group {
 .card-trending {
   position: absolute;
   top: 49%;
-  left: 110px;
+  left: 100px;
   line-height: 8px; }
   .card-trending :first-child {
-    border-bottom: 5px solid rgba(137, 137, 137, 0.7);
+    border-bottom: 3px solid rgba(137, 137, 137, 0.7);
     line-height: 19px; }
   .card-trending :last-child {
     text-align: center;
@@ -2036,10 +2051,10 @@ nav .nav-container .searchbar .search-field, form.navbar-form .input-group {
 .card-nom {
   position: absolute;
   top: 49%;
-  left: 200px;
+  left: 180px;
   line-height: 8px; }
   .card-nom :first-child {
-    border-bottom: 5px solid rgba(137, 137, 137, 0.7);
+    border-bottom: 3px solid rgba(137, 137, 137, 0.7);
     line-height: 19px; }
   .card-nom :last-child {
     text-align: center;
@@ -2067,32 +2082,51 @@ nav .nav-container .searchbar .search-field, form.navbar-form .input-group {
 
 .weeklyReview-avatar {
   position: absolute;
-  top: 40px;
-  left: 0;
+  top: 30px;
+  left: 10px;
   width: 200px; }
   .weeklyReview-avatar img {
-    width: 100% !important;
-    height: 100% !important; }
+    width: 160px !important;
+    height: 160px !important;
+    object-fit: cover; }
 
 .weeklyReview-name {
   position: absolute;
-  top: 60px;
-  left: 210px;
+  top: 40px;
+  left: 190px;
   letter-spacing: 1px;
   font-size: 18px;
   font-weight: bold; }
 
 .weeklyReview-organisation {
   position: absolute;
-  top: 30px;
-  left: 210px; }
+  top: 10px;
+  left: 190px; }
 
 .weeklyReview-nom {
   position: absolute;
-  left: 210px;
-  top: 140px;
+  left: 190px;
+  top: 190px;
   letter-spacing: 1px;
-  font-size: 18px;
-  font-weight: bold; }
+  font-size: 18px; }
+  .weeklyReview-nom :first-child {
+    border-bottom: 3px solid rgba(137, 137, 137, 0.7);
+    line-height: 19px; }
+  .weeklyReview-nom :last-child {
+    text-align: center;
+    font-weight: bold; }
+
+.weeklyReview-trending {
+  position: absolute;
+  left: 60px;
+  top: 190px;
+  letter-spacing: 1px;
+  font-size: 18px; }
+  .weeklyReview-trending :first-child {
+    border-bottom: 3px solid rgba(137, 137, 137, 0.7);
+    line-height: 19px; }
+  .weeklyReview-trending :last-child {
+    text-align: center;
+    font-weight: bold; }
 
 /*# sourceMappingURL=custom.css.map */

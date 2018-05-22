@@ -19,22 +19,87 @@ namespace BAR.UI.MVC.Controllers.api
 		private IDataManager dataManager;
 		private IWidgetManager widgetManager;
 		private IItemManager itemManager;
-    private ISubscriptionManager subscriptionManager;
+		private IUserManager userManager;
+		private ISubscriptionManager subscriptionManager;
 
-		[HttpGet]
-		[Route("api/Data/Synchronize")]
+		/// <summary>
+		/// Sets the synchronize timer
+		/// </summary>
+        [HttpPost]
+        [Route("api/Data/SetSynchronize/{interval}/{start}/{id}")]
+        public IHttpActionResult SetSynchronize(int id,int interval, string start)
+        {
+            start = start.Substring(0, 2) + ":" + start.Substring(2, start.Length);
+            dataManager = new DataManager();
+            if (interval != 0 || start != "0")
+            {
+                dataManager.ChangeTimerInterval(id, interval);
+                dataManager.ChangeStartTimer(id, start);
+                return StatusCode(HttpStatusCode.Accepted);
+            }
+            else
+            {
+                return StatusCode(HttpStatusCode.NotAcceptable);
+            }
+        }
+
+		/// <summary>
+		/// Synchronizes with the database of textgain
+		/// </summary>
+        [HttpGet]
+		[Route("api/Data/Synchronize/{id}")]
 		[SubPlatformCheckAPI]
-		public async Task<IHttpActionResult> SynchronizeAsync()
+		public async Task<IHttpActionResult> Synchronize(int id)
 		{
+			//Get the subplatformID from the SubPlatformCheckAPI attribute
+			object _customObject = null;
+			int suplatformID = -1;
+			if (Request.Properties.TryGetValue("SubPlatformID", out _customObject))
+			{
+				suplatformID = (int)_customObject;
+			}
+
 			dataManager = new DataManager();
-					
+			itemManager = new ItemManager();
+
+			List<Theme> themes = itemManager.GetAllThemesForSubplatform(suplatformID).ToList();
+
+			//Making the string with all the themes the source should validate
+			string themeString = "\"themes\":{ ";
+			for(int i=0; i< themes.Count(); i++)
+			{
+				themeString += "\"";
+				themeString += themes[i].Name;
+				themeString += "\":[";
+				List<Keyword> keywords = themes[i].Keywords.ToList();
+				for (int j= 0; j < keywords.Count(); j++)
+				{
+					themeString += "\"";
+					themeString += keywords[j].Name;
+					themeString += "\"";
+					if (j != keywords.Count()-1)
+					{
+						themeString += ",";
+					}
+				}
+				themeString += "]";
+				if (i != themes.Count()-1)
+				{
+					themeString += ",";
+				}
+			}
+			themeString += "}";
+
 			string content;
 			if (dataManager.GetLastAudit() == null)
 			{
-				content = "{}";
+				//content = "{}";
 
 				//Test with fewer data 
-				//content = "{\"since\":\"2018-04-15 00:00\"}";
+				content = "{" +
+					"\"since\":\"2018-05-18 00:00\"," +
+					themeString +
+					"}";
 			}
 			else
 			{
@@ -46,7 +111,7 @@ namespace BAR.UI.MVC.Controllers.api
 			using (HttpClient client = new HttpClient())
 			{
 				//Make request
-				HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, dataManager.GetDataSource(1).Url);
+				HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, dataManager.GetDataSource(id).Url);
 				request.Headers.Add("Accept", "application/json");
 				request.Headers.Add("X-API-Key", "aEN3K6VJPEoh3sMp9ZVA73kkr");
 
@@ -63,21 +128,14 @@ namespace BAR.UI.MVC.Controllers.api
 					{
 						var completed = dataManager.SynchronizeData(json);
 						if (completed)
-						{						
+						{
 							dataManager.ChangeAudit(auditId);
 
 							widgetManager = new WidgetManager();
 							itemManager = new ItemManager();
-              subscriptionManager = new SubscriptionManager();
-              ControllerHelpers controllerHelpers = new ControllerHelpers();
-
-							//Get the subplatformID from the SubPlatformCheckAPI attribute
-							object _customObject = null;
-							int suplatformID = -1;
-							if (Request.Properties.TryGetValue("SubPlatformID", out _customObject))
-							{
-								suplatformID = (int)_customObject;
-							}
+							subscriptionManager = new SubscriptionManager();
+							userManager = new UserManager();
+							ControllerHelpers controllerHelpers = new ControllerHelpers();
 
 							//Syncronize recent data with all the persons and themes
 							widgetManager.GenerateDataForPersonsAndThemes();
@@ -108,7 +166,6 @@ namespace BAR.UI.MVC.Controllers.api
                 await controllerHelpers.SendPushNotificationAsync(user.DeviceToken, "Trending", String.Format("%s is nu trending.", subAlert.Subscription.SubscribedItem.Name));
                 subscriptionManager.ChangeSubAlertToSend(subAlert);
               }
-
 							return StatusCode(HttpStatusCode.OK);
 						}
 						else
@@ -127,5 +184,29 @@ namespace BAR.UI.MVC.Controllers.api
 				}
 			}
 		}
-	}
+
+		/// <summary>
+		/// Sets an item to a deleted state
+		/// </summary>
+        [HttpPost]
+        [Route("api/Data/DeleteItem/{dataSourceId}")]
+        public IHttpActionResult ToggleDeleteItem(int dataSourceId)
+        {
+            dataManager = new DataManager();
+            dataManager.RemoveDataSource(dataSourceId);
+            return StatusCode(HttpStatusCode.NoContent);
+        }
+
+		/// <summary>
+		/// Renames a datasource
+		/// </summary>
+        [HttpPost]
+        [Route("api/Data/ChangeDataSource/{dataSourceId}/{interval}")]
+        public IHttpActionResult RenameItem(int dataSourceId, int interval)
+        {
+            dataManager = new DataManager();
+            dataManager.ChangeTimerInterval(dataSourceId, interval);
+            return StatusCode(HttpStatusCode.NoContent);
+        }
+    }
 }
