@@ -301,39 +301,32 @@
     <script>
 
         (() => {
-            $.ajax({
-                type: "GET",
+            $.get({
                 url: '/api/GetTopTrendingItems/1',
                 dataType: "json",
                 success: data => {
                     GetTopTrending(data);
                     TwitterFeed(data);
-                },
-                error: (xhr) => alert(xhr.responseText)
+                }
             });
 
-            $.ajax({
-                type: "GET",
+            $.get({
                 url: '/api/GetTopTrendingItems/2',
                 dataType: "json",
                 success: data => {
                     GetTopTrending(data);
-                },
-                error: (xhr) => alert(xhr.responseText)
+                }
             });
 
-            $.ajax({
-                type: "GET",
+            $.get({
                 url: '/api/GetTopTrendingItems/3',
                 dataType: "json",
                 success: data => {
                     GetTopTrending(data);
-                },
-                error: (xhr) => alert(xhr.responseText)
+                }
             });
 
-            $.ajax({
-                type: "GET",
+            $.get({
                 url: '/api/Widget/GetWeeklyReview/0',
                 dataType: "json",
                 success: data => {
@@ -344,8 +337,7 @@
                             WeeklyReview(data[j].Title, data[j].ItemIds[0], data[j].WidgetId, itemtype);
                         }
                     }
-                },
-                error: (xhr) => alert(xhr.responseText)
+                }
             });
 
 
