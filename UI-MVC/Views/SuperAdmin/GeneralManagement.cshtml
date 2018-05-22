@@ -96,9 +96,6 @@
         $("#synchronizeForm").on("submit", function (event) {
             submitForm($(this), event, $("#synchronizeMessage"));
         });
-        $("#sendPublicNotificatioForm").on("submit", function (event) {
-            submitForm($(this), event, $("#SendPublicNotificationMessage"));
-        });
 
         //Ajax call in generic function so every form can use the same code.
         function submitForm($this, event, message) {
@@ -219,6 +216,27 @@
                             });
                     },
                     500);
+         });
+
+      $("#sendPublicNotificatioForm").on("submit", function (event) {
+                event.preventDefault();
+                var $this = $(this);
+                $.ajax({
+                    type: $this.attr('method'),
+                    url: $this.attr('action'),
+                    data: $this.serialize()
+                }).fail(() => {/* ok */ })
+                    .done(function (data) {
+                    $("#SendPublicNotificationMessage").addClass('green')
+                    .html("@Resources.Send")
+                    .fadeOut(2000,
+                    function () {
+                        $(this)
+                            .removeClass()
+                            .html("")
+                            .css("display", "inline");
+                    })
+                    });
             });
   </script>
 }
