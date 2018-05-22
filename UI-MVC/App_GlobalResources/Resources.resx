@@ -822,4 +822,13 @@
   <data name="LogoPicture" xml:space="preserve">
     <value>Logo</value>
   </data>
+  <data name="Deleted" xml:space="preserve">
+    <value>Deleted</value>
+  </data>
+  <data name="Answer" xml:space="preserve">
+    <value>Answer</value>
+  </data>
+  <data name="Question" xml:space="preserve">
+    <value>Question</value>
+  </data>
 </root>

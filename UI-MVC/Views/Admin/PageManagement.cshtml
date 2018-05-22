@@ -191,19 +191,19 @@
                 <form id="form_page_faq" class="form-horizontal form-label-left">
                     <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="privacy_title">
-                            Question
+                            @Resources.Question
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                            @Html.TextBoxFor(model => model.FAQQuestion, "", new { @class = "form-control", placeholder = @Model.PrivacyTitle })
+                            @Html.TextBoxFor(model => model.FAQQuestion, "", new { @class = "form-control" })
                         </div>
                     </div>
                     <label class="control-label col-md-3 col-sm-3 col-xs-12" for="privacy_title">
-                        Answer
+                        @Resources.Answer
                     </label>
                     <div class="col-sm-6 col-md-6 col-xs-12 center-margin">
                         <div class="form-group">
                             <div id="alerts"></div>
-                            @Html.TextBoxFor(model => model.FAQAnswer, new { @class = "form-control", id = "descr", @row = "20", placeholder = @Model.PrivacyText })
+                            @Html.TextBoxFor(model => model.FAQAnswer, new { @class = "form-control", id = "descr", @row = "20" })
                         </div>
                     </div>
                     <div class="col-sm-6 col-md-6 col-xs-12 center-margin">
@@ -213,19 +213,10 @@
                         </div>
                     </div>
                 </form>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="row">
-    <div class="col-md-12 col-xs-12">
-        <div class="x_panel">
-            <div class="x_title">
-                <div class="clearfix"></div>
-            </div>
-            <div class="x_content">
-                <div class="form-group">
-                    @Html.Partial("Partials/_FAQTable", Model)
+                <div class="x_content">
+                    <div class="form-group">
+                        @Html.Partial("Partials/_FAQTable", Model)
+                    </div>
                 </div>
             </div>
         </div>
@@ -353,7 +344,30 @@
 
 
 
+
 @section CustomJS{
     @Scripts.Render("~/Scripts/mjolnic-bootstrap-colorpicker/dist/js/bootstrap-colorpicker.min.js")
     <script src="~/Content/build/js/pagemanagement.js"></script>
+    <script type="text/javascript">
+            var wto;
+            $(".removeItem").click(function() {
+                clearTimeout(wto);
+                var $this = $(this);
+                var id = $this.data('question-id');
+                console.log(id);
+                var text = $this.html();
+                $this.html("<i class='fa fa-circle-o-notch fa-spin'></i>");
+                wto = setTimeout(function() {
+                        $.ajax({
+                                type: 'POST',
+                                url: '/api/Subplatform/DeleteQuestion/' + id
+                            }).fail(() => { alert("@Resources.CannotRemoveItem") })
+                            .done(function() {
+                                $this.html("@Resources.Deleted");
+                                $this.toggleClass("btn-danger btn-dark");
+                            });
+                    },
+                    500);
+            });
+    </script>
 }

@@ -90,12 +90,12 @@ function putColor() {
 
     let data = {
         PrimaryColor: formdata.PrimaryColor,
-        PrimaryDarkerColor: FormData.PrimaryDarkerColor,
-        PrimaryDarkestColor: FormData.PrimaryDarkestColor,
+        PrimaryDarkerColor: formdata.PrimaryDarkerColor,
+        PrimaryDarkestColor: formdata.PrimaryDarkestColor,
         SecondaryColor: formdata.SecondaryColor,
-        SecondaryLighterColor: FormData.SecondaryLighterColor,
-        SecondaryDarkerColor: FormData.SecondaryDarkerColor,
-        SecondaryDarkestColor: FormData.SecondaryDarkestColor,
+        SecondaryLighterColor: formdata.SecondaryLighterColor,
+        SecondaryDarkerColor: formdata.SecondaryDarkerColor,
+        SecondaryDarkestColor: formdata.SecondaryDarkestColor,
         TertiaryColor: formdata.TertiaryColor,
         BackgroundColor: formdata.BackgroundColor,
         TextColor: formdata.TextColor
@@ -167,7 +167,7 @@ function putFAQ() {
     }, {});
     let data = {
         FAQAnswer: formdata.FAQAnswer,
-        FAQQuestion: FormData.FAQQuestion
+        FAQQuestion: formdata.FAQQuestion
     };
     console.log(data);
 

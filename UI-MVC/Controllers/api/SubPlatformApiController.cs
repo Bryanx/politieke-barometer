@@ -4,6 +4,7 @@ using BAR.BL.Managers;
 using BAR.BL.Domain.Core;
 using BAR.UI.MVC.Models;
 using BAR.UI.MVC.Attributes;
+using System;
 
 namespace BAR.UI.MVC.Controllers.api
 {
@@ -139,11 +140,11 @@ namespace BAR.UI.MVC.Controllers.api
 			if (Request.Properties.TryGetValue("SubPlatformID", out _customObject)) suplatformId = (int)_customObject;
 
 			if (custom == null)
-				return BadRequest("No customization given");
+				return BadRequest("No question given");
 			if (!ModelState.IsValid)
 				return BadRequest(ModelState);
 
-			platformManager.ChangeFAQTitle(suplatformId, custom.FAQTitle);
+			platformManager.AddQuestion(suplatformId, QuestionType.General, custom.FAQQuestion, custom.FAQAnswer);
 
 			return StatusCode(HttpStatusCode.NoContent);
 		}
@@ -189,7 +190,7 @@ namespace BAR.UI.MVC.Controllers.api
 			if (!ModelState.IsValid)
 				return BadRequest(ModelState);
 
-			platformManager.AddQuestion(suplatformId, question.QuestionType, question.Title, question.Answer);
+			platformManager.AddQuestion(suplatformId, QuestionType.General, question.Title, question.Answer);
 
 			return StatusCode(HttpStatusCode.NoContent);
 		}
@@ -219,7 +220,7 @@ namespace BAR.UI.MVC.Controllers.api
 		/// Deletes a question
 		/// </summary>
 		[HttpPost]
-		[Route("api/Customization/DeleteQuestion/{questionId}")]
+		[Route("api/Subplatform/DeleteQuestion/{questionId}")]
 		public IHttpActionResult DeleteQuestion(int questionId)
 		{
 			platformManager = new SubplatformManager();
@@ -227,8 +228,14 @@ namespace BAR.UI.MVC.Controllers.api
 			if (!platformManager.Exists(questionId))
 				return NotFound();
 
-			platformManager.RemoveQuestion(questionId);
-
+			try
+			{
+				platformManager.RemoveQuestion(questionId);
+			}
+			catch(Exception e)
+			{
+				//DoNothing
+			}
 			return StatusCode(HttpStatusCode.NoContent);
 		}
 	}

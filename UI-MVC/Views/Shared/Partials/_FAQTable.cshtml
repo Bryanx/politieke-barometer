@@ -4,17 +4,22 @@
 
 <table id="datatable-responsive" class="table" cellspacing="10px" width="100%">
     <colgroup>
-        <col style="width: 50%">
-        <col style="width: 50%">
+        <col style="width: 30%">
+        <col style="width: 60%">
+        <col style="width: 10%">
     </colgroup>
     <thead>
         <tr>
             <th>
-                @Resources.QuestionAndAnswer
+                @Resources.Question
             </th>
             <th>
-                @Resources.QuestionAndAnswer
+                @Resources.Answer
             </th>
+            <th>
+                @Resources.Delete
+            </th>
+
         </tr>
     </thead>
     <tbody>
@@ -26,6 +31,9 @@
             </td>
             <td>
                 @faq.Answer
+            </td>
+            <td>
+                <a class="removeItem btn btn-danger btn-xs" data-question-id=@faq.QuestionId title=@Resources.Remove>@Resources.Remove</a>
             </td>
         </tr>
         }

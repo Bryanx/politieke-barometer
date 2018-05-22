@@ -55,7 +55,9 @@ namespace BAR.UI.MVC.Controllers
 			Customization custom = platformManager.GetCustomization(subPlatformID);
 
 			CustomizationViewModel vm = Mapper.Map(custom, new CustomizationViewModel());
-			vm.Questions = Mapper.Map(platformManager.GetAllQuestions(), new List<QuestionDTO>()); 
+
+			vm.Questions = Mapper.Map(platformManager.GetQuestions(subPlatformID), new List<QuestionDTO>());
+
 			vm.User = userManager.GetUser(User.Identity.GetUserId());
 			vm.PageTitle = Resources.PageManagement;
 

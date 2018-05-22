@@ -816,4 +816,13 @@
   <data name="LogoPicture" xml:space="preserve">
     <value>Logo</value>
   </data>
+  <data name="Deleted" xml:space="preserve">
+    <value>Verwijderd</value>
+  </data>
+  <data name="Answer" xml:space="preserve">
+    <value>Antwoord</value>
+  </data>
+  <data name="Question" xml:space="preserve">
+    <value>Vraag</value>
+  </data>
 </root>

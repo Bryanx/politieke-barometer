@@ -73,6 +73,7 @@ namespace BAR.UI.MVC.Models
 	/// </summary>
 	public class QuestionDTO : BaseViewModel
 	{
+		public int QuestionId { get; set; }
 		public string Title { get; set; }
 		public string Answer { get; set; }
 	}
