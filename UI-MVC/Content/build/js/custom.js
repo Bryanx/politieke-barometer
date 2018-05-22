@@ -41,6 +41,7 @@ window.addEventListener('resize', function () {
     $(".avatar-view").css("height", $(".avatar-view").width());
     $(".related-img-view").css("height", $(".related-img-view").width());
 
+    $(document).on("click", ".subscribeItem", (e) => ajaxToggleSubscribe(e));
 })($)
 window.addEventListener('resize', function () {
     $(".avatar-view").css("height", $(".avatar-view").width());
