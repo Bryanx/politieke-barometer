@@ -175,5 +175,17 @@ namespace BAR.UI.MVC.Controllers
         if (customization.HeaderImage == null) return null;
         return new FileContentResult(customization.LogoImage, "image/jpeg");
     }
+
+		/// <summary>
+		/// Returns image of byte array.
+		/// </summary>
+		public FileContentResult DarkLogoImage()
+		{
+			subplatformManager = new SubplatformManager();
+
+			Customization customization = subplatformManager.GetCustomization((int)RouteData.Values["SubPlatformID"]);
+			if (customization.HeaderImage == null) return null;
+			return new FileContentResult(customization.DarkLogoImage, "image/jpeg");
+		}
 	}
 }

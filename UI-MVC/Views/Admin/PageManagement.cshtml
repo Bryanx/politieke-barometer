@@ -179,31 +179,54 @@
         </div>
     </div>
 </div>
-
 <div class="row">
     <div class="col-md-12 col-sm-12 col-xs-12">
         <div class="x_panel">
             <div class="x_title">
-                <h2>FAQ Pagina</h2>
+                <h2>FAQ</h2>
                 <div class="clearfix"></div>
             </div>
             <div class="x_content">
-                </br>
-                <form id="form_question_faq" class="form-horizontal form-label-left">
+                <br />
+                <form id="form_page_faq" class="form-horizontal form-label-left">
                     <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12">
-                            FAQ
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="privacy_title">
+                            Question
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                            @Html.TextBoxFor(model => model.FAQTitle, "", new { @class = "form-control", placeholder = @Model.FAQTitle })
+                            @Html.TextBoxFor(model => model.FAQQuestion, "", new { @class = "form-control", placeholder = @Model.PrivacyTitle })
+                        </div>
+                    </div>
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="privacy_title">
+                        Answer
+                    </label>
+                    <div class="col-sm-6 col-md-6 col-xs-12 center-margin">
+                        <div class="form-group">
+                            <div id="alerts"></div>
+                            @Html.TextBoxFor(model => model.FAQAnswer, new { @class = "form-control", id = "descr", @row = "20", placeholder = @Model.PrivacyText })
                         </div>
                     </div>
                     <div class="col-sm-6 col-md-6 col-xs-12 center-margin">
                         <div class="form-group">
                             <button type="submit" class="btn btn-dark">Opslaan</button>
+                            <div id="messageSettings" style="display: inline"></div>
                         </div>
                     </div>
                 </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12 col-xs-12">
+        <div class="x_panel">
+            <div class="x_title">
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+                <div class="form-group">
+                    @Html.Partial("Partials/_FAQTable", Model)
+                </div>
             </div>
         </div>
     </div>
@@ -288,6 +311,31 @@
                 <div class="form-group">
                     <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
                         <input type="file" name="WebsiteLogo" id="fileUpload" accept=".png,.jpg,.jpeg,.gif,.tif" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+                        <button type="submit" class="btn btn-dark">@Resources.Save</button>
+                        <div style="display: inline"></div>
+                    </div>
+                </div>}
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>Dark Logo Picture</h2>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+                <br />
+                @using (Html.BeginForm("DarkLogoImage", "Admin", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
+                {
+                @Html.AntiForgeryToken()
+                <div class="form-group">
+                    <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+                        <input type="file" name="DarkWebsiteLogo" id="fileUpload" accept=".png,.jpg,.jpeg,.gif,.tif" />
                     </div>
                 </div>
                 <div class="form-group">

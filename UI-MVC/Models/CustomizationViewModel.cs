@@ -49,6 +49,8 @@ namespace BAR.UI.MVC.Models
 
 		//FAQ
 		public string FAQTitle { get; set; }
+		public string FAQQuestion { get; set; }
+		public string FAQAnswer { get; set; }
 
 		//Questions
 		public IEnumerable<QuestionDTO> Questions { get; set; }
@@ -64,7 +66,6 @@ namespace BAR.UI.MVC.Models
 		public byte[] HeaderImage { get; set; }
 		public byte[] LogoImage { get; set; }
 		public byte[] DarkLogoImage { get; set; }
-
 	}
 
 	/// <summary>

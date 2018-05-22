@@ -55,6 +55,7 @@ namespace BAR.UI.MVC.Controllers
 			Customization custom = platformManager.GetCustomization(subPlatformID);
 
 			CustomizationViewModel vm = Mapper.Map(custom, new CustomizationViewModel());
+			vm.Questions = Mapper.Map(platformManager.GetAllQuestions(), new List<QuestionDTO>()); 
 			vm.User = userManager.GetUser(User.Identity.GetUserId());
 			vm.PageTitle = Resources.PageManagement;
 
@@ -323,7 +324,7 @@ namespace BAR.UI.MVC.Controllers
 
 		/// <summary>
 		/// POST
-		/// Changes headerimage of a subplatform.
+		/// Changes logo of a subplatform.
 		/// </summary>
 		[HttpPost]
 		[ValidateAntiForgeryToken]
@@ -334,6 +335,25 @@ namespace BAR.UI.MVC.Controllers
 			if (Request.Files.Count > 0)
 			{
 				HttpPostedFileBase logoImgFile = Request.Files["WebsiteLogo"];
+				int subPlatformID = (int)RouteData.Values["SubPlatformID"];
+				platformManager.ChangeSubplatformLogo(subPlatformID, logoImgFile);
+			}
+			return RedirectToAction("PageManagement", "Admin");
+		}
+
+		/// <summary>
+		/// POST
+		/// Changes dark logo of a subplatform.
+		/// </summary>
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		public ActionResult DarkLogoImage([Bind(Exclude = "DarkWebsiteLogo")]CustomizationViewModel model)
+		{
+			platformManager = new SubplatformManager();
+
+			if (Request.Files.Count > 0)
+			{
+				HttpPostedFileBase logoImgFile = Request.Files["DarkWebsiteLogo"];
 				int subPlatformID = (int)RouteData.Values["SubPlatformID"];
 				platformManager.ChangeSubplatformLogo(subPlatformID, logoImgFile);
 			}

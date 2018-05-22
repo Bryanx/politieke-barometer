@@ -94,10 +94,19 @@ namespace BAR.UI.MVC
 					.ForMember(m => m.CustomizationId, opt => opt.MapFrom(src => src.CustomizationId))
 					//Mapping Page colors
 					.ForMember(m => m.PrimaryColor, opt => opt.MapFrom(src => src.PrimaryColor))
+					.ForMember(m => m.PrimaryDarkerColor, opt => opt.MapFrom(src => src.PrimaryDarkerColor))
+					.ForMember(m => m.PrimaryDarkestColor, opt => opt.MapFrom(src => src.PrimaryDarkestColor))
 					.ForMember(m => m.SecondaryColor, opt => opt.MapFrom(src => src.SecondaryColor))
+					.ForMember(m => m.SecondaryLighterColor, opt => opt.MapFrom(src => src.SecondaryLighterColor))
+					.ForMember(m => m.SecondaryDarkerColor, opt => opt.MapFrom(src => src.SecondaryDarkerColor))
+					.ForMember(m => m.SecondaryDarkestColor, opt => opt.MapFrom(src => src.SecondaryDarkestColor))
 					.ForMember(m => m.TertiaryColor, opt => opt.MapFrom(src => src.TertiaryColor))
 					.ForMember(m => m.BackgroundColor, opt => opt.MapFrom(src => src.BackgroundColor))
 					.ForMember(m => m.TextColor, opt => opt.MapFrom(src => src.TextColor))
+					.ForMember(m => m.LinkColor, opt => opt.MapFrom(src => src.LinkColor))
+					.ForMember(m => m.WhiteColor, opt => opt.MapFrom(src => src.WhiteColor))
+
+
 					//Mapping Page aliases
 					.ForMember(m => m.PersonAlias, opt => opt.MapFrom(src => src.PersonAlias))
 					.ForMember(m => m.PersonsAlias, opt => opt.MapFrom(src => src.PersonsAlias))
@@ -110,6 +119,7 @@ namespace BAR.UI.MVC
 					.ForMember(m => m.PrivacyText, opt => opt.MapFrom(src => src.PrivacyText))
 					//FAQ page
 					.ForMember(m => m.FAQTitle, opt => opt.MapFrom(src => src.FAQTitle))
+
 					//Contact page
 					.ForMember(m => m.StreetAndHousenumber, opt => opt.MapFrom(src => src.StreetAndHousenumber))
 					.ForMember(m => m.Zipcode, opt => opt.MapFrom(src => src.Zipcode))
@@ -117,7 +127,8 @@ namespace BAR.UI.MVC
 					.ForMember(m => m.Country, opt => opt.MapFrom(src => src.Country))
 					.ForMember(m => m.Email, opt => opt.MapFrom(src => src.Email))
 					.ForMember(m => m.HeaderImage, opt => opt.MapFrom(src => src.HeaderImage))
-					.ForMember(m => m.LogoImage, opt => opt.MapFrom(src => src.LogoImage));
+					.ForMember(m => m.LogoImage, opt => opt.MapFrom(src => src.LogoImage))
+					.ForMember(m => m.DarkLogoImage, opt => opt.MapFrom(src => src.DarkLogoImage));
 
 				cfg.CreateMap<Question, QuestionDTO>()
 					.ForMember(m => m.Title, opt => opt.MapFrom(src => src.Title))

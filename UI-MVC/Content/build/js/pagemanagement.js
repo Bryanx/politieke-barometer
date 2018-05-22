@@ -83,6 +83,11 @@ function putColor() {
         a[x.name] = x.value;
         return a;
     }, {});
+    let test = FormData.PrimaryColor;
+    console.log(test);
+    let test2 = FormData.PrimaryDarkerColor;
+    console.log(test2);
+
     let data = {
         PrimaryColor: formdata.PrimaryColor,
         PrimaryDarkerColor: FormData.PrimaryDarkerColor,
@@ -95,6 +100,7 @@ function putColor() {
         BackgroundColor: formdata.BackgroundColor,
         TextColor: formdata.TextColor
     };
+    console.log(data);
 
     //Do ajax call
     $.ajax({
@@ -160,8 +166,10 @@ function putFAQ() {
         return a;
     }, {});
     let data = {
-        FAQTitle: formdata.FAQTitle
+        FAQAnswer: formdata.FAQAnswer,
+        FAQQuestion: FormData.FAQQuestion
     };
+    console.log(data);
 
     //Do ajax-call
     $.ajax({

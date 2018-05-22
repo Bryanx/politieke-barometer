@@ -1,6 +1,6 @@
 ﻿@using BAR.BL.Domain.Items
 @using BAR.UI.MVC.Helpers
-@model BAR.UI.MVC.Models.SubPlatformManagement
+@model BAR.UI.MVC.Models.CustomizationViewModel
 
 <table id="datatable-responsive" class="table" cellspacing="10px" width="100%">
     <colgroup>
@@ -10,22 +10,22 @@
     <thead>
         <tr>
             <th>
-                @Resources.Name
+                @Resources.QuestionAndAnswer
             </th>
             <th>
-                @Resources.CreationDate
+                @Resources.QuestionAndAnswer
             </th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var subplatform in Model.SubPlatforms)
+        @foreach (var faq in Model.Questions)
         {
         <tr class="subscription">
             <td>
-                <a href=@Html.Raw("https://" + @subplatform.Name + Html.Raw(".localhost:44317"))>@subplatform.Name</a>
+                @faq.Title
             </td>
             <td>
-                @subplatform.CreationDate
+                @faq.Answer
             </td>
         </tr>
         }

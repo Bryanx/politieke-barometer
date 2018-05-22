@@ -596,6 +596,7 @@
     <Content Include="Views\Theme\Details.cshtml" />
     <Content Include="Views\Shared\Partials\_ThemeTable.cshtml" />
     <Content Include="Views\Shared\Partials\_CreateItemModal.cshtml" />
+    <Content Include="Views\Shared\Partials\_FAQTable.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BAR.BL.Model\Domain.csproj">
