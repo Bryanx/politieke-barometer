@@ -94,7 +94,7 @@ namespace BAR.UI.MVC.Helpers
 			return helper.RouteUrl("Default", new
 			{
 				controller = "Home",
-				action = nameof(AdminController.HeaderImage)
+				action = nameof(HomeController.HeaderImage)
 			});
 		}
 
@@ -103,7 +103,7 @@ namespace BAR.UI.MVC.Helpers
 			return helper.RouteUrl("Default", new
 			{
 				controller = "Home",
-				action = nameof(AdminController.LogoImage)
+				action = nameof(HomeController.LogoImage)
 			});
 		}
 
@@ -112,7 +112,7 @@ namespace BAR.UI.MVC.Helpers
 			return helper.RouteUrl("Default", new
 			{
 				controller = "Home",
-				action = nameof(AdminController.DarkLogoImage)
+				action = nameof(HomeController.DarkLogoImage)
 			});
 		}
 

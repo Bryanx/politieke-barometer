@@ -526,7 +526,7 @@ namespace BAR.BL.Managers
 		/// <param name="platformId"></param>
 		/// <param name="darkLogoImgFile"></param>
 		/// <returns></returns>
-		public Customization ChangeSubplatformDarkLogo(int platformId, HttpPostedFileBase darkLogoImgFile)
+		public Customization ChangeSubplatformDarkLogo(int platformId, HttpPostedFileBase logoImgFile)
 		{
 			InitRepo();
 
@@ -536,9 +536,9 @@ namespace BAR.BL.Managers
 
 			//Change header picture
 			byte[] imageData = null;
-			using (var binary = new BinaryReader(darkLogoImgFile.InputStream))
+			using (var binary = new BinaryReader(logoImgFile.InputStream))
 			{
-				imageData = binary.ReadBytes(darkLogoImgFile.ContentLength);
+				imageData = binary.ReadBytes(logoImgFile.ContentLength);
 			}
 			customizationToUpdate.DarkLogoImage = imageData;
 

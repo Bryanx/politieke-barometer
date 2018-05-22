@@ -357,7 +357,7 @@ namespace BAR.UI.MVC.Controllers
 			{
 				HttpPostedFileBase logoImgFile = Request.Files["DarkWebsiteLogo"];
 				int subPlatformID = (int)RouteData.Values["SubPlatformID"];
-				platformManager.ChangeSubplatformLogo(subPlatformID, logoImgFile);
+				platformManager.ChangeSubplatformDarkLogo(subPlatformID, logoImgFile);
 			}
 			return RedirectToAction("PageManagement", "Admin");
 		}
