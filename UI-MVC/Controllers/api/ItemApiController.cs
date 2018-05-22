@@ -16,6 +16,7 @@ namespace BAR.UI.MVC.Controllers.api
 	/// <summary>
 	/// This controller is used for doing api-calls to work with items.
 	/// </summary>
+	[SubPlatformCheckAPI]
 	public class ItemApiController : ApiController
 	{
 		private IItemManager itemManager;
@@ -24,7 +25,6 @@ namespace BAR.UI.MVC.Controllers.api
 		/// Returns all items for search suggestions.
 		/// </summary>
 		[HttpGet]
-		[SubPlatformCheckAPI]
 		[Route("api/GetSearchItems")]
 		public IHttpActionResult GetSearchItems()
 		{
@@ -50,23 +50,30 @@ namespace BAR.UI.MVC.Controllers.api
 		[Route("api/GetTopTrendingItems/{itemType}")]
 		public IHttpActionResult GetTopTrendingItems(int itemType)
 		{
+			//Get the subplatformID from the SubPlatformCheckAPI attribute
+			int suplatformID = -1;
+			if (Request.Properties.TryGetValue("SubPlatformID", out object _customObject))
+			{
+				suplatformID = (int)_customObject;
+			}
+
 			ItemType type = (ItemType)itemType;
 			itemManager = new ItemManager();
 			List<Item> lijst = new List<Item>();
 
 			if (type == ItemType.Person)
 			{
-				itemManager.GetMostTrendingItemsForType(ItemType.Person, 3)
+				itemManager.GetMostTrendingItemsForType(suplatformID, ItemType.Person, 3)
 					.ForEach(item => lijst.Add(itemManager.GetPersonWithDetails(item.ItemId)));
 			}
 			else if (type == ItemType.Organisation)
 			{
-				itemManager.GetMostTrendingItemsForType(ItemType.Organisation, 3)
+				itemManager.GetMostTrendingItemsForType(suplatformID, ItemType.Organisation, 3)
 					.ForEach(item => lijst.Add(itemManager.GetOrganisationWithDetails(item.ItemId)));
 			}
 			else
 			{
-				itemManager.GetMostTrendingItemsForType(ItemType.Theme, 3)
+				itemManager.GetMostTrendingItemsForType(suplatformID, ItemType.Theme, 3)
 					.ForEach(item => lijst.Add(itemManager.GetThemeWithDetails(item.ItemId)));
 			}
 
@@ -124,7 +131,7 @@ namespace BAR.UI.MVC.Controllers.api
 			itemManager.ChangePerson(Int32.Parse(itemId), model.DateOfBirth, model.Gender, model.Position, model.District);
 			return StatusCode(HttpStatusCode.NoContent);
 		}
-
+		
 		/// <summary>
 		/// Retrieves more people from the same organisation.
 		/// </summary>

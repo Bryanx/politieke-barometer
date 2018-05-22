@@ -59,11 +59,12 @@ body .container.body .main-header-container-parent {
 }
 
 .main-header-container {
-  height: 85%;
-  justify-content: center;
-  align-items: center;
-  padding: 0 !important;
-  margin-top: -100px;
+    background-image: url("../images/government2.jpg");
+    height: 85%;
+    justify-content: center;
+    align-items: center;
+    padding: 0 !important;
+    margin-top: -100px;
 }
 
 .logo {

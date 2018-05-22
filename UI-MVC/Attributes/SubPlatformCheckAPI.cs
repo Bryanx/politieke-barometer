@@ -1,6 +1,9 @@
 ﻿using BAR.BL.Domain.Core;
 using BAR.BL.Managers;
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
 using System.Web.Http.Controllers;
 using System.Web.Http.Filters;
 
@@ -10,8 +13,15 @@ namespace BAR.UI.MVC.Attributes
 	{
 		public override void OnActionExecuting(HttpActionContext actionContext)
 		{
+			//int subdomainId = GetSubDomain(HttpContext.Current.Request.Url);
 			int subdomainId = 1;
-			actionContext.Request.Properties.Add("SubPlatformID", subdomainId);
+			try
+			{
+				actionContext.Request.Properties.Add("SubPlatformID", subdomainId);
+			} catch (Exception e)
+			{
+				//Do Nothing, already added
+			}
 
 			base.OnActionExecuting(actionContext);
 		}

@@ -9,14 +9,14 @@
             <ul>
                 <li>
                     <a href='@Url.RootUrl()'>
-                        <i class="small-logo colored"></i>
+                        <i runat="server" class="small-logo colored" style="background-image: url(&quot;@Url.DarkLogoImage()&quot;);"></i>
                     </a>
                 </li>
                 <li>
                     &copy; @DateTime.Now.Year - Barometer
                 </li>
                 <li>
-                    <button href="mailto:@Model.ContactEmail" class="btn btn-default">@Resources.EmailUs</button>
+                    <button href="mailto:@Model.Customization.Email" class="btn btn-default">@Resources.EmailUs</button>
                 </li>
             </ul>
         </div>
@@ -30,10 +30,13 @@
                     <a href="@Url.DashboardUrl()">@Resources.Dashboard</a>
                 </li>
                 <li>
-                    <a href="@Url.PersonUrl()">@Resources.Politicians</a>
+                    <a href="@Url.PersonUrl()">@Model.Customization.PersonsAlias</a>
                 </li>
                 <li>
-                    <a href="@Url.OrganisationUrl()">@Resources.Parties</a>
+                    <a href="@Url.OrganisationUrl()">@Model.Customization.OrganisationsAlias</a>
+                </li>
+                <li>
+                    <a href="@Url.OrganisationUrl()">@Model.Customization.ThemesAlias</a>
                 </li>
             </ul>
         </div>
@@ -55,10 +58,10 @@
             <h4>@Resources.Contact</h4>
             <ul>
                 <li>
-                    @Model.ContactStreet
+                    @Model.Customization.StreetAndHousenumber
                 </li>
                 <li>
-                    @Model.ContactCity
+                    @Model.Customization.City
                 </li>
             </ul>
         </div>

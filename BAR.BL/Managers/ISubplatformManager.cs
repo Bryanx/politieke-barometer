@@ -2,6 +2,7 @@
 using BAR.BL.Domain.Users;
 using System;
 using System.Collections.Generic;
+using System.Web;
 
 namespace BAR.BL.Managers
 {
@@ -20,12 +21,17 @@ namespace BAR.BL.Managers
 
 		//Customizations
 		Customization GetCustomization(int subplatfromId);
+		Customization ChangePageColors(int platformId, string primaryColor, string primaryDarkerColor, string primaryDarkestColor, string secondairyColor, string secondaryLighterColor, string secondaryDarkerColor, string secondaryDarkestColor, string tertiaryColor, string backgroundColor, string textColor);
 
-		Customization ChangePageColors(int platformId, string primaryColor, string secondairyColor, string tertiaryColor, string backgroundColor, string textColor);
 		Customization ChangePageText(int platformId, string personAlias, string personsAlias, string organisationAlias, string organisationsAlias, string themeAlias, string themesAlias);
 		Customization ChangePrivacyText(int platformId, string content, string title = "Privacy policy");
 		Customization ChangeFAQTitle(int platformId, string title);
 		Customization ChangeAddress(int platformId, string streetAndHousenumber, string zipcode, string city, string country, string email);
+		Customization ChangeSubplatformHeaderImage(int platformId, HttpPostedFileBase headerImgFile);
+		Customization ChangeSubplatformLogo(int platformId, HttpPostedFileBase logoImgFile);
+		Customization ChangeSubplatformDarkLogo(int platformId, HttpPostedFileBase darkLogoImgFile);
+
+
 
 		//Questions
 		Question GetQuestion(int questionId);

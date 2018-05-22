@@ -6,7 +6,7 @@
         <h1>
             <strong>@Resources.StayUpToDate</strong>
         </h1>
-        @Resources.SignupToFollow @Resources.Politicians.ToLower() @Resources.Or.ToLower() @Resources.Parties.ToLower().
+        @Resources.SignupToFollow  @Resources.Or.ToLower().
     </div>
     @using (Html.BeginForm("Register", "User", FormMethod.Post, new {@class = "form-horizontal", role = "form"})) {
         @Html.AntiForgeryToken()

@@ -1,6 +1,7 @@
 ﻿using BAR.BL.Domain.Core;
 using BAR.BL.Managers;
 using System;
+using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
 
@@ -10,7 +11,7 @@ namespace BAR.UI.MVC.Attributes
 	{
 		public override void OnActionExecuting(ActionExecutingContext filterContext)
 		{
-			//** NEEDEN FOR TESTING WITH SUBPLATFORM **//
+			//** NEEDED FOR TESTING WITH SUBPLATFORM **//
 			//int subdomainID = GetSubDomain(HttpContext.Current.Request.Url);
 
 			int subdomainID = 1;
@@ -55,7 +56,7 @@ namespace BAR.UI.MVC.Attributes
 					}
 				}
 			}
-			return 1;
+			return -1;
 		}
 	}
 }

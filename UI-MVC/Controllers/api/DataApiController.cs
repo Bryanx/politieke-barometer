@@ -97,15 +97,20 @@ namespace BAR.UI.MVC.Controllers.api
 
         //Test with fewer data 
         content = "{" +
-          "\"since\":\"2018-05-18 00:00\"," +
+          "\"since\":\"2018-05-17 00:00\"," +
           themeString +
           "}";
       }
       else
       {
         string stringdate = dataManager.GetLastAudit().TimeStamp.ToString("yyyy-MM-dd HH:mm");
-        content = String.Format("{{\"since\":\"{0}\"}}", stringdate);
-      }
+				content = "{" +
+					"\"since\":\"" + 
+					stringdate +
+					"\"," +
+					themeString +
+					"}";
+			}
       int auditId = dataManager.AddAudit(DateTime.Now, false).SynchronizeAuditId;
 
       using (HttpClient client = new HttpClient())

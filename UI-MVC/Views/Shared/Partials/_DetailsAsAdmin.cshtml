@@ -30,7 +30,7 @@
     </div>
     <div class="col-md-3 col-sm-3 col-xs-12">
         <h4>
-            <strong>@Resources.Politician @Resources.Details</strong>
+            <strong>@Model.Customization.PersonAlias @Resources.Details</strong>
         </h4>
         <ul class="list-unstyled user_data">
             <form method="post" action="/api/Admin/UpdateItem/@Model.Item.ItemId" id="itemForm" data-item-id="@Model.Item.ItemId">

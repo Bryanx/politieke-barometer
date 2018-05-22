@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.IO;
 using System.Linq;
+using System.Text;
 
 namespace BAR.DAL.EF
 {
@@ -148,7 +149,7 @@ namespace BAR.DAL.EF
 				Name = "k3",
 				CreationDate = DateTime.Now,
 				Customization = AddDefaultCustomization(),
-				Questions = new List<Question>(),			
+				Questions = new List<Question>(),
 			};
 			ctx.SubPlatforms.Add(subPlatform1);
 
@@ -164,10 +165,19 @@ namespace BAR.DAL.EF
 			{
 				//Colors
 				PrimaryColor = "#0f8ec4",
-				SecondairyColor = "#303E4D",
+				PrimaryDarkerColor = "#0e85b8",
+				PrimaryDarkestColor = "#0d77a4",
+				SecondaryColor = "#303E4D",
+				SecondaryDarkerColor = "#2a3744",
+				SecondaryDarkestColor = "#1f2e3f",
+				SecondaryLighterColor = "#3c3c3c",
 				TertiaryColor = "#278e87",
 				BackgroundColor = "#f7f7f7",
+
+				WhiteColor = "#fff",
+				LinkColor = "#5A738E",
 				TextColor = "#73879C",
+
 
 				//Navbar and title text
 				PersonAlias = "Persoon",
@@ -189,7 +199,12 @@ namespace BAR.DAL.EF
 				Zipcode = "2060",
 				City = "Antwerpen",
 				Country = "Belgi�",
-				Email = "contact@politiekebarometer.be"
+				Email = "contact@politiekebarometer.be",
+
+				//HeaderImage
+				HeaderImage = Encoding.ASCII.GetBytes(""),
+				LogoImage = Encoding.ASCII.GetBytes(""),
+				DarkLogoImage = Encoding.ASCII.GetBytes("")
 			};
 
 			return custom;
@@ -234,110 +249,110 @@ namespace BAR.DAL.EF
 		{
 			List<Property> propertiesList = new List<Property>();
 
-      Property gender = new Property
-      {
-        Name = "Gender"
-      };
-      Property age = new Property
-      {
-        Name = "Age"
-      };
-      Property education = new Property
-      {
-        Name = "Education"
-      };
-      Property language = new Property
-      {
-        Name = "Language"
-      };
-      Property personality = new Property
-      {
-        Name = "Personality"
-      };
-      Property word = new Property
-      {
-        Name = "Word"
-      };
-      Property sentiment = new Property
-      {
-        Name = "Sentiment"
-      };
-      Property hashtag = new Property
-      {
-        Name = "Hashtag"
-      };
-      Property mention = new Property
-      {
-        Name = "Mention"
-      };
-      Property url = new Property
-      {
-        Name = "Url"
-      };
-      Property date = new Property
-      {
-        Name = "Date"
-      };
-      Property geo = new Property
-      {
-        Name = "Geo"
-      };
-      Property postId = new Property
-      {
-        Name = "PostId"
-      };     
-      Property retweet = new Property
-      {
-        Name = "Retweet"
-      };
+			Property gender = new Property
+			{
+				Name = "Gender"
+			};
+			Property age = new Property
+			{
+				Name = "Age"
+			};
+			Property education = new Property
+			{
+				Name = "Education"
+			};
+			Property language = new Property
+			{
+				Name = "Language"
+			};
+			Property personality = new Property
+			{
+				Name = "Personality"
+			};
+			Property word = new Property
+			{
+				Name = "Word"
+			};
+			Property sentiment = new Property
+			{
+				Name = "Sentiment"
+			};
+			Property hashtag = new Property
+			{
+				Name = "Hashtag"
+			};
+			Property mention = new Property
+			{
+				Name = "Mention"
+			};
+			Property url = new Property
+			{
+				Name = "Url"
+			};
+			Property date = new Property
+			{
+				Name = "Date"
+			};
+			Property geo = new Property
+			{
+				Name = "Geo"
+			};
+			Property postId = new Property
+			{
+				Name = "PostId"
+			};
+			Property retweet = new Property
+			{
+				Name = "Retweet"
+			};
 			Property theme = new Property
 			{
 				Name = "Theme"
 			};
 
-      propertiesList.Add(gender);
-      propertiesList.Add(age);
-      propertiesList.Add(education);
-      propertiesList.Add(language);
-      propertiesList.Add(personality);
-      propertiesList.Add(word);
-      propertiesList.Add(sentiment);
-      propertiesList.Add(hashtag);
-      propertiesList.Add(mention);
-      propertiesList.Add(url);
-      propertiesList.Add(date);
-      propertiesList.Add(geo);
-      propertiesList.Add(postId);
-      propertiesList.Add(retweet);
+			propertiesList.Add(gender);
+			propertiesList.Add(age);
+			propertiesList.Add(education);
+			propertiesList.Add(language);
+			propertiesList.Add(personality);
+			propertiesList.Add(word);
+			propertiesList.Add(sentiment);
+			propertiesList.Add(hashtag);
+			propertiesList.Add(mention);
+			propertiesList.Add(url);
+			propertiesList.Add(date);
+			propertiesList.Add(geo);
+			propertiesList.Add(postId);
+			propertiesList.Add(retweet);
 			propertiesList.Add(theme);
 
 
 			ctx.Properties.AddRange(propertiesList);
-      ctx.SaveChanges();
-    }
+			ctx.SaveChanges();
+		}
 
-    /// <summary>
-    /// Reads all Belgium cities from Json.
-    /// </summary>
-    /// <param name="ctx"></param>
-    private void GenerateAreas(BarometerDbContext ctx)
-    {
-      string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "zipcode-belgium.json");
-      string json = File.ReadAllText(path);
-      dynamic deserializedJson = JsonConvert.DeserializeObject(json);
+		/// <summary>
+		/// Reads all Belgium cities from Json.
+		/// </summary>
+		/// <param name="ctx"></param>
+		private void GenerateAreas(BarometerDbContext ctx)
+		{
+			string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "zipcode-belgium.json");
+			string json = File.ReadAllText(path);
+			dynamic deserializedJson = JsonConvert.DeserializeObject(json);
 
-      for (int i = 0; i < deserializedJson.Count; i++)
-      {
-        Area area = new Area
-        {
-          Country    = "België",
-          PostalCode = deserializedJson[i].zip,
-          Residence  = deserializedJson[i].city
-        };
-        ctx.Areas.Add(area);
-      }
-      ctx.SaveChanges();
-    }
-  }
+			for (int i = 0; i < deserializedJson.Count; i++)
+			{
+				Area area = new Area
+				{
+					Country = "België",
+					PostalCode = deserializedJson[i].zip,
+					Residence = deserializedJson[i].city
+				};
+				ctx.Areas.Add(area);
+			}
+			ctx.SaveChanges();
+		}
+	}
 }
 

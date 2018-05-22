@@ -30,6 +30,7 @@ namespace BAR.DAL
 		int UpdateQuestion(Question question);
 		int UpdateQuestions(IEnumerable<Question> questions);
 		int UpdateUserActivity(UserActivity activity);
+		int UpdateCustomization(Customization customization);
 		
 
 

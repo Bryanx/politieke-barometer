@@ -26,10 +26,10 @@
 
                 </div>
                 <div class="col-md-9 col-sm-9 col-xs-12">
-                    @Resources.Theme
+                    @Model.Customization.ThemeAlias
                     <h1>
                         <span class="item-name">@Model.Theme.Name</span>
-                        @if (Model.Subscribed == true)
+                        @if (Model.Subscribed != true)
                         {
                         <a class="w-100px subscribeItem btn btn-success pull-right" data-item-id="@Model.Theme.ItemId" title="Deze persoon volgen">@Resources.Subscribe</a>}
                         else
@@ -40,7 +40,7 @@
                 </div>
                 <div class="col-md-3 col-sm-3 col-xs-12">
                     <h4>
-                        <strong>@Resources.Theme details</strong>
+                        <strong>@Model.Customization.ThemeAlias details</strong>
                     </h4>
                     <ul class="list-unstyled user_data">
                         @foreach (var keyword in Model.Keywords)

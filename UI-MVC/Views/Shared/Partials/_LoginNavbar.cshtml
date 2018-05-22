@@ -12,13 +12,13 @@
         </a>
         <ul class="dropdown-menu pull-right">
             <li>
-                <a href="@Url.PersonUrl()"><i class="fa fa-users"></i>@Resources.Politicians</a>
+                <a href="@Url.PersonUrl()"><i class="fa fa-users"></i>@Model.Customization.PersonsAlias</a>
             </li>
             <li>
-                <a href="@Url.OrganisationUrl()"><i class="fa fa-briefcase"></i>@Resources.Parties</a>
+                <a href="@Url.OrganisationUrl()"><i class="fa fa-briefcase"></i>@Model.Customization.OrganisationsAlias</a>
             </li>
             <li>
-                <a href='@Url.ThemeUrl()'><i class="fa fa-tag"></i>@Resources.Topics</a>
+                <a href='@Url.ThemeUrl()'><i class="fa fa-tag"></i>@Model.Customization.ThemesAlias</a>
             </li>
         </ul>
     </li>

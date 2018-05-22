@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using BAR.BL.Managers;
+using BAR.UI.MVC.App_GlobalResources;
 using BAR.UI.MVC.Models;
 using Microsoft.AspNet.Identity;
 using System.Collections.Generic;
@@ -25,12 +26,15 @@ namespace BAR.UI.MVC.Controllers
 			userManager = new UserManager();
 			subplatformManager = new SubplatformManager();
 
+			List<SubPlatformDTO> subplatforms = null;
+			subplatforms = Mapper.Map(subplatformManager.GetSubplatforms(), new List<SubPlatformDTO>());
+
 			//Assembling the view
-			return View(new SubPlatformManagement()
+			return View(new SubPlatformManagement
 			{
-				PageTitle = "Subplatform overview",
-				User = User.Identity.IsAuthenticated ? userManager.GetUser(User.Identity.GetUserId()) : null,
-				SubPlatforms = Mapper.Map(subplatformManager.GetSubplatforms(), new List<SubPlatformDTO>())
+				PageTitle = Resources.SubPlatformManagement,
+				User = userManager.GetUser(User.Identity.GetUserId()),
+				SubPlatforms = subplatforms
 			});
 		}
 	}

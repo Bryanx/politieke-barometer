@@ -1,4 +1,24 @@
 ﻿@model BAR.UI.MVC.Models.BaseViewModel
 
-<h2>@Model.PageTitle</h2>
+<h1>@Model.PageTitle</h1>
+<hr />
 
+<div class="row">
+
+    @foreach (var question in Model.Customization.Questions)
+    {
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>@question.Title</h2>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    @question.Answer
+                </div>
+            </div>
+        </div>
+    </div>
+    }
+</div>

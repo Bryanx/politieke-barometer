@@ -28,6 +28,7 @@ namespace BAR.UI.MVC.Controllers
 	{
 		private IUserManager userManager;
 		private ISubscriptionManager subManager;
+		private ISubplatformManager subplatformManager;
 
 		#region Identity
 		
@@ -499,32 +500,19 @@ namespace BAR.UI.MVC.Controllers
 			ItemManager itemManager = new ItemManager();
 			subManager = new SubscriptionManager();
 			userManager = new UserManager();
+			subplatformManager = new SubplatformManager();
 			
 			int subPlatformID = (int) RouteData.Values["SubPlatformID"];
 
 			PersonViewModels personViewModels = new PersonViewModels();
-			IEnumerable<Person> allPersons = itemManager.GetAllPersonsForSubplatform(subPlatformID);
-			
-			personViewModels.Persons = Mapper.Map(allPersons, personViewModels.Persons);
+			personViewModels.Persons = Mapper.Map(itemManager.GetAllPersonsForSubplatform(subPlatformID), personViewModels.Persons);
+			personViewModels.PageTitle = subplatformManager.GetCustomization(subPlatformID).PersonsAlias;
 			personViewModels.User = User.Identity.IsAuthenticated ? userManager.GetUser(User.Identity.GetUserId()) : null;
 
-			List<ItemDTO> items = Mapper.Map(allPersons, new List<ItemDTO>());
+			List<ItemDTO> items = Mapper.Map(itemManager.GetAllPersonsForSubplatform(subPlatformID), new List<ItemDTO>());
 			for(int i = 0; i < items.Count; i++) {
 				personViewModels.Persons[i].Item = items[i];
 			}
-			
-			itemManager.GetAllOrganisationsForSubplatform(subPlatformID).ForEach(item => {
-				personViewModels.Persons.Add(new PersonViewModel() {
-					Item = Mapper.Map(item, new ItemDTO())
-				});
-			});
-			
-			itemManager.GetAllThemes().ForEach(item => {
-				personViewModels.Persons.Add(new PersonViewModel() {
-					Item = Mapper.Map(item, new ItemDTO()),
-					OrganisationId = -1
-				});
-			});
 
 			IEnumerable<Subscription> subs = subManager.GetSubscriptionsWithItemsForUser(User.Identity.GetUserId());
 			personViewModels.Persons = personViewModels.Persons.Where(person => subs.Any(sub => sub.SubscribedItem.ItemId == person.Item.ItemId)).ToList();
@@ -538,6 +526,8 @@ namespace BAR.UI.MVC.Controllers
 		/// </summary>
 		public ActionResult UserWeeklyReview()
 		{
+			int subPlatformID = (int)RouteData.Values["SubPlatformID"];
+
 			// Building WeeklyReviewModel
 			WidgetManager widgetManager = new WidgetManager();
 			ItemManager itemManager = new ItemManager();
@@ -548,10 +538,10 @@ namespace BAR.UI.MVC.Controllers
 			// Getting trending items for user and all items
 			List<Item> weeklyTrendings = new List<Item>();
 
-			itemManager.GetMostTrendingItemsForUserAndItemType(userId, ItemType.Person, 4, true).OrderBy(item => item.TrendingPercentage).Reverse().ForEach(item => weeklyTrendings.Add(item));
+			itemManager.GetMostTrendingItemsForUserAndItemType(subPlatformID, userId, ItemType.Person, 4, true).OrderBy(item => item.TrendingPercentage).Reverse().ForEach(item => weeklyTrendings.Add(item));
 			if (weeklyTrendings.Count < 4)
 			{
-				List<Item> trendings = itemManager.GetMostTrendingItemsForType(ItemType.Person, 4, true).ToList();
+				List<Item> trendings = itemManager.GetMostTrendingItemsForType(subPlatformID, ItemType.Person, 4, true).ToList();
 				while (weeklyTrendings.Count < 4)
 				{
 					List<int> ids = new List<int>();
@@ -584,10 +574,10 @@ namespace BAR.UI.MVC.Controllers
 
 			}
 
-			itemManager.GetMostTrendingItemsForUserAndItemType(userId, ItemType.Organisation, 4, true).OrderBy(item => item.TrendingPercentage).Reverse().ForEach(item => weeklyTrendings.Add(item));
+			itemManager.GetMostTrendingItemsForUserAndItemType(subPlatformID, userId, ItemType.Organisation, 4, true).OrderBy(item => item.TrendingPercentage).Reverse().ForEach(item => weeklyTrendings.Add(item));
 			if (weeklyTrendings.Count < 8)
 			{
-				List<Item> trendings = itemManager.GetMostTrendingItemsForType(ItemType.Organisation, 4, true).ToList();
+				List<Item> trendings = itemManager.GetMostTrendingItemsForType(subPlatformID, ItemType.Organisation, 4, true).ToList();
 				while (weeklyTrendings.Count < 8)
 				{
 					List<int> ids = new List<int>();
@@ -604,10 +594,10 @@ namespace BAR.UI.MVC.Controllers
 				}
 			}
 
-			itemManager.GetMostTrendingItemsForUserAndItemType(userId, ItemType.Theme, 4, true).OrderBy(item => item.TrendingPercentage).Reverse().ForEach(item => weeklyTrendings.Add(item));
+			itemManager.GetMostTrendingItemsForUserAndItemType(subPlatformID, userId, ItemType.Theme, 4, true).OrderBy(item => item.TrendingPercentage).Reverse().ForEach(item => weeklyTrendings.Add(item));
 			if (weeklyTrendings.Count < 12)
 			{
-				List<Item> trendings = itemManager.GetMostTrendingItemsForType(ItemType.Theme, 4, true).ToList();
+				List<Item> trendings = itemManager.GetMostTrendingItemsForType(subPlatformID, ItemType.Theme, 4, true).ToList();
 				while (weeklyTrendings.Count < 12)
 				{
 					List<int> ids = new List<int>();

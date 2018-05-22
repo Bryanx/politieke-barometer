@@ -768,4 +768,62 @@
   <data name="SetTime" xml:space="preserve">
     <value>Commencer à synchroniser</value>
   </data>
+  <data name="HomepageHeaderSee" xml:space="preserve">
+    <value>Regardez quel</value>
+  </data>
+  <data name="HomepageHeaderTrending" xml:space="preserve">
+    <value>sont trending</value>
+  </data>
+  <data name="SearchFor" xml:space="preserve">
+    <value>Cherchez des</value>
+  </data>
+  <data name="And" xml:space="preserve">
+    <value>et</value>
+  </data>
+  <data name="BackgroundColor" xml:space="preserve">
+    <value>Couleur de fond</value>
+  </data>
+  <data name="PrimaryColor" xml:space="preserve">
+    <value>Couleur primaire</value>
+  </data>
+  <data name="PrimaryDarkerColor" xml:space="preserve">
+    <value>Couleur primaire plus foncée</value>
+  </data>
+  <data name="PrimaryDarkestColor" xml:space="preserve">
+    <value>Couleur primaire la plus sombre</value>
+  </data>
+  <data name="SecondaryColor" xml:space="preserve">
+    <value>Couleur secondaire</value>
+  </data>
+  <data name="SecondaryDarkerColor" xml:space="preserve">
+    <value>Couleur secondaire plus foncée</value>
+  </data>
+  <data name="SecondaryDarkestColor" xml:space="preserve">
+    <value>Couleur secondaire la plus sombre</value>
+  </data>
+  <data name="SecondaryLighterColor" xml:space="preserve">
+    <value>Couleur secondaire plus claire</value>
+  </data>
+  <data name="TertiaryColor" xml:space="preserve">
+    <value>Couleur tertiaire</value>
+  </data>
+  <data name="TextColor" xml:space="preserve">
+    <value>Couleur du texte</value>
+  </data>
+  <data name="HeaderPicture" xml:space="preserve">
+    <value>Image</value>
+  </data>
+  <data name="LogoPicture" xml:space="preserve">
+    <value>Logo</value>
+  </data>
+  <data name="Deleted" xml:space="preserve">
+    <value>7/5000
+Supprimé</value>
+  </data>
+  <data name="Answer" xml:space="preserve">
+    <value>Réponse</value>
+  </data>
+  <data name="Question" xml:space="preserve">
+    <value>Question</value>
+  </data>
 </root>

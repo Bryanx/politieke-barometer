@@ -24,6 +24,8 @@ namespace BAR.UI.MVC.Controllers
 		private IItemManager itemManager;
 		private IUserManager userManager;
 		private ISubscriptionManager subManager;
+		private IWidgetManager widgetManager;
+		private ISubplatformManager subplatformManager;
 
 		/// <summary>
 		/// Item page for logged-in and non-logged-in users.
@@ -43,7 +45,6 @@ namespace BAR.UI.MVC.Controllers
 			//Return platformspecific data
 			PersonViewModels personViewModels = new PersonViewModels();
 			personViewModels.Persons = Mapper.Map(persons, personViewModels.Persons);
-			personViewModels.PageTitle = Resources.AllPoliticians;
 			personViewModels.User = User.Identity.IsAuthenticated ? userManager.GetUser(User.Identity.GetUserId()) : null;
 
 			List<Person> allPersons = itemManager.GetAllPersonsForSubplatform(subPlatformID).ToList();

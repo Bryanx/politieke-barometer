@@ -91,13 +91,13 @@ namespace BAR.BL.Managers
 		/// the number of trending items depends on the
 		/// number that you give via the parameter
 		/// </summary>
-		public IEnumerable<Item> GetMostTrendingItems(int numberOfItems = 4	, bool useWithOldData = false)
+		public IEnumerable<Item> GetMostTrendingItems(int subplatformId, int numberOfItems = 4, bool useWithOldData = false)
 		{
 			List<Item> items = new List<Item>();
 
-			foreach (Item item in GetMostTrendingItemsForType(ItemType.Person, numberOfItems, useWithOldData)) items.Add(item);
-			foreach (Item item in GetMostTrendingItemsForType(ItemType.Organisation, numberOfItems, useWithOldData)) items.Add(item);
-			foreach (Item item in GetMostTrendingItemsForType(ItemType.Theme, numberOfItems, useWithOldData)) items.Add(item);
+			foreach (Item item in GetMostTrendingItemsForType(subplatformId, ItemType.Person, numberOfItems, useWithOldData)) items.Add(item);
+			foreach (Item item in GetMostTrendingItemsForType(subplatformId, ItemType.Organisation, numberOfItems, useWithOldData)) items.Add(item);
+			foreach (Item item in GetMostTrendingItemsForType(subplatformId, ItemType.Theme, numberOfItems, useWithOldData)) items.Add(item);
 
 			IEnumerable<Item> itemsOrderd = items;
 			return itemsOrderd.AsEnumerable();
@@ -108,18 +108,22 @@ namespace BAR.BL.Managers
 		/// for a specific type
 		/// the number of items depends on the parameter "numberOfItems"
 		/// </summary>
-		public IEnumerable<Item> GetMostTrendingItemsForType(ItemType type, int numberOfItems = 5, bool useWithOldData = false)
+		public IEnumerable<Item> GetMostTrendingItemsForType(int subplatformId, ItemType type, int numberOfItems = 5, bool useWithOldData = false)
 		{
 			//order the items by populairity
 			IEnumerable<Item> itemsOrderd = GetAllItems();
 			if (!useWithOldData)
 			{
-				itemsOrderd = itemsOrderd.Where(item => item.ItemType == type)
-				.OrderBy(item => item.TrendingPercentage).AsEnumerable();
+				itemsOrderd = itemsOrderd
+					.Where(item => item.SubPlatform.SubPlatformId.Equals(subplatformId))
+					.Where(item => item.ItemType == type)
+					.OrderBy(item => item.TrendingPercentage).AsEnumerable();
 			}
 			else
 			{
-				itemsOrderd = itemsOrderd.Where(item => item.ItemType == type)
+				itemsOrderd = itemsOrderd
+				.Where(item => item.SubPlatform.SubPlatformId.Equals(subplatformId))
+				.Where(item => item.ItemType == type)
 				.OrderBy(item => item.TrendingPercentageOld).AsEnumerable();
 			}
 
@@ -130,7 +134,7 @@ namespace BAR.BL.Managers
 		/// Gives back a list of the most trending items
 		/// based on the userId.
 		/// </summary>
-		public IEnumerable<Item> GetMostTrendingItemsForUser(string userId, int numberOfItems = 5, bool useWithOldData = false)
+		public IEnumerable<Item> GetMostTrendingItemsForUser(int subplatformId, string userId, int numberOfItems = 5, bool useWithOldData = false)
 		{
 			//Get items for userId and order items from user
 			//We need to get every item of the subscription of a specefic user
@@ -160,7 +164,7 @@ namespace BAR.BL.Managers
 		/// for a specific type and user
 		/// the number of items depends on the parameter "numberOfItems"
 		/// </summary>
-		public IEnumerable<Item> GetMostTrendingItemsForUserAndItemType(string userId, ItemType type, int numberOfItems = 5, bool useWithOldData = false)
+		public IEnumerable<Item> GetMostTrendingItemsForUserAndItemType(int subplatformId, string userId, ItemType type, int numberOfItems = 5, bool useWithOldData = false)
 		{
 			//Get items for userId and order items from user
 			//We need to get every item of the subscription of a specefic user

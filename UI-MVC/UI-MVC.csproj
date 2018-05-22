@@ -307,6 +307,7 @@
     <Content Include="Content\build\css\partials\tiles.scss" />
     <Content Include="Content\build\css\partials\dashboard.scss" />
     <Content Include="Content\build\css\partials\weeklyReview.scss" />
+    <Content Include="Content\build\css\clouds.css" />
     <Content Include="Content\build\css\vendor\bootstrap-progressbar-3.3.4.css" />
     <Content Include="Content\build\css\vendor\bootstrap-progressbar-3.3.4.min.css" />
     <Content Include="Content\build\css\vendor\bootstrap.css" />
@@ -364,6 +365,7 @@
     <Content Include="Content\build\js\custom.js" />
     <Content Include="Content\build\js\graphWizard.js" />
     <Content Include="Content\build\js\homepage.js" />
+    <Content Include="Content\build\js\pagemanagement.js" />
     <Content Include="Content\build\js\template.js" />
     <Content Include="Content\build\js\template.min.js" />
     <Content Include="Content\build\js\searchbar.js" />
@@ -594,6 +596,7 @@
     <Content Include="Views\Theme\Details.cshtml" />
     <Content Include="Views\Shared\Partials\_ThemeTable.cshtml" />
     <Content Include="Views\Shared\Partials\_CreateItemModal.cshtml" />
+    <Content Include="Views\Shared\Partials\_FAQTable.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BAR.BL.Model\Domain.csproj">

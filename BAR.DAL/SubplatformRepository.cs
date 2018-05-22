@@ -140,6 +140,15 @@ namespace BAR.DAL
 		}
 
 		/// <summary>
+		/// Updates a customization object in the database
+		/// </summary>
+		public int UpdateCustomization(Customization customization)
+		{
+			ctx.Entry(customization).State = EntityState.Modified;
+			return ctx.SaveChanges();
+		}
+
+		/// <summary>
 		/// Deletes a subplatform.
 		/// 
 		/// NOTE

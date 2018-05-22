@@ -55,6 +55,9 @@ namespace BAR.UI.MVC.Controllers
 			Customization custom = platformManager.GetCustomization(subPlatformID);
 
 			CustomizationViewModel vm = Mapper.Map(custom, new CustomizationViewModel());
+
+			vm.Questions = Mapper.Map(platformManager.GetQuestions(subPlatformID), new List<QuestionDTO>());
+
 			vm.User = userManager.GetUser(User.Identity.GetUserId());
 			vm.PageTitle = Resources.PageManagement;
 
@@ -300,6 +303,63 @@ namespace BAR.UI.MVC.Controllers
 			itemManager.GenerateDefaultItemWidgets(theme.Name, theme.ItemId);
 
 			return RedirectToAction("Details", "Theme", new { id = theme.ItemId });
+		}
+
+		/// <summary>
+		/// POST
+		/// Changes headerimage of a subplatform.
+		/// </summary>
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		public ActionResult HeaderImage([Bind(Exclude = "WebsiteHeader")]CustomizationViewModel model)
+		{
+			platformManager = new SubplatformManager();
+
+			if (Request.Files.Count > 0)
+			{
+				HttpPostedFileBase headerImgFile = Request.Files["WebsiteHeader"];
+				int subPlatformID = (int)RouteData.Values["SubPlatformID"];
+				platformManager.ChangeSubplatformHeaderImage(subPlatformID, headerImgFile);
+			}
+			return RedirectToAction("PageManagement", "Admin");
+		}
+
+		/// <summary>
+		/// POST
+		/// Changes logo of a subplatform.
+		/// </summary>
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		public ActionResult LogoImage([Bind(Exclude = "WebsiteLogo")]CustomizationViewModel model)
+		{
+			platformManager = new SubplatformManager();
+
+			if (Request.Files.Count > 0)
+			{
+				HttpPostedFileBase logoImgFile = Request.Files["WebsiteLogo"];
+				int subPlatformID = (int)RouteData.Values["SubPlatformID"];
+				platformManager.ChangeSubplatformLogo(subPlatformID, logoImgFile);
+			}
+			return RedirectToAction("PageManagement", "Admin");
+		}
+
+		/// <summary>
+		/// POST
+		/// Changes dark logo of a subplatform.
+		/// </summary>
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		public ActionResult DarkLogoImage([Bind(Exclude = "DarkWebsiteLogo")]CustomizationViewModel model)
+		{
+			platformManager = new SubplatformManager();
+
+			if (Request.Files.Count > 0)
+			{
+				HttpPostedFileBase logoImgFile = Request.Files["DarkWebsiteLogo"];
+				int subPlatformID = (int)RouteData.Values["SubPlatformID"];
+				platformManager.ChangeSubplatformDarkLogo(subPlatformID, logoImgFile);
+			}
+			return RedirectToAction("PageManagement", "Admin");
 		}
 	}
 }

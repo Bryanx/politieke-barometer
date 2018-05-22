@@ -4,6 +4,8 @@ using System.Linq;
 using BAR.DAL;
 using BAR.BL.Domain.Core;
 using BAR.BL.Domain.Users;
+using System.Web;
+using System.IO;
 
 namespace BAR.BL.Managers
 {
@@ -86,7 +88,8 @@ namespace BAR.BL.Managers
 		/// Changes the page colors of a specific platform
 		/// Updates the changes in database
 		/// </summary>
-		public Customization ChangePageColors(int platformId, string primaryColor, string secondairyColor, string tertiaryColor, string backgroundColor, string textColor)
+		public Customization ChangePageColors(int platformId, string primaryColor, string primaryDarkerColor, string primaryDarkestColor, string secondairyColor,
+			string secondaryLighterColor, string secondaryDarkerColor, string secondaryDarkestColor, string tertiaryColor, string backgroundColor, string textColor)
 		{
 			InitRepo();
 
@@ -97,7 +100,12 @@ namespace BAR.BL.Managers
 			//Change Customization
 			Customization custom = platform.Customization;
 			custom.PrimaryColor = primaryColor;
-			custom.SecondairyColor = secondairyColor;
+			custom.PrimaryDarkerColor = primaryDarkerColor;
+			custom.PrimaryDarkestColor = primaryDarkestColor;
+			custom.SecondaryColor = secondairyColor;
+			custom.SecondaryLighterColor = secondaryLighterColor;
+			custom.SecondaryDarkerColor = secondaryDarkerColor;
+			custom.SecondaryDarkestColor = secondaryDarkestColor;
 			custom.TertiaryColor = tertiaryColor;
 			custom.BackgroundColor = backgroundColor;
 			custom.TextColor = textColor;
@@ -190,7 +198,7 @@ namespace BAR.BL.Managers
 			{
 				//Colors
 				PrimaryColor = "#0f8ec4",
-				SecondairyColor = "#303E4D",
+				SecondaryColor = "#303E4D",
 				TertiaryColor = "#278e87",
 				BackgroundColor = "#f7f7f7",
 				TextColor = "#73879C",
@@ -456,6 +464,87 @@ namespace BAR.BL.Managers
 			InitRepo();
 			platformRepo.UpdateSubplatform(platform);
 			return platform;
+		}
+
+		/// <summary>
+		/// Changesthe subplatform header image
+		/// </summary>
+		/// <param name="platformId"></param>
+		/// <param name="headerImgFile"></param>
+		/// <returns></returns>
+		public Customization ChangeSubplatformHeaderImage(int platformId, HttpPostedFileBase headerImgFile)
+		{
+			InitRepo();
+
+			//Get User
+			Customization customizationToUpdate = platformRepo.ReadCustomisation(platformId);
+			if (customizationToUpdate == null) return null;
+
+			//Change header picture
+			byte[] imageData = null;
+			using (var binary = new BinaryReader(headerImgFile.InputStream))
+			{
+				imageData = binary.ReadBytes(headerImgFile.ContentLength);
+			}
+			customizationToUpdate.HeaderImage = imageData;
+
+			//Update database
+			platformRepo.UpdateCustomization(customizationToUpdate);
+			return customizationToUpdate;
+		}
+
+		/// <summary>
+		/// Changes the subplatform logo image
+		/// </summary>
+		/// <param name="platformId"></param>
+		/// <param name="logoImgFile"></param>
+		/// <returns></returns>
+		public Customization ChangeSubplatformLogo(int platformId, HttpPostedFileBase logoImgFile)
+		{
+			InitRepo();
+
+			//Get User
+			Customization customizationToUpdate = platformRepo.ReadCustomisation(platformId);
+			if (customizationToUpdate == null) return null;
+
+			//Change header picture
+			byte[] imageData = null;
+			using (var binary = new BinaryReader(logoImgFile.InputStream))
+			{
+				imageData = binary.ReadBytes(logoImgFile.ContentLength);
+			}
+			customizationToUpdate.LogoImage = imageData;
+
+			//Update database
+			platformRepo.UpdateCustomization(customizationToUpdate);
+			return customizationToUpdate;
+		}
+
+		/// <summary>
+		/// Changes the subplatfor dark logo image
+		/// </summary>
+		/// <param name="platformId"></param>
+		/// <param name="darkLogoImgFile"></param>
+		/// <returns></returns>
+		public Customization ChangeSubplatformDarkLogo(int platformId, HttpPostedFileBase logoImgFile)
+		{
+			InitRepo();
+
+			//Get User
+			Customization customizationToUpdate = platformRepo.ReadCustomisation(platformId);
+			if (customizationToUpdate == null) return null;
+
+			//Change header picture
+			byte[] imageData = null;
+			using (var binary = new BinaryReader(logoImgFile.InputStream))
+			{
+				imageData = binary.ReadBytes(logoImgFile.ContentLength);
+			}
+			customizationToUpdate.DarkLogoImage = imageData;
+
+			//Update database
+			platformRepo.UpdateCustomization(customizationToUpdate);
+			return customizationToUpdate;
 		}
 	}
 }
