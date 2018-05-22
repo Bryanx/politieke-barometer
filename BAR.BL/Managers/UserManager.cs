@@ -219,21 +219,21 @@ namespace BAR.BL.Managers
 		/// <summary>
 		/// Generate alerts for the weekly review
 		/// </summary>
-		public void GenerateAlertsForWeeklyReview(int platformId)
+		public bool GenerateAlertsForWeeklyReview(int platformId)
 		{
 			InitRepo();
 
-			//Get timepstam for weekly review
+			//Get timepstamp for weekly review
 			SubplatformManager platformManager = new SubplatformManager();
 			SubPlatform platform = platformManager.GetSubPlatform(platformId);
-			if (platform.LastUpdatedWeeklyReview != null && platform.LastUpdatedWeeklyReview > DateTime.Now.AddDays(-7)) return;
+			if (platform.LastUpdatedWeeklyReview != null && platform.LastUpdatedWeeklyReview > DateTime.Now.AddDays(-7)) return false;
 
 			platform.LastUpdatedWeeklyReview = DateTime.Now;
 			platformManager.ChangeSubplatform(platform);
 
 			//Get all users
 			IEnumerable<User> users = userRepo.ReadAllUsersWithAlerts();
-			if (users == null || users.Count() == 0) return;
+			if (users == null || users.Count() == 0) return false;
 
 			//Generate weekly review alerts
 			foreach (User user in users)
@@ -252,6 +252,7 @@ namespace BAR.BL.Managers
 			//Update database & send emails
 			SendWeeklyReviewEmails(users.Where(user => user.AlertsViaEmail));
 			userRepo.UpdateUsers(users);
+      return true;
 		}
 
 		/// <summary>

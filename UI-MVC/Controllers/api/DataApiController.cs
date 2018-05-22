@@ -153,18 +153,19 @@ namespace BAR.UI.MVC.Controllers.api
 							itemManager.RefreshItemData(suplatformID);
 
 							//Update weekly review alerts						
-							userManager.GenerateAlertsForWeeklyReview(suplatformID);
+							if(new UserManager().GenerateAlertsForWeeklyReview(suplatformID))
+              {
+                //Send weekly review notification to android
+                await controllerHelpers.SendPushNotificationAsync("/topics/weeklyreview", "Weekly Review", "Er is een nieuwe weekly review beschikbaar.");
+              }
 
-							//Send weekly review notification to android
-							await controllerHelpers.SendPushNotificationAsync("/topics/weeklyreview", "Weekly Review", "Er is een nieuwe weekly review beschikbaar.");
-
-							//Send trending notifications to users
-							foreach (SubAlert subAlert in subscriptionManager.GetUnsendedSubAlerts())
-							{
-								User user = subAlert.Subscription.SubscribedUser;
-								await controllerHelpers.SendPushNotificationAsync(user.DeviceToken, "Trending", String.Format("%s is nu trending.", subAlert.Subscription.SubscribedItem.Name));
-							}
-
+              //Send trending notifications to users
+              foreach (SubAlert subAlert in subscriptionManager.GetUnsendedSubAlerts())
+              {
+                User user = subAlert.Subscription.SubscribedUser;
+                await controllerHelpers.SendPushNotificationAsync(user.DeviceToken, "Trending", String.Format("%s is nu trending.", subAlert.Subscription.SubscribedItem.Name));
+                subscriptionManager.ChangeSubAlertToSend(subAlert);
+              }
 							return StatusCode(HttpStatusCode.OK);
 						}
 						else
@@ -174,15 +175,8 @@ namespace BAR.UI.MVC.Controllers.api
 					}
 					else
 					{
-						subscriptionManager = new SubscriptionManager();
-						ControllerHelpers controllerHelpers = new ControllerHelpers();
-						foreach (SubAlert subAlert in subscriptionManager.GetUnsendedSubAlerts())
-						{
-							User user = subAlert.Subscription.SubscribedUser;
-							await controllerHelpers.SendPushNotificationAsync(user.DeviceToken, "Trending", String.Format("%s is nu trending.", subAlert.Subscription.SubscribedItem.Name));
-						}
-						return StatusCode(HttpStatusCode.NoContent);
-					}
+            return StatusCode(HttpStatusCode.NoContent);
+          }
 				}
 				else
 				{
@@ -214,6 +208,5 @@ namespace BAR.UI.MVC.Controllers.api
             dataManager.ChangeTimerInterval(dataSourceId, interval);
             return StatusCode(HttpStatusCode.NoContent);
         }
-
     }
 }
