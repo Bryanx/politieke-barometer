@@ -8,8 +8,6 @@
 @model BAR.UI.MVC.Models.ItemViewModels.ItemViewModel
 
 <link href="../../Content/build/css/homepage.css" rel="stylesheet">
-<link href="../../Content/build/css/clouds.css" rel="stylesheet">
-
 
 <section>
 @section Homepage {
@@ -20,27 +18,6 @@
             
             <div runat="server" class="logo" style="background-image: url(&quot;@Url.LogoImage()&quot;);"></div>
             <div class="main-header">
-                @*<div id="background-wrap">
-                    <div class="x1">
-                        <div class="cloud"></div>
-                    </div>
-
-                    <div class="x2">
-                        <div class="cloud"></div>
-                    </div>
-
-                    <div class="x3">
-                        <div class="cloud"></div>
-                    </div>
-
-                    <div class="x4">
-                        <div class="cloud"></div>
-                    </div>
-
-                    <div class="x5">
-                        <div class="cloud"></div>
-                    </div>
-                </div>*@
                 <h1 class="main-header-title">@Resources.HomepageHeaderSee @Model.Customization.PersonsAlias.ToLower() @Resources.HomepageHeaderTrending<br/>@Resources.OnSocialMedia.ToLower().</h1>
             </div>
             @Html.Partial("Partials/_SearchBar", Model)
@@ -75,7 +52,7 @@
 <section>     <!-- top 3 politici (trending) -->
     <div class="x_panel">
         <div class="x_title">
-            <h2>Top 3 trending politici</h2>
+            <h2>Top 3 trending @Model.Customization.PersonsAlias</h2>
             <ul class='nav panel_toolbox'>
                 <li>
                     <a class="collapse-link">
@@ -156,7 +133,7 @@
 
             <div class="x_panel">
                 <div class="x_title">
-                    <h2>Top 3 trending Organisations</h2>
+                    <h2>Top 3 trending @Model.Customization.OrganisationsAlias</h2>
                     <ul class='nav panel_toolbox'>
                         <li>
                             <a class="collapse-link">
@@ -197,7 +174,7 @@
     <section> <!-- top 3 Themas (trending) -->
         <div class="x_panel">
             <div class="x_title">
-                <h2>Top 3 trending Thema's</h2>
+                <h2>Top 3 trending @Model.Customization.ThemesAlias</h2>
                 <ul class='nav panel_toolbox'>
                     <li>
                         <a class="collapse-link">

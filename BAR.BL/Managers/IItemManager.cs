@@ -14,10 +14,10 @@ namespace BAR.BL.Managers
 		Item GetItemWithAllWidgets(int itemId);
 		IEnumerable<Item> GetAllItems();	
 		IEnumerable<Item> GetItemsForType(ItemType type);	
-		IEnumerable<Item> GetMostTrendingItems(int numberOfItems = 5, bool useWithOldData = false);
-		IEnumerable<Item> GetMostTrendingItemsForType(ItemType type, int numberOfItems = 5, bool useWithOldData = false);
-		IEnumerable<Item> GetMostTrendingItemsForUser(string userId, int numberOfItems = 5, bool useWithOldData = false);
-		IEnumerable<Item> GetMostTrendingItemsForUserAndItemType(string userId, ItemType type, int numberOfItems = 5, bool useWithOldData = false);
+		IEnumerable<Item> GetMostTrendingItems(int subplatformId, int numberOfItems = 5, bool useWithOldData = false);
+		IEnumerable<Item> GetMostTrendingItemsForType(int subplatformId, ItemType type, int numberOfItems = 5, bool useWithOldData = false);
+		IEnumerable<Item> GetMostTrendingItemsForUser(int subplatformId, string userId, int numberOfItems = 5, bool useWithOldData = false);
+		IEnumerable<Item> GetMostTrendingItemsForUserAndItemType(int subplatformId, string userId, ItemType type, int numberOfItems = 5, bool useWithOldData = false);
 		IEnumerable<Item> GetItemsForOrganisation(int itemId);		
 		IEnumerable<Item> GetAllOrganisationsForSubplatform(int subPlatformID);
 

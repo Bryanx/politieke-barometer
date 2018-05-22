@@ -250,14 +250,14 @@ namespace BAR.BL.Managers
 			}
 
 			//Update database & send emails
-			SendWeeklyReviewEmails(users.Where(user => user.AlertsViaEmail));
+			SendWeeklyReviewEmails(platformId, users.Where(user => user.AlertsViaEmail));
 			userRepo.UpdateUsers(users);
 		}
 
 		/// <summary>
 		/// Sent emails to the people who want to receive an email
 		/// </summary>
-		private void SendWeeklyReviewEmails(IEnumerable<User> users)
+		private void SendWeeklyReviewEmails(int subplatformId, IEnumerable<User> users)
 		{
 			ItemManager itemManager = new ItemManager();
 			IEnumerable<Item> items;
@@ -265,7 +265,7 @@ namespace BAR.BL.Managers
 			foreach (User user in users)
 			{
 				//Get 5 most trending items of
-				items = itemManager.GetMostTrendingItemsForUser(user.Id, useWithOldData: true);
+				items = itemManager.GetMostTrendingItemsForUser(subplatformId, user.Id, useWithOldData: true);
 
 				string content = "";
 				foreach (Item item in items.OrderBy(item => item.TrendingPercentage)) content += "- " + item.Name + " (" + item.TrendingPercentage + "% trending)</br>";

@@ -163,15 +163,15 @@ namespace BAR.DAL.EF
 			Customization custom = new Customization()
 			{
 				//Colors
-				PrimaryColor = "#c40f3f",
+				PrimaryColor = "#0f8ec4",
+				PrimaryDarkerColor = "#0e85b8",
+				PrimaryDarkestColor = "#0d77a4",
 				SecondaryColor = "#303E4D",
 				SecondaryDarkerColor = "#2a3744",
 				SecondaryDarkestColor = "#1f2e3f",
 				SecondaryLighterColor = "#3c3c3c",
-				TertiaryColor = "#79268e",
-				BackgroundColor = "#fbff87",
-				PrimaryDarkerColor = "#0e85b8",
-				PrimaryDarkestColor = "#0d77a4",
+				TertiaryColor = "#278e87",
+				BackgroundColor = "#f7f7f7",
 
 				WhiteColor = "#fff",
 				LinkColor = "#5A738E",
