@@ -76,7 +76,7 @@
                         <strong>@Resources.NumberOfMentions</strong>
                     </h4>
                     <h1>
-                        <strong class="totalNumberOfMentions"></strong>
+                        <strong class="totalNumberOfMentions">@Model.Organisation.NumberOfMentions</strong>
                     </h1>
                 </div>
             </div>
@@ -121,14 +121,6 @@
 
         $(document).on("click", ".subscribeItem", (e) => ajaxToggleSubscribe(e));
         
-        function loadNumberOfMentions() {
-            $.ajax({
-                method: "GET",
-                url: "/api/GetNumberOfMentions/" + @Model.Organisation.ItemId,
-                success: data => $(".totalNumberOfMentions").html(data)
-            });
-        }
-
         (() => {
             loadWidgets("/api/GetItemWidgets/", @Model.Organisation.ItemId);
             loadNumberOfMentions();

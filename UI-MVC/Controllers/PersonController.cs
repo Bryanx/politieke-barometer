@@ -53,6 +53,7 @@ namespace BAR.UI.MVC.Controllers
 			{
 				personViewModels.Persons[i].Item = items[i];
 				personViewModels.Persons[i].Item.Picture = persons[i].Picture;
+
 			}
 
 			IEnumerable<Subscription> subs = subManager.GetSubscriptionsWithItemsForUser(User.Identity.GetUserId());
