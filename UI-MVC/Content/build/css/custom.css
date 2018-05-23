@@ -338,6 +338,9 @@ hr {
 .fixed_height_200 {
   height: 200px; }
 
+.fixed_height_100 {
+  height: 100px; }
+
 .max_height_460 {
   max-height: 460px; }
 
@@ -464,12 +467,12 @@ a.btn-success, a.btn-primary, a.btn-warning {
 
 .btn-dark {
   color: #E9EDEF;
-  background-color: #4B5F71;
-  border-color: #364B5F; }
+  background-color: var(--secondary-color);
+  border-color: var(--secondary-darker); }
   .btn-dark:hover, .btn-dark:focus, .btn-dark:active, .btn-dark.active {
     color: var(--white);
-    background-color: #394D5F;
-    border-color: #394D5F; }
+    background-color: var(--secondary-lighter);
+    border-color: var(--secondary-darker); }
 
 .btn-danger {
   color: var(--font-color) !important;
@@ -1993,7 +1996,7 @@ nav .nav-container .searchbar .search-field, form.navbar-form .input-group {
   margin-top: 20px;
   margin-bottom: 10px;
   border-radius: 5px;
-  color: #246b94;
+  color: var(--primary-color);
   box-shadow: 0 0 3px 0 rgba(0, 0, 0, 0.2);
   background: linear-gradient(180deg, white 70%, rgba(137, 137, 137, 0.2) 30%);
   font-weight: normal; }

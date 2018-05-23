@@ -172,8 +172,9 @@ function init_JQVmap() {
     }
 
     function createMap(data, top3s) {
-        var colors = ["#E6F2F0", "#0f8ec4"];
-        $('#world-map-gdp').vectorMap({
+        //Remove spaces from color string.
+        var colors = ["#E6F2F0", primary_color.toString().replace(/\s/g, '')];
+        let map = $('#world-map-gdp').vectorMap({
             map: 'be_mill',
             backgroundColor: null,
             enableZoom: false,

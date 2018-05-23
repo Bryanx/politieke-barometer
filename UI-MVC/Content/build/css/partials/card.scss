@@ -1,6 +1,6 @@
 $primary-color: rgba(137, 137, 137, 0.2);
 $primary-color-darker: rgba(137, 137, 137, 0.7);
-$font-color: #246b94;
+$font-color: var(--primary-color);
 
 .small-card > .card {
   height: 80px;
