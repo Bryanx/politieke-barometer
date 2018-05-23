@@ -48,7 +48,7 @@ footer.joinus {
   padding: 100px 0;
   text-align: center;
   color: var(--white);
-  @include diagonal-gradient;
+  background: linear-gradient(170deg, var(--primary-color), var(--tertiary-color));
   > div {
     margin-bottom: 20px;
   }

@@ -9,7 +9,7 @@
 
   > thead {
     margin: 0 -20px;
-    @include diagonal-gradient;
+    background: linear-gradient(170deg, var(--primary-color), var(--tertiary-color));
     color: var(--white);
     > tr > th {
       border: 1px solid rgba(white, 0.2);
@@ -141,6 +141,23 @@ table.jambo_table {
   float: right;
   text-align: right;
 }
+
+.pagination > li > a, .pagination > li > span {
+  color: var(--primary-color);
+  &:hover {
+    color: var(--primary-darker);
+  }
+}
+
+.pagination > li.active > a, .pagination > li.active > span {
+  background-color: var(--primary-color);
+  border-color: var(--primary-darker);
+  &:hover {
+    background-color: var(--primary-darker);
+    border-color: var(--primary-darkest);
+  }
+}
+
 
 table {
   &.dataTable {
