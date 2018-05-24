@@ -506,6 +506,20 @@ namespace BAR.UI.MVC.Controllers
 
 			PersonViewModels personViewModels = new PersonViewModels();
 			personViewModels.Persons = Mapper.Map(itemManager.GetAllPersonsForSubplatform(subPlatformID), personViewModels.Persons);
+			
+			itemManager.GetAllOrganisationsForSubplatform(subPlatformID).ForEach(item => {	
+				personViewModels.Persons.Add(new PersonViewModel() {
+					Item = Mapper.Map(item, new ItemDTO())
+				});
+			});
+
+			itemManager.GetAllThemesForSubplatform(subPlatformID).ForEach(item => {
+				personViewModels.Persons.Add(new PersonViewModel() {
+					Item = Mapper.Map(item, new ItemDTO()),
+					OrganisationId = -1
+				});
+			});
+			
 			personViewModels.PageTitle = subplatformManager.GetCustomization(subPlatformID).PersonsAlias;
 			personViewModels.User = User.Identity.IsAuthenticated ? userManager.GetUser(User.Identity.GetUserId()) : null;
 
