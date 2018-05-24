@@ -63,12 +63,12 @@ a {
 
 .btn-dark {
   color: #E9EDEF;
-  background-color: #4B5F71;
-  border-color: #364B5F;
+  background-color: var(--secondary-color);
+  border-color: var(--secondary-darker);
   &:hover, &:focus, &:active, &.active {
     color: var(--white);
-    background-color: #394D5F;
-    border-color: #394D5F;
+    background-color: var(--secondary-lighter);
+    border-color: var(--secondary-darker);
   }
 }
 

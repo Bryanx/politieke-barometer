@@ -4,17 +4,7 @@
 var htmlselector = document.getElementsByTagName('html')[0];
 var primary_color = window.getComputedStyle(document.documentElement).getPropertyValue('--primary-color')
     .split(' ').join('');
-var primary_darker = window.getComputedStyle(document.documentElement).getPropertyValue('--primary-darker')
-    .split(' ').join('');
-var primary_darkest = window.getComputedStyle(document.documentElement).getPropertyValue('--primary-darkest')
-    .split(' ').join('');
 var secondary_color = window.getComputedStyle(document.documentElement).getPropertyValue('--secondary-color')
-    .split(' ').join('');
-var secondary_lighter = window.getComputedStyle(document.documentElement).getPropertyValue('--secondary-lighter')
-    .split(' ').join('');
-var secondary_darker = window.getComputedStyle(document.documentElement).getPropertyValue('--secondary-darker')
-    .split(' ').join('');
-var secondary_darkest = window.getComputedStyle(document.documentElement).getPropertyValue('--secondary-darkest')
     .split(' ').join('');
 var tertiary_color = window.getComputedStyle(document.documentElement).getPropertyValue('--tertiary-color')
     .split(' ').join('');
@@ -49,12 +39,7 @@ function changeColor(variable, color, event) {
  * When a colorpicker is changed css is updated.
  */
 $('#cp-primary').colorpicker().on('changeColor', (e) => changeColor("--primary-color", primary_color, e));
-$('#cp-primary-darker').colorpicker().on('changeColor', (e) => changeColor("--primary-darker", primary_darker, e));
-$('#cp-primary-darkest').colorpicker().on('changeColor', (e) => changeColor("--primary-darkest", primary_darkest, e));
 $('#cp-secondary').colorpicker().on('changeColor', (e) => changeColor("--secondary-color", secondary_color, e));
-$('#cp-secondary-lighter').colorpicker().on('changeColor', (e) => changeColor("--secondary-lighter", secondary_lighter, e));
-$('#cp-secondary-darker').colorpicker().on('changeColor', (e) => changeColor("--secondary-darker", secondary_darker, e));
-$('#cp-secondary-darkest').colorpicker().on('changeColor', (e) => changeColor("--secondary-darkest", secondary_darkest, e));
 $('#cp-tertiary').colorpicker().on('changeColor', (e) => changeColor("--tertiary-color", tertiary_color, e));
 $('#cp-bg').colorpicker().on('changeColor', (e) => changeColor("--bg-color", bg_color, e));
 $('#cp-font').colorpicker().on('changeColor', (e) => changeColor("--font-color", font_color, e));
@@ -64,12 +49,7 @@ $('#cp-font').colorpicker().on('changeColor', (e) => changeColor("--font-color",
  */
 (() => {
     $('#ip-primary').val(primary_color).trigger('change');
-    $('#ip-primary-darker').val(primary_darker).trigger('change');
-    $('#ip-primary-darkest').val(primary_darkest).trigger('change');
     $('#ip-secondary').val(secondary_color).trigger('change');
-    $('#ip-secondary-lighter').val(secondary_lighter).trigger('change');
-    $('#ip-secondary-darker').val(secondary_darker).trigger('change');
-    $('#ip-secondary-darkest').val(secondary_darkest).trigger('change');
     $('#ip-tertiary').val(tertiary_color).trigger('change');
     $('#ip-bg').val(bg_color).trigger('change');
     $('#ip-font').val(font_color).trigger('change');
@@ -83,19 +63,15 @@ function putColor() {
         a[x.name] = x.value;
         return a;
     }, {});
-    let test = FormData.PrimaryColor;
-    console.log(test);
-    let test2 = FormData.PrimaryDarkerColor;
-    console.log(test2);
-
+    
     let data = {
         PrimaryColor: formdata.PrimaryColor,
-        PrimaryDarkerColor: formdata.PrimaryDarkerColor,
-        PrimaryDarkestColor: formdata.PrimaryDarkestColor,
+        PrimaryDarkerColor: shadeBlendConvert(-0.1, formdata.PrimaryColor),
+        PrimaryDarkestColor: shadeBlendConvert(-0.2, formdata.PrimaryColor),
         SecondaryColor: formdata.SecondaryColor,
-        SecondaryLighterColor: formdata.SecondaryLighterColor,
-        SecondaryDarkerColor: formdata.SecondaryDarkerColor,
-        SecondaryDarkestColor: formdata.SecondaryDarkestColor,
+        SecondaryLighterColor: shadeBlendConvert(0.1, formdata.SecondaryColor),
+        SecondaryDarkerColor: shadeBlendConvert(-0.1, formdata.SecondaryColor),
+        SecondaryDarkestColor: shadeBlendConvert(-0.2, formdata.SecondaryColor),
         TertiaryColor: formdata.TertiaryColor,
         BackgroundColor: formdata.BackgroundColor,
         TextColor: formdata.TextColor

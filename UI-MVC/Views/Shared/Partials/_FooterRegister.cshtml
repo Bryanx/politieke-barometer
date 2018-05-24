@@ -6,7 +6,7 @@
         <h1>
             <strong>@Resources.StayUpToDate</strong>
         </h1>
-        @Resources.SignupToFollow  @Resources.Or.ToLower().
+        @Resources.SignupToFollow @Model.Customization.PersonsAlias.ToLower(), @Model.Customization.OrganisationsAlias.ToLower() @Resources.Or.ToLower() @Model.Customization.ThemesAlias.ToLower().
     </div>
     @using (Html.BeginForm("Register", "User", FormMethod.Post, new {@class = "form-horizontal", role = "form"})) {
         @Html.AntiForgeryToken()

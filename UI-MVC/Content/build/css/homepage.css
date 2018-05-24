@@ -12,7 +12,6 @@ nav {
   transition: 1.2s ease-in-out; }
 
 .widget_summary {
-
   padding: 20px 40px;
   border-right: 1px solid rgba(0, 0, 0, 0.1); }
   .widget_summary:last-of-type {
@@ -48,6 +47,7 @@ body .container.body .main-header-container-parent {
   height: 50%; }
 
 .main-header-container {
+  background-image: url("../images/government2.jpg");
   height: 85%;
   justify-content: center;
   align-items: center;

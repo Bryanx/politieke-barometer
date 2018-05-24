@@ -326,6 +326,9 @@ hr {
 .fixed_height_670 {
   height: 670px; }
 
+.fixed_height_620 {
+  height: 620px; }
+
 .fixed_height_320 {
   height: 320px; }
 
@@ -337,6 +340,9 @@ hr {
 
 .fixed_height_200 {
   height: 200px; }
+
+.fixed_height_100 {
+  height: 100px; }
 
 .max_height_460 {
   max-height: 460px; }
@@ -464,12 +470,12 @@ a.btn-success, a.btn-primary, a.btn-warning {
 
 .btn-dark {
   color: #E9EDEF;
-  background-color: #4B5F71;
-  border-color: #364B5F; }
+  background-color: var(--secondary-color);
+  border-color: var(--secondary-darker); }
   .btn-dark:hover, .btn-dark:focus, .btn-dark:active, .btn-dark.active {
     color: var(--white);
-    background-color: #394D5F;
-    border-color: #394D5F; }
+    background-color: var(--secondary-lighter);
+    border-color: var(--secondary-darker); }
 
 .btn-danger {
   color: var(--font-color) !important;
@@ -622,11 +628,7 @@ div .msg_list {
     margin-right: 10px; }
   .table > thead {
     margin: 0 -20px;
-    background-image: -webkit-gradient(linear, 0% 0%, 100% 100%, color-stop(0, #0f8ec4), #278e87);
-    background-image: -webkit-repeating-linear-gradient(top left, #0f8ec4 0%, #278e87 100%);
-    background-image: repeating-linear-gradient(to bottom right, #0f8ec4 0%, #278e87 100%);
-    background-image: -ms-repeating-linear-gradient(top left, #0f8ec4 0%, #278e87 100%);
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#0f8ec4', endColorstr='#278e87');
+    background: linear-gradient(170deg, var(--primary-color), var(--tertiary-color));
     color: var(--white); }
     .table > thead > tr > th {
       border: 1px solid rgba(255, 255, 255, 0.2);
@@ -737,6 +739,18 @@ table.jambo_table {
 .dataTables_paginate {
   float: right;
   text-align: right; }
+
+.pagination > li > a, .pagination > li > span {
+  color: var(--primary-color); }
+  .pagination > li > a:hover, .pagination > li > span:hover {
+    color: var(--primary-darker); }
+
+.pagination > li.active > a, .pagination > li.active > span {
+  background-color: var(--primary-color);
+  border-color: var(--primary-darker); }
+  .pagination > li.active > a:hover, .pagination > li.active > span:hover {
+    background-color: var(--primary-darker);
+    border-color: var(--primary-darkest); }
 
 table.dataTable th.focus, table.dataTable td.focus {
   outline: 2px solid var(--primary-color) !important;
@@ -1074,11 +1088,7 @@ footer.joinus {
   padding: 100px 0;
   text-align: center;
   color: var(--white);
-  background-image: -webkit-gradient(linear, 0% 0%, 100% 100%, color-stop(0, #0f8ec4), #278e87);
-  background-image: -webkit-repeating-linear-gradient(top left, #0f8ec4 0%, #278e87 100%);
-  background-image: repeating-linear-gradient(to bottom right, #0f8ec4 0%, #278e87 100%);
-  background-image: -ms-repeating-linear-gradient(top left, #0f8ec4 0%, #278e87 100%);
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#0f8ec4', endColorstr='#278e87'); }
+  background: linear-gradient(170deg, var(--primary-color), var(--tertiary-color)); }
   footer.joinus > div {
     margin-bottom: 20px; }
   footer.joinus input {
@@ -1993,7 +2003,7 @@ nav .nav-container .searchbar .search-field, form.navbar-form .input-group {
   margin-top: 20px;
   margin-bottom: 10px;
   border-radius: 5px;
-  color: #246b94;
+  color: var(--primary-color);
   box-shadow: 0 0 3px 0 rgba(0, 0, 0, 0.2);
   background: linear-gradient(180deg, white 70%, rgba(137, 137, 137, 0.2) 30%);
   font-weight: normal; }

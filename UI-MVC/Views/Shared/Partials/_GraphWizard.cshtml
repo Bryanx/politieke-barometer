@@ -1,4 +1,5 @@
-﻿<div class="modal makeGraphModal fade" tabindex="-1" role="dialog" aria-hidden="true">
+﻿@model BAR.UI.MVC.Models.BaseViewModel
+<div class="modal makeGraphModal fade" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="hidden wizardItemId1"></div>
         <div class="hidden wizardItemId2"></div>
@@ -14,7 +15,7 @@
                                      back-button-text="Terug"
                                      next-button-text="Volgende"
                                      finish-button-text="Plaats grafiek"
-                                     color="#0f8ec4">
+                                     color="@Model.Customization.PrimaryColor">
                             <!-- Stap 1 -->
                             <tab-content title="Element kiezen" icon="fa fa-user" :before-change="validateFirstTab">
                                 <h1 class="text-center">@Resources.ChooseData</h1>

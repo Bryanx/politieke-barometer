@@ -13,6 +13,7 @@
     @Html.Partial("Partials/_AdminTable", Model)
 }
 <div style="visibility: hidden">space</div>
+<div style="visibility: hidden">space</div>
 
 @section CustomJS{
     @Scripts.Render("~/bundles/datatables")
@@ -27,7 +28,6 @@
     <script type="text/javascript">
             (() => {
                 $('#datatable-buttons').dataTable({
-                    "sScrollY": "700px",
                     "paging": true,
                     dom: "lBfrtip",
                     buttons: [
