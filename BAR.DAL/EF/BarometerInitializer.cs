@@ -180,10 +180,10 @@ namespace BAR.DAL.EF
 				//Navbar and title text
 				PersonAlias = "Persoon",
 				PersonsAlias = "Personen",
-				OrganisationAlias = "Organisation",
-				OrganisationsAlias = "Organisations",
-				ThemeAlias = "Theme",
-				ThemesAlias = "Themes",
+				OrganisationAlias = "Organisatie",
+				OrganisationsAlias = "Organisaties",
+				ThemeAlias = "Thema",
+				ThemesAlias = "Thema's",
 
 				//Privacy
 				PrivacyTitle = "Privacy policy",
@@ -196,7 +196,7 @@ namespace BAR.DAL.EF
 				StreetAndHousenumber = "Nationalestraat 24",
 				Zipcode = "2060",
 				City = "Antwerpen",
-				Country = "Belgi�",
+				Country = "België",
 				Email = "contact@politiekebarometer.be",
 
 				//HeaderImage
