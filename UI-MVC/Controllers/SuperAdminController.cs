@@ -26,18 +26,18 @@ namespace BAR.UI.MVC.Controllers
 		/// </summary>
 		public ActionResult GeneralManagement()
 		{
-			userManager = new UserManager();      
-      dataManager = new DataManager();
-      
-      IEnumerable<DataSource> datasources = dataManager.GetAllDataSources();
-      
-      //Assembling the view
-      return View(new GeneralManagementViewModel
-      {
-        PageTitle = Resources.GeneralManagement,
-        User = userManager.GetUser(User.Identity.GetUserId()),
-         DataSources = datasources
-      });
+			userManager = new UserManager();
+			dataManager = new DataManager();
+
+			IEnumerable<DataSource> datasources = dataManager.GetAllDataSources();
+
+			//Assembling the view
+			return View(new GeneralManagementViewModel
+			{
+				PageTitle = Resources.GeneralManagement,
+				User = userManager.GetUser(User.Identity.GetUserId()),
+				DataSources = datasources
+			});
 		}
 
 		/// <summary>
