@@ -22,7 +22,7 @@ namespace BAR.BL.Managers
 		IEnumerable<Item> GetAllOrganisationsForSubplatform(int subPlatformID);
 
 		Item AddItem(ItemType itemType, string name, string description = "", string function = "",
-			string district = null, string level = null, string site = null, Gender gender = Gender.OTHER, string position = null,
+			string district = null, string level = null, string site = null, Gender gender = Gender.Other, string position = null,
 			DateTime? dateOfBirth = null, List<Keyword> keywords = null);
 
 		Item ChangeItemName(int itemId, string name);

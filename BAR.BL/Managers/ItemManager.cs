@@ -319,7 +319,7 @@ namespace BAR.BL.Managers
 		/// Creates a new item based on the given parameters
 		/// </summary>
 		public Item AddItem(ItemType itemType, string name, string description = "", string function = "",
-			string district = null, string level = null, string site = null, Gender gender = Gender.OTHER, string position = null,
+			string district = null, string level = null, string site = null, Gender gender = Gender.Other, string position = null,
 			DateTime? dateOfBirth = null, List<Keyword> keywords = null)
 		{
 			InitRepo();
@@ -882,7 +882,7 @@ namespace BAR.BL.Managers
 					string district = deserializedJson[i].district;
 					string position = deserializedJson[i].position;
 
-					Gender personGender = (gender == "M") ? Gender.MAN : Gender.WOMAN;
+					Gender personGender = (gender == "M") ? Gender.Man : Gender.Woman;
 					DateTime? dateOfBirth = DateTime.ParseExact(stringDate, "yyyy-MM-dd HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture);
 
 					Person person = (Person)AddItem(itemType: ItemType.Person, name: fullname, gender: personGender, district: district,

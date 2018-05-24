@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace BAR.BL.Domain.Widgets
 {
@@ -13,11 +9,11 @@ namespace BAR.BL.Domain.Widgets
 		public ICollection<GraphValue> GraphValues { get; set; }
 		public Widget Widget { get; set; }
 
-		public WidgetData() {
-		}
+		public WidgetData() { }
 
 		//Constructor for making a copy of WidgetData
-		public WidgetData(WidgetData widgetData) {
+		public WidgetData(WidgetData widgetData)
+		{
 			KeyValue = widgetData.KeyValue;
 			GraphValues = widgetData.GraphValues;
 		}
