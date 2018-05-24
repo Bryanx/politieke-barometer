@@ -177,9 +177,7 @@ namespace BAR.DAL
 		/// </summary>
 		public IEnumerable<WidgetData> ReadAllWidgetDatas()
 		{
-			return ctx.WidgetDatas.Include(data => data.Widget)
-								  .Include(data => data.Widget.Items)
-								  .Include(data => data.GraphValues)
+			return ctx.WidgetDatas.Include(data => data.GraphValues)
 								  .AsEnumerable();
 		}
 
@@ -211,7 +209,8 @@ namespace BAR.DAL
 		/// </summary>
 		public int DeleteWidgetDatas(IEnumerable<WidgetData> datas)
 		{
-			if (datas != null && datas.Count() > 0) ctx.WidgetDatas.RemoveRange(datas);
+			foreach (WidgetData data in datas) ctx.Entry(data).State = EntityState.Deleted;
+			ctx.WidgetDatas.RemoveRange(datas);
 			return ctx.SaveChanges();
 		}
 
