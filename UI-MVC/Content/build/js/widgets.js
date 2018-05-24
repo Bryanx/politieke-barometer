@@ -836,7 +836,7 @@ function loadWidgets(url, itemId, onlyLoadLastWidget = false) {
             }
         }
         //if widgettype == graphtype
-        if (widget.WidgetType === 0) loadGraphs(itemId, widget);
+        if (widget.WidgetType === 1) loadGraphs(itemId, widget);
         widgets.push(widget);
     };
 
