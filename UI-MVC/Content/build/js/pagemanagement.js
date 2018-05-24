@@ -238,3 +238,25 @@ $("#form_page_faq").submit(function (event) {
     event.preventDefault();
     getSubplatformId(getCustomData);
 });
+
+
+var wto;
+$(".removeItem").click(function() {
+    clearTimeout(wto);
+    var $this = $(this);
+    var id = $this.data('question-id');
+    console.log(id);
+    var text = $this.html();
+    $this.html("<i class='fa fa-circle-o-notch fa-spin'></i>");
+    wto = setTimeout(function() {
+            $.ajax({
+                type: 'POST',
+                url: '/api/Subplatform/DeleteQuestion/' + id
+            }).fail(() => { alert(Resources.CannotRemoveItem) })
+                .done(function() {
+                    $this.html(Resources.Deleted);
+                    $this.toggleClass("btn-danger btn-dark");
+                });
+        },
+        500);
+});

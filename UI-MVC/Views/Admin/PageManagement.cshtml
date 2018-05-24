@@ -313,26 +313,4 @@
 @section CustomJS{
     @Scripts.Render("~/Scripts/mjolnic-bootstrap-colorpicker/dist/js/bootstrap-colorpicker.min.js")
     <script src="~/Content/build/js/pagemanagement.js"></script>
-    <script type="text/javascript">
-            var wto;
-            $(".removeItem").click(function() {
-                clearTimeout(wto);
-                var $this = $(this);
-                var id = $this.data('question-id');
-                console.log(id);
-                var text = $this.html();
-                $this.html("<i class='fa fa-circle-o-notch fa-spin'></i>");
-                wto = setTimeout(function() {
-                        $.ajax({
-                                type: 'POST',
-                                url: '/api/Subplatform/DeleteQuestion/' + id
-                            }).fail(() => { alert("@Resources.CannotRemoveItem") })
-                            .done(function() {
-                                $this.html("@Resources.Deleted");
-                                $this.toggleClass("btn-danger btn-dark");
-                            });
-                    },
-                    500);
-            });
-    </script>
 }

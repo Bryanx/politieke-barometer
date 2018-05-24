@@ -12,8 +12,8 @@
 } else {
     @Html.Partial("Partials/_AdminTable", Model)
 }
-<div style="visibility: hidden">space</div>
-<div style="visibility: hidden">space</div>
+<div class="space">space</div>
+<div class="space">space</div>
 
 @section CustomJS{
     @Scripts.Render("~/bundles/datatables")
@@ -23,60 +23,5 @@
     <script src="~/Scripts/DataExport/pdfmake.min.js"></script>
     <script src="~/Scripts/DataExport/vfs_fonts.js"></script>
     <script src="~/Scripts/DataExport/buttons.html5.min.js"></script>
-
-
-    <script type="text/javascript">
-            (() => {
-                $('#datatable-buttons').dataTable({
-                    "paging": true,
-                    dom: "lBfrtip",
-                    buttons: [
-                        'copy', 'excelHtml5', 'pdfHtml5', 'csvHtml5'
-                    ]
-                });
-
-            })($);
-    </script>
-
-    <script type="text/javascript">
-        (() => {
-            $('#datatable-buttons').dataTable({
-                "sScrollY": "700px",
-                "paging": true,
-                dom: "lBfrtip",
-                buttons: [
-                    'copy', 'excelHtml5', 'pdfHtml5', 'csvHtml5'
-                ]
-            });
-        });
-
-        $('.accountActivityChange').click(function() {
-            var $this = $(this);
-            var id = $this.data('item-id');
-            console.log($this.text());
-            $.ajax({
-                    type: 'POST',
-                    url: '/api/Admin/ToggleAccountActivity/' + id
-                }).fail(() => {/* ok */ })
-                .done(function () {
-                    $this.toggleClass("btn-danger btn-success")
-                        .toggleText("@Resources.Recover", "@Resources.Remove")
-                        .parent().parent().toggleClass("greyed-out");
-                });
-        });
-        
-        function changeRole(id, htmlId) {
-            $.ajax({
-                    type: "POST",
-                    url: "/api/Admin/ChangeRole/" + id,
-                    contentType: 'application/json; charset=utf-8',
-                    dataType: "json",
-                    data: JSON.stringify($("#dd" + htmlId + " option:selected").text())
-                }).fail(() => {/* ok */ })
-                .done(function () {
-                    $("#td2" + htmlId).text($("#dd" + htmlId + " option:selected").text());
-                });
-            event.preventDefault();
-        }
-    </script>
+    <script src="~/Content/build/js/usermanagement.js"></script>
 }

@@ -1029,5 +1029,8 @@ function init() {
 
     //itempage handlers
     $(document).on("click", ".addToDashboard", (e) => moveWidget(e));
+    
+    //start loading widgets
+    if (dashboardpage) loadWidgets("api/WidgetApi/GetUserWidgets", "");
 }
 
