@@ -34,19 +34,19 @@
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">@Html.DisplayNameFor(m => m.Gender)</label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
                             <div id="gender" class="btn-group" data-toggle="buttons">
-                                @if (Model.Gender == Gender.MAN) {
+                                @if (Model.Gender == Gender.Man) {
                                     <label class="btn btn-default active">
-                                        @Html.RadioButtonFor(model => model.Gender, Gender.MAN) @Resources.Man
+                                        @Html.RadioButtonFor(model => model.Gender, Gender.Man) @Resources.Man
                                     </label>
                                     <label class="btn btn-default">
-                                        @Html.RadioButtonFor(model => model.Gender, Gender.WOMAN) @Resources.Woman
+                                        @Html.RadioButtonFor(model => model.Gender, Gender.Woman) @Resources.Woman
                                     </label>
                                 } else {
                                     <label class="btn btn-default">
-                                        @Html.RadioButtonFor(model => model.Gender, Gender.MAN) @Resources.Man
+                                        @Html.RadioButtonFor(model => model.Gender, Gender.Man) @Resources.Man
                                     </label>
                                     <label class="btn btn-default active">
-                                        @Html.RadioButtonFor(model => model.Gender, Gender.WOMAN) @Resources.Woman
+                                        @Html.RadioButtonFor(model => model.Gender, Gender.Woman) @Resources.Woman
                                     </label>
                                 }
                             </div>

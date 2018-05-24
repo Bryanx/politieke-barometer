@@ -1,18 +1,15 @@
 using BAR.BL.Domain.Items;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BAR.BL.Domain.Data
 {
-    public class Information
-    {
-        public int InformationId { get; set; }
-        public ICollection<Item> Items { get; set; }
-        public Source Source { get; set; }
-        public DateTime? CreationDate { get; set; }
-        public ICollection<PropertyValue> PropertieValues { get; set; }
-    }
+	public class Information
+	{
+		public int InformationId { get; set; }
+		public ICollection<Item> Items { get; set; }
+		public Source Source { get; set; }
+		public DateTime? CreationDate { get; set; }
+		public ICollection<PropertyValue> PropertieValues { get; set; }
+	}
 }

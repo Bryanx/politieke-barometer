@@ -34,7 +34,7 @@ namespace BAR.DAL
 		{
 			return ctx.Items.Find(itemId);
 		}
-		
+
 		/// <summary>
 		/// Returns the item that matches the itemId.
 		/// </summary>       
@@ -49,7 +49,7 @@ namespace BAR.DAL
 							.Where(item => item.ItemId == itemId && !item.Deleted)
 							.SingleOrDefault();
 		}
-		
+
 		/// <summary>
 		/// Returns the item that matches the itemId.
 		/// </summary>       
@@ -100,10 +100,10 @@ namespace BAR.DAL
 		public IEnumerable<Item> ReadAllItemsWithPlatforms()
 		{
 			return ctx.Items.Include(item => item.ItemWidgets)
-				            .Include(item => item.SubPlatform)
+							.Include(item => item.SubPlatform)
 							.AsEnumerable();
 		}
-		
+
 		/// <summary>
 		/// Returns a list of all persons.
 		/// </summary>
@@ -111,13 +111,13 @@ namespace BAR.DAL
 		public IEnumerable<Person> ReadAllPersonsWithPlatforms()
 		{
 			return ctx.Items.OfType<Person>()
-				              .Include(item => item.Area)
-				              .Include(item => item.ItemWidgets)
-				              .Include(item => item.SubPlatform)
-				              .Include(item => item.Organisation)
-				              .Include(item => item.SocialMediaNames)
-				              .Include(item => item.SocialMediaNames.Select(social => social.Source))
-				              .AsEnumerable();
+							  .Include(item => item.Area)
+							  .Include(item => item.ItemWidgets)
+							  .Include(item => item.SubPlatform)
+							  .Include(item => item.Organisation)
+							  .Include(item => item.SocialMediaNames)
+							  .Include(item => item.SocialMediaNames.Select(social => social.Source))
+							  .AsEnumerable();
 		}
 
 		/// <summary>
@@ -227,16 +227,16 @@ namespace BAR.DAL
 			return ctx.SaveChanges();
 		}
 
-        /// <summary>
-        /// Reads an organisation with a given name.
-        /// </summary>
-        public Organisation ReadOrganisation(string organisationName)
-        {
-          return ctx.Items.OfType<Organisation>()
-						  .Include(org => org.SubPlatform)
-						  .Where(org => org.Name.ToLower().Equals(organisationName.ToLower()))
-						  .SingleOrDefault();
-        }
+		/// <summary>
+		/// Reads an organisation with a given name.
+		/// </summary>
+		public Organisation ReadOrganisation(string organisationName)
+		{
+			return ctx.Items.OfType<Organisation>()
+							.Include(org => org.SubPlatform)
+							.Where(org => org.Name.ToLower().Equals(organisationName.ToLower()))
+							.SingleOrDefault();
+		}
 
 		/// <summary>
 		/// Gives back all the items with all the informations

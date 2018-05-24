@@ -9,7 +9,7 @@ namespace BAR.DAL
 		//Read
 		SubPlatform ReadSubPlatform(int platformId);
 		SubPlatform ReadSubPlatform(string platformId);
-		SubPlatform ReadSubplatformWithCustomization(int platformId);		
+		SubPlatform ReadSubplatformWithCustomization(int platformId);
 		IEnumerable<SubPlatform> ReadSubPlatforms();
 		Customization ReadCustomisation(int platformId);
 		Question ReadQuestion(int questionId);
@@ -18,7 +18,6 @@ namespace BAR.DAL
 		IEnumerable<Question> ReadQuestionsForType(QuestionType type);
 		IEnumerable<UserActivity> ReadAllActvities();
 		IEnumerable<UserActivity> ReadActivitiesForType(ActivityType type);
-		
 
 		//Create
 		int CreateSubplatform(SubPlatform subPlatform);
@@ -31,8 +30,6 @@ namespace BAR.DAL
 		int UpdateQuestions(IEnumerable<Question> questions);
 		int UpdateUserActivity(UserActivity activity);
 		int UpdateCustomization(Customization customization);
-		
-
 
 		//Delete
 		int DeleteSubplatform(SubPlatform subPlatform);

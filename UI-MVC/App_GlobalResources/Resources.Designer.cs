@@ -907,7 +907,7 @@ namespace BAR.UI.MVC.App_GlobalResources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Import content.
+        ///   Looks up a localized string similar to Import persons and organisations.
         /// </summary>
         public static string ImportContent {
             get {

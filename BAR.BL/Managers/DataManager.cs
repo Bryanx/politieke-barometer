@@ -342,24 +342,6 @@ namespace BAR.BL.Managers
 					information.Items.Add(themes.Where(x => x.Name.Equals(name)).SingleOrDefault());
 				}
 
-
-				////Associate Data with a given theme
-				//for (int j = 0; j < deserializedJson[i].words.Count; j++)
-				//{
-				//	string wordName = deserializedJson[i].words[j];
-
-				//	foreach (Theme theme in themes)
-				//	{
-				//		foreach (Keyword keyword in theme.Keywords.ToList())
-				//		{
-				//			if (keyword.Name.ToLower().Equals(wordName.ToLower()))
-				//			{
-				//				information.Items.Add(themes.Where(x => x.Name.Equals(theme.Name)).SingleOrDefault());
-				//			}
-				//		}
-				//	}
-				//}
-
 				//Add other information
 				information.Source = sources.Where(x => x.Name.Equals("Twitter")).SingleOrDefault();
 				string stringDate = Convert.ToString(deserializedJson[i].date);
@@ -519,7 +501,7 @@ namespace BAR.BL.Managers
 					Value = startdate.ToString("dd-MM")
 				};
 				activity = activities.Where(act => act.TimeStamp.ToString("dd-MM-yy").Equals(startdate.ToString("dd-MM-yy"))).SingleOrDefault();
-				if (activity != null) graphValue.NumberOfTimes = activity.NumberOfTimes;					
+				if (activity != null) graphValue.NumberOfTimes = activity.NumberOfTimes;
 				startdate = startdate.AddDays(-1);
 				widgetData.GraphValues.Add(graphValue);
 			}

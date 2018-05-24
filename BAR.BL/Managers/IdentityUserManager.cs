@@ -9,10 +9,10 @@ using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace BAR.BL.Managers
 {
-  /// <summary>
-  /// Class which will handle all configuration related to Identity.
-  /// </summary>
-  public class IdentityUserManager : UserManager<User>
+	/// <summary>
+	/// Class which will handle all configuration related to Identity.
+	/// </summary>
+	public class IdentityUserManager : UserManager<User>
 	{
 		/// <summary>
 		/// Repository is given to base class (UserManager - Identity).

@@ -1,5 +1,4 @@
 ﻿using BAR.BL.Domain.Items;
-using System;
 using System.Collections.Generic;
 
 namespace BAR.DAL
@@ -19,7 +18,7 @@ namespace BAR.DAL
 		Organisation ReadOrganisationWithDetails(int itemId);
 		Organisation ReadOrganisation(string organisationName);
 		IEnumerable<Organisation> ReadAllOraginsations();
-		Theme ReadThemeWithDetails(int itemId);	
+		Theme ReadThemeWithDetails(int itemId);
 		IEnumerable<Theme> ReadAllThemes();
 
 		//Create

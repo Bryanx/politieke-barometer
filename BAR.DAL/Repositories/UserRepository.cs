@@ -10,7 +10,7 @@ namespace BAR.DAL
 	/// <summary>
 	/// This class is used for the persistance of users.
 	/// 
-	/// WARNING
+	/// NOTE
 	/// This class has nothing to do with the identity-framework
 	/// for this, we reference to the UserIdentityRepository.
 	/// </summary>

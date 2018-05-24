@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace BAR.BL.Domain.Widgets
+﻿namespace BAR.BL.Domain.Widgets
 {
 	public class GraphValue
 	{
@@ -12,8 +6,7 @@ namespace BAR.BL.Domain.Widgets
 		public string Value { get; set; }
 		public double NumberOfTimes { get; set; }
 
-		public GraphValue() {
-		}
+		public GraphValue() { }
 		
 		//Constructor for making a copy of GraphValue
 		public GraphValue(GraphValue graphValue) {

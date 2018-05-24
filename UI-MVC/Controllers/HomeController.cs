@@ -16,28 +16,28 @@ using BAR.BL.Domain.Core;
 
 namespace BAR.UI.MVC.Controllers
 {
-  /// <summary>
-  /// This controller is used for managing the homepage.
-  /// </summary>
-  public class HomeController : LanguageController
-  {
-    private const string INDEX_PAGE_TITLE = "Politieke Barometer";
-    private IItemManager itemManager;
-    private IUserManager userManager;
-    private ISubplatformManager subplatformManager;
+	/// <summary>
+	/// This controller is used for managing the homepage.
+	/// </summary>
+	public class HomeController : LanguageController
+	{
+		private const string INDEX_PAGE_TITLE = "Politieke Barometer";
+		private IItemManager itemManager;
+		private IUserManager userManager;
+		private ISubplatformManager subplatformManager;
 
-    /// <summary>
-    /// Landing page for logged-in and non-logged-in users.
-    /// </summary>
-    [AllowAnonymous]
-    public ActionResult Index()
-    {
+		/// <summary>
+		/// Landing page for logged-in and non-logged-in users.
+		/// </summary>
+		[AllowAnonymous]
+		public ActionResult Index()
+		{
 
 			//Get hold of subplatformID we saved in the [SubplatformCheck] attribute
 			int subPlatformId = (int)RouteData.Values["SubPlatformID"];
 
 			userManager = new UserManager();
-      itemManager = new ItemManager();
+			itemManager = new ItemManager();
 			subplatformManager = new SubplatformManager();
 
 			// -------- Making WeeklyReviewModel --------
@@ -99,22 +99,22 @@ namespace BAR.UI.MVC.Controllers
 			});
 		}
 
-    /// <summary>
-    /// FAQ page for logged-in and non-logged-in users.
-    /// </summary>
-    [AllowAnonymous]
-    public ActionResult Faq()
-    {
-      userManager = new UserManager();
+		/// <summary>
+		/// FAQ page for logged-in and non-logged-in users.
+		/// </summary>
+		[AllowAnonymous]
+		public ActionResult Faq()
+		{
+			userManager = new UserManager();
 			subplatformManager = new SubplatformManager();
 
-      IEnumerable<Question> questions = subplatformManager.GetAllQuestions();//Assembling the view
-      return View(new BaseViewModel()
-      {
-        PageTitle = Resources.QuestionAndAnswer,
-        User = User.Identity.IsAuthenticated ? userManager.GetUser(User.Identity.GetUserId()) : null
-      });
-    }
+			IEnumerable<Question> questions = subplatformManager.GetAllQuestions();//Assembling the view
+			return View(new BaseViewModel()
+			{
+				PageTitle = Resources.QuestionAndAnswer,
+				User = User.Identity.IsAuthenticated ? userManager.GetUser(User.Identity.GetUserId()) : null
+			});
+		}
 
 		/// <summary>
 		/// Saves the language preferences in a cookie.
@@ -141,40 +141,40 @@ namespace BAR.UI.MVC.Controllers
 			return Redirect(Request.UrlReferrer.ToString());
 		}
 
-    /// <summary>
-    /// Returns a javascript object with language resources.
-    /// This way local resources can be used in javascript files.
-    /// </summary>
-    public ActionResult GetResources()
-    {
-      Response.ContentType = "text/javascript";
-      return View();
-    }
+		/// <summary>
+		/// Returns a javascript object with language resources.
+		/// This way local resources can be used in javascript files.
+		/// </summary>
+		public ActionResult GetResources()
+		{
+			Response.ContentType = "text/javascript";
+			return View();
+		}
 
 
-    /// <summary>
-    /// Returns image of byte array.
-    /// </summary>
-    public FileContentResult HeaderImage()
-    {
-        subplatformManager = new SubplatformManager();
+		/// <summary>
+		/// Returns image of byte array.
+		/// </summary>
+		public FileContentResult HeaderImage()
+		{
+			subplatformManager = new SubplatformManager();
 
-        Customization customization = subplatformManager.GetCustomization((int)RouteData.Values["SubPlatformID"]);
-        if (customization.HeaderImage == null) return null;
-        return new FileContentResult(customization.HeaderImage, "image/jpeg");
-    }
+			Customization customization = subplatformManager.GetCustomization((int)RouteData.Values["SubPlatformID"]);
+			if (customization.HeaderImage == null) return null;
+			return new FileContentResult(customization.HeaderImage, "image/jpeg");
+		}
 
-    /// <summary>
-    /// Returns image of byte array.
-    /// </summary>
-    public FileContentResult LogoImage()
-    {
-        subplatformManager = new SubplatformManager();
+		/// <summary>
+		/// Returns image of byte array.
+		/// </summary>
+		public FileContentResult LogoImage()
+		{
+			subplatformManager = new SubplatformManager();
 
-        Customization customization = subplatformManager.GetCustomization((int)RouteData.Values["SubPlatformID"]);
-        if (customization.HeaderImage == null) return null;
-        return new FileContentResult(customization.LogoImage, "image/jpeg");
-    }
+			Customization customization = subplatformManager.GetCustomization((int)RouteData.Values["SubPlatformID"]);
+			if (customization.HeaderImage == null) return null;
+			return new FileContentResult(customization.LogoImage, "image/jpeg");
+		}
 
 		/// <summary>
 		/// Returns image of byte array.

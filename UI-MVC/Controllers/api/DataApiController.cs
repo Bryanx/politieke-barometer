@@ -52,9 +52,8 @@ namespace BAR.UI.MVC.Controllers.api
 		public async Task<IHttpActionResult> Synchronize(int id)
 		{
 			//Get the subplatformID from the SubPlatformCheckAPI attribute
-			object _customObject = null;
 			int suplatformID = -1;
-			if (Request.Properties.TryGetValue("SubPlatformID", out _customObject))
+			if (Request.Properties.TryGetValue("SubPlatformID", out object _customObject))
 			{
 				suplatformID = (int)_customObject;
 			}
@@ -64,7 +63,7 @@ namespace BAR.UI.MVC.Controllers.api
 
 			List<Theme> themes = itemManager.GetAllThemesForSubplatform(suplatformID).ToList();
 
-			//Making the string with all the themes the source should validate
+			//Making the string with all the themes. The source should validate
 			string themeString = "\"themes\":{ ";
 			for (int i = 0; i < themes.Count(); i++)
 			{
@@ -97,7 +96,7 @@ namespace BAR.UI.MVC.Controllers.api
 
 				//Test with fewer data 
 				content = "{" +
-				  "\"since\":\"2018-05-21 00:00\"," +
+				  "\"since\":\"2018-05-22 00:00\"," +
 				  themeString +
 				  "}";
 			}
@@ -168,8 +167,13 @@ namespace BAR.UI.MVC.Controllers.api
 							foreach (SubAlert subAlert in subscriptionManager.GetUnsendedSubAlerts())
 							{
 								User user = subAlert.Subscription.SubscribedUser;
-								await controllerHelpers.SendPushNotificationAsync(user.DeviceToken, "Trending", String.Format("%s is nu trending.", subAlert.Subscription.SubscribedItem.Name));
-								subscriptionManager.ChangeSubAlertToSend(subAlert);
+								if (user.DeviceToken != null)
+								{
+									await controllerHelpers.SendPushNotificationAsync(user.DeviceToken, "Trending", String.Format("%s is nu trending.", subAlert.Subscription.SubscribedItem.Name));
+									subscriptionManager.ChangeSubAlertToSend(subAlert);
+								}
+								
+
 							}
 							return StatusCode(HttpStatusCode.OK);
 						}

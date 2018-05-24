@@ -22,7 +22,7 @@ namespace BAR.BL.Managers
 		//Audits
 		SynchronizeAudit GetLastAudit();
 		SynchronizeAudit AddAudit(DateTime timestamp, bool succes);
-		SynchronizeAudit GetAudit(int synchronizeAuditId);	
+		SynchronizeAudit GetAudit(int synchronizeAuditId);
 		SynchronizeAudit ChangeAudit(int synchronizeAuditId);
 
 		//Sources
@@ -37,8 +37,8 @@ namespace BAR.BL.Managers
 		DataSource ChangeTimerInterval(int dataSourceId, int interval);
 		DataSource ChangeStartTimer(int dataSourceId, string startTimer);
 		DataSource ChangeLastTimeCheckedTime(int dataSourceId, DateTime date);
-		void RemoveDataSource(int dataSourceId);	
-		
+		void RemoveDataSource(int dataSourceId);
+
 		//Others
 		bool SynchronizeData(string json);
 		bool IsJsonEmpty(string json);

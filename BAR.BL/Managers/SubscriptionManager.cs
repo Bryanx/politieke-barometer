@@ -63,7 +63,6 @@ namespace BAR.BL.Managers
 			IEnumerable<Subscription> subs = GetSubscriptionsWithItemsForUser(userId);
 			if (subs.Where(sub => sub.SubscribedItem.ItemId == itemId).Count() != 0) return null;
 
-
 			//make subscription		
 			Subscription subscription = new Subscription()
 			{
@@ -74,7 +73,7 @@ namespace BAR.BL.Managers
 				Alerts = new List<SubAlert>()
 			};
 			item.NumberOfFollowers++;
-			
+
 			//Save changes to the database
 			subRepo.CreateSubscription(subscription);
 			uowManager.Save();
@@ -300,7 +299,7 @@ namespace BAR.BL.Managers
 		public IEnumerable<SubAlert> GetAllSubAlerts()
 		{
 			InitRepo();
-      return subRepo.ReadAllSubAlerts().AsEnumerable();
+			return subRepo.ReadAllSubAlerts().AsEnumerable();
 		}
 
 		/// <summary>
@@ -330,26 +329,29 @@ namespace BAR.BL.Managers
 			return subRepo.ReadUserAlerts(userId);
 		}
 
-    /// <summary>
+		/// <summary>
 		/// Gets all the sub alerts that were not yet sent to the
 		/// android devices
 		/// </summary>
-    public IEnumerable<SubAlert> GetUnsendedSubAlerts()
-    {
-      InitRepo();
-      return GetAllSubAlerts().Where(alert => !alert.IsSend);
-    }
+		public IEnumerable<SubAlert> GetUnsendedSubAlerts()
+		{
+			InitRepo();
+			return GetAllSubAlerts().Where(alert => !alert.IsSend);
+		}
 
-    /// <summary>
+		/// <summary>
 		/// Change status to send
 		/// </summary>
-    public void ChangeSubAlertToSend(SubAlert subAlert)
-    {
-      //Change alert status
-      subAlert.IsSend = true;
+		public void ChangeSubAlertToSend(SubAlert subAlert)
+		{
+			InitRepo();
 
-      //Update database
-      subRepo.UpdateSubAlert(subAlert);
-    }
+			//Change alert status
+			if (subAlert == null) return;
+			subAlert.IsSend = true;
+
+			//Update database
+			subRepo.UpdateSubAlert(subAlert);
+		}
 	}
 }

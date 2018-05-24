@@ -232,7 +232,7 @@ namespace BAR.DAL
 							  .Include(widget => widget.WidgetDatas)
 							  .Include(widget => widget.WidgetDatas.Select(data => data.GraphValues))
 							  .Where(widget => widget.PropertyTags.Any(tag => tag.Name.ToLower().Equals("geo")))
-							  .SingleOrDefault();				
+							  .SingleOrDefault();
 		}
 
 		/// <summary>
@@ -242,11 +242,11 @@ namespace BAR.DAL
 		{
 			return ctx.Widgets.Include(widget => widget.Items)
 							  .Include(widget => widget.WidgetDatas)
-					          .Include(widget => widget.WidgetDatas.Select(data => data.GraphValues))
+							  .Include(widget => widget.WidgetDatas.Select(data => data.GraphValues))
 							  .Include(widget => widget.Items)
 							  .Include(widget => widget.PropertyTags)
-					          .Where(widget => widget.Items.Any(item => item.ItemType == type))
-					          .AsEnumerable();
+							  .Where(widget => widget.Items.Any(item => item.ItemType == type))
+							  .AsEnumerable();
 		}
 
 		/// <summary>

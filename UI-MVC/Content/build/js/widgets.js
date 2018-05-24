@@ -344,7 +344,7 @@ function loadGraphs(itemId, widget) {
         $this.addClass("loadMessage");
         $.ajax({
             type: "POST",
-            url: "api/Widget/" + widgetId + "/" + newTitle,
+            url: "api/WidgetApi/" + widgetId + "/" + newTitle,
             success: () => {
                 $this.removeClass("loadMessage");
                 $userWidgetTitle.html(newTitle + "<i class='fa fa-edit edit-title'></i></h2>");
@@ -836,7 +836,7 @@ function loadWidgets(url, itemId, onlyLoadLastWidget = false) {
             }
         }
         //if widgettype == graphtype
-        if (widget.WidgetType === 0) loadGraphs(itemId, widget);
+        if (widget.WidgetType === 1) loadGraphs(itemId, widget);
         widgets.push(widget);
     };
 
@@ -945,8 +945,8 @@ function init() {
                 if ($modal.length) $modal.modal("hide");
                 if ($nowidgets.length) $nowidgets.hide();
                 if (dashboardpage) {
-                    if (widgets.length < 1) loadWidgets("api/Widget/GetUserWidgets", "");
-                    else loadWidgets("api/Widget/GetUserWidgets", "", true);
+                    if (widgets.length < 1) loadWidgets("api/WidgetApi/GetUserWidgets", "");
+                    else loadWidgets("api/WidgetApi/GetUserWidgets", "", true);
                 }
                 showSaveMessage();
             }
@@ -1003,7 +1003,7 @@ function init() {
         if (widgetId.length) {
             $.ajax({
                 type: "POST",
-                url: "/api/Widget/Delete/" + widgetId,
+                url: "/api/WidgetApi/Delete/" + widgetId,
                 dataType: "json",
                 error: (xhr) => {
                     alert($.parseJSON(xhr.responseText).Message);

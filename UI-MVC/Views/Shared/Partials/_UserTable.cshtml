@@ -60,13 +60,13 @@
                         <span style="display:none">@Model.Users.ElementAt(i).LastName</span>
 
                     </td>
-                    @if (Model.Users.ElementAt(i).Gender == BAR.BL.Domain.Users.Gender.MAN)
+                    @if (Model.Users.ElementAt(i).Gender == BAR.BL.Domain.Users.Gender.Man)
                     {
                         <td>
                             @Resources.Man
                         </td>
 }
-                    else if (Model.Users.ElementAt(i).Gender == BAR.BL.Domain.Users.Gender.WOMAN)
+                    else if (Model.Users.ElementAt(i).Gender == BAR.BL.Domain.Users.Gender.Woman)
                     {
                         <td>
                             @Resources.Woman

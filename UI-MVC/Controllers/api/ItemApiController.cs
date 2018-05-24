@@ -85,11 +85,10 @@ namespace BAR.UI.MVC.Controllers.api
 		/// </summary>
 		[HttpPost]
 		[Route("api/Admin/ToggleDeleteItem/{itemId}")]
-		public IHttpActionResult ToggleDeleteItem(string itemId)
+		public IHttpActionResult ToggleDeleteItem(int itemId)
 		{
-			if (itemId == null) return BadRequest("no itemId given");
 			itemManager = new ItemManager();
-			itemManager.ChangeItemActivity(Int32.Parse(itemId));
+			itemManager.ChangeItemActivity(itemId);
 			return StatusCode(HttpStatusCode.NoContent);
 		}
 
@@ -98,11 +97,11 @@ namespace BAR.UI.MVC.Controllers.api
 		/// </summary>
 		[HttpPost]
 		[Route("api/Admin/RenameItem/{itemId}/{itemName}")]
-		public IHttpActionResult RenameItem(string itemId, string itemName)
+		public IHttpActionResult RenameItem(int itemId, string itemName)
 		{
-			if (itemId == null || itemName == null) return BadRequest("Uncorrect parameters");
+			if (itemName == null) return BadRequest("Uncorrect parameters");
 			itemManager = new ItemManager();
-			itemManager.ChangeItemName(Int32.Parse(itemId), itemName);
+			itemManager.ChangeItemName(itemId, itemName);
 			return StatusCode(HttpStatusCode.NoContent);
 		}
 
@@ -111,11 +110,10 @@ namespace BAR.UI.MVC.Controllers.api
 		/// </summary>
 		[HttpGet]
 		[Route("api/GetItemWithDetails/{itemId}")]
-		public IHttpActionResult GetItemWithDetails(string itemId)
+		public IHttpActionResult GetItemWithDetails(int itemId)
 		{
-			if (itemId == null) return BadRequest("no itemId given");
 			itemManager = new ItemManager();
-			Item item = itemManager.GetPersonWithDetails(Int32.Parse(itemId));
+			Item item = itemManager.GetPersonWithDetails(itemId);
 			return Ok(item);
 		}
 
@@ -124,23 +122,22 @@ namespace BAR.UI.MVC.Controllers.api
 		/// </summary>
 		[HttpPost]
 		[Route("api/Admin/UpdateItem/{itemId}")]
-		public IHttpActionResult UpdateItem(string itemId, [FromBody] ItemViewModels.PersonViewModel model)
+		public IHttpActionResult UpdateItem(int itemId, [FromBody] ItemViewModels.PersonViewModel model)
 		{
-			if (itemId == null) return BadRequest("No itemId given");
 			itemManager = new ItemManager();
-			itemManager.ChangePerson(Int32.Parse(itemId), model.DateOfBirth, model.Gender, model.Position, model.District);
+			itemManager.ChangePerson(itemId, model.DateOfBirth, model.Gender, model.Position, model.District);
 			return StatusCode(HttpStatusCode.NoContent);
 		}
-		
+
 		/// <summary>
 		/// Retrieves more people from the same organisation.
 		/// </summary>
 		[HttpGet]
 		[Route("api/GetMorePeopleFromOrg/{itemId}")]
-		public IHttpActionResult GetMorePeopleFromOrg(string itemId)
+		public IHttpActionResult GetMorePeopleFromOrg(int itemId)
 		{
 			itemManager = new ItemManager();
-			Person requestedPerson = itemManager.GetPersonWithDetails(Int32.Parse(itemId));
+			Person requestedPerson = itemManager.GetPersonWithDetails(itemId);
 
 			if (requestedPerson == null)
 			{
@@ -163,14 +160,12 @@ namespace BAR.UI.MVC.Controllers.api
 		/// </summary>
 		[HttpGet]
 		[Route("api/GetPeopleFromOrg/{itemId}")]
-		public IHttpActionResult GetPeopleFromOrg(string itemId)
+		public IHttpActionResult GetPeopleFromOrg(int itemId)
 		{
-			if (itemId == null) return BadRequest("No itemId given");
 			itemManager = new ItemManager();
-			int orgId = Int32.Parse(itemId);
 			try
 			{
-				List<Person> items = itemManager.GetAllPersons().Where(p => p.Organisation.ItemId == orgId).ToList();
+				List<Person> items = itemManager.GetAllPersons().Where(p => p.Organisation.ItemId == itemId).ToList();
 				return Ok(Mapper.Map(items, new List<ItemDTO>()));
 			}
 #pragma warning disable CS0168 // Variable is declared but never used
@@ -236,17 +231,17 @@ namespace BAR.UI.MVC.Controllers.api
 		[HttpGet]
 		[Route("api/GetPopularPersonsPerDistrict")]
 		[SubPlatformCheckAPI]
-		public IHttpActionResult GetPopularPersonsPerDistrict() {
+		public IHttpActionResult GetPopularPersonsPerDistrict()
+		{
 			itemManager = new ItemManager();
-			
-  		//Get the subplatformID from the SubPlatformCheckAPI attribute
-			object _customObject = null;
+
+			//Get the subplatformID from the SubPlatformCheckAPI attribute
 			int suplatformID = -1;
-			if (Request.Properties.TryGetValue("SubPlatformID", out _customObject))
+			if (Request.Properties.TryGetValue("SubPlatformID", out object _customObject))
 			{
 				suplatformID = (int)_customObject;
 			}
-			
+
 			List<Person> persons = itemManager.GetAllPersonsForSubplatform(suplatformID).ToList();
 
 			if (!persons.Any()) return NotFound();

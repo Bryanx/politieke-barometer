@@ -31,7 +31,6 @@ namespace BAR.UI.MVC.Controllers.api
 
 			if (userAlerts == null || subAlerts == null || (userAlerts.Count() == 0 && subAlerts.Count() == 0)) return StatusCode(HttpStatusCode.NoContent);
 
-			//Made DTO class to prevent circular references
 			List<AlertDTO> lijst = new List<AlertDTO>();
 			foreach (SubAlert alert in subAlerts)
 			{
@@ -56,7 +55,7 @@ namespace BAR.UI.MVC.Controllers.api
 				};
 				lijst.Add(alertDTO);
 			}
-				 
+
 			return Ok(lijst.AsEnumerable());
 		}
 
@@ -79,7 +78,7 @@ namespace BAR.UI.MVC.Controllers.api
 		[Route("api/User/Alert/{alertId}/Delete")]
 		public IHttpActionResult DeleteAlert(int alertId)
 		{
-			subManager = new SubscriptionManager();	
+			subManager = new SubscriptionManager();
 			subManager.RemoveAlert(alertId);
 			return StatusCode(HttpStatusCode.NoContent);
 		}

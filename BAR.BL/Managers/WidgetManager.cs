@@ -365,7 +365,7 @@ namespace BAR.BL.Managers
 			new ItemManager().RemoveOverflowingItems();
 
 			//Generate data for geolocation
-			GenerateDataForGeolocation();	
+			GenerateDataForGeolocation();
 		}
 
 		/// <summary>
@@ -508,7 +508,7 @@ namespace BAR.BL.Managers
 
 			//If lastUpdated was to long ago, then the activities shall be udpated
 			if (lastUpdated == null || !lastUpdated.Value.ToString("dd-MM-yy").Equals(DateTime.Now.ToString("dd-MM-yy"))) widgets = ChangeWidgetActities(widgets, platformId);
-			
+
 			//Link widdatas to widgets
 			foreach (Widget widget in widgets) widget.WidgetDatas.ToList().AddRange(GetWidgetDatasForWidgetId(widget.WidgetId));
 			return widgets;

@@ -157,9 +157,6 @@ namespace BAR.DAL
 		/// </summary>
 		public int DeleteSubplatform(SubPlatform subPlatform)
 		{
-			//*** WARNING ***//
-			//This method does yet delete the whole platform.
-			//It just deletes the instance of the subplatform
 			ctx.SubPlatforms.Remove(subPlatform);
 			return ctx.SaveChanges();
 		}
@@ -226,5 +223,5 @@ namespace BAR.DAL
 		{
 			return ctx.UserActivities.Where(act => act.ActivityType == type).AsEnumerable();
 		}
-    }
+	}
 }

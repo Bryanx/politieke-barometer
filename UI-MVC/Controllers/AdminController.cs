@@ -54,14 +54,11 @@ namespace BAR.UI.MVC.Controllers
 			int subPlatformID = (int)RouteData.Values["SubPlatformID"];
 			Customization custom = platformManager.GetCustomization(subPlatformID);
 
+			//Assembling the view
 			CustomizationViewModel vm = Mapper.Map(custom, new CustomizationViewModel());
-
 			vm.Questions = Mapper.Map(platformManager.GetQuestions(subPlatformID), new List<QuestionDTO>());
-
 			vm.User = userManager.GetUser(User.Identity.GetUserId());
 			vm.PageTitle = Resources.PageManagement;
-
-			//Assembling the view
 			return View(vm);
 		}
 
@@ -77,7 +74,7 @@ namespace BAR.UI.MVC.Controllers
 			userManager = new UserManager();
 
 			//Assembling the view
-			ItemCreateViewModel vm = new ItemViewModels.ItemCreateViewModel()
+			ItemCreateViewModel vm = new ItemCreateViewModel()
 			{
 				User = userManager.GetUser(User.Identity.GetUserId()),
 				PageTitle = Resources.ItemManagement,
@@ -85,12 +82,11 @@ namespace BAR.UI.MVC.Controllers
 			};
 
 			int count = itemManager.GetAllOrganisationsForSubplatform(subPlatformID).Count();
-			vm.Organisations = itemManager.GetAllOrganisationsForSubplatform(subPlatformID).Select(x => new SelectListItem
+			vm.Organisations = itemManager.GetAllOrganisationsForSubplatform(subPlatformID).Select(org => new SelectListItem
 			{
-				Value = System.Convert.ToString(x.ItemId),
-				Text = x.Name,
-			}).OrderBy(x => x.Text);
-
+				Value = System.Convert.ToString(org.ItemId),
+				Text = org.Name,
+			}).OrderBy(org => org.Text);
 			return View(vm);
 		}
 

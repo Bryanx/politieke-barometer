@@ -2,7 +2,6 @@
 using BAR.BL.Domain.Items;
 using BAR.BL.Domain.Users;
 using BAR.BL.Managers;
-using BAR.UI.MVC.App_GlobalResources;
 using BAR.UI.MVC.Attributes;
 using BAR.UI.MVC.Models;
 using Microsoft.AspNet.Identity;
@@ -24,8 +23,6 @@ namespace BAR.UI.MVC.Controllers
 		private IItemManager itemManager;
 		private IUserManager userManager;
 		private ISubscriptionManager subManager;
-		private IWidgetManager widgetManager;
-		private ISubplatformManager subplatformManager;
 
 		/// <summary>
 		/// Item page for logged-in and non-logged-in users.
