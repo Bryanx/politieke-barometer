@@ -75,7 +75,7 @@ namespace BAR.DAL.EF
 			};
 			ctx.Widgets.Add(registerWidget);
 
-			List<PropertyTag> tags3= new List<PropertyTag>();
+			List<PropertyTag> tags3 = new List<PropertyTag>();
 			PropertyTag tag3 = new PropertyTag()
 			{
 				Name = "activity visit"
@@ -102,7 +102,6 @@ namespace BAR.DAL.EF
 		/// <summary>
 		/// Generates test data for K3 subplatform
 		/// </summary>
-		/// <param name="ctx"></param>
 		private void GenerateK3(BarometerDbContext ctx)
 		{
 			Person Marthe = new Person()
@@ -131,7 +130,6 @@ namespace BAR.DAL.EF
 		/// <summary>
 		/// Generates some subplatforms.
 		/// </summary>
-		/// <param name="ctx"></param>
 		private void GenerateSubPlatforms(BarometerDbContext ctx)
 		{
 
@@ -210,36 +208,36 @@ namespace BAR.DAL.EF
 			return custom;
 		}
 
-    /// <summary>
-    /// Generates all of the sources we get our information from.
-    /// </summary>
-    private void GenerateSources(BarometerDbContext ctx)
-    {
-      Source twitter = new Source
-      {
-        Name = "Twitter",
-        Site = "https://twitter.com/"
-      };
-      ctx.Sources.Add(twitter);
-      Source facebook = new Source
-      {
-        Name = "Facebook",
-        Site = "https://www.facebook.com/"
-      };
-      ctx.Sources.Add(facebook);
-      DataSource textgain = new DataSource
-      {
-        Name = "Textgain",
-        Url = "https://kdg.textgain.com/query",
-        DataSourceId = 1,
-        Interval = 60,
-        SetTime = "0900",
-        LastTimeChecked = DateTime.Now
-        
-      };
-    ctx.DataSources.Add(textgain);
-    ctx.SaveChanges();
-    }
+		/// <summary>
+		/// Generates all of the sources we get our information from.
+		/// </summary>
+		private void GenerateSources(BarometerDbContext ctx)
+		{
+			Source twitter = new Source
+			{
+				Name = "Twitter",
+				Site = "https://twitter.com/"
+			};
+			ctx.Sources.Add(twitter);
+			Source facebook = new Source
+			{
+				Name = "Facebook",
+				Site = "https://www.facebook.com/"
+			};
+			ctx.Sources.Add(facebook);
+			DataSource textgain = new DataSource
+			{
+				Name = "Textgain",
+				Url = "https://kdg.textgain.com/query",
+				DataSourceId = 1,
+				Interval = 60,
+				SetTime = "0900",
+				LastTimeChecked = DateTime.Now
+
+			};
+			ctx.DataSources.Add(textgain);
+			ctx.SaveChanges();
+		}
 
 		/// <summary>
 		/// Performance gain if you put all items in a list
@@ -334,7 +332,6 @@ namespace BAR.DAL.EF
 		/// <summary>
 		/// Reads all Belgium cities from Json.
 		/// </summary>
-		/// <param name="ctx"></param>
 		private void GenerateAreas(BarometerDbContext ctx)
 		{
 			string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "zipcode-belgium.json");
