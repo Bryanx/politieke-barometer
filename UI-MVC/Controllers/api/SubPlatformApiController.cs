@@ -62,11 +62,11 @@ namespace BAR.UI.MVC.Controllers.api
 		public IHttpActionResult PutColor([FromBody] CustomizationViewModel model)
 		{
 			platformManager = new SubplatformManager();
-			
+
 			object _customObject = null;
 			int suplatformId = 1;
 			if (Request.Properties.TryGetValue("SubPlatformID", out _customObject)) suplatformId = (int)_customObject;
-			
+
 			if (model == null)
 				return BadRequest("No customization given");
 			if (!ModelState.IsValid)
@@ -91,7 +91,7 @@ namespace BAR.UI.MVC.Controllers.api
 			object _customObject = null;
 			int suplatformId = 1;
 			if (Request.Properties.TryGetValue("SubPlatformID", out _customObject)) suplatformId = (int)_customObject;
-			
+
 			if (model == null)
 				return BadRequest("No customization given");
 			if (!ModelState.IsValid)
@@ -161,7 +161,7 @@ namespace BAR.UI.MVC.Controllers.api
 			object _customObject = null;
 			int suplatformId = 1;
 			if (Request.Properties.TryGetValue("SubPlatformID", out _customObject)) suplatformId = (int)_customObject;
-			
+
 			if (custom == null)
 				return BadRequest("No customization given");
 			if (!ModelState.IsValid)
@@ -228,14 +228,7 @@ namespace BAR.UI.MVC.Controllers.api
 			if (!platformManager.Exists(questionId))
 				return NotFound();
 
-			try
-			{
-				platformManager.RemoveQuestion(questionId);
-			}
-			catch(Exception e)
-			{
-				//DoNothing
-			}
+			platformManager.RemoveQuestion(questionId);
 			return StatusCode(HttpStatusCode.NoContent);
 		}
 	}

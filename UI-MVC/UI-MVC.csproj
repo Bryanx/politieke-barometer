@@ -234,7 +234,7 @@
     <Compile Include="Controllers\api\ItemApiController.cs" />
     <Compile Include="Controllers\api\SuperAdminApiController.cs" />
     <Compile Include="Controllers\api\UserApiController.cs" />
-    <Compile Include="Controllers\api\WidgetController.cs" />
+    <Compile Include="Controllers\api\WidgetApiController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LanguageController.cs" />

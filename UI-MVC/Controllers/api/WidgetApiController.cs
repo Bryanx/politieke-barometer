@@ -20,7 +20,7 @@ namespace BAR.UI.MVC.Controllers.api
 	/// This class is used to transfer all widget information from UI to the managers.
 	/// The api calls are in ajax requests on the dashboard index page.
 	/// </summary>
-	public class WidgetController : ApiController
+	public class WidgetApiController : ApiController
 	{
 		private IWidgetManager widgetManager;
 		private IItemManager itemManager;
