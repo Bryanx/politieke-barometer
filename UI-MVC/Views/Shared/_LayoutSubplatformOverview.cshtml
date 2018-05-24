@@ -17,15 +17,18 @@
 
     <title>@(Model.PageTitle.Length == 0 ? @ViewBag.Title : Model.PageTitle)</title>
 
-    @Styles.Render("~/Content/css")
+    <link href="~/Content/build/css/vendor/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/build/css/vendor/font-awesome.min.css" rel="stylesheet" />
+    <link href="~/Content/build/css/vendor/bootstrap-progressbar-3.3.4.min.css" rel="stylesheet" />
+    <link href="~/Content/build/css/vendor/jqvmap.min.css" rel="stylesheet" />
 
     @if (IsSectionDefined("CustomCSS"))
     {
-    @RenderSection("CustomCSS")
+        @RenderSection("CustomCSS")
     }
 
     <!-- Custom Theme Style -->
-    @Styles.Render("~/Content/custom")
+    <link href="~/Content/build/css/custom.css" rel="stylesheet" />
 
     <!-- Font -->
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
@@ -38,26 +41,38 @@
             <!-- page content -->
             @if (IsSectionDefined("Homepage"))
             {
-            @RenderSection("Homepage")
+                @RenderSection("Homepage")
             }
             @RenderBody()
-            
+
             <!-- /page content -->
-            
+
         </div>
     </div>
 
     <!-- Scripts -->
     <script src="/Home/GetResources"></script>
-    @Scripts.Render("~/bundles/jquery", "~/bundles/bootstrap", "~/bundles/dates", "~/bundles/timeago", "~/Scripts/vue.min.js")
-    @Scripts.Render("~/Content/build/js/alerts.js")
-
+    <script src="/Home/GetResources"></script>
+    <script src="~/Scripts/jquery/jquery-3.3.1.min.js"></script>
+    <script src="~/Scripts/jquery/jquery.autocomplete.min.js"></script>
+    <script src="~/Content/build/js/searchbar.js"></script>
+    <script src="~/Scripts/bootstrap.js"></script>
+    <script src="~/Scripts/dates/date.min.js"></script>
+    <script src="~/Scripts/dates/moment.min.js"></script>
+    <script src="~/Scripts/dates/daterangepicker.js"></script>
+    <script src="~/Scripts/jquery/jquery.timeago.js"></script>
+    <script src="~/Content/build/js/template.js"></script>
+    <script src="~/Content/build/js/searchbar.js"></script>
+    <script src="~/Content/build/js/custom.js"></script>
+    <script src="~/Content/build/js/alerts.js"></script>
     @if (IsSectionDefined("CustomJS"))
     {
-    @RenderSection("CustomJS")
+        @RenderSection("CustomJS")
     }
     <!-- Custom Theme Scripts -->
-    @Scripts.Render("~/bundles/custom")
+    <script src="~/Content/build/js/template.js"></script>
+    <script src="~/Content/build/js/searchbar.js"></script>
+    <script src="~/Content/build/js/custom.js"></script>
     <script defer>
         (() => {
             $(".culture", ".left_col").click(function () {

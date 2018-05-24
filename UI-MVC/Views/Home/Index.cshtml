@@ -10,46 +10,48 @@
 <link href="../../Content/build/css/homepage.css" rel="stylesheet">
 
 <section>
-@section Homepage {
-    <!-- header start -->
-    <div class="main-header-container-parent row header-image-bg">
-        
-        <div runat="server" class="col-md-12 col-sm-12 col-xs-12 main-header-container" style="background-image: url(&quot;@Url.HeaderImage()&quot;)">
+    @section Homepage {
+        <!-- header start -->
+        <div class="main-header-container-parent row header-image-bg">
 
-        <div runat="server" class="logo" style="background-image: url(&quot;@Url.LogoImage()&quot;);"></div>
-        <div class="main-header">
-            <h1 class="main-header-title">@Resources.HomepageHeaderSee @Model.Customization.PersonsAlias.ToLower() @Resources.HomepageHeaderTrending<br />@Resources.OnSocialMedia.ToLower().</h1>
+            <div runat="server" class="col-md-12 col-sm-12 col-xs-12 main-header-container" style="background-image: url(&quot;@Url.HeaderImage()&quot;)">
+
+                <div runat="server" class="logo" style="background-image: url(&quot;@Url.LogoImage()&quot;);"></div>
+                <div class="main-header">
+                    <h1 class="main-header-title">@Resources.HomepageHeaderSee @Model.Customization.PersonsAlias.ToLower() @Resources.HomepageHeaderTrending<br />@Resources.OnSocialMedia.ToLower().</h1>
+                </div>
+                @Html.Partial("Partials/_SearchBar", Model)
+            </div>
         </div>
-        @Html.Partial("Partials/_SearchBar", Model)
-    </div>
-    </div>
-    <!-- header end -->
-}
+        <!-- header end -->
+    }
     <a name="nieuws"></a>
 
-<!-- top tiles -->
+    <!-- top tiles -->
     <div class="row tile_count">
-        @foreach (var item in Model.Items.Where(i => i.ItemType == ItemType.Person).OrderByDescending(m => m.NumberOfMentions).Take(6)) {
+        @foreach (var item in Model.Items.Where(i => i.ItemType == ItemType.Person).OrderByDescending(m => m.NumberOfMentions).Take(6))
+        {
 
-                <div class="tile_stats_count col-md-2 col-sm-4 col-xs-6">
-                    <a style="text-decoration: none" href="/Person/Details/@item.ItemId">
+            <div class="tile_stats_count col-md-2 col-sm-4 col-xs-6">
+                <a style="text-decoration: none" href="/Person/Details/@item.ItemId">
                     <span class="count_top"><i class="fa fa-user"></i> @item.Name</span>
                     <div class="count">@item.NumberOfMentions</div>
-                    </a>
-                    <span class="count_bottom">
-                        <i class="green">
-                            <i class="fa fa-sort-asc">
-                            </i>@item.TrendingPercentage%
-                        </i> Sinds vorige week
-                    </span>
-                    
-                </div>
+                </a>
+                <span class="count_bottom">
+                    <i class="green">
+                        <i class="fa fa-sort-asc">
+                        </i>@item.TrendingPercentage%
+                    </i> Sinds vorige week
+                </span>
+
+            </div>
         }
     </div>
-<!-- /top tiles -->
+    <!-- /top tiles -->
 </section>  <!-- end first page -->
 
-<section>     <!-- top 3 politici (trending) -->
+<section>
+    <!-- top 3 politici (trending) -->
     <div class="x_panel">
         <div class="x_title">
             <h2>Top 3 trending @Model.Customization.PersonsAlias</h2>
@@ -61,7 +63,7 @@
                 </li>
                 <li><a id="0" class='makeJSON' data-widget-id=""> @Resources.Save @Resources.To @Resources.Dashboard</a></li>
             </ul>
-            <div class='clearfix'></div>   
+            <div class='clearfix'></div>
         </div>
         <div class="x_content">
 
@@ -70,20 +72,21 @@
                     <canvas id='trending-1-graph'></canvas>
                     <h2 class='no-graph-data text-center'>No data available.</h2>
                 </div>
-                
+
                 <!-- CARDS -->
                 <div class="row">
                     @for (int j = 0; j < 3; j++)
                     {
                         <div class="col-xs-12 col-sm-4">
-                            @if (Model.TopTrendingPersonViewModels.Count == 3) {
+                            @if (Model.TopTrendingPersonViewModels.Count == 3)
+                            {
                                 @Html.Partial("Partials/_cardPerson", Model.TopTrendingPersonViewModels.ElementAt(j))
-                            }                               
+                            }
                         </div>
                     }
                 </div>
                 <!-- /CARDS -->
-                
+
                 <div class='x_panel no-scrollbar x_nested_panel'>
                     <div class='x_title'>
                         <h2 class='graphTitle'>Twitter feed</h2>
@@ -106,9 +109,8 @@
                                             <a style="text-decoration: none">
                                                 <h4 id="t-name-@j" style="display: inline-block"></h4>
                                                 <b>
-                                                    <h4 style="display: inline-block">
-                                                        
-                                                    </h4></b>
+                                                    <h4 style="display: inline-block"></h4>
+                                                </b>
                                             </a>
                                         </div>
                                         <div id="twitter-feed-@j" class="w_center w_90">
@@ -129,7 +131,8 @@
 
 <div class="row">
     <div class="col-12 col-sm-6">
-        <section> <!-- top 3 organisations (trending) -->
+        <section>
+            <!-- top 3 organisations (trending) -->
 
             <div class="x_panel">
                 <div class="x_title">
@@ -151,68 +154,72 @@
                             <h2 class='no-graph-data text-center'>No data available.</h2>
                         </div>
                     </div>
-                    
+
                     <!-- SMALL CARDS -->
                     <div class="row">
                         @for (int j = 3; j < 6; j++)
                         {
                             <div class="col-xs-12 col-sm-4 small-card">
-                                @if (Model.TopTrendingitems.Count > 3) {
+                                @if (Model.TopTrendingitems.Count > 3)
+                                {
                                     @Html.Partial("Partials/_card", Model.TopTrendingitems.ElementAt(j))
                                 }
                             </div>
                         }
                     </div>
                     <!-- /SMALL CARDS -->
-                    
+
                 </div>
             </div>
         </section> <!-- /top 3 organisations (trending) -->
     </div>
-        
-<div class="col-12 col-sm-6">
-    <section> <!-- top 3 Themas (trending) -->
-        <div class="x_panel">
-            <div class="x_title">
-                <h2>Top 3 trending @Model.Customization.ThemesAlias</h2>
-                <ul class='nav panel_toolbox'>
-                    <li>
-                        <a class="collapse-link">
-                            <i class="fa fa-chevron-down"></i>
-                        </a>
-                    </li>
-                    <li><a id="2" class='makeJSON' data-widget-id=""> @Resources.Save @Resources.To @Resources.Dashboard</a></li>
-                </ul>
-                <div class='clearfix'></div>
-            </div>
-            <div class="x_content">
-                <div class="row">
-                    <div class="col-12" style="max-height: 300px; height: 300px">
-                        <canvas id='trending-3-graph'></canvas>
-                        <h2 class='no-graph-data text-center'>No data available.</h2>
-                    </div>
-                </div>
 
-                <!-- /SMALL CARDS -->
-                <div class="row">
-                    @for (int j = 6; j < 9; j++)
-                    {
-                        <div class="col-xs-12 col-sm-4 small-card">
-                            @if (Model.TopTrendingitems.Count > 7) {
-                                @Html.Partial("Partials/_card", Model.TopTrendingitems.ElementAt(j))
-                            }
-                        </div>
-                    }
+    <div class="col-12 col-sm-6">
+        <section>
+            <!-- top 3 Themas (trending) -->
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2>Top 3 trending @Model.Customization.ThemesAlias</h2>
+                    <ul class='nav panel_toolbox'>
+                        <li>
+                            <a class="collapse-link">
+                                <i class="fa fa-chevron-down"></i>
+                            </a>
+                        </li>
+                        <li><a id="2" class='makeJSON' data-widget-id=""> @Resources.Save @Resources.To @Resources.Dashboard</a></li>
+                    </ul>
+                    <div class='clearfix'></div>
                 </div>
-                <!-- /SMALL CARDS -->
-                
+                <div class="x_content">
+                    <div class="row">
+                        <div class="col-12" style="max-height: 300px; height: 300px">
+                            <canvas id='trending-3-graph'></canvas>
+                            <h2 class='no-graph-data text-center'>No data available.</h2>
+                        </div>
+                    </div>
+
+                    <!-- /SMALL CARDS -->
+                    <div class="row">
+                        @for (int j = 6; j < 9; j++)
+                        {
+                            <div class="col-xs-12 col-sm-4 small-card">
+                                @if (Model.TopTrendingitems.Count > 7)
+                                {
+                                    @Html.Partial("Partials/_card", Model.TopTrendingitems.ElementAt(j))
+                                }
+                            </div>
+                        }
+                    </div>
+                    <!-- /SMALL CARDS -->
+
+                </div>
             </div>
-        </div>
-    </section> <!-- /top 3 Themas (trending) -->
+        </section> <!-- /top 3 Themas (trending) -->
     </div>
 </div>
 
-<section>  <!-- Weekly Review -->
+<section>
+    <!-- Weekly Review -->
     <div class="x_panel">
         <div class='x_title'>
             <h2 class='graphTitle'>Weekly Review</h2>
@@ -226,47 +233,49 @@
             <div class='clearfix'></div>
         </div>
         <div class="x_content">
-        @if (Model.WeeklyReviewModel.WeeklyItems.Count > 11) {
-            @Html.Partial("Partials/_WeeklyReview", Model.WeeklyReviewModel)
-        }
+            @if (Model.WeeklyReviewModel.WeeklyItems.Count > 11)
+            {
+                @Html.Partial("Partials/_WeeklyReview", Model.WeeklyReviewModel)
+            }
         </div>
     </div>
 </section>
 
-<section>  <!-- Kaart -->
-<div class="row">
-    <div class="col-md-12 col-sm-12 col-xs-12">
-        <div class="x_panel">
-            <div class="x_title">
-                <h2>
-                    Populariteit per regio
-                </h2>
-                <ul class="nav panel_toolbox">
-                    <li>
-                        <a class="collapse-link">
-                            <i class="fa fa-chevron-up"></i>
-                        </a>
-                    </li>
-                </ul>
-                <div class="clearfix"></div>
-            </div>
-            <div class="x_content">
-                <div class="dashboard-widget-content">
-                    <div id="map-parent">
-                        <div id="world-map-gdp" class="col-md-12 col-sm-12 col-xs-12" style="height: 430px;">
+<section>
+    <!-- Kaart -->
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2>
+                        Populariteit per regio
+                    </h2>
+                    <ul class="nav panel_toolbox">
+                        <li>
+                            <a class="collapse-link">
+                                <i class="fa fa-chevron-up"></i>
+                            </a>
+                        </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <div class="dashboard-widget-content">
+                        <div id="map-parent">
+                            <div id="world-map-gdp" class="col-md-12 col-sm-12 col-xs-12" style="height: 430px;">
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 </section> <!-- end third page -->
 
 @section CustomJS{
     <div id="fb-root"></div>
     <script>
-        (function(d, s, id) {
+        (function (d, s, id) {
             var js, fjs = d.getElementsByTagName(s)[0];
             if (d.getElementById(id)) return;
             js = d.createElement(s);
@@ -278,6 +287,14 @@
     </script>
     <script src="~/Scripts/ChartJS/Chart.js"></script>
     <script src="https://platform.twitter.com/widgets.js"></script>
-    @Scripts.Render("~/bundles/gridstack", "~/bundles/map")
+    <script src="~/Scripts/jquery/jquery-ui.js"></script>
+    <script src="~/Scripts/underscore.min.js"></script>
+    <script src="~/Scripts/gridstack/gridstack.js"></script>
+    <script src="~/Scripts/gridstack/gridstack.jQueryUI.js"></script>
+    <script src="~/Content/build/js/widgets.js"></script>
+    <script src="~/Scripts/underscore.min.js"></script>
+    <script src="~/Scripts/gridstack/gridstack.js"></script>
+    <script src="~/Scripts/gridstack/gridstack.jQueryUI.js"></script>
+    <script src="~/Content/build/js/widgets.js"></script>
     <script src="../../Content/build/js/homepage.js"></script>
 }

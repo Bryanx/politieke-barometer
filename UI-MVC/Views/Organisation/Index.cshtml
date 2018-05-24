@@ -2,14 +2,18 @@
 @model BAR.UI.MVC.Models.ItemViewModels.ItemViewModel
 
 @section CustomCSS{
-    @Styles.Render("~/bundles/datatables-css")
+    <script src="~/Scripts/datatables/datatables.net-bs/css/dataTables.bootstrap.min.css"></script>
+    <script src="~/Scripts/datatables/datatables.net-responsive-bs/css/responsive.bootstrap.min.css"></script>
+
 }
 
 <h1>@Model.PageTitle</h1>
-<hr/>
+<hr />
 @Html.Partial("Partials/_OrganisationTable", Model)
 <div class="space">space</div>
 
 @section CustomJS{
-    @Scripts.Render("~/bundles/datatables")
+    <script src="~/Scripts/datatables/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="~/Scripts/datatables/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+
 }

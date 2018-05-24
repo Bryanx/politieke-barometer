@@ -20,7 +20,7 @@
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
     <Use64BitIISExpress />
-    <IISExpressSSLPort>44303</IISExpressSSLPort>
+    <IISExpressSSLPort>44317</IISExpressSSLPort>
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
@@ -273,7 +273,13 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\build\css\custom.css">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Content\build\css\custom.scss" />
+    <Content Include="Content\build\css\homepage.css">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Content\build\css\homepage.scss" />
     <Content Include="Content\build\css\modules\animations.scss" />
     <Content Include="Content\build\css\modules\general.scss" />
@@ -554,7 +560,9 @@
     <Content Include="Views\Lockout.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Mvc.sitemap" />
+    <None Include="Mvc.sitemap">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="MvcSiteMapSchema.xsd" />
     <None Include="packages.config" />
     <None Include="Scripts\bootstrap-wysiwyg\bootstrap-wysiwyg.js" />

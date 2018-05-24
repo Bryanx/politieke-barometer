@@ -9,16 +9,25 @@
 @section CustomJS {
     <script src="~/Scripts/ChartJS/Chart.js"></script>
     <script src="https://platform.twitter.com/widgets.js"></script>
-    @Scripts.Render("~/bundles/gridstack", "~/bundles/map")
-    <script src="../../Content/build/js/homepage.js"></script> 
-    
+    <script src="~/Scripts/jquery/jquery-ui.js"></script>
+    <script src="~/Scripts/underscore.min.js"></script>
+    <script src="~/Scripts/gridstack/gridstack.js"></script>
+    <script src="~/Scripts/gridstack/gridstack.jQueryUI.js"></script>
+    <script src="~/Content/build/js/widgets.js"></script>
+
+    <script src="~/Scripts/underscore.min.js"></script>
+    <script src="~/Scripts/gridstack/gridstack.js"></script>
+    <script src="~/Scripts/gridstack/gridstack.jQueryUI.js"></script>
+    <script src="~/Content/build/js/widgets.js"></script>
+    <script src="../../Content/build/js/homepage.js"></script>
+
     <script defer>
         (() => {
             console.log("@Model.Widgets.Count()");
             WeeklyReview("@Model.Widgets.ElementAt(0).Title", @Model.Widgets.ElementAt(0).Items.ElementAt(0).ItemId, @Model.Widgets.ElementAt(0).WidgetId, 1);
             WeeklyReview("@Model.Widgets.ElementAt(4).Title", @Model.Widgets.ElementAt(4).Items.ElementAt(0).ItemId, @Model.Widgets.ElementAt(4).WidgetId, 2);
             WeeklyReview("@Model.Widgets.ElementAt(8).Title", @Model.Widgets.ElementAt(8).Items.ElementAt(0).ItemId, @Model.Widgets.ElementAt(8).WidgetId, 3);
-        })($) 
-        
+        })($)
+
     </script>
 }

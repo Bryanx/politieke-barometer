@@ -2,23 +2,41 @@
 @model BAR.UI.MVC.Models.EditUserViewModel
 
 @section CustomCSS{
-    @Styles.Render("~/bundles/datatables-css", "~/bundles/datatables-buttons-css")
+     <script src="~/Scripts/datatables/datatables.net-bs/css/dataTables.bootstrap.min.css"></script>
+    <script src="~/Scripts/datatables/datatables.net-responsive-bs/css/responsive.bootstrap.min.css"></script>
+    <script src="~/Scripts/datatables/datatables.net-buttons-bs/css/buttons.bootstrap.css"></script>
+    <script src="~/Scripts/datatables/datatables.net-buttons-bs/css/buttons.bootstrap.min.css"></script>
 }
 
 <h1>@Model.PageTitle</h1>
 <hr />
-@if (User.IsInRole("Admin")) {
+@if (User.IsInRole("Admin"))
+{
     @Html.Partial("Partials/_UserTable", Model)
-} else {
+}
+else
+{
     @Html.Partial("Partials/_AdminTable", Model)
 }
 <div class="space">space</div>
 <div class="space">space</div>
 
 @section CustomJS{
-    @Scripts.Render("~/bundles/datatables")
-    @Scripts.Render("~/bundles/datatables-buttons", "~/bundles/datatables-buttons-bs")
+    <script src="~/Scripts/datatables/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="~/Scripts/datatables/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
 
+    <script src="~/Scripts/datatables/datatables.net-buttons/js/buttons.colVis.js"></script>
+    <script src="~/Scripts/datatables/datatables.net-buttons/js/buttons.colVis.min.js"></script>
+    <script src="~/Scripts/datatables/datatables.net-buttons/js/buttons.flash.js"></script>
+    <script src="~/Scripts/datatables/datatables.net-buttons/js/buttons.flash.min.js"></script>
+    <script src="~/Scripts/datatables/datatables.net-buttons/js/buttons.html5.js"></script>
+    <script src="~/Scripts/datatables/datatables.net-buttons/js/buttons.html5.min.js"></script>
+    <script src="~/Scripts/datatables/datatables.net-buttons/js/buttons.print.js"></script>
+    <script src="~/Scripts/datatables/datatables.net-buttons/js/buttons.print.min.js"></script>
+    <script src="~/Scripts/datatables/datatables.net-buttons/js/dataTables.buttons.js"></script>
+    <script src="~/Scripts/datatables/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="~/Scripts/datatables/datatables.net-buttons-bs/js/buttons.bootstrap.js"></script>
+    <script src="~/Scripts/datatables/datatables.net-buttons-bs/js/buttons.bootstrap.min.js"></script>
     <script src="~/Scripts/DataExport/jszip.min.js"></script>
     <script src="~/Scripts/DataExport/pdfmake.min.js"></script>
     <script src="~/Scripts/DataExport/vfs_fonts.js"></script>

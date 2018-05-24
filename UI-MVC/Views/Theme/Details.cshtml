@@ -27,10 +27,10 @@
                         <span class="item-name">@Model.Theme.Name</span>
                         @if (Model.Subscribed != true)
                         {
-                        <a class="w-100px subscribeItem btn btn-success pull-right" data-item-id="@Model.Theme.ItemId" title="Deze persoon volgen">@Resources.Subscribe</a>}
+                            <a class="w-100px subscribeItem btn btn-success pull-right" data-item-id="@Model.Theme.ItemId" title="Deze persoon volgen">@Resources.Subscribe</a>}
                         else
                         {
-                        <a class="w-100px subscribeItem btn btn-danger pull-right" data-item-id="@Model.Theme.ItemId" title="Uitschrijven">@Resources.Unsubscribe</a>}
+                            <a class="w-100px subscribeItem btn btn-danger pull-right" data-item-id="@Model.Theme.ItemId" title="Uitschrijven">@Resources.Unsubscribe</a>}
                     </h1>
                     <hr />
                 </div>
@@ -41,13 +41,13 @@
                     <ul class="list-unstyled user_data">
                         @foreach (var keyword in Model.Keywords)
                         {
-                        <button class="btn btn-default btn-xs">@keyword.Name</button>
+                            <button class="btn btn-default btn-xs">@keyword.Name</button>
                         }
 
                     </ul>
                 </div>
                 <div class="col-md-3 col-sm-3 col-xs-12">
-                    
+
                 </div>
                 <div class="col-md-3 col-sm-3 col-xs-12">
                     <h4>
@@ -67,14 +67,18 @@
 <h1 class="itemHeader">
     @Resources.PeopleWhoMention @Model.Theme.Name
 </h1>
-<hr/>
+<hr />
 
 <!-- Widgets -->
 <div class="grid-stack item-page" id="grid"></div>
 
 @section CustomJS{
     <script src="~/Scripts/ChartJS/Chart.js"></script>
-    @Scripts.Render("~/bundles/gridstack")
+    <script src="~/Scripts/jquery/jquery-ui.js"></script>
+    <script src="~/Scripts/underscore.min.js"></script>
+    <script src="~/Scripts/gridstack/gridstack.js"></script>
+    <script src="~/Scripts/gridstack/gridstack.jQueryUI.js"></script>
+    <script src="~/Content/build/js/widgets.js"></script>
     <script type="text/javascript" defer>(() => loadWidgets("/api/GetItemWidgets/", @Model.Theme.ItemId))($);</script>
 }
 

@@ -34,15 +34,18 @@
 
     <title>@(Model.PageTitle.Length == 0 ? @ViewBag.Title : Model.PageTitle)</title>
 
-    @Styles.Render("~/Content/css")
+    <link href="~/Content/build/css/vendor/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/build/css/vendor/font-awesome.min.css" rel="stylesheet" />
+    <link href="~/Content/build/css/vendor/bootstrap-progressbar-3.3.4.min.css" rel="stylesheet" />
+    <link href="~/Content/build/css/vendor/jqvmap.min.css" rel="stylesheet" />
 
-    @if (IsSectionDefined("CustomCSS")) {
+    @if (IsSectionDefined("CustomCSS"))
+    {
         @RenderSection("CustomCSS")
     }
 
     <!-- Custom Theme Style -->
-    @Styles.Render("~/Content/custom")
-
+    <link href="~/Content/build/css/custom.css" rel="stylesheet" />
     <!-- Font -->
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
 </head>
@@ -61,13 +64,12 @@
                     </div>
                     <!-- search -->
                     @Html.Partial("Partials/_SearchBar", Model)
-        
+
                     <!-- login -->
                     @Html.ShowNavLogin(Model)
                 </div>
             </nav>
             <!-- /top navigation -->
-            
             <!-- breadcrumbs -->
             <div class="breadcrumb-container">
                 @Html.MvcSiteMap().SiteMapPath("BootstrapSiteMapPathHelperModel")
@@ -83,24 +85,34 @@
                 @RenderBody()
             </div>
             <!-- /page content -->
-            
             <!-- footer content -->
             @Html.Partial("Partials/_Footer")
             <!-- /footer content -->
-            
+
         </div>
     </div>
-<div id="notificationMessage"></div>
+    <div id="notificationMessage"></div>
 
-<!-- modals -->
-@if (Model.User == null) {
-    @Html.Partial("Partials/_LoginModal", new LoginViewModel())
-}
+    <!-- modals -->
+    @if (Model.User == null)
+    {
+        @Html.Partial("Partials/_LoginModal", new LoginViewModel())
+    }
 
-<!-- Scripts -->
-    <script src="/Home/GetResources"></script> 
-    @Scripts.Render("~/bundles/jquery","~/Content/build/js/searchbar.js", "~/bundles/bootstrap", "~/bundles/dates", "~/bundles/timeago", "~/bundles/custom")
-    @Scripts.Render("~/Content/build/js/alerts.js")
+    <!-- Scripts -->
+    <script src="/Home/GetResources"></script>
+    <script src="~/Scripts/jquery/jquery-3.3.1.min.js"></script>
+    <script src="~/Scripts/jquery/jquery.autocomplete.min.js"></script>
+    <script src="~/Content/build/js/searchbar.js"></script>
+    <script src="~/Scripts/bootstrap.js"></script>
+    <script src="~/Scripts/dates/date.min.js"></script>
+    <script src="~/Scripts/dates/moment.min.js"></script>
+    <script src="~/Scripts/dates/daterangepicker.js"></script>
+    <script src="~/Scripts/jquery/jquery.timeago.js"></script>
+    <script src="~/Content/build/js/template.js"></script>
+    <script src="~/Content/build/js/searchbar.js"></script>
+    <script src="~/Content/build/js/custom.js"></script>
+    <script src="~/Content/build/js/alerts.js"></script>
 
     @if (IsSectionDefined("CustomJS"))
     {
