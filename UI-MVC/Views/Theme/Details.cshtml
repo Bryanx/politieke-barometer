@@ -1,10 +1,6 @@
 ﻿@using System.Web.Optimization
 @model BAR.UI.MVC.Models.ItemViewModels.ThemeViewModel
 
-@{
-  ViewBag.Title = Model.PageTitle;
-}
-
 @section CustomCSS{
     <link rel="stylesheet" href="../../Content/build/css/vendor/gridstack.css" />
 }
@@ -68,10 +64,7 @@
 <!-- Mentions widget -->
 <div class="grid-stack item-page" id="mentions-grid"></div>
 
-<div style="visibility: hidden">space</div>
-<div style="visibility: hidden">space</div>
-
-<h1>
+<h1 class="itemHeader">
     @Resources.PeopleWhoMention @Model.Theme.Name
 </h1>
 <hr/>
@@ -82,14 +75,6 @@
 @section CustomJS{
     <script src="~/Scripts/ChartJS/Chart.js"></script>
     @Scripts.Render("~/bundles/gridstack")
-    <script type="text/javascript" defer>
-
-        $(document).on("click", ".subscribeItem", (e) => ajaxToggleSubscribe(e));
-
-        (() => {
-            loadWidgets("/api/GetItemWidgets/", @Model.Theme.ItemId);
-        })(jQuery);
-
-    </script>
+    <script type="text/javascript" defer>(() => loadWidgets("/api/GetItemWidgets/", @Model.Theme.ItemId))($);</script>
 }
 

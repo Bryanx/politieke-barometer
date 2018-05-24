@@ -3,10 +3,6 @@
 @using BAR.UI.MVC.Models
 @model BAR.UI.MVC.Models.ItemViewModels.OrganisationViewModel
 
-@{
-    ViewBag.Title = Model.PageTitle;
-}
-
 @section CustomCSS{
     <link rel="stylesheet" href="../../Content/build/css/vendor/gridstack.css"/>
 }
@@ -87,16 +83,11 @@
 <!-- Mentions widget -->
 <div class="grid-stack item-page" id="mentions-grid"></div>
 
-<div style="visibility: hidden">space</div>
-<div style="visibility: hidden">space</div>
-
 <!-- Widgets -->
 <div class="grid-stack organisation-page" id="grid"></div>
 
-<div style="visibility: hidden">space</div>
-
 <!-- Organisation members -->
-<h1>@Resources.Members</h1>
+<h1 class="itemHeader">@Resources.Members</h1>
 <hr/>
 <div class="row">
     <div class="col-xs-12">
@@ -117,15 +108,6 @@
 @section CustomJS{
     <script src="~/Scripts/ChartJS/Chart.js"></script>
     @Scripts.Render("~/bundles/gridstack")
-    <script type="text/javascript" defer>
-
-        $(document).on("click", ".subscribeItem", (e) => ajaxToggleSubscribe(e));
-        
-        (() => {
-            loadWidgets("/api/GetItemWidgets/", @Model.Organisation.ItemId);
-            loadNumberOfMentions();
-        })(jQuery);
-
-    </script>
+    <script type="text/javascript" defer>(() => loadWidgets("/api/GetItemWidgets/", @Model.Organisation.ItemId))(jQuery);</script>
 }
 

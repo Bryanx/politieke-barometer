@@ -262,3 +262,45 @@ let makingJSON = function (e){
 
 
 $(document).on("click", ".makeJSON", (e) => makingJSON(e));
+
+
+(() => {
+    $.get({
+        url: '/api/GetTopTrendingItems/1',
+        dataType: "json",
+        success: data => {
+            GetTopTrending(data);
+            TwitterFeed(data);
+        }
+    });
+
+    $.get({
+        url: '/api/GetTopTrendingItems/2',
+        dataType: "json",
+        success: data => {
+            GetTopTrending(data);
+        }
+    });
+
+    $.get({
+        url: '/api/GetTopTrendingItems/3',
+        dataType: "json",
+        success: data => {
+            GetTopTrending(data);
+        }
+    });
+
+    $.get({
+        url: '/api/WidgetApi/GetWeeklyReview/0',
+        dataType: "json",
+        success: data => {
+            var itemtype = 0;
+            for (var j = 0; j < data.length; j++) {
+                if (j === 0 || j === 4 || j === 8) {
+                    itemtype++;
+                    WeeklyReview(data[j].Title, data[j].ItemIds[0], data[j].WidgetId, itemtype);
+                }
+            }
+        }
+    });
+})($)

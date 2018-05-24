@@ -27,7 +27,7 @@
 
 </section>
 
-<div style="visibility: hidden">space</div>
+<div class="space">space</div>
 
 <div class="no-widgets text-center">
     <h1>@Resources.NoChartsYet</h1>
@@ -37,7 +37,7 @@
 <!-- Make graph modal -->
 @Html.Partial("Partials/_GraphWizard", Model)
 
-<div style="visibility: hidden">space</div>
+<div class="space">space</div>
 
 <!-- Subscriptions -->
 @if (Model.Persons.Any())
@@ -52,7 +52,7 @@
     </section>
 }
 
-<div style="visibility: hidden">space</div>
+<div class="space">space</div>
 
 @section CustomJS{
     <script src="~/Scripts/vue/vue.min.js"></script>
@@ -61,34 +61,5 @@
     <script src="~/Scripts/ChartJS/Chart.js"></script>
     @Scripts.Render("~/bundles/gridstack")
     <script src="~/Content/build/js/graphWizard.js"></script>
-    <script type="text/javascript">
-        (() => {
-            loadWidgets("api/WidgetApi/GetUserWidgets", "");
-
-            var wto;
-            $('.subscribeItem').click(function () {
-                clearTimeout(wto);
-                var $this = $(this);
-                var id = $this.data('item-id');
-                if (res.subscriptionAmount === 1) {
-                    $('.subscriptions').empty();
-                    res.alertcount = 0;
-                    updateAlertCount();
-                } else {
-                    $this.parent().parent().empty();
-                }
-                wto = setTimeout(function () {
-                    $.ajax({
-                        type: 'POST',
-                        url: '/api/ToggleSubscribe/' + id
-                    }).fail(() => { /* ok */ })
-                        .done(function () {
-                            loadAlerts();
-                            res.subscriptionAmount--;
-                        });
-                },
-                    500);
-            });
-        })($);
-    </script>
+    <script src="~/Content/build/js/subscribeDashboard.js"></script>
 }

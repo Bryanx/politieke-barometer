@@ -311,6 +311,9 @@ hr {
 .no-scrollbar {
   overflow-y: hidden !important; }
 
+.space {
+  visibility: hidden; }
+
 .scroll {
   overflow-y: auto !important; }
 
@@ -1899,6 +1902,10 @@ canvas {
     height: 34px;
     vertical-align: top;
     display: inline-block; }
+
+.itemHeader {
+  margin-top: 45px;
+  clear: both; }
 
 .modal-lg {
   max-width: 600px;
