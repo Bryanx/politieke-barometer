@@ -1,9 +1,6 @@
 ﻿using BAR.BL.Domain.Core;
 using BAR.BL.Managers;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Http.Controllers;
 using System.Web.Http.Filters;
 
@@ -18,7 +15,10 @@ namespace BAR.UI.MVC.Attributes
 			try
 			{
 				actionContext.Request.Properties.Add("SubPlatformID", subdomainId);
-			} catch (Exception e)
+#pragma warning disable CS0168 // Variable is declared but never used
+			}
+			catch (Exception e)
+#pragma warning restore CS0168 // Variable is declared but never used
 			{
 				//Do Nothing, already added
 			}
