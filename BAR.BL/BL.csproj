@@ -107,19 +107,19 @@
   <ItemGroup>
     <Compile Include="Managers\WidgetManager.cs" />
     <Compile Include="Managers\DataManager.cs" />
-    <Compile Include="Interfaces\IWidgetManager.cs" />
-    <Compile Include="Interfaces\IDataManager.cs" />
+    <Compile Include="Managers\IWidgetManager.cs" />
+    <Compile Include="Managers\IDataManager.cs" />
     <Compile Include="Managers\IdentityUserManager.cs" />
-    <Compile Include="Interfaces\IItemManager.cs" />
-    <Compile Include="Interfaces\ISubplatformManager.cs" />
-    <Compile Include="Interfaces\ISubscriptionManager.cs" />
+    <Compile Include="Managers\IItemManager.cs" />
+    <Compile Include="Managers\ISubplatformManager.cs" />
+    <Compile Include="Managers\ISubscriptionManager.cs" />
     <Compile Include="Managers\ItemManager.cs" />
-    <Compile Include="Interfaces\IUserManager.cs" />
+    <Compile Include="Managers\IUserManager.cs" />
     <Compile Include="Managers\SubplatformManager.cs" />
-    <Compile Include="Others\ServiceManager.cs" />
-    <Compile Include="Others\SignInManager.cs" />
+    <Compile Include="Managers\ServiceManager.cs" />
+    <Compile Include="Managers\SignInManager.cs" />
     <Compile Include="Managers\SubscriptionManager.cs" />
-    <Compile Include="UnitOfWork\UnitOfWorkManager.cs" />
+    <Compile Include="Managers\UnitOfWorkManager.cs" />
     <Compile Include="Managers\UserManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
