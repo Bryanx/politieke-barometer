@@ -167,9 +167,12 @@ namespace BAR.UI.MVC.Controllers.api
 							foreach (SubAlert subAlert in subscriptionManager.GetUnsendedSubAlerts())
 							{
 								User user = subAlert.Subscription.SubscribedUser;
-								await controllerHelpers.SendPushNotificationAsync(user.DeviceToken, "Trending", String.Format("%s is nu trending.", subAlert.Subscription.SubscribedItem.Name));
-								subscriptionManager.ChangeSubAlertToSend(subAlert);
-							}
+                if (user.DeviceToken != null)
+                {
+                  await controllerHelpers.SendPushNotificationAsync(user.DeviceToken, "Trending", String.Format("%s is nu trending.", subAlert.Subscription.SubscribedItem.Name));
+                }
+                subscriptionManager.ChangeSubAlertToSend(subAlert);
+              }
 							return StatusCode(HttpStatusCode.OK);
 						}
 						else
