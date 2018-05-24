@@ -123,7 +123,7 @@ namespace BAR.DAL
 		}
 
 		/// <summary>
-		/// Deletes a subscription from the database.
+		/// Deletes a subscription and all the alerts from that specific subscritption
 		/// Returns -1 if SaveChanges() is delayed by unit of work.
 		/// </summary>
 		public int DeleteSubscription(int subId)
@@ -220,10 +220,13 @@ namespace BAR.DAL
 												 .AsEnumerable();
 		}
 
-    public int UpdateSubAlert(SubAlert subAlert)
-    {
-      ctx.Entry(subAlert).State = EntityState.Modified;
-      return ctx.SaveChanges();
-    }
-  }
+		/// <summary>
+		/// Updates a given subalert in the database
+		/// </summary>
+		public int UpdateSubAlert(SubAlert subAlert)
+		{
+			ctx.Entry(subAlert).State = EntityState.Modified;
+			return ctx.SaveChanges();
+		}
+	}
 }

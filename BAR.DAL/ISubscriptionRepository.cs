@@ -25,9 +25,9 @@ namespace BAR.DAL
 
 		//Update
 		int UpdateAlert(Alert alert);
+		int UpdateSubAlert(SubAlert subAlert);
 		int UpdateSubScription(Subscription sub);
 		int UpdateSubscriptions(IEnumerable<Subscription> subs);
-    int UpdateSubAlert(SubAlert subAlert);
 
 		//Delete
 		int DeleteAlert(Alert alert);
