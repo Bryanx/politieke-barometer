@@ -228,7 +228,16 @@ namespace BAR.UI.MVC.Controllers.api
 			if (!platformManager.Exists(questionId))
 				return NotFound();
 
-			platformManager.RemoveQuestion(questionId);
+			try
+			{
+				platformManager.RemoveQuestion(questionId);
+#pragma warning disable CS0168 // Variable is declared but never used
+			}
+			catch (Exception e)
+#pragma warning restore CS0168 // Variable is declared but never used
+			{
+				//Do Nothing
+			}			
 			return StatusCode(HttpStatusCode.NoContent);
 		}
 	}

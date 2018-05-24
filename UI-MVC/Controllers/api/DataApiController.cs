@@ -96,7 +96,7 @@ namespace BAR.UI.MVC.Controllers.api
 
 				//Test with fewer data 
 				content = "{" +
-				  "\"since\":\"2018-05-17 00:00\"," +
+				  "\"since\":\"2018-05-22 00:00\"," +
 				  themeString +
 				  "}";
 			}
