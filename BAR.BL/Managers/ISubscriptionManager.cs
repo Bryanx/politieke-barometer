@@ -8,10 +8,10 @@ namespace BAR.BL.Managers
 	{
 		//Subscriptions
 		Subscription GetSubscription(int subId);
-		IEnumerable<Subscription> GetSubscriptionsWithItemsForUser(string userId);	
+		IEnumerable<Subscription> GetSubscriptionsWithItemsForUser(string userId);
 
 		Subscription CreateSubscription(string userId, int itemId, int treshhold = 10);
-		
+
 		Subscription ChangeSubscriptionTresh(int subId, int treshhold);
 
 		void RemoveSubscription(int subId);
@@ -30,7 +30,7 @@ namespace BAR.BL.Managers
 		IEnumerable<SubAlert> GetUnsendedSubAlerts();
 
 		Alert ChangeAlertToRead(int alertId);
-    void ChangeSubAlertToSend(SubAlert subAlert);
+		void ChangeSubAlertToSend(SubAlert subAlert);
 
 		void RemoveAlert(int alertId);
 

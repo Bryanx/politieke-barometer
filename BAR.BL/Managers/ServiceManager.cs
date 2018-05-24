@@ -18,14 +18,14 @@ namespace BAR.BL.Managers
 		public async Task SendAsync(IdentityMessage message)
 		{
 			var clientKey = ConfigurationManager.AppSettings["SendGridClient"];
-			var client = new SendGridClient(clientKey);
-			var from = new EmailAddress("Politiek@barometer.be", "Politieke barometer");
-			var subject = message.Subject;
-			var to = new EmailAddress(message.Destination, "Politieke barometer gebruiker");
-			var plainTextContent = "";
-			var htmlContent = message.Body;
-			var msg = MailHelper.CreateSingleEmail(from, to, subject, plainTextContent, htmlContent);
-			var response = await client.SendEmailAsync(msg);
+			SendGridClient client = new SendGridClient(clientKey);
+			EmailAddress from = new EmailAddress("Politiek@barometer.be", "Politieke barometer");
+			string subject = message.Subject;
+			EmailAddress to = new EmailAddress(message.Destination, "Politieke barometer gebruiker");
+			string plainTextContent = "";
+			string htmlContent = message.Body;
+			SendGridMessage msg = MailHelper.CreateSingleEmail(from, to, subject, plainTextContent, htmlContent);
+			Response response = await client.SendEmailAsync(msg);
 		}
 	}
 }

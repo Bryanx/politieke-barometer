@@ -11,9 +11,7 @@ namespace BAR.BL.Managers
 	public class SignInManager : SignInManager<User, string>
 	{
 		public SignInManager(IdentityUserManager userManager, IAuthenticationManager authenticationManager)
-				: base(userManager, authenticationManager)
-		{
-		}
+				: base(userManager, authenticationManager) { }
 
 		/// <summary>
 		/// Creates an instance of SignInManager and returns it as a callback function to Owin.

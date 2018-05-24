@@ -31,8 +31,6 @@ namespace BAR.BL.Managers
 		Customization ChangeSubplatformLogo(int platformId, HttpPostedFileBase logoImgFile);
 		Customization ChangeSubplatformDarkLogo(int platformId, HttpPostedFileBase darkLogoImgFile);
 
-
-
 		//Questions
 		Question GetQuestion(int questionId);
 		IEnumerable<Question> GetAllQuestions();

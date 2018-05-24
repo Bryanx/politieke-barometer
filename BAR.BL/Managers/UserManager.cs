@@ -252,7 +252,7 @@ namespace BAR.BL.Managers
 			//Update database & send emails
 			SendWeeklyReviewEmails(platformId, users.Where(user => user.AlertsViaEmail));
 			userRepo.UpdateUsers(users);
-      return true;
+			return true;
 		}
 
 		/// <summary>

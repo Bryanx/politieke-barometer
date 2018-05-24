@@ -356,7 +356,7 @@ namespace BAR.BL.Managers
 					Keywords = new List<Keyword>(),
 					ItemType = itemType
 				};
-        if (keywords != null) keywords.AddRange(keywords);         
+				if (keywords != null) keywords.AddRange(keywords);
 				break;
 				default:
 				item = null;
@@ -452,7 +452,7 @@ namespace BAR.BL.Managers
 				itemWidgets.Add(widget5);
 				widgetIds.Add(widget5.WidgetId);
 			}
-      
+
 			//Link widgets to item & save changes to database
 			item.ItemWidgets = itemWidgets;
 			itemRepo.UpdateItem(item);
@@ -572,7 +572,7 @@ namespace BAR.BL.Managers
 					Username = source.Name
 				});
 			}
-			
+
 			//Update database
 			itemRepo.UpdatePerson(personToUpdate);
 			uowManager.Save();
@@ -585,7 +585,7 @@ namespace BAR.BL.Managers
 		/// </summary>
 		public Item ChangeItemPlatform(int itemId, int subplatformId)
 		{
-			uowManager = new UnitOfWorkManager();	
+			uowManager = new UnitOfWorkManager();
 			InitRepo();
 
 			//Get subplatform
@@ -716,9 +716,9 @@ namespace BAR.BL.Managers
 		{
 			string json = string.Empty;
 
-			using (BinaryReader b = new BinaryReader(pfb.InputStream))
+			using (BinaryReader reader = new BinaryReader(pfb.InputStream))
 			{
-				byte[] binData = b.ReadBytes(pfb.ContentLength);
+				byte[] binData = reader.ReadBytes(pfb.ContentLength);
 				json = System.Text.Encoding.UTF8.GetString(binData);
 			}
 			return json;
@@ -851,7 +851,7 @@ namespace BAR.BL.Managers
 			uowManager = new UnitOfWorkManager();
 			InitRepo();
 
-			dynamic deserializedJson = JsonConvert.DeserializeObject(json);	
+			dynamic deserializedJson = JsonConvert.DeserializeObject(json);
 			UserManager userManager = new UserManager(uowManager);
 			DataManager dataManager = new DataManager(uowManager);
 			SubPlatform subPlatform = new SubplatformManager(uowManager).GetSubPlatform(subPlatformID);
@@ -908,7 +908,7 @@ namespace BAR.BL.Managers
 						};
 						person.SocialMediaNames.Add(facebookSocial);
 					}
-					person.Organisation = (Organisation) organisations.Where(org => org.Name.Equals(organisation)).SingleOrDefault();
+					person.Organisation = (Organisation)organisations.Where(org => org.Name.Equals(organisation)).SingleOrDefault();
 
 					items.Add(person);
 				}
@@ -923,7 +923,7 @@ namespace BAR.BL.Managers
 				uowManager = null;
 				return true;
 			}
-			return false;
+			else return false;
 		}
 
 		/// <summary>

@@ -28,11 +28,11 @@ namespace BAR.BL.Managers
 		IEnumerable<Widget> ChangeWidgetActities(IEnumerable<Widget> widgets, int platformId);
 
 		void RemoveWidget(int widgetId);
-	
+
 		void GenerateDataForPersonsAndThemes();
 		void GenerateDataForOrganisations();
 		void MoveWidgetToDashBoard(int widgetId, GraphType graphType, IEnumerable<int> itemIds, string userId);
-		
+
 		//dashboards
 		Dashboard GetDashboard(string userId);
 		Dashboard GetDashboardWithAllDataForUserId(string userId);
@@ -44,7 +44,7 @@ namespace BAR.BL.Managers
 		IEnumerable<WidgetData> GetWidgetDatasForItemId(int itemId);
 		IEnumerable<WidgetData> GetWidgetDatasForKeyvalue(string value);
 		IEnumerable<WidgetData> GetWidgetDatasForWidgetId(int widgetId);
-	
+
 		WidgetData AddWidgetData(WidgetData widgetData);
 
 		void RemoveWidgetDatas(IEnumerable<WidgetData> datas);
