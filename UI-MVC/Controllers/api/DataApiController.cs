@@ -173,6 +173,7 @@ namespace BAR.UI.MVC.Controllers.api
 									subscriptionManager.ChangeSubAlertToSend(subAlert);
 								}
 								
+
 							}
 							return StatusCode(HttpStatusCode.OK);
 						}
