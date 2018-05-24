@@ -171,7 +171,7 @@ namespace BAR.UI.MVC.Controllers.api
 		/// Change the title of a widget
 		/// </summary>
 		[HttpPost]
-		[Route("api/Widget/{id}/{title}")]
+		[Route("api/WidgetApi/{id}/{title}")]
 		public IHttpActionResult PutName(int id, string title)
 		{
 			widgetManager = new WidgetManager();
@@ -189,7 +189,7 @@ namespace BAR.UI.MVC.Controllers.api
 		/// Deletes a widget
 		/// </summary>
 		[HttpPost]
-		[Route("api/Widget/Delete/{id}")]
+		[Route("api/WidgetApi/Delete/{id}")]
 		public IHttpActionResult Delete(int id)
 		{
 			widgetManager = new WidgetManager();
@@ -206,7 +206,7 @@ namespace BAR.UI.MVC.Controllers.api
 		/// </summary>
 		[SubPlatformCheckAPI]
 		[HttpGet]
-		[Route("api/Widget/GetWeeklyReview/{id}")]
+		[Route("api/WidgetApi/GetWeeklyReview/{id}")]
 		public IHttpActionResult GetWeeklyReview(string id)
 		{
 			//Determine subplatform
