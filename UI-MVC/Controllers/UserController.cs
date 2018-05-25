@@ -660,7 +660,8 @@ namespace BAR.UI.MVC.Controllers
 				WeeklyItems = weeklyTrendings,
 				Widgets = widgets,
 				User = User.Identity.IsAuthenticated ? userManager.GetUser(User.Identity.GetUserId()) : null,
-				Defaults = defaults
+				Defaults = defaults,
+				PageTitle = Resources.WeeklyReview
 			};
 
 			return View(weeklyReviewModel);
