@@ -33,7 +33,7 @@ namespace BAR.UI.MVC
 				  .ForMember(m => m.Name, opt => opt.MapFrom(src => src.Name))
 				  .ForMember(m => m.NumberOfMentions, opt => opt.MapFrom(src => src.NumberOfMentions))
 				  .ForMember(m => m.SentimentNegative, opt => opt.MapFrom(src => Math.Floor(src.SentimentNegative)))
-				  .ForMember(m => m.SentimentPositive, opt => opt.MapFrom(src => Math.Floor(src.SentimentPositve)))
+				  .ForMember(m => m.SentimentPositve, opt => opt.MapFrom(src => Math.Floor(src.SentimentPositve)))
 				  .ForMember(m => m.TrendingPercentage, opt => opt.MapFrom(src => Math.Floor(src.TrendingPercentage)));
 
 				//Mapping UserWidgets
