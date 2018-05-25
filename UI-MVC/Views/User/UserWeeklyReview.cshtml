@@ -23,7 +23,16 @@
 
     <script defer>
         (() => {
-            console.log("@Model.Widgets.Count()");
+            for (var d1 = (3 - @Model.Defaults.ElementAt(0)); d1 < 3; d1++) {
+                $("#default-1").find(".card-default-item").eq(d1).css("visibility", "visible");
+            }  
+            for (var d2 = (3 - @Model.Defaults.ElementAt(1)); d2 < 3; d2++) {
+                $("#default-2").find(".card-default-item").eq(d2).css("visibility", "visible");    
+            }  
+            for (var d3 = (3 - @Model.Defaults.ElementAt(2)); d3 < 3; d3++) {
+                $("#default-3").find(".card-default-item").eq(d3).css("visibility", "visible");    
+            }  
+            
             WeeklyReview("@Model.Widgets.ElementAt(0).Title", @Model.Widgets.ElementAt(0).Items.ElementAt(0).ItemId, @Model.Widgets.ElementAt(0).WidgetId, 1);
             WeeklyReview("@Model.Widgets.ElementAt(4).Title", @Model.Widgets.ElementAt(4).Items.ElementAt(0).ItemId, @Model.Widgets.ElementAt(4).WidgetId, 2);
             WeeklyReview("@Model.Widgets.ElementAt(8).Title", @Model.Widgets.ElementAt(8).Items.ElementAt(0).ItemId, @Model.Widgets.ElementAt(8).WidgetId, 3);

@@ -12,7 +12,6 @@
 $('.accountActivityChange').click(function() {
     var $this = $(this);
     var id = $this.data('item-id');
-    console.log($this.text());
     $.ajax({
         type: 'POST',
         url: '/api/Admin/ToggleAccountActivity/' + id

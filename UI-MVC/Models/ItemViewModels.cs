@@ -45,6 +45,7 @@ namespace BAR.UI.MVC.Models {
             public ICollection<PersonViewModel> WeeklyPersonViewModels { get; set; }
             public ICollection<Item> WeeklyItems { get; set; }
             public IEnumerable<Widget> Widgets { get; set; }
+            public ICollection<int> Defaults { get; set; }
         }
         
         public class PersonViewModels : BaseViewModel {

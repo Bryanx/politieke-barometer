@@ -245,7 +245,6 @@ function nodeboxSize(node, parent, id) {
     node.id = 'graph' + id;
     node.width = parent.clientWidth;
     node.height = parent.clientHeight;
-    console.log("height: " + parent.clientHeight + "\nwidth: " + parent.clientWidth);
     parent.appendChild(node);
 }
 
@@ -932,7 +931,6 @@ function init() {
     addWidgetToDashboard = function (json) {
         json.GraphType = convertChartTypeToGraphType(json.GraphType);
         json = JSON.stringify(json);
-        console.log(json);
         $modal = $(".makeGraphModal");
         $nowidgets = $(".no-widgets");
         $.ajax({

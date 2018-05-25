@@ -54,7 +54,6 @@ var AddTimeChart = function (widget, labels, label, values, borderColor, color, 
             },
         }
     });
-    console.log(chart);
 };
 
 
@@ -72,7 +71,6 @@ var AddTimeChart = function (widget, labels, label, values, borderColor, color, 
         url: "/api/GetActivityWidgets",
         success: widgets => {
             let rowSpan = 12;
-            console.log(widgets);
             widgets.forEach(widget => {
                 adminGrid.addWidget(activityWidget(widget.WidgetId, widget.Title), widget.RowNumber, widget.ColumnNumber,
                     rowSpan,  widget.ColumnSpan,  true, 6, 12, 6, 6, widget.WidgetId);

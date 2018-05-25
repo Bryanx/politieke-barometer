@@ -137,7 +137,7 @@ namespace BAR.UI.MVC.Controllers
                       protocol: Request.Url.Scheme);
                     await userManager.SendEmailAsync(user.Id, Resources.ConfirmAccount,
                       "<a href=\"" + callbackUrl + "\">" + Resources.ConfirmAccountClickingHere + "</a>");
-                    //Assign Role to user    
+                    //Assign Role to user
                     await userManager.AddToRoleAsync(user.Id, "User");
 
                     //Log activity
@@ -382,7 +382,7 @@ namespace BAR.UI.MVC.Controllers
                 {
                     result = await userManager.AddLoginAsync(user.Id, info.Login);
 
-                    //Assign Role to user Here      
+                    //Assign Role to user Here
                     await userManager.AddToRoleAsync(user.Id, "User");
 
                     //log activity
@@ -541,35 +541,41 @@ namespace BAR.UI.MVC.Controllers
         {
             int subPlatformID = (int)RouteData.Values["SubPlatformID"];
 
-            // Building WeeklyReviewModel
-            WidgetManager widgetManager = new WidgetManager();
-            ItemManager itemManager = new ItemManager();
-            userManager = new UserManager();
-            string userId = User.Identity.GetUserId();
+			// Building WeeklyReviewModel
+			WidgetManager widgetManager = new WidgetManager();
+			ItemManager itemManager = new ItemManager();
+			userManager = new UserManager();
+			string userId = User.Identity.GetUserId();
+			ICollection<int> defaults = new List<int>();
+			int countPerson = 0;
+			int countOrg = 0;
+			int countTheme = 0;
 
             // -------- Making WeeklyReviewModel --------
             // Getting trending items for user and all items
             List<Item> weeklyTrendings = new List<Item>();
 
-            itemManager.GetMostTrendingItemsForUserAndItemType(subPlatformID, userId, ItemType.Person, 4, true).OrderBy(item => item.TrendingPercentage).Reverse().ForEach(item => weeklyTrendings.Add(item));
-            if (weeklyTrendings.Count < 4)
-            {
-                List<Item> trendings = itemManager.GetMostTrendingItemsForType(subPlatformID, ItemType.Person, 4, true).ToList();
-                while (weeklyTrendings.Count < 4)
-                {
-                    List<int> ids = new List<int>();
-                    weeklyTrendings.ForEach(i => ids.Add(i.ItemId));
-                    if (ids.Contains(trendings.First().ItemId))
-                    {
-                        trendings.RemoveAt(0);
-                    }
-                    else
-                    {
-                        weeklyTrendings.Add(trendings.First());
-                        trendings.RemoveAt(0);
-                    }
-                }
-            }
+			itemManager.GetMostTrendingItemsForUserAndItemType(subPlatformID, userId, ItemType.Person, 4, true).OrderBy(item => item.TrendingPercentage).Reverse().ForEach(item => weeklyTrendings.Add(item));
+			if (weeklyTrendings.Count < 4)
+			{
+				List<Item> trendings = itemManager.GetMostTrendingItemsForType(subPlatformID, ItemType.Person, 4, true).ToList();
+
+				while (weeklyTrendings.Count < 4)
+				{
+					List<int> ids = new List<int>();
+					weeklyTrendings.ForEach(i => ids.Add(i.ItemId));
+					if (ids.Contains(trendings.First().ItemId))
+					{
+						trendings.RemoveAt(0);
+					}
+					else
+					{
+						weeklyTrendings.Add(trendings.First());
+						trendings.RemoveAt(0);
+						countPerson++;
+					}
+				}
+			}
 
             weeklyTrendings.OrderBy(item => item.TrendingPercentage);
 
@@ -587,66 +593,74 @@ namespace BAR.UI.MVC.Controllers
 
             }
 
-            itemManager.GetMostTrendingItemsForUserAndItemType(subPlatformID, userId, ItemType.Organisation, 4, true).OrderBy(item => item.TrendingPercentage).Reverse().ForEach(item => weeklyTrendings.Add(item));
-            if (weeklyTrendings.Count < 8)
-            {
-                List<Item> trendings = itemManager.GetMostTrendingItemsForType(subPlatformID, ItemType.Organisation, 4, true).ToList();
-                while (weeklyTrendings.Count < 8)
-                {
-                    List<int> ids = new List<int>();
-                    weeklyTrendings.ForEach(i => ids.Add(i.ItemId));
-                    if (ids.Contains(trendings.First().ItemId))
-                    {
-                        trendings.RemoveAt(0);
-                    }
-                    else
-                    {
-                        weeklyTrendings.Add(trendings.First());
-                        trendings.RemoveAt(0);
-                    }
-                }
-            }
+			itemManager.GetMostTrendingItemsForUserAndItemType(subPlatformID, userId, ItemType.Organisation, 4, true).OrderBy(item => item.TrendingPercentage).Reverse().ForEach(item => weeklyTrendings.Add(item));
+			if (weeklyTrendings.Count < 8)
+			{
+				List<Item> trendings = itemManager.GetMostTrendingItemsForType(subPlatformID, ItemType.Organisation, 4, true).ToList();
+				while (weeklyTrendings.Count < 8)
+				{
+					List<int> ids = new List<int>();
+					weeklyTrendings.ForEach(i => ids.Add(i.ItemId));
+					if (ids.Contains(trendings.First().ItemId))
+					{
+						trendings.RemoveAt(0);
+					}
+					else
+					{
+						weeklyTrendings.Add(trendings.First());
+						trendings.RemoveAt(0);
+						countOrg++;
+					}
+				}
+			}
 
-            itemManager.GetMostTrendingItemsForUserAndItemType(subPlatformID, userId, ItemType.Theme, 4, true).OrderBy(item => item.TrendingPercentage).Reverse().ForEach(item => weeklyTrendings.Add(item));
-            if (weeklyTrendings.Count < 12)
-            {
-                List<Item> trendings = itemManager.GetMostTrendingItemsForType(subPlatformID, ItemType.Theme, 4, true).ToList();
-                while (weeklyTrendings.Count < 12)
-                {
-                    List<int> ids = new List<int>();
-                    weeklyTrendings.ForEach(i => ids.Add(i.ItemId));
-                    if (ids.Contains(trendings.First().ItemId))
-                    {
-                        trendings.RemoveAt(0);
-                    }
-                    else
-                    {
-                        weeklyTrendings.Add(trendings.First());
-                        trendings.RemoveAt(0);
-                    }
-                }
-            }
+			itemManager.GetMostTrendingItemsForUserAndItemType(subPlatformID, userId, ItemType.Theme, 4, true).OrderBy(item => item.TrendingPercentage).Reverse().ForEach(item => weeklyTrendings.Add(item));
+			if (weeklyTrendings.Count < 12)
+			{
+				List<Item> trendings = itemManager.GetMostTrendingItemsForType(subPlatformID, ItemType.Theme, 4, true).ToList();
+				while (weeklyTrendings.Count < 12)
+				{
+					List<int> ids = new List<int>();
+					weeklyTrendings.ForEach(i => ids.Add(i.ItemId));
+					if (ids.Contains(trendings.First().ItemId))
+					{
+						trendings.RemoveAt(0);
+					}
+					else
+					{
+						weeklyTrendings.Add(trendings.First());
+						trendings.RemoveAt(0);
+						countTheme++;
+					}
+				}
+			}
 
             // Making widgets
             List<Widget> widgets = new List<Widget>();
 
-            foreach (Item item in weeklyTrendings)
-            {
-                IEnumerable<Widget> widgetsToAdd = widgetManager.GetAllWidgetsWithAllDataForItem(item.ItemId)
-                  .Where(widget => widget.PropertyTags
-                    .Any(proptag => proptag.Name.ToLower().Equals("mentions")))
-                  .AsEnumerable();
-                if (widgetsToAdd != null) widgets.AddRange(widgetsToAdd);
-            }
+			foreach (Item item in weeklyTrendings)
+			{
+				IEnumerable<Widget> widgetsToAdd = widgetManager.GetAllWidgetsWithAllDataForItem(item.ItemId)
+					.Where(widget => widget.PropertyTags
+						.Any(proptag => proptag.Name.ToLower().Equals("mentions")))
+					.AsEnumerable();
+				if (widgetsToAdd != null) widgets.AddRange(widgetsToAdd);
+			}
+
+			// Making defaults list
+			defaults.Add(countPerson);
+			defaults.Add(countOrg);
+			defaults.Add(countTheme);
 
 
-            WeeklyReviewModel weeklyReviewModel = new WeeklyReviewModel
-            {
-                WeeklyPersonViewModels = weeklyPersonViewModels,
-                WeeklyItems = weeklyTrendings,
-                Widgets = widgets,
-                User = User.Identity.IsAuthenticated ? userManager.GetUser(User.Identity.GetUserId()) : null,
-            };
+			WeeklyReviewModel weeklyReviewModel = new WeeklyReviewModel
+			{
+				WeeklyPersonViewModels = weeklyPersonViewModels,
+				WeeklyItems = weeklyTrendings,
+				Widgets = widgets,
+				User = User.Identity.IsAuthenticated ? userManager.GetUser(User.Identity.GetUserId()) : null,
+				Defaults = defaults
+			};
 
             return View(weeklyReviewModel);
         }
