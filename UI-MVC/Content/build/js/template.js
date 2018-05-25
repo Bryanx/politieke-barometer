@@ -308,7 +308,6 @@ function init_select2() {
 	if (typeof (select2) === 'undefined') {
 		return;
 	}
-	console.log('init_toolbox');
 
 	$(".select2_single").select2({
 		placeholder: "Select a state",
@@ -330,7 +329,6 @@ function init_wysiwyg() {
 	if (typeof ($.fn.wysiwyg) === 'undefined') {
 		return;
 	}
-	console.log('init_wysiwyg');
 
 	function init_ToolbarBootstrapBindings() {
 		var fonts = ['Serif', 'Sans', 'Arial', 'Arial Black', 'Courier',
@@ -407,7 +405,6 @@ function init_cropper() {
 	if (typeof ($.fn.cropper) === 'undefined') {
 		return;
 	}
-	console.log('init_cropper');
 
 	var $image = $('#image');
 	var $download = $('#download');
@@ -641,7 +638,6 @@ function init_validator() {
 	if (typeof (validator) === 'undefined') {
 		return;
 	}
-	console.log('init_validator');
 
 	// initialize the validator function
 	validator.message.date = 'not a real date';
@@ -680,7 +676,6 @@ function init_PNotify() {
 	if (typeof (PNotify) === 'undefined') {
 		return;
 	}
-	console.log('init_PNotify');
 	/*
 		new PNotify({
 			title: "PNotify",
@@ -713,7 +708,6 @@ function init_compose() {
 	if (typeof ($.fn.slideToggle) === 'undefined') {
 		return;
 	}
-	console.log('init_compose');
 
 	$('#compose, .compose-close').click(function () {
 		$('.compose').slideToggle();
