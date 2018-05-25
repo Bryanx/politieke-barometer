@@ -825,4 +825,10 @@
   <data name="Question" xml:space="preserve">
     <value>Vraag</value>
   </data>
+  <data name="Organisations" xml:space="preserve">
+    <value>Organisaties</value>
+  </data>
+  <data name="Persons" xml:space="preserve">
+    <value>Personen</value>
+  </data>
 </root>
