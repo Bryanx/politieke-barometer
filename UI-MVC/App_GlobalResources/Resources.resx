@@ -831,4 +831,10 @@
   <data name="Question" xml:space="preserve">
     <value>Question</value>
   </data>
+  <data name="Organisations" xml:space="preserve">
+    <value>Organisations</value>
+  </data>
+  <data name="Persons" xml:space="preserve">
+    <value>Persons</value>
+  </data>
 </root>

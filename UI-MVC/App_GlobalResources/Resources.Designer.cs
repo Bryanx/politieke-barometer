@@ -1393,6 +1393,15 @@ namespace BAR.UI.MVC.App_GlobalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Organisations.
+        /// </summary>
+        public static string Organisations {
+            get {
+                return ResourceManager.GetString("Organisations", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Other settings.
         /// </summary>
         public static string OtherSettings {
@@ -1470,6 +1479,15 @@ namespace BAR.UI.MVC.App_GlobalResources {
         public static string PersonalityDistributionOfMentions {
             get {
                 return ResourceManager.GetString("PersonalityDistributionOfMentions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Persons.
+        /// </summary>
+        public static string Persons {
+            get {
+                return ResourceManager.GetString("Persons", resourceCulture);
             }
         }
         
