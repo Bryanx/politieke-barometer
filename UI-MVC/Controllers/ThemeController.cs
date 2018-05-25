@@ -70,7 +70,7 @@ namespace BAR.UI.MVC.Controllers
 			if (requestedItem == null) return HttpNotFound();
 
 			Item subbedItem = subManager.GetSubscribedItemsForUser(User.Identity.GetUserId())
-				.FirstOrDefault(item => item.ItemId == item.ItemId);
+				.FirstOrDefault(item => item.ItemId == id);
 
 			ThemeViewModel themeViewModel = Mapper.Map(theme, new ThemeViewModel());
 
