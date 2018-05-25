@@ -103,6 +103,20 @@ $font-color: var(--primary-color);
   position: absolute;
   top: 10px;
   right: 10px;
+  .card-default-item {
+    display: block;
+    margin-top: 5px;
+  }
+}
+
+.card-default-item {
+  visibility: hidden;
+}
+
+.card-default {
+  position: absolute;
+  top: 10px;
+  right: 10px;
 }
 
 .card-trending {
