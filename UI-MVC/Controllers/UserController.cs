@@ -129,16 +129,16 @@ namespace BAR.UI.MVC.Controllers
                 };
                 var result = await userManager.CreateAsync(user, model.Password);
 
-                if (result.Succeeded)
-                {
-                    //Send an email with this link
-                    string code = await userManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                    var callbackUrl = Url.Action("ConfirmEmail", "User", new { userId = user.Id, code = code },
-                      protocol: Request.Url.Scheme);
-                    await userManager.SendEmailAsync(user.Id, Resources.ConfirmAccount,
-                      "<a href=\"" + callbackUrl + "\">" + Resources.ConfirmAccountClickingHere + "</a>");
-                    //Assign Role to user
-                    await userManager.AddToRoleAsync(user.Id, "User");
+				if (result.Succeeded)
+				{
+					//Send an email with this link
+					string code = await userManager.GenerateEmailConfirmationTokenAsync(user.Id);
+					var callbackUrl = Url.Action("ConfirmEmail", "User", new { userId = user.Id, code = code },
+						protocol: Request.Url.Scheme);
+					await userManager.SendEmailAsync(user.Id, Resources.ConfirmAccount,
+						"<a href=\"" + callbackUrl + "\">" + Resources.ConfirmAccountClickingHere + "</a>");
+					//Assign Role to user    
+					await userManager.AddToRoleAsync(user.Id, "User");
 
                     //Log activity
                     new SubplatformManager().LogActivity(ActivityType.RegisterActivity);
