@@ -8,7 +8,7 @@
 
 		public GraphValue() { }
 		
-		//Constructor for making a copy of GraphValue
+		//Constructor for making a copy of GraphValue.
 		public GraphValue(GraphValue graphValue) {
 			Value = graphValue.Value;
 			NumberOfTimes = graphValue.NumberOfTimes;
