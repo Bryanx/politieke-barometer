@@ -35,5 +35,8 @@ namespace BAR.DAL
 		//Delete
 		int DeleteWidget(Widget widgetId);
 		int DeleteWidgetDatas(IEnumerable<WidgetData> datas);
+
+		//Others
+		int ResetAllData();
 	}
 }

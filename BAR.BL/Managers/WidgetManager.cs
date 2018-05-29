@@ -327,6 +327,7 @@ namespace BAR.BL.Managers
 			InitRepo();
 
 			//Remove old widgetdatas
+			widgetRepo.ResetAllData();
 			RemoveWidgetDatas(GetAllWidgetDatas());
 
 			//Fill widgets with new widgetdata
