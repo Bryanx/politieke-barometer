@@ -209,14 +209,7 @@ namespace BAR.DAL
 		/// </summary>
 		public int DeleteWidgetDatas(IEnumerable<WidgetData> datas)
 		{
-			foreach (WidgetData data in datas)
-			{
-				foreach (GraphValue gv in data.GraphValues)
-				{
-					ctx.Entry(gv).State = EntityState.Deleted;
-				}
-				ctx.Entry(data).State = EntityState.Deleted;
-			}
+			foreach (WidgetData data in datas) ctx.Entry(data).State = EntityState.Deleted;		
 			ctx.WidgetDatas.RemoveRange(datas);
 			return ctx.SaveChanges();
 		}
