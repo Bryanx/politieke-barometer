@@ -209,7 +209,14 @@ namespace BAR.DAL
 		/// </summary>
 		public int DeleteWidgetDatas(IEnumerable<WidgetData> datas)
 		{
-			foreach (WidgetData data in datas) ctx.Entry(data).State = EntityState.Deleted;
+			foreach (WidgetData data in datas)
+			{
+				foreach (GraphValue gv in data.GraphValues)
+				{
+					ctx.Entry(gv).State = EntityState.Deleted;
+				}
+				ctx.Entry(data).State = EntityState.Deleted;
+			}
 			ctx.WidgetDatas.RemoveRange(datas);
 			return ctx.SaveChanges();
 		}
@@ -269,6 +276,15 @@ namespace BAR.DAL
 			return ctx.WidgetDatas.Include(data => data.Widget)
 								  .Where(data => data.Widget.WidgetId == widgetId)
 								  .AsEnumerable();
+		}
+
+		/// <summary>
+		/// Resets all the data for a clean synchronisation
+		/// </summary>
+		public int ResetAllData()
+		{
+			ctx.Database.ExecuteSqlCommand("TRUNCATE TABLE GraphValues");
+			return ctx.SaveChanges();
 		}
 	}
 }
