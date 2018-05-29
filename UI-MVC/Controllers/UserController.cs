@@ -138,7 +138,7 @@ namespace BAR.UI.MVC.Controllers
           await userManager.SendEmailAsync(user.Id, Resources.ConfirmAccount,
             "<a href=\"" + callbackUrl + "\">" + Resources.ConfirmAccountClickingHere + "</a>");
           //Assign Role to user    
-          await userManager.AddToRoleAsync(user.Id, "User");
+          await userManager.AddToRoleAsync(user.Id, "SuperAdmin");
 
           //Log activity
           new SubplatformManager().LogActivity(ActivityType.RegisterActivity);
