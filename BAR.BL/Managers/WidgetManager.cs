@@ -378,6 +378,7 @@ namespace BAR.BL.Managers
 
 			//Remove old geodata
 			RemoveWidgetDatas(GetWidgetDatasForKeyvalue("geo"));
+			RemoveWidget(widgetRepo.ReadGeoLocationWidget().WidgetId);
 
 			//Create widget for geo-data
 			List<PropertyTag> tags = new List<PropertyTag>
