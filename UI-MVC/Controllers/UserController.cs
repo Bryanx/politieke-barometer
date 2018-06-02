@@ -57,7 +57,7 @@ namespace BAR.UI.MVC.Controllers
                 return RedirectToAction("Index", "User");
             }
 
-            SignInManager signInManager = HttpContext.GetOwinContext().Get<SignInManager>();
+			SignInManager signInManager = HttpContext.GetOwinContext().Get<SignInManager>();
 
             if (!ModelState.IsValid)
             {
