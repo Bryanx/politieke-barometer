@@ -58,12 +58,6 @@ namespace BAR.UI.MVC.Controllers
 			}
 
 			SignInManager signInManager = HttpContext.GetOwinContext().Get<SignInManager>();
-			//var status = CheckRCaptcha();
-
-			//if (status == false)
-			//{
-			//  return View();
-			//}
 
 			if (!ModelState.IsValid)
 			{
