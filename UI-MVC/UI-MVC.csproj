@@ -237,6 +237,7 @@
     <Compile Include="Controllers\api\WidgetApiController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Models\Itemstats.cs" />
     <Compile Include="Controllers\LanguageController.cs" />
     <Compile Include="Controllers\OrganisationController.cs" />
     <Compile Include="Controllers\OverviewController.cs" />
