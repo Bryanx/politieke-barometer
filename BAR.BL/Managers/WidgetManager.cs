@@ -598,6 +598,70 @@ namespace BAR.BL.Managers
 			InitRepo();
 			return widgetRepo.ReadWidgetDatasForWidgetId(widgetId).AsEnumerable();
 		}
+
+		public string NoteboxData(int itemId)
+		{
+			IEnumerable<Widget> data = GetAllWidgetsWithAllDataForItem(itemId);
+
+			double male = 0;
+			double female = 0;
+			double unknown = 0;
+
+			int age25plus = 0;
+			int age25min = 0;
+			int ageUnknown = 0;
+
+			foreach (Widget w in data)
+			{
+				foreach (WidgetData wd in w.WidgetDatas)
+				{
+					if (wd.KeyValue.ToLower().Equals("gender"))
+					{
+						foreach (GraphValue gv in wd.GraphValues)
+						{
+							if (gv.Value.Equals("m"))
+							{
+								male += (int)gv.NumberOfTimes;
+							}
+							else if (gv.Value.Equals("f"))
+							{
+								female += (int)gv.NumberOfTimes;
+							}
+							else
+							{
+								unknown += (int)gv.NumberOfTimes;
+							}
+						}
+					}
+					else if(wd.KeyValue.ToLower().Equals("age"))
+					{
+						foreach (GraphValue gv in wd.GraphValues)
+						{
+							if (gv.Value.Equals("25+"))
+							{
+								age25plus += (int)gv.NumberOfTimes;
+							}
+							else if (gv.Value.Equals("25-"))
+							{
+								age25min += (int)gv.NumberOfTimes;
+							}
+							else
+							{
+								ageUnknown += (int)gv.NumberOfTimes;
+							}
+						}
+					}
+				}
+			}
+
+			double totaal = male + female + unknown;
+			male = Math.Round(male / totaal * 50);
+			female = Math.Round(female / totaal * 50);
+			unknown = Math.Round(unknown / totaal * 50);
+			
+
+			return male + "," + female + "," + unknown + "," + age25min + "," + age25plus + "," + ageUnknown;
+		}
 	}
 }
 

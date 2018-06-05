@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Net;
 using System.Web.Http;
@@ -13,6 +14,7 @@ using BAR.BL.Domain.Items;
 using BAR.UI.MVC.App_GlobalResources;
 using BAR.UI.MVC.Attributes;
 using Newtonsoft.Json;
+using WebGrease.Css.Extensions;
 
 namespace BAR.UI.MVC.Controllers.api
 {
@@ -55,8 +57,6 @@ namespace BAR.UI.MVC.Controllers.api
 		{
 			widgetManager = new WidgetManager();
 			IEnumerable<Widget> widgets = widgetManager.GetItemwidgetsForItem(itemId);
-
-			string json = CreateDataJson(itemId);
 
 			if (widgets == null || widgets.Count() == 0)
 				return StatusCode(HttpStatusCode.NoContent);
@@ -252,74 +252,28 @@ namespace BAR.UI.MVC.Controllers.api
 			return Ok(Mapper.Map(widgets.ToList(), new List<UserWidgetDTO>()));
 		}
 
-		private string CreateDataJson(int itemId)
+		[HttpGet]
+		[Route("api/WidgetApi/CreateDataJson/{itemId}")]
+		public IHttpActionResult CreateDataJson(int itemId)
 		{
-			List<Widget> data = widgetManager.GetAllWidgetsWithAllDataForItem(itemId).ToList();
-
-			int male = 0;
-			int female = 0;
-			int unknown = 0;
-
-			int age25plus = 0;
-			int age25min = 0;
-			int ageUnknown = 0;
-
-			foreach (Widget w in data)
+			widgetManager = new WidgetManager();
+			string val = widgetManager.NoteboxData(itemId);
+			List<int> vals = new List<int>();
+			val.Split(',').ForEach(v => vals.Add(Int32.Parse(v)));
+			
+			Itemstats itemstats = new Itemstats
 			{
-				foreach (WidgetData wd in w.WidgetDatas)
-				{
-					if (wd.KeyValue.ToLower().Equals("gender"))
-					{
-						foreach (GraphValue gv in wd.GraphValues)
-						{
-							if (gv.Value.Equals("m"))
-							{
-								male += (int)gv.NumberOfTimes;
-							}
-							else if (gv.Value.Equals("f"))
-							{
-								female += (int)gv.NumberOfTimes;
-							}
-							else
-							{
-								unknown += (int)gv.NumberOfTimes;
-							}
-						}
-					}
-					else if(wd.KeyValue.ToLower().Equals("age"))
-					{
-						foreach (GraphValue gv in wd.GraphValues)
-						{
-							if (gv.Value.Equals("25+"))
-							{
-								age25plus += (int)gv.NumberOfTimes;
-							}
-							else if (gv.Value.Equals("25-"))
-							{
-								age25min += (int)gv.NumberOfTimes;
-							}
-							else
-							{
-								ageUnknown += (int)gv.NumberOfTimes;
-							}
-						}
-					}
-				}
-			}
-
-			Itemstats itemstats = new Itemstats()
-			{
-				Male = male,
-				Female = female,
-				GenderUnknown = unknown,
-				Old = age25plus,
-				Young = age25min,
-				AgeUnknown = ageUnknown
+				Male = vals.ElementAt(0),
+				Female = vals.ElementAt(1),
+				GenderUnknown = vals.ElementAt(2),
+				Old = vals.ElementAt(3),
+				Young = vals.ElementAt(4),
+				AgeUnknown = vals.ElementAt(5)
 
 			};
-			string json = JsonConvert.SerializeObject(itemstats);
+			
 
-			return json;
+			return Ok(itemstats);
 		}
  
 	}

@@ -48,5 +48,7 @@ namespace BAR.BL.Managers
 		WidgetData AddWidgetData(WidgetData widgetData);
 
 		void RemoveWidgetDatas(IEnumerable<WidgetData> datas);
+
+		string NoteboxData(int itemId);
 	}
 }
