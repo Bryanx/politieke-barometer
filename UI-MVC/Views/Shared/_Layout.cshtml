@@ -33,7 +33,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <title>@(Model.PageTitle.Length == 0 ? @ViewBag.Title : Model.PageTitle)</title>
-
+    <link rel="icon" type="image/png" sizes="16x16" href="~/favicon.png">
     @Styles.Render("~/Content/css")
 
     @if (IsSectionDefined("CustomCSS")) {
