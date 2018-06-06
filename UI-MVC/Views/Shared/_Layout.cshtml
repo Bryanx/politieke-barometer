@@ -33,7 +33,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <title>@(Model.PageTitle.Length == 0 ? @ViewBag.Title : Model.PageTitle)</title>
-
+    <link rel="icon" type="image/png" sizes="16x16" href="~/favicon.png">
     <link href="~/Content/build/css/vendor/bootstrap.min.css" rel="stylesheet" />
     <link href="~/Content/build/css/vendor/font-awesome.min.css" rel="stylesheet" />
     <link href="~/Content/build/css/vendor/bootstrap-progressbar-3.3.4.min.css" rel="stylesheet" />
@@ -113,7 +113,7 @@
     <script src="~/Content/build/js/searchbar.js"></script>
     <script src="~/Content/build/js/custom.js"></script>
     <script src="~/Content/build/js/alerts.js"></script>
-    
+
 
     @if (IsSectionDefined("CustomJS"))
     {
