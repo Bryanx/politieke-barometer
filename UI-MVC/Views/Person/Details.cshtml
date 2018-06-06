@@ -33,6 +33,18 @@
 <!-- Mentions widget -->
 <div class="grid-stack item-page" id="mentions-grid"></div>
 
+<!-- notenbox -->
+
+<div class="x_panel" style="margin-top: 20px">
+    <div class="x_title" style="display: flex">
+        <h2>@Resources.Gender</h2>   
+    </div>
+    <div class="x_content">
+        <canvas id="c" width="1000" height="250"></canvas>
+    </div>
+</div>
+<!-- /notenbox -->
+
 <h1 class="itemHeader">
     @Resources.PeopleWhoMention @Model.Item.Name
 </h1>
@@ -83,6 +95,7 @@
             fjs.parentNode.insertBefore(js, fjs);
         }(document, 'script', 'facebook-jssdk'));
     </script>
+    <script src="https://nodebox.live/api/v1/ndbx.js"></script>
     <script src="~/Scripts/ChartJS/Chart.js"></script>
     <script src="https://platform.twitter.com/widgets.js"></script>
     <script src="~/Scripts/jquery/jquery-ui.js"></script>
@@ -92,4 +105,44 @@
     <script src="~/Content/build/js/widgets.js"></script>
     <script src="~/Content/build/js/admintoggle.js"></script>
     <script type="text/javascript" defer>(() => loadWidgets("/api/GetItemWidgets/", @Model.Item.ItemId))(jQuery);</script>
+
+   
+    
+    <script>
+        var male;
+        var female;
+        var unknown;
+        
+        (() => {
+            $.get({
+                url: '/api/WidgetApi/CreateDataJson/@Model.Item.ItemId',
+                dataType: "json",
+                success: data => {
+                    male = data.Male;
+                    female = data.Female;
+                    unknown = data.Unknown;
+                }
+            });
+        })($);
+        
+        var options = {
+            userId: 'AnthonyT',
+            projectId: 'genderGraph',
+            functionId: 'main',
+            canvasId: 'c'
+        };
+
+        // Initialize the NodeBox player object
+        ndbx.embed(options,
+            function(err, player) {
+                if (err) {
+                    throw new Error(err);
+                } else {
+                    window.player = player;
+                }
+                window.player.setValue('aantal_man', 'v', male);
+                window.player.setValue('aantal_vrouw', 'v', female);
+                window.player.setValue('aantal_unknown', 'v', unknown);
+            });
+    </script>
 }

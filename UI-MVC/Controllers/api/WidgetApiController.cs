@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Net;
 using System.Web.Http;
@@ -12,7 +13,8 @@ using Microsoft.AspNet.Identity;
 using BAR.BL.Domain.Items;
 using BAR.UI.MVC.App_GlobalResources;
 using BAR.UI.MVC.Attributes;
-
+using Newtonsoft.Json;
+using WebGrease.Css.Extensions;
 
 namespace BAR.UI.MVC.Controllers.api
 {
@@ -55,7 +57,7 @@ namespace BAR.UI.MVC.Controllers.api
 		{
 			widgetManager = new WidgetManager();
 			IEnumerable<Widget> widgets = widgetManager.GetItemwidgetsForItem(itemId);
-			
+
 			if (widgets == null || widgets.Count() == 0)
 				return StatusCode(HttpStatusCode.NoContent);
 
@@ -64,7 +66,7 @@ namespace BAR.UI.MVC.Controllers.api
 
             return Ok(uWidgets);
 		}
-		
+
 		/// <summary>
 		/// Retrieves the graph data for a given itemId and widget.
 		/// </summary>
@@ -249,5 +251,30 @@ namespace BAR.UI.MVC.Controllers.api
 			
 			return Ok(Mapper.Map(widgets.ToList(), new List<UserWidgetDTO>()));
 		}
+
+		[HttpGet]
+		[Route("api/WidgetApi/CreateDataJson/{itemId}")]
+		public IHttpActionResult CreateDataJson(int itemId)
+		{
+			widgetManager = new WidgetManager();
+			string val = widgetManager.NoteboxData(itemId);
+			List<int> vals = new List<int>();
+			val.Split(',').ForEach(v => vals.Add(Int32.Parse(v)));
+			
+			Itemstats itemstats = new Itemstats
+			{
+				Male = vals.ElementAt(0),
+				Female = vals.ElementAt(1),
+				GenderUnknown = vals.ElementAt(2),
+				Old = vals.ElementAt(3),
+				Young = vals.ElementAt(4),
+				AgeUnknown = vals.ElementAt(5)
+
+			};
+			
+
+			return Ok(itemstats);
+		}
+ 
 	}
 }
