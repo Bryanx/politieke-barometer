@@ -710,7 +710,7 @@ function loadGraphs(itemId, widget) {
     function addAutocomplete(){
         if (searchlist.length > 0){
             $('.compareSearch').devbridgeAutocomplete({
-                width: 400,
+                width: "auto",
                 lookup: searchlist,
                 triggerSelectOnValidInput: false,
                 maxHeight: 200,
