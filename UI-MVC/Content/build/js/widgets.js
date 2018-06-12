@@ -729,8 +729,6 @@ function loadGraphs(itemId, widget) {
 
     addAutocomplete();
 
-    $('.compareSearch').keyup(() => $($('.compareSuggestion')[0]).parent().parent().css("margin-left", "0"));
-    
     //Change widget title
     $(document).on("mouseenter", ".userWidgetTitle", (e) => $(e.target).children(".edit-title").show());
     $(document).on("mouseleave", ".userWidgetTitle", (e) => $(e.target).children(".edit-title").hide());
