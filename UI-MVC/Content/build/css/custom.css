@@ -1890,7 +1890,12 @@ canvas {
     max-width: 400px;
     height: 34px;
     vertical-align: top;
-    display: inline-block; }
+    display: inline-block;
+    padding-left: 36px;
+    background-image: url(../images/search_svg.svg);
+    background-repeat: no-repeat;
+    background-position: 12px center;
+    background-size: 15px 15px; }
 
 .itemHeader {
   margin-top: 45px;
