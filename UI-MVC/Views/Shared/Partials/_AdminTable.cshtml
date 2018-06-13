@@ -1,4 +1,5 @@
-﻿@model BAR.UI.MVC.Models.EditUserViewModel
+﻿@using BAR.UI.MVC.Helpers
+@model BAR.UI.MVC.Models.EditUserViewModel
 
 <table id="datatable-buttons" class="table" cellspacing="10px" width="100%">
 
@@ -47,7 +48,7 @@
         {
                 <tr class="subscription @(@Model.Users.ElementAt(i).Deleted ? "greyed-out" : "")">
                     <td>
-                        <div class="img-circle person-image"></div>
+                        @Html.ImageHelper(@Url.ProfilePictureUrlForUser(Model.Users.ElementAt(i).Id), htmlAttributes: new {@class = "img-circle person-image-top", onerror = "this.onload = null; this.src='/Content/build/images/user.png';"})
                     </td>
                     <td>
                         @Model.Users.ElementAt(i).FirstName
