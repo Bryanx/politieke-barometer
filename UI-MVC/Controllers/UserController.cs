@@ -485,6 +485,18 @@ namespace BAR.UI.MVC.Controllers
 			if (user.ProfilePicture == null) return null;
 			return new FileContentResult(user.ProfilePicture, "image/jpeg");
 		}
+		
+		/// <summary>
+		/// Returns profile picture of a specific user.
+		/// </summary>
+		public FileContentResult ProfilePictureForUser(string id)
+		{
+			userManager = new UserManager();
+
+			User user = userManager.GetUser(id);
+			if (user.ProfilePicture == null) return null;
+			return new FileContentResult(user.ProfilePicture, "image/jpeg");
+		}
 
 		/// <summary>
 		/// Gets user model with all his subscribed items.

@@ -51,17 +51,32 @@ canvas{
     vertical-align: top;
     display: none;
   }
-
   .compareSearch {
     margin-top: 10px;
     max-width: 400px;
     height: 34px;
     vertical-align: top;
     display: inline-block;
+    padding-left: 36px;
+    background-image: url(../images/search_svg.svg);
+    background-repeat: no-repeat;
+    background-position: 12px center;
+    background-size: 15px 15px;
   }
 }
 
 .itemHeader {
   margin-top: 45px;
   clear:both;
+}
+
+.graphLoading {
+  font-size: 50px;
+  text-align: center;
+  vertical-align: middle;
+  color: var(--primary-color);
+  top: calc(50% - 10px);
+  left: calc(50% - 25px);
+  position: absolute;
+  display: block;
 }
