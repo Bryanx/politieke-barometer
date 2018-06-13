@@ -28,14 +28,6 @@ a {
   @extend %social-button;
 }
 
-.btn-search {
-  margin-right: 0 !important;
-  padding: 6px 20px;
-  border: 1px solid transparent;
-  @include box-shadow(none);
-  background: var(--bg-color);
-}
-
 .btn-outline {
   background-color: transparent;
   color: inherit;

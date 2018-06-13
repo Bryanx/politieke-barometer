@@ -11,26 +11,25 @@ nav .nav-container .searchbar .search-field, form.navbar-form .input-group {
   border: 1px solid transparent;
 }
 
-.search-focus {
-  @include border-radius;
-  border: 1px solid var(--primary-color) !important;
-}
 
-.search-field, .btn-search {
+.search-field {
+  width: 100% !important;
   color: #65686a;
   font: $font-default;
   font-size: 20px;
   transition: 0.1s;
-  border: none;
   box-shadow: none !important;
   @include border-radius;
-}
-
-.search-field {
-  padding-left: 0;
-  margin-left: -1px;
+  padding-left: 58px;
   background: #f7f7f7;
   z-index: auto !important;
+  background-image: url("../images/search_svg.svg");
+  background-repeat: no-repeat;
+  background-position: 19px center;
+  background-size: 20px 20px;
+  &:focus {
+    border: 1px solid var(--primary-color) !important;
+  }
 }
 
 .dropdown-search {
@@ -40,3 +39,4 @@ nav .nav-container .searchbar .search-field, form.navbar-form .input-group {
 .navbar-search .input-group .input-group-btn {
   width: 1% !important;
 }
+

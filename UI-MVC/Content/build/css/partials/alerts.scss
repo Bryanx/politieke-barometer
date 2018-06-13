@@ -57,7 +57,7 @@ ul {
   &.msg_list li a {
     padding: 3px 5px !important;
     width: auto;
-    text-decoration: none;
+    text-decoration: none !important;
     &:hover {
       background-color: transparent !important;
     }

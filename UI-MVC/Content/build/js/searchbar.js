@@ -3,7 +3,7 @@ var searchlist = [];
 //create autocomplete
 function loadSuggestions() {
   $('.search-field').devbridgeAutocomplete({
-    width: $('.searchbar').width() - 2,
+    width: "auto",
     lookup: searchlist,
     triggerSelectOnValidInput: false,
     maxHeight: 290,
@@ -39,10 +39,4 @@ function checkItemType(id) {
       window.location.href = "/" + data + "/Details/" + id.data;
     })
 };
-
-
-//Resizeable suggestions
-$(window).on("resize", function () {
-  $('.autocomplete-suggestions').css("width", $('.searchbar').width() - 2);
-});
 

@@ -5,7 +5,7 @@ using System.Web.Mvc;
 
 namespace BAR.UI.MVC.Controllers
 {
-	public class ErrorController : Controller
+	public class ErrorController : LanguageController
 	{
 		private IUserManager userManager;
 

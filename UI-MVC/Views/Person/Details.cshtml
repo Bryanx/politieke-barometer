@@ -14,9 +14,8 @@
     <div class="col-md-12 col-sm-12 col-xs-12">
         <div class="x_panel">
             <div class="clearfix"></div>
-
-            @if (@User.IsInRole("Admin") || @User.IsInRole("SuperAdmin"))
-            {
+            
+            @if (@User.IsInRole("Admin") || @User.IsInRole("SuperAdmin")) {
                 <button id="viewAsUser" class="adminview btn btn-default btn-xs">Toggle adminview</button>
             }
             <!-- Current avatar -->
@@ -33,9 +32,14 @@
 <!-- Mentions widget -->
 <div class="grid-stack item-page" id="mentions-grid"></div>
 
-<!-- notenbox -->
 
-<div class="x_panel" style="margin-top: 20px">
+<h1 class="itemHeader">
+    @Resources.PeopleWhoMention @Model.Item.Name
+</h1>
+<hr/>
+
+<!-- notenbox -->
+<div class="x_panel">
     <div class="x_title" style="display: flex">
         <h2>@Resources.Gender</h2>   
     </div>
@@ -45,18 +49,13 @@
 </div>
 <!-- /notenbox -->
 
-<h1 class="itemHeader">
-    @Resources.PeopleWhoMention @Model.Item.Name
-</h1>
-<hr />
-
 <!-- Widgets -->
 <div class="grid-stack item-page" id="grid"></div>
 
 <h1 class="itemHeader">
     @Resources.MoreInfoAbout @Model.Item.Name
 </h1>
-<hr />
+<hr/>
 
 <!-- More information widgets -->
 <div class="grid-stack item-page" id="social-grid"></div>
@@ -64,15 +63,14 @@
 <h1 class="itemHeader">
     @Resources.MorePeopleFrom <a href="@Url.OrganisationUrl(@Model.OrganisationId)">@Model.OrganisationName</a>
 </h1>
-<hr />
+<hr/>
 <div class="row">
     <div class="col-xs-12">
         <div class="x_panel max_height_460 scroll">
             <div class="x_content">
-                <br />
+                <br/>
                 <div id="related-items">
-                    @foreach (ItemViewModels.PersonViewModel person in @Model.PeopleFromSameOrg)
-                    {
+                    @foreach (ItemViewModels.PersonViewModel person in @Model.PeopleFromSameOrg) {
                         @Html.Partial("Partials/_RelatedItems", person)
                     }
                 </div>
@@ -86,7 +84,7 @@
 @section CustomJS{
     <div id="fb-root"></div>
     <script>
-        (function (d, s, id) {
+        (function(d, s, id) {
             var js, fjs = d.getElementsByTagName(s)[0];
             if (d.getElementById(id)) return;
             js = d.createElement(s);

@@ -88,6 +88,16 @@ namespace BAR.UI.MVC.Helpers
 				action = nameof(UserController.ProfilePicture)
 			});
 		}
+		
+		public static string ProfilePictureUrlForUser(this UrlHelper helper, string userId)
+		{
+			return helper.RouteUrl("Default", new
+			{
+				controller = "User",
+				action = nameof(UserController.ProfilePictureForUser),
+				id = userId
+			});
+		}
 
 		public static string HeaderImage(this UrlHelper helper)
 		{
