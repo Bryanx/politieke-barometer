@@ -64,6 +64,7 @@ var widgetElements = {
             "                    <div class='clearfix'></div>" +
             "                </div>" +
             "                <div style='position: relative; height: 75%;'> " +
+            "                    <div id='loadingSymbol" + id + "'></div>" +
             "                    <canvas id='graph" + id + "'></canvas>" +
             "                    <h2 class='no-graph-data text-center'>"+Resources.NoDataAvailable+"</h2>" +
             "               </div>" +
@@ -116,6 +117,7 @@ var widgetElements = {
             "                    <div class='clearfix'></div>" +
             "                </div>" +
             "                <div style='position: relative; height: 75%;'> " +
+            "                    <div id='loadingSymbol" + id + "'></div>" +
             "                    <canvas id='graph" + id + "'></canvas>" +
             "                    <h2 class='no-graph-data text-center'>"+Resources.NoDataAvailable+"</h2>" +
             "               </div>" +
@@ -681,11 +683,13 @@ function loadGraphs(itemId, widget) {
             }
             let widgetId = widget.WidgetId;
             $.each(itemids, (index, itemId) => {
+                $("#loadingSymbol"+widgetId).html("<i class='graphLoading fa fa-circle-o-notch fa-spin'></i>");
                 $.ajax({
                     type: "GET",
                     url: "/api/GetGraphs/" + itemId + "/" + widgetId,
                     dataType: "json",
                     success: data => {
+                        $("#loadingSymbol"+widgetId).empty();
                         if (!widget.ItemIds.includes(itemId)) widget.ItemIds.push(itemId);
                         let chart = charts.find(c => c.config.id == widgetId);
                         if (chart == undefined) {

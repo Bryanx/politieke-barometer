@@ -69,3 +69,14 @@ canvas{
   margin-top: 45px;
   clear:both;
 }
+
+.graphLoading {
+  font-size: 50px;
+  text-align: center;
+  vertical-align: middle;
+  color: var(--primary-color);
+  top: calc(50% - 10px);
+  left: calc(50% - 25px);
+  position: absolute;
+  display: block;
+}
