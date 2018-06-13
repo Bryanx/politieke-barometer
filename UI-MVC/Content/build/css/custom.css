@@ -535,7 +535,7 @@ ul.msg_headers li:nth-child(2) a:hover {
 ul.msg_list li a {
   padding: 3px 5px !important;
   width: auto;
-  text-decoration: none; }
+  text-decoration: none !important; }
   ul.msg_list li a:hover {
     background-color: transparent !important; }
   ul.msg_list li a .time {

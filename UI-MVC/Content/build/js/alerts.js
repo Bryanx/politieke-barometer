@@ -103,7 +103,7 @@ function generateAlertHTML(alert, type) {
             "class": "alertTime",
             html: `<i class="font_11 fa fa-clock-o"></i> ${jQuery.timeago(alert.TimeStamp)}`
         });
-    alertBody.append(alertIcon).append(alertContent).append(alertTime)
+    alertBody.append(alertIcon).append(alertContent).append(alertTime);
     alertItem.append(alertCloseButton).append(alertBody);
     return alertItem;
 }
@@ -114,11 +114,10 @@ function InsertAlerts(alertData) {
     var counter = 0;
     $.each(alertData,
         (key, value) => {
-            checkAlertType(value)
-
+            checkAlertType(value, counter, alertData.length);
+            
             if (!value.IsRead) counter++;
         });
-
     //Update the alertCounter
     res.alertcount = counter;
     updateAlertCount();
@@ -131,10 +130,7 @@ function loadAlerts() {
         $("#alertMenu").find(res.alertLoader).remove();
         //There are alerts available
         if (data != undefined) {
-            var alertData = data;
             InsertAlerts(data);
-            $('#alertMenu').append(
-                "<li id=\"seeAllAlerts\"><div class=\"text-center\"><a><strong>" + Resources.ShowAllAlerts + "</strong></a></div></li>");
         } else { //No available alerts
             $('#alertMenu').empty();
             $('#alertMenu').append("<li class=\"noAlertsAvailable\"><i class=\"fa fa-bell\"></i></br>" +
@@ -159,9 +155,8 @@ function loadAlerts() {
 }
 
 //Checks the alert type
-function checkAlertType(value) {
-    $.ajax({
-        type: "GET",
+function checkAlertType(value, index, length) {
+    $.get({
         url: "/api/User/Alert/CheckAlert/" + value.AlertId,
         contentType: 'application/json; charset=utf-8',
         dataType: "json",
@@ -171,6 +166,9 @@ function checkAlertType(value) {
 
             //Add alert to alert dropdownlist
             $('#alertMenu').append(alertItem);
+
+            if (index+1 === length) $('#alertMenu').append(
+                    "<li id=\"seeAllAlerts\"><div class=\"text-center\"><a><strong>" + Resources.ShowAllAlerts + "</strong></a></div></li>");
         })
 };
 
