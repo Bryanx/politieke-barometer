@@ -71,14 +71,12 @@ var AddTimeChart = function (widget, labels, label, values, borderColor, color, 
         url: "/api/GetActivityWidgets",
         success: widgets => {
             let rowSpan = 12;
-            widgets.forEach(widget => {
+            $.each(widgets, (i, widget) => {
                 adminGrid.addWidget(activityWidget(widget.WidgetId, widget.Title), widget.RowNumber, widget.ColumnNumber,
                     rowSpan,  widget.ColumnSpan,  true, 6, 12, 6, 6, widget.WidgetId);
                 adminGrid.movable(".grid-stack-item", false);
                 adminGrid.resizable(".grid-stack-item", false);
                 rowSpan = 6;
-            });
-            $.each(widgets, (i, widget) => {
                 i += 3;
                 let labels = widget.WidgetDatas[0].GraphValues.map(g => g.Value);
                 let values = widget.WidgetDatas[0].GraphValues.map(g => g.NumberOfTimes);
