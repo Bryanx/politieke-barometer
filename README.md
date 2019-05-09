@@ -3,6 +3,8 @@
 The purpose of this project is to make visible through a live dashboard what people are watching and mentioning on social media.
 The platform was initially meant for public elections, so people can see which politicians are popular on social media. However the platform has been changed so a sub platform can be created for anything the user wants to monitor on social media.
 
+The project was made in .NET
+
 # Demo
 
 Charts displaying social media trends and mentions:
